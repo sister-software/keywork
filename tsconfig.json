@@ -1,0 +1,48 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ES2022",
+    "moduleResolution": "Node",
+    "esModuleInterop": true,
+    "strict": true,
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "ES2021",
+      "esnext"
+    ],
+    "types": [
+      "@cloudflare/workers-types"
+    ],
+    "baseUrl": ".",
+    "outDir": "./dist",
+    "allowJs": true,
+    "checkJs": true,
+    "skipLibCheck": true,
+    "noEmit": false,
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "incremental": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "noUncheckedIndexedAccess": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "declarationDir": "./dist"
+  },
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.mts",
+    "src/**/*.mjs",
+    "src/**/*.js",
+    "src/**/*.cjs",
+    "src/**/*.cts"
+  ],
+  "exclude": [
+    "node_modules",
+    "docs",
+    "dist"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "javascript.preferences.importModuleSpecifierEnding": "auto",
+  "typescript.preferences.importModuleSpecifierEnding": "auto",
+  "search.exclude": {
+    "yarn.lock": true,
+    "dist": true,
+    "docs": true
+  },
+}

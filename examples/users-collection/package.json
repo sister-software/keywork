@@ -1,0 +1,14 @@
+{
+  "name": "@keyworkdb/users-example",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">= 16.7"
+  },
+  "dependencies": {
+    "keyworkdb": "latest"
+  },
+  "devDependencies": {
+    "miniflare": "^2.4.0"
+  }
+}
