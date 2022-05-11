@@ -1,8 +1,9 @@
 {
-  "name": "keyworkdb",
+  "name": "@keywork/root",
   "license": "AGPL-3.0",
   "version": "0.1.0",
-  "description": "A NoSQL ODM for Cloudflare Workers KV.",
+  "private": true,
+  "description": "A collection of useful tools for building web apps on Cloudflare Workers.",
   "keywords": [
     "cloudflare",
     "workers",
@@ -16,10 +17,10 @@
     "nosql",
     "odm"
   ],
-  "repository": "git@github.com:TeffenEllis/keyworkdb.git",
+  "repository": "git@github.com:TeffenEllis/keywork.git",
   "bugs": {
-    "url" : "https://github.com/TeffenEllis/keyworkdb/issues",
-    "email" : "teffen@nirri.us"
+    "url": "https://github.com/TeffenEllis/keywork/issues",
+    "email": "teffen@nirri.us"
   },
   "author": "Teffen Ellis <teffen@nirri.us>",
   "packageManager": "yarn@1.22.0",
@@ -35,21 +36,19 @@
   "engines": {
     "node": ">= 16.7"
   },
-  "files": [
-    "dist"
+  "workspaces": [
+    "packages/*"
   ],
   "scripts": {
-    "build": "node --experimental-specifier-resolution=node ./build/build-package.mjs",
+    "build": "node --experimental-specifier-resolution=node ./build/build-packages.mjs",
+    "types:build": "tsc",
+    "types:bundle": "npm run types:build && node --experimental-specifier-resolution=node ./build/utils/types.mjs",
     "test": "jest"
   },
-  "dependencies": {
-    "deepmerge": "^4.2.2",
-    "lodash.isplainobject": "^4.0.6",
-    "ulidx": "^0.3.0"
-  },
   "devDependencies": {
+    "@ava/typescript": "^3.0.1",
     "@cloudflare/workers-types": "^3.9.0",
-    "@types/lodash.isplainobject": "^4.0.7",
+    "@microsoft/api-extractor": "^7.23.1",
     "@types/node": "^17.0.31",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
@@ -65,7 +64,7 @@
     "prettier-plugin-organize-imports": "^2.3.4",
     "rimraf": "^3.0.2",
     "tsconfig-paths": "^4.0.0",
-    "typescript": "^4.6.4"
+    "typescript": "beta"
   },
   "browserslist": [
     "last 2 Chrome versions",

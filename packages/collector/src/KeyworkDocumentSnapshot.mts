@@ -1,6 +1,6 @@
 import type { KeyworkDocumentMetadata } from './KeyworkDocumentMetadata.mjs'
 
-interface KeyworkDocumentSnapshotDoesNotExist {
+export interface KeyworkDocumentSnapshotDoesNotExist {
   absoluteDocPath: string
   relativeDocPath: string
   exists: false
@@ -8,7 +8,7 @@ interface KeyworkDocumentSnapshotDoesNotExist {
   metadata: null
 }
 
-interface KeyworkDocumentSnapshotExists<ExpectedType = unknown> {
+export interface KeyworkDocumentSnapshotExists<ExpectedType = unknown> {
   absoluteDocPath: string
   relativeDocPath: string
   exists: true
@@ -16,8 +16,6 @@ interface KeyworkDocumentSnapshotExists<ExpectedType = unknown> {
   metadata: KeyworkDocumentMetadata
 }
 
-type KeyworkDocumentSnapshot<ExpectedType = unknown> =
+export type KeyworkDocumentSnapshot<ExpectedType = unknown> =
   | KeyworkDocumentSnapshotExists<ExpectedType>
   | KeyworkDocumentSnapshotDoesNotExist
-
-export default KeyworkDocumentSnapshot

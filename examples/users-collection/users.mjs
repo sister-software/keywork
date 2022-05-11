@@ -1,4 +1,5 @@
-import { KeyworkCollection } from 'keyworkdb'
+import { KeyworkCollection } from '@keywork/odm'
+import { JSONResponse } from '@keywork/responder'
 
 export default {
   /**
@@ -23,9 +24,7 @@ export default {
         keys: userDocumentsList.keys,
       }
 
-      return new Response(JSON.stringify(body, null, 2), {
-        'Content-Type': 'text/json; charset=utf-8',
-      })
+      return new JSONResponse(body)
     }
   },
 }

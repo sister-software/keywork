@@ -1,11 +1,10 @@
-import { DeserializationTypes } from '../common.mjs'
-import KeyworkCollection from './KeyworkCollection.mjs'
-import KeyworkDocumentReference from './KeyworkDocumentReference.mjs'
-
+import { DeserializationTypes } from './common.mjs'
+import { KeyworkCollection } from './KeyworkCollection.mjs'
+import { KeyworkDocumentReference } from './KeyworkDocumentReference.mjs'
 /**
  * Creates a database instance backed by a Cloudflare KV namespace.
  */
-export default class KeyworkDatabase {
+export class KeyworkDatabase {
   constructor(
     /** The KV namespace binding provided by the parent Worker. */
     protected kvNamespace: KVNamespace

@@ -1,5 +1,5 @@
 export interface ErrorJSONBody {
-  statusText: string
+  status: string
   statusCode: number
 }
 
@@ -14,12 +14,16 @@ export class KeyworkResourceAccessError extends Error {
 
   toJSON(): ErrorJSONBody {
     return {
-      statusText: this.statusText,
+      status: this.statusText,
       statusCode: this.status,
     }
   }
 
   static fromUnknownError(_error: any): KeyworkResourceAccessError {
+    if (_error instanceof KeyworkResourceAccessError) {
+      return _error
+    }
+
     const code = 500
     let message = 'An unknown Keywork error occured'
 

@@ -1,12 +1,3 @@
-import * as path from 'path'
-import { loadConfig as loadTSconfig } from 'tsconfig-paths'
-const logger = console
-
-const tsConfig = loadTSconfig()
-if (tsConfig.resultType === 'failed') throw new Error('TS Config not found.')
-
-export const appRoot = path.join.bind(null, tsConfig.absoluteBaseUrl)
-
 /**
  *
  * @param {string} filePath

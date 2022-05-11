@@ -1,0 +1,54 @@
+{
+  "name": "@keywork/responder",
+  "license": "AGPL-3.0",
+  "version": "0.1.0",
+  "description": "A NoSQL ODM for Cloudflare Workers KV.",
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "cloudflare workers",
+    "kv",
+    "cloudflare kv",
+    "key",
+    "value",
+    "key value",
+    "database",
+    "nosql",
+    "odm"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TeffenEllis/keywork.git",
+    "directory": "packages/collector"
+  },
+  "bugs": {
+    "url": "https://github.com/TeffenEllis/keywork/issues"
+  },
+  "author": "Teffen Ellis <teffen@nirri.us>",
+  "packageManager": "yarn@1.22.0",
+  "type": "module",
+  "main": "./dist/csm/index.cjs",
+  "module": "./dist/esm/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "import": "./dist/esm/index.mjs",
+    "require": "./dist/csm/index.cjs"
+  },
+  "sideEffects": false,
+  "engines": {
+    "node": ">= 16.7"
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "test": "jest"
+  },
+  "dependencies": {
+    "@cloudflare/kv-asset-handler": "^0.2.0",
+    "@keywork/shared": "0.1.0",
+    "@types/cookie": "^0.5.1",
+    "cookie": "^0.5.0",
+    "http-status-codes": "^2.2.0"
+  }
+}

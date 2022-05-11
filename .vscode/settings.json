@@ -1,6 +1,7 @@
 {
   "javascript.preferences.importModuleSpecifierEnding": "auto",
   "typescript.preferences.importModuleSpecifierEnding": "auto",
+  "typescript.preferences.importModuleSpecifier": "shortest",
   "search.exclude": {
     "yarn.lock": true,
     "dist": true,

@@ -1,48 +1,40 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "module": "ES2022",
-    "moduleResolution": "Node",
-    "esModuleInterop": true,
+    "module": "esnext",
+    "target": "esnext",
+    "lib": ["esnext"],
     "strict": true,
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "ES2021",
-      "esnext"
-    ],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "resolveJsonModule": true,
     "types": [
       "@cloudflare/workers-types"
     ],
-    "baseUrl": ".",
-    "outDir": "./dist",
-    "allowJs": true,
-    "checkJs": true,
-    "skipLibCheck": true,
-    "noEmit": false,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "incremental": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "noUncheckedIndexedAccess": true,
-    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
+    "sourceMap": true,
     "declaration": true,
+    "declarationMap": true,
     "emitDeclarationOnly": true,
-    "declarationDir": "./dist"
+    "baseUrl": ".",
+    "rootDir": ".",
+    "checkJs": true,
+    "allowJs": true,
+    "paths": {
+      "keywork": ["packages/keywork/src"],
+      "@keywork/*": ["packages/*/src/index.mts"]
+    }
   },
   "include": [
-    "src/**/*.ts",
-    "src/**/*.mts",
-    "src/**/*.mjs",
-    "src/**/*.js",
-    "src/**/*.cjs",
-    "src/**/*.cts"
+    "packages/*/src/**/*.mts",
+    "packages/*/src/**/*.js",
+    "packages/*/src/**/*.mjs",
+    "packages/*/src/**/*.ts",
+    "packages/*/test/**/*.mts",
+    "types"
   ],
   "exclude": [
-    "node_modules",
-    "docs",
-    "dist"
+    "packages/core/test/fixtures/wrangler"
   ]
 }

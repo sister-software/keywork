@@ -1,12 +1,18 @@
+import { convertJSONToEtaggableString, generateETag, KeyworkResourceAccessError, resolveDocPath } from '@keywork/shared'
 import deepmerge from 'deepmerge'
-import type { DeserializationTransformers, DeserializationTypes, PutOrPatchOptions } from '../common.mjs'
-import { KeyworkResourceAccessError } from '../utils/errors.mjs'
-import { resolveDocPath } from '../utils/strings.mjs'
-import type KeyworkCollection from './KeyworkCollection.mjs'
-import { generateDocumentMetadata, KeyworkDocumentMetadata, parseValueTypeInfo } from './KeyworkDocumentMetadata.mjs'
-import type KeyworkDocumentSnapshot from './KeyworkDocumentSnapshot.mjs'
+import type { DeserializationTransformers, DeserializationTypes, PutOrPatchOptions } from './common.mjs'
+import type { KeyworkCollection } from './KeyworkCollection.mjs'
+import {
+  generateDocumentMetadata,
+  isETaggable,
+  KeyworkDocumentMetadata,
+  parseValueTypeInfo,
+} from './KeyworkDocumentMetadata.mjs'
+import type { KeyworkDocumentSnapshot } from './KeyworkDocumentSnapshot.mjs'
 
-interface KeyworkDocumentFetchOptions {
+export type { KeyworkDocumentSnapshot }
+
+export interface KeyworkDocumentFetchOptions {
   /**
    * The cacheTtl parameter must be an integer that is greater than or equal to 60.
    * It defines the length of time in seconds that a KV result is cached in the edge location that it is accessed from.
@@ -26,7 +32,7 @@ interface KeyworkDocumentFetchOptions {
 /**
  * Creates an instance associated with specific document within a Cloudflare KV.
  */
-export default class KeyworkDocumentReference<
+export class KeyworkDocumentReference<
   // eslint-disable-next-line @typescript-eslint/ban-types
   ExpectedType extends DeserializationTypes | {} = never
 > {
@@ -101,25 +107,31 @@ export default class KeyworkDocumentReference<
     const deserializeAs = parseValueTypeInfo(nextValue)
 
     const preparedValue =
-      deserializeAs === 'json' ? JSON.stringify(nextValue, null, 2) : (nextValue as unknown as DeserializationTypes)
+      deserializeAs === 'json'
+        ? convertJSONToEtaggableString(nextValue)
+        : (nextValue as unknown as DeserializationTypes)
 
     const snapshot = await this.fetchSnapshot()
 
     const now = new Date()
+    const etag = isETaggable(preparedValue, deserializeAs) ? await generateETag(preparedValue) : null
+
     let metadata: KeyworkDocumentMetadata
     if (snapshot.exists) {
       metadata = {
+        ...putOptions,
         ...snapshot.metadata,
         updatedAt: now.toJSON(),
-        ...putOptions,
+        etag,
       }
     } else {
       metadata = generateDocumentMetadata({
-        docPath: this.absoluteDocPath,
+        ...putOptions,
+        absoluteDocPath: this.absoluteDocPath,
         relativeDocPath: this.relativeDocPath,
         createdAt: now,
         deserializeAs,
-        ...putOptions,
+        etag,
       })
     }
 
@@ -169,10 +181,13 @@ export default class KeyworkDocumentReference<
       }
     }
 
-    metadata.updatedAt = new Date().toJSON()
-
     const preparedValue =
       deserializeAs === 'json' ? JSON.stringify(nextValue, null, 2) : (nextValue as unknown as DeserializationTypes)
+
+    Object.assign<KeyworkDocumentMetadata, Partial<KeyworkDocumentMetadata>>(metadata, {
+      updatedAt: new Date().toJSON(),
+      etag: isETaggable(preparedValue, deserializeAs) ? await generateETag(preparedValue) : null,
+    })
 
     await this.kvNamespace.put(this.absoluteDocPath, preparedValue, { ...options, metadata })
 

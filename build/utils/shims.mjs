@@ -24,18 +24,3 @@ export const createBuildEnvInjections = () => {
     'process.env.BUILD_ID': JSON.stringify(process.env.BUILD_ID || Date.now()),
   }
 }
-
-/**
- * Gets a list of dependency names from the passed package
- * @param {~Package} pkg
- * @param {boolean} [includeDev]
- * @returns {Set<string>}
- */
-export function getPackageDependencies(pkg, includeDev) {
-  return new Set([
-    ...(pkg.dependencies ? Object.keys(pkg.dependencies) : []),
-    ...(includeDev && pkg.devDependencies ? Object.keys(pkg.devDependencies) : []),
-    ...(pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : []),
-    ...(pkg.optionalDependencies ? Object.keys(pkg.optionalDependencies) : []),
-  ])
-}

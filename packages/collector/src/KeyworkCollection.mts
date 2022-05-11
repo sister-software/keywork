@@ -1,37 +1,37 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import type { DeserializationTypes } from '../common.mjs'
-import { KeyworkResourceAccessError } from '../utils/errors.mjs'
-import { resolveDocPath } from '../utils/strings.mjs'
+import { KeyworkResourceAccessError, PathBuilder, resolveDocPath } from '@keywork/shared'
+import type { DeserializationTypes } from './common.mjs'
+import type { CollectionDocumentReferencesResponse, FetchListOptions } from './KeyworkCollection/common.mjs'
 import {
-  CollectionDocumentReferencesResponse,
   COLLECTION_INDEX_PREFIXES,
   COLLECTION_KEY,
   DOCUMENTS_KEY,
-  FetchListOptions,
   INDEXES_DOCUMENT_PATH_PREFIX,
   INDEXES_ID_PREFIX,
-} from './KeyworkCollection/common.mjs'
+} from './KeyworkCollection/constants.mjs'
 import type { KeyworkDocumentMetadata } from './KeyworkDocumentMetadata.mjs'
-import KeyworkDocumentReference from './KeyworkDocumentReference.mjs'
+import { KeyworkDocumentReference } from './KeyworkDocumentReference.mjs'
 
-export default class KeyworkCollection<
+export type { PathBuilder }
+
+export class KeyworkCollection<
   // eslint-disable-next-line @typescript-eslint/ban-types
   ExpectedType extends DeserializationTypes | {}
 > {
   /** Path to documents. */
-  protected __documentsPath: typeof resolveDocPath
+  protected __documentsPath: PathBuilder
 
   /** Path to indexes. */
-  protected __indexesPath: typeof resolveDocPath
+  protected __indexesPath: PathBuilder
 
   /** Path to index prefixes */
-  protected __indexPrefixesPath: typeof resolveDocPath
+  protected __indexPrefixesPath: PathBuilder
 
   /** Path to the default document index by ID. */
-  protected __indexByIDPath: typeof resolveDocPath
+  protected __indexByIDPath: PathBuilder
 
   /** Path to the default document index by document key. */
-  protected __indexByDocumentPath: typeof resolveDocPath
+  protected __indexByDocumentPath: PathBuilder
 
   /** Path to index listing entries by an entry's properties */
   protected __indexPathByPropertyName!: Record<keyof ExpectedType, string | undefined>
