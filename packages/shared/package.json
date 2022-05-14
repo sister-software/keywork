@@ -48,9 +48,5 @@
     "deepmerge": "^4.2.2",
     "lodash.isplainobject": "^4.0.6",
     "ulidx": "^0.3.0"
-  },
-  "devDependencies": {
-    "@cloudflare/workers-types": "^3.9.0",
-    "chalk": "^5.0.1"
   }
 }

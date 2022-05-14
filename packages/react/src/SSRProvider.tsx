@@ -13,22 +13,22 @@ export interface SSRProviderProps {
   ssrPropsByPath: SSRPropsByPath
 }
 
-// export const SSRProvider: React.FC<SSRProviderProps> = ({ ssrPropsByPath }) => {
-//   return (
-//     <script
-//       id="__ssr_props-container"
-//       type="text/javascript"
-//       dangerouslySetInnerHTML={{
-//         __html: `;(function() {
-//           const encoded = \`${encodeURIComponent(JSON.stringify(Object.fromEntries(ssrPropsByPath)))}\`;
-//           window.__ssr_props_by_path = JSON.parse(decodeURIComponent(encoded));
-//         }())`,
-//       }}
-//     />
-//   )
-// }
+export const SSRProvider: React.FC<SSRProviderProps> = ({ ssrPropsByPath }) => {
+  return (
+    <script
+      id="__ssr_props-container"
+      type="text/javascript"
+      dangerouslySetInnerHTML={{
+        __html: `;(function() {
+          const encoded = \`${encodeURIComponent(JSON.stringify(Object.fromEntries(ssrPropsByPath)))}\`;
+          window.__ssr_props_by_path = JSON.parse(decodeURIComponent(encoded));
+        }())`,
+      }}
+    />
+  )
+}
 
-// const streamTextEncoder = new TextEncoder()
+const streamTextEncoder = new TextEncoder()
 
 export function respondWithStaticProps<P extends SSRPropsLike>(
   request: Request,

@@ -1,25 +1,19 @@
 {
-  "name": "@keywork/responder",
+  "name": "@keywork/shared",
   "license": "AGPL-3.0",
   "version": "0.1.0",
-  "description": "A NoSQL ODM for Cloudflare Workers KV.",
+  "description": "Common core utilities for building Keywork",
   "keywords": [
     "cloudflare",
     "workers",
-    "cloudflare workers",
-    "kv",
-    "cloudflare kv",
-    "key",
-    "value",
-    "key value",
-    "database",
-    "nosql",
-    "odm"
+    "browserify",
+    "isomorphic",
+    "polyfill"
   ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TeffenEllis/keywork.git",
-    "directory": "packages/responder"
+    "directory": "packages/workify"
   },
   "bugs": {
     "url": "https://github.com/TeffenEllis/keywork/issues"
@@ -45,10 +39,5 @@
     "test": "jest"
   },
   "dependencies": {
-    "@cloudflare/kv-asset-handler": "^0.2.0",
-    "@keywork/shared": "0.1.0",
-    "@types/cookie": "^0.5.1",
-    "cookie": "^0.5.0",
-    "http-status-codes": "^2.2.0"
   }
 }

@@ -5,17 +5,16 @@
   "private": true,
   "description": "A collection of useful tools for building web apps on Cloudflare Workers.",
   "keywords": [
+    "keywork",
     "cloudflare",
     "workers",
     "cloudflare workers",
     "kv",
     "cloudflare kv",
-    "key",
-    "value",
     "key value",
     "database",
     "nosql",
-    "odm"
+    "react"
   ],
   "repository": "git@github.com:TeffenEllis/keywork.git",
   "bugs": {

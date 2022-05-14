@@ -1,18 +1,12 @@
-import { ErrorResponse, JSONResponse } from '@keywork/responder'
+import { ErrorResponse, JSONResponse, KeyworkSession, WorkerRouteHandler } from '@keywork/responder'
 import { KeyworkQueryParamKeys, PrefixedLogger } from '@keywork/shared'
-import { WorkerRouteHandler } from '../routeHandlers.mjs'
-import { KeyworkSession } from '../session.mjs'
 import { respondWithStaticProps } from './SSRProvider.mjs'
 // import { GA } from '~site/worker/analytics/ga.js'
 // import { HitType } from '~site/worker/analytics/types.js'
 
 const logger = new PrefixedLogger('Static Props', 'cyan')
 
-export type GetStaticProps<StaticProps, Params = {}> = (
-  params: Params,
-  // cfClient: CloudflareWorkerClient<Env>,
-  session: KeyworkSession
-) => Promise<StaticProps>
+export type GetStaticProps<StaticProps, Params = {}> = (params: Params, session: KeyworkSession) => Promise<StaticProps>
 
 export function createStaticPropsHandler<StaticProps = unknown, Params = unknown>(
   getStaticProps: GetStaticProps<StaticProps, Params>
