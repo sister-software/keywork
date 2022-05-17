@@ -7,10 +7,12 @@ const __dirname = path.dirname(__filename)
 
 export const projectRoot = path.resolve(__dirname, '..', '..')
 
-export const pkgsDir = path.join(projectRoot, 'packages')
-export const pkgsList = (await fs.readdir(pkgsDir)).filter((name) => name !== '.DS_Store')
+export const packagesDirectory = path.join(projectRoot, 'packages')
+export const packagesList = (await fs.readdir(packagesDirectory)).filter((name) => name !== '.DS_Store')
 
 export const scope = '@keywork'
+
+/** @typedef {import('../../package.json') T_npm_packageJSON } */
 
 /**
  * Recursively walks a directory, returning a list of all files contained within
@@ -28,7 +30,7 @@ export async function walk(rootPath) {
 
 /**
  * Gets a list of dependency names from the passed package
- * @param {~Package} pkg
+ * @param {T_npm_packageJSON} pkg
  * @param {boolean} [includeDev]
  * @returns {Set<string>}
  */
@@ -42,31 +44,31 @@ export function getPackageDependencies(pkg, includeDev) {
 }
 
 /**
- * @typedef {object} ~Package
- * @property {string} name
- * @property {string} version
- * @property {Record<string, string>} [dependencies]
- * @property {Record<string, string>} [devDependencies]
- * @property {Record<string, string>} [peerDependencies]
- * @property {Record<string, string>} [optionalDependencies]
- * @property {string[]} [entryPoints]
- */
-
-/**
  * Gets the contents of the package.json file in <pkgRoot>
  * @param {string} pkgRoot
- * @returns {Promise<~Package>}
+ *
+ * @returns {Promise<(T_npm_packageJSON>}
  */
 export async function getPackage(pkgRoot) {
   return JSON.parse(await fs.readFile(path.join(pkgRoot, 'package.json'), 'utf8'))
 }
 
-/**
- * Sets the contents of the package.json file in <pkgRoot>
- * @param {string} pkgRoot
- * @param {~Package} pkg
- * @returns {Promise<void>}
- */
-export async function setPackage(pkgRoot, pkg) {
-  await fs.writeFile(path.join(pkgRoot, 'package.json'), JSON.stringify(pkg, null, 2) + '\n', 'utf8')
+export const rewritePlugin = () => {
+  /** @type {import('esbuild').Plugin} */
+  const plugin = {
+    name: 'rewrite-mjs-ext',
+    setup(build) {
+      build.onResolve({ filter: /.mjs$/ }, (args) => {
+        if (pkgDeps.has(args.path)) return { external: true }
+
+        if (args.importer) {
+          const path = changeExtension(args.path, '.cjs')
+          console.log(path, args.path)
+          return { path, external: true }
+        }
+      })
+    },
+  }
+
+  return plugin
 }

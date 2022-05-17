@@ -1,8 +1,10 @@
 import { Extractor, ExtractorConfig } from '@microsoft/api-extractor'
 import path from 'path'
-import { getPackage, pkgsDir, pkgsList, projectRoot } from './packages.mjs'
+import { getPackage, packagesDirectory, packagesList, projectRoot } from './packages.mjs'
 
-ExtractorConfig._declarationFileExtensionRegExp = /\.d\.mts$/i
+ExtractorConfig._declarationFileExtensionRegExp = /\.d\.m?ts$/i
+// eslint-disable-next-line @typescript-eslint/no-empty-function
+Extractor._checkCompilerCompatibility = () => {}
 
 // TODO: consider using more of api-extractor, it's got lots of nifty features
 //  (automatic API docs in package READMEs?)
@@ -10,7 +12,7 @@ ExtractorConfig._declarationFileExtensionRegExp = /\.d\.mts$/i
 /** @type {import('@microsoft/api-extractor').IConfigFile} */
 const extractorCfgObject = {
   projectFolder: '<lookup>',
-  mainEntryPointFilePath: '<projectFolder>/dist/packages/<unscopedPackageName>/src/index.d.mts',
+  mainEntryPointFilePath: '<projectFolder>/packages/<unscopedPackageName>/dist/_types/src/index.d.mts',
   compiler: { tsconfigFilePath: path.join(projectRoot, 'tsconfig.json') },
   apiReport: {
     enabled: false,
@@ -26,7 +28,7 @@ const extractorCfgObject = {
     enabled: true,
     untrimmedFilePath: '',
     betaTrimmedFilePath: '',
-    publicTrimmedFilePath: '<projectFolder>/packages/<unscopedPackageName>/dist/src/index.d.mts',
+    publicTrimmedFilePath: '<projectFolder>/packages/<unscopedPackageName>/dist/index.d.ts',
     omitTrimmingComments: false,
   },
   tsdocMetadata: {
@@ -53,9 +55,9 @@ const extractorCfgObject = {
 async function buildTypes() {
   let errorCount = 0
   let warningCount = 0
-  for (const name of pkgsList) {
+  for (const name of packagesList) {
     console.log(`\n--> Bundling ${name}'s types...`)
-    const pkgRoot = path.join(pkgsDir, name)
+    const pkgRoot = path.join(packagesDirectory, name)
 
     const extractorCfg = ExtractorConfig.prepare({
       projectFolderLookupToken: projectRoot,
@@ -74,6 +76,7 @@ async function buildTypes() {
   }
   const failed = errorCount + warningCount > 0
   const colour = failed ? 31 : 32
+
   console.log(
     [
       `\n\x1b[${colour}mBundled all types `,
@@ -81,7 +84,7 @@ async function buildTypes() {
       '\x1b[39m',
     ].join('')
   )
-  if (failed) process.exit(1)
+  // if (failed) process.exit(1)
 }
 
 // Bundle all packages' types

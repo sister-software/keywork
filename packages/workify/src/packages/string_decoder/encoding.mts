@@ -1,3 +1,5 @@
+import { BufferEncoding } from '../buffer/index.mjs'
+
 export function throwUnimplementedEncoding(encoding: never): never {
   throw new Error(`String Decoder not implemented for ${encoding}`)
 }
@@ -23,9 +25,12 @@ export function isEncodingPolyfill(encoding: string): encoding is BufferEncoding
   }
 }
 
-const isEncoding = Buffer.isEncoding || isEncodingPolyfill
+export type NormalizedBufferEncoding = 'ascii' | 'utf8' | 'utf16le' | 'base64' | 'latin1' | 'hex'
 
-function _normalizeEncoding(enc: string) {
+/**
+ * @internal
+ */
+export function _normalizeEncoding(enc: string) {
   if (!enc) return 'utf8'
   let retried
 
@@ -55,10 +60,6 @@ function _normalizeEncoding(enc: string) {
   }
 }
 
-export type NormalizedBufferEncoding = ReturnType<typeof _normalizeEncoding>
-
-// Do not cache `Buffer.isEncoding` when checking encoding names as some
-// modules monkey-patch it to support additional encodings
 /**
  * Normalize encoding notation
  *
@@ -67,8 +68,7 @@ export type NormalizedBufferEncoding = ReturnType<typeof _normalizeEncoding>
 export function normalizeEncoding(enc: BufferEncoding): NonNullable<NormalizedBufferEncoding> {
   const nenc = _normalizeEncoding(enc)
 
-  if (typeof nenc !== 'string' && (Buffer.isEncoding === isEncoding || !isEncoding(enc)))
-    throw new TypeError('Unknown encoding: ' + enc)
+  if (typeof nenc !== 'string' && !isEncodingPolyfill(enc)) throw new TypeError('Unknown encoding: ' + enc)
 
   return (nenc || enc) as NonNullable<NormalizedBufferEncoding>
 }

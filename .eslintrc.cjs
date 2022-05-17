@@ -3,17 +3,23 @@
 // eslint-disable-next-line no-undef
 module.exports = {
   root: true,
-  ignorePatterns: ['dist/**/*'],
+  ignorePatterns: ['./**/dist/**/*'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
 
-  extends: ['eslint:recommended', 'plugin:@typescript-eslint/recommended'],
+  extends: [
+    'eslint:recommended',
+    'plugin:react/recommended',
+    'plugin:react-hooks/recommended',
+    'plugin:@typescript-eslint/recommended',
+  ],
   env: {
     browser: true,
     node: true,
     worker: true,
   },
   rules: {
+    'react/prop-types': 'off',
     'no-undef': 'off',
     'no-extra-semi': 'off',
     '@typescript-eslint/no-extra-semi': ['warn'],

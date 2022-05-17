@@ -1,40 +1,10 @@
 {
-  "compilerOptions": {
-    "module": "esnext",
-    "target": "esnext",
-    "lib": ["esnext"],
-    "strict": true,
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "experimentalDecorators": true,
-    "resolveJsonModule": true,
-    "types": [
-      "@cloudflare/workers-types"
-    ],
-    "outDir": "dist",
-    "sourceMap": true,
-    "declaration": true,
-    "declarationMap": true,
-    "emitDeclarationOnly": true,
-    "baseUrl": ".",
-    "rootDir": ".",
-    "checkJs": true,
-    "allowJs": true,
-    "paths": {
-      "keywork": ["packages/keywork/src"],
-      "@keywork/*": ["packages/*/src/index.mts"]
-    }
-  },
-  "include": [
-    "packages/*/src/**/*.mts",
-    "packages/*/src/**/*.js",
-    "packages/*/src/**/*.mjs",
-    "packages/*/src/**/*.ts",
-    "packages/*/test/**/*.mts",
-    "types"
-  ],
-  "exclude": [
-    "packages/core/test/fixtures/wrangler"
+  "files": [],
+  "references": [
+    { "path": "./packages/shared" },
+    { "path": "./packages/collections" },
+    { "path": "./packages/responder" },
+    { "path": "./packages/workify" },
+    { "path": "./packages/react" }
   ]
 }

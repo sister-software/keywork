@@ -1,5 +1,6 @@
-import type { StringDecoder as IStringDecoder } from 'string_decoder'
+import { Buffer } from 'buffer'
 import { AbstractStringDecoder } from './AbstractStringDecoder.mjs'
+import { IStringDecoder } from './common.mjs'
 
 export class UTF8StringDecoder extends AbstractStringDecoder implements IStringDecoder {
   protected lastChar = Buffer.allocUnsafe(4)

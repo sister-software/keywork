@@ -1,9 +1,7 @@
-import type { StringDecoder as IStringDecoderOriginal } from 'string_decoder'
+import type { Buffer } from 'buffer'
+import { BufferEncoding } from '../../buffer/index.mjs'
 import { NormalizedBufferEncoding, normalizeEncoding } from '../encoding.mjs'
-
-export interface IStringDecoder extends IStringDecoderOriginal {
-  encoding: NonNullable<NormalizedBufferEncoding>
-}
+import { IStringDecoder } from './common.mjs'
 
 export abstract class AbstractStringDecoder implements IStringDecoder {
   protected lastNeed = 0
@@ -59,8 +57,3 @@ export abstract class AbstractStringDecoder implements IStringDecoder {
 
   public abstract text(buffer: Buffer, i: number): string
 }
-
-// StringDecoder.prototype.end = utf8End
-
-// Returns only complete characters in a Buffer
-// StringDecoder.prototype.text = utf8Text

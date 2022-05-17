@@ -1,5 +1,7 @@
-import { IStringDecoder } from './decoders/AbstractStringDecoder.mjs'
+import type { Buffer } from 'buffer'
+import { BufferEncoding } from '../buffer/index.mjs'
 import { Base64StringDecoder } from './decoders/Base64StringDecoder.mjs'
+import { IStringDecoder } from './decoders/common.mjs'
 import { SingleByteStringDecoder } from './decoders/SingleByteStringDecoder.mjs'
 import { UTF16StringDecoder } from './decoders/UTF16StringDecoder.mjs'
 import { UTF8StringDecoder } from './decoders/UTF8StringDecoder.mjs'
@@ -53,8 +55,5 @@ function getDecoder(normalizedEncoding: NonNullable<NormalizedBufferEncoding>): 
 
   return throwUnimplementedEncoding(normalizedEncoding)
 }
-
-const foo = new StringDecoder('utf-8')
-const bar = new StringDecoder('utf8')
 
 export { StringDecoder }

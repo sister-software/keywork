@@ -1,4 +1,5 @@
-import type { StringDecoder as IStringDecoder } from 'string_decoder'
+import type { Buffer } from 'buffer'
+import { IStringDecoder } from './common.mjs'
 import { UTF8StringDecoder } from './UTF8StringDecoder.mjs'
 
 export class SingleByteStringDecoder extends UTF8StringDecoder implements IStringDecoder {

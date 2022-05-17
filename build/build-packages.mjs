@@ -1,19 +1,21 @@
 import esbuild from 'esbuild'
+import FastGlob from 'fast-glob'
 import path from 'path'
-import { getPackage, getPackageDependencies, pkgsDir, pkgsList, projectRoot, walk } from './utils/packages.mjs'
+import { cleanBuild } from './utils/clean.mjs'
+import { getPackage, getPackageDependencies, packagesDirectory, packagesList, projectRoot } from './utils/packages.mjs'
 
-const argv = process.argv.slice(2)
-const watch = argv[0] === 'watch'
+const env = process.env.NODE_ENV || 'development'
+const watch = process.argv.some((arg) => arg === '--watch')
 
 /**
  * Common build options for all packages
  * @type {esbuild.BuildOptions}
  */
-const buildOptions = {
+const buildOptionsBase = {
   platform: 'node',
-  format: 'cjs',
   target: 'esnext',
-  bundle: true,
+  treeShaking: true,
+  minify: env === 'production',
   sourcemap: true,
   sourcesContent: false,
   // Mark root package's dependencies as external, include root devDependencies
@@ -34,131 +36,54 @@ const buildOptions = {
   watch,
 }
 
+const distDirName = 'dist'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const typescriptExtPattern = /\.m[tj]s$/
 
 /**
  * Builds a package and its tests stored in packages/<name>/
- * @param {string} name
+ * @param {string} packageName
  * @returns {Promise<void>}
  */
-async function buildPackage(name) {
-  const pkgRoot = path.join(pkgsDir, name)
-  const pkg = await getPackage(pkgRoot)
+async function buildPackage(packageName) {
+  const packageRoot = path.join(packagesDirectory, packageName)
+  // const pkg = await getPackage(pkgRoot)
+  const sourcePath = path.join(packageRoot, 'src')
 
-  const indexPath = path.join(pkgRoot, 'src', 'index.mts')
-  // Look for test files ending with .spec.ts in the test directory, default to
-  // empty array if not found
-  let testPaths = []
-  try {
-    testPaths = (await walk(path.join(pkgRoot, 'test'))).filter((testPath) => testPath.endsWith('.spec.ts'))
-  } catch (e) {
-    if (e.code !== 'ENOENT') throw e
-  }
-  const outPath = path.join(pkgRoot, 'dist')
+  const entryPoints = await FastGlob(path.join(sourcePath, '**/*.{ts,mts,tsx,cts}'))
 
-  const cjsEntryPoints = [indexPath, ...testPaths]
-  // Some tests require bundled ES module fixtures (e.g. Workers Sites), so
-  // build .mjs/.mts files using `format: "esm"`
-  const esmEntryPoints = []
+  const outPath = path.join(packageRoot, distDirName)
 
-  for (const entryPoint of pkg.entryPoints ?? []) {
-    const absoluteEntryPoint = path.join(pkgRoot, entryPoint)
-    const collection = typescriptExtPattern.test(entryPoint) ? esmEntryPoints : cjsEntryPoints
-    collection.push(absoluteEntryPoint)
-  }
-
+  /** @type {esbuild.BuildOptions} */
   const pkgBuildOptions = {
-    ...buildOptions,
-    external: [
-      // Extend root package's dependencies with this package's
-      ...buildOptions.external,
-      // Exclude devDependencies, we'll use these to signal single-use/small
-      // packages we want inlined in the bundle
-      ...getPackageDependencies(pkg),
-    ],
-    outdir: outPath,
-    outbase: pkgRoot,
+    ...buildOptionsBase,
+    // entryPoints: [indexPath],
+    // outdir: outPath,
+    outbase: sourcePath,
   }
-  await esbuild.build({ ...pkgBuildOptions, entryPoints: cjsEntryPoints })
-  if (esmEntryPoints.length) {
-    await esbuild.build({
-      ...pkgBuildOptions,
-      format: 'esm',
-      entryPoints: esmEntryPoints,
-    })
-  }
+
+  console.log('Building', packageRoot)
+  await esbuild.build({
+    ...pkgBuildOptions,
+    format: 'esm',
+    entryPoints,
+    external: undefined,
+    outExtension: {
+      '.js': '.mjs',
+    },
+    outdir: path.join(outPath),
+  })
 }
 
-// Bundle all packages, optionally watching
-await Promise.all(pkgsList.map((pkgName) => buildPackage(pkgName)))
+// Clear previous builds.
+await Promise.all(
+  packagesList.map((packageName) => {
+    const packageRoot = path.join(packagesDirectory, packageName)
+    const outPath = path.join(packageRoot, distDirName)
 
-// import { build } from 'esbuild'
-// import FastGlob from 'fast-glob'
-// import { cleanBuild } from './utils/clean.mjs'
-// import { readJSON } from './utils/files.mjs'
-// import { appRoot, changeExtension } from './utils/paths.mjs'
+    return cleanBuild(outPath)
+  })
+)
 
-// const env = process.env.NODE_ENV || 'development'
-// const isWatching = process.argv.some((arg) => arg === '--watch')
-// const buildDir = appRoot.bind(null, 'dist')
-
-// async function buildPackage() {
-//   await cleanBuild(buildDir())
-
-//   const pkgJSON = await readJSON(appRoot('package.json'))
-//   const pkgDeps = getPackageDependencies(pkgJSON, true)
-//   const entryPoints = await FastGlob(appRoot('src/**/*.{ts,mts,cts}'))
-
-//   /** @type {esbuild.BuildOptions} */
-//   const buildOptions = {
-//     entryPoints,
-//     watch: isWatching,
-//     target: 'esnext',
-//     sourcemap: true,
-//     sourcesContent: false,
-//     logLevel: isWatching ? 'info' : 'warning',
-//     keepNames: true,
-//     treeShaking: true,
-//     minify: env === 'production',
-//   }
-
-//   await Promise.all([
-//     build({
-//       ...buildOptions,
-//       external: Array.from(pkgDeps),
-//       bundle: true,
-//       format: 'cjs',
-//       outExtension: {
-//         '.js': '.cjs',
-//       },
-//       outdir: buildDir('cjs'),
-//       plugins: [
-//         {
-//           name: 'rewrite-mjs-ext',
-//           setup(build) {
-//             build.onResolve({ filter: /.mjs$/ }, (args) => {
-//               if (pkgDeps.has(args.path)) return { external: true }
-
-//               if (args.importer) {
-//                 const path = changeExtension(args.path, '.cjs')
-//                 console.log(path, args.path)
-//                 return { path, external: true }
-//               }
-//             })
-//           },
-//         },
-//       ],
-//     }),
-//     build({
-//       ...buildOptions,
-//       format: 'esm',
-//       outExtension: {
-//         '.js': '.mjs',
-//       },
-//       outdir: buildDir('esm'),
-//     }),
-//   ])
-
-// }
-
-// export default buildPackage()
+// Bundle all packages
+await Promise.all(packagesList.map((pkgName) => buildPackage(pkgName)))

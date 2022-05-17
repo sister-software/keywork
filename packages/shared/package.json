@@ -1,7 +1,7 @@
 {
   "name": "@keywork/shared",
   "license": "AGPL-3.0",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Common core utilities for building Keywork",
   "keywords": [
     "cloudflare",
@@ -27,13 +27,9 @@
   "author": "Teffen Ellis <teffen@nirri.us>",
   "packageManager": "yarn@1.22.0",
   "type": "module",
-  "main": "./dist/csm/index.cjs",
-  "module": "./dist/esm/index.mjs",
+  "main": "./dist/index.mjs",
+  "exports": "./dist/index.mjs",
   "types": "dist/index.d.ts",
-  "exports": {
-    "import": "./dist/esm/index.mjs",
-    "require": "./dist/csm/index.cjs"
-  },
   "sideEffects": false,
   "engines": {
     "node": ">= 16.7"

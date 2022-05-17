@@ -1,8 +1,8 @@
 {
-  "name": "@keywork/shared",
+  "name": "@keywork/workify",
   "license": "AGPL-3.0",
-  "version": "0.1.0",
-  "description": "Common core utilities for building Keywork",
+  "version": "0.2.0",
+  "description": "Polyfills to bring Node packages into Cloudflare Workers.",
   "keywords": [
     "cloudflare",
     "workers",
@@ -21,13 +21,9 @@
   "author": "Teffen Ellis <teffen@nirri.us>",
   "packageManager": "yarn@1.22.0",
   "type": "module",
-  "main": "./dist/csm/index.cjs",
-  "module": "./dist/esm/index.mjs",
-  "types": "dist/index.d.ts",
-  "exports": {
-    "import": "./dist/esm/index.mjs",
-    "require": "./dist/csm/index.cjs"
-  },
+  "main": "./dist/index.mjs",
+  "exports": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
   "sideEffects": false,
   "engines": {
     "node": ">= 16.7"
@@ -39,5 +35,6 @@
     "test": "jest"
   },
   "dependencies": {
+    "buffer": "^6.0.3"
   }
 }

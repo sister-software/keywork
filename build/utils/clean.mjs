@@ -6,12 +6,12 @@ import rimraf from 'rimraf'
  */
 export function cleanBuild(dirtyDirectoryPath) {
   return new Promise((resolve, reject) => {
-    console.info(dirtyDirectoryPath, 'Clearing path...')
+    console.info('Clearing path...', dirtyDirectoryPath)
     rimraf(dirtyDirectoryPath, (error) => {
       if (error) {
         return reject(error)
       }
-      console.info(dirtyDirectoryPath, 'Cleared!')
+
       return resolve()
     })
   })

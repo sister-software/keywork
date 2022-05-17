@@ -1,28 +1,48 @@
 import { KeyworkResourceAccessError } from './errors.mjs'
 import { prettyJSON } from './json.mjs'
 
+/** @private */
+interface ConsoleLike {
+  debug(message?: any, ...optionalParams: any[]): void
+  error(message?: any, ...optionalParams: any[]): void
+  info(message?: any, ...optionalParams: any[]): void
+  log(message?: any, ...optionalParams: any[]): void
+  warn(message?: any, ...optionalParams: any[]): void
+}
+
 export const timestamp = (date = new Date()) => `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`
 timestamp.toString = () => timestamp()
 
-const logTypes = new Map<keyof Console, string>([
+const logTypes = new Map<keyof ConsoleLike, string>([
   ['log', '💬'],
   ['info', '💡'],
   ['warn', '⚠️'],
   ['debug', '🔎'],
 ])
+
 export class PrefixedLogger {
   protected logPrefix: string
-  public _log: typeof console.log
-  protected _error: typeof console.error
+  public _log: ConsoleLike['log']
+  protected _error: ConsoleLike['error']
 
-  public log!: typeof console.log
-  public info!: typeof console.info
-  public warn!: typeof console.warn
-  public debug!: typeof console.debug
+  public log!: ConsoleLike['log']
+  public info!: ConsoleLike['info']
+  public warn!: ConsoleLike['warn']
+  public debug!: ConsoleLike['debug']
+
   constructor(logPrefix: string, color = 'cyan') {
-    this.logPrefix = `[${logPrefix}]`
+    let globalConsole: ConsoleLike
 
-    this._log = console.log.bind(console)
+    // @ts-expect-error 2584
+    if (typeof console !== 'undefined') {
+      // @ts-expect-error 2584
+      globalConsole = console as ConsoleLike
+    } else {
+      throw new Error('Cannot create Prefixed Logger without a global console logger.')
+    }
+
+    this.logPrefix = `[${logPrefix}]`
+    this._log = globalConsole.log.bind(globalConsole)
 
     // @ts-ignore Iteratable
     for (const [logType, logTypeLabel] of logTypes.entries()) {
@@ -35,10 +55,10 @@ export class PrefixedLogger {
         this.logPrefix,
       ]
 
-      this[logType as 'log'] = console[logType as 'log'].bind(console, ...(bindArgs as [any]))
+      this[logType as 'log'] = globalConsole[logType as 'log'].bind(globalConsole, ...(bindArgs as [any]))
     }
 
-    this._error = console.error.bind(console, this.logPrefix)
+    this._error = globalConsole.error.bind(globalConsole, this.logPrefix)
   }
 
   public error = (error: unknown) => {

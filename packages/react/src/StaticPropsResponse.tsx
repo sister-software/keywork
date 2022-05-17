@@ -1,86 +1,98 @@
+import { ErrorResponse, getBrowserIdentifier, HTMLResponse } from '@keywork/responder'
+import { KeyworkResourceAccessError } from '@keywork/shared'
 import React from 'react'
-import { SSRPropsByPath } from './props.mjs'
-// import { renderToNodeStream } from 'react-dom/server'
-// import { StaticRouter } from 'react-router-dom/server'
-// import ReactApplication from '~components/pages/_app.js'
-// import SSRDocument from '~components/pages/_document.js'
-// import { RenderEnvProvider } from '~contexts/common/RenderEnvProvider.js'
-// import { QueryParamKeys } from '~core/common/constants/site.js'
-// import { fileExtensionToHeader } from '~core/common/net/responses.js'
-// import { createNodeCompatibleTransformStream } from '~core/common/net/streams.js'
-// import { HydrationProvider } from '~core/common/react/RouteDataFetcher.js'
+import { ReactDOMServerReadableStream, renderToReadableStream, RenderToReadableStreamOptions } from 'react-dom/server'
+import { StaticRouter } from 'react-router-dom/server'
+import { KeyworkReactSSRRoutes, ProviderWrapper } from './components/KeyworkApp.js'
+import { KeyworkHTMLDocument } from './components/KeyworkHTMLDocument.js'
+import { HydrationProvider } from './ssr/HydrationProvider'
+import { SSRPropsByPath, SSRPropsLike, SSRRouteRecords } from './ssr/props.mjs'
+import { SSRProvider } from './ssr/SSRProvider.js'
 
-export interface SSRProviderProps {
-  ssrPropsByPath: SSRPropsByPath
+interface ReactRenderStreamSuccessResult {
+  stream: ReactDOMServerReadableStream
+  error: null
 }
 
-export const SSRProvider: React.FC<SSRProviderProps> = ({ ssrPropsByPath }) => {
-  return (
-    <script
-      id="__ssr_props-container"
-      type="text/javascript"
-      dangerouslySetInnerHTML={{
-        __html: `;(function() {
-          const encoded = \`${encodeURIComponent(JSON.stringify(Object.fromEntries(ssrPropsByPath)))}\`;
-          window.__ssr_props_by_path = JSON.parse(decodeURIComponent(encoded));
-        }())`,
-      }}
+interface ReactRenderStreamErrorResult {
+  stream: ReactDOMServerReadableStream
+  error: KeyworkResourceAccessError
+}
+
+type ReactRenderStreamResult = ReactRenderStreamSuccessResult | ReactRenderStreamErrorResult
+
+async function renderReactStream(
+  children: React.ReactNode,
+  options?: RenderToReadableStreamOptions
+): Promise<ReactRenderStreamResult> {
+  const controller = new AbortController()
+  let error: null | KeyworkResourceAccessError = null
+
+  const stream = await renderToReadableStream(children, {
+    ...options,
+    signal: controller.signal,
+    onError(_error) {
+      error = KeyworkResourceAccessError.fromUnknownError(_error)
+      console.error(error)
+    },
+  })
+
+  return {
+    stream,
+    error,
+  }
+}
+
+export async function createStaticPropsResponse<P extends SSRPropsLike>(
+  request: Request,
+  /**
+   * A mapping of React Router route patterns to their React component handlers.
+   * @TODO This is likely not needed in the near future.
+   */
+  routeRecords: SSRRouteRecords,
+  pageProps?: P,
+  /**
+   * A component which wraps the current SSR routes.
+   * Use this if you need to inject a provider into the SSR pipeline.
+   */
+  ProviderWrapper?: ProviderWrapper
+): Promise<Response> {
+  const location = new URL(request.url)
+
+  const ssrPropsByPath: SSRPropsByPath<any> = new Map([[location.pathname, pageProps]])
+  const browserIdentifier = getBrowserIdentifier(request)
+  const appDocument = (
+    <KeyworkHTMLDocument
+      browserIdentifier={browserIdentifier}
+      location={location}
+      // isSocialPreview={location.searchParams.has(KeyworkQueryParamKeys.SharePreview)}
+      appContent={
+        <StaticRouter location={location}>
+          <HydrationProvider initialLocation={location} origin={location.origin} ssrPropsByPath={ssrPropsByPath}>
+            <KeyworkReactSSRRoutes routeRecords={routeRecords} ProviderWrapper={ProviderWrapper} />
+          </HydrationProvider>
+
+          <SSRProvider ssrPropsByPath={ssrPropsByPath} />
+        </StaticRouter>
+      }
     />
   )
+
+  let result: ReactRenderStreamResult
+
+  try {
+    result = await renderReactStream(appDocument)
+  } catch (error) {
+    console.error(error)
+
+    // TODO: render some fallback HTML.
+    return ErrorResponse.fromUnknownError(error, 'An error occured during rendering...')
+  }
+
+  if (result.error) {
+    // TODO: render some fallback HTML.
+    return ErrorResponse.fromUnknownError(result.error, 'An error occured during rendering...')
+  }
+
+  return new HTMLResponse(result.stream)
 }
-
-const streamTextEncoder = new TextEncoder()
-
-export function respondWithStaticProps<P extends SSRPropsLike>(
-  request: Request,
-  pageProps?: P,
-  moduleManifest?: string[]
-): Response {
-  return new Response()
-}
-//   const { readable, writer } = createNodeCompatibleTransformStream()
-
-//   writer.write(streamTextEncoder.encode('<!DOCTYPE html>'))
-
-//   const response = new Response(readable, {
-//     status: 200,
-//     headers: fileExtensionToHeader('.html'),
-//   })
-
-//   const location = new URL(request.url)
-
-//   const ssrPropsByPath: SSRPropsByPath = new Map([[location.pathname, pageProps]])
-//   let browserIdentifier = 'unknown'
-//   const userAgent = (request.headers.get('user-agent') || '').toLowerCase()
-
-//   if (userAgent.includes('chrome')) {
-//     browserIdentifier = 'chrome'
-//   } else if (userAgent.includes('safari')) {
-//     browserIdentifier = 'safari'
-//   }
-
-//   const appDocument = (
-//     <SSRDocument
-//       browserIdentifier={browserIdentifier}
-//       moduleManifest={moduleManifest}
-//       location={location}
-//       isSocialPreview={location.searchParams.has(QueryParamKeys.SharePreview)}
-//       appContent={
-//         <StaticRouter location={location}>
-//           <HydrationProvider initialLocation={location} ssrPropsByPath={ssrPropsByPath}>
-//             <RenderEnvProvider initialLocation={location}>
-//               <ReactApplication />
-//             </RenderEnvProvider>
-//           </HydrationProvider>
-//           <SSRProvider ssrPropsByPath={ssrPropsByPath} />
-//         </StaticRouter>
-//       }
-//     />
-//   )
-
-//   const renderStream = renderToNodeStream(appDocument)
-
-//   renderStream.pipe(writer)
-
-//   return response
-// }

@@ -1,12 +1,22 @@
 /* eslint-disable no-dupe-class-members */
-/// <reference types="node" />
-import type { EventEmitter, Transform as NodeTransformStream, TransformCallback, TransformOptions } from 'node:stream'
 
-export interface NodeCompatibleTransformStream extends WritableStreamDefaultWriter, EventEmitter {
-  end: () => void
-}
+import { BufferEncoding } from '../buffer/index.mjs'
 
-export class Transform implements NodeTransformStream {
+export type TransformCallback = (error?: Error | null, data?: any) => void
+
+/**
+ * Transform streams are `Duplex` streams where the output is in some way
+ * related to the input. Like all `Duplex` streams, `Transform` streams
+ * implement both the `Readable` and `Writable` interfaces.
+ *
+ * Examples of `Transform` streams include:
+ *
+ * * `zlib streams`
+ * * `crypto streams`
+ * @since v0.9.4
+ * @remark This is an incomplete polyfill that wraps the web-only `TransformStream`
+ */
+export class NodeTransformPolyfill {
   protected _readableStream: ReadableStream
   protected _writableStream: WritableStream
   protected _writer: WritableStreamDefaultWriter
@@ -32,12 +42,30 @@ export class Transform implements NodeTransformStream {
   public readableObjectMode = false
   public destroyed = false
 
-  constructor(_opts?: TransformOptions) {
+  constructor(_options?: any) {
     const transformStream = new TransformStream()
 
     this._readableStream = transformStream.readable
     this._writableStream = transformStream.writable
     this._writer = transformStream.writable.getWriter()
+  }
+
+  public getReadableStream() {
+    return this._readableStream
+  }
+
+  public getWritableStream() {
+    return this._writableStream
+  }
+
+  /**
+   * - `"byob"` which results in a ReadableStreamBYOBReader being created that can read readable byte streams (i.e. can handle "bring your own buffer" reading).
+   * - `undefined` (or not specified at all — this is the default), which results in a ReadableStreamDefaultReader being created that can read individual chunks from a stream.
+   */
+  getReader<O = ReadableStreamGetReaderOptions | undefined>(
+    options?: O
+  ): O extends undefined ? ReadableStreamDefaultReader : ReadableStreamBYOBReader {
+    return this._readableStream.getReader(options as any) as any
   }
 
   _write(_chunk: any, _encoding: BufferEncoding, _callback: (error?: Error | null) => void): void {
@@ -46,10 +74,7 @@ export class Transform implements NodeTransformStream {
   _destroy(_error: Error | null, _callback: (error: Error | null) => void): void {
     throw new Error('Method not implemented.')
   }
-  _final(
-    _callback: (error?: Error | null) => /// <reference types="node" />
-    void
-  ): void {
+  _final(_callback: (error?: Error | null) => void): void {
     throw new Error('Method not implemented.')
   }
   setDefaultEncoding(_encoding: BufferEncoding): this {
@@ -65,44 +90,57 @@ export class Transform implements NodeTransformStream {
   _read(_size: number): void {
     throw new Error('Method not implemented.')
   }
+
   read(_size?: number) {
     throw new Error('Method not implemented.')
   }
+
   setEncoding(_encoding: BufferEncoding): this {
     throw new Error('Method not implemented.')
   }
+
   pause(): this {
     throw new Error('Method not implemented.')
   }
+
   resume(): this {
     throw new Error('Method not implemented.')
   }
+
   isPaused(): boolean {
     throw new Error('Method not implemented.')
   }
-  unpipe(_destination?: NodeJS.WritableStream): this {
+
+  unpipe(_destination?: WritableStream): this {
     throw new Error('Method not implemented.')
   }
+
   unshift(_chunk: any, _encoding?: BufferEncoding): void {
     throw new Error('Method not implemented.')
   }
-  wrap(_stream: NodeJS.ReadableStream): this {
+
+  wrap(_stream: ReadableStream): this {
     throw new Error('Method not implemented.')
   }
+
   push(_chunk: any, _encoding?: BufferEncoding): boolean {
     throw new Error('Method not implemented.')
   }
+
   destroy(_error?: Error): this {
-    throw new Error('Method not implemented.')
+    this.close()
+      .then(() => {
+        return this._writableStream.close()
+      })
+      .then(() => {
+        return this._readableStream.cancel(_error)
+      })
+
+    return this
   }
+
   addListener(event: 'close', listener: () => void): this
-  addListener(
-    event: 'data',
-    listener: (
-      chunk: /// <reference types="node" />
-      any
-    ) => void
-  ): this
+  addListener(event: 'data', listener: (chunk: any) => void): this
   addListener(event: 'end', listener: () => void): this
   addListener(event: 'error', listener: (err: Error) => void): this
   addListener(event: 'pause', listener: () => void): this
@@ -113,21 +151,9 @@ export class Transform implements NodeTransformStream {
     throw new Error('Method not implemented.')
   }
   prependListener(event: 'close', listener: () => void): this
-  prependListener(
-    event: 'data',
-    listener: (
-      /// <reference types="node" />
-      chunk: any
-    ) => void
-  ): this
+  prependListener(event: 'data', listener: (chunk: any) => void): this
   prependListener(event: 'end', listener: () => void): this
-  prependListener(
-    event: 'error',
-    listener: (
-      /// <reference types="node" />
-      err: Error
-    ) => void
-  ): this
+  prependListener(event: 'error', listener: (err: Error) => void): this
   prependListener(event: 'pause', listener: () => void): this
   prependListener(event: 'readable', listener: () => void): this
   prependListener(event: 'resume', listener: () => void): this
@@ -149,7 +175,7 @@ export class Transform implements NodeTransformStream {
   [Symbol.asyncIterator](): AsyncIterableIterator<any> {
     throw new Error('Method not implemented.')
   }
-  pipe<T extends NodeJS.WritableStream>(_destination: T, _options?: { end?: boolean | undefined }): T {
+  pipe<T extends WritableStream>(_destination: T, _options?: { end?: boolean | undefined }): T {
     throw new Error('Method not implemented.')
   }
   setMaxListeners(_n: number): this {

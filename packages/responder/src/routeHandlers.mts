@@ -1,11 +1,14 @@
-import { CommonWorkerEnvironmentBindings, EnvironmentBindingLike } from './bindings.mjs'
-import type { KeyworkSession } from './session.mjs'
+import { CommonWorkerEnvironmentBindings, EnvironmentBindingLike } from './index.mjs'
+import type { KeyworkSession } from './KeyworkSession.mjs'
 
 export interface RequestWithCFProperties extends Request {
   cf: IncomingRequestCfProperties
 }
 
-interface WorkerRouteHandlerData<Params extends {} | null = null, BoundAliases extends EnvironmentBindingLike = {}> {
+export interface WorkerRouteHandlerData<
+  Params extends {} | null = null,
+  BoundAliases extends EnvironmentBindingLike = {}
+> {
   request: RequestWithCFProperties
   env: CommonWorkerEnvironmentBindings<BoundAliases>
   params: Params
