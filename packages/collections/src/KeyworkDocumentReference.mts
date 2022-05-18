@@ -1,4 +1,4 @@
-import { convertJSONToEtaggableString, generateETag } from '@keywork/responder'
+import { convertJSONToETaggableString, generateETag } from '@keywork/responder'
 import { KeyworkResourceAccessError, resolveDocPath } from '@keywork/shared'
 import deepmerge from 'deepmerge'
 import type { DeserializationTransformers, DeserializationTypes, PutOrPatchOptions } from './common.mjs'
@@ -109,7 +109,7 @@ export class KeyworkDocumentReference<
 
     const preparedValue =
       deserializeAs === 'json'
-        ? convertJSONToEtaggableString(nextValue)
+        ? convertJSONToETaggableString(nextValue)
         : (nextValue as unknown as DeserializationTypes)
 
     const snapshot = await this.fetchSnapshot()

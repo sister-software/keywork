@@ -1,7 +1,7 @@
 /**
  * Wraps `JSON.stringify` to ensure that JSON pretty printing doesn't influence ETag generation.
  */
-export const convertJSONToEtaggableString = (value: {}): string => {
+export const convertJSONToETaggableString = (value: {}): string => {
   return JSON.stringify(value)
 }
 

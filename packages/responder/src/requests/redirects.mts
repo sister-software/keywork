@@ -1,5 +1,5 @@
 import { StatusCodes } from 'http-status-codes'
-import { WorkerRouteHandler } from 'packages/responder/src/routeHandlers.mjs'
+import { WorkerRouteHandler } from './common.mjs'
 
 export type CreateRedirectHandler = (destinationURL: string | URL, statusCode?: number) => WorkerRouteHandler
 

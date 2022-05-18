@@ -4,7 +4,7 @@ export const HTML = {
 } as const
 
 export const XML = {
-  extension: 'html',
+  extension: 'xml',
   mimeType: 'application/xml; charset=utf-8',
 } as const
 

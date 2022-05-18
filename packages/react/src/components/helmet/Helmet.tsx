@@ -145,10 +145,11 @@ const Helmet = (Component: any) =>
       return newFlattenedProps
     }
 
-    warnOnInvalidChildren(child: any, nestedChildren: any) {
-      if (process.env.NODE_ENV !== 'production') {
-        if (!VALID_TAG_NAMES.some((name) => child.type === name)) {
-          if (typeof child.type === 'function') {
+    warnOnInvalidChildren(_child: any, _nestedChildren: any) {
+      // @ts-expect-error Process check
+      if (typeof process !== 'undefined' && process.env.NODE_ENV !== 'production') {
+        if (!VALID_TAG_NAMES.some((name) => _child.type === name)) {
+          if (typeof _child.type === 'function') {
             return console.warn(
               `You may be attempting to nest <Helmet> components within each other, which is not allowed. Refer to our API for more information.`
             )
@@ -156,18 +157,18 @@ const Helmet = (Component: any) =>
 
           return console.warn(
             `Only elements types ${VALID_TAG_NAMES.join(', ')} are allowed. Helmet does not support rendering <${
-              child.type
+              _child.type
             }> elements. Refer to our API for more information.`
           )
         }
 
         if (
-          nestedChildren &&
-          typeof nestedChildren !== 'string' &&
-          (!Array.isArray(nestedChildren) || nestedChildren.some((nestedChild) => typeof nestedChild !== 'string'))
+          _nestedChildren &&
+          typeof _nestedChildren !== 'string' &&
+          (!Array.isArray(_nestedChildren) || _nestedChildren.some((nestedChild) => typeof nestedChild !== 'string'))
         ) {
           throw new Error(
-            `Helmet expects a string as a child of <${child.type}>. Did you forget to wrap your children in braces? ( <${child.type}>{\`\`}</${child.type}> ) Refer to our API for more information.`
+            `Helmet expects a string as a child of <${_child.type}>. Did you forget to wrap your children in braces? ( <${_child.type}>{\`\`}</${_child.type}> ) Refer to our API for more information.`
           )
         }
       }

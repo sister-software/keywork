@@ -4,7 +4,12 @@
     "rootDir": ".",
     "outDir": "dist/_types",
     "types": [
+      "window",
       "@cloudflare/workers-types"
+    ],
+    "typeRoots": [
+      "./types",
+      "./node_modules/@types"
     ]
   },
   "references": [

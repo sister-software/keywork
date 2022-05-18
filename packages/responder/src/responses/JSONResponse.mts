@@ -16,7 +16,7 @@ export class JSONResponse extends CachableResponse {
    * @param request An optional request to check for etag headers.
    * @param etag An optional etag for the given `json` parameter.
    * @param headersInit Optional headers to add to the response.
-   * @param pretty Optional indenting of the JSON.
+   * @param pretty Optional indenting of the JSON. Note that this may affect etag matching.
    */
   constructor(
     json: {},
@@ -26,9 +26,15 @@ export class JSONResponse extends CachableResponse {
     headersInit?: HeadersInit,
     pretty = false
   ) {
-    super(JSON.stringify(json, null, pretty ? 2 : undefined), request, etag, cacheControlOptions, {
-      ...fileExtensionToContentTypeHeader('json'),
-      ...headersInit,
-    })
+    super(
+      typeof json === 'string' ? json : JSON.stringify(json, null, pretty ? 2 : undefined),
+      request,
+      etag,
+      cacheControlOptions,
+      {
+        ...fileExtensionToContentTypeHeader('json'),
+        ...headersInit,
+      }
+    )
   }
 }

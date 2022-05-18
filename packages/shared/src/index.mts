@@ -5,3 +5,7 @@ export * from './json.mjs'
 export * from './logger.mjs'
 export * from './strings.mjs'
 export * from './url.mjs'
+
+declare global {
+  export interface Window {}
+}

@@ -4,19 +4,13 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { Helmet } from './helmet/Helmet'
 
-/** Added to trigger cache busting. */
-const assetSearchParams = new URLSearchParams({
-  [KeyworkQueryParamKeys.BuildID]: process.env.BUILD_ID!,
-})
-
-const $assetSearchParams = assetSearchParams.toString()
-
 export interface KeyworkHTMLDocumentProps {
   appContent: React.ReactElement
   location: URL
   moduleManifest?: string[]
   browserIdentifier?: string
   className?: string
+  buildId?: string
 }
 
 /**
@@ -29,9 +23,17 @@ export const KeyworkHTMLDocument: React.FC<KeyworkHTMLDocumentProps> = ({
   location,
   browserIdentifier,
   className,
+  buildId,
 }) => {
   const staticAppContent = renderToString(appContent)
   const helmetData = Helmet.renderStatic()
+
+  /** Added to trigger cache busting. */
+  const assetSearchParams = new URLSearchParams({
+    [KeyworkQueryParamKeys.BuildID]: buildId || 'development',
+  })
+
+  const $assetSearchParams = assetSearchParams.toString()
 
   return (
     <html

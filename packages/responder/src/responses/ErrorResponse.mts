@@ -14,7 +14,7 @@ export class ErrorResponse extends Response {
    * @param headersInit Optional headers to include with the response.
    */
   constructor(
-    status: StatusCodes.INTERNAL_SERVER_ERROR,
+    status: number = StatusCodes.INTERNAL_SERVER_ERROR,
     statusText = getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR),
     body?: BodyInit | null,
     headersInit?: HeadersInit

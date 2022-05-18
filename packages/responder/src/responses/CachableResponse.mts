@@ -23,7 +23,7 @@ export class CachableResponse extends Response {
     body: BodyInit | null,
     request?: Request,
     etag?: string | null,
-    cacheControlOptions?: CacheControlOptions,
+    cacheControlOptions?: Partial<CacheControlOptions>,
     headersInit?: HeadersInit
   ) {
     if (request && isETagMatch(request, etag)) {

@@ -9,9 +9,10 @@ export interface CacheControlOptions {
 
   'max-age': number
   'must-revalidate': boolean
+  immutable: boolean
 }
 
-export function createCacheControlHeader(options: CacheControlOptions | undefined): CacheControlHeader {
+export function createCacheControlHeader(options: Partial<CacheControlOptions> | undefined): CacheControlHeader {
   options = options || { 'max-age': DURATION_ONE_WEEK, 'must-revalidate': true }
 
   const headerValues: string[] = []

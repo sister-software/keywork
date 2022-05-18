@@ -1,9 +1,8 @@
 export type {
   CachableResponse,
   CacheControlOptions,
-  CommonWorkerEnvironmentBindings,
+  DefaultWorkerBindings,
   EnvironmentBindingKinds,
-  EnvironmentBindingLike,
   KeyworkSession,
   RequestWithCFProperties,
   WorkerEnvFetchBinding,
@@ -20,4 +19,4 @@ export * from './ssr/HydrationProvider'
 export * from './ssr/props.mjs'
 export * from './ssr/RouteWithSSR'
 export * from './ssr/SSRProvider'
-export * from './StaticPropsResponse'
+export * from './StaticPropsResponse.js'

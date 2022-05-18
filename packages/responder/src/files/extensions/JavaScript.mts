@@ -14,6 +14,11 @@ export const JSON = {
 } as const
 
 export const JSONLinkedData = {
-  extension: 'json',
+  extension: 'jsonld',
   mimeType: 'application/json+ld; charset=utf-8',
 } as const
+
+export const JSONWebManifest = {
+  extension: 'webmanifest',
+  mimeType: 'application/manifest+json',
+}
