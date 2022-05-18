@@ -1,0 +1,31 @@
+import { DeserializationTypes } from './common.js'
+import { KeyworkCollection } from './KeyworkCollection.js'
+import { KeyworkDocumentReference } from './KeyworkDocumentReference.js'
+/**
+ * Creates a database instance backed by a Cloudflare KV namespace.
+ */
+export class KeyworkDatabase {
+  constructor(
+    /** The KV namespace binding provided by the parent Worker. */
+    protected kvNamespace: KVNamespace
+  ) {}
+
+  /**
+   * Gets a `KeyworkDocumentReference` instance that refers to the document at the specified absolute path.
+   */
+  public doc<
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    ExpectedType extends DeserializationTypes | {} = never
+  >(docPath: string) {
+    return new KeyworkDocumentReference<ExpectedType>(this.kvNamespace, docPath)
+  }
+
+  /**
+   * Gets a `KeyworkCollection` instance that refers to a collection of documents.
+   */
+  public async collection(collectionPath: string) {
+    const collection = new KeyworkCollection(this.kvNamespace, collectionPath)
+
+    return collection.initialize()
+  }
+}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { SSRPropsByPath } from './props.mjs'
+import { SSRPropsByPath } from './props.js'
 
 export interface SSRProviderProps {
   ssrPropsByPath: SSRPropsByPath

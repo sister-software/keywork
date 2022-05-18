@@ -1,6 +1,6 @@
 import React from 'react'
 import { useMatch } from 'react-router'
-import { useHydrationContext } from './HydrationProvider'
+import { useHydrationContext } from './HydrationProvider.js'
 
 export interface RouteWithSSRProps {
   // component: React.ElementType<any>

@@ -12,7 +12,7 @@ Extractor._checkCompilerCompatibility = () => {}
 /** @type {import('@microsoft/api-extractor').IConfigFile} */
 const extractorCfgObject = {
   projectFolder: '<lookup>',
-  mainEntryPointFilePath: '<projectFolder>/packages/<unscopedPackageName>/dist/_types/src/index.d.mts',
+  mainEntryPointFilePath: '<projectFolder>/packages/<unscopedPackageName>/dist/_types/src/index.d.ts',
   compiler: { tsconfigFilePath: path.join(projectRoot, 'tsconfig.json') },
   apiReport: {
     enabled: false,

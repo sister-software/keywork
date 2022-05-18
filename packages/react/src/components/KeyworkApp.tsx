@@ -1,5 +1,5 @@
 import React from 'react'
-import { SSRRouteRecords, useSSRRoutes } from '../ssr/props.mjs'
+import { SSRRouteRecords, useSSRRoutes } from '../ssr/props.js'
 
 export interface KeyworkAppProps {
   children: React.ReactNode

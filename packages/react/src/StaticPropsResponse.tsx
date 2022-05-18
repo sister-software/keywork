@@ -1,14 +1,22 @@
 import { ErrorResponse, getBrowserIdentifier, HTMLResponse } from '@keywork/responder'
 import { KeyworkResourceAccessError } from '@keywork/shared'
 import React from 'react'
-import { ReactDOMServerReadableStream, renderToReadableStream, RenderToReadableStreamOptions } from 'react-dom/server'
+import type {
+  ReactDOMServerReadableStream,
+  renderToReadableStream as RenderToReadableStream,
+  RenderToReadableStreamOptions,
+} from 'react-dom/server'
+// @ts-expect-error Export not yet public
+// eslint-disable-next-line import/extensions
+import { renderToReadableStream as _renderToReadableStream } from 'react-dom/server.browser'
 import { StaticRouter } from 'react-router-dom/server'
 import { KeyworkReactSSRRoutes, ProviderWrapper } from './components/KeyworkApp.js'
 import { KeyworkHTMLDocument } from './components/KeyworkHTMLDocument.js'
-import { HydrationProvider } from './ssr/HydrationProvider'
-import { SSRPropsByPath, SSRPropsLike, SSRRouteRecords } from './ssr/props.mjs'
+import { HydrationProvider } from './ssr/HydrationProvider.js'
+import { SSRPropsByPath, SSRPropsLike, SSRRouteRecords } from './ssr/props.js'
 import { SSRProvider } from './ssr/SSRProvider.js'
 
+const renderToReadableStream: typeof RenderToReadableStream = _renderToReadableStream
 interface ReactRenderStreamSuccessResult {
   stream: ReactDOMServerReadableStream
   error: null
@@ -66,16 +74,15 @@ export async function createStaticPropsResponse<P extends SSRPropsLike>(
       browserIdentifier={browserIdentifier}
       location={location}
       // isSocialPreview={location.searchParams.has(KeyworkQueryParamKeys.SharePreview)}
-      appContent={
-        <StaticRouter location={location}>
-          <HydrationProvider initialLocation={location} origin={location.origin} ssrPropsByPath={ssrPropsByPath}>
-            <KeyworkReactSSRRoutes routeRecords={routeRecords} ProviderWrapper={ProviderWrapper} />
-          </HydrationProvider>
+    >
+      <StaticRouter location={location}>
+        <HydrationProvider initialLocation={location} origin={location.origin} ssrPropsByPath={ssrPropsByPath}>
+          <KeyworkReactSSRRoutes routeRecords={routeRecords} ProviderWrapper={ProviderWrapper} />
+        </HydrationProvider>
 
-          <SSRProvider ssrPropsByPath={ssrPropsByPath} />
-        </StaticRouter>
-      }
-    />
+        <SSRProvider ssrPropsByPath={ssrPropsByPath} />
+      </StaticRouter>
+    </KeyworkHTMLDocument>
   )
 
   let result: ReactRenderStreamResult

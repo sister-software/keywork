@@ -1,31 +1,28 @@
 import { KeyworkQueryParamKeys } from '@keywork/shared'
 import classNames from 'classnames'
 import React from 'react'
-import { renderToString } from 'react-dom/server'
 import { Helmet } from './helmet/Helmet'
 
 export interface KeyworkHTMLDocumentProps {
-  appContent: React.ReactElement
   location: URL
   moduleManifest?: string[]
   browserIdentifier?: string
   className?: string
   buildId?: string
+  children: React.ReactNode
 }
 
 /**
  * A server-side render of a given HTML document.
  *
- * @remark See
  */
 export const KeyworkHTMLDocument: React.FC<KeyworkHTMLDocumentProps> = ({
-  appContent,
+  children,
   location,
   browserIdentifier,
   className,
   buildId,
 }) => {
-  const staticAppContent = renderToString(appContent)
   const helmetData = Helmet.renderStatic()
 
   /** Added to trigger cache busting. */
@@ -61,12 +58,7 @@ export const KeyworkHTMLDocument: React.FC<KeyworkHTMLDocumentProps> = ({
         {helmetData.script.toComponent()}
       </head>
       <body>
-        <div
-          id="app-root"
-          dangerouslySetInnerHTML={{
-            __html: staticAppContent,
-          }}
-        />
+        <div id="app-root">{children}</div>
         <div id="style-root" />
         <script type="module" src={`/index.js?${$assetSearchParams}`}></script>
       </body>

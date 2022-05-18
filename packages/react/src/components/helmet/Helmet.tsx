@@ -1,14 +1,14 @@
 import React from 'react'
 import isEqual from 'react-fast-compare'
 import withSideEffect from 'react-side-effect'
-import { TAG_NAMES, VALID_TAG_NAMES } from './HelmetConstants.mjs'
+import { TAG_NAMES, VALID_TAG_NAMES } from './HelmetConstants.js'
 import {
   convertReactPropstoHtmlAttributes,
   handleClientStateChange,
   mapStateOnServer,
   reducePropsToState,
-} from './HelmetUtils.mjs'
-import { HelmetData, HelmetProps } from './types.mjs'
+} from './HelmetUtils.js'
+import { HelmetData, HelmetProps } from './types.js'
 
 const isReactNode = (reactNode: React.ReactNode): reactNode is React.ReactElement => {
   return !!(reactNode && (reactNode as any).props)

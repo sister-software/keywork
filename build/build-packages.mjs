@@ -51,26 +51,15 @@ async function buildPackage(packageName) {
   const sourcePath = path.join(packageRoot, 'src')
 
   const entryPoints = await FastGlob(path.join(sourcePath, '**/*.{ts,mts,tsx,cts}'))
-
   const outPath = path.join(packageRoot, distDirName)
-
-  /** @type {esbuild.BuildOptions} */
-  const pkgBuildOptions = {
-    ...buildOptionsBase,
-    // entryPoints: [indexPath],
-    // outdir: outPath,
-    outbase: sourcePath,
-  }
 
   console.log('Building', packageRoot)
   await esbuild.build({
-    ...pkgBuildOptions,
+    ...buildOptionsBase,
+    outbase: sourcePath,
     format: 'esm',
     entryPoints,
     external: undefined,
-    outExtension: {
-      '.js': '.mjs',
-    },
     outdir: path.join(outPath),
   })
 }

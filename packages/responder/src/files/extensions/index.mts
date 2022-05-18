@@ -1,5 +1,0 @@
-export * from './Forms.mjs'
-export * from './Images.mjs'
-export * from './JavaScript.mjs'
-export * from './PlainText.mjs'
-export * from './XML.mjs'

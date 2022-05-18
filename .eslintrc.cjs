@@ -6,12 +6,21 @@ module.exports = {
   ignorePatterns: ['./**/dist/**/*'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint'],
-
+  settings: {
+    react: {
+      version: 'detect',
+    },
+    'import/parsers': {
+      '@typescript-eslint/parser': ['.ts', '.mts', '.tsx'],
+    },
+  },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
   ],
   env: {
     browser: true,
@@ -19,6 +28,8 @@ module.exports = {
     worker: true,
   },
   rules: {
+    'import/no-unresolved': 'off',
+    'import/extensions': 1,
     'react/prop-types': 'off',
     'no-undef': 'off',
     'no-extra-semi': 'off',

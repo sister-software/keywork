@@ -6,7 +6,7 @@
       "esnext"
     ],
     "paths": {
-      "@keywork/*": ["packages/*/src/index.mts"]
+      "@keywork/*": ["packages/*/src/index.ts"]
     },
     "types": [],
     "jsx": "react",
@@ -15,7 +15,6 @@
     "esModuleInterop": true,
     "isolatedModules": true,
     "experimentalDecorators": true,
-    "resolveJsonModule": true,
     "baseUrl": ".",
     "sourceMap": true,
     "declaration": true,

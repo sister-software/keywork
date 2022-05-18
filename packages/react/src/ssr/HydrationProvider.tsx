@@ -1,8 +1,8 @@
 import { KeyworkQueryParamKeys } from '@keywork/shared'
-import React, { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'react-router'
-import { createNamedContextHook } from '../hooks/createNamedContextHook.mjs'
-import { SSRPropsByPath } from './props.mjs'
+import { createContextAndNamedHook } from '../hooks/createNamedContextHook.js'
+import { SSRPropsByPath } from './props.js'
 
 export interface HydrationProviderProps {
   ssrPropsByPath: SSRPropsByPath
@@ -14,6 +14,8 @@ export interface HydrationProviderProps {
 export interface HydrationProvider {
   propsByPath: SSRPropsByPath<null>
 }
+
+export const [HydrationContext, useHydrationContext] = createContextAndNamedHook<HydrationProvider>()
 
 export const HydrationProvider: React.FC<HydrationProviderProps> = ({
   origin,
@@ -64,6 +66,3 @@ export const HydrationProvider: React.FC<HydrationProviderProps> = ({
 
   return <HydrationContext.Provider value={value}>{children}</HydrationContext.Provider>
 }
-
-export const HydrationContext = createContext<HydrationProvider | undefined>(undefined)
-export const useHydrationContext = createNamedContextHook(HydrationContext)

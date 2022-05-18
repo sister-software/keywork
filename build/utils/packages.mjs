@@ -58,14 +58,14 @@ export const rewritePlugin = () => {
   const plugin = {
     name: 'rewrite-mjs-ext',
     setup(build) {
-      build.onResolve({ filter: /.mjs$/ }, (args) => {
-        if (pkgDeps.has(args.path)) return { external: true }
+      build.onLoad({ filter: /react/ }, (args) => {
+        console.log(args)
+        // if (pkgDeps.has(args.path)) return { external: true }
 
-        if (args.importer) {
-          const path = changeExtension(args.path, '.cjs')
-          console.log(path, args.path)
-          return { path, external: true }
-        }
+        // if (args.importer) {
+        //   const path = changeExtension(args.path, '.cjs')
+        //   return { path, external: true }
+        // }
       })
     },
   }
