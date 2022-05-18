@@ -1,3 +1,5 @@
+import * as path from 'path'
+
 /**
  *
  * @param {string} filePath

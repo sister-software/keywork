@@ -32,7 +32,7 @@ export async function walk(rootPath) {
  * Gets a list of dependency names from the passed package
  * @param {T_npm_packageJSON} pkg
  * @param {boolean} [includeDev]
- * @returns {Set<string>}
+ * @returns {Set<string>} packageDependencies
  */
 export function getPackageDependencies(pkg, includeDev) {
   return new Set([
