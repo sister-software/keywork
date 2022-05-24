@@ -1,5 +1,5 @@
 import { convertJSONToETaggableString, generateETag } from '@keywork/responder'
-import { KeyworkResourceAccessError, resolveDocPath } from '@keywork/shared'
+import { KeyworkResourceAccessError, resolveDocPath } from '@keywork/utils'
 import deepmerge from 'deepmerge'
 import type { DeserializationTransformers, DeserializationTypes, PutOrPatchOptions } from './common.js'
 import type { KeyworkCollection } from './KeyworkCollection.js'

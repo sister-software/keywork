@@ -1,7 +1,7 @@
 {
-  "name": "@keywork/shared",
+  "name": "@keywork/utils",
   "license": "AGPL-3.0",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Common core utilities for building Keywork",
   "keywords": [
     "cloudflare",
@@ -19,7 +19,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/TeffenEllis/keywork.git",
-    "directory": "packages/shared"
+    "directory": "packages/utils"
   },
   "bugs": {
     "url": "https://github.com/TeffenEllis/keywork/issues"

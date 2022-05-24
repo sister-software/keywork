@@ -1,13 +1,13 @@
 import { StatusCodes } from 'http-status-codes'
-import { WorkerRouteHandler } from './common.js'
+import { IncomingRequestHandler } from './common.js'
 
-export type CreateRedirectHandler = (destinationURL: string | URL, statusCode?: number) => WorkerRouteHandler
+export type CreateRedirectHandler = (destinationURL: string | URL, statusCode?: number) => IncomingRequestHandler
 
 export const createRedirectHandler: CreateRedirectHandler = (
   destinationURL,
   statusCode = StatusCodes.MOVED_TEMPORARILY
 ) => {
-  const handleRedirect: WorkerRouteHandler = ({ request }) => {
+  const handleRedirect: IncomingRequestHandler = ({ request }) => {
     console.debug(`Redirect from ${request.url} to ${destinationURL.toString()}`)
 
     return Response.redirect(destinationURL.toString(), statusCode)

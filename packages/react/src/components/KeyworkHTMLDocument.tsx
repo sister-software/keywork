@@ -1,7 +1,8 @@
-import { KeyworkQueryParamKeys } from '@keywork/shared'
+import { KeyworkQueryParamKeys } from '@keywork/utils'
 import classNames from 'classnames'
 import React from 'react'
-import { Helmet } from './helmet/Helmet'
+import { useKeyworkHead } from '../ssr/KeyworkHeadProvider.js'
+// import { HelmetData } from './helmet/index.js'
 
 export interface KeyworkHTMLDocumentProps {
   location: URL
@@ -12,24 +13,25 @@ export interface KeyworkHTMLDocumentProps {
   children: React.ReactNode
 }
 
+export type KeyworkHTMLDocumentComponent = React.FC<KeyworkHTMLDocumentProps>
+
 /**
  * A server-side render of a given HTML document.
  *
  */
-export const KeyworkHTMLDocument: React.FC<KeyworkHTMLDocumentProps> = ({
+export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
   children,
   location,
   browserIdentifier,
   className,
   buildId,
 }) => {
-  const helmetData = Helmet.renderStatic()
-
   /** Added to trigger cache busting. */
   const assetSearchParams = new URLSearchParams({
     [KeyworkQueryParamKeys.BuildID]: buildId || 'development',
   })
 
+  const helmetData = useKeyworkHead()
   const $assetSearchParams = assetSearchParams.toString()
 
   return (
@@ -60,6 +62,7 @@ export const KeyworkHTMLDocument: React.FC<KeyworkHTMLDocumentProps> = ({
       <body>
         <div id="app-root">{children}</div>
         <div id="style-root" />
+
         <script type="module" src={`/index.js?${$assetSearchParams}`}></script>
       </body>
     </html>

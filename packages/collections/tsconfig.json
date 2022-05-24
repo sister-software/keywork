@@ -9,7 +9,7 @@
   },
 
   "references": [
-    { "path": "../shared" },
+    { "path": "../utils" },
     { "path": "../responder" }
   ]
 }

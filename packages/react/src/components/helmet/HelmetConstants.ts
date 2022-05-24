@@ -1,10 +1,12 @@
+import { HelmetValidTagNames } from './types'
+
 export const ATTRIBUTE_NAMES = {
   BODY: 'bodyAttributes',
   HTML: 'htmlAttributes',
   TITLE: 'titleAttributes',
 }
 
-export const TAG_NAMES = {
+export const TAG_NAMES: Record<string, HelmetValidTagNames> = {
   BASE: 'base',
   BODY: 'body',
   HEAD: 'head',

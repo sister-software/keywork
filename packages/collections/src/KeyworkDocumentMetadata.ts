@@ -19,7 +19,7 @@ export interface CreateKeyworkDocumentMetadataOptions {
   /**
    * An optional ETag of the value associated with this document.
    *
-   * @see `generateETag` via `@keywork/shared`
+   * @see `generateETag` via `@keywork/utils`
    */
   etag?: string | null
 }
@@ -43,7 +43,7 @@ export interface KeyworkDocumentMetadata extends PutOrPatchOptions {
   /**
    * An optional ETag of the value associated with this document.
    *
-   * @see `generateETag` via `@keywork/shared`
+   * @see `generateETag` via `@keywork/utils`
    */
   etag: string | null
 }

@@ -1,4 +1,4 @@
-import { KeyworkResourceAccessError } from '@keywork/shared'
+import { KeyworkResourceAccessError } from '@keywork/utils'
 import { getReasonPhrase, StatusCodes } from 'http-status-codes'
 
 /**

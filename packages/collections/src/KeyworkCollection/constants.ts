@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
-import { resolveDocPath } from '@keywork/shared'
+import { resolveDocPath } from '@keywork/utils'
 
 /** Key to a collection's documents. */
 export const COLLECTION_KEY = '__COLLECTION'

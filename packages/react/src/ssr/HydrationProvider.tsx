@@ -1,4 +1,4 @@
-import { KeyworkQueryParamKeys } from '@keywork/shared'
+import { KeyworkQueryParamKeys } from '@keywork/utils'
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useLocation } from 'react-router'
 import { createContextAndNamedHook } from '../hooks/createNamedContextHook.js'
@@ -15,7 +15,8 @@ export interface HydrationProvider {
   propsByPath: SSRPropsByPath<null>
 }
 
-export const [HydrationContext, useHydrationContext] = createContextAndNamedHook<HydrationProvider>()
+const [HydrationContext, useHydrationContext] = createContextAndNamedHook<HydrationProvider>()
+export { useHydrationContext }
 
 export const HydrationProvider: React.FC<HydrationProviderProps> = ({
   origin,

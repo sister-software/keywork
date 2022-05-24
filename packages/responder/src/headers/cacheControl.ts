@@ -1,4 +1,4 @@
-import { DURATION_ONE_WEEK } from '@keywork/shared'
+import { DURATION_ONE_WEEK } from '@keywork/utils'
 
 export type CacheControlHeader = HeadersInit & {
   'Cache-Control': string

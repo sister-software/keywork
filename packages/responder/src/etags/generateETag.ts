@@ -1,4 +1,4 @@
-import { KeyworkResourceAccessError, stringToArrayBuffer } from '@keywork/shared'
+import { KeyworkResourceAccessError, stringToArrayBuffer } from '@keywork/utils'
 import { StatusCodes } from 'http-status-codes'
 import { EMPTY_ETAG, ETaggable } from './common.js'
 

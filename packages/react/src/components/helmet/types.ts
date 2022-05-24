@@ -10,6 +10,18 @@ export type LinkProps = JSX.IntrinsicElements['link']
 
 export type MetaProps = JSX.IntrinsicElements['meta']
 
+export type HelmetValidTagNames =
+  | 'base'
+  | 'body'
+  | 'head'
+  | 'html'
+  | 'link'
+  | 'meta'
+  | 'noscript'
+  | 'script'
+  | 'style'
+  | 'title'
+
 export interface HelmetTags {
   baseTag: any[]
   linkTags: HTMLLinkElement[]
@@ -19,10 +31,25 @@ export interface HelmetTags {
   styleTags: HTMLStyleElement[]
 }
 
+export interface HelmetTagToElement {
+  base: HTMLBaseElement
+  body: HTMLBodyElement
+  head: HTMLHeadElement
+  html: HTMLHtmlElement
+  link: HTMLLinkElement
+  meta: HTMLMetaElement
+  noscript: any
+  script: HTMLScriptElement
+  style: HTMLStyleElement
+  title: HTMLTitleElement
+}
+
+export type HelmetTagAttributes<T extends keyof HelmetTagToElement> = Array<HelmetTagToElement[T]>
+
 export interface HelmetProps {
   async?: boolean | undefined
   base?: any
-  bodyAttributes?: BodyProps | undefined
+  bodyAttributes?: BodyProps
   children?: React.ReactNode
   defaultTitle?: string | undefined
   defer?: boolean | undefined
@@ -37,7 +64,7 @@ export interface HelmetProps {
   script?: any[] | undefined
   style?: any[] | undefined
   title?: string | undefined
-  titleAttributes?: object | undefined
+  titleAttributes?: OtherElementAttributes | undefined
   titleTemplate?: string | undefined
 }
 

@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react'
 
 /**
  * A convenience wrapper around `React.createContext` that creates a context and hook for the child components within a Provider's context.
- *
+ * @TODO This should just accept the component and return the useful pieces.
  * @example This is especially useful when creating a Provider.
  *
  * ```tsx
@@ -30,7 +30,7 @@ export function createContextAndNamedHook<T>(
   displayName?: string
 ): readonly [React.Context<T | undefined>, () => NonNullable<T>] {
   const Context = createContext<T | undefined>(defaultValue)
-  const _displayName = displayName || Context.displayName || Context.Provider.name
+  const _displayName = displayName || Context.displayName || Context.Provider.name || 'Unknown'
 
   const useNamedContextHook = () => {
     const val = useContext(Context)

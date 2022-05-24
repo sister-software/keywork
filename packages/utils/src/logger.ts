@@ -1,7 +1,9 @@
 import { KeyworkResourceAccessError } from './errors.js'
 import { prettyJSON } from './json.js'
 
-/** @private */
+/**
+ * @internal
+ */
 interface ConsoleLike {
   debug(message?: any, ...optionalParams: any[]): void
   error(message?: any, ...optionalParams: any[]): void

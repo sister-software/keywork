@@ -1,4 +1,4 @@
-import { SnowflakeID } from '@keywork/shared'
+import { SnowflakeID } from '@keywork/utils'
 import { parse as parseCookies, serialize as serializeCookies } from 'cookie'
 
 export const DEFAULT_SESSION_COOKIE_KEY = '_keyworkSessionID'

@@ -1,3 +1,3 @@
 export * from './common.js'
-export * from './createAPIWorkerHandler.js'
+export * from './KeyworkRequestHandler.js'
 export * from './redirects.js'

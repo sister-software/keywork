@@ -10,7 +10,15 @@ import {
   TAG_NAMES,
   TAG_PROPERTIES,
 } from './HelmetConstants.js'
-import { HelmetData, HelmetDatum, HelmetPropsToState, HelmetTags, OtherElementAttributes } from './types.js'
+import {
+  HelmetData,
+  HelmetDatum,
+  HelmetPropsToState,
+  HelmetTagAttributes,
+  HelmetTags,
+  HelmetValidTagNames,
+  OtherElementAttributes,
+} from './types.js'
 
 declare global {
   type DOMHighResTimeStamp = number
@@ -366,7 +374,7 @@ const updateAttributes = (tagName: string, attributes: OtherElementAttributes = 
   }
 }
 
-const updateTags = (type: string, tags: any[]) => {
+const updateTags = <T extends HelmetValidTagNames>(type: T, tags: HelmetTagAttributes<T>) => {
   const headElement = document.head || document.querySelector(TAG_NAMES.HEAD)
   const tagNodes = headElement.querySelectorAll(`${type}[${HELMET_ATTRIBUTE}]`)
   const oldTags = Array.prototype.slice.call(tagNodes)
@@ -426,23 +434,19 @@ const generateElementAttributesAsString = (attributes: OtherElementAttributes) =
     return str ? `${str} ${attr}` : attr
   }, '')
 
-const generateTitleAsString = (
-  type: string,
-  title: string,
-  attributes: OtherElementAttributes,
-  encode?: boolean | undefined
-) => {
+const generateTitleAsString = (title: string, attributes: OtherElementAttributes, encode?: boolean | undefined) => {
   const attributeString = generateElementAttributesAsString(attributes)
   const flattenedTitle = flattenArray(title)
   return attributeString
-    ? `<${type} ${HELMET_ATTRIBUTE}="true" ${attributeString}>${encodeSpecialCharacters(
-        flattenedTitle,
-        encode
-      )}</${type}>`
-    : `<${type} ${HELMET_ATTRIBUTE}="true">${encodeSpecialCharacters(flattenedTitle, encode)}</${type}>`
+    ? `<title ${HELMET_ATTRIBUTE}="true" ${attributeString}>${encodeSpecialCharacters(flattenedTitle, encode)}</title>`
+    : `<title ${HELMET_ATTRIBUTE}="true">${encodeSpecialCharacters(flattenedTitle, encode)}</title>`
 }
 
-const generateTagsAsString = (type: string, tags: any[], encode?: boolean | undefined) =>
+const generateTagsAsString = <T extends HelmetValidTagNames>(
+  type: T,
+  tags: HelmetTagAttributes<T>,
+  encode?: boolean | undefined
+) =>
   tags.reduce((str, tag) => {
     const attributeHtml = Object.keys(tag)
       .filter((attribute) => !(attribute === TAG_PROPERTIES.INNER_HTML || attribute === TAG_PROPERTIES.CSS_TEXT))
@@ -463,7 +467,10 @@ const generateTagsAsString = (type: string, tags: any[], encode?: boolean | unde
     }`
   }, '')
 
-const convertElementAttributestoReactProps = (attributes: OtherElementAttributes, initProps = {}) => {
+const convertElementAttributestoReactProps = (
+  attributes: OtherElementAttributes | any,
+  initProps: OtherElementAttributes = {}
+) => {
   return Object.keys(attributes).reduce((obj, key) => {
     ;(obj as any)[(REACT_TAG_MAP as any)[key] || key] = attributes[key]
     return obj
@@ -477,11 +484,7 @@ export const convertReactPropstoHtmlAttributes = (props: any, initAttributes = {
   }, initAttributes)
 }
 
-const generateTitleAsReactComponent = (
-  type: string,
-  title: string,
-  attributes: OtherElementAttributes
-): React.ReactElement[] => {
+const generateTitleAsReactComponent = (title: string, attributes: OtherElementAttributes): React.ReactElement[] => {
   // assigning into an array to define toString function on it
   const initProps = {
     key: title,
@@ -513,24 +516,34 @@ const generateTagsAsReactComponent = (type: string, tags: any[]) =>
     return React.createElement(type, mappedTag)
   })
 
-const getMethodsForTag = (type: string, tags: any, encode?: boolean | undefined): HelmetDatum => {
-  switch (type) {
-    case TAG_NAMES.TITLE:
-      return {
-        toComponent: () => generateTitleAsReactComponent(type, (tags as any).title, tags.titleAttributes),
-        toString: () => generateTitleAsString(type, tags.title, tags.titleAttributes, encode),
-      }
-    case ATTRIBUTE_NAMES.BODY:
-    case ATTRIBUTE_NAMES.HTML:
-      return {
-        toComponent: () => convertElementAttributestoReactProps(tags) as any,
-        toString: () => generateElementAttributesAsString(tags),
-      }
-    default:
-      return {
-        toComponent: () => generateTagsAsReactComponent(type, tags),
-        toString: () => generateTagsAsString(type, tags, encode),
-      }
+const getMethodsForRootTags = (attributes: OtherElementAttributes = {}): HelmetDatum => {
+  return {
+    toComponent: () => convertElementAttributestoReactProps(attributes) as any,
+    toString: () => generateElementAttributesAsString(attributes),
+  }
+}
+
+const getMethodsForTitle = (
+  title: string,
+  titleAttributes: OtherElementAttributes = {},
+  encode?: boolean | undefined
+): HelmetDatum => {
+  return {
+    toComponent: () => generateTitleAsReactComponent(title, titleAttributes),
+    toString: () => generateTitleAsString(title, titleAttributes, encode),
+  }
+}
+
+const getMethodsForTag = <T extends HelmetValidTagNames>(
+  type: T,
+  _tags?: HelmetTagAttributes<T> | undefined,
+  encode?: boolean | undefined
+): HelmetDatum => {
+  const tags = _tags || []
+
+  return {
+    toComponent: () => generateTagsAsReactComponent(type, tags!),
+    toString: () => generateTagsAsString(type, tags!, encode),
   }
 }
 
@@ -546,16 +559,16 @@ export const mapStateOnServer = ({
   styleTags,
   title = '',
   titleAttributes,
-}: HelmetPropsToState) => {
+}: NonNullable<HelmetPropsToState>) => {
   return {
     base: getMethodsForTag(TAG_NAMES.BASE, baseTag, encode),
-    bodyAttributes: getMethodsForTag(ATTRIBUTE_NAMES.BODY, bodyAttributes, encode),
-    htmlAttributes: getMethodsForTag(ATTRIBUTE_NAMES.HTML, htmlAttributes, encode),
+    bodyAttributes: getMethodsForRootTags(bodyAttributes),
+    htmlAttributes: getMethodsForRootTags(htmlAttributes),
     link: getMethodsForTag(TAG_NAMES.LINK, linkTags, encode),
     meta: getMethodsForTag(TAG_NAMES.META, metaTags, encode),
     noscript: getMethodsForTag(TAG_NAMES.NOSCRIPT, noscriptTags, encode),
     script: getMethodsForTag(TAG_NAMES.SCRIPT, scriptTags, encode),
     style: getMethodsForTag(TAG_NAMES.STYLE, styleTags, encode),
-    title: getMethodsForTag(TAG_NAMES.TITLE, { title, titleAttributes }, encode),
+    title: getMethodsForTitle(title, titleAttributes, encode),
   } as unknown as HelmetData
 }

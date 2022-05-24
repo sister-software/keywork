@@ -1,4 +1,4 @@
-import { KeyworkResourceAccessError, PathBuilder, resolveDocPath } from '@keywork/shared'
+import { KeyworkResourceAccessError, PathBuilder, resolveDocPath } from '@keywork/utils'
 import type { DeserializationTypes } from './common.js'
 import type { CollectionDocumentReferencesResponse, FetchListOptions } from './KeyworkCollection/common.js'
 import {
