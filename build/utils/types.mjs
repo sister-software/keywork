@@ -38,6 +38,14 @@ const extractorCfgObject = {
   messages: {
     compilerMessageReporting: {
       default: { logLevel: 'warning' },
+      TS2687: { logLevel: 'none' },
+      TS2430: { logLevel: 'none' },
+      TS2717: { logLevel: 'none' },
+      TS2315: { logLevel: 'none' },
+      TS6200: { logLevel: 'none' },
+      TS2508: { logLevel: 'none' },
+      TS2344: { logLevel: 'none' },
+      TS1259: { logLevel: 'none' },
     },
     extractorMessageReporting: {
       default: { logLevel: 'warning' },
