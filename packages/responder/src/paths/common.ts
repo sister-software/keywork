@@ -41,19 +41,28 @@ export interface PathMatch<ExpectedParams extends {} | null = null> {
   pattern: PathPattern
 }
 
-export type Mutable<T> = {
+/**
+ * @internal
+ */
+export type _Mutable<T> = {
   -readonly [P in keyof T]: T[P]
 }
 
+/**
+ * @internal
+ */
 type ParamParseFailed = { failed: true }
 
-type ParamParseSegment<Segment extends string> =
+/**
+ * @internal
+ */
+type _ParamParseSegment<Segment extends string> =
   // Check here if there exists a forward slash in the string.
   Segment extends `${infer LeftSegment}/${infer RightSegment}`
     ? // If there is a forward slash, then attempt to parse each side of the
       // forward slash.
-      ParamParseSegment<LeftSegment> extends infer LeftResult
-      ? ParamParseSegment<RightSegment> extends infer RightResult
+      _ParamParseSegment<LeftSegment> extends infer LeftResult
+      ? _ParamParseSegment<RightSegment> extends infer RightResult
         ? LeftResult extends string
           ? // If the left side is successfully parsed as a param, then check if
             // the right side can be successfully parsed as well. If both sides
@@ -71,7 +80,7 @@ type ParamParseSegment<Segment extends string> =
         : ParamParseFailed
       : // If the left side didn't parse into a param, then just check the right
       // side.
-      ParamParseSegment<RightSegment> extends infer RightResult
+      _ParamParseSegment<RightSegment> extends infer RightResult
       ? RightResult extends string
         ? RightResult
         : ParamParseFailed
@@ -85,8 +94,8 @@ type ParamParseSegment<Segment extends string> =
 // Attempt to parse the given string segment. If it fails, then just return the
 // plain string type as a default fallback. Otherwise return the union of the
 // parsed string literals that were referenced as dynamic segments in the route.
-export type ParamParseKey<Segment extends string> = ParamParseSegment<Segment> extends string
-  ? ParamParseSegment<Segment>
+export type ParamParseKey<Segment extends string> = _ParamParseSegment<Segment> extends string
+  ? _ParamParseSegment<Segment>
   : string
 /**
  * The parameters that were parsed from the URL path.

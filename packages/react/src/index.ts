@@ -11,7 +11,6 @@ export type {
   WorkersPagesAssetsBinding,
   WorkersSiteStaticContentBinding,
 } from '@keywork/responder'
-export * from './components/KeyworkHTMLDocument.js'
-export * from './components/KeyworkSSRRoutes.js'
+export * from './components/index.js'
 export * from './hooks/createNamedContextHook.js'
 export * from './ssr/index.js'

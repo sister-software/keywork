@@ -10,14 +10,17 @@ import {
 } from '@keywork/responder'
 import { KeyworkQueryParamKeys } from '@keywork/utils'
 import React from 'react'
-import { StaticRouter } from 'react-router-dom/server'
-// import { Helmet } from '../components/Helmet/Helmet.js'
-import { KeyworkHTMLDocument, KeyworkHTMLDocumentComponent } from '../components/KeyworkHTMLDocument.js'
-import { KeyworkProvidersComponent } from '../components/KeyworkSSRRoutes.js'
-import { HydrationProvider } from './HydrationProvider.js'
-import { GetStaticPropsHandler, SSRPropsByPath, SSRPropsLike } from './props.js'
+import {
+  KeyworkHTMLDocument,
+  KeyworkHTMLDocumentComponent,
+  KeyworkProviders,
+  KeyworkProvidersComponent,
+  KeyworkRouter,
+  StaticPropsProvider,
+} from '../components/index.js'
+import { GetStaticPropsHandler, SSRPropsLike } from './props.js'
 import { ReactRenderStreamResult, renderReactStream } from './renderReactStream.js'
-import { SSRProvider } from './SSRProvider.js'
+import { SSRPropsEmbed } from './SSRPropsEmbed.js'
 
 async function renderStaticPropsAsJSON(request: Request, staticProps: NonNullable<SSRPropsLike>): Promise<Response> {
   const etag = await generateETag(convertJSONToETaggableString(staticProps))
@@ -30,36 +33,27 @@ async function renderStaticPropsAsComponentStream<StaticProps extends NonNullabl
   staticProps: StaticProps,
   /** The React component to render for this specific page. */
   PageComponent: React.FC<StaticProps>,
-  DocumentComponent?: KeyworkHTMLDocumentComponent<StaticProps>,
+  DocumentComponent?: KeyworkHTMLDocumentComponent,
   Providers?: KeyworkProvidersComponent
 ): Promise<Response> {
   const location = new URL(request.url)
 
-  const ssrPropsByPath: SSRPropsByPath<any> = new Map([[location.pathname, staticProps]])
   const browserIdentifier = getBrowserIdentifier(request)
-  DocumentComponent = DocumentComponent || (KeyworkHTMLDocument as KeyworkHTMLDocumentComponent<StaticProps>)
+  DocumentComponent = DocumentComponent || KeyworkHTMLDocument
+  Providers = Providers || KeyworkProviders
 
   const appDocument = (
-    <DocumentComponent
-      staticProps={staticProps}
-      browserIdentifier={browserIdentifier}
-      location={location}
-      // isSocialPreview={location.searchParams.has(KeyworkQueryParamKeys.SharePreview)}
-    >
-      <StaticRouter location={location}>
-        <HydrationProvider initialLocation={location} origin={location.origin} ssrPropsByPath={ssrPropsByPath}>
-          {Providers ? (
-            <Providers initialLocation={location}>
-              <PageComponent {...staticProps} />
-            </Providers>
-          ) : (
+    <StaticPropsProvider staticProps={staticProps}>
+      <KeyworkRouter initialLocation={location}>
+        <Providers>
+          <DocumentComponent browserIdentifier={browserIdentifier} location={location}>
             <PageComponent {...staticProps} />
-          )}
-        </HydrationProvider>
 
-        <SSRProvider ssrPropsByPath={ssrPropsByPath} />
-      </StaticRouter>
-    </DocumentComponent>
+            <SSRPropsEmbed staticProps={staticProps} />
+          </DocumentComponent>
+        </Providers>
+      </KeyworkRouter>
+    </StaticPropsProvider>
   )
 
   let result: ReactRenderStreamResult
@@ -102,7 +96,7 @@ export abstract class KeyworkStaticPropsRequestHandler<
    * A HTML Document React component which wraps the entire application.
    * Use this if you need to replace the default HTML Document.
    */
-  abstract DocumentComponent?: KeyworkHTMLDocumentComponent<StaticProps>
+  abstract DocumentComponent?: KeyworkHTMLDocumentComponent
 
   abstract getStaticProps: GetStaticPropsHandler<StaticProps, BoundAliases>
 
@@ -129,7 +123,7 @@ export abstract class KeyworkStaticPropsRequestHandler<
       staticProps,
       this.PageComponent as any,
       this.DocumentComponent as any,
-      this.Providers
+      this.Providers as any
     )
   }
 }

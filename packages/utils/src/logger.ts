@@ -4,7 +4,7 @@ import { prettyJSON } from './json.js'
 /**
  * @internal
  */
-interface ConsoleLike {
+interface _ConsoleLike {
   debug(message?: any, ...optionalParams: any[]): void
   error(message?: any, ...optionalParams: any[]): void
   info(message?: any, ...optionalParams: any[]): void
@@ -15,7 +15,7 @@ interface ConsoleLike {
 export const timestamp = (date = new Date()) => `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`
 timestamp.toString = () => timestamp()
 
-const logTypes = new Map<keyof ConsoleLike, string>([
+const logTypes = new Map<keyof _ConsoleLike, string>([
   ['log', '💬'],
   ['info', '💡'],
   ['warn', '⚠️'],
@@ -24,21 +24,21 @@ const logTypes = new Map<keyof ConsoleLike, string>([
 
 export class PrefixedLogger {
   protected logPrefix: string
-  public _log: ConsoleLike['log']
-  protected _error: ConsoleLike['error']
+  public _log: _ConsoleLike['log']
+  protected _error: _ConsoleLike['error']
 
-  public log!: ConsoleLike['log']
-  public info!: ConsoleLike['info']
-  public warn!: ConsoleLike['warn']
-  public debug!: ConsoleLike['debug']
+  public log!: _ConsoleLike['log']
+  public info!: _ConsoleLike['info']
+  public warn!: _ConsoleLike['warn']
+  public debug!: _ConsoleLike['debug']
 
   constructor(logPrefix: string, color = 'cyan') {
-    let globalConsole: ConsoleLike
+    let globalConsole: _ConsoleLike
 
     // @ts-expect-error 2584
     if (typeof console !== 'undefined') {
       // @ts-expect-error 2584
-      globalConsole = console as ConsoleLike
+      globalConsole = console as _ConsoleLike
     } else {
       throw new Error('Cannot create Prefixed Logger without a global console logger.')
     }

@@ -1,11 +1,9 @@
 import { KeyworkQueryParamKeys } from '@keywork/utils'
 import classNames from 'classnames'
 import React from 'react'
-import { SSRPropsLike } from '../ssr/index.js'
 
-export interface KeyworkHTMLDocumentProps<StaticProps extends SSRPropsLike> {
+export interface KeyworkHTMLDocumentProps {
   location: URL
-  staticProps: StaticProps
   moduleManifest?: string[]
   browserIdentifier?: string
   className?: string
@@ -25,9 +23,7 @@ export interface KeyworkHTMLDocumentProps<StaticProps extends SSRPropsLike> {
   htmlAttributes?: React.HtmlHTMLAttributes<HTMLHtmlElement>
 }
 
-export type KeyworkHTMLDocumentComponent<StaticProps extends SSRPropsLike = SSRPropsLike> = React.FC<
-  KeyworkHTMLDocumentProps<StaticProps>
->
+export type KeyworkHTMLDocumentComponent = React.FC<KeyworkHTMLDocumentProps>
 
 /**
  * A server-side render of a given HTML document.

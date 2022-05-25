@@ -1,4 +1,4 @@
-import { Mutable, ParsedPathParams, PathMatch, PathPattern } from './common.js'
+import { ParsedPathParams, PathMatch, PathPattern, _Mutable } from './common.js'
 
 /**
  * Performs pattern matching on a URL pathname and returns information about
@@ -22,7 +22,7 @@ export function matchPath<ExpectedParams extends {} | null, Path extends string>
   const matchedPathname = match[0]
   let pathnameBase = matchedPathname.replace(/(.)\/+$/, '$1')
   const captureGroups = match.slice(1)
-  const params = paramNames.reduce<Mutable<ParsedPathParams>>((memo, paramName, index) => {
+  const params = paramNames.reduce<_Mutable<ParsedPathParams>>((memo, paramName, index) => {
     // We need to compute the pathnameBase here using the raw splat value
     // instead of using params["*"] later because it will be decoded then
     if (paramName === '*') {

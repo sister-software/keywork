@@ -1,35 +1,18 @@
 import { IncomingRequestData } from '@keywork/responder'
-import React, { useMemo } from 'react'
-import { RouteObject, useRoutes } from 'react-router'
-import { RouteWithSSR } from './RouteWithSSR.js'
+import { KeyworkResourceAccessError } from '@keywork/utils'
 
 export type SSRPropsLike = {} | null
 
-export type SSRPropsByPath<SSRP extends SSRPropsLike = null> = Map<string, SSRP>
-
-export interface WindowAndKeyworkSSRProps {
-  __ssr_props_by_path: SSRPropsByPath
-}
-
 /**
- * A mapping of React Router route patterns to their React component handlers.
+ * The global key where SSR props are assigned.
+ * @remark This includes a space to prevent autocomplete from listing this key.
  */
-export type SSRRouteRecords<P = any> = Map<string, React.ElementType<P>>
-
-export function useSSRRoutes(routeRecords?: SSRRouteRecords) {
-  const routeObjects = useMemo((): RouteObject[] => {
-    if (!routeRecords) return []
-    return Array.from(routeRecords.entries(), ([path, Component]): RouteObject => {
-      return {
-        path,
-        element: React.createElement(RouteWithSSR, { path, component: Component }),
-      }
-    })
-  }, [routeRecords])
-
-  const routes = useRoutes(routeObjects)
-
-  return routes
+export const globalScopeSSRKey = '__ keywork_ssr_props'
+export type GlobalScopeSSRKey = typeof globalScopeSSRKey
+export interface GlobalScopeWithKeyworkSSRProps<SSRProps extends SSRPropsLike = SSRPropsLike>
+  extends Record<GlobalScopeSSRKey, SSRProps> {
+  document?: unknown
+  location: URL
 }
 
 /**
@@ -49,3 +32,38 @@ export type GetStaticPropsHandler<
    */
   additionalData?: AdditionalData
 ) => StaticProps | Promise<StaticProps>
+
+export function globalScopeHasSSRProps<SSRProps extends SSRPropsLike>(
+  globalScope: unknown
+): globalScope is GlobalScopeWithKeyworkSSRProps<SSRProps> {
+  return Boolean(globalScope && globalScopeSSRKey in (globalScope as any))
+}
+
+/**
+ *
+ * @param globalScope In most cases, this is either `window` or `self`.
+ * @returns SSRProps
+ */
+export function getSSRPropsFromScope<SSRProps extends SSRPropsLike>(globalScope: unknown): SSRProps {
+  if (!globalScopeHasSSRProps<SSRProps>(globalScope)) {
+    console.error(`Looking for ${globalScopeSSRKey} in scope:`, globalScope)
+    throw new KeyworkResourceAccessError('SSR props not in provided scope.')
+  }
+
+  const staticProps = globalScope[globalScopeSSRKey]
+
+  if (typeof staticProps === 'undefined') {
+    throw new KeyworkResourceAccessError(
+      'SSR Props is empty. To indicate there are no props, return null from `getStaticProps`'
+    )
+  }
+
+  globalScope[globalScopeSSRKey] = null as any
+
+  if (globalScope.document) {
+    // eslint-disable-next-line @typescript-eslint/no-extra-semi
+    ;(globalScope.document as any)?.getElementById(globalScopeSSRKey)?.remove()
+  }
+
+  return staticProps
+}

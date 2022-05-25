@@ -19,7 +19,7 @@ import { createContext, useContext } from 'react'
  *     [dep1, dep2, depN]
  *     )
  *
- *     return <HydrationContext.Provider value={value}>{children}</HydrationContext.Provider>
+ *     return <WidgetsContext.Provider value={value}>{children}</WidgetsContext.Provider>
  *   }
  * ```
  * @param defaultValue
@@ -28,18 +28,18 @@ import { createContext, useContext } from 'react'
 export function createContextAndNamedHook<T>(
   defaultValue: T | undefined = undefined,
   displayName?: string
-): readonly [React.Context<T | undefined>, () => NonNullable<T>] {
+): readonly [React.Context<T | undefined>, <V = T>() => NonNullable<V>] {
   const Context = createContext<T | undefined>(defaultValue)
   const _displayName = displayName || Context.displayName || Context.Provider.name || 'Unknown'
 
-  const useNamedContextHook = () => {
+  const useNamedContextHook = <V = T>() => {
     const val = useContext(Context)
 
     if (!val) {
       throw new Error(`Context Provider not found: ${_displayName}`)
     }
 
-    return val as NonNullable<T>
+    return val as unknown as NonNullable<V>
   }
 
   const contextTuple = [Context, useNamedContextHook] as const
