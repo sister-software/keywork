@@ -11,7 +11,6 @@ export type {
   WorkersPagesAssetsBinding,
   WorkersSiteStaticContentBinding,
 } from '@keywork/responder'
-export * from './components/Helmet/index.js'
 export * from './components/KeyworkHTMLDocument.js'
 export * from './components/KeyworkSSRRoutes.js'
 export * from './hooks/createNamedContextHook.js'
