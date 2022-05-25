@@ -1,19 +1,33 @@
 import { KeyworkQueryParamKeys } from '@keywork/utils'
 import classNames from 'classnames'
 import React from 'react'
-import { useKeyworkHead } from '../ssr/KeyworkHeadProvider.js'
-// import { HelmetData } from './helmet/index.js'
+import { SSRPropsLike } from '../ssr/index.js'
 
-export interface KeyworkHTMLDocumentProps {
+export interface KeyworkHTMLDocumentProps<StaticProps extends SSRPropsLike> {
   location: URL
+  staticProps: StaticProps
   moduleManifest?: string[]
   browserIdentifier?: string
   className?: string
   buildId?: string
   children: React.ReactNode
+  /** Document title. */
+  title?: string
+  /** Optional `<meta>` tags */
+  meta?: React.ReactFragment
+  /** Optional `<link>` tags */
+  link?: React.ReactFragment
+  /** Optional `<style>` tags */
+  style?: React.ReactFragment
+  /** Optional `<script>` tags */
+  script?: React.ReactFragment
+
+  htmlAttributes?: React.HtmlHTMLAttributes<HTMLHtmlElement>
 }
 
-export type KeyworkHTMLDocumentComponent = React.FC<KeyworkHTMLDocumentProps>
+export type KeyworkHTMLDocumentComponent<StaticProps extends SSRPropsLike = SSRPropsLike> = React.FC<
+  KeyworkHTMLDocumentProps<StaticProps>
+>
 
 /**
  * A server-side render of a given HTML document.
@@ -25,13 +39,18 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
   browserIdentifier,
   className,
   buildId,
+  htmlAttributes,
+  title = 'Keywork App',
+  meta,
+  link,
+  style,
+  script,
 }) => {
   /** Added to trigger cache busting. */
   const assetSearchParams = new URLSearchParams({
     [KeyworkQueryParamKeys.BuildID]: buildId || 'development',
   })
 
-  const helmetData = useKeyworkHead()
   const $assetSearchParams = assetSearchParams.toString()
 
   return (
@@ -40,13 +59,14 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
       className={classNames('static has-pointer', className)}
       data-browser={browserIdentifier}
       data-route={location.pathname || '/'}
+      {...htmlAttributes}
     >
       <head>
         <meta charSet="utf-8" />
-        {helmetData.title.toComponent()}
+        <title>{title}</title>
 
-        {helmetData.meta.toComponent()}
-        {helmetData.link.toComponent()}
+        {meta}
+        {link}
 
         <script
           dangerouslySetInnerHTML={{
@@ -56,8 +76,8 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
           }}
         />
 
-        {helmetData.style.toComponent()}
-        {helmetData.script.toComponent()}
+        {style}
+        {script}
       </head>
       <body>
         <div id="app-root">{children}</div>

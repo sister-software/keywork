@@ -12,11 +12,7 @@ import { KeyworkQueryParamKeys } from '@keywork/utils'
 import React from 'react'
 import { StaticRouter } from 'react-router-dom/server'
 // import { Helmet } from '../components/Helmet/Helmet.js'
-import {
-  KeyworkHTMLDocument,
-  KeyworkHTMLDocumentComponent,
-  KeyworkHTMLDocumentProps,
-} from '../components/KeyworkHTMLDocument.js'
+import { KeyworkHTMLDocument, KeyworkHTMLDocumentComponent } from '../components/KeyworkHTMLDocument.js'
 import { KeyworkProvidersComponent } from '../components/KeyworkSSRRoutes.js'
 import { HydrationProvider } from './HydrationProvider.js'
 import { GetStaticPropsHandler, SSRPropsByPath, SSRPropsLike } from './props.js'
@@ -34,19 +30,18 @@ async function renderStaticPropsAsComponentStream<StaticProps extends NonNullabl
   staticProps: StaticProps,
   /** The React component to render for this specific page. */
   PageComponent: React.FC<StaticProps>,
-  DocumentComponent: KeyworkHTMLDocumentComponent = KeyworkHTMLDocument,
+  DocumentComponent?: KeyworkHTMLDocumentComponent<StaticProps>,
   Providers?: KeyworkProvidersComponent
 ): Promise<Response> {
   const location = new URL(request.url)
 
   const ssrPropsByPath: SSRPropsByPath<any> = new Map([[location.pathname, staticProps]])
   const browserIdentifier = getBrowserIdentifier(request)
-
-  // const helmetData = renderToString(<Helmet></Helmet>)
+  DocumentComponent = DocumentComponent || (KeyworkHTMLDocument as KeyworkHTMLDocumentComponent<StaticProps>)
 
   const appDocument = (
-    // <KeyworkHeadProvider helmetData={helmetData}>
     <DocumentComponent
+      staticProps={staticProps}
       browserIdentifier={browserIdentifier}
       location={location}
       // isSocialPreview={location.searchParams.has(KeyworkQueryParamKeys.SharePreview)}
@@ -65,7 +60,6 @@ async function renderStaticPropsAsComponentStream<StaticProps extends NonNullabl
         <SSRProvider ssrPropsByPath={ssrPropsByPath} />
       </StaticRouter>
     </DocumentComponent>
-    // </KeyworkHeadProvider>
   )
 
   let result: ReactRenderStreamResult
@@ -84,8 +78,6 @@ async function renderStaticPropsAsComponentStream<StaticProps extends NonNullabl
     return ErrorResponse.fromUnknownError(result.error, 'An error occured during rendering...')
   }
 
-  // TODO: remove when header ready
-  await result.stream.allReady
   return new HTMLResponse(result.stream)
 }
 
@@ -110,7 +102,7 @@ export abstract class KeyworkStaticPropsRequestHandler<
    * A HTML Document React component which wraps the entire application.
    * Use this if you need to replace the default HTML Document.
    */
-  abstract DocumentComponent?: React.FC<KeyworkHTMLDocumentProps>
+  abstract DocumentComponent?: KeyworkHTMLDocumentComponent<StaticProps>
 
   abstract getStaticProps: GetStaticPropsHandler<StaticProps, BoundAliases>
 
@@ -119,10 +111,10 @@ export abstract class KeyworkStaticPropsRequestHandler<
     const location = new URL(request.url)
     const onlySendStaticProps = location.searchParams.has(KeyworkQueryParamKeys.StaticProps)
 
-    let staticProps: StaticProps
+    let staticProps: NonNullable<StaticProps>
 
     try {
-      staticProps = await this.getStaticProps(data)
+      staticProps = ((await this.getStaticProps(data)) || {}) as NonNullable<StaticProps>
     } catch (error) {
       this.logger.error(error)
       return ErrorResponse.fromUnknownError(error)
@@ -134,9 +126,9 @@ export abstract class KeyworkStaticPropsRequestHandler<
 
     return renderStaticPropsAsComponentStream(
       request,
-      staticProps as NonNullable<typeof staticProps>,
+      staticProps,
       this.PageComponent as any,
-      this.DocumentComponent,
+      this.DocumentComponent as any,
       this.Providers
     )
   }

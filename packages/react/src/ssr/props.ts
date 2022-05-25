@@ -3,7 +3,7 @@ import React, { useMemo } from 'react'
 import { RouteObject, useRoutes } from 'react-router'
 import { RouteWithSSR } from './RouteWithSSR.js'
 
-export type SSRPropsLike = {} | undefined | null
+export type SSRPropsLike = {} | null
 
 export type SSRPropsByPath<SSRP extends SSRPropsLike = null> = Map<string, SSRP>
 
@@ -37,7 +37,7 @@ export function useSSRRoutes(routeRecords?: SSRRouteRecords) {
  */
 export type GetStaticPropsHandler<
   /** The static props returned by the handler. */
-  StaticProps,
+  StaticProps extends {} | null,
   BoundAliases extends {} | null = null,
   AdditionalData extends {} | null = null
 > = (
