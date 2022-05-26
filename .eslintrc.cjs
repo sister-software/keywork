@@ -1,7 +1,23 @@
+/**
+ * @file This file is part of the Keywork project.
+ * @copyright Nirrius, LLC. All rights reserved.
+ * @author Teffen Ellis, et al.
+ * @license AGPL-3.0
+ *
+ * @remark Keywork is free software for non-commercial purposes.
+ * You can be released from the requirements of the license by purchasing a commercial license.
+ * Buying such a license is mandatory as soon as you develop commercial activities
+ * involving the Keywork software without disclosing the source code of your own applications.
+ *
+ * @see LICENSE.md in the project root for further licensing information.
+ */
+
+/* eslint-disable @typescript-eslint/no-var-requires */
 const path = require('path')
 const fs = require('fs')
 
-const rawHeaderContent = fs.readFileSync(path.resolve(__dirname, 'build', 'header.js'), 'utf8')
+const headerPath = path.resolve(__dirname, 'build', 'header.js')
+const rawHeaderContent = fs.readFileSync(headerPath, 'utf8')
 const headerLines = rawHeaderContent.replace('/**', '*').replace('*/\n', '').split('\n')
 
 module.exports = {
