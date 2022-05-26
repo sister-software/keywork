@@ -40,12 +40,14 @@
     "types:extract": "node --experimental-specifier-resolution=node ./build/utils/types.mjs",
     "types:bundle": "npm run types:build && npm run types:extract",
     "prepublishOnly": "npm run types:bundle",
+    "docs:generate": "api-documenter markdown --input-folder ./.tmp/types --output-folder ./docs",
     "test": "jest"
   },
   "publishConfig": {},
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
     "@cloudflare/workers-types": "^3.10.0",
+    "@microsoft/api-documenter": "^7.17.16",
     "@microsoft/api-extractor": "^7.23.1",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",

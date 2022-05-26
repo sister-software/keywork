@@ -21,8 +21,8 @@ const extractorCfgObject = {
     reportTempFolder: '<projectFolder>/temp/',
   },
   docModel: {
-    enabled: false,
-    apiJsonFilePath: '<projectFolder>/temp/<unscopedPackageName>.api.json',
+    enabled: true,
+    apiJsonFilePath: '<projectFolder>/.tmp/types/<unscopedPackageName>.api.json',
   },
   dtsRollup: {
     enabled: true,
