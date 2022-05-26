@@ -1,7 +1,7 @@
 {
   "name": "@keywork/root",
   "license": "AGPL-3.0",
-  "version": "0.4.0",
+  "version": "1.0.0",
   "private": true,
   "description": "A library of useful tools for building web apps on Cloudflare Workers.",
   "keywords": [
