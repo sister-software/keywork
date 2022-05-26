@@ -5,6 +5,6 @@
     { "path": "./packages/collections" },
     { "path": "./packages/responder" },
     { "path": "./packages/workify" },
-    { "path": "./packages/react" }
+    { "path": "./packages/react-isomorphic" }
   ]
 }

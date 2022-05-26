@@ -1,8 +1,8 @@
 {
-  "name": "@keywork/react",
+  "name": "@keywork/react-isomorphic",
   "license": "AGPL-3.0",
   "version": "0.4.0",
-  "description": "Render server-side apps with React and Cloudflare Workers.",
+  "description": "Everything you need to serve React apps from a Cloudflare Worker.",
   "keywords": [
     "keywork",
     "cloudflare",
