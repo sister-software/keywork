@@ -1,78 +1,84 @@
-# 🌈 Keywork DB
+# 🌈 Keywork
 
 
-**Keywork DB** is a NoSQL ODM for Cloudflare's
-[Worker KV](https://developers.cloudflare.com/workers/runtime-apis/kv/).
-
->Heads up! This package is under active development and changing fast!
-
-**See <https://keyworkdb.com> for more detailed documentation.**
+**Keywork** is a batteries-included, _magic-free_, library for building web apps on Cloudflare Workers.
 
 ## Features
 
-- ✨ A familiar data modeling for folks familiar with Firestore and MongoDB
-- 🛠 Extends Worker KV's API without abstracting away important details
 - 💪 Written in TypeScript
 - 📚 Modules Support
 - 🔥 Compatible with [Miniflare](https://miniflare.dev/)
 
-## Install
+**See <https://keywork.app> for more detailed documentation.**
 
-KeyworkDB is installed using npm:
+## Packages
 
-```sh
-$ yarn add keyworkdb
-```
+### `@keywork/responder`
 
-## Using Keywork from within a Cloudflare Worker.
+![NPM](https://img.shields.io/npm/l/@keywork/responder)
+![npm (scoped)](https://img.shields.io/npm/v/@keywork/responder)
+![npm](https://img.shields.io/npm/dm/@keywork/responder)
+
+Everything you need to handle incoming request in a Worker environment.
+
+- HTTP responses for content like JSON, HTML, and much more!
+- Type-safe request handlers that make API endpoints easy.
+- Cache headers, cache responses, and even ETag generation for your own content.
+- Simplified error handling for your server-side Worker logic.
+
+### `@keywork/react-isomorphic`
+
+![NPM](https://img.shields.io/npm/l/@keywork/react-isomorphic)
+![npm (scoped)](https://img.shields.io/npm/v/@keywork/react-isomorphic)
+![npm](https://img.shields.io/npm/dm/@keywork/react-isomorphic)
 
 
-```toml
-# e.g. wrangler.toml
-compatibility_date = "2022-02-13"
-name = "example-app"
-route = "https://example.com/api/users/*"
+Everything you need to serve React apps from your Worker.
 
-kv_namespaces = [
-  { binding = "users", id = "abcd123...", preview_id = "efgh456..."},
-]
-```
+- Static prop handlers that feel just like your typical API endpoints.
+- Server-side rendering from your worker, made even faster with streamed responses.
+- Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
+- Client-side hydration that fits into your existing build pipeline.
 
-```js
-// e.g. worker.mjs
-import { KeyworkCollection } from 'keyworkdb'
+### `@keywork/collections` (Beta)
 
-export default {
-  /**
-   * Your worker's incoming request handler.
-   * Note that the `env` parameter will reflect your KV bindings in `wrangler.toml`
-   *
-   * @param request Request
-   * @param env Env
-   * @param ctx ExecutionContext
-   *
-   * @returns Response | Promise<Response>
-   */
-  fetch(request, env, _ctx) {
-    const url = new URL(request.url)
-    const usersCollection = new KeyworkCollection(env.users)
+![NPM](https://img.shields.io/npm/l/@keywork/collections)
+![npm (scoped)](https://img.shields.io/npm/v/@keywork/collections)
+![npm](https://img.shields.io/npm/dm/@keywork/collections)
 
-    if (url.pathname === '/') {
-      const userDocumentsList = usersCollection.fetchDocumentsList()
 
-      const body = {
-        userCount: userDocumentsList.keys.length,
-        keys: userDocumentsList.keys,
-      }
+The missing piece that unlocks the full power of storing and querying data from your Worker.
 
-      return new Response(JSON.stringify(body, null, 2), {
-        'Content-Type': 'text/json; charset=utf-8',
-      })
-    }
-  },
-}
-```
+- A NoSQL _eventually-consistent_ ODM for Cloudflare's [Worker KV](https://developers.cloudflare.com/workers/runtime-apis/kv/).
+- An API reminiscent of Firebase and MongoDB, perfect for migrating your existing backend to Cloudflare's network.
+- Extends Worker KV's API without abstracting away important details
+
+### `@keywork/utils`
+
+![NPM](https://img.shields.io/npm/l/@keywork/utils)
+![npm (scoped)](https://img.shields.io/npm/v/@keywork/utils)
+![npm](https://img.shields.io/npm/dm/@keywork/utils)
+
+Common core utilities for building web apps.
+
+- URL helpers, path builders.
+- ULID and Snowflake ID generation.
+- Isomorpic runtime error handling for both the browser, and your Worker.
+- Logging that helps you better trace down errors as your app grows.
+- All the typical "junk drawer" stuff you usually have to implement when building a web app.
+
+## License
+
+Keywork is free software for non-commercial purposes.
+
+You can be released from the requirements of the license by purchasing a commercial license.
+Buying such a license is mandatory as soon as you develop commercial activities
+involving the Keywork software without disclosing the source code of your own applications.
+
+Contact `teffen [at] nirri [dot] us` for business inquiries.
 
 ## Acknowledgements
 
-Many thanks to the folks at Cloudflare 💞
+- Many thanks to the folks at Cloudflare and the Workers team 💞
+- MrBBot and the developers of Miniflare
+- The React community

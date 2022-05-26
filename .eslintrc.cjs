@@ -1,11 +1,14 @@
-// @ts-check
+const path = require('path')
+const fs = require('fs')
 
-// eslint-disable-next-line no-undef
+const rawHeaderContent = fs.readFileSync(path.resolve(__dirname, 'build', 'header.js'), 'utf8')
+const headerLines = rawHeaderContent.replace('/**', '*').replace('*/\n', '').split('\n')
+
 module.exports = {
   root: true,
   ignorePatterns: ['./**/dist/**/*'],
   parser: '@typescript-eslint/parser',
-  plugins: ['@typescript-eslint'],
+  plugins: ['@typescript-eslint', 'header'],
   settings: {
     react: {
       version: 'detect',
@@ -28,6 +31,7 @@ module.exports = {
     worker: true,
   },
   rules: {
+    'header/header': [2, 'block', headerLines, 2],
     'import/no-unresolved': 'off',
     'import/extensions': 1,
     'react/prop-types': 'off',

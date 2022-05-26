@@ -2,7 +2,7 @@
 "name": "@keywork/collections",
   "license": "AGPL-3.0",
   "version": "0.4.0",
-  "description": "A NoSQL ODM for Cloudflare Workers KV.",
+  "description": "A NoSQL ODM library for Cloudflare Workers KV.",
   "keywords": [
     "cloudflare",
     "workers",
@@ -18,11 +18,11 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/TeffenEllis/keywork.git",
+    "url": "git+https://github.com/nirrius/keywork.git",
     "directory": "packages/collections"
   },
   "bugs": {
-    "url" : "https://github.com/TeffenEllis/keywork/issues"
+    "url" : "https://github.com/nirrius/keywork/issues"
   },
   "author": "Teffen Ellis <teffen@nirri.us>",
   "packageManager": "yarn@1.22.0",
