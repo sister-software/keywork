@@ -1,7 +1,0 @@
-compatibility_date = "2022-02-13"
-name = "example-app"
-route = "https://example.com/api/users/*"
-
-kv_namespaces = [
-  { binding = "users", id = "abcd123...", preview_id = "efgh456..."},
-]
