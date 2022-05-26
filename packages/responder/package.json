@@ -2,7 +2,7 @@
   "name": "@keywork/responder",
   "license": "AGPL-3.0",
   "version": "0.4.0",
-  "description": "A NoSQL ODM for Cloudflare Workers KV.",
+  "description": "All the HTTP and request utilities needed to ",
   "keywords": [
     "cloudflare",
     "workers",

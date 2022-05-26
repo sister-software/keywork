@@ -1,5 +1,5 @@
 import { convertJSONToETaggableString, generateETag } from '@keywork/responder'
-import { KeyworkResourceAccessError, resolveDocPath } from '@keywork/utils'
+import { KeyworkResourceError, resolveDocPath } from '@keywork/utils'
 import deepmerge from 'deepmerge'
 import type { DeserializationTransformers, DeserializationTypes, PutOrPatchOptions } from './common.js'
 import type { KeyworkCollection } from './KeyworkCollection.js'
@@ -175,7 +175,7 @@ export class KeyworkDocumentReference<
         nextValue = deepmerge(snapshot.value, nextValue, deepMergeOptions)
       } catch (error) {
         console.error(error)
-        throw new KeyworkResourceAccessError(
+        throw new KeyworkResourceError(
           `The given value could not be merged to the existing data at '${this.absoluteDocPath}'`,
           409
         )

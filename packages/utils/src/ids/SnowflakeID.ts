@@ -1,4 +1,4 @@
-import { hexToDec } from './numbers.js'
+import { hexToDec } from '../numbers.js'
 
 /**
  * A basic implementation of Twitter's original Snowflake ID system.

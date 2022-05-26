@@ -1,4 +1,4 @@
-import { KeyworkResourceAccessError, PrefixedLogger } from '@keywork/utils'
+import { KeyworkResourceError, PrefixedLogger } from '@keywork/utils'
 import React from 'react'
 const logger = new PrefixedLogger('Hydrate')
 
@@ -25,7 +25,7 @@ export function hydrateKeyworkApp(initialChildren: React.ReactNode, options?: Hy
   const globalScope = options?.globalScope || self
 
   if (!globalScopeHasSSRProps(globalScope) || !globalScope.document) {
-    throw new KeyworkResourceAccessError('Provided scope missing.')
+    throw new KeyworkResourceError('Provided scope missing.')
   }
 
   const container = (globalScope.document as any).getElementById(rootID)

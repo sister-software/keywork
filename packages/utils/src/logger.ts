@@ -1,4 +1,4 @@
-import { KeyworkResourceAccessError } from './errors.js'
+import { KeyworkResourceError } from './errors.js'
 import { prettyJSON } from './json.js'
 
 /**
@@ -65,7 +65,7 @@ export class PrefixedLogger {
 
   public error = (error: unknown) => {
     const message = error ? `${error as any}` : 'Unknown Error'
-    const statusCode = error instanceof KeyworkResourceAccessError ? error.status : 500
+    const statusCode = error instanceof KeyworkResourceError ? error.status : 500
     const stack = error instanceof Error ? error.stack : undefined
 
     this._error(statusCode, message, stack)

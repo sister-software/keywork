@@ -1,4 +1,4 @@
-import { KeyworkResourceAccessError } from '@keywork/utils'
+import { KeyworkResourceError } from '@keywork/utils'
 import { StatusCodes } from 'http-status-codes'
 import { PathMatch, PathPattern } from '../paths/common.js'
 import { matchPath } from '../paths/matchPath.js'
@@ -16,7 +16,7 @@ export function parsePathname<ExpectedParams extends {} | null>(
   urlOrRequest: Pick<Request, 'url'> | string | URL
 ): PathMatch<ExpectedParams> {
   if (!urlOrRequest) {
-    throw new KeyworkResourceAccessError(`URL or Request is not defined.`, StatusCodes.INTERNAL_SERVER_ERROR)
+    throw new KeyworkResourceError(`URL or Request is not defined.`, StatusCodes.INTERNAL_SERVER_ERROR)
   }
   let url: URL
 
@@ -27,7 +27,7 @@ export function parsePathname<ExpectedParams extends {} | null>(
   } else if (isURLLike(urlOrRequest)) {
     url = urlOrRequest
   } else {
-    throw new KeyworkResourceAccessError(
+    throw new KeyworkResourceError(
       `Pathname could not be parsed from ${urlOrRequest}.`,
       StatusCodes.INTERNAL_SERVER_ERROR
     )
@@ -35,7 +35,7 @@ export function parsePathname<ExpectedParams extends {} | null>(
   const possibleMatch = matchPath<ExpectedParams, string>(pattern, url.pathname)
 
   if (!possibleMatch)
-    throw new KeyworkResourceAccessError(
+    throw new KeyworkResourceError(
       `Path ${url.pathname} does not this route handler's expected pattern`,
       StatusCodes.BAD_REQUEST
     )

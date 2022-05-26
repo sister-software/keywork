@@ -1,4 +1,4 @@
-import { KeyworkResourceAccessError, PathBuilder, resolveDocPath } from '@keywork/utils'
+import { KeyworkResourceError, PathBuilder, resolveDocPath } from '@keywork/utils'
 import type { DeserializationTypes } from './common.js'
 import type { CollectionDocumentReferencesResponse, FetchListOptions } from './KeyworkCollection/common.js'
 import {
@@ -161,10 +161,7 @@ export class KeyworkCollection<
       )
     } catch (error) {
       console.error(error)
-      throw new KeyworkResourceAccessError(
-        `An error occured while creating indexes for \`${metadata.absoluteDocPath}\``,
-        500
-      )
+      throw new KeyworkResourceError(`An error occured while creating indexes for \`${metadata.absoluteDocPath}\``, 500)
     }
 
     if (metadata.deserializeAs === 'json') {
@@ -185,7 +182,7 @@ export class KeyworkCollection<
             )
           } catch (error) {
             console.error(error)
-            throw new KeyworkResourceAccessError(
+            throw new KeyworkResourceError(
               `An error occured while creating the \`${propertyName}\` index for '${metadata.absoluteDocPath}'`,
               500
             )

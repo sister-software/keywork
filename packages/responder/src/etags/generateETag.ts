@@ -1,4 +1,4 @@
-import { KeyworkResourceAccessError, stringToArrayBuffer } from '@keywork/utils'
+import { KeyworkResourceError, stringToArrayBuffer } from '@keywork/utils'
 import { StatusCodes } from 'http-status-codes'
 import { EMPTY_ETAG, ETaggable } from './common.js'
 
@@ -32,7 +32,7 @@ export async function generateETag(entity: ETaggable, options?: EntityToETagOpti
     if (!entity.length) return EMPTY_ETAG
     entityBuffer = stringToArrayBuffer(entity)
   } else {
-    throw new KeyworkResourceAccessError(
+    throw new KeyworkResourceError(
       `The given entity is of unexpected type \`${typeof entity}\``,
       StatusCodes.BAD_REQUEST
     )

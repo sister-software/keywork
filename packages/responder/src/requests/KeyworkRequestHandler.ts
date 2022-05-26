@@ -63,20 +63,77 @@ export interface KeyworkRequestHandler<BoundAliases extends {} | null = null> ex
 /**
  * In the "Module Worker" format, incoming HTTP events are handled by defining and exporting an object with method handlers corresponding to event names.
  *
- * To create a route handler, start by first extending the `AbstractRouteHandler` class.
+ * To create a route handler, start by first extending the `KeyworkRequestHandler` class.
  * Your implementation must at least include a `onRequestGet` handler, or a method-agnostic `onRequest` handler.
- * You may also specify
  *
- * @example
- * ```ts
- * class TodoListWorker extends AbstractRouteHandler {
- *   onRequestGet: WorkerRouteHandler<Partial<Params>, BoundAliases> = async ({request, env, context, session}) => {
- *    const params = parsePathname('/todos/:todoID', request)
- *    const todo = await fetchTodos(params.todoID)
- *    return new JSONResponse(todo)
- *   }
- * }
+ * @example <caption>A simple Todo list handler</caption>
+ *
+ *           ```ts
+ *           interface GetTodoParams {
+ *             todoID: string
+ *           }
+ *
+ *           class TodoListWorker extends KeyworkRequestHandler {
+ *             onRequestGet: WorkerRouteHandler = async ({request, env, context, session}) => {
+ *              const params = parsePathname<GetTodoParams>('/todos/:todoID', request)
+ *              const todo = await fetchTodos(params.todoID)
+ *
+ *              if (!todo) throw new KeyworkResourceError('TODO does not exist')
+ *
+ *              return new JSONResponse(todo)
+ *             }
+ *           }
  *```
+ *
+ * @example <caption>Creating a more advanced request handler with a Keywork Collection.</caption>
+ *
+ *           ```ts
+ *           import {StatusCodes} from 'http-status-codes'
+ *
+ *           import { KeyworkCollection } from '@keywork/collections'
+ *           import { KeyworkResourceError } from '@keywork/utils'
+ *           import { IncomingRequestHandler, KeyworkRequestHandler, parsePathname } from '@keywork/responder'
+ *
+ *           interface ExampleAppBindings {
+ *             exampleApp: KVNamespace
+ *           }
+ *
+ *           interface GetUserParams {
+ *             userID: string
+ *           }
+ *
+ *           interface ExampleUser {
+ *             firstName: string
+ *             lastName: string
+ *             role: 'member' | 'admin'
+ *             plan: 'free' | 'paid'
+ *           }
+ *
+ *           class UserAPIHandler extends KeyworkRequestHandler<ExampleAppBindings> {
+ *             onRequestGet: IncomingRequestHandler<ExampleAppBindings> = async ({ request, env }) => {
+ *               const { params } = parsePathname<GetUserParams>('/users/:userID', request)
+ *
+ *               const usersCollection = new KeyworkCollection<ExampleUser>(env.exampleApp, 'users')
+ *               const userRef = usersCollection.createDocumentReference(params.userID)
+ *               const userSnapshot = await userRef.fetchSnapshot()
+ *               if (!userSnapshot.exists) {
+ *                 throw new KeyworkResourceError('User does not exist', StatusCodes.BAD_REQUEST)
+ *               }
+ *
+ *               const user = userSnapshot.value
+ *
+ *               if (user.plan !== 'paid') {
+ *                 throw new KeyworkResourceError('You must have a paid plan', StatusCodes.PAYMENT_REQUIRED)
+ *               }
+ *
+ *               if (user.role !== 'admin') {
+ *                 throw new KeyworkResourceError('Only an admin can access this page', StatusCodes.FORBIDDEN)
+ *               }
+ *             }
+ *           }
+ *
+ *           export default UserAPIHandler
+ *           ```
  */
 export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = null> {
   logger = new PrefixedLogger('Keywork Route Handler')
@@ -103,11 +160,19 @@ export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = nul
   }
 
   /**
-   * The Worker's primary incoming fetch handler.
+   * The Worker's primary incoming fetch handler. This delegates to a handler you define, such as `onGetRequest`.
+   * @remark Generally, `KeyworkRequestHandler#fetch` should not be used within your app.
+   * This is automatically called by the Worker runtime.
    */
-  fetch(request: Request, env: BoundAliases, context: ExecutionContext): Promise<Response> | Response {
+  fetch(
+    /** The incoming request. */
+    request: Request,
+    /** The bound aliases, usually defined in your wrangler.toml file. */
+    env: BoundAliases,
+    /** The Worker context object.  */
+    context: ExecutionContext
+  ): Promise<Response> | Response {
     const handler = this.getHandlerForMethod(request.method as HTTPMethod)
-
     if (!handler) return new ErrorResponse(405, `Method ${request.method} was rejected.`)
 
     const session = new KeyworkSession(request)

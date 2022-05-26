@@ -1,5 +1,5 @@
 import { IncomingRequestData } from '@keywork/responder'
-import { KeyworkResourceAccessError } from '@keywork/utils'
+import { KeyworkResourceError } from '@keywork/utils'
 
 export type SSRPropsLike = {} | null
 
@@ -47,13 +47,13 @@ export function globalScopeHasSSRProps<SSRProps extends SSRPropsLike>(
 export function getSSRPropsFromScope<SSRProps extends SSRPropsLike>(globalScope: unknown): SSRProps {
   if (!globalScopeHasSSRProps<SSRProps>(globalScope)) {
     console.error(`Looking for ${globalScopeSSRKey} in scope:`, globalScope)
-    throw new KeyworkResourceAccessError('SSR props not in provided scope.')
+    throw new KeyworkResourceError('SSR props not in provided scope.')
   }
 
   const staticProps = globalScope[globalScopeSSRKey]
 
   if (typeof staticProps === 'undefined') {
-    throw new KeyworkResourceAccessError(
+    throw new KeyworkResourceError(
       'SSR Props is empty. To indicate there are no props, return null from `getStaticProps`'
     )
   }

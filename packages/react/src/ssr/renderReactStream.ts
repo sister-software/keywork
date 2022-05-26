@@ -1,4 +1,4 @@
-import { KeyworkResourceAccessError } from '@keywork/utils'
+import { KeyworkResourceError } from '@keywork/utils'
 import React from 'react'
 import {
   ReactDOMServerReadableStream,
@@ -18,7 +18,7 @@ export interface ReactRenderStreamSuccessResult {
 
 export interface ReactRenderStreamErrorResult {
   stream: ReactDOMServerReadableStream
-  error: KeyworkResourceAccessError
+  error: KeyworkResourceError
 }
 
 export type ReactRenderStreamResult = ReactRenderStreamSuccessResult | ReactRenderStreamErrorResult
@@ -28,13 +28,13 @@ export async function renderReactStream(
   options?: RenderToReadableStreamOptions
 ): Promise<ReactRenderStreamResult> {
   const controller = new AbortController()
-  let error: null | KeyworkResourceAccessError = null
+  let error: null | KeyworkResourceError = null
 
   const stream = await renderToReadableStream(children, {
     ...options,
     signal: controller.signal,
     onError(_error) {
-      error = KeyworkResourceAccessError.fromUnknownError(_error)
+      error = KeyworkResourceError.fromUnknownError(_error)
       console.error(error)
     },
   })
