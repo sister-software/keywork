@@ -28,8 +28,6 @@ const watch = process.argv.some((arg) => arg === '--watch')
 const buildOptionsBase = {
   platform: 'node',
   target: 'esnext',
-  treeShaking: true,
-  minify: env === 'production',
   sourcemap: true,
   sourcesContent: false,
   // Mark root package's dependencies as external, include root devDependencies
