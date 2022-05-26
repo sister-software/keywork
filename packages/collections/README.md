@@ -1,5 +1,21 @@
-import { KeyworkCollection } from '@keywork/odm'
-import { JSONResponse } from '@keywork/responder'
+
+## Using Keywork collections from within a Cloudflare Worker.
+
+
+```toml
+# e.g. wrangler.toml
+compatibility_date = "2022-02-13"
+name = "example-app"
+route = "https://example.com/api/users/*"
+
+kv_namespaces = [
+  { binding = "users", id = "abcd123...", preview_id = "efgh456..."},
+]
+```
+
+```js
+// e.g. worker.mjs
+import { KeyworkCollection } from '@keywork/collections'
 
 export default {
   /**
@@ -24,7 +40,10 @@ export default {
         keys: userDocumentsList.keys,
       }
 
-      return new JSONResponse(body)
+      return new Response(JSON.stringify(body, null, 2), {
+        'Content-Type': 'text/json; charset=utf-8',
+      })
     }
   },
 }
+```
