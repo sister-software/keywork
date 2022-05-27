@@ -12,10 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './datetime.js'
-export * from './errors.js'
-export * from './ids/index.js'
-export * from './json.js'
-export * from './logger.js'
-export * from './strings.js'
-export * from './url.js'
+/**
+ * A NoSQL ODM library for Cloudflare Workers KV.
+ * @module Collections
+ * @packageDocumentation
+ */
+
+export * from './src/common.js'
+export * from './src/KeyworkCollection.js'
+export * from './src/KeyworkCollection/common.js'
+export * from './src/KeyworkDatabase.js'
+export * from './src/KeyworkDocumentMetadata.js'
+export * from './src/KeyworkDocumentReference.js'
+export * from './src/KeyworkDocumentSnapshot.js'

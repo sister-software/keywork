@@ -19,11 +19,22 @@ export const convertJSONToETaggableString = (value: {}): string => {
   return JSON.stringify(value)
 }
 
+/**
+ * Types that can be converted into ETags.
+ * @ignore
+ */
 export type ETaggable = string | ArrayBuffer
 
-/** Precomputed etag for an empty entity. */
+/**
+ * Precomputed etag for an empty entity.
+ * @internal
+ */
 export const EMPTY_ETAG = '"0-2jmj7l5rSw0yVb/vlWAYkK/YBwk"'
 
+/**
+ * Utility function to check if a given request's headers match an etag.
+ * If the etag matches, the client may use the locally cache resource.
+ */
 export function isETagMatch(request: Request, etag: string | null | undefined): etag is string {
   const headerContent = request.headers.get('If-None-Match')
 

@@ -36,6 +36,16 @@ const logTypes = new Map<keyof _ConsoleLike, string>([
   ['debug', '🔎'],
 ])
 
+/**
+ * A isomorphic logger available in the browser and worker environment.
+ *
+ * @example
+ * ```ts
+ * const logger = new PrefixedLogger('Todo API')
+ * logger.info('Fetching todo', todoID)
+ * logger.error('Unexpected error')
+ * ```
+ */
 export class PrefixedLogger {
   protected logPrefix: string
   public _log: _ConsoleLike['log']

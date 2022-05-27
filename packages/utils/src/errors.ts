@@ -24,16 +24,18 @@ export interface ErrorJSONBody {
  *
  * @remarks Generally, uncaught instances of `KeyworkResourceError` will fail gracefully by any Worker using `KeyworkRequestHandler`.
  * This approach can free your Worker's incoming request handler from wrapping every failure operation with try/catch.
- * @see {KeyworkRequestHandler} for a more detailed example.
+ * @see {@link responder.KeyworkRequestHandler} for a more detailed example.
  *
- * @example <caption>Check if a user has permission to do some action.</caption>
- *          ```ts
- *          if (isLoggedIn(someUser))
- *            throw new KeyworkResourceError("You must be logged in to do that", StatusCodes.UNAUTHORIZED)
- *          }
- *          if (someUser.role !== 'admin')
- *            throw new KeyworkResourceError("Only an admin can access that", StatusCodes.FORBIDDEN)
- *          }
+ * @example
+ * Check if a user has permission to do some action.
+ *
+ * ```ts
+ * if (isLoggedIn(someUser))
+ *   throw new KeyworkResourceError("You must be logged in to do that", StatusCodes.UNAUTHORIZED)
+ * }
+ * if (someUser.role !== 'admin')
+ *   throw new KeyworkResourceError("Only an admin can access that", StatusCodes.FORBIDDEN)
+ * }
  * ```
  */
 export class KeyworkResourceError extends Error {

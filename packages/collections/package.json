@@ -28,6 +28,7 @@
   "packageManager": "yarn@1.22.0",
   "type": "module",
   "main": "./dist/index.js",
+  "typedocMain": "src/index.ts",
   "exports": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "sideEffects": false,

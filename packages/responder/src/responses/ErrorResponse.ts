@@ -17,8 +17,10 @@ import { getReasonPhrase, StatusCodes } from 'http-status-codes'
 
 /**
  * An error response sent to a client when a request is invalid in some way.
- * @remarks If an error object is available and publically visible, consider `ErrorResponse.fromUnknownError`
+ * @remarks If an error object is available and publically visible,
+ * consider {@link ErrorResponse.fromUnknownError}
  *
+ * @category HTTP Responses
  */
 export class ErrorResponse extends Response {
   constructor(
@@ -41,18 +43,20 @@ export class ErrorResponse extends Response {
   /**
    * Given an error-like object, attempt respond with a `KeyworkResourceError`.
    *
-   * @example <caption>Handling a error from an incoming request.</caption>
-   *          ```ts
-   *          try {
-   *            result = await fetchFoobarResource()
-   *          } catch (error) {
-   *            // Log the error internally...
-   *            console.error(error)
+   * @example
+   * Handling a error from an incoming request.
    *
-   *            // Respond with a public reason...
-   *            return ErrorResponse.fromUnknownError(error, 'An error occured while fetching foobar.')
-   *          }
-   *          ```
+   * ```ts
+   * try {
+   *   result = await fetchFoobarResource()
+   * } catch (error) {
+   *   // Log the error internally...
+   *   console.error(error)
+   *
+   *   // Respond with a public reason...
+   *   return ErrorResponse.fromUnknownError(error, 'An error occured while fetching foobar.')
+   * }
+   * ```
    */
   static fromUnknownError(
     /** Any kind of unknown error, usually from a try/catch block. */

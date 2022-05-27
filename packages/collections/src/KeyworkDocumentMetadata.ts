@@ -85,6 +85,10 @@ export function generateDocumentMetadata({
   return metadata
 }
 
+/**
+ * Attempts to parse a given value's serialization type.
+ * @internal
+ */
 export function parseValueTypeInfo(value: unknown): DeserializationTransformers {
   const valueType = typeof value
 
@@ -101,12 +105,13 @@ export function parseValueTypeInfo(value: unknown): DeserializationTransformers 
 }
 
 /**
- * Checks whether a given value and deserialization transformer is ETaggable
- *
- * @param deserializeAs An optional pre-computed `DeserializationTransformers`
- * */
+ * Checks whether a given value and deserialization transformer is ETaggable.
+ */
 export function isETaggable(
   value: unknown,
+  /**
+   * An optional pre-computed `DeserializationTransformers`
+   */
   deserializeAs: DeserializationTransformers = parseValueTypeInfo(value)
 ): value is ETaggable {
   switch (deserializeAs) {

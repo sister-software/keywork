@@ -25,31 +25,26 @@ export interface KeyworkRequestHandler<BoundAliases extends {} | null = null> ex
   /**
    * An incoming `GET` request handler.
    *
-   * @see `WorkerRouteHandler`
    */
   onRequestGet?: IncomingRequestHandler<BoundAliases>
   /**
    * An incoming `POST` request handler.
    *
-   * @see `WorkerRouteHandler`
    */
   onRequestPost?: IncomingRequestHandler<BoundAliases>
   /**
    * An incoming `PUT` request handler.
    *
-   * @see `WorkerRouteHandler`
    */
   onRequestPut?: IncomingRequestHandler<BoundAliases>
   /**
    * An incoming `PATCH` request handler.
    *
-   * @see `WorkerRouteHandler`
    */
   onRequestPatch?: IncomingRequestHandler<BoundAliases>
   /**
    * An incoming `DELETE` request handler.
    *
-   * @see `WorkerRouteHandler`
    */
   onRequestDelete?: IncomingRequestHandler<BoundAliases>
   /**
@@ -61,7 +56,6 @@ export interface KeyworkRequestHandler<BoundAliases extends {} | null = null> ex
   /**
    * An incoming `OPTIONS` request handler.
    *
-   * @see `WorkerRouteHandler`
    */
   onRequestOptions?: IncomingRequestHandler<BoundAliases>
 
@@ -69,85 +63,84 @@ export interface KeyworkRequestHandler<BoundAliases extends {} | null = null> ex
    * An incoming request handler for all HTTP methods.
    * @remarks This will always be a lower priority than an explicitly defined method handler.
    *
-   * @see `WorkerRouteHandler`
    */
   onRequest?: IncomingRequestHandler<BoundAliases>
 }
 
 /**
+ * An extendable base class for handling incoming requests from a Worker.
+ *
  * In the "Module Worker" format, incoming HTTP events are handled by defining and exporting an object with method handlers corresponding to event names.
  *
  * To create a route handler, start by first extending the `KeyworkRequestHandler` class.
  * Your implementation must at least include a `onRequestGet` handler, or a method-agnostic `onRequest` handler.
  *
- * @example <caption>A simple Todo list handler</caption>
+ * @example
+ * A simple Todo list handler
  *
- *           ```ts
- *           interface GetTodoParams {
- *             todoID: string
- *           }
+ * ```ts
+ * interface GetTodoParams {
+ *   todoID: string
+ * }
  *
- *           class TodoListWorker extends KeyworkRequestHandler {
- *             onRequestGet: WorkerRouteHandler = async ({request, env, context, session}) => {
- *              const params = parsePathname<GetTodoParams>('/todos/:todoID', request)
- *              const todo = await fetchTodos(params.todoID)
+ * class TodoListWorker extends KeyworkRequestHandler {
+ *   onRequestGet: WorkerRouteHandler = async ({request, env, context, session}) => {
+ *     const params = parsePathname<GetTodoParams>('/todos/:todoID', request)
+ *     const todo = await fetchTodos(params.todoID)
  *
- *              if (!todo) throw new KeyworkResourceError('TODO does not exist')
+ *     if (!todo) throw new KeyworkResourceError('TODO does not exist')
  *
- *              return new JSONResponse(todo)
- *             }
- *           }
- *```
+ *     return new JSONResponse(todo)
+ *   }
+ * }
+ * ```
  *
- * @example <caption>Creating a more advanced request handler with a Keywork Collection.</caption>
+ * @example
+ * Creating a more advanced request handler with a Keywork Collection.
  *
- *           ```ts
- *           import {StatusCodes} from 'http-status-codes'
+ * ```ts
+ * import { StatusCodes } from 'http-status-codes'
+ * import { KeyworkCollection } from '@keywork/collections'
+ * import { KeyworkResourceError } from '@keywork/utils'
+ * import { IncomingRequestHandler, KeyworkRequestHandler, parsePathname } from '@keywork/responder'
  *
- *           import { KeyworkCollection } from '@keywork/collections'
- *           import { KeyworkResourceError } from '@keywork/utils'
- *           import { IncomingRequestHandler, KeyworkRequestHandler, parsePathname } from '@keywork/responder'
+ * interface ExampleAppBindings {
+ *   exampleApp: KVNamespace
+ * }
  *
- *           interface ExampleAppBindings {
- *             exampleApp: KVNamespace
- *           }
+ * interface GetUserParams {
+ *   userID: string
+ * }
  *
- *           interface GetUserParams {
- *             userID: string
- *           }
+ * interface ExampleUser {
+ *   firstName: string
+ *   lastName: string
+ *   role: 'member' | 'admin'
+ *   plan: 'free' | 'paid'
+ * }
  *
- *           interface ExampleUser {
- *             firstName: string
- *             lastName: string
- *             role: 'member' | 'admin'
- *             plan: 'free' | 'paid'
- *           }
+ * class UserAPIHandler extends KeyworkRequestHandler<ExampleAppBindings> {
+ *   onRequestGet: IncomingRequestHandler<ExampleAppBindings> = async ({ request, env }) => {
+ *     const { params } = parsePathname<GetUserParams>('/users/:userID', request)
+ *     const usersCollection = new KeyworkCollection<ExampleUser>(env.exampleApp, 'users')
+ *     const userRef = usersCollection.createDocumentReference(params.userID)
+ *     const userSnapshot = await userRef.fetchSnapshot()
+ *     if (!userSnapshot.exists) {
+ *       throw new KeyworkResourceError('User does not exist', StatusCodes.BAD_REQUEST)
+ *     }
+ *     const user = userSnapshot.value
+ *     if (user.plan !== 'paid') {
+ *       throw new KeyworkResourceError('You must have a paid plan', StatusCodes.PAYMENT_REQUIRED)
+ *     }
+ *     if (user.role !== 'admin') {
+ *       throw new KeyworkResourceError('Only an admin can access this page', StatusCodes.FORBIDDEN)
+ *     }
+ *   }
+ * }
+ * export default UserAPIHandler
+ * ```
  *
- *           class UserAPIHandler extends KeyworkRequestHandler<ExampleAppBindings> {
- *             onRequestGet: IncomingRequestHandler<ExampleAppBindings> = async ({ request, env }) => {
- *               const { params } = parsePathname<GetUserParams>('/users/:userID', request)
- *
- *               const usersCollection = new KeyworkCollection<ExampleUser>(env.exampleApp, 'users')
- *               const userRef = usersCollection.createDocumentReference(params.userID)
- *               const userSnapshot = await userRef.fetchSnapshot()
- *               if (!userSnapshot.exists) {
- *                 throw new KeyworkResourceError('User does not exist', StatusCodes.BAD_REQUEST)
- *               }
- *
- *               const user = userSnapshot.value
- *
- *               if (user.plan !== 'paid') {
- *                 throw new KeyworkResourceError('You must have a paid plan', StatusCodes.PAYMENT_REQUIRED)
- *               }
- *
- *               if (user.role !== 'admin') {
- *                 throw new KeyworkResourceError('Only an admin can access this page', StatusCodes.FORBIDDEN)
- *               }
- *             }
- *           }
- *
- *           export default UserAPIHandler
- *           ```
+ * @category Incoming Request Handlers
  */
 export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = null> {
   logger = new PrefixedLogger('Keywork Route Handler')
@@ -174,9 +167,9 @@ export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = nul
   }
 
   /**
-   * The Worker's primary incoming fetch handler. This delegates to a handler you define, such as `onGetRequest`.
+   * The Worker's primary incoming fetch handler. This delegates to a method-specfic handler you define, such as `onGetRequest`.
    * @remarks Generally, `KeyworkRequestHandler#fetch` should not be used within your app.
-   * This is automatically called by the Worker runtime.
+   * This is instead automatically called by the Worker runtime when an incoming request is received.
    */
   fetch(
     /** The incoming request. */

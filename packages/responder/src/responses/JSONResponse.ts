@@ -12,32 +12,30 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { CacheControlOptions } from '../headers/cacheControl.js'
+import { CacheControlDirectives } from '../headers/cacheControl.js'
 import { fileExtensionToContentTypeHeader } from '../headers/contentType.js'
 import { CachableResponse } from './CachableResponse.js'
 
 /**
  * A response sent to the client containing a JSON object.
+ *
  * @remarks Etag caching is supported when `JSONResponse` is constructed with the needed parameters.
  * You may want to disable caching in your browser development tools to avoid this behavior while debugging.
+ * @category HTTP Responses
  */
 export class JSONResponse extends CachableResponse {
-  /**
-   * @remarks Etag caching is supported when `JSONResponse` is constructed with the needed parameters.
-   * You may want to disable caching in your browser development tools to avoid this behavior while debugging.
-   *
-   * @param json A non-cyclical object capable of JSON serialization.
-   * @param request An optional request to check for etag headers.
-   * @param etag An optional etag for the given `json` parameter.
-   * @param headersInit Optional headers to add to the response.
-   * @param pretty Optional indenting of the JSON. Note that this may affect etag matching.
-   */
   constructor(
+    /** A non-cyclical object capable of JSON serialization. */
     json: {},
+    /** A request to check for etag headers. */
     request?: Request,
+    /** An etag for the given `json` parameter. */
     etag?: string,
-    cacheControlOptions?: CacheControlOptions,
+    /** Options to generate a cache control header. */
+    cacheControlOptions?: CacheControlDirectives,
+    /** Headers to add to the response. */
     headersInit?: HeadersInit,
+    /** Indenting of the JSON. Note that this may affect etag matching. */
     pretty = false
   ) {
     super(

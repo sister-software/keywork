@@ -33,9 +33,10 @@ export interface IncomingRequestData<BoundAliases extends {} | null = null> {
 
 /**
  * An incoming request handler.
- * @remarks Your implementation should always return a response. Long running
- * @remarks The optional `ForcedParams` generic type is defined at compile time, but you must supply them.
- * @remarks Always attempt to handle runtime errors gracefully, and respond with `ErrorResponse` when necessary.
+ * @remarks
+ * - Your implementation should always return a response.
+ * - The optional `ForcedParams` generic type is defined at compile time, but you must supply them.
+ * - Always attempt to handle runtime errors gracefully, and respond with `KeyworkResourceError` when necessary.
  *
  */
 export type IncomingRequestHandler<BoundAliases extends {} | null = null, AdditionalData extends {} | null = null> = (

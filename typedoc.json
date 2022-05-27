@@ -1,0 +1,22 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPoints": [
+    "./packages/utils/index.ts",
+    "./packages/responder/index.ts",
+    "./packages/react-isomorphic/index.ts",
+    "./packages/collections/index.ts"
+  ],
+  "excludeInternal": true,
+  "out": "docs",
+  "darkHighlightTheme": "monokai",
+  "lightHighlightTheme": "monokai",
+
+  "cname": "keywork.app",
+  "exclude": ["**/test/**"],
+  "excludeExternals": true,
+  "cleanOutputDir": true,
+  "name": "Keywork",
+  "hideGenerator": true,
+  "plugin": ["./node_modules/typedoc-neo-theme/index.js"],
+  "theme": "./node_modules/typedoc-neo-theme/bin/default"
+}

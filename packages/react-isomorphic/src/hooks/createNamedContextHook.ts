@@ -17,24 +17,24 @@ import { createContext, useContext } from 'react'
 /**
  * A convenience wrapper around `React.createContext` that creates a context and hook for the child components within a Provider's context.
  *
- * @example <caption>Creating a named context Provider with a computed value.</caption>
- *           ```tsx
- *           const [WidgetsContext, useWidgetsContext] = createNamedContextHook<WidgetsProvider>()
- *           // Note that the `WidgetsContext` is not exported if the provider needs additional logic.
- *           export { useWidgetsContext }
+ * @example
+ * Creating a named context Provider with a computed value.
  *
- *           // Instead, a component is declared to pass down a computed value.
- *           export const WidgetProvider: React.FC<WidgetProviderProps> = ({children}) => {
- *             // Always use a memoized value to prevent rerenders.
- *             const value = useMemo<WidgetsProvider>(
- *               () => ({
- *                 // Some combination of props go here...
- *               }),
- *               [dep1, dep2, depN]
- *               )
+ * #### `WidgetsProvider.tsx`
  *
- *               return <WidgetsContext.Provider value={value}>{children}</WidgetsContext.Provider>
- *             }
+ * ```tsx
+ * const [WidgetsContext, useWidgetsContext] = createNamedContextHook<WidgetsProvider>()
+ * // Note that the `WidgetsContext` is not exported if the provider needs additional logic.
+ * export { useWidgetsContext }
+ *
+ * // Instead, a component is declared to pass down a computed value.
+ * export const WidgetProvider: React.FC<WidgetProviderProps> = ({children}) => {
+ *   // Always use a memoized value to prevent rerenders.
+ *   // Some combination of props go here...
+ *   const value = useMemo<WidgetsProvider>(() => ({}), [dep1, dep2, depN])
+ *
+ *   return <WidgetsContext.Provider value={value}>{children}</WidgetsContext.Provider>
+ * }
  * ```
  * @param defaultValue
  * @returns {[React.Context<T | undefined>, () => NonNullable<T>]} contextTuple

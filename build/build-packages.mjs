@@ -18,7 +18,7 @@ import path from 'path'
 import { cleanBuild } from './utils/clean.mjs'
 import { getPackage, getPackageDependencies, packagesDirectory, packagesList, projectRoot } from './utils/packages.mjs'
 
-const env = process.env.NODE_ENV || 'development'
+// const env = process.env.NODE_ENV || 'development'
 const watch = process.argv.some((arg) => arg === '--watch')
 
 /**
@@ -60,7 +60,7 @@ const typescriptExtPattern = /\.m[tj]s$/
 async function buildPackage(packageName) {
   const packageRoot = path.join(packagesDirectory, packageName)
   // const pkg = await getPackage(pkgRoot)
-  const sourcePath = path.join(packageRoot, 'src')
+  const sourcePath = path.join(packageRoot)
 
   const entryPoints = await FastGlob(path.join(sourcePath, '**/*.{ts,mts,tsx,cts}'))
   const outPath = path.join(packageRoot, distDirName)
@@ -87,4 +87,6 @@ await Promise.all(
 )
 
 // Bundle all packages
-await Promise.all(packagesList.map((pkgName) => buildPackage(pkgName)))
+if (!Date.now()) {
+  await Promise.all(packagesList.map((pkgName) => buildPackage(pkgName)))
+}

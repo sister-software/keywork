@@ -14,30 +14,28 @@
 
 import { StatusCodes } from 'http-status-codes'
 import { isETagMatch } from '../etags/common.js'
-import { CacheControlOptions, createCacheControlHeader } from '../headers/cacheControl.js'
+import { CacheControlDirectives, createCacheControlHeader } from '../headers/cacheControl.js'
 import { NotModifiedResponse } from './NotModifiedResponse.js'
 
 /**
  * A client-side cachable response.
+ *
  * @remarks Etag caching is supported when `CachableResponse` is constructed with the needed parameters.
  * You may want to disable caching in your browser development tools to avoid this behavior while debugging.
+
+* @category HTTP Responses
  */
 export class CachableResponse extends Response {
-  /**
-   * @remarks Etag caching is supported when `CachableResponse` is constructed with the needed parameters.
-   * You may want to disable caching in your browser development tools to avoid this behavior while debugging.
-   *
-   * @param body A body sent with the response.
-   * @param request An optional request to check for etag headers.
-   * @param etag An optional etag for the given `json` parameter.
-   * @param cacheControlOptions Options to generate a cache control header.
-   * @param headersInit Optional headers to add to the response.
-   */
   constructor(
+    /** A body sent with the response. */
     body: BodyInit | null,
+    /** A request to check for etag headers. */
     request?: Request,
+    /** An etag for the given `body` parameter. */
     etag?: string | null,
-    cacheControlOptions?: Partial<CacheControlOptions>,
+    /** Options to generate a cache control header. */
+    cacheControlOptions?: Partial<CacheControlDirectives>,
+    /** headers to add to the response. */
     headersInit?: HeadersInit
   ) {
     if (request && isETagMatch(request, etag)) {

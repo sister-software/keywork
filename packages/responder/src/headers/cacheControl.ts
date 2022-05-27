@@ -18,7 +18,12 @@ export type CacheControlHeader = HeadersInit & {
   'Cache-Control': string
 }
 
-export interface CacheControlOptions {
+/**
+ * Directives for the Cache-Control header.
+ * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control MDN}
+ * @category HTTP Responses
+ */
+export interface CacheControlDirectives {
   [cacheControlKey: string]: number | boolean | string
 
   'max-age': number
@@ -26,7 +31,7 @@ export interface CacheControlOptions {
   immutable: boolean
 }
 
-export function createCacheControlHeader(options: Partial<CacheControlOptions> | undefined): CacheControlHeader {
+export function createCacheControlHeader(options: Partial<CacheControlDirectives> | undefined): CacheControlHeader {
   options = options || { 'max-age': DURATION_ONE_WEEK, 'must-revalidate': true }
 
   const headerValues: string[] = []

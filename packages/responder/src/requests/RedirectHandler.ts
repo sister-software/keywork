@@ -18,15 +18,19 @@ import { KeyworkRequestHandler } from './KeyworkRequestHandler.js'
 
 /**
  * A higher-order function for redirecting requests via `IncomingRequestHandler`.
+ *
  * @returns The incoming request handler.
  *
- * @example <caption>Creating a Worker that just redirects incoming requests.</caption>
+ * @example
+ * Creating a Worker that just redirects incoming requests.
  *
- *           ```ts
- *           const redirectToExample = new RedirectHandler('https://example.com')
+ * ```ts
+ * const redirectToExample = new RedirectHandler('https://example.com')
  *
- *           export default redirectToExample
- *           ```
+ * export default redirectToExample
+ * ```
+ *
+ * @category Incoming Request Handlers
  */
 export class RedirectHandler extends KeyworkRequestHandler {
   constructor(

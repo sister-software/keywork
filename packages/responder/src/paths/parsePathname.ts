@@ -21,9 +21,9 @@ import { isRequestLike, isURLLike } from './common.js'
 /**
  * Performs pattern matching on a URL pathname and returns information about the match.
  *
- * @see https://reactrouter.com/docs/en/v6/api#matchpath
+ * @see {@link https://reactrouter.com/docs/en/v6/api#matchpath}
  *
- * @throws {@link KeyworkResourceAccessError}
+ * @throws {@link KeyworkResourceError}
  */
 export function parsePathname<ExpectedParams extends {} | null>(
   pattern: PathPattern<string> | string,

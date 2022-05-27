@@ -17,6 +17,11 @@ import { parse as parseCookies, serialize as serializeCookies } from 'cookie'
 
 export const DEFAULT_SESSION_COOKIE_KEY = '_keyworkSessionID'
 
+/**
+ * A simple session manager to aid in authenticating users.
+ * @beta This is under active development.
+ * @category Sessions & Cookies
+ */
 export class KeyworkSession {
   public sessionID: string
   public readonly isNewSession: boolean

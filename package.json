@@ -40,15 +40,14 @@
     "types:extract": "node --experimental-specifier-resolution=node ./build/utils/types.mjs",
     "types:bundle": "npm run types:build && npm run types:extract",
     "prepublishOnly": "npm run types:bundle",
-    "docs:generate": "api-documenter markdown --input-folder ./.tmp/types --output-folder ./docs",
+    "docs:generate": "typedoc",
     "test": "jest"
   },
   "publishConfig": {},
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
     "@cloudflare/workers-types": "^3.10.0",
-    "@microsoft/api-documenter": "^7.17.16",
-    "@microsoft/api-extractor": "^7.23.1",
+    "@microsoft/api-extractor": "^7.24.2",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
     "esbuild": "^0.14.38",
@@ -67,6 +66,7 @@
     "prettier-plugin-organize-imports": "^2.3.4",
     "rimraf": "^3.0.2",
     "tsconfig-paths": "^4.0.0",
+    "typedoc": "beta",
     "typescript": "beta"
   },
   "browserslist": [

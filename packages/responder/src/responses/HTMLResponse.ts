@@ -12,27 +12,25 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { CacheControlOptions } from '../headers/cacheControl.js'
+import { CacheControlDirectives } from '../headers/cacheControl.js'
 import { fileExtensionToContentTypeHeader } from '../headers/contentType.js'
 import { CachableResponse } from './CachableResponse.js'
 
 /**
  * A cachable request containing HTML content.
+ * @category HTTP Responses
  */
 export class HTMLResponse extends CachableResponse {
-  /**
-   *
-   * @param htmlContent A string containing a full HTML document, or a readable stream.
-   * @param request An optional request to check for etag headers.
-   * @param etag An optional etag for the given `json` parameter.
-   * @param cacheControlOptions Options to generate a cache control header.
-   * @param headersInit Optional headers to add to the response.
-   */
   constructor(
+    /** A string containing a full HTML document, or a readable stream. */
     htmlContent: string | ReadableStream,
+    /** An optional request to check for etag headers. */
     request?: Request,
+    /** An optional etag for the given `json` parameter. */
     etag?: string,
-    cacheControlOptions?: CacheControlOptions,
+    /** Options to generate a cache control header. */
+    cacheControlOptions?: CacheControlDirectives,
+    /** Headers to add to the response. */
     headersInit?: HeadersInit
   ) {
     super(htmlContent, request, etag, cacheControlOptions, {

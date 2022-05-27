@@ -21,19 +21,20 @@ import { SSRPropsLike } from './props'
  *
  * @remarks While this allows `PathPattern` objects, this matching isn't yet fully supported.
  *
- * @example <caption>A collection of patterns to their respective React components.</caption>
- * Order your routes from most to least specific:
+ * @example
+ * A collection of patterns to their respective React components.
  *
- *           ```ts
- *           export const routeRecords = new PatternToPageComponentMap<any>([
- *             ['/todos/:todoSlug/:subTaskSlug/', TodoSubTaskPage],
- *             ['/todos/:todoSlug/', TodoPage],
- *             ['/todos/', TodosIndexPage],
- *             ['/about/', AboutPage],
- *             ['/privacy/', PrivacyPage],
- *             ['/', IndexPage],
- *             ['*', NotFoundErrorPage],
- *           ])
+ * ```ts
+ * // Order your routes from most to least specific:
+ * export const routeRecords = new PatternToPageComponentMap<any>([
+ *   ['/todos/:todoSlug/:subTaskSlug/', TodoSubTaskPage],
+ *   ['/todos/:todoSlug/', TodoPage],
+ *   ['/todos/', TodosIndexPage],
+ *   ['/about/', AboutPage],
+ *   ['/privacy/', PrivacyPage],
+ *   ['/', IndexPage],
+ *   ['*', NotFoundErrorPage],
+ * ])
  * ```
  */
 export class PatternToPageComponentMap<StaticProps extends SSRPropsLike> extends Map<

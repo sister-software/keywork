@@ -105,9 +105,14 @@ type _ParamParseSegment<Segment extends string> =
     Segment extends `:${infer Remaining}`
     ? Remaining
     : ParamParseFailed
-// Attempt to parse the given string segment. If it fails, then just return the
-// plain string type as a default fallback. Otherwise return the union of the
-// parsed string literals that were referenced as dynamic segments in the route.
+
+/**
+ * Attempt to parse the given string segment. If it fails, then just return the
+ * plain string type as a default fallback. Otherwise return the union of the
+ * parsed string literals that were referenced as dynamic segments in the route.
+ *
+ * @internal
+ */
 export type ParamParseKey<Segment extends string> = _ParamParseSegment<Segment> extends string
   ? _ParamParseSegment<Segment>
   : string

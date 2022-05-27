@@ -1,6 +1,3 @@
-# 🌈 Keywork
-
-
 **Keywork** is a batteries-included, _magic-free_, library for building web apps on Cloudflare Workers.
 
 ## Features
@@ -15,7 +12,6 @@
 
 ### `@keywork/responder`
 
-![NPM](https://img.shields.io/npm/l/@keywork/responder)
 ![npm (scoped)](https://img.shields.io/npm/v/@keywork/responder)
 ![npm](https://img.shields.io/npm/dm/@keywork/responder)
 
@@ -28,7 +24,6 @@ Everything you need to handle incoming request in a Worker environment.
 
 ### `@keywork/react-isomorphic`
 
-![NPM](https://img.shields.io/npm/l/@keywork/react-isomorphic)
 ![npm (scoped)](https://img.shields.io/npm/v/@keywork/react-isomorphic)
 ![npm](https://img.shields.io/npm/dm/@keywork/react-isomorphic)
 
@@ -42,7 +37,6 @@ Everything you need to serve React apps from your Worker.
 
 ### `@keywork/collections` (Beta)
 
-![NPM](https://img.shields.io/npm/l/@keywork/collections)
 ![npm (scoped)](https://img.shields.io/npm/v/@keywork/collections)
 ![npm](https://img.shields.io/npm/dm/@keywork/collections)
 
@@ -55,7 +49,6 @@ The missing piece that unlocks the full power of storing and querying data from 
 
 ### `@keywork/utils`
 
-![NPM](https://img.shields.io/npm/l/@keywork/utils)
 ![npm (scoped)](https://img.shields.io/npm/v/@keywork/utils)
 ![npm](https://img.shields.io/npm/dm/@keywork/utils)
 

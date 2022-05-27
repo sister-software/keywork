@@ -28,15 +28,18 @@ export interface WorkersPagesAssetsBinding {
  *
  * @remarks This binding only exists in Worker __Sites__.
  * Worker __Pages__ instead uses `env.ASSETS`
- * @see https://developers.cloudflare.com/pages/platform/functions/#advanced-mode
  *
- * @remarks When using ESBuild, ensure that the virtual module `__STATIC_CONTENT_MANIFEST`
- * is marked as external. e.g.
+ *
+ * When using ESBuild, ensure that the virtual module `__STATIC_CONTENT_MANIFEST`
+ * is marked as external:
+ *
  * ```js
  * import {build} from 'esbuild'
  *
  * build({ external: ['__STATIC_CONTENT_MANIFEST']})
  * ```
+ *
+ * @see {@link https://developers.cloudflare.com/pages/platform/functions/#advanced-mode Cloudflare Worker Pages API}
  */
 export interface WorkersSiteStaticContentBinding {
   __STATIC_CONTENT: KVNamespace
@@ -44,24 +47,46 @@ export interface WorkersSiteStaticContentBinding {
 }
 
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
+import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
+import { KeyworkResourceError } from '@keywork/utils'
+import { IncomingRequestHandler } from '../requests/common.js'
+import { KeyworkRequestHandler } from '../requests/KeyworkRequestHandler.js'
 import { WorkerEnvFetchBinding } from './fetch.js'
 
 // import manifestJSON from '__STATIC_CONTENT_MANIFEST'
-// const assetManifest = JSON.parse(manifestJSON)
 
-export class KeyworkAssetHandler {
-  public async fetchStaticAsset(request: Request, env: WorkersSiteStaticContentBinding, ctx: ExecutionContext) {
+/**
+ * Handles incoming requests for static assets uploaded to Cloudflare KV.
+ * @beta This is under active development
+  @category Static Asset Management
+ */
+export class KeyworkAssetHandler extends KeyworkRequestHandler<WorkersSiteStaticContentBinding> {
+  protected assetManifest: AssetManifestType
+  constructor(rawAssetManifest: string) {
+    super()
+
+    try {
+      this.assetManifest = JSON.parse(rawAssetManifest)
+    } catch (error) {
+      this.logger.error(error)
+      this.logger.warn('Is this well-formed JSON?', rawAssetManifest)
+      throw new KeyworkResourceError('An error occurred while parsing the asset manifest.')
+    }
+  }
+  onRequestGet: IncomingRequestHandler<WorkersSiteStaticContentBinding, null> = ({ env, request, context }) => {
     return getAssetFromKV(
       {
         request,
         waitUntil(promise) {
-          return ctx.waitUntil(promise)
+          return context.waitUntil(promise)
         },
       },
       {
         ASSET_NAMESPACE: env.__STATIC_CONTENT,
-        // ASSET_MANIFEST: assetManifest,
+        ASSET_MANIFEST: this.assetManifest,
       }
     )
   }
 }
+
+export type { AssetManifestType }
