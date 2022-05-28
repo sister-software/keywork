@@ -22,14 +22,10 @@ export interface ErrorJSONBody {
  * An error class that feels fits nicely into an incoming HTTP request handler.
  * This pairs well with the `http-status-codes` NPM package.
  *
- * @remarks Generally, uncaught instances of `KeyworkResourceError` will fail gracefully by any Worker using `KeyworkRequestHandler`.
- * This approach can free your Worker's incoming request handler from wrapping every failure operation with try/catch.
- * @see {@link responder.KeyworkRequestHandler} for a more detailed example.
- *
  * @example
  * Check if a user has permission to do some action.
  *
- * ```ts
+ * ```typescript
  * if (isLoggedIn(someUser))
  *   throw new KeyworkResourceError("You must be logged in to do that", StatusCodes.UNAUTHORIZED)
  * }
@@ -37,6 +33,7 @@ export interface ErrorJSONBody {
  *   throw new KeyworkResourceError("Only an admin can access that", StatusCodes.FORBIDDEN)
  * }
  * ```
+ * @public
  */
 export class KeyworkResourceError extends Error {
   constructor(public statusText: string, public status: number = StatusCodes.INTERNAL_SERVER_ERROR) {

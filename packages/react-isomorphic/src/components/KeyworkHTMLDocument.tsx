@@ -14,7 +14,7 @@
 
 import { KeyworkQueryParamKeys } from '@keywork/utils'
 import classNames from 'classnames'
-import React from 'react'
+import React, { FC, HtmlHTMLAttributes, ReactFragment, ReactNode } from 'react'
 
 export interface KeyworkHTMLDocumentProps {
   location: URL
@@ -22,22 +22,22 @@ export interface KeyworkHTMLDocumentProps {
   browserIdentifier?: string
   className?: string
   buildId?: string
-  children: React.ReactNode
+  children: ReactNode
   /** Document title. */
   title?: string
   /** Optional `<meta>` tags */
-  meta?: React.ReactFragment
+  meta?: ReactFragment
   /** Optional `<link>` tags */
-  link?: React.ReactFragment
+  link?: ReactFragment
   /** Optional `<style>` tags */
-  style?: React.ReactFragment
+  style?: ReactFragment
   /** Optional `<script>` tags */
-  script?: React.ReactFragment
+  script?: ReactFragment
 
-  htmlAttributes?: React.HtmlHTMLAttributes<HTMLHtmlElement>
+  htmlAttributes?: HtmlHTMLAttributes<HTMLHtmlElement>
 }
 
-export type KeyworkHTMLDocumentComponent = React.FC<KeyworkHTMLDocumentProps>
+export type KeyworkHTMLDocumentComponent = FC<KeyworkHTMLDocumentProps>
 
 /**
  * A server-side render of a given HTML document.

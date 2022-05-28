@@ -1,4 +1,9 @@
 /**
+ * @module Collections
+ * @packageDocumentation
+ * A NoSQL ODM library for Cloudflare Workers KV.
+ */
+/**
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -10,12 +15,6 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- */
-
-/**
- * A NoSQL ODM library for Cloudflare Workers KV.
- * @module Collections
- * @packageDocumentation
  */
 
 export * from './src/common.js'

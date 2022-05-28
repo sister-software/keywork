@@ -21,7 +21,6 @@ export const convertJSONToETaggableString = (value: {}): string => {
 
 /**
  * Types that can be converted into ETags.
- * @ignore
  */
 export type ETaggable = string | ArrayBuffer
 
@@ -29,7 +28,7 @@ export type ETaggable = string | ArrayBuffer
  * Precomputed etag for an empty entity.
  * @internal
  */
-export const EMPTY_ETAG = '"0-2jmj7l5rSw0yVb/vlWAYkK/YBwk"'
+export const _EMPTY_ETAG = '"0-2jmj7l5rSw0yVb/vlWAYkK/YBwk"'
 
 /**
  * Utility function to check if a given request's headers match an etag.

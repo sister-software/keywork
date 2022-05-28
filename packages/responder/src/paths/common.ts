@@ -65,12 +65,12 @@ export type _Mutable<T> = {
 /**
  * @internal
  */
-type ParamParseFailed = { failed: true }
+export type _ParamParseFailed = { failed: true }
 
 /**
  * @internal
  */
-type _ParamParseSegment<Segment extends string> =
+export type _ParamParseSegment<Segment extends string> =
   // Check here if there exists a forward slash in the string.
   Segment extends `${infer LeftSegment}/${infer RightSegment}`
     ? // If there is a forward slash, then attempt to parse each side of the
@@ -90,21 +90,21 @@ type _ParamParseSegment<Segment extends string> =
           // can, then the result is just right, else it's a failure.
           RightResult extends string
           ? RightResult
-          : ParamParseFailed
-        : ParamParseFailed
+          : _ParamParseFailed
+        : _ParamParseFailed
       : // If the left side didn't parse into a param, then just check the right
       // side.
       _ParamParseSegment<RightSegment> extends infer RightResult
       ? RightResult extends string
         ? RightResult
-        : ParamParseFailed
-      : ParamParseFailed
+        : _ParamParseFailed
+      : _ParamParseFailed
     : // If there's no forward slash, then check if this segment starts with a
     // colon. If it does, then this is a dynamic segment, so the result is
     // just the remainder of the string. Otherwise, it's a failure.
     Segment extends `:${infer Remaining}`
     ? Remaining
-    : ParamParseFailed
+    : _ParamParseFailed
 
 /**
  * Attempt to parse the given string segment. If it fails, then just return the
@@ -113,7 +113,7 @@ type _ParamParseSegment<Segment extends string> =
  *
  * @internal
  */
-export type ParamParseKey<Segment extends string> = _ParamParseSegment<Segment> extends string
+export type _ParamParseKey<Segment extends string> = _ParamParseSegment<Segment> extends string
   ? _ParamParseSegment<Segment>
   : string
 /**

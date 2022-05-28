@@ -1,0 +1,39 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/tsdoc/v0/tsdoc.schema.json",
+  "tagDefinitions": [
+    {
+      "tagName": "@copyright",
+      "allowMultiple": true,
+      "syntaxKind": "block"
+    },
+    {
+      "tagName": "@file",
+      "allowMultiple": true,
+      "syntaxKind": "block"
+    },
+    {
+      "tagName": "@author",
+      "allowMultiple": true,
+      "syntaxKind": "block"
+    },
+    {
+      "tagName": "@license",
+      "allowMultiple": true,
+      "syntaxKind": "block"
+    },
+    {
+      "tagName": "@category",
+      "allowMultiple": true,
+      "syntaxKind": "block"
+    },
+    {
+      "tagName": "@module",
+      "allowMultiple": true,
+      "syntaxKind": "block"
+    }
+  ],
+  "supportForTags": {
+    "@category": true,
+    "@module": true
+  }
+}

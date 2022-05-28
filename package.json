@@ -35,19 +35,19 @@
     "packages/*"
   ],
   "scripts": {
-    "build": "node --experimental-specifier-resolution=node ./build/build-packages.mjs",
-    "types:build": "tsc -b",
-    "types:extract": "node --experimental-specifier-resolution=node ./build/utils/types.mjs",
-    "types:bundle": "npm run types:build && npm run types:extract",
-    "prepublishOnly": "npm run types:bundle",
-    "docs:generate": "typedoc",
+    "build:packages": "node --experimental-specifier-resolution=node ./build/build-packages.mjs",
+    "build:types": "tsc -b && node --experimental-specifier-resolution=node ./build/utils/types.mjs",
+    "build:docs": "api-documenter markdown --input-folder temp/ --output-folder site/docs/api/",
+    "build:all": "npm run build:packages && npm run build:docs",
+    "prepublishOnly": "npm run build:all",
     "test": "jest"
   },
-  "publishConfig": {},
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
     "@cloudflare/workers-types": "^3.10.0",
+    "@microsoft/api-documenter": "^7.17.16",
     "@microsoft/api-extractor": "^7.24.2",
+    "@microsoft/tsdoc-config": "^0.16.1",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
     "esbuild": "^0.14.38",
@@ -57,6 +57,7 @@
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-react": "^7.29.4",
     "eslint-plugin-react-hooks": "^4.5.0",
+    "eslint-plugin-tsdoc": "^0.2.16",
     "fast-glob": "^3.2.11",
     "jest": "^28.1.0",
     "miniflare": "^2.4.0",
@@ -66,7 +67,6 @@
     "prettier-plugin-organize-imports": "^2.3.4",
     "rimraf": "^3.0.2",
     "tsconfig-paths": "^4.0.0",
-    "typedoc": "beta",
     "typescript": "beta"
   },
   "browserslist": [

@@ -23,7 +23,7 @@ import {
   KeyworkRequestHandler,
 } from '@keywork/responder'
 import { KeyworkQueryParamKeys } from '@keywork/utils'
-import React from 'react'
+import React, { FC } from 'react'
 import {
   KeyworkHTMLDocument,
   KeyworkHTMLDocumentComponent,
@@ -34,7 +34,7 @@ import {
 } from '../components/index.js'
 import { GetStaticPropsHandler, SSRPropsLike } from './props.js'
 import { ReactRenderStreamResult, renderReactStream } from './renderReactStream.js'
-import { SSRPropsEmbed } from './SSRPropsEmbed.js'
+import { _SSRPropsEmbed } from './SSRPropsEmbed.js'
 
 async function renderStaticPropsAsJSON(request: Request, staticProps: NonNullable<SSRPropsLike>): Promise<Response> {
   const etag = await generateETag(convertJSONToETaggableString(staticProps))
@@ -46,7 +46,7 @@ async function renderStaticPropsAsComponentStream<StaticProps extends NonNullabl
   request: Request,
   staticProps: StaticProps,
   /** The React component to render for this specific page. */
-  PageComponent: React.FC<StaticProps>,
+  PageComponent: FC<StaticProps>,
   DocumentComponent?: KeyworkHTMLDocumentComponent,
   Providers?: KeyworkProvidersComponent
 ): Promise<Response> {
@@ -63,7 +63,7 @@ async function renderStaticPropsAsComponentStream<StaticProps extends NonNullabl
           <DocumentComponent browserIdentifier={browserIdentifier} location={location}>
             <PageComponent {...staticProps} />
 
-            <SSRPropsEmbed staticProps={staticProps} />
+            <_SSRPropsEmbed staticProps={staticProps} />
           </DocumentComponent>
         </Providers>
       </KeyworkRouter>
@@ -99,7 +99,7 @@ export abstract class KeyworkStaticPropsRequestHandler<
   BoundAliases extends {} | null = null
 > extends KeyworkRequestHandler<BoundAliases> {
   /** The React component to render for this specific page. */
-  abstract PageComponent: React.FC<StaticProps>
+  abstract PageComponent: FC<StaticProps>
 
   /**
    * A React component which wraps the SSR routes.

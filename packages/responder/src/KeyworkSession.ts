@@ -19,7 +19,7 @@ export const DEFAULT_SESSION_COOKIE_KEY = '_keyworkSessionID'
 
 /**
  * A simple session manager to aid in authenticating users.
- * @beta This is under active development.
+ * This is under active development.
  * @category Sessions & Cookies
  */
 export class KeyworkSession {

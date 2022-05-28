@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import React from 'react'
+import React, { FC } from 'react'
 import { globalScopeSSRKey, SSRPropsLike } from './props.js'
 
 export interface SSRProviderProps<StaticProps extends NonNullable<SSRPropsLike>> {
@@ -23,7 +23,7 @@ export interface SSRProviderProps<StaticProps extends NonNullable<SSRPropsLike>>
  * Embeds the given SSR props in the DOM for client-side hydration.
  * @internal This is primarily used by `KeyworkStaticPropsRequestHandler`
  */
-export const SSRPropsEmbed: React.FC<SSRProviderProps<any>> = ({ staticProps }) => {
+export const _SSRPropsEmbed: FC<SSRProviderProps<any>> = ({ staticProps }) => {
   return (
     <script
       id="__ssr_props-container"

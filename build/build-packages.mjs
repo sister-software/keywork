@@ -12,11 +12,13 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+/* eslint-disable tsdoc/syntax */
+
 import esbuild from 'esbuild'
 import FastGlob from 'fast-glob'
 import path from 'path'
-import { cleanBuild } from './utils/clean.mjs'
-import { getPackage, getPackageDependencies, packagesDirectory, packagesList, projectRoot } from './utils/packages.mjs'
+import { generateDocs } from './utils/extractTypes.mjs'
+import { getPackage, getPackageDependencies, packagesDirectory, projectRoot } from './utils/packages.mjs'
 
 // const env = process.env.NODE_ENV || 'development'
 const watch = process.argv.some((arg) => arg === '--watch')
@@ -59,7 +61,6 @@ const typescriptExtPattern = /\.m[tj]s$/
  */
 async function buildPackage(packageName) {
   const packageRoot = path.join(packagesDirectory, packageName)
-  // const pkg = await getPackage(pkgRoot)
   const sourcePath = path.join(packageRoot)
 
   const entryPoints = await FastGlob(path.join(sourcePath, '**/*.{ts,mts,tsx,cts}'))
@@ -76,17 +77,19 @@ async function buildPackage(packageName) {
   })
 }
 
-// Clear previous builds.
-await Promise.all(
-  packagesList.map((packageName) => {
-    const packageRoot = path.join(packagesDirectory, packageName)
-    const outPath = path.join(packageRoot, distDirName)
+// // Clear previous builds.
+// await Promise.all(
+//   packagesList.map((packageName) => {
+//     const packageRoot = path.join(packagesDirectory, packageName)
+//     const outPath = path.join(packageRoot, distDirName)
 
-    return cleanBuild(outPath)
-  })
-)
+//     return cleanBuild(outPath)
+//   })
+// )
 
-// Bundle all packages
-if (!Date.now()) {
-  await Promise.all(packagesList.map((pkgName) => buildPackage(pkgName)))
-}
+// console.log(`Building ${packagesList.length} packages...`)
+// await Promise.all(packagesList.map((pkgName) => buildPackage(pkgName)))
+
+// await generateTypes()
+// await runAPIExtractor()
+await generateDocs()

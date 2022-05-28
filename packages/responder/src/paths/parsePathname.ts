@@ -23,7 +23,7 @@ import { isRequestLike, isURLLike } from './common.js'
  *
  * @see {@link https://reactrouter.com/docs/en/v6/api#matchpath}
  *
- * @throws {@link KeyworkResourceError}
+ * @throws {@link @keywork/utils/KeyworkResourceError}
  */
 export function parsePathname<ExpectedParams extends {} | null>(
   pattern: PathPattern<string> | string,

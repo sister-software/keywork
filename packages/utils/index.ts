@@ -1,4 +1,10 @@
 /**
+ * Common core utilities for building apps in Cloudflare Workers.
+ * @module Utilities
+ * @packageDocumentation
+ */
+
+/**
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -10,12 +16,6 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- */
-
-/**
- * Common core utilities for building apps in Cloudflare Workers.
- * @module Utilities
- * @packageDocumentation
  */
 
 export * from './src/datetime.js'

@@ -13,7 +13,7 @@
  */
 
 import { KeyworkResourceError } from '@keywork/utils'
-import React from 'react'
+import { ReactNode } from 'react'
 import {
   ReactDOMServerReadableStream,
   renderToReadableStream as RenderToReadableStream,
@@ -38,7 +38,7 @@ export interface ReactRenderStreamErrorResult {
 export type ReactRenderStreamResult = ReactRenderStreamSuccessResult | ReactRenderStreamErrorResult
 
 export async function renderReactStream(
-  children: React.ReactNode,
+  children: ReactNode,
   options?: RenderToReadableStreamOptions
 ): Promise<ReactRenderStreamResult> {
   const controller = new AbortController()

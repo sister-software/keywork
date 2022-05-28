@@ -18,6 +18,30 @@ import { ErrorResponse } from '../responses/ErrorResponse.js'
 import { HTTPMethod, IncomingRequestData, IncomingRequestHandler, RequestWithCFProperties } from './common.js'
 
 /**
+ *
+ * Foo bar baz
+ * @example
+ * A simple Todo list handler
+ *
+ * ```ts
+ * interface GetTodoParams {
+ *   todoID: string
+ * }
+ *
+ * class TodoListWorker extends KeyworkRequestHandler {
+ *   onRequestGet: WorkerRouteHandler = async ({request, env, context, session}) => {
+ *     const params = parsePathname<GetTodoParams>('/todos/:todoID', request)
+ *     const todo = await fetchTodos(params.todoID)
+ *
+ *     if (!todo) throw new KeyworkResourceError('TODO does not exist')
+ *
+ *     return new JSONResponse(todo)
+ *   }
+ * }
+ * ```
+ */
+
+/**
  * An object containing the Worker's primary fetch handler for all incoming requests.
  * Usually, this is the Worker's `default` and only export.
  */

@@ -58,7 +58,7 @@ import { WorkerEnvFetchBinding } from './fetch.js'
 /**
  * Handles incoming requests for static assets uploaded to Cloudflare KV.
  * @beta This is under active development
-  @category Static Asset Management
+ * @category {Static Asset Management}
  */
 export class KeyworkAssetHandler extends KeyworkRequestHandler<WorkersSiteStaticContentBinding> {
   protected assetManifest: AssetManifestType

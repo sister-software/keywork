@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import React, { useMemo } from 'react'
+import React, { FC, ReactNode, useMemo } from 'react'
 import { createContextAndNamedHook } from '../hooks/createNamedContextHook.js'
 
 export interface KeyworkRouterProvider {
@@ -27,10 +27,10 @@ export { useKeyworkRouter }
 
 export interface KeyworkRouterProps {
   initialLocation: URL
-  children: React.ReactNode
+  children: ReactNode
 }
 
-export const KeyworkRouter: React.FC<KeyworkRouterProps> = ({ initialLocation, children }) => {
+export const KeyworkRouter: FC<KeyworkRouterProps> = ({ initialLocation, children }) => {
   const value = useMemo<KeyworkRouterProvider>(
     () => ({
       location: initialLocation,

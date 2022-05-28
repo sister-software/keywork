@@ -14,7 +14,7 @@
 
 import { KeyworkResourceError, stringToArrayBuffer } from '@keywork/utils'
 import { StatusCodes } from 'http-status-codes'
-import { EMPTY_ETAG, ETaggable } from './common.js'
+import { ETaggable, _EMPTY_ETAG } from './common.js'
 
 export interface EntityToETagOptions {
   /**
@@ -43,7 +43,7 @@ export async function generateETag(entity: ETaggable, options?: EntityToETagOpti
   if (entity instanceof ArrayBuffer) {
     entityBuffer = entity
   } else if (typeof entity === 'string') {
-    if (!entity.length) return EMPTY_ETAG
+    if (!entity.length) return _EMPTY_ETAG
     entityBuffer = stringToArrayBuffer(entity)
   } else {
     throw new KeyworkResourceError(
@@ -53,7 +53,7 @@ export async function generateETag(entity: ETaggable, options?: EntityToETagOpti
   }
 
   if (entityBuffer.byteLength === 0) {
-    return EMPTY_ETAG
+    return _EMPTY_ETAG
   }
 
   // Compute hash of entity...

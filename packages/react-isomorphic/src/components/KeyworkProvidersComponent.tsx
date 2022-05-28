@@ -12,17 +12,17 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import React from 'react'
+import React, { FC, ReactNode } from 'react'
 
 export interface ProviderWrapperProps {
-  children: React.ReactNode
+  children: ReactNode
 }
 
 /**
  * A component which wraps the current SSR routes.
  * Use this if you need to inject a provider into the SSR pipeline.
  */
-export type KeyworkProvidersComponent = React.FC<ProviderWrapperProps>
+export type KeyworkProvidersComponent = FC<ProviderWrapperProps>
 
 export const KeyworkProviders: KeyworkProvidersComponent = ({ children }) => {
   return <>{children}</>

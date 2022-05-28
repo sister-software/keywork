@@ -21,7 +21,7 @@ import {
   generateDocumentMetadata,
   isETaggable,
   KeyworkDocumentMetadata,
-  parseValueTypeInfo,
+  _parseValueTypeInfo,
 } from './KeyworkDocumentMetadata.js'
 import type { KeyworkDocumentSnapshot } from './KeyworkDocumentSnapshot.js'
 
@@ -119,7 +119,7 @@ export class KeyworkDocumentReference<
    * Overwrites the entire entity if it already exists, and creates a new resource if it doesn’t exist.
    */
   public async putValue<E = ExpectedType>(nextValue: Partial<E>, putOptions?: PutOrPatchOptions) {
-    const deserializeAs = parseValueTypeInfo(nextValue)
+    const deserializeAs = _parseValueTypeInfo(nextValue)
 
     const preparedValue =
       deserializeAs === 'json'
@@ -172,7 +172,7 @@ export class KeyworkDocumentReference<
     snapshot?: KeyworkDocumentSnapshot<E>,
     deepMergeOptions?: deepmerge.Options
   ) {
-    const deserializeAs = parseValueTypeInfo(nextValue)
+    const deserializeAs = _parseValueTypeInfo(nextValue)
 
     if (!snapshot) {
       snapshot = (await this.fetchSnapshot({ deserializeAs })) as unknown as KeyworkDocumentSnapshot<E>
@@ -183,7 +183,7 @@ export class KeyworkDocumentReference<
     }
 
     const metadata = snapshot.metadata
-    if (deserializeAs === 'json' && parseValueTypeInfo(snapshot.value) === 'json') {
+    if (deserializeAs === 'json' && _parseValueTypeInfo(snapshot.value) === 'json') {
       // Both the current value and the previous value are JSON-like. Attempt to merge them.
       try {
         nextValue = deepmerge(snapshot.value, nextValue, deepMergeOptions)

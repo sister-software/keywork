@@ -18,9 +18,7 @@ import { SSRPropsLike } from './props'
 /**
  * A **client-side** mapping of path patterns to their respective page components.
  * This is useful if your app bundles all React route handlers into a single Worker.
- *
- * @remarks While this allows `PathPattern` objects, this matching isn't yet fully supported.
- *
+ * *
  * @example
  * A collection of patterns to their respective React components.
  *
@@ -36,6 +34,11 @@ import { SSRPropsLike } from './props'
  *   ['*', NotFoundErrorPage],
  * ])
  * ```
+ *
+ * :::caution
+ * While this type allows `PathPattern` objects, this matching isn't yet fully supported.
+ *
+ * :::
  */
 export class PatternToPageComponentMap<StaticProps extends SSRPropsLike> extends Map<
   PathPattern | string,

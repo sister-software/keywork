@@ -13,7 +13,7 @@
  */
 
 import { PathMatch } from '@keywork/responder'
-import React, { useMemo } from 'react'
+import React, { FC, useMemo } from 'react'
 import { createContextAndNamedHook } from '../hooks/createNamedContextHook.js'
 import { matchRoute, PatternToPageComponentMap } from '../ssr/index.js'
 import { useKeyworkRouter } from './KeyworkRouter.js'
@@ -28,7 +28,7 @@ const [KeyworkRouteMatchContext, useMatch] = createContextAndNamedHook<PathMatch
 )
 export { useMatch }
 
-export const KeyworkPatternToPageComponent: React.FC<KeyworkBrowserRouterProps> = ({ patternToPageComponent }) => {
+export const KeyworkPatternToPageComponent: FC<KeyworkBrowserRouterProps> = ({ patternToPageComponent }) => {
   const staticProps = useStaticProps<any>()
   const { location } = useKeyworkRouter()
 
@@ -50,7 +50,7 @@ export const KeyworkPatternToPageComponent: React.FC<KeyworkBrowserRouterProps> 
   )
 }
 
-const FallbackComponent: React.FC = () => {
+const FallbackComponent: FC = () => {
   return (
     <>
       <h1>Keywork Error</h1>

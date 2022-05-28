@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import React from 'react'
+import React, { FC, ReactNode } from 'react'
 import { createContextAndNamedHook } from '../hooks/createNamedContextHook.js'
 import { SSRPropsLike } from '../ssr/index.js'
 
@@ -21,11 +21,11 @@ export { useStaticProps }
 
 export interface StaticPropsProvider<StaticProps extends NonNullable<SSRPropsLike>> {
   staticProps: StaticProps
-  children: React.ReactNode
+  children: ReactNode
 }
 
 export type StaticPropsProviderComponent<StaticProps extends NonNullable<SSRPropsLike> = NonNullable<SSRPropsLike>> =
-  React.FC<StaticPropsProvider<StaticProps>>
+  FC<StaticPropsProvider<StaticProps>>
 
 export const StaticPropsProvider: StaticPropsProviderComponent = ({ staticProps, children }) => {
   return <StaticPropsContext.Provider value={staticProps}>{children}</StaticPropsContext.Provider>

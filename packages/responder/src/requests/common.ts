@@ -28,6 +28,7 @@ export interface IncomingRequestData<BoundAliases extends {} | null = null> {
   readonly request: RequestWithCFProperties
   readonly env: BoundAliases extends null ? DefaultWorkerBindings : BoundAliases & DefaultWorkerBindings
   readonly context: ExecutionContext
+  /** @beta */
   readonly session: KeyworkSession
 }
 

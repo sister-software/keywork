@@ -89,7 +89,7 @@ export function generateDocumentMetadata({
  * Attempts to parse a given value's serialization type.
  * @internal
  */
-export function parseValueTypeInfo(value: unknown): DeserializationTransformers {
+export function _parseValueTypeInfo(value: unknown): DeserializationTransformers {
   const valueType = typeof value
 
   if (valueType === 'object') {
@@ -112,7 +112,7 @@ export function isETaggable(
   /**
    * An optional pre-computed `DeserializationTransformers`
    */
-  deserializeAs: DeserializationTransformers = parseValueTypeInfo(value)
+  deserializeAs: DeserializationTransformers = _parseValueTypeInfo(value)
 ): value is ETaggable {
   switch (deserializeAs) {
     case 'arrayBuffer':

@@ -37,7 +37,7 @@ import { createContext, useContext } from 'react'
  * }
  * ```
  * @param defaultValue
- * @returns {[React.Context<T | undefined>, () => NonNullable<T>]} contextTuple
+ * @returns contextTuple
  */
 export function createContextAndNamedHook<T>(
   /** The initial computed value, usually left as `undefined` */

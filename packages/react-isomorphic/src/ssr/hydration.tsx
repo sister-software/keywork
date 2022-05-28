@@ -13,7 +13,7 @@
  */
 
 import { KeyworkResourceError, PrefixedLogger } from '@keywork/utils'
-import React from 'react'
+import React, { ReactNode } from 'react'
 const logger = new PrefixedLogger('Hydrate')
 
 import { hydrateRoot, HydrationOptions } from 'react-dom/client'
@@ -34,7 +34,7 @@ export interface HydrateKeyworkAppOptions {
  * @remarks This should only run in the browser.
  * @param initialChildren This should be the current page's component, along with any needed providers.
  */
-export function hydrateKeyworkApp(initialChildren: React.ReactNode, options?: HydrateKeyworkAppOptions) {
+export function hydrateKeyworkApp(initialChildren: ReactNode, options?: HydrateKeyworkAppOptions) {
   const rootID = options?.rootID || keyworkRootID
   const globalScope = options?.globalScope || self
 
