@@ -1,7 +1,7 @@
 {
 "name": "@keywork/collections",
   "license": "AGPL-3.0",
-  "version": "0.5.0",
+  "version": "1.1.0",
   "description": "A NoSQL ODM library for Cloudflare Workers KV.",
   "keywords": [
     "cloudflare",
@@ -42,14 +42,14 @@
     "test": "jest"
   },
   "dependencies": {
-    "@keywork/utils": "^1.0.0",
-    "@keywork/app": "^1.0.0",
+    "@keywork/utils": "^1.1.0",
+    "@keywork/app": "^1.1.0",
     "deepmerge": "^4.2.2",
     "lodash.isplainobject": "^4.0.6",
     "ulidx": "^0.3.0"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.10.0",
+    "@cloudflare/workers-types": "^3.11.0",
     "@types/lodash.isplainobject": "^4.0.7"
   }
 }

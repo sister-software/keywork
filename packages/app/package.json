@@ -1,7 +1,7 @@
 {
   "name": "@keywork/app",
   "license": "AGPL-3.0",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Everything you need to handle incoming requests in a Worker environment.",
   "keywords": [
     "cloudflare",
@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@cloudflare/kv-asset-handler": "^0.2.0",
-    "@keywork/utils": "^1.0.0",
+    "@keywork/utils": "^1.1.0",
     "@types/cookie": "^0.5.1",
     "cookie": "^0.5.0",
     "http-status-codes": "^2.2.0"
