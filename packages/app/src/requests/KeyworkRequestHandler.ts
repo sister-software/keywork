@@ -99,71 +99,6 @@ export interface KeyworkRequestHandler<BoundAliases extends {} | null = null> ex
  * To create a route handler, start by first extending the `KeyworkRequestHandler` class.
  * Your implementation must at least include a `onRequestGet` handler, or a method-agnostic `onRequest` handler.
  *
- * @example
- * A simple Todo list handler
- *
- * ```ts
- * interface GetTodoParams {
- *   todoID: string
- * }
- *
- * class TodoListWorker extends KeyworkRequestHandler {
- *   onRequestGet: WorkerRouteHandler = async ({request, env, context, session}) => {
- *     const params = parsePathname<GetTodoParams>('/todos/:todoID', request)
- *     const todo = await fetchTodos(params.todoID)
- *
- *     if (!todo) throw new KeyworkResourceError('TODO does not exist')
- *
- *     return new JSONResponse(todo)
- *   }
- * }
- * ```
- *
- * @example
- * Creating a more advanced request handler with a Keywork Collection.
- *
- * ```ts
- * import { StatusCodes } from 'http-status-codes'
- * import { KeyworkCollection } from '@keywork/collections'
- * import { KeyworkResourceError } from '@keywork/utils'
- * import { IncomingRequestHandler, KeyworkRequestHandler, parsePathname } from '@keywork/app'
- *
- * interface ExampleAppBindings {
- *   exampleApp: KVNamespace
- * }
- *
- * interface GetUserParams {
- *   userID: string
- * }
- *
- * interface ExampleUser {
- *   firstName: string
- *   lastName: string
- *   role: 'member' | 'admin'
- *   plan: 'free' | 'paid'
- * }
- *
- * class UserAPIHandler extends KeyworkRequestHandler<ExampleAppBindings> {
- *   onRequestGet: IncomingRequestHandler<ExampleAppBindings> = async ({ request, env }) => {
- *     const { params } = parsePathname<GetUserParams>('/users/:userID', request)
- *     const usersCollection = new KeyworkCollection<ExampleUser>(env.exampleApp, 'users')
- *     const userRef = usersCollection.createDocumentReference(params.userID)
- *     const userSnapshot = await userRef.fetchSnapshot()
- *     if (!userSnapshot.exists) {
- *       throw new KeyworkResourceError('User does not exist', StatusCodes.BAD_REQUEST)
- *     }
- *     const user = userSnapshot.value
- *     if (user.plan !== 'paid') {
- *       throw new KeyworkResourceError('You must have a paid plan', StatusCodes.PAYMENT_REQUIRED)
- *     }
- *     if (user.role !== 'admin') {
- *       throw new KeyworkResourceError('Only an admin can access this page', StatusCodes.FORBIDDEN)
- *     }
- *   }
- * }
- * export default UserAPIHandler
- * ```
- *
  * @category Incoming Request Handlers
  */
 export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = null> {
@@ -207,11 +142,13 @@ export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = nul
     if (!handler) return new ErrorResponse(405, `Method ${request.method} was rejected.`)
 
     const session = new KeyworkSession(request)
+    const url = new URL(request.url)
     const data: IncomingRequestData<BoundAliases> = {
       request: request as RequestWithCFProperties,
       env: env as any,
       context,
       session,
+      url,
     }
 
     try {

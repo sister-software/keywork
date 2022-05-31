@@ -1370,7 +1370,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@keywork/app!IncomingRequestData#context:member",
-              "docComment": "",
+              "docComment": "/**\n * An execution context for running async tasks after the response is sent.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1397,7 +1397,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@keywork/app!IncomingRequestData#env:member",
-              "docComment": "",
+              "docComment": "/**\n * Any bound environment properties defined in your `wrangler.toml` file\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1437,7 +1437,7 @@
             {
               "kind": "PropertySignature",
               "canonicalReference": "@keywork/app!IncomingRequestData#request:member",
-              "docComment": "",
+              "docComment": "/**\n * The incoming request\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -1483,6 +1483,33 @@
               "isOptional": false,
               "releaseTag": "Beta",
               "name": "session",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@keywork/app!IncomingRequestData#url:member",
+              "docComment": "/**\n * The incoming request URL object\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "readonly url: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "URL",
+                  "canonicalReference": "!URL:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "url",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
@@ -2066,7 +2093,7 @@
         {
           "kind": "Class",
           "canonicalReference": "@keywork/app!KeyworkRequestHandler:class",
-          "docComment": "/**\n * An extendable base class for handling incoming requests from a Worker.\n *\n * In the \"Module Worker\" format, incoming HTTP events are handled by defining and exporting an object with method handlers corresponding to event names.\n *\n * To create a route handler, start by first extending the `KeyworkRequestHandler` class. Your implementation must at least include a `onRequestGet` handler, or a method-agnostic `onRequest` handler.\n *\n * @example\n *\n * A simple Todo list handler\n * ```ts\n * interface GetTodoParams {\n *   todoID: string\n * }\n *\n * class TodoListWorker extends KeyworkRequestHandler {\n *   onRequestGet: WorkerRouteHandler = async ({request, env, context, session}) => {\n *     const params = parsePathname<GetTodoParams>('/todos/:todoID', request)\n *     const todo = await fetchTodos(params.todoID)\n *\n *     if (!todo) throw new KeyworkResourceError('TODO does not exist')\n *\n *     return new JSONResponse(todo)\n *   }\n * }\n * ```\n *\n * @example\n *\n * Creating a more advanced request handler with a Keywork Collection.\n * ```ts\n * import { StatusCodes } from 'http-status-codes'\n * import { KeyworkCollection } from '@keywork/collections'\n * import { KeyworkResourceError } from '@keywork/utils'\n * import { IncomingRequestHandler, KeyworkRequestHandler, parsePathname } from '@keywork/app'\n *\n * interface ExampleAppBindings {\n *   exampleApp: KVNamespace\n * }\n *\n * interface GetUserParams {\n *   userID: string\n * }\n *\n * interface ExampleUser {\n *   firstName: string\n *   lastName: string\n *   role: 'member' | 'admin'\n *   plan: 'free' | 'paid'\n * }\n *\n * class UserAPIHandler extends KeyworkRequestHandler<ExampleAppBindings> {\n *   onRequestGet: IncomingRequestHandler<ExampleAppBindings> = async ({ request, env }) => {\n *     const { params } = parsePathname<GetUserParams>('/users/:userID', request)\n *     const usersCollection = new KeyworkCollection<ExampleUser>(env.exampleApp, 'users')\n *     const userRef = usersCollection.createDocumentReference(params.userID)\n *     const userSnapshot = await userRef.fetchSnapshot()\n *     if (!userSnapshot.exists) {\n *       throw new KeyworkResourceError('User does not exist', StatusCodes.BAD_REQUEST)\n *     }\n *     const user = userSnapshot.value\n *     if (user.plan !== 'paid') {\n *       throw new KeyworkResourceError('You must have a paid plan', StatusCodes.PAYMENT_REQUIRED)\n *     }\n *     if (user.role !== 'admin') {\n *       throw new KeyworkResourceError('Only an admin can access this page', StatusCodes.FORBIDDEN)\n *     }\n *   }\n * }\n * export default UserAPIHandler\n * ```\n *\n * @category\n *\n * Incoming Request Handlers\n */\n",
+          "docComment": "/**\n * An extendable base class for handling incoming requests from a Worker.\n *\n * In the \"Module Worker\" format, incoming HTTP events are handled by defining and exporting an object with method handlers corresponding to event names.\n *\n * To create a route handler, start by first extending the `KeyworkRequestHandler` class. Your implementation must at least include a `onRequestGet` handler, or a method-agnostic `onRequest` handler.\n *\n * @category\n *\n * Incoming Request Handlers\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",

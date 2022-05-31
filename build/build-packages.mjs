@@ -17,8 +17,9 @@
 import esbuild from 'esbuild'
 import FastGlob from 'fast-glob'
 import path from 'path'
-import { generateDocs } from './utils/extractor/index.mjs'
-import { getPackage, getPackageDependencies, packagesDirectory, projectRoot } from './utils/packages.mjs'
+import { cleanBuild } from './utils/clean.mjs'
+import { generateDocs, generateTypes, runAPIExtractor } from './utils/extractor/index.mjs'
+import { getPackage, getPackageDependencies, packagesDirectory, packagesList, projectRoot } from './utils/packages.mjs'
 
 // const env = process.env.NODE_ENV || 'development'
 const watch = process.argv.some((arg) => arg === '--watch')
@@ -78,18 +79,18 @@ async function buildPackage(packageName) {
 }
 
 // Clear previous builds.
-// await Promise.all(
-//   packagesList.map((packageName) => {
-//     const packageRoot = path.join(packagesDirectory, packageName)
-//     const outPath = path.join(packageRoot, distDirName)
+await Promise.all(
+  packagesList.map((packageName) => {
+    const packageRoot = path.join(packagesDirectory, packageName)
+    const outPath = path.join(packageRoot, distDirName)
 
-//     return cleanBuild(outPath)
-//   })
-// )
+    return cleanBuild(outPath)
+  })
+)
 
-// console.log(`Building ${packagesList.length} packages...`)
-// await Promise.all(packagesList.map((pkgName) => buildPackage(pkgName)))
+console.log(`Building ${packagesList.length} packages...`)
+await Promise.all(packagesList.map((pkgName) => buildPackage(pkgName)))
 
-// await generateTypes()
-// await runAPIExtractor()
+await generateTypes()
+await runAPIExtractor()
 await generateDocs()

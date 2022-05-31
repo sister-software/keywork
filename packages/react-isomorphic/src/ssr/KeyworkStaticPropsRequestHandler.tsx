@@ -115,8 +115,7 @@ export abstract class KeyworkStaticPropsRequestHandler<
   abstract getStaticProps: GetStaticPropsHandler<StaticProps, BoundAliases>
 
   onRequestGet: IncomingRequestHandler<BoundAliases> = async (data) => {
-    const { request } = data
-    const location = new URL(request.url)
+    const { request, url: location } = data
     const onlySendStaticProps = location.searchParams.has(KeyworkQueryParamKeys.StaticProps)
 
     let staticProps: NonNullable<StaticProps>

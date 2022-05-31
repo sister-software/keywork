@@ -12,28 +12,32 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { exec } from 'child_process'
-import { createReadStream, existsSync } from 'fs'
-import { copyFile, readdir, rm, writeFile } from 'fs/promises'
+import fsExtra from 'fs-extra'
+import * as fs from 'fs/promises'
 import path from 'path'
-import { createInterface } from 'readline'
+import TypeDoc from 'typedoc'
 import { cleanBuild } from '../clean.mjs'
-import { checkFileExists } from '../files.mjs'
 import { packagesDirectory, packagesList, projectRoot } from '../packages.mjs'
-import { createExtractorConfig } from './common.mjs'
 
 // @ts-check
 
-const EMPTY_COMMENT = '<!-- -->'
 const FileNames = {
   Readme: 'README.md',
   Index: 'index.md',
+  TypeScriptIndex: 'index.ts',
   Overview: 'overview.md',
   Category: '_category_.json',
+  CNAME: 'CNAME',
+}
+
+const defaultCategory = {
+  collapsible: true,
+  position: 1,
 }
 
 const docsOutputDir = path.join(projectRoot, 'site', 'docs')
-const rootReadmePath = path.join(projectRoot, 'README.md')
+const rootDocsPath = path.join(packagesDirectory, 'docs')
+const rootDocsOutputPath = path.join(docsOutputDir, 'overview')
 
 export async function generateDocs() {
   await cleanBuild(docsOutputDir)
@@ -42,8 +46,18 @@ export async function generateDocs() {
     await generatePackageDocs(packageName)
   }
 
-  await copyFile(rootReadmePath, path.join(docsOutputDir, FileNames.Index))
+  // TODO: something about async makes TypeDoc blow up.
+  // await Promise.all(
+  //   packagesList.map((packageName) => {
+  //     return generatePackageDocs(packageName)
+  //   })
+  // )
+
+  fsExtra.copy(rootDocsPath, rootDocsOutputPath)
 }
+
+// This seems to be hardcoded.
+const typeDocModulesDirName = 'modules'
 
 /**
  *
@@ -51,145 +65,64 @@ export async function generateDocs() {
  */
 async function generatePackageDocs(packageName) {
   console.log(`Generating docs for ${packageName}...`)
-  const extractorConfig = await createExtractorConfig(packageName)
 
   const packageRoot = path.join(packagesDirectory, packageName)
-  const packageDocInputDir = path.dirname(extractorConfig.apiJsonFilePath)
   const packageDocOutputDir = path.join(docsOutputDir, packageName)
-  const packageDocAPIOutputDir = path.join(packageDocOutputDir, 'api')
+  const packageDocAPIOutputDir = path.join(packageDocOutputDir, typeDocModulesDirName)
 
-  await new Promise((resolve, reject) =>
-    exec(`api-documenter markdown -i ${packageDocInputDir} -o ${packageDocAPIOutputDir}`, (err, stdout, stderr) => {
-      console.log(stdout)
-      console.error(stderr)
-      if (err) {
-        reject(err)
-      } else {
-        resolve()
-      }
-    })
-  )
+  await fs.mkdir(packageDocAPIOutputDir, { recursive: true })
 
-  console.log(`Preparing ${packageName} docs for Docusaurus...`)
+  const app = new TypeDoc.Application()
 
-  const allDocFiles = await readdir(packageDocAPIOutputDir)
-  const relativeDocPaths = allDocFiles.filter((docFile) => {
-    return path.extname(docFile) === '.md'
+  // If you want TypeDoc to load tsconfig.json / typedoc.json files
+  app.options.addReader(new TypeDoc.TSConfigReader())
+  app.options.addReader(new TypeDoc.TypeDocReader())
+
+  app.bootstrap({
+    // typedoc options here
+    entryPoints: [path.join(packageRoot, FileNames.TypeScriptIndex)],
+    out: packageDocAPIOutputDir,
+    plugin: 'typedoc-plugin-markdown',
+    cname: false,
+    githubPages: false,
+    excludeInternal: true,
+    hideGenerator: true,
+    hideBreadcrumbs: true,
+    // hidePageTitle: true,
   })
 
-  for (const relativeDocPath of relativeDocPaths) {
-    let { name: docID } = path.parse(relativeDocPath)
-    const absoluteDocPath = path.join(packageDocAPIOutputDir, relativeDocPath)
-    const input = createReadStream(absoluteDocPath)
-    const docIndexID = `${packageName}.md`
-    const docIsPackageIndex = docID === packageName
+  const project = app.convert()
 
-    try {
-      const output = []
-      const lines = createInterface({
-        input,
-        crlfDelay: Infinity,
-      })
-      let title = ''
-
-      lines.on('line', (line) => {
-        line = line.replaceAll('\\_\\_', '__')
-
-        if (line.includes(docIndexID)) {
-          line = line.replaceAll(docIndexID, `${packageName}/api`)
-        }
-
-        let skip = false
-        if (!title) {
-          const titleLine = line.match(/## (.*)/)
-          if (titleLine) {
-            title = titleLine[1]
-          }
-        }
-
-        const homeLink = line.match(/\[Home\]\(.\/index\.md\) &gt; (.*)/)
-        if (homeLink) {
-          // Skip the breadcrumb for the toplevel index file.
-          if (docID !== 'keywork') {
-            output.push(homeLink[1])
-          }
-          skip = true
-        }
-
-        // See issue #4. api-documenter expects \| to escape table
-        // column delimiters, but docusaurus uses a markdown processor
-        // that doesn't support this. Replace with an escape sequence
-        // that renders |.
-        if (line.startsWith('|')) {
-          line = line.replace(/\\\|/g, '&#124;')
-        }
-
-        if (line.includes(EMPTY_COMMENT)) {
-          line = line.replaceAll(EMPTY_COMMENT, '')
-        }
-
-        if (!skip) {
-          output.push(line)
-        }
-      })
-
-      await new Promise((resolve) => lines.once('close', resolve))
-      input.close()
-
-      // Fix double escaping
-      title = title.replaceAll('\\_', '_')
-
-      if (docIsPackageIndex) {
-        title = 'API'
-        docID = 'index'
-      }
-
-      const header = [
-        //
-        '---',
-        `id: ${docID}`,
-        `title: ${title}`,
-        `hide_title: true`,
-        '---',
-      ]
-
-      const fileContent = header.concat(output).join('\n')
-
-      await writeFile(absoluteDocPath, fileContent)
-    } catch (err) {
-      console.error(`Could not process ${relativeDocPath}: ${err}`)
-    } finally {
-      input.destroy()
-    }
+  if (!project) {
+    throw new Error(`TypeDoc could not parse ${packageName}`)
   }
 
-  // Copy static files...
-  const apiIndexPath = path.join(packageDocAPIOutputDir, `${packageName}.md`)
-  const packageDocs = new Map([
-    // API Index
-    [apiIndexPath, path.join(packageDocAPIOutputDir, FileNames.Index)],
-    // Category
-    [path.join(packageRoot, FileNames.Category), path.join(packageDocOutputDir, FileNames.Category)],
-  ])
+  await app.generateDocs(project, packageDocAPIOutputDir)
 
-  await Promise.all(
-    Array.from(packageDocs.entries(), async ([from, to]) => {
-      const exists = await checkFileExists(from)
+  const packageDocsPath = path.join(packageRoot, 'docs')
+  fsExtra.copy(packageDocsPath, packageDocOutputDir)
 
-      if (exists) {
-        await copyFile(from, to)
-      }
-    })
+  await fs.writeFile(
+    path.join(packageDocAPIOutputDir, FileNames.Category),
+    JSON.stringify(
+      {
+        ...defaultCategory,
+        label: 'API',
+      },
+      null,
+      2
+    )
   )
 
+  const omittedFiles = [
+    path.join(packageDocAPIOutputDir, FileNames.Readme),
+    path.join(packageDocAPIOutputDir, FileNames.CNAME),
+  ]
+
   // Fixes issues surrounding indexing.
-  await rm(apiIndexPath)
-
-  const absoluteDocReadmePath = path.join(packagesDirectory, FileNames.Readme)
-
-  if (existsSync(absoluteDocReadmePath)) {
-    console.log(`Copying ${packageName} README...`)
-    const absoluteReadmeDestPath = path.join(packageDocOutputDir, FileNames.Index)
-    await copyFile(absoluteDocReadmePath, absoluteReadmeDestPath)
-  }
+  await Promise.all(
+    omittedFiles.map((filePath) => {
+      return fs.rm(filePath)
+    })
+  )
 }

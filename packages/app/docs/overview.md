@@ -1,8 +1,8 @@
 ---
 id: api.app.readme
 title: App Package Overview
-sidebar_position: 1
-sidebar_label: "Keywork App"
+sidebar_position: 0
+sidebar_label: "Package Overview"
 ---
 
 

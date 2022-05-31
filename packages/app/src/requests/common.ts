@@ -25,8 +25,13 @@ export interface RequestWithCFProperties extends Request {
  * Data associated with the incoming request.
  */
 export interface IncomingRequestData<BoundAliases extends {} | null = null> {
+  /** The incoming request */
   readonly request: RequestWithCFProperties
+  /** The incoming request URL object */
+  readonly url: URL
+  /** Any bound environment properties defined in your `wrangler.toml` file */
   readonly env: BoundAliases extends null ? DefaultWorkerBindings : BoundAliases & DefaultWorkerBindings
+  /** An execution context for running async tasks after the response is sent. */
   readonly context: ExecutionContext
   /** @beta */
   readonly session: KeyworkSession

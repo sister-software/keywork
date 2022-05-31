@@ -36,8 +36,7 @@
   ],
   "scripts": {
     "build:packages": "node --experimental-specifier-resolution=node ./build/build-packages.mjs",
-    "build:types": "tsc -b && node --experimental-specifier-resolution=node ./build/utils/types.mjs",
-    "build:docs": "api-documenter markdown --input-folder temp/ --output-folder site/docs/api/",
+    "build:docs": "node --experimental-specifier-resolution=node -e 'import(\"./build/utils/extractor/docs.mjs\").then(mod => mod.generateDocs());'",
     "build:all": "npm run build:packages && npm run build:docs",
     "prepublishOnly": "npm run build:all",
     "test": "jest"
@@ -59,6 +58,7 @@
     "eslint-plugin-react-hooks": "^4.5.0",
     "eslint-plugin-tsdoc": "^0.2.16",
     "fast-glob": "^3.2.11",
+    "fs-extra": "^10.1.0",
     "jest": "^28.1.0",
     "miniflare": "^2.4.0",
     "node-stdlib-browser": "^1.2.0",
@@ -67,6 +67,8 @@
     "prettier-plugin-organize-imports": "^2.3.4",
     "rimraf": "^3.0.2",
     "tsconfig-paths": "^4.0.0",
+    "typedoc": "^0.22.16",
+    "typedoc-plugin-markdown": "^3.12.1",
     "typescript": "beta"
   },
   "browserslist": [

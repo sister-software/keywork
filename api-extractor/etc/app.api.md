@@ -111,14 +111,12 @@ export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 
 
 // @public
 export interface IncomingRequestData<BoundAliases extends {} | null = null> {
-    // (undocumented)
     readonly context: ExecutionContext;
-    // (undocumented)
     readonly env: BoundAliases extends null ? DefaultWorkerBindings : BoundAliases & DefaultWorkerBindings;
-    // (undocumented)
     readonly request: RequestWithCFProperties;
     // @beta (undocumented)
     readonly session: KeyworkSession;
+    readonly url: URL;
 }
 
 // @public
