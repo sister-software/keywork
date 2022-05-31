@@ -6,6 +6,7 @@
     "yarn.lock": true,
     "dist": true,
     "docs": true,
+    "api-extractor": true,
     "site/docs": true,
     "site/etc": true,
     "site/temp": true

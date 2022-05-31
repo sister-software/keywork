@@ -17,7 +17,7 @@
 import esbuild from 'esbuild'
 import FastGlob from 'fast-glob'
 import path from 'path'
-import { generateDocs } from './utils/extractTypes.mjs'
+import { generateDocs } from './utils/extractor/index.mjs'
 import { getPackage, getPackageDependencies, packagesDirectory, projectRoot } from './utils/packages.mjs'
 
 // const env = process.env.NODE_ENV || 'development'
@@ -77,7 +77,7 @@ async function buildPackage(packageName) {
   })
 }
 
-// // Clear previous builds.
+// Clear previous builds.
 // await Promise.all(
 //   packagesList.map((packageName) => {
 //     const packageRoot = path.join(packagesDirectory, packageName)

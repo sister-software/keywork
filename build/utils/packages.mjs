@@ -15,6 +15,7 @@
 import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
+import { readJSON } from './files.mjs'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -22,7 +23,12 @@ const __dirname = path.dirname(__filename)
 export const projectRoot = path.resolve(__dirname, '..', '..')
 
 export const packagesDirectory = path.join(projectRoot, 'packages')
-export const packagesList = (await fs.readdir(packagesDirectory)).filter((name) => name !== '.DS_Store')
+
+const tsconfig = await readJSON(path.join(projectRoot, 'tsconfig.json'))
+
+export const packagesList = tsconfig.references.map((reference) => {
+  return path.basename(reference.path)
+})
 
 export const scope = '@keywork'
 
