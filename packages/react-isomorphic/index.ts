@@ -12,12 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * Everything you need to serve React apps from a Cloudflare Worker.
- * @module React Isomorphic
- * @packageDocumentation
- */
-
 export type {
   CachableResponse,
   CacheControlDirectives as CacheControlOptions,
@@ -30,7 +24,7 @@ export type {
   WorkerEnvFetchBinding,
   WorkersPagesAssetsBinding,
   WorkersSiteStaticContentBinding,
-} from '@keywork/responder'
+} from '@keywork/app'
 export * from './src/components/index.js'
 export * from './src/hooks/createNamedContextHook.js'
 export * from './src/ssr/index.js'

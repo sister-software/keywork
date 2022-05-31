@@ -43,7 +43,7 @@
   },
   "dependencies": {
     "@keywork/utils": "^1.0.0",
-    "@keywork/responder": "^1.0.0",
+    "@keywork/app": "^1.0.0",
     "deepmerge": "^4.2.2",
     "lodash.isplainobject": "^4.0.6",
     "ulidx": "^0.3.0"

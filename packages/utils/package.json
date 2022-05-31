@@ -2,7 +2,7 @@
   "name": "@keywork/utils",
   "license": "AGPL-3.0",
   "version": "1.0.0",
-  "description": "Common core utilities for building apps in Cloudflare Workers",
+  "description": "Common core utilities for building apps in Cloudflare Workers.",
   "keywords": [
     "cloudflare",
     "workers",

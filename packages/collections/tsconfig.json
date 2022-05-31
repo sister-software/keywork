@@ -10,6 +10,6 @@
 
   "references": [
     { "path": "../utils" },
-    { "path": "../responder" }
+    { "path": "../app" }
   ]
 }

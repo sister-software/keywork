@@ -1,8 +1,8 @@
 {
-  "name": "@keywork/responder",
+  "name": "@keywork/app",
   "license": "AGPL-3.0",
   "version": "1.0.0",
-  "description": "Everything you need to handle incoming request in a Worker environment.",
+  "description": "Everything you need to handle incoming requests in a Worker environment.",
   "keywords": [
     "cloudflare",
     "workers",
@@ -19,7 +19,7 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/nirrius/keywork.git",
-    "directory": "packages/responder"
+    "directory": "packages/app"
   },
   "bugs": {
     "url": "https://github.com/nirrius/keywork/issues"

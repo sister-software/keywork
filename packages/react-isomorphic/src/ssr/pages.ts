@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { matchPath, PathPattern } from '@keywork/responder'
+import { matchPath, PathPattern } from '@keywork/app'
 import { SSRPropsLike } from './props'
 
 /**

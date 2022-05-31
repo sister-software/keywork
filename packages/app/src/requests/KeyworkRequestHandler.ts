@@ -126,7 +126,7 @@ export interface KeyworkRequestHandler<BoundAliases extends {} | null = null> ex
  * import { StatusCodes } from 'http-status-codes'
  * import { KeyworkCollection } from '@keywork/collections'
  * import { KeyworkResourceError } from '@keywork/utils'
- * import { IncomingRequestHandler, KeyworkRequestHandler, parsePathname } from '@keywork/responder'
+ * import { IncomingRequestHandler, KeyworkRequestHandler, parsePathname } from '@keywork/app'
  *
  * interface ExampleAppBindings {
  *   exampleApp: KVNamespace

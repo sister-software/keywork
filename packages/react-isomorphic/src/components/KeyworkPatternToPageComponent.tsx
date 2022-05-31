@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { PathMatch } from '@keywork/responder'
+import { PathMatch } from '@keywork/app'
 import React, { FC, useMemo } from 'react'
 import { createContextAndNamedHook } from '../hooks/createNamedContextHook.js'
 import { matchRoute, PatternToPageComponentMap } from '../ssr/index.js'

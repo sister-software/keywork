@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { convertJSONToETaggableString, generateETag } from '@keywork/responder'
+import { convertJSONToETaggableString, generateETag } from '@keywork/app'
 import { KeyworkResourceError, resolveDocPath } from '@keywork/utils'
 import deepmerge from 'deepmerge'
 import type { DeserializationTransformers, DeserializationTypes, PutOrPatchOptions } from './common.js'

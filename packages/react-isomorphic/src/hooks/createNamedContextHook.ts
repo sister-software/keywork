@@ -20,9 +20,7 @@ import { createContext, useContext } from 'react'
  * @example
  * Creating a named context Provider with a computed value.
  *
- * #### `WidgetsProvider.tsx`
- *
- * ```tsx
+ * ```tsx title=WidgetsProvider.tsx
  * const [WidgetsContext, useWidgetsContext] = createNamedContextHook<WidgetsProvider>()
  * // Note that the `WidgetsContext` is not exported if the provider needs additional logic.
  * export { useWidgetsContext }

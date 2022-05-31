@@ -1,9 +1,15 @@
+---
+id: api.collections.readme
+title: Collections Package Overview
+sidebar_position: 3
+sidebar_label: "Collections"
+---
+
 
 ## Using Keywork collections from within a Cloudflare Worker.
 
 
-```toml
-# e.g. wrangler.toml
+```toml title=wrangler.toml
 compatibility_date = "2022-02-13"
 name = "example-app"
 route = "https://example.com/api/users/*"
@@ -13,8 +19,7 @@ kv_namespaces = [
 ]
 ```
 
-```js
-// e.g. worker.mjs
+```js title=worker.js
 import { KeyworkCollection } from '@keywork/collections'
 
 export default {

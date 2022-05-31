@@ -1,10 +1,4 @@
 /**
- * Common core utilities for building apps in Cloudflare Workers.
- * @module Utilities
- * @packageDocumentation
- */
-
-/**
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.

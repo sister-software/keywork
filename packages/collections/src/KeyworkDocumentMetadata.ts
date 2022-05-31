@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ETaggable } from '@keywork/responder'
+import { ETaggable } from '@keywork/app'
 import isPlainObject from 'lodash.isplainobject'
 import { ulid } from 'ulidx'
 import type { DeserializationTransformers, PutOrPatchOptions } from './common.js'

@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { IncomingRequestData } from '@keywork/responder'
+import { IncomingRequestData } from '@keywork/app'
 import { KeyworkResourceError } from '@keywork/utils'
 
 export type SSRPropsLike = {} | null

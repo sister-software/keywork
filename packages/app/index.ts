@@ -14,7 +14,7 @@
 
 /**
  * Everything you need to handle incoming request in a Worker environment.
- * @module Responder
+ * @module app
  * @packageDocumentation
  */
 

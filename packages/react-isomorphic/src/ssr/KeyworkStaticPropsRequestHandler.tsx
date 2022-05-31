@@ -21,7 +21,7 @@ import {
   IncomingRequestHandler,
   JSONResponse,
   KeyworkRequestHandler,
-} from '@keywork/responder'
+} from '@keywork/app'
 import { KeyworkQueryParamKeys } from '@keywork/utils'
 import React, { FC } from 'react'
 import {
