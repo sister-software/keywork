@@ -1,13 +1,6 @@
-/**
- * Any CSS included here will be global. The classic template
- * bundles Infima by default. Infima is a CSS framework designed to
- * work well for content-centric websites.
- */
-
-/* You can override the default Infima variables here. */
 :root {
-  --ifm-font-family-base: "Go", -apple-system, BlinkMacSystemFont, sans-serif;
-  --ifm-font-family-monospace: "Go Mono", "Fira Code", Menlo, 'SF Mono', 'Andale Mono', 'Roboto Mono', Monaco, monospace;
+  --ifm-font-family-base: 'Go', -apple-system, BlinkMacSystemFont, sans-serif;
+  --ifm-font-family-monospace: 'Go Mono', 'Fira Code', Menlo, 'SF Mono', 'Andale Mono', 'Roboto Mono', Monaco, monospace;
   --nirrius-sidebar-offset: 4rem;
   --nirrius-red-lightest: #fff6f6;
   --nirrius-red-light: #ffeaea;
@@ -31,8 +24,8 @@
   --nirrius-blue-light: #65b9e2;
   --nirrius-blue-base: #00aaff;
   --nirrius-blue-dark: #0088cc;
-  --nirrius-blue-darker: hsl(200deg 100% 30%);
-  --nirrius-blue-darkest: hsl(200deg 100% 25%);
+  --nirrius-blue-darker: #006699;
+  --nirrius-blue-darkest: #005580;
 
   --nirrius-shadow: rgb(0 0 0 / 10%);
   --ifm-navbar-height: 3rem;
@@ -62,125 +55,11 @@
   --ifm-menu-color: var(--ifm-color-emphasis-1000);
 }
 
-/* region Fonts */
-@font-face {
-  font-family: 'Go';
-  font-style:  normal;
-  font-weight: normal;
-  src: url('/fonts/go/Go-Regular.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Go';
-  font-style:  italic;
-  font-weight: normal;
-  src: url('/fonts/go/Go-Italic.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Go';
-  font-style:  normal;
-  font-weight: bold;
-  src: url('/fonts/go/Go-Bold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Go';
-  font-style:  italic;
-  font-weight: bold;
-  src: url('/fonts/go/Go-Bold-Italic.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Go';
-  font-style:  normal;
-  font-weight: medium;
-  src: url('/fonts/go/Go-Medium.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Go';
-  font-style:  italic;
-  font-weight: medium;
-  src: url('/fonts/go/Go-Medium-Italic.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Go-Mono';
-  font-style:  normal;
-  font-weight: normal;
-  src: url('/fonts/go/Go-Mono.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Go-Mono';
-  font-style:  italic;
-  font-weight: normal;
-  src: url('/fonts/go/Go-Mono-Italic.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Go-Mono';
-  font-style:  normal;
-  font-weight: bold;
-  src: url('/fonts/go/Go-Mono-Bold.ttf') format('truetype');
-}
-
-@font-face {
-  font-family: 'Go-Mono';
-  font-style:  italic;
-  font-weight: bold;
-  src: url('/fonts/go/Go-Mono-Bold-Italic.ttf') format('truetype');
-}
-/* endregion */
-
-#__docusaurus::before {
-  content: '';
-  background-size: 8px;
-  background-image: repeating-linear-gradient(
-    180deg,
-    transparent 0,
-    transparent 1px,
-    hsla(0, 0%, 45%, 0.05) 0,
-    hsla(0, 0%, 45%, 0.05) 2px
-  );
-  display: block;
-  z-index: 9999;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
-}
-
-#__docusaurus {
-  cursor: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+Cjxzdmcgd2lkdGg9IjE0cHgiIGhlaWdodD0iMTRweCIgdmlld0JveD0iMCAwIDI0IDI0IiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHhtbG5zOnNrZXRjaD0iaHR0cDovL3d3dy5ib2hlbWlhbmNvZGluZy5jb20vc2tldGNoL25zIj4KICA8ZyBpZD0iUGFnZS0xIiBzdHJva2U9Im5vbmUiIHN0cm9rZS13aWR0aD0iMC43IiBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIHNrZXRjaDp0eXBlPSJNU1BhZ2UiPgogICAgPHBhdGggZD0iTTEyLjY2NzI2MTYsMTkuNzQ3ODQzNyBMMjAuMjIwNTYyNCwxMi4xOTQ1NDI5IEwxNC45MTcyNjE2LDYuODkxMjQyMDEgTDIxLjA0NDAzNjksMSBMMSwxIEwxLDIwLjQ3ODE3OTkgTDcuMzYzOTYwNzEsMTQuNDQ0NTQyOSBMMTIuNjY3MjYxNiwxOS43NDc4NDM3IFoiIGlkPSJSZWN0YW5nbGUtMSIgc3Ryb2tlPSIjRkZGRkZGIiBmaWxsPSIjMDAwMDAwIj48L3BhdGg+CiAgPC9nPgo8L3N2Zz4K),
-    default;
-}
-
-.main-wrapper::before {
-  content: "";
-  display: block;
-  bottom: -200%;
-  left: -200%;
-  position: absolute;
-  right: -200%;
-  top: -200%;
-  transform: rotate(-45deg);
-  opacity: .5;
-  background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNTVweCIgaGVpZ2h0PSIzMHB4IiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIj48ZGVmcz48cGF0aCBkPSJNMyAxMC41di0zaDEuNXYzSDN6TTAgMTVWM2gxLjV2MS41SDN2M0gxLjVWMTVIMHptNiAwdi0xLjVINC41di0zSDZWM2gxLjV2MTJINnptMyAwVjZoMS41djlIOXpNOSA0LjVWM2gxLjV2MS41SDl6TTEyIDE1VjZoMS41djEuNUgxNVY5aC0xLjV2NkgxMnptMy03LjVWNmgxLjV2MS41SDE1em0zIDcuNVY2aDEuNXYxLjVIMjFWOWgtMS41djZIMTh6bTMtNy41VjZoMS41djEuNUgyMXptMyA3LjVWNmgxLjV2OUgyNHptMC0xMC41VjNoMS41djEuNUgyNHptMyA5VjZoMS41djcuNUgyN3ptMS41IDEuNXYtMS41aDNWNkgzM3Y5aC00LjV6bTYgMHYtMS41SDM5VjE1aC00LjV6bTQuNS0xLjV2LTNoMS41djNIMzl6bS0zLTNWOWgzdjEuNWgtM3pNMzQuNSA5VjcuNUgzNlY5aC0xLjV6TTM2IDcuNVY2aDN2MS41aC0zeiIgaWQ9ImEiLz48L2RlZnM+PGcgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMCAtMykiIGZpbGw9Im5vbmUiIGZpbGwtcnVsZT0iZXZlbm9kZCI+PHVzZSBmaWxsPSIjRkFEM0QzIiB4bGluazpocmVmPSIjYSIvPjx1c2UgZmlsbD0iI0ZGREZERiIgeGxpbms6aHJlZj0iI2EiLz48L2c+PC9zdmc+Cg==);
-  pointer-events: none;
-  z-index: -100;
-}
-
 /*  header */
 
-[id*="-function"],
-[id*="-variable"],
-[id*="-module"]{
+[id*='-function'],
+[id*='-variable'],
+[id*='-module'] {
   font-family: var(--ifm-font-family-monospace);
 }
 
@@ -217,37 +96,6 @@ table thead tr {
   background-color: var(--ifm-table-head-background);
 }
 
-/* menu */
-
-.menu__list-item .menu__link:not(.menu__link--sublist-caret) {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 100%;
-  overflow: hidden;
-  display: inline-block;
-}
-
-.menu__link,
-.menu__caret {
-  border-radius: 0;
-}
-
-.menu__link.menu__link--active {
-  text-decoration: underline;
-}
-
-.menu__list-item-collapsible .menu__link:hover,
-.menu__list-item-collapsible .menu__link--active {
-  background-color: var(--nirrius-yellow-dark);
-}
-
-.menu__list,
-.menu__caret:before,
-.menu__link--sublist-caret:after,
-.button {
-  transition: none !important;
-}
-
 /* button */
 
 :where(.button--primary):not(.button--outline) {
@@ -256,98 +104,4 @@ table thead tr {
 
 :where(.button--primary):not(.button--outline):hover {
   --ifm-button-border-color: var(--ifm-color-emphasis-400);
-}
-
-/* navbutton */
-
-.pagination-nav__link {
-  background-color: var(--nirrius-green-light);
-  box-shadow: -6px 9px 0 var(--nirrius-shadow);
-  border: 1px solid var(--nirrius-green-dark);
-}
-
-.pagination-nav__link:hover .pagination-nav__label {
-  text-decoration: underline;
-}
-
-.docsWrapper_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-styles-module {
-  padding-bottom: 1rem;
-}
-/* sidebar */
-
-.theme-doc-toc-desktop,
-.theme-doc-sidebar-item-category-level-1,
-.theme-doc-sidebar-item-link-level-1 {
-  border: 4px solid var(--ifm-color-emphasis-600);
-  background-color: var(--nirrius-yellow-light);
-  box-shadow: -6px 9px 0 var(--nirrius-shadow) !important;
-}
-
-.theme-doc-sidebar-menu {
-  margin-right: .5rem;
-}
-
-.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible .menu__link {
-  background: var(--nirrius-teal-base) !important;
-  padding: 0.5rem 1rem;
-  justify-content: center;
-}
-
-.theme-doc-sidebar-item-category-level-1:not(:first-child) {
-  margin-top: 1rem;
-}
-
-.table-of-contents__link:hover,
-.table-of-contents__link:hover code,
-.table-of-contents__link--active,
-.table-of-contents__link--active code {
-  text-decoration: underline;
-}
-
-
-@media (min-width: 997px) {
-  .menu_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-Content-styles-module {
-    padding-top: 0;
-  }
-  .docSidebarContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Sidebar-styles-module {
-    margin-top: calc(-1 * var(--ifm-navbar-height) + var(--nirrius-sidebar-offset)) !important;
-    margin-left: calc(var(--nirrius-sidebar-offset) / 6);
-    border: none;
-    clip-path: none !important;
-  }
-
-  .sidebar_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
-    border: none !important;
-    top: var(--nirrius-sidebar-offset) !important;
-    padding-top: calc(var(--ifm-navbar-height) - var(--nirrius-sidebar-offset)) !important;
-  }
-}
-
-/* scrollbar */
-.thin-scrollbar::-webkit-scrollbar {
-  width: .5rem;
-}
-
-.thin-scrollbar::-webkit-scrollbar-track {
-  background-color: transparent;
-  background-size: 2px;
-  background-repeat: repeat;
-  border-radius: 0;
-}
-
-.thin-scrollbar::-webkit-scrollbar-thumb {
-  background-image: url('/img/dotted.png');
-  background-color: teal-light;
-  background-size: 2px;
-  background-repeat: repeat;
-  outline: 2px solid gray-base;
-  border-radius: 0;
-}
-
-.thin-scrollbar::-webkit-scrollbar-corner {
-  background-image: url('/img/dotted.png');
-  background-color: teal-light;
-  background-size: 2px;
-  background-repeat: repeat;
-  border-radius: 0;
 }

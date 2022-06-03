@@ -1,0 +1,13 @@
+.pagination-nav__link {
+  background-color: var(--nirrius-green-light);
+  box-shadow: -6px 9px 0 var(--nirrius-shadow);
+  border: 1px solid var(--nirrius-green-dark);
+}
+
+.pagination-nav__link:hover .pagination-nav__label {
+  text-decoration: underline;
+}
+
+.docsWrapper_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-styles-module {
+  padding-bottom: 1rem;
+}

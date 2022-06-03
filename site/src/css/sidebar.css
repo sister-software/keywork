@@ -1,0 +1,46 @@
+.theme-doc-toc-desktop,
+.theme-doc-sidebar-item-category-level-1,
+.theme-doc-sidebar-item-link-level-1 {
+  border: 4px solid var(--ifm-color-emphasis-600);
+  background-color: var(--nirrius-yellow-light);
+  box-shadow: -6px 9px 0 var(--nirrius-shadow) !important;
+}
+
+.theme-doc-sidebar-menu {
+  margin-right: 0.5rem;
+}
+
+.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible .menu__link {
+  background: var(--nirrius-teal-base) !important;
+  padding: 0.5rem 1rem;
+  justify-content: center;
+}
+
+.theme-doc-sidebar-item-category-level-1:not(:first-child) {
+  margin-top: 1rem;
+}
+
+.table-of-contents__link:hover,
+.table-of-contents__link:hover code,
+.table-of-contents__link--active,
+.table-of-contents__link--active code {
+  text-decoration: underline;
+}
+
+@media (min-width: 997px) {
+  .menu_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-Content-styles-module {
+    padding-top: 0;
+  }
+  .docSidebarContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Sidebar-styles-module {
+    margin-top: calc(-1 * var(--ifm-navbar-height) + var(--nirrius-sidebar-offset)) !important;
+    margin-left: calc(var(--nirrius-sidebar-offset) / 6);
+    border: none;
+    clip-path: none !important;
+  }
+
+  .sidebar_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
+    border: none !important;
+    top: var(--nirrius-sidebar-offset) !important;
+    padding-top: calc(var(--ifm-navbar-height) - var(--nirrius-sidebar-offset)) !important;
+  }
+}

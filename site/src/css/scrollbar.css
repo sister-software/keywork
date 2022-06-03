@@ -1,0 +1,27 @@
+.thin-scrollbar::-webkit-scrollbar {
+  width: 0.5rem;
+}
+
+.thin-scrollbar::-webkit-scrollbar-track {
+  background-color: transparent;
+  background-size: 2px;
+  background-repeat: repeat;
+  border-radius: 0;
+}
+
+.thin-scrollbar::-webkit-scrollbar-thumb {
+  background-image: url('/img/dotted.png');
+  background-color: teal-light;
+  background-size: 2px;
+  background-repeat: repeat;
+  outline: 2px solid gray-base;
+  border-radius: 0;
+}
+
+.thin-scrollbar::-webkit-scrollbar-corner {
+  background-image: url('/img/dotted.png');
+  background-color: teal-light;
+  background-size: 2px;
+  background-repeat: repeat;
+  border-radius: 0;
+}

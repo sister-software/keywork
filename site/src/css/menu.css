@@ -1,0 +1,28 @@
+.menu__list-item .menu__link:not(.menu__link--sublist-caret) {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.menu__link,
+.menu__caret {
+  border-radius: 0;
+}
+
+.menu__link.menu__link--active {
+  text-decoration: underline;
+}
+
+.menu__list-item-collapsible .menu__link:hover,
+.menu__list-item-collapsible .menu__link--active {
+  background-color: var(--nirrius-yellow-dark);
+}
+
+.menu__list,
+.menu__caret:before,
+.menu__link--sublist-caret:after,
+.button {
+  transition: none !important;
+}
