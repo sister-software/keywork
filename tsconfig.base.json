@@ -6,7 +6,10 @@
       "esnext"
     ],
     "paths": {
-      "@keywork/*": ["packages/*/src/index.ts"]
+      "keywork": ["packages/keywork/index.ts"],
+      "@keywork/utils": ["packages/utils/index.ts"],
+      "@keywork/collections": ["packages/collections/index.ts"],
+      "@keywork/react-isomorphic": ["packages/react-isomorphic/index.ts"]
     },
     "types": [],
     "jsx": "react",

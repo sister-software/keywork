@@ -50,10 +50,10 @@ const config = {
       ({
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          // Remove this to remove the "edit this page" links.
-          // editUrl: 'https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/',
         },
+        // 'pages': {
+        //   ''
+        // }
         blog: false,
         theme: {
           customCss: [
@@ -64,10 +64,32 @@ const config = {
             require.resolve('./src/css/scanline.css'),
             require.resolve('./src/css/navigation.css'),
             require.resolve('./src/css/scrollbar.css'),
+            require.resolve('./src/css/sidebar.css'),
             require.resolve('./src/css/menu.css'),
             require.resolve('./src/css/cursor.css'),
           ],
         },
+      }),
+    ],
+  ],
+  plugins: [
+    [
+      '@docusaurus/plugin-content-docs',
+      /** @type {import('@docusaurus/plugin-content-docs').PluginOptions} */
+      ({
+        id: 'docs-licensing',
+        path: 'licensing',
+        routeBasePath: '/licensing',
+      }),
+    ],
+
+    [
+      '@docusaurus/plugin-content-docs',
+      /** @type {import('@docusaurus/plugin-content-docs').PluginOptions} */
+      ({
+        id: 'docs-modules',
+        path: 'api',
+        routeBasePath: '/api',
       }),
     ],
   ],
@@ -88,11 +110,24 @@ const config = {
         },
         items: [
           {
-            to: 'docs/overview/getting-started', // 'api' is the 'out' directory
+            to: 'docs/quick-start/overview/getting-started', // 'api' is the 'out' directory
             activeBasePath: 'docs',
             label: 'Documentation',
             position: 'left',
           },
+          {
+            to: 'api/modules',
+            activeBasePath: 'api',
+            label: 'API Reference',
+            position: 'left',
+          },
+          {
+            to: 'licensing/overview/',
+            activeBasePath: 'licensing',
+            label: 'Licensing',
+            position: 'left',
+          },
+
           {
             href: 'https://github.com/nirrius/keywork', // 'api' is the 'out' directory
             label: 'Github',

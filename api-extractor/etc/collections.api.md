@@ -7,7 +7,7 @@
 /// <reference types="@cloudflare/workers-types" />
 
 import deepmerge from 'deepmerge';
-import { ETaggable } from '@keywork/app';
+import { ETaggable } from 'keywork';
 import { PathBuilder } from '@keywork/utils';
 
 // @public (undocumented)

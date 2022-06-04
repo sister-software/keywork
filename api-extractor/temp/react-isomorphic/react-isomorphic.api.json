@@ -375,7 +375,7 @@
             {
               "kind": "Reference",
               "text": "IncomingRequestData",
-              "canonicalReference": "@keywork/app!IncomingRequestData:interface"
+              "canonicalReference": "!unknown"
             },
             {
               "kind": "Content",
@@ -1591,7 +1591,7 @@
             {
               "kind": "Reference",
               "text": "KeyworkRequestHandler",
-              "canonicalReference": "@keywork/app!KeyworkRequestHandler:class"
+              "canonicalReference": "!unknown"
             },
             {
               "kind": "Content",
@@ -1697,7 +1697,7 @@
                 {
                   "kind": "Reference",
                   "text": "IncomingRequestHandler",
-                  "canonicalReference": "@keywork/app!IncomingRequestHandler:type"
+                  "canonicalReference": "!unknown"
                 },
                 {
                   "kind": "Content",
@@ -1817,16 +1817,7 @@
             },
             {
               "kind": "Content",
-              "text": "import(\"@keywork/app\")."
-            },
-            {
-              "kind": "Reference",
-              "text": "PathMatch",
-              "canonicalReference": "@keywork/app!PathMatch:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<{} | null> | null"
+              "text": "import(\"keywork\").PathMatch<{} | null> | null"
             },
             {
               "kind": "Content",
@@ -1835,7 +1826,7 @@
           ],
           "returnTypeTokenRange": {
             "startIndex": 6,
-            "endIndex": 9
+            "endIndex": 7
           },
           "releaseTag": "Public",
           "overloadIndex": 1,
@@ -1889,7 +1880,7 @@
             {
               "kind": "Reference",
               "text": "PathPattern",
-              "canonicalReference": "@keywork/app!PathPattern:interface"
+              "canonicalReference": "!unknown"
             },
             {
               "kind": "Content",
@@ -2349,7 +2340,7 @@
             {
               "kind": "Reference",
               "text": "PathMatch",
-              "canonicalReference": "@keywork/app!PathMatch:interface"
+              "canonicalReference": "!unknown"
             },
             {
               "kind": "Content",

@@ -9,11 +9,11 @@
 import { FC } from 'react';
 import { HtmlHTMLAttributes } from 'react';
 import { HydrationOptions } from 'react-dom/client';
-import { IncomingRequestData } from '@keywork/app';
-import { IncomingRequestHandler } from '@keywork/app';
-import { KeyworkRequestHandler } from '@keywork/app';
-import { PathMatch } from '@keywork/app';
-import { PathPattern } from '@keywork/app';
+import { IncomingRequestData } from 'keywork';
+import { IncomingRequestHandler } from 'keywork';
+import { KeyworkRequestHandler } from 'keywork';
+import { PathMatch } from 'keywork';
+import { PathPattern } from 'keywork';
 import { ReactFragment } from 'react';
 import { ReactNode } from 'react';
 import { Root } from 'react-dom/client';

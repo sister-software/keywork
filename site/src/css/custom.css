@@ -1,6 +1,6 @@
 :root {
   --ifm-font-family-base: 'Go', -apple-system, BlinkMacSystemFont, sans-serif;
-  --ifm-font-family-monospace: 'Go Mono', 'Fira Code', Menlo, 'SF Mono', 'Andale Mono', 'Roboto Mono', Monaco, monospace;
+  --ifm-font-family-monospace: 'Fira Code', Menlo, 'SF Mono', 'Andale Mono', 'Roboto Mono', Monaco, monospace;
   --nirrius-sidebar-offset: 4rem;
   --nirrius-red-lightest: #fff6f6;
   --nirrius-red-light: #ffeaea;

@@ -3,7 +3,7 @@
   "references": [
     { "path": "./packages/utils" },
     { "path": "./packages/collections" },
-    { "path": "./packages/app" },
+    { "path": "./packages/keywork" },
     { "path": "./packages/react-isomorphic" }
   ]
 }

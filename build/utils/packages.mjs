@@ -26,6 +26,7 @@ export const packagesDirectory = path.join(projectRoot, 'packages')
 
 const tsconfig = await readJSON(path.join(projectRoot, 'tsconfig.json'))
 
+/** @type string[] Package names */
 export const packagesList = tsconfig.references.map((reference) => {
   return path.basename(reference.path)
 })

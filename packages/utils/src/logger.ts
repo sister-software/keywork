@@ -23,7 +23,10 @@ export interface GlobalConsoleLike {
   warn(message?: any, ...optionalParams: any[]): void
 }
 
-export const timestamp = (date = new Date()) => `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`
+/**
+ * @ignore
+ */
+const timestamp = (date = new Date()) => `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`
 timestamp.toString = () => timestamp()
 
 const logTypes = new Map<keyof GlobalConsoleLike, string>([

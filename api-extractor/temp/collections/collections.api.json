@@ -583,7 +583,7 @@
             {
               "kind": "Reference",
               "text": "ETaggable",
-              "canonicalReference": "@keywork/app!ETaggable:type"
+              "canonicalReference": "!unknown"
             },
             {
               "kind": "Content",

@@ -12,12 +12,13 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import fsExtra from 'fs-extra'
+import * as fsExtra from 'fs-extra'
 import * as fs from 'fs/promises'
 import path from 'path'
 import TypeDoc from 'typedoc'
 import { cleanBuild } from '../clean.mjs'
 import { packagesDirectory, packagesList, projectRoot } from '../packages.mjs'
+import { changeExtension } from '../paths.mjs'
 
 // @ts-check
 
@@ -28,6 +29,7 @@ const FileNames = {
   Overview: 'overview.md',
   Category: '_category_.json',
   CNAME: 'CNAME',
+  ModuleIndex: 'modules.md',
 }
 
 const defaultCategory = {
@@ -35,42 +37,12 @@ const defaultCategory = {
   position: 1,
 }
 
-const docsOutputDir = path.join(projectRoot, 'site', 'docs')
-const rootDocsPath = path.join(packagesDirectory, 'docs')
-const rootDocsOutputPath = path.join(docsOutputDir, 'overview')
-
-export async function generateDocs() {
-  await cleanBuild(docsOutputDir)
-
-  for (const packageName of packagesList) {
-    await generatePackageDocs(packageName)
-  }
-
-  // TODO: something about async makes TypeDoc blow up.
-  // await Promise.all(
-  //   packagesList.map((packageName) => {
-  //     return generatePackageDocs(packageName)
-  //   })
-  // )
-
-  fsExtra.copy(rootDocsPath, rootDocsOutputPath)
-}
-
 // This seems to be hardcoded.
 const typeDocModulesDirName = 'modules'
+const APIOutputDir = path.join(projectRoot, 'site', 'api')
 
-/**
- *
- * @param {string} packageName
- */
-async function generatePackageDocs(packageName) {
-  console.log(`Generating docs for ${packageName}...`)
-
-  const packageRoot = path.join(packagesDirectory, packageName)
-  const packageDocOutputDir = path.join(docsOutputDir, packageName)
-  const packageDocAPIOutputDir = path.join(packageDocOutputDir, typeDocModulesDirName)
-
-  await fs.mkdir(packageDocAPIOutputDir, { recursive: true })
+export async function generateDocs() {
+  await cleanBuild(APIOutputDir)
 
   const app = new TypeDoc.Application()
 
@@ -78,45 +50,65 @@ async function generatePackageDocs(packageName) {
   app.options.addReader(new TypeDoc.TSConfigReader())
   app.options.addReader(new TypeDoc.TypeDocReader())
 
+  // const packageDocAPIOutputDir = path.join(APIOutputDir, packageName)
+  console.log(path.join(packagesDirectory, 'utils', FileNames.TypeScriptIndex))
   app.bootstrap({
-    // typedoc options here
-    entryPoints: [path.join(packageRoot, FileNames.TypeScriptIndex)],
-    out: packageDocAPIOutputDir,
+    entryPoints: packagesList.map((packageName) => {
+      return path.join(packagesDirectory, packageName, FileNames.TypeScriptIndex)
+    }),
+    out: APIOutputDir,
     plugin: 'typedoc-plugin-markdown',
-    cname: false,
     githubPages: false,
     excludeInternal: true,
     hideGenerator: true,
     hideBreadcrumbs: true,
-    // hidePageTitle: true,
+  })
+
+  /** @type {TypeDoc.Theme}  */
+  const MarkdownTheme = app.renderer.themes.get('markdown')
+
+  if (!MarkdownTheme) throw new Error('Markdown theme not present')
+
+  class ExtendedMarkdownTheme extends MarkdownTheme {
+    get readme() {
+      return 'none'
+    }
+    set readme(value) {
+      return
+    }
+
+    toUrl(mapping, reflection) {
+      const value = super.toUrl(mapping, reflection)
+      // TODO: I'm guessing we need something like a rewrite rule
+      return changeExtension(value, '.foo.md')
+    }
+  }
+  app.renderer.themes.set('markdown', ExtendedMarkdownTheme)
+
+  Object.defineProperty(app.renderer, 'cname', {
+    get() {
+      return ''
+    },
+  })
+
+  Object.defineProperty(app.renderer, 'githubPages', {
+    get() {
+      return ''
+    },
   })
 
   const project = app.convert()
 
   if (!project) {
-    throw new Error(`TypeDoc could not parse ${packageName}`)
+    throw new Error(`TypeDoc could not parse packages`)
   }
 
-  await app.generateDocs(project, packageDocAPIOutputDir)
-
-  const packageDocsPath = path.join(packageRoot, 'docs')
-  fsExtra.copy(packageDocsPath, packageDocOutputDir)
-
-  await fs.writeFile(
-    path.join(packageDocAPIOutputDir, FileNames.Category),
-    JSON.stringify(
-      {
-        ...defaultCategory,
-        label: 'API',
-      },
-      null,
-      2
-    )
-  )
+  await app.generateDocs(project, APIOutputDir)
 
   const omittedFiles = [
-    path.join(packageDocAPIOutputDir, FileNames.Readme),
-    path.join(packageDocAPIOutputDir, FileNames.CNAME),
+    //
+    path.join(APIOutputDir, FileNames.Readme),
+    // path.join(APIOutputDir, FileNames.CNAME),
   ]
 
   // Fixes issues surrounding indexing.
@@ -124,5 +116,44 @@ async function generatePackageDocs(packageName) {
     omittedFiles.map((filePath) => {
       return fs.rm(filePath)
     })
+  )
+
+  // await fsExtra.move(
+  //   path.join(APIOutputDir, FileNames.ModuleIndex),
+  //   path.join(APIOutputDir, typeDocModulesDirName, FileNames.ModuleIndex)
+  // )
+
+  await Promise.all(
+    packagesList.map(async (packageName) => {
+      const normalizedPackageName = packageName.replaceAll('-', '_')
+      const packageDocAPIOutputDir = path.join(APIOutputDir, typeDocModulesDirName, normalizedPackageName)
+      const indexName = `${normalizedPackageName}.md`
+
+      await fs.mkdir(packageDocAPIOutputDir)
+
+      await fsExtra.move(
+        path.join(APIOutputDir, typeDocModulesDirName, indexName),
+        path.join(packageDocAPIOutputDir, indexName)
+      )
+
+      await fs.copyFile(
+        path.join(packagesDirectory, packageName, FileNames.Category),
+        path.join(packageDocAPIOutputDir, FileNames.Category)
+      )
+    })
+  )
+
+  await fs.writeFile(
+    path.join(APIOutputDir, typeDocModulesDirName, FileNames.Category),
+    JSON.stringify(
+      {
+        ...defaultCategory,
+        collapsible: false,
+        collapsed: false,
+        label: 'API Overview',
+      },
+      null,
+      2
+    )
   )
 }

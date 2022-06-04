@@ -38,7 +38,7 @@
     "test": "jest"
   },
   "dependencies": {
-    "@keywork/app": "^1.1.0",
+    "keywork": "^1.1.0",
     "@keywork/utils": "^1.1.0",
     "classnames": "^2.3.1",
     "http-status-codes": "^2.2.0",

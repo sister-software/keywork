@@ -12,6 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { KeyworkQueryParamKeys } from '@keywork/utils'
 import {
   convertJSONToETaggableString,
   ErrorResponse,
@@ -21,8 +22,7 @@ import {
   IncomingRequestHandler,
   JSONResponse,
   KeyworkRequestHandler,
-} from '@keywork/app'
-import { KeyworkQueryParamKeys } from '@keywork/utils'
+} from 'keywork'
 import React, { FC } from 'react'
 import {
   KeyworkHTMLDocument,

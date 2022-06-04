@@ -39,7 +39,7 @@
   font-weight: medium;
   src: local('Go Medium'), url('/fonts/go/Go-Medium-Italic.ttf') format('truetype');
 }
-
+/*
 @font-face {
   font-family: 'Go Mono';
   font-style: normal;
@@ -66,4 +66,4 @@
   font-style: italic;
   font-weight: bold;
   src: local('Go Mono'), url('/fonts/go/Go-Mono-Bold-Italic.ttf') format('truetype');
-}
+} */

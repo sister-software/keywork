@@ -10,10 +10,10 @@
 
 ## Packages
 
-### `@keywork/app`
+### `keywork`
 
-![npm (scoped)](https://img.shields.io/npm/v/@keywork/app)
-![npm](https://img.shields.io/npm/dm/@keywork/app)
+![npm (scoped)](https://img.shields.io/npm/v/keywork)
+![npm](https://img.shields.io/npm/dm/keywork)
 
 Everything you need to handle incoming request in a Worker environment.
 

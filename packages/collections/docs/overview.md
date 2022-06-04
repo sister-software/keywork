@@ -35,7 +35,7 @@ kv_namespaces = [
 import { StatusCodes } from 'http-status-codes'
 import { KeyworkCollection } from '@keywork/collections'
 import { KeyworkResourceError } from '@keywork/utils'
-import { IncomingRequestHandler, KeyworkRequestHandler, parsePathname } from '@keywork/app'
+import { IncomingRequestHandler, KeyworkRequestHandler, parsePathname } from 'keywork'
 
 interface ExampleAppBindings {
   exampleApp: KVNamespace

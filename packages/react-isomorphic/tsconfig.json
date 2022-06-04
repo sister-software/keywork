@@ -9,6 +9,6 @@
   },
   "references": [
     { "path": "../utils" },
-    { "path": "../app" }
+    { "path": "../keywork" }
   ],
 }
