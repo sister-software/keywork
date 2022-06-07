@@ -24,7 +24,7 @@ export interface GlobalConsoleLike {
 }
 
 /**
- * @ignore
+ * @internal
  */
 const timestamp = (date = new Date()) => `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`
 timestamp.toString = () => timestamp()

@@ -1,6 +1,12 @@
+---
+title: "Class: PrefixedLogger"
+sidebar_label: "PrefixedLogger"
+sidebar_class_name: "doc-kind-class"
+---
+
 # Class: PrefixedLogger
 
-[utils](../modules/utils.md).PrefixedLogger
+[utils](../modules/utils).PrefixedLogger
 
 A isomorphic logger available in the browser and worker environment.
 
@@ -10,28 +16,6 @@ const logger = new PrefixedLogger('Todo API')
 logger.info('Fetching todo', todoID)
 logger.error('Unexpected error')
 ```
-
-## Table of contents
-
-### Constructors
-
-- [constructor](utils.PrefixedLogger.md#constructor)
-
-### Properties
-
-- [\_error](utils.PrefixedLogger.md#_error)
-- [\_log](utils.PrefixedLogger.md#_log)
-- [debug](utils.PrefixedLogger.md#debug)
-- [info](utils.PrefixedLogger.md#info)
-- [log](utils.PrefixedLogger.md#log)
-- [logPrefix](utils.PrefixedLogger.md#logprefix)
-- [warn](utils.PrefixedLogger.md#warn)
-
-### Methods
-
-- [error](utils.PrefixedLogger.md#error)
-- [json](utils.PrefixedLogger.md#json)
-- [jsonEntries](utils.PrefixedLogger.md#jsonentries)
 
 ## Constructors
 
@@ -48,7 +32,7 @@ logger.error('Unexpected error')
 
 #### Defined in
 
-[packages/utils/src/logger.ts:59](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L59)
+[packages/utils/src/logger.ts:59](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L59)
 
 ## Properties
 
@@ -73,7 +57,7 @@ logger.error('Unexpected error')
 
 #### Defined in
 
-[packages/utils/src/logger.ts:52](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L52)
+[packages/utils/src/logger.ts:52](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L52)
 
 ___
 
@@ -98,7 +82,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:51](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L51)
+[packages/utils/src/logger.ts:51](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L51)
 
 ___
 
@@ -123,7 +107,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:57](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L57)
+[packages/utils/src/logger.ts:57](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L57)
 
 ___
 
@@ -148,7 +132,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:55](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L55)
+[packages/utils/src/logger.ts:55](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L55)
 
 ___
 
@@ -173,7 +157,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:54](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L54)
+[packages/utils/src/logger.ts:54](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L54)
 
 ___
 
@@ -183,7 +167,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:50](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L50)
+[packages/utils/src/logger.ts:50](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L50)
 
 ___
 
@@ -208,7 +192,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:56](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L56)
+[packages/utils/src/logger.ts:56](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L56)
 
 ## Methods
 
@@ -228,7 +212,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:90](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L90)
+[packages/utils/src/logger.ts:90](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L90)
 
 ___
 
@@ -248,7 +232,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:99](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L99)
+[packages/utils/src/logger.ts:99](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L99)
 
 ___
 
@@ -276,4 +260,4 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:104](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L104)
+[packages/utils/src/logger.ts:104](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L104)

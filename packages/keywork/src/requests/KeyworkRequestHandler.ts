@@ -15,81 +15,8 @@
 import { PrefixedLogger } from '@keywork/utils'
 import { KeyworkSession } from '../KeyworkSession.js'
 import { ErrorResponse } from '../responses/ErrorResponse.js'
-import { HTTPMethod, IncomingRequestData, IncomingRequestHandler, RequestWithCFProperties } from './common.js'
-
-/**
- *
- * Foo bar baz
- * @example
- * A simple Todo list handler
- *
- * ```ts
- * interface GetTodoParams {
- *   todoID: string
- * }
- *
- * class TodoListWorker extends KeyworkRequestHandler {
- *   onRequestGet: WorkerRouteHandler = async ({request, env, context, session}) => {
- *     const params = parsePathname<GetTodoParams>('/todos/:todoID', request)
- *     const todo = await fetchTodos(params.todoID)
- *
- *     if (!todo) throw new KeyworkResourceError('TODO does not exist')
- *
- *     return new JSONResponse(todo)
- *   }
- * }
- * ```
- */
-
-/**
- * An object containing the Worker's primary fetch handler for all incoming requests.
- * Usually, this is the Worker's `default` and only export.
- */
-export interface KeyworkRequestHandler<BoundAliases extends {} | null = null> extends ExportedHandler<BoundAliases> {
-  /**
-   * An incoming `GET` request handler.
-   *
-   */
-  onRequestGet?: IncomingRequestHandler<BoundAliases>
-  /**
-   * An incoming `POST` request handler.
-   *
-   */
-  onRequestPost?: IncomingRequestHandler<BoundAliases>
-  /**
-   * An incoming `PUT` request handler.
-   *
-   */
-  onRequestPut?: IncomingRequestHandler<BoundAliases>
-  /**
-   * An incoming `PATCH` request handler.
-   *
-   */
-  onRequestPatch?: IncomingRequestHandler<BoundAliases>
-  /**
-   * An incoming `DELETE` request handler.
-   *
-   */
-  onRequestDelete?: IncomingRequestHandler<BoundAliases>
-  /**
-   * An incoming `HEAD` request handler.
-   *
-   * @see `WorkerRouteHandler`
-   */
-  onRequestHead?: IncomingRequestHandler<BoundAliases>
-  /**
-   * An incoming `OPTIONS` request handler.
-   *
-   */
-  onRequestOptions?: IncomingRequestHandler<BoundAliases>
-
-  /**
-   * An incoming request handler for all HTTP methods.
-   * @remarks This will always be a lower priority than an explicitly defined method handler.
-   *
-   */
-  onRequest?: IncomingRequestHandler<BoundAliases>
-}
+import { HTMLResponse } from '../responses/HTMLResponse.js'
+import { IncomingRequestData, PossiblePromise, RequestWithCFProperties, _HTTPMethod } from './common.js'
 
 /**
  * An extendable base class for handling incoming requests from a Worker.
@@ -99,12 +26,89 @@ export interface KeyworkRequestHandler<BoundAliases extends {} | null = null> ex
  * To create a route handler, start by first extending the `KeyworkRequestHandler` class.
  * Your implementation must at least include a `onRequestGet` handler, or a method-agnostic `onRequest` handler.
  *
+ * - Always attempt to handle runtime errors gracefully, and respond with `KeyworkResourceError` when necessary.
+ *
  * @category Incoming Request Handlers
  */
-export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = null> {
+export abstract class KeyworkRequestHandler<
+  BoundAliases extends {} | null = null,
+  StaticProps extends {} | null = null
+> {
+  /**
+   * A server-side logger.
+   */
   logger = new PrefixedLogger('Keywork Route Handler')
 
-  private getHandlerForMethod(method: HTTPMethod): IncomingRequestHandler<BoundAliases> | undefined {
+  //#region Request method dandlers
+
+  /**
+   * An incoming `GET` request handler.
+   */
+  onRequestGet?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>
+
+  /**
+   * An incoming `POST` request handler.
+   */
+  onRequestPost?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>
+
+  /**
+   * An incoming `PUT` request handler.
+   */
+  onRequestPut?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>
+
+  /**
+   * An incoming `PATCH` request handler.
+   */
+  onRequestPatch?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>
+
+  /**
+   * An incoming `DELETE` request handler.
+   */
+  onRequestDelete?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>
+
+  /**
+   * An incoming `HEAD` request handler.
+   */
+  onRequestHead?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>
+
+  /**
+   * An incoming `OPTIONS` request handler.
+   */
+  onRequestOptions?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>
+
+  /**
+   * An incoming request handler for all HTTP methods.
+   * @remarks This will always be a lower priority than an explicitly defined method handler.
+   *
+   */
+  onRequest?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>
+
+  //#endregion
+
+  //#region React
+
+  /**
+   * A method used to fetch static props for rendering React apps in your worker.
+   */
+  getStaticProps?(data: IncomingRequestData<BoundAliases>): PossiblePromise<StaticProps>
+
+  /**
+   * @internal
+   */
+  protected async _onRequestGetReactComponent(_data: IncomingRequestData<BoundAliases>): Promise<HTMLResponse> {
+    return new HTMLResponse('')
+  }
+
+  //#endregion
+
+  /**
+   * @internal
+   */
+  _onInvalidRequest = ({ request }: IncomingRequestData<BoundAliases>) => {
+    return new ErrorResponse(405, `Method ${request.method} was rejected.`)
+  }
+
+  private getHandlerForMethod(method: _HTTPMethod) {
     switch (method) {
       case 'GET':
         return this.onRequestGet
@@ -138,8 +142,7 @@ export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = nul
     /** The Worker context object.  */
     context: ExecutionContext
   ): Promise<Response> | Response {
-    const handler = this.getHandlerForMethod(request.method as HTTPMethod)
-    if (!handler) return new ErrorResponse(405, `Method ${request.method} was rejected.`)
+    const handler = this.getHandlerForMethod(request.method as _HTTPMethod)
 
     const session = new KeyworkSession(request)
     const url = new URL(request.url)
@@ -152,6 +155,8 @@ export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = nul
     }
 
     try {
+      if (!handler) return this._onInvalidRequest(data)
+
       return handler(data)
     } catch (_error) {
       this.logger.error(_error)

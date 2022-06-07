@@ -18,7 +18,7 @@ import esbuild from 'esbuild'
 import FastGlob from 'fast-glob'
 import path from 'path'
 import { cleanBuild } from './utils/clean.mjs'
-import { generateDocs, generateTypes, runAPIExtractor } from './utils/extractor/index.mjs'
+import { generateTypes, runAPIExtractor } from './utils/extractor/index.mjs'
 import { getPackage, getPackageDependencies, packagesDirectory, packagesList, projectRoot } from './utils/packages.mjs'
 
 // const env = process.env.NODE_ENV || 'development'
@@ -93,4 +93,3 @@ await Promise.all(packagesList.map((pkgName) => buildPackage(pkgName)))
 
 await generateTypes()
 await runAPIExtractor()
-await generateDocs()

@@ -1,6 +1,12 @@
+---
+title: "Class: KeyworkResourceError"
+sidebar_label: "KeyworkResourceError"
+sidebar_class_name: "doc-kind-class"
+---
+
 # Class: KeyworkResourceError
 
-[utils](../modules/utils.md).KeyworkResourceError
+[utils](../modules/utils).KeyworkResourceError
 
 An error class that feels fits nicely into an incoming HTTP request handler.
 This pairs well with the `http-status-codes` NPM package.
@@ -23,26 +29,6 @@ if (someUser.role !== 'admin')
 
   ↳ **`KeyworkResourceError`**
 
-## Table of contents
-
-### Constructors
-
-- [constructor](utils.KeyworkResourceError.md#constructor)
-
-### Properties
-
-- [status](utils.KeyworkResourceError.md#status)
-- [statusText](utils.KeyworkResourceError.md#statustext)
-
-### Accessors
-
-- [message](utils.KeyworkResourceError.md#message)
-
-### Methods
-
-- [toJSON](utils.KeyworkResourceError.md#tojson)
-- [fromUnknownError](utils.KeyworkResourceError.md#fromunknownerror)
-
 ## Constructors
 
 ### constructor
@@ -62,9 +48,51 @@ Error.constructor
 
 #### Defined in
 
-[packages/utils/src/errors.ts:39](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/errors.ts#L39)
+[packages/utils/src/errors.ts:39](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/errors.ts#L39)
 
 ## Properties
+
+### cause
+
+• `Optional` **cause**: `Error`
+
+#### Inherited from
+
+Error.cause
+
+#### Defined in
+
+site/node_modules/typescript/lib/lib.es2022.error.d.ts:26
+
+___
+
+### name
+
+• **name**: `string`
+
+#### Inherited from
+
+Error.name
+
+#### Defined in
+
+site/node_modules/typescript/lib/lib.es5.d.ts:1028
+
+___
+
+### stack
+
+• `Optional` **stack**: `string`
+
+#### Inherited from
+
+Error.stack
+
+#### Defined in
+
+site/node_modules/typescript/lib/lib.es5.d.ts:1030
+
+___
 
 ### status
 
@@ -92,27 +120,27 @@ Error.message
 
 #### Defined in
 
-[packages/utils/src/errors.ts:43](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/errors.ts#L43)
+[packages/utils/src/errors.ts:43](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/errors.ts#L43)
 
 ## Methods
 
 ### toJSON
 
-▸ **toJSON**(): [`ErrorJSONBody`](../interfaces/utils.ErrorJSONBody.md)
+▸ **toJSON**(): [`ErrorJSONBody`](../interfaces/utils.ErrorJSONBody)
 
 #### Returns
 
-[`ErrorJSONBody`](../interfaces/utils.ErrorJSONBody.md)
+[`ErrorJSONBody`](../interfaces/utils.ErrorJSONBody)
 
 #### Defined in
 
-[packages/utils/src/errors.ts:47](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/errors.ts#L47)
+[packages/utils/src/errors.ts:47](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/errors.ts#L47)
 
 ___
 
 ### fromUnknownError
 
-▸ `Static` **fromUnknownError**(`_error`): [`KeyworkResourceError`](utils.KeyworkResourceError.md)
+▸ `Static` **fromUnknownError**(`_error`): [`KeyworkResourceError`](utils.KeyworkResourceError)
 
 Attempts to convert an unknown error object into a well-formed `KeyworkResourceError`
 
@@ -124,8 +152,8 @@ Attempts to convert an unknown error object into a well-formed `KeyworkResourceE
 
 #### Returns
 
-[`KeyworkResourceError`](utils.KeyworkResourceError.md)
+[`KeyworkResourceError`](utils.KeyworkResourceError)
 
 #### Defined in
 
-[packages/utils/src/errors.ts:57](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/errors.ts#L57)
+[packages/utils/src/errors.ts:57](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/errors.ts#L57)

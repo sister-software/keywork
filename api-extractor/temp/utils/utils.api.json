@@ -1663,36 +1663,6 @@
             }
           ],
           "name": "stringToArrayBuffer"
-        },
-        {
-          "kind": "Variable",
-          "canonicalReference": "@keywork/utils!timestamp:var",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "timestamp: "
-            },
-            {
-              "kind": "Content",
-              "text": "{\n    (date?: "
-            },
-            {
-              "kind": "Reference",
-              "text": "Date",
-              "canonicalReference": "!Date:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "): string;\n    toString(): string;\n}"
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "timestamp",
-          "variableTypeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 4
-          }
         }
       ]
     }

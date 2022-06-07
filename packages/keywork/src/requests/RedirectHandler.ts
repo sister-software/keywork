@@ -13,11 +13,11 @@
  */
 
 import { StatusCodes } from 'http-status-codes'
-import { IncomingRequestHandler } from './common.js'
+import { IncomingRequestData } from './common.js'
 import { KeyworkRequestHandler } from './KeyworkRequestHandler.js'
 
 /**
- * A higher-order function for redirecting requests via `IncomingRequestHandler`.
+ * A higher-order function for redirecting requests via `KeyworkRequestHandler`.
  *
  * @returns The incoming request handler.
  *
@@ -42,7 +42,7 @@ export class RedirectHandler extends KeyworkRequestHandler {
     super()
   }
 
-  onRequest: IncomingRequestHandler<null, null> = ({ request }) => {
+  onRequest = ({ request }: IncomingRequestData) => {
     this.logger.info(`Redirect from ${request.url} to ${this.destinationURL.toString()}`)
 
     return Response.redirect(this.destinationURL.toString(), this.statusCode)

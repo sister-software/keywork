@@ -1,6 +1,12 @@
+---
+title: "Interface: KeyworkDocumentMetadata"
+sidebar_label: "KeyworkDocumentMetadata"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: KeyworkDocumentMetadata
 
-[collections](../modules/collections.md).KeyworkDocumentMetadata
+[collections](../modules/collections).KeyworkDocumentMetadata
 
 Metadata associated with a specific `KeyworkDocument`
 
@@ -8,23 +14,9 @@ Metadata associated with a specific `KeyworkDocument`
 
 ## Hierarchy
 
-- [`PutOrPatchOptions`](collections.PutOrPatchOptions.md)
+- [`PutOrPatchOptions`](collections.PutOrPatchOptions)
 
   ↳ **`KeyworkDocumentMetadata`**
-
-## Table of contents
-
-### Properties
-
-- [absoluteDocPath](collections.KeyworkDocumentMetadata.md#absolutedocpath)
-- [createdAt](collections.KeyworkDocumentMetadata.md#createdat)
-- [deserializeAs](collections.KeyworkDocumentMetadata.md#deserializeas)
-- [etag](collections.KeyworkDocumentMetadata.md#etag)
-- [expiration](collections.KeyworkDocumentMetadata.md#expiration)
-- [expirationTtl](collections.KeyworkDocumentMetadata.md#expirationttl)
-- [id](collections.KeyworkDocumentMetadata.md#id)
-- [relativeDocPath](collections.KeyworkDocumentMetadata.md#relativedocpath)
-- [updatedAt](collections.KeyworkDocumentMetadata.md#updatedat)
 
 ## Properties
 
@@ -36,7 +28,7 @@ Full path to document.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:49](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentMetadata.ts#L49)
+[packages/collections/src/KeyworkDocumentMetadata.ts:49](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L49)
 
 ___
 
@@ -46,19 +38,19 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:52](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentMetadata.ts#L52)
+[packages/collections/src/KeyworkDocumentMetadata.ts:52](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L52)
 
 ___
 
 ### deserializeAs
 
-• **deserializeAs**: [`DeserializationTransformers`](../modules/collections.md#deserializationtransformers)
+• **deserializeAs**: [`DeserializationTransformers`](../modules/collections#deserializationtransformers)
 
 Defaults to text `String`
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:55](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentMetadata.ts#L55)
+[packages/collections/src/KeyworkDocumentMetadata.ts:55](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L55)
 
 ___
 
@@ -72,7 +64,7 @@ An optional ETag of the value associated with this document.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:62](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentMetadata.ts#L62)
+[packages/collections/src/KeyworkDocumentMetadata.ts:62](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L62)
 
 ___
 
@@ -82,11 +74,11 @@ ___
 
 #### Inherited from
 
-[PutOrPatchOptions](collections.PutOrPatchOptions.md).[expiration](collections.PutOrPatchOptions.md#expiration)
+[PutOrPatchOptions](collections.PutOrPatchOptions).[expiration](collections.PutOrPatchOptions#expiration)
 
 #### Defined in
 
-[packages/collections/src/common.ts:16](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/common.ts#L16)
+[packages/collections/src/common.ts:16](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/common.ts#L16)
 
 ___
 
@@ -96,11 +88,11 @@ ___
 
 #### Inherited from
 
-[PutOrPatchOptions](collections.PutOrPatchOptions.md).[expirationTtl](collections.PutOrPatchOptions.md#expirationttl)
+[PutOrPatchOptions](collections.PutOrPatchOptions).[expirationTtl](collections.PutOrPatchOptions#expirationttl)
 
 #### Defined in
 
-[packages/collections/src/common.ts:17](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/common.ts#L17)
+[packages/collections/src/common.ts:17](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/common.ts#L17)
 
 ___
 
@@ -112,7 +104,7 @@ The document's ULID identifier within its collection.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:47](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentMetadata.ts#L47)
+[packages/collections/src/KeyworkDocumentMetadata.ts:47](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L47)
 
 ___
 
@@ -124,7 +116,7 @@ Relative path to document from parent collection.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:51](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentMetadata.ts#L51)
+[packages/collections/src/KeyworkDocumentMetadata.ts:51](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L51)
 
 ___
 
@@ -134,4 +126,4 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:53](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentMetadata.ts#L53)
+[packages/collections/src/KeyworkDocumentMetadata.ts:53](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L53)

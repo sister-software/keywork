@@ -1,27 +1,26 @@
+---
+title: "Interface: WorkersPagesAssetsBinding"
+sidebar_label: "WorkersPagesAssetsBinding"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: WorkersPagesAssetsBinding
 
-[keywork](../modules/keywork.md).WorkersPagesAssetsBinding
+[keywork](../modules/keywork).WorkersPagesAssetsBinding
 
 An environment binding available within Worker Pages.
 
 **`remarks`** This binding only exists in Worker __Pages__.
 
-## Table of contents
-
-### Properties
-
-- [ASSETS](keywork.WorkersPagesAssetsBinding.md#assets)
-- [\_\_STATIC\_CONTENT](keywork.WorkersPagesAssetsBinding.md#__static_content)
-
 ## Properties
 
 ### ASSETS
 
-• **ASSETS**: [`WorkerEnvFetchBinding`](../modules/keywork.md#workerenvfetchbinding)
+• **ASSETS**: [`WorkerEnvFetchBinding`](../modules/keywork#workerenvfetchbinding)
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:620
+packages/keywork/dist/index.d.ts:578
 
 ___
 
@@ -31,4 +30,4 @@ ___
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:621
+packages/keywork/dist/index.d.ts:579

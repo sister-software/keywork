@@ -112,12 +112,6 @@ export class SnowflakeID {
 // @public (undocumented)
 export function stringToArrayBuffer(str: string): ArrayBuffer;
 
-// @public (undocumented)
-export const timestamp: {
-    (date?: Date): string;
-    toString(): string;
-};
-
 // (No @packageDocumentation comment for this package)
 
 ```

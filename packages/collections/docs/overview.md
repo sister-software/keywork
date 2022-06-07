@@ -2,19 +2,17 @@
 id: api.collections.readme
 title: Collections Package Overview
 sidebar_position: 0
-sidebar_label: "Package Overview"
+sidebar_label: 'Package Overview'
 ---
 
->The missing piece that unlocks the full power of storing and querying data from your Worker.
+> The missing piece that unlocks the full power of storing and querying data from your Worker.
 
 ![npm (scoped)](https://img.shields.io/npm/v/@keywork/collections)
 ![npm](https://img.shields.io/npm/dm/@keywork/collections)
 
-
 - A NoSQL _eventually-consistent_ ODM for Cloudflare's [Worker KV](https://developers.cloudflare.com/workers/runtime-apis/kv/).
 - An API reminiscent of Firebase and MongoDB, perfect for migrating your existing backend to Cloudflare's network.
 - Extends Worker KV's API without abstracting away important details
-
 
 ## Using Keywork collections from within a Cloudflare Worker.
 
@@ -27,7 +25,6 @@ kv_namespaces = [
   { binding = "users", id = "abcd123...", preview_id = "efgh456..."},
 ]
 ```
-
 
 ## Creating a advanced request handler with a Keywork Collection.
 
@@ -53,7 +50,7 @@ interface ExampleUser {
 }
 
 class UserAPIHandler extends KeyworkRequestHandler<ExampleAppBindings> {
-  onRequestGet: IncomingRequestHandler<ExampleAppBindings> = async ({ request, env }) => {
+  onRequestGet = async ({ request, env }: IncomingRequestData<ExampleAppBindings>) => {
     const { params } = parsePathname<GetUserParams>('/users/:userID', request)
     const usersCollection = new KeyworkCollection<ExampleUser>(env.exampleApp, 'users')
     const userRef = usersCollection.createDocumentReference(params.userID)
@@ -71,3 +68,4 @@ class UserAPIHandler extends KeyworkRequestHandler<ExampleAppBindings> {
   }
 }
 export default UserAPIHandler
+```

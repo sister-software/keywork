@@ -1,6 +1,12 @@
+---
+title: "Interface: PutOrPatchOptions"
+sidebar_label: "PutOrPatchOptions"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: PutOrPatchOptions
 
-[collections](../modules/collections.md).PutOrPatchOptions
+[collections](../modules/collections).PutOrPatchOptions
 
 **`file`** This file is part of the Keywork project.
 
@@ -21,14 +27,7 @@ involving the Keywork software without disclosing the source code of your own ap
 
 - **`PutOrPatchOptions`**
 
-  ↳ [`KeyworkDocumentMetadata`](collections.KeyworkDocumentMetadata.md)
-
-## Table of contents
-
-### Properties
-
-- [expiration](collections.PutOrPatchOptions.md#expiration)
-- [expirationTtl](collections.PutOrPatchOptions.md#expirationttl)
+  ↳ [`KeyworkDocumentMetadata`](collections.KeyworkDocumentMetadata)
 
 ## Properties
 
@@ -38,7 +37,7 @@ involving the Keywork software without disclosing the source code of your own ap
 
 #### Defined in
 
-[packages/collections/src/common.ts:16](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/common.ts#L16)
+[packages/collections/src/common.ts:16](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/common.ts#L16)
 
 ___
 
@@ -48,4 +47,4 @@ ___
 
 #### Defined in
 
-[packages/collections/src/common.ts:17](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/common.ts#L17)
+[packages/collections/src/common.ts:17](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/common.ts#L17)

@@ -49,7 +49,7 @@ export interface WorkersSiteStaticContentBinding {
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
 import { KeyworkResourceError } from '@keywork/utils'
-import { IncomingRequestHandler } from '../requests/common.js'
+import { IncomingRequestData } from '../requests/common.js'
 import { KeyworkRequestHandler } from '../requests/KeyworkRequestHandler.js'
 import { WorkerEnvFetchBinding } from './fetch.js'
 
@@ -73,7 +73,7 @@ export class KeyworkAssetHandler extends KeyworkRequestHandler<WorkersSiteStatic
       throw new KeyworkResourceError('An error occurred while parsing the asset manifest.')
     }
   }
-  onRequestGet: IncomingRequestHandler<WorkersSiteStaticContentBinding, null> = ({ env, request, context }) => {
+  onRequestGet = ({ env, request, context }: IncomingRequestData<WorkersSiteStaticContentBinding>) => {
     return getAssetFromKV(
       {
         request,

@@ -1,6 +1,12 @@
+---
+title: "Interface: PathMatch"
+sidebar_label: "PathMatch"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: PathMatch<ExpectedParams\>
 
-[keywork](../modules/keywork.md).PathMatch
+[keywork](../modules/keywork).PathMatch
 
 A PathMatch contains info about how a PathPattern matched on a URL pathname.
 
@@ -9,15 +15,6 @@ A PathMatch contains info about how a PathPattern matched on a URL pathname.
 | Name | Type |
 | :------ | :------ |
 | `ExpectedParams` | extends {} \| ``null`` = ``null`` |
-
-## Table of contents
-
-### Properties
-
-- [params](keywork.PathMatch.md#params)
-- [pathname](keywork.PathMatch.md#pathname)
-- [pathnameBase](keywork.PathMatch.md#pathnamebase)
-- [pattern](keywork.PathMatch.md#pattern)
 
 ## Properties
 
@@ -29,7 +26,7 @@ The names and values of dynamic parameters in the URL.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:491
+packages/keywork/dist/index.d.ts:447
 
 ___
 
@@ -41,7 +38,7 @@ The portion of the URL pathname that was matched.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:495
+packages/keywork/dist/index.d.ts:451
 
 ___
 
@@ -53,16 +50,16 @@ The portion of the URL pathname that was matched before child routes.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:499
+packages/keywork/dist/index.d.ts:455
 
 ___
 
 ### pattern
 
-• **pattern**: [`PathPattern`](keywork.PathPattern.md)<`string`\>
+• **pattern**: [`PathPattern`](keywork.PathPattern)<`string`\>
 
 The pattern that was used to match.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:503
+packages/keywork/dist/index.d.ts:459

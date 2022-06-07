@@ -1301,31 +1301,6 @@
           "implementsTokenRanges": []
         },
         {
-          "kind": "TypeAlias",
-          "canonicalReference": "keywork!HTTPMethod:type",
-          "docComment": "",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare type HTTPMethod = "
-            },
-            {
-              "kind": "Content",
-              "text": "'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS'"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "HTTPMethod",
-          "typeTokenRange": {
-            "startIndex": 1,
-            "endIndex": 2
-          }
-        },
-        {
           "kind": "Interface",
           "canonicalReference": "keywork!IncomingRequestData:interface",
           "docComment": "/**\n * Data associated with the incoming request.\n */\n",
@@ -1517,123 +1492,6 @@
             }
           ],
           "extendsTokenRanges": []
-        },
-        {
-          "kind": "TypeAlias",
-          "canonicalReference": "keywork!IncomingRequestHandler:type",
-          "docComment": "/**\n * An incoming request handler.\n *\n * @remarks\n *\n * - Your implementation should always return a response. - The optional `ForcedParams` generic type is defined at compile time, but you must supply them. - Always attempt to handle runtime errors gracefully, and respond with `KeyworkResourceError` when necessary.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export declare type IncomingRequestHandler<BoundAliases extends "
-            },
-            {
-              "kind": "Content",
-              "text": "{} | null "
-            },
-            {
-              "kind": "Content",
-              "text": "= "
-            },
-            {
-              "kind": "Content",
-              "text": "null"
-            },
-            {
-              "kind": "Content",
-              "text": ", AdditionalData extends "
-            },
-            {
-              "kind": "Content",
-              "text": "{} | null "
-            },
-            {
-              "kind": "Content",
-              "text": "= "
-            },
-            {
-              "kind": "Content",
-              "text": "null"
-            },
-            {
-              "kind": "Content",
-              "text": "> = "
-            },
-            {
-              "kind": "Content",
-              "text": "(\ndata: "
-            },
-            {
-              "kind": "Reference",
-              "text": "IncomingRequestData",
-              "canonicalReference": "keywork!IncomingRequestData:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<BoundAliases>, \nadditionalData?: AdditionalData) => "
-            },
-            {
-              "kind": "Reference",
-              "text": "Response",
-              "canonicalReference": "!Response:interface"
-            },
-            {
-              "kind": "Content",
-              "text": " | "
-            },
-            {
-              "kind": "Reference",
-              "text": "Promise",
-              "canonicalReference": "!Promise:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<"
-            },
-            {
-              "kind": "Reference",
-              "text": "Response",
-              "canonicalReference": "!Response:interface"
-            },
-            {
-              "kind": "Content",
-              "text": ">"
-            },
-            {
-              "kind": "Content",
-              "text": ";"
-            }
-          ],
-          "releaseTag": "Public",
-          "name": "IncomingRequestHandler",
-          "typeParameters": [
-            {
-              "typeParameterName": "BoundAliases",
-              "constraintTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              }
-            },
-            {
-              "typeParameterName": "AdditionalData",
-              "constraintTokenRange": {
-                "startIndex": 5,
-                "endIndex": 6
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 7,
-                "endIndex": 8
-              }
-            }
-          ],
-          "typeTokenRange": {
-            "startIndex": 9,
-            "endIndex": 18
-          }
         },
         {
           "kind": "Function",
@@ -2052,9 +1910,13 @@
                   "text": "onRequestGet: "
                 },
                 {
+                  "kind": "Content",
+                  "text": "({ env, request, context }: "
+                },
+                {
                   "kind": "Reference",
-                  "text": "IncomingRequestHandler",
-                  "canonicalReference": "keywork!IncomingRequestHandler:type"
+                  "text": "IncomingRequestData",
+                  "canonicalReference": "keywork!IncomingRequestData:interface"
                 },
                 {
                   "kind": "Content",
@@ -2067,7 +1929,25 @@
                 },
                 {
                   "kind": "Content",
-                  "text": ", null>"
+                  "text": ">) => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Promise",
+                  "canonicalReference": "!Promise:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Response",
+                  "canonicalReference": "!Response:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
                 },
                 {
                   "kind": "Content",
@@ -2079,7 +1959,7 @@
               "name": "onRequestGet",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 5
+                "endIndex": 10
               },
               "isStatic": false
             }
@@ -2093,11 +1973,27 @@
         {
           "kind": "Class",
           "canonicalReference": "keywork!KeyworkRequestHandler:class",
-          "docComment": "/**\n * An extendable base class for handling incoming requests from a Worker.\n *\n * In the \"Module Worker\" format, incoming HTTP events are handled by defining and exporting an object with method handlers corresponding to event names.\n *\n * To create a route handler, start by first extending the `KeyworkRequestHandler` class. Your implementation must at least include a `onRequestGet` handler, or a method-agnostic `onRequest` handler.\n *\n * @category\n *\n * Incoming Request Handlers\n */\n",
+          "docComment": "/**\n * An extendable base class for handling incoming requests from a Worker.\n *\n * In the \"Module Worker\" format, incoming HTTP events are handled by defining and exporting an object with method handlers corresponding to event names.\n *\n * To create a route handler, start by first extending the `KeyworkRequestHandler` class. Your implementation must at least include a `onRequestGet` handler, or a method-agnostic `onRequest` handler.\n *\n * - Always attempt to handle runtime errors gracefully, and respond with `KeyworkResourceError` when necessary.\n *\n * @category\n *\n * Incoming Request Handlers\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
               "text": "export declare abstract class KeyworkRequestHandler<BoundAliases extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{} | null "
+            },
+            {
+              "kind": "Content",
+              "text": "= "
+            },
+            {
+              "kind": "Content",
+              "text": "null"
+            },
+            {
+              "kind": "Content",
+              "text": ", StaticProps extends "
             },
             {
               "kind": "Content",
@@ -2127,6 +2023,17 @@
               "defaultTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 4
+              }
+            },
+            {
+              "typeParameterName": "StaticProps",
+              "constraintTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 7,
+                "endIndex": 8
               }
             }
           ],
@@ -2232,9 +2139,65 @@
               "name": "fetch"
             },
             {
+              "kind": "Method",
+              "canonicalReference": "keywork!KeyworkRequestHandler#getStaticProps:member(1)",
+              "docComment": "/**\n * A method used to fetch static props for rendering React apps in your worker.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "getStaticProps?(data: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "IncomingRequestData",
+                  "canonicalReference": "keywork!IncomingRequestData:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<BoundAliases>"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PossiblePromise",
+                  "canonicalReference": "keywork!PossiblePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<StaticProps>"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isOptional": true,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "data",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "getStaticProps"
+            },
+            {
               "kind": "Property",
               "canonicalReference": "keywork!KeyworkRequestHandler#logger:member",
-              "docComment": "",
+              "docComment": "/**\n * A server-side logger.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
@@ -2258,74 +2221,20 @@
                 "endIndex": 2
               },
               "isStatic": false
-            }
-          ],
-          "implementsTokenRanges": []
-        },
-        {
-          "kind": "Interface",
-          "canonicalReference": "keywork!KeyworkRequestHandler:interface",
-          "docComment": "/**\n * An object containing the Worker's primary fetch handler for all incoming requests. Usually, this is the Worker's `default` and only export.\n */\n",
-          "excerptTokens": [
-            {
-              "kind": "Content",
-              "text": "export interface KeyworkRequestHandler<BoundAliases extends "
             },
             {
-              "kind": "Content",
-              "text": "{} | null "
-            },
-            {
-              "kind": "Content",
-              "text": "= "
-            },
-            {
-              "kind": "Content",
-              "text": "null"
-            },
-            {
-              "kind": "Content",
-              "text": "> extends "
-            },
-            {
-              "kind": "Reference",
-              "text": "ExportedHandler",
-              "canonicalReference": "!ExportedHandler:interface"
-            },
-            {
-              "kind": "Content",
-              "text": "<BoundAliases> "
-            }
-          ],
-          "releaseTag": "Public",
-          "typeParameters": [
-            {
-              "typeParameterName": "BoundAliases",
-              "constraintTokenRange": {
-                "startIndex": 1,
-                "endIndex": 2
-              },
-              "defaultTypeTokenRange": {
-                "startIndex": 3,
-                "endIndex": 4
-              }
-            }
-          ],
-          "name": "KeyworkRequestHandler",
-          "members": [
-            {
-              "kind": "PropertySignature",
-              "canonicalReference": "keywork!KeyworkRequestHandler#onRequest:member",
+              "kind": "Method",
+              "canonicalReference": "keywork!KeyworkRequestHandler#onRequest:member(1)",
               "docComment": "/**\n * An incoming request handler for all HTTP methods.\n *\n * @remarks\n *\n * This will always be a lower priority than an explicitly defined method handler.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "onRequest?: "
+                  "text": "onRequest?(data: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "IncomingRequestHandler",
-                  "canonicalReference": "keywork!IncomingRequestHandler:type"
+                  "text": "IncomingRequestData",
+                  "canonicalReference": "keywork!IncomingRequestData:interface"
                 },
                 {
                   "kind": "Content",
@@ -2333,30 +2242,64 @@
                 },
                 {
                   "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PossiblePromise",
+                  "canonicalReference": "keywork!PossiblePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Response",
+                  "canonicalReference": "!Response:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
                   "text": ";"
                 }
               ],
               "isOptional": true,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 8
+              },
               "releaseTag": "Public",
-              "name": "onRequest",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "data",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "onRequest"
             },
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestDelete:member",
+              "kind": "Method",
+              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestDelete:member(1)",
               "docComment": "/**\n * An incoming `DELETE` request handler.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "onRequestDelete?: "
+                  "text": "onRequestDelete?(data: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "IncomingRequestHandler",
-                  "canonicalReference": "keywork!IncomingRequestHandler:type"
+                  "text": "IncomingRequestData",
+                  "canonicalReference": "keywork!IncomingRequestData:interface"
                 },
                 {
                   "kind": "Content",
@@ -2364,30 +2307,64 @@
                 },
                 {
                   "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PossiblePromise",
+                  "canonicalReference": "keywork!PossiblePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Response",
+                  "canonicalReference": "!Response:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
                   "text": ";"
                 }
               ],
               "isOptional": true,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 8
+              },
               "releaseTag": "Public",
-              "name": "onRequestDelete",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "data",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "onRequestDelete"
             },
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestGet:member",
+              "kind": "Method",
+              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestGet:member(1)",
               "docComment": "/**\n * An incoming `GET` request handler.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "onRequestGet?: "
+                  "text": "onRequestGet?(data: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "IncomingRequestHandler",
-                  "canonicalReference": "keywork!IncomingRequestHandler:type"
+                  "text": "IncomingRequestData",
+                  "canonicalReference": "keywork!IncomingRequestData:interface"
                 },
                 {
                   "kind": "Content",
@@ -2395,30 +2372,64 @@
                 },
                 {
                   "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PossiblePromise",
+                  "canonicalReference": "keywork!PossiblePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Response",
+                  "canonicalReference": "!Response:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
                   "text": ";"
                 }
               ],
               "isOptional": true,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 8
+              },
               "releaseTag": "Public",
-              "name": "onRequestGet",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "data",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "onRequestGet"
             },
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestHead:member",
-              "docComment": "/**\n * An incoming `HEAD` request handler.\n *\n * @see\n *\n * `WorkerRouteHandler`\n */\n",
+              "kind": "Method",
+              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestHead:member(1)",
+              "docComment": "/**\n * An incoming `HEAD` request handler.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "onRequestHead?: "
+                  "text": "onRequestHead?(data: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "IncomingRequestHandler",
-                  "canonicalReference": "keywork!IncomingRequestHandler:type"
+                  "text": "IncomingRequestData",
+                  "canonicalReference": "keywork!IncomingRequestData:interface"
                 },
                 {
                   "kind": "Content",
@@ -2426,30 +2437,64 @@
                 },
                 {
                   "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PossiblePromise",
+                  "canonicalReference": "keywork!PossiblePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Response",
+                  "canonicalReference": "!Response:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
                   "text": ";"
                 }
               ],
               "isOptional": true,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 8
+              },
               "releaseTag": "Public",
-              "name": "onRequestHead",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "data",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "onRequestHead"
             },
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestOptions:member",
+              "kind": "Method",
+              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestOptions:member(1)",
               "docComment": "/**\n * An incoming `OPTIONS` request handler.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "onRequestOptions?: "
+                  "text": "onRequestOptions?(data: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "IncomingRequestHandler",
-                  "canonicalReference": "keywork!IncomingRequestHandler:type"
+                  "text": "IncomingRequestData",
+                  "canonicalReference": "keywork!IncomingRequestData:interface"
                 },
                 {
                   "kind": "Content",
@@ -2457,30 +2502,64 @@
                 },
                 {
                   "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PossiblePromise",
+                  "canonicalReference": "keywork!PossiblePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Response",
+                  "canonicalReference": "!Response:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
                   "text": ";"
                 }
               ],
               "isOptional": true,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 8
+              },
               "releaseTag": "Public",
-              "name": "onRequestOptions",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "data",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "onRequestOptions"
             },
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestPatch:member",
+              "kind": "Method",
+              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestPatch:member(1)",
               "docComment": "/**\n * An incoming `PATCH` request handler.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "onRequestPatch?: "
+                  "text": "onRequestPatch?(data: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "IncomingRequestHandler",
-                  "canonicalReference": "keywork!IncomingRequestHandler:type"
+                  "text": "IncomingRequestData",
+                  "canonicalReference": "keywork!IncomingRequestData:interface"
                 },
                 {
                   "kind": "Content",
@@ -2488,30 +2567,64 @@
                 },
                 {
                   "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PossiblePromise",
+                  "canonicalReference": "keywork!PossiblePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Response",
+                  "canonicalReference": "!Response:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
                   "text": ";"
                 }
               ],
               "isOptional": true,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 8
+              },
               "releaseTag": "Public",
-              "name": "onRequestPatch",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "data",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "onRequestPatch"
             },
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestPost:member",
+              "kind": "Method",
+              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestPost:member(1)",
               "docComment": "/**\n * An incoming `POST` request handler.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "onRequestPost?: "
+                  "text": "onRequestPost?(data: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "IncomingRequestHandler",
-                  "canonicalReference": "keywork!IncomingRequestHandler:type"
+                  "text": "IncomingRequestData",
+                  "canonicalReference": "keywork!IncomingRequestData:interface"
                 },
                 {
                   "kind": "Content",
@@ -2519,30 +2632,64 @@
                 },
                 {
                   "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PossiblePromise",
+                  "canonicalReference": "keywork!PossiblePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Response",
+                  "canonicalReference": "!Response:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
                   "text": ";"
                 }
               ],
               "isOptional": true,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 8
+              },
               "releaseTag": "Public",
-              "name": "onRequestPost",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "data",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "onRequestPost"
             },
             {
-              "kind": "PropertySignature",
-              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestPut:member",
+              "kind": "Method",
+              "canonicalReference": "keywork!KeyworkRequestHandler#onRequestPut:member(1)",
               "docComment": "/**\n * An incoming `PUT` request handler.\n */\n",
               "excerptTokens": [
                 {
                   "kind": "Content",
-                  "text": "onRequestPut?: "
+                  "text": "onRequestPut?(data: "
                 },
                 {
                   "kind": "Reference",
-                  "text": "IncomingRequestHandler",
-                  "canonicalReference": "keywork!IncomingRequestHandler:type"
+                  "text": "IncomingRequestData",
+                  "canonicalReference": "keywork!IncomingRequestData:interface"
                 },
                 {
                   "kind": "Content",
@@ -2550,24 +2697,53 @@
                 },
                 {
                   "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PossiblePromise",
+                  "canonicalReference": "keywork!PossiblePromise:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Response",
+                  "canonicalReference": "!Response:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
                   "text": ";"
                 }
               ],
               "isOptional": true,
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 4,
+                "endIndex": 8
+              },
               "releaseTag": "Public",
-              "name": "onRequestPut",
-              "propertyTypeTokenRange": {
-                "startIndex": 1,
-                "endIndex": 3
-              }
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "data",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  },
+                  "isOptional": false
+                }
+              ],
+              "name": "onRequestPut"
             }
           ],
-          "extendsTokenRanges": [
-            {
-              "startIndex": 5,
-              "endIndex": 6
-            }
-          ]
+          "implementsTokenRanges": []
         },
         {
           "kind": "Class",
@@ -3369,9 +3545,56 @@
           "extendsTokenRanges": []
         },
         {
+          "kind": "TypeAlias",
+          "canonicalReference": "keywork!PossiblePromise:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type PossiblePromise<T> = "
+            },
+            {
+              "kind": "Content",
+              "text": "T | "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<T>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "PossiblePromise",
+          "typeParameters": [
+            {
+              "typeParameterName": "T",
+              "constraintTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 4
+          }
+        },
+        {
           "kind": "Class",
           "canonicalReference": "keywork!RedirectHandler:class",
-          "docComment": "/**\n * A higher-order function for redirecting requests via `IncomingRequestHandler`.\n *\n * @returns The incoming request handler.\n *\n * @example\n *\n * Creating a Worker that just redirects incoming requests.\n * ```ts\n * const redirectToExample = new RedirectHandler('https://example.com')\n *\n * export default redirectToExample\n * ```\n *\n * @category\n *\n * Incoming Request Handlers\n */\n",
+          "docComment": "/**\n * A higher-order function for redirecting requests via `KeyworkRequestHandler`.\n *\n * @returns The incoming request handler.\n *\n * @example\n *\n * Creating a Worker that just redirects incoming requests.\n * ```ts\n * const redirectToExample = new RedirectHandler('https://example.com')\n *\n * export default redirectToExample\n * ```\n *\n * @category\n *\n * Incoming Request Handlers\n */\n",
           "excerptTokens": [
             {
               "kind": "Content",
@@ -3484,13 +3707,22 @@
                   "text": "onRequest: "
                 },
                 {
+                  "kind": "Content",
+                  "text": "({ request }: "
+                },
+                {
                   "kind": "Reference",
-                  "text": "IncomingRequestHandler",
-                  "canonicalReference": "keywork!IncomingRequestHandler:type"
+                  "text": "IncomingRequestData",
+                  "canonicalReference": "keywork!IncomingRequestData:interface"
                 },
                 {
                   "kind": "Content",
-                  "text": "<null, null>"
+                  "text": ") => "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Response",
+                  "canonicalReference": "!Response:interface"
                 },
                 {
                   "kind": "Content",
@@ -3502,7 +3734,7 @@
               "name": "onRequest",
               "propertyTypeTokenRange": {
                 "startIndex": 1,
-                "endIndex": 3
+                "endIndex": 5
               },
               "isStatic": false
             },

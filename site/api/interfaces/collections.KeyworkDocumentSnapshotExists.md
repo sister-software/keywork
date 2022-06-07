@@ -1,22 +1,18 @@
+---
+title: "Interface: KeyworkDocumentSnapshotExists"
+sidebar_label: "KeyworkDocumentSnapshotExists"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: KeyworkDocumentSnapshotExists<ExpectedType\>
 
-[collections](../modules/collections.md).KeyworkDocumentSnapshotExists
+[collections](../modules/collections).KeyworkDocumentSnapshotExists
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `ExpectedType` | `unknown` |
-
-## Table of contents
-
-### Properties
-
-- [absoluteDocPath](collections.KeyworkDocumentSnapshotExists.md#absolutedocpath)
-- [exists](collections.KeyworkDocumentSnapshotExists.md#exists)
-- [metadata](collections.KeyworkDocumentSnapshotExists.md#metadata)
-- [relativeDocPath](collections.KeyworkDocumentSnapshotExists.md#relativedocpath)
-- [value](collections.KeyworkDocumentSnapshotExists.md#value)
 
 ## Properties
 
@@ -26,7 +22,7 @@
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentSnapshot.ts:26](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentSnapshot.ts#L26)
+[packages/collections/src/KeyworkDocumentSnapshot.ts:26](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentSnapshot.ts#L26)
 
 ___
 
@@ -36,17 +32,17 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentSnapshot.ts:28](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentSnapshot.ts#L28)
+[packages/collections/src/KeyworkDocumentSnapshot.ts:28](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentSnapshot.ts#L28)
 
 ___
 
 ### metadata
 
-• **metadata**: [`KeyworkDocumentMetadata`](collections.KeyworkDocumentMetadata.md)
+• **metadata**: [`KeyworkDocumentMetadata`](collections.KeyworkDocumentMetadata)
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentSnapshot.ts:30](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentSnapshot.ts#L30)
+[packages/collections/src/KeyworkDocumentSnapshot.ts:30](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentSnapshot.ts#L30)
 
 ___
 
@@ -56,7 +52,7 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentSnapshot.ts:27](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentSnapshot.ts#L27)
+[packages/collections/src/KeyworkDocumentSnapshot.ts:27](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentSnapshot.ts#L27)
 
 ___
 
@@ -66,4 +62,4 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentSnapshot.ts:29](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentSnapshot.ts#L29)
+[packages/collections/src/KeyworkDocumentSnapshot.ts:29](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentSnapshot.ts#L29)

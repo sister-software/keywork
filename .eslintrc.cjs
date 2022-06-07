@@ -22,7 +22,7 @@ const headerLines = rawHeaderContent.replace('/**', '*').replace('*/\n', '').spl
 
 module.exports = {
   root: true,
-  ignorePatterns: ['./**/dist/**/*'],
+  ignorePatterns: ['./**/dist/**/*', './node_modules/**/*'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'eslint-plugin-tsdoc', 'header'],
   settings: {

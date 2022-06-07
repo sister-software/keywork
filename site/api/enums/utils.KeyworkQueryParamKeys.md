@@ -1,6 +1,12 @@
+---
+title: "Enumeration: KeyworkQueryParamKeys"
+sidebar_label: "KeyworkQueryParamKeys"
+sidebar_class_name: "doc-kind-enumeration"
+---
+
 # Enumeration: KeyworkQueryParamKeys
 
-[utils](../modules/utils.md).KeyworkQueryParamKeys
+[utils](../modules/utils).KeyworkQueryParamKeys
 
 **`file`** This file is part of the Keywork project.
 
@@ -17,13 +23,6 @@ involving the Keywork software without disclosing the source code of your own ap
 
 **`see`** LICENSE.md in the project root for further licensing information.
 
-## Table of contents
-
-### Enumeration Members
-
-- [BuildID](utils.KeyworkQueryParamKeys.md#buildid)
-- [StaticProps](utils.KeyworkQueryParamKeys.md#staticprops)
-
 ## Enumeration Members
 
 ### BuildID
@@ -34,7 +33,7 @@ The current build ID. Used to bust caches on static assets.
 
 #### Defined in
 
-[packages/utils/src/url.ts:17](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/url.ts#L17)
+[packages/utils/src/url.ts:17](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/url.ts#L17)
 
 ___
 
@@ -47,4 +46,4 @@ only needs the static props for an upcoming page transition.
 
 #### Defined in
 
-[packages/utils/src/url.ts:22](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/url.ts#L22)
+[packages/utils/src/url.ts:22](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/url.ts#L22)

@@ -1,13 +1,12 @@
+---
+title: "Interface: KeyworkDocumentFetchOptions"
+sidebar_label: "KeyworkDocumentFetchOptions"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: KeyworkDocumentFetchOptions
 
-[collections](../modules/collections.md).KeyworkDocumentFetchOptions
-
-## Table of contents
-
-### Properties
-
-- [cacheTtl](collections.KeyworkDocumentFetchOptions.md#cachettl)
-- [deserializeAs](collections.KeyworkDocumentFetchOptions.md#deserializeas)
+[collections](../modules/collections).KeyworkDocumentFetchOptions
 
 ## Properties
 
@@ -23,13 +22,13 @@ This can be useful for reducing cold read latency on keys that are read relative
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentReference.ts:38](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentReference.ts#L38)
+[packages/collections/src/KeyworkDocumentReference.ts:38](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentReference.ts#L38)
 
 ___
 
 ### deserializeAs
 
-• `Optional` **deserializeAs**: [`DeserializationTransformers`](../modules/collections.md#deserializationtransformers)
+• `Optional` **deserializeAs**: [`DeserializationTransformers`](../modules/collections#deserializationtransformers)
 
 Determines how the fetched data will be interpreted after fetching.
 
@@ -37,4 +36,4 @@ Determines how the fetched data will be interpreted after fetching.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentReference.ts:44](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentReference.ts#L44)
+[packages/collections/src/KeyworkDocumentReference.ts:44](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentReference.ts#L44)

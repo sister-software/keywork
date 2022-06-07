@@ -1,6 +1,12 @@
+---
+title: "Interface: WorkersSiteStaticContentBinding"
+sidebar_label: "WorkersSiteStaticContentBinding"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: WorkersSiteStaticContentBinding
 
-[keywork](../modules/keywork.md).WorkersSiteStaticContentBinding
+[keywork](../modules/keywork).WorkersSiteStaticContentBinding
 
 An environment binding available within Worker Sites.
 This is often used with the `@cloudflare/kv-asset-handler` package.
@@ -19,13 +25,6 @@ build({ external: ['__STATIC_CONTENT_MANIFEST']})
 
 **`see`** [Cloudflare Worker Pages API](https://developers.cloudflare.com/pages/platform/functions/#advanced-mode)
 
-## Table of contents
-
-### Properties
-
-- [ASSETS](keywork.WorkersSiteStaticContentBinding.md#assets)
-- [\_\_STATIC\_CONTENT](keywork.WorkersSiteStaticContentBinding.md#__static_content)
-
 ## Properties
 
 ### ASSETS
@@ -34,7 +33,7 @@ build({ external: ['__STATIC_CONTENT_MANIFEST']})
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:645
+packages/keywork/dist/index.d.ts:603
 
 ___
 
@@ -44,4 +43,4 @@ ___
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:644
+packages/keywork/dist/index.d.ts:602

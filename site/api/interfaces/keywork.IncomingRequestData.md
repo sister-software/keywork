@@ -1,6 +1,12 @@
+---
+title: "Interface: IncomingRequestData"
+sidebar_label: "IncomingRequestData"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: IncomingRequestData<BoundAliases\>
 
-[keywork](../modules/keywork.md).IncomingRequestData
+[keywork](../modules/keywork).IncomingRequestData
 
 Data associated with the incoming request.
 
@@ -9,15 +15,6 @@ Data associated with the incoming request.
 | Name | Type |
 | :------ | :------ |
 | `BoundAliases` | extends {} \| ``null`` = ``null`` |
-
-## Table of contents
-
-### Properties
-
-- [context](keywork.IncomingRequestData.md#context)
-- [env](keywork.IncomingRequestData.md#env)
-- [request](keywork.IncomingRequestData.md#request)
-- [url](keywork.IncomingRequestData.md#url)
 
 ## Properties
 
@@ -35,7 +32,7 @@ ___
 
 ### env
 
-• `Readonly` **env**: `BoundAliases` extends ``null`` ? [`DefaultWorkerBindings`](../modules/keywork.md#defaultworkerbindings) : `BoundAliases` & [`WorkersSiteStaticContentBinding`](keywork.WorkersSiteStaticContentBinding.md) & `BoundAliases` & [`WorkersPagesAssetsBinding`](keywork.WorkersPagesAssetsBinding.md)
+• `Readonly` **env**: `BoundAliases` extends ``null`` ? [`DefaultWorkerBindings`](../modules/keywork#defaultworkerbindings) : `BoundAliases` & [`WorkersSiteStaticContentBinding`](keywork.WorkersSiteStaticContentBinding) & `BoundAliases` & [`WorkersPagesAssetsBinding`](keywork.WorkersPagesAssetsBinding)
 
 Any bound environment properties defined in your `wrangler.toml` file
 
@@ -47,7 +44,7 @@ ___
 
 ### request
 
-• `Readonly` **request**: [`RequestWithCFProperties`](keywork.RequestWithCFProperties.md)
+• `Readonly` **request**: [`RequestWithCFProperties`](keywork.RequestWithCFProperties)
 
 The incoming request
 

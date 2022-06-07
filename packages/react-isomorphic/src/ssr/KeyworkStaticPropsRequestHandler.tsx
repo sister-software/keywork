@@ -19,7 +19,7 @@ import {
   generateETag,
   getBrowserIdentifier,
   HTMLResponse,
-  IncomingRequestHandler,
+  IncomingRequestData,
   JSONResponse,
   KeyworkRequestHandler,
 } from 'keywork'
@@ -32,7 +32,7 @@ import {
   KeyworkRouter,
   StaticPropsProvider,
 } from '../components/index.js'
-import { GetStaticPropsHandler, SSRPropsLike } from './props.js'
+import { SSRPropsLike } from './props.js'
 import { ReactRenderStreamResult, renderReactStream } from './renderReactStream.js'
 import { _SSRPropsEmbed } from './SSRPropsEmbed.js'
 
@@ -89,12 +89,7 @@ async function renderStaticPropsAsComponentStream<StaticProps extends NonNullabl
   return new HTMLResponse(result.stream)
 }
 
-// if (!onlySendStaticProps && process.env.NODE_ENV !== 'development') {
-//   const ga = new GA(request, session.sessionID)
-//   context.waitUntil(ga.send(HitType.PAGE_VIEW))
-// }
-
-export abstract class KeyworkStaticPropsRequestHandler<
+export abstract class StaticPropsRequestHandler<
   StaticProps extends SSRPropsLike,
   BoundAliases extends {} | null = null
 > extends KeyworkRequestHandler<BoundAliases> {
@@ -112,16 +107,16 @@ export abstract class KeyworkStaticPropsRequestHandler<
    */
   abstract DocumentComponent?: KeyworkHTMLDocumentComponent
 
-  abstract getStaticProps: GetStaticPropsHandler<StaticProps, BoundAliases>
+  // abstract getStaticProps: GetStaticPropsHandler<StaticProps, BoundAliases>
 
-  onRequestGet: IncomingRequestHandler<BoundAliases> = async (data) => {
+  onRequestGet = async (data: IncomingRequestData<BoundAliases>) => {
     const { request, url: location } = data
     const onlySendStaticProps = location.searchParams.has(KeyworkQueryParamKeys.StaticProps)
 
     let staticProps: NonNullable<StaticProps>
 
     try {
-      staticProps = ((await this.getStaticProps(data)) || {}) as NonNullable<StaticProps>
+      staticProps = ((await this.getStaticProps!(data)) || {}) as NonNullable<StaticProps>
     } catch (error) {
       this.logger.error(error)
       return ErrorResponse.fromUnknownError(error)

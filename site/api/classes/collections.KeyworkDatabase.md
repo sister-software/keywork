@@ -1,23 +1,14 @@
+---
+title: "Class: KeyworkDatabase"
+sidebar_label: "KeyworkDatabase"
+sidebar_class_name: "doc-kind-class"
+---
+
 # Class: KeyworkDatabase
 
-[collections](../modules/collections.md).KeyworkDatabase
+[collections](../modules/collections).KeyworkDatabase
 
 Creates a database instance backed by a Cloudflare KV namespace.
-
-## Table of contents
-
-### Constructors
-
-- [constructor](collections.KeyworkDatabase.md#constructor)
-
-### Properties
-
-- [kvNamespace](collections.KeyworkDatabase.md#kvnamespace)
-
-### Methods
-
-- [collection](collections.KeyworkDatabase.md#collection)
-- [doc](collections.KeyworkDatabase.md#doc)
 
 ## Constructors
 
@@ -33,7 +24,7 @@ Creates a database instance backed by a Cloudflare KV namespace.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDatabase.ts:22](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDatabase.ts#L22)
+[packages/collections/src/KeyworkDatabase.ts:22](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDatabase.ts#L22)
 
 ## Properties
 
@@ -45,7 +36,7 @@ Creates a database instance backed by a Cloudflare KV namespace.
 
 ### collection
 
-▸ **collection**(`collectionPath`): `Promise`<[`KeyworkCollection`](collections.KeyworkCollection.md)<{} \| [`DeserializationTypes`](../modules/collections.md#deserializationtypes)\>\>
+▸ **collection**(`collectionPath`): `Promise`<[`KeyworkCollection`](collections.KeyworkCollection)<{} \| [`DeserializationTypes`](../modules/collections#deserializationtypes)\>\>
 
 Gets a `KeyworkCollection` instance that refers to a collection of documents.
 
@@ -57,17 +48,17 @@ Gets a `KeyworkCollection` instance that refers to a collection of documents.
 
 #### Returns
 
-`Promise`<[`KeyworkCollection`](collections.KeyworkCollection.md)<{} \| [`DeserializationTypes`](../modules/collections.md#deserializationtypes)\>\>
+`Promise`<[`KeyworkCollection`](collections.KeyworkCollection)<{} \| [`DeserializationTypes`](../modules/collections#deserializationtypes)\>\>
 
 #### Defined in
 
-[packages/collections/src/KeyworkDatabase.ts:40](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDatabase.ts#L40)
+[packages/collections/src/KeyworkDatabase.ts:40](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDatabase.ts#L40)
 
 ___
 
 ### doc
 
-▸ **doc**<`ExpectedType`\>(`docPath`): [`KeyworkDocumentReference`](collections.KeyworkDocumentReference.md)<`ExpectedType`\>
+▸ **doc**<`ExpectedType`\>(`docPath`): [`KeyworkDocumentReference`](collections.KeyworkDocumentReference)<`ExpectedType`\>
 
 Gets a `KeyworkDocumentReference` instance that refers to the document at the specified absolute path.
 
@@ -75,7 +66,7 @@ Gets a `KeyworkDocumentReference` instance that refers to the document at the sp
 
 | Name | Type |
 | :------ | :------ |
-| `ExpectedType` | extends {} \| [`DeserializationTypes`](../modules/collections.md#deserializationtypes) = `never` |
+| `ExpectedType` | extends {} \| [`DeserializationTypes`](../modules/collections#deserializationtypes) = `never` |
 
 #### Parameters
 
@@ -85,8 +76,8 @@ Gets a `KeyworkDocumentReference` instance that refers to the document at the sp
 
 #### Returns
 
-[`KeyworkDocumentReference`](collections.KeyworkDocumentReference.md)<`ExpectedType`\>
+[`KeyworkDocumentReference`](collections.KeyworkDocumentReference)<`ExpectedType`\>
 
 #### Defined in
 
-[packages/collections/src/KeyworkDatabase.ts:30](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDatabase.ts#L30)
+[packages/collections/src/KeyworkDatabase.ts:30](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDatabase.ts#L30)

@@ -1,8 +1,14 @@
+---
+title: "Class: RedirectHandler"
+sidebar_label: "RedirectHandler"
+sidebar_class_name: "doc-kind-class"
+---
+
 # Class: RedirectHandler
 
-[keywork](../modules/keywork.md).RedirectHandler
+[keywork](../modules/keywork).RedirectHandler
 
-A higher-order function for redirecting requests via `IncomingRequestHandler`.
+A higher-order function for redirecting requests via `KeyworkRequestHandler`.
 
 **`returns`** The incoming request handler.
 
@@ -17,33 +23,9 @@ export default redirectToExample
 
 ## Hierarchy
 
-- [`KeyworkRequestHandler`](keywork.KeyworkRequestHandler.md)
+- [`KeyworkRequestHandler`](keywork.KeyworkRequestHandler)
 
   ↳ **`RedirectHandler`**
-
-## Table of contents
-
-### Constructors
-
-- [constructor](keywork.RedirectHandler.md#constructor)
-
-### Properties
-
-- [destinationURL](keywork.RedirectHandler.md#destinationurl)
-- [logger](keywork.RedirectHandler.md#logger)
-- [onRequest](keywork.RedirectHandler.md#onrequest)
-- [onRequestDelete](keywork.RedirectHandler.md#onrequestdelete)
-- [onRequestGet](keywork.RedirectHandler.md#onrequestget)
-- [onRequestHead](keywork.RedirectHandler.md#onrequesthead)
-- [onRequestOptions](keywork.RedirectHandler.md#onrequestoptions)
-- [onRequestPatch](keywork.RedirectHandler.md#onrequestpatch)
-- [onRequestPost](keywork.RedirectHandler.md#onrequestpost)
-- [onRequestPut](keywork.RedirectHandler.md#onrequestput)
-- [statusCode](keywork.RedirectHandler.md#statuscode)
-
-### Methods
-
-- [fetch](keywork.RedirectHandler.md#fetch)
 
 ## Constructors
 
@@ -60,11 +42,11 @@ export default redirectToExample
 
 #### Overrides
 
-[KeyworkRequestHandler](keywork.KeyworkRequestHandler.md).[constructor](keywork.KeyworkRequestHandler.md#constructor)
+[KeyworkRequestHandler](keywork.KeyworkRequestHandler).[constructor](keywork.KeyworkRequestHandler#constructor)
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:562
+packages/keywork/dist/index.d.ts:520
 
 ## Properties
 
@@ -76,7 +58,7 @@ URL A url-like string or URL object
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:559
+packages/keywork/dist/index.d.ts:517
 
 ___
 
@@ -84,145 +66,43 @@ ___
 
 • **logger**: `PrefixedLogger`
 
+A server-side logger.
+
 #### Inherited from
 
-[KeyworkRequestHandler](keywork.KeyworkRequestHandler.md).[logger](keywork.KeyworkRequestHandler.md#logger)
+[KeyworkRequestHandler](keywork.KeyworkRequestHandler).[logger](keywork.KeyworkRequestHandler#logger)
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:398
+packages/keywork/dist/index.d.ts:314
 
 ___
 
 ### onRequest
 
-• **onRequest**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<``null``, ``null``\>
+• **onRequest**: (`__namedParameters`: [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<``null``\>) => `Response`
 
-An incoming request handler for all HTTP methods.
+#### Type declaration
 
-**`remarks`** This will always be a lower priority than an explicitly defined method handler.
+▸ (`__namedParameters`): `Response`
+
+##### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `__namedParameters` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<``null``\> |
+
+##### Returns
+
+`Response`
 
 #### Overrides
 
-[KeyworkRequestHandler](keywork.KeyworkRequestHandler.md).[onRequest](keywork.KeyworkRequestHandler.md#onrequest)
+[KeyworkRequestHandler](keywork.KeyworkRequestHandler).[onRequest](keywork.KeyworkRequestHandler#onrequest)
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:567
-
-___
-
-### onRequestDelete
-
-• `Optional` **onRequestDelete**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<``null``, ``null``\>
-
-An incoming `DELETE` request handler.
-
-#### Inherited from
-
-[KeyworkRequestHandler](keywork.KeyworkRequestHandler.md).[onRequestDelete](keywork.KeyworkRequestHandler.md#onrequestdelete)
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:367
-
-___
-
-### onRequestGet
-
-• `Optional` **onRequestGet**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<``null``, ``null``\>
-
-An incoming `GET` request handler.
-
-#### Inherited from
-
-[KeyworkRequestHandler](keywork.KeyworkRequestHandler.md).[onRequestGet](keywork.KeyworkRequestHandler.md#onrequestget)
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:347
-
-___
-
-### onRequestHead
-
-• `Optional` **onRequestHead**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<``null``, ``null``\>
-
-An incoming `HEAD` request handler.
-
-**`see`** `WorkerRouteHandler`
-
-#### Inherited from
-
-[KeyworkRequestHandler](keywork.KeyworkRequestHandler.md).[onRequestHead](keywork.KeyworkRequestHandler.md#onrequesthead)
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:373
-
-___
-
-### onRequestOptions
-
-• `Optional` **onRequestOptions**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<``null``, ``null``\>
-
-An incoming `OPTIONS` request handler.
-
-#### Inherited from
-
-[KeyworkRequestHandler](keywork.KeyworkRequestHandler.md).[onRequestOptions](keywork.KeyworkRequestHandler.md#onrequestoptions)
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:378
-
-___
-
-### onRequestPatch
-
-• `Optional` **onRequestPatch**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<``null``, ``null``\>
-
-An incoming `PATCH` request handler.
-
-#### Inherited from
-
-[KeyworkRequestHandler](keywork.KeyworkRequestHandler.md).[onRequestPatch](keywork.KeyworkRequestHandler.md#onrequestpatch)
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:362
-
-___
-
-### onRequestPost
-
-• `Optional` **onRequestPost**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<``null``, ``null``\>
-
-An incoming `POST` request handler.
-
-#### Inherited from
-
-[KeyworkRequestHandler](keywork.KeyworkRequestHandler.md).[onRequestPost](keywork.KeyworkRequestHandler.md#onrequestpost)
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:352
-
-___
-
-### onRequestPut
-
-• `Optional` **onRequestPut**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<``null``, ``null``\>
-
-An incoming `PUT` request handler.
-
-#### Inherited from
-
-[KeyworkRequestHandler](keywork.KeyworkRequestHandler.md).[onRequestPut](keywork.KeyworkRequestHandler.md#onrequestput)
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:357
+packages/keywork/dist/index.d.ts:525
 
 ___
 
@@ -234,7 +114,7 @@ An optional status code. Defaults to `302`
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:561
+packages/keywork/dist/index.d.ts:519
 
 ## Methods
 
@@ -261,8 +141,216 @@ This is instead automatically called by the Worker runtime when an incoming requ
 
 #### Inherited from
 
-[KeyworkRequestHandler](keywork.KeyworkRequestHandler.md).[fetch](keywork.KeyworkRequestHandler.md#fetch)
+[KeyworkRequestHandler](keywork.KeyworkRequestHandler).[fetch](keywork.KeyworkRequestHandler#fetch)
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:405
+packages/keywork/dist/index.d.ts:361
+
+___
+
+### getStaticProps
+
+▸ `Optional` **getStaticProps**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<``null``\>
+
+A method used to fetch static props for rendering React apps in your worker.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<``null``\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<``null``\>
+
+#### Inherited from
+
+[KeyworkRequestHandler](keywork.KeyworkRequestHandler).[getStaticProps](keywork.KeyworkRequestHandler#getstaticprops)
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:352
+
+___
+
+### onRequestDelete
+
+▸ `Optional` **onRequestDelete**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `DELETE` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<``null``\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Inherited from
+
+[KeyworkRequestHandler](keywork.KeyworkRequestHandler).[onRequestDelete](keywork.KeyworkRequestHandler#onrequestdelete)
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:334
+
+___
+
+### onRequestGet
+
+▸ `Optional` **onRequestGet**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `GET` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<``null``\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Inherited from
+
+[KeyworkRequestHandler](keywork.KeyworkRequestHandler).[onRequestGet](keywork.KeyworkRequestHandler#onrequestget)
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:318
+
+___
+
+### onRequestHead
+
+▸ `Optional` **onRequestHead**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `HEAD` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<``null``\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Inherited from
+
+[KeyworkRequestHandler](keywork.KeyworkRequestHandler).[onRequestHead](keywork.KeyworkRequestHandler#onrequesthead)
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:338
+
+___
+
+### onRequestOptions
+
+▸ `Optional` **onRequestOptions**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `OPTIONS` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<``null``\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Inherited from
+
+[KeyworkRequestHandler](keywork.KeyworkRequestHandler).[onRequestOptions](keywork.KeyworkRequestHandler#onrequestoptions)
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:342
+
+___
+
+### onRequestPatch
+
+▸ `Optional` **onRequestPatch**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `PATCH` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<``null``\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Inherited from
+
+[KeyworkRequestHandler](keywork.KeyworkRequestHandler).[onRequestPatch](keywork.KeyworkRequestHandler#onrequestpatch)
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:330
+
+___
+
+### onRequestPost
+
+▸ `Optional` **onRequestPost**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `POST` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<``null``\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Inherited from
+
+[KeyworkRequestHandler](keywork.KeyworkRequestHandler).[onRequestPost](keywork.KeyworkRequestHandler#onrequestpost)
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:322
+
+___
+
+### onRequestPut
+
+▸ `Optional` **onRequestPut**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `PUT` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<``null``\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Inherited from
+
+[KeyworkRequestHandler](keywork.KeyworkRequestHandler).[onRequestPut](keywork.KeyworkRequestHandler#onrequestput)
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:326

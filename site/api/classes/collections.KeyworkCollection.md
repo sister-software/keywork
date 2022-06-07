@@ -1,42 +1,18 @@
+---
+title: "Class: KeyworkCollection"
+sidebar_label: "KeyworkCollection"
+sidebar_class_name: "doc-kind-class"
+---
+
 # Class: KeyworkCollection<ExpectedType\>
 
-[collections](../modules/collections.md).KeyworkCollection
+[collections](../modules/collections).KeyworkCollection
 
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
-| `ExpectedType` | extends [`DeserializationTypes`](../modules/collections.md#deserializationtypes) \| {} |
-
-## Table of contents
-
-### Constructors
-
-- [constructor](collections.KeyworkCollection.md#constructor)
-
-### Properties
-
-- [\_\_documentsPath](collections.KeyworkCollection.md#__documentspath)
-- [\_\_indexByDocumentPath](collections.KeyworkCollection.md#__indexbydocumentpath)
-- [\_\_indexByIDPath](collections.KeyworkCollection.md#__indexbyidpath)
-- [\_\_indexPathByPropertyName](collections.KeyworkCollection.md#__indexpathbypropertyname)
-- [\_\_indexPrefixesPath](collections.KeyworkCollection.md#__indexprefixespath)
-- [\_\_indexesPath](collections.KeyworkCollection.md#__indexespath)
-- [collectionPath](collections.KeyworkCollection.md#collectionpath)
-- [kvNamespace](collections.KeyworkCollection.md#kvnamespace)
-
-### Methods
-
-- [addEntryToIndexes](collections.KeyworkCollection.md#addentrytoindexes)
-- [createDocumentReference](collections.KeyworkCollection.md#createdocumentreference)
-- [fetchDocumentMetadataByPath](collections.KeyworkCollection.md#fetchdocumentmetadatabypath)
-- [fetchDocuments](collections.KeyworkCollection.md#fetchdocuments)
-- [fetchDocumentsList](collections.KeyworkCollection.md#fetchdocumentslist)
-- [fetchDocumentsListByID](collections.KeyworkCollection.md#fetchdocumentslistbyid)
-- [fetchIndexPrefixes](collections.KeyworkCollection.md#fetchindexprefixes)
-- [initialize](collections.KeyworkCollection.md#initialize)
-- [permanentlyDeleteThisCollection](collections.KeyworkCollection.md#permanentlydeletethiscollection)
-- [query](collections.KeyworkCollection.md#query)
+| `ExpectedType` | extends [`DeserializationTypes`](../modules/collections#deserializationtypes) \| {} |
 
 ## Constructors
 
@@ -48,7 +24,7 @@
 
 | Name | Type |
 | :------ | :------ |
-| `ExpectedType` | extends {} \| [`DeserializationTypes`](../modules/collections.md#deserializationtypes) |
+| `ExpectedType` | extends {} \| [`DeserializationTypes`](../modules/collections#deserializationtypes) |
 
 #### Parameters
 
@@ -59,81 +35,9 @@
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:52](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L52)
+[packages/collections/src/KeyworkCollection.ts:70](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L70)
 
 ## Properties
-
-### \_\_documentsPath
-
-• `Protected` **\_\_documentsPath**: [`PathBuilder`](../modules/collections.md#pathbuilder)
-
-Path to documents.
-
-#### Defined in
-
-[packages/collections/src/KeyworkCollection.ts:35](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L35)
-
-___
-
-### \_\_indexByDocumentPath
-
-• `Protected` **\_\_indexByDocumentPath**: [`PathBuilder`](../modules/collections.md#pathbuilder)
-
-Path to the default document index by document key.
-
-#### Defined in
-
-[packages/collections/src/KeyworkCollection.ts:47](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L47)
-
-___
-
-### \_\_indexByIDPath
-
-• `Protected` **\_\_indexByIDPath**: [`PathBuilder`](../modules/collections.md#pathbuilder)
-
-Path to the default document index by ID.
-
-#### Defined in
-
-[packages/collections/src/KeyworkCollection.ts:44](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L44)
-
-___
-
-### \_\_indexPathByPropertyName
-
-• `Protected` **\_\_indexPathByPropertyName**: `Record`<keyof `ExpectedType`, `undefined` \| `string`\>
-
-Path to index listing entries by an entry's properties
-
-#### Defined in
-
-[packages/collections/src/KeyworkCollection.ts:50](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L50)
-
-___
-
-### \_\_indexPrefixesPath
-
-• `Protected` **\_\_indexPrefixesPath**: [`PathBuilder`](../modules/collections.md#pathbuilder)
-
-Path to index prefixes
-
-#### Defined in
-
-[packages/collections/src/KeyworkCollection.ts:41](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L41)
-
-___
-
-### \_\_indexesPath
-
-• `Protected` **\_\_indexesPath**: [`PathBuilder`](../modules/collections.md#pathbuilder)
-
-Path to indexes.
-
-#### Defined in
-
-[packages/collections/src/KeyworkCollection.ts:38](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L38)
-
-___
 
 ### collectionPath
 
@@ -155,14 +59,14 @@ ___
 
 | Name | Type |
 | :------ | :------ |
-| `E` | extends {} \| [`DeserializationTypes`](../modules/collections.md#deserializationtypes) |
+| `E` | extends {} \| [`DeserializationTypes`](../modules/collections#deserializationtypes) |
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
 | `entry` | `E` |
-| `metadata` | [`KeyworkDocumentMetadata`](../interfaces/collections.KeyworkDocumentMetadata.md) |
+| `metadata` | [`KeyworkDocumentMetadata`](../interfaces/collections.KeyworkDocumentMetadata) |
 
 #### Returns
 
@@ -170,13 +74,13 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:161](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L161)
+[packages/collections/src/KeyworkCollection.ts:179](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L179)
 
 ___
 
 ### createDocumentReference
 
-▸ **createDocumentReference**(`relativeDocPath`): [`KeyworkDocumentReference`](collections.KeyworkDocumentReference.md)<`ExpectedType`\>
+▸ **createDocumentReference**(`relativeDocPath`): [`KeyworkDocumentReference`](collections.KeyworkDocumentReference)<`ExpectedType`\>
 
 Create a `KeyworkDocumentReference` instance that refers to the document at the specified *relative* path.
 
@@ -188,17 +92,17 @@ Create a `KeyworkDocumentReference` instance that refers to the document at the 
 
 #### Returns
 
-[`KeyworkDocumentReference`](collections.KeyworkDocumentReference.md)<`ExpectedType`\>
+[`KeyworkDocumentReference`](collections.KeyworkDocumentReference)<`ExpectedType`\>
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:152](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L152)
+[packages/collections/src/KeyworkCollection.ts:170](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L170)
 
 ___
 
 ### fetchDocumentMetadataByPath
 
-▸ **fetchDocumentMetadataByPath**(`relativeDocPath`): `Promise`<``null`` \| [`KeyworkDocumentMetadata`](../interfaces/collections.KeyworkDocumentMetadata.md)\>
+▸ **fetchDocumentMetadataByPath**(`relativeDocPath`): `Promise`<``null`` \| [`KeyworkDocumentMetadata`](../interfaces/collections.KeyworkDocumentMetadata)\>
 
 Fetches a given document's metadata.
 This is used to determine a document's deserialization ahead of its fetching.
@@ -211,17 +115,17 @@ This is used to determine a document's deserialization ahead of its fetching.
 
 #### Returns
 
-`Promise`<``null`` \| [`KeyworkDocumentMetadata`](../interfaces/collections.KeyworkDocumentMetadata.md)\>
+`Promise`<``null`` \| [`KeyworkDocumentMetadata`](../interfaces/collections.KeyworkDocumentMetadata)\>
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:116](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L116)
+[packages/collections/src/KeyworkCollection.ts:134](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L134)
 
 ___
 
 ### fetchDocuments
 
-▸ **fetchDocuments**(`options?`): `Promise`<[`CollectionDocumentReferencesResponse`](../interfaces/collections.CollectionDocumentReferencesResponse.md)<`ExpectedType`\>\>
+▸ **fetchDocuments**(`options?`): `Promise`<[`CollectionDocumentReferencesResponse`](../interfaces/collections.CollectionDocumentReferencesResponse)<`ExpectedType`\>\>
 
 Fetches a paginated list of the immediate `KeyworkDocumentReference`.
 
@@ -229,41 +133,41 @@ Fetches a paginated list of the immediate `KeyworkDocumentReference`.
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | [`FetchListOptions`](../interfaces/collections.FetchListOptions.md) |
+| `options?` | [`FetchListOptions`](../interfaces/collections.FetchListOptions) |
 
 #### Returns
 
-`Promise`<[`CollectionDocumentReferencesResponse`](../interfaces/collections.CollectionDocumentReferencesResponse.md)<`ExpectedType`\>\>
+`Promise`<[`CollectionDocumentReferencesResponse`](../interfaces/collections.CollectionDocumentReferencesResponse)<`ExpectedType`\>\>
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:123](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L123)
+[packages/collections/src/KeyworkCollection.ts:141](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L141)
 
 ___
 
 ### fetchDocumentsList
 
-▸ **fetchDocumentsList**(`options?`): `Promise`<{ `keys`: (`undefined` \| `string`)[]  }\>
+▸ **fetchDocumentsList**(`options?`): `Promise`<{ `cursor?`: `string` ; `keys`: (`undefined` \| `string`)[] ; `list_complete`: `boolean`  }\>
 
 #### Parameters
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | [`FetchListOptions`](../interfaces/collections.FetchListOptions.md) |
+| `options?` | [`FetchListOptions`](../interfaces/collections.FetchListOptions) |
 
 #### Returns
 
-`Promise`<{ `keys`: (`undefined` \| `string`)[]  }\>
+`Promise`<{ `cursor?`: `string` ; `keys`: (`undefined` \| `string`)[] ; `list_complete`: `boolean`  }\>
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:103](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L103)
+[packages/collections/src/KeyworkCollection.ts:121](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L121)
 
 ___
 
 ### fetchDocumentsListByID
 
-▸ **fetchDocumentsListByID**(`options?`): `Promise`<`KVNamespaceListResult`<[`KeyworkDocumentMetadata`](../interfaces/collections.KeyworkDocumentMetadata.md)\>\>
+▸ **fetchDocumentsListByID**(`options?`): `Promise`<`KVNamespaceListResult`<[`KeyworkDocumentMetadata`](../interfaces/collections.KeyworkDocumentMetadata)\>\>
 
 Fetches a paginated list of the immediate documents within this collection.
 
@@ -271,15 +175,15 @@ Fetches a paginated list of the immediate documents within this collection.
 
 | Name | Type |
 | :------ | :------ |
-| `options?` | [`FetchListOptions`](../interfaces/collections.FetchListOptions.md) |
+| `options?` | [`FetchListOptions`](../interfaces/collections.FetchListOptions) |
 
 #### Returns
 
-`Promise`<`KVNamespaceListResult`<[`KeyworkDocumentMetadata`](../interfaces/collections.KeyworkDocumentMetadata.md)\>\>
+`Promise`<`KVNamespaceListResult`<[`KeyworkDocumentMetadata`](../interfaces/collections.KeyworkDocumentMetadata)\>\>
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:96](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L96)
+[packages/collections/src/KeyworkCollection.ts:114](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L114)
 
 ___
 
@@ -293,21 +197,21 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:84](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L84)
+[packages/collections/src/KeyworkCollection.ts:102](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L102)
 
 ___
 
 ### initialize
 
-▸ **initialize**(): `Promise`<[`KeyworkCollection`](collections.KeyworkCollection.md)<`ExpectedType`\>\>
+▸ **initialize**(): `Promise`<[`KeyworkCollection`](collections.KeyworkCollection)<`ExpectedType`\>\>
 
 #### Returns
 
-`Promise`<[`KeyworkCollection`](collections.KeyworkCollection.md)<`ExpectedType`\>\>
+`Promise`<[`KeyworkCollection`](collections.KeyworkCollection)<`ExpectedType`\>\>
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:65](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L65)
+[packages/collections/src/KeyworkCollection.ts:83](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L83)
 
 ___
 
@@ -321,7 +225,7 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:213](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L213)
+[packages/collections/src/KeyworkCollection.ts:231](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L231)
 
 ___
 
@@ -335,4 +239,4 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:209](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkCollection.ts#L209)
+[packages/collections/src/KeyworkCollection.ts:227](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L227)

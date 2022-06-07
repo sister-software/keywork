@@ -13,5 +13,4 @@
  */
 
 export * from './common.mjs'
-export * from './docs.mjs'
 export * from './extract.mjs'

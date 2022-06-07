@@ -1,12 +1,12 @@
+---
+title: "Interface: EntityToETagOptions"
+sidebar_label: "EntityToETagOptions"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: EntityToETagOptions
 
-[keywork](../modules/keywork.md).EntityToETagOptions
-
-## Table of contents
-
-### Properties
-
-- [weak](keywork.EntityToETagOptions.md#weak)
+[keywork](../modules/keywork).EntityToETagOptions
 
 ## Properties
 

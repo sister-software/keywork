@@ -15,7 +15,10 @@
 import { DefaultWorkerBindings } from '../bindings/index.js'
 import type { KeyworkSession } from '../KeyworkSession.js'
 
-export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS'
+/**
+ * @internal
+ */
+export type _HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS'
 
 export interface RequestWithCFProperties extends Request {
   cf: IncomingRequestCfProperties
@@ -37,20 +40,4 @@ export interface IncomingRequestData<BoundAliases extends {} | null = null> {
   readonly session: KeyworkSession
 }
 
-/**
- * An incoming request handler.
- * @remarks
- * - Your implementation should always return a response.
- * - The optional `ForcedParams` generic type is defined at compile time, but you must supply them.
- * - Always attempt to handle runtime errors gracefully, and respond with `KeyworkResourceError` when necessary.
- *
- */
-export type IncomingRequestHandler<BoundAliases extends {} | null = null, AdditionalData extends {} | null = null> = (
-  /** Data parsed from the incoming request. */
-  data: IncomingRequestData<BoundAliases>,
-  /**
-   * An optional argument for sending additional data to the handler.
-   * This can be useful when a handler is invoked manually.
-   */
-  additionalData?: AdditionalData
-) => Response | Promise<Response>
+export type PossiblePromise<T> = T | Promise<T>

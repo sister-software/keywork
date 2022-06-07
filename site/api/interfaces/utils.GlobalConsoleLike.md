@@ -1,16 +1,12 @@
+---
+title: "Interface: GlobalConsoleLike"
+sidebar_label: "GlobalConsoleLike"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: GlobalConsoleLike
 
-[utils](../modules/utils.md).GlobalConsoleLike
-
-## Table of contents
-
-### Methods
-
-- [debug](utils.GlobalConsoleLike.md#debug)
-- [error](utils.GlobalConsoleLike.md#error)
-- [info](utils.GlobalConsoleLike.md#info)
-- [log](utils.GlobalConsoleLike.md#log)
-- [warn](utils.GlobalConsoleLike.md#warn)
+[utils](../modules/utils).GlobalConsoleLike
 
 ## Methods
 
@@ -31,7 +27,7 @@
 
 #### Defined in
 
-[packages/utils/src/logger.ts:19](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L19)
+[packages/utils/src/logger.ts:19](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L19)
 
 ___
 
@@ -52,7 +48,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:20](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L20)
+[packages/utils/src/logger.ts:20](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L20)
 
 ___
 
@@ -73,7 +69,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:21](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L21)
+[packages/utils/src/logger.ts:21](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L21)
 
 ___
 
@@ -94,7 +90,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:22](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L22)
+[packages/utils/src/logger.ts:22](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L22)
 
 ___
 
@@ -115,4 +111,4 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:23](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/logger.ts#L23)
+[packages/utils/src/logger.ts:23](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L23)

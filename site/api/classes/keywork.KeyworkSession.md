@@ -1,26 +1,15 @@
+---
+title: "Class: KeyworkSession"
+sidebar_label: "KeyworkSession"
+sidebar_class_name: "doc-kind-class"
+---
+
 # Class: KeyworkSession
 
-[keywork](../modules/keywork.md).KeyworkSession
+[keywork](../modules/keywork).KeyworkSession
 
 A simple session manager to aid in authenticating users.
 This is under active development.
-
-## Table of contents
-
-### Constructors
-
-- [constructor](keywork.KeyworkSession.md#constructor)
-
-### Properties
-
-- [cookieKey](keywork.KeyworkSession.md#cookiekey)
-- [createClientID](keywork.KeyworkSession.md#createclientid)
-- [isNewSession](keywork.KeyworkSession.md#isnewsession)
-- [sessionID](keywork.KeyworkSession.md#sessionid)
-
-### Methods
-
-- [assignSessionHeaders](keywork.KeyworkSession.md#assignsessionheaders)
 
 ## Constructors
 
@@ -37,7 +26,7 @@ This is under active development.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:423
+packages/keywork/dist/index.d.ts:379
 
 ## Properties
 
@@ -47,7 +36,7 @@ packages/keywork/dist/index.d.ts:423
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:420
+packages/keywork/dist/index.d.ts:376
 
 ___
 
@@ -57,7 +46,7 @@ ___
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:425
+packages/keywork/dist/index.d.ts:381
 
 ___
 
@@ -67,7 +56,7 @@ ___
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:422
+packages/keywork/dist/index.d.ts:378
 
 ___
 
@@ -77,7 +66,7 @@ ___
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:421
+packages/keywork/dist/index.d.ts:377
 
 ## Methods
 
@@ -97,4 +86,4 @@ packages/keywork/dist/index.d.ts:421
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:424
+packages/keywork/dist/index.d.ts:380

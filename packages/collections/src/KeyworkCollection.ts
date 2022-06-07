@@ -31,22 +31,40 @@ export class KeyworkCollection<
   // eslint-disable-next-line @typescript-eslint/ban-types
   ExpectedType extends DeserializationTypes | {}
 > {
-  /** Path to documents. */
+  /**
+   * Path to documents.
+   * @internal
+   */
   protected __documentsPath: PathBuilder
 
-  /** Path to indexes. */
+  /**
+   * Path to indexes.
+   * @internal
+   */
   protected __indexesPath: PathBuilder
 
-  /** Path to index prefixes */
+  /**
+   * Path to index prefixes
+   * @internal
+   */
   protected __indexPrefixesPath: PathBuilder
 
-  /** Path to the default document index by ID. */
+  /**
+   * Path to the default document index by ID.
+   * @internal
+   */
   protected __indexByIDPath: PathBuilder
 
-  /** Path to the default document index by document key. */
+  /**
+   * Path to the default document index by document key.
+   * @internal
+   */
   protected __indexByDocumentPath: PathBuilder
 
-  /** Path to index listing entries by an entry's properties */
+  /**
+   * Path to index listing entries by an entry's properties
+   * @internal
+   */
   protected __indexPathByPropertyName!: Record<keyof ExpectedType, string | undefined>
 
   constructor(

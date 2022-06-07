@@ -106,8 +106,8 @@ export class HTMLResponse extends CachableResponse {
     headersInit?: HeadersInit);
 }
 
-// @public (undocumented)
-export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS';
+// @internal (undocumented)
+export type _HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS';
 
 // @public
 export interface IncomingRequestData<BoundAliases extends {} | null = null> {
@@ -118,11 +118,6 @@ export interface IncomingRequestData<BoundAliases extends {} | null = null> {
     readonly session: KeyworkSession;
     readonly url: URL;
 }
-
-// @public
-export type IncomingRequestHandler<BoundAliases extends {} | null = null, AdditionalData extends {} | null = null> = (
-data: IncomingRequestData<BoundAliases>,
-additionalData?: AdditionalData) => Response | Promise<Response>;
 
 // @public
 export function isETagMatch(request: Request, etag: string | null | undefined): etag is string;
@@ -150,29 +145,29 @@ export class KeyworkAssetHandler extends KeyworkRequestHandler<WorkersSiteStatic
     // (undocumented)
     protected assetManifest: AssetManifestType;
     // (undocumented)
-    onRequestGet: IncomingRequestHandler<WorkersSiteStaticContentBinding, null>;
+    onRequestGet: ({ env, request, context }: IncomingRequestData<WorkersSiteStaticContentBinding>) => Promise<Response>;
 }
 
 // @public
-export interface KeyworkRequestHandler<BoundAliases extends {} | null = null> extends ExportedHandler<BoundAliases> {
-    onRequest?: IncomingRequestHandler<BoundAliases>;
-    onRequestDelete?: IncomingRequestHandler<BoundAliases>;
-    onRequestGet?: IncomingRequestHandler<BoundAliases>;
-    onRequestHead?: IncomingRequestHandler<BoundAliases>;
-    onRequestOptions?: IncomingRequestHandler<BoundAliases>;
-    onRequestPatch?: IncomingRequestHandler<BoundAliases>;
-    onRequestPost?: IncomingRequestHandler<BoundAliases>;
-    onRequestPut?: IncomingRequestHandler<BoundAliases>;
-}
-
-// @public
-export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = null> {
+export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = null, StaticProps extends {} | null = null> {
     fetch(
     request: Request,
     env: BoundAliases,
     context: ExecutionContext): Promise<Response> | Response;
-    // (undocumented)
+    getStaticProps?(data: IncomingRequestData<BoundAliases>): PossiblePromise<StaticProps>;
     logger: PrefixedLogger;
+    // @internal (undocumented)
+    _onInvalidRequest: ({ request }: IncomingRequestData<BoundAliases>) => ErrorResponse;
+    onRequest?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
+    onRequestDelete?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
+    onRequestGet?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
+    // @internal (undocumented)
+    protected _onRequestGetReactComponent(_data: IncomingRequestData<BoundAliases>): Promise<HTMLResponse>;
+    onRequestHead?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
+    onRequestOptions?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
+    onRequestPatch?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
+    onRequestPost?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
+    onRequestPut?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
 }
 
 // @public
@@ -235,6 +230,9 @@ export interface PathPattern<Path extends string = string> {
     path: Path;
 }
 
+// @public (undocumented)
+export type PossiblePromise<T> = T | Promise<T>;
+
 // @public
 export class RedirectHandler extends KeyworkRequestHandler {
     constructor(
@@ -242,7 +240,7 @@ export class RedirectHandler extends KeyworkRequestHandler {
     statusCode?: number);
     destinationURL: string | URL;
     // (undocumented)
-    onRequest: IncomingRequestHandler<null, null>;
+    onRequest: ({ request }: IncomingRequestData) => Response;
     statusCode: number;
 }
 

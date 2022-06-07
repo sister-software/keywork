@@ -1,6 +1,12 @@
-# Class: KeyworkRequestHandler<BoundAliases\>
+---
+title: "Class: KeyworkRequestHandler"
+sidebar_label: "KeyworkRequestHandler"
+sidebar_class_name: "doc-kind-class"
+---
 
-[keywork](../modules/keywork.md).KeyworkRequestHandler
+# Class: KeyworkRequestHandler<BoundAliases, StaticProps\>
+
+[keywork](../modules/keywork).KeyworkRequestHandler
 
 An extendable base class for handling incoming requests from a Worker.
 
@@ -9,58 +15,33 @@ In the "Module Worker" format, incoming HTTP events are handled by defining and 
 To create a route handler, start by first extending the `KeyworkRequestHandler` class.
 Your implementation must at least include a `onRequestGet` handler, or a method-agnostic `onRequest` handler.
 
+- Always attempt to handle runtime errors gracefully, and respond with `KeyworkResourceError` when necessary.
+
 ## Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `BoundAliases` | extends {} \| ``null`` = ``null`` |
+| `StaticProps` | extends {} \| ``null`` = ``null`` |
 
 ## Hierarchy
 
-- `ExportedHandler`<`BoundAliases`\>
+- **`KeyworkRequestHandler`**
 
-  ↳ **`KeyworkRequestHandler`**
-
-  ↳↳ [`RedirectHandler`](keywork.RedirectHandler.md)
-
-## Table of contents
-
-### Constructors
-
-- [constructor](keywork.KeyworkRequestHandler.md#constructor)
-
-### Properties
-
-- [getHandlerForMethod](keywork.KeyworkRequestHandler.md#gethandlerformethod)
-- [logger](keywork.KeyworkRequestHandler.md#logger)
-- [onRequest](keywork.KeyworkRequestHandler.md#onrequest)
-- [onRequestDelete](keywork.KeyworkRequestHandler.md#onrequestdelete)
-- [onRequestGet](keywork.KeyworkRequestHandler.md#onrequestget)
-- [onRequestHead](keywork.KeyworkRequestHandler.md#onrequesthead)
-- [onRequestOptions](keywork.KeyworkRequestHandler.md#onrequestoptions)
-- [onRequestPatch](keywork.KeyworkRequestHandler.md#onrequestpatch)
-- [onRequestPost](keywork.KeyworkRequestHandler.md#onrequestpost)
-- [onRequestPut](keywork.KeyworkRequestHandler.md#onrequestput)
-
-### Methods
-
-- [fetch](keywork.KeyworkRequestHandler.md#fetch)
+  ↳ [`RedirectHandler`](keywork.RedirectHandler)
 
 ## Constructors
 
 ### constructor
 
-• **new KeyworkRequestHandler**<`BoundAliases`\>()
+• **new KeyworkRequestHandler**<`BoundAliases`, `StaticProps`\>()
 
 #### Type parameters
 
 | Name | Type |
 | :------ | :------ |
 | `BoundAliases` | extends ``null`` \| {} = ``null`` |
-
-#### Inherited from
-
-ExportedHandler<BoundAliases\>.constructor
+| `StaticProps` | extends ``null`` \| {} = ``null`` |
 
 ## Properties
 
@@ -70,7 +51,7 @@ ExportedHandler<BoundAliases\>.constructor
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:399
+packages/keywork/dist/index.d.ts:355
 
 ___
 
@@ -78,109 +59,11 @@ ___
 
 • **logger**: `PrefixedLogger`
 
-#### Defined in
-
-packages/keywork/dist/index.d.ts:398
-
-___
-
-### onRequest
-
-• `Optional` **onRequest**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<`BoundAliases`, ``null``\>
-
-An incoming request handler for all HTTP methods.
-
-**`remarks`** This will always be a lower priority than an explicitly defined method handler.
+A server-side logger.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:384
-
-___
-
-### onRequestDelete
-
-• `Optional` **onRequestDelete**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<`BoundAliases`, ``null``\>
-
-An incoming `DELETE` request handler.
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:367
-
-___
-
-### onRequestGet
-
-• `Optional` **onRequestGet**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<`BoundAliases`, ``null``\>
-
-An incoming `GET` request handler.
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:347
-
-___
-
-### onRequestHead
-
-• `Optional` **onRequestHead**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<`BoundAliases`, ``null``\>
-
-An incoming `HEAD` request handler.
-
-**`see`** `WorkerRouteHandler`
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:373
-
-___
-
-### onRequestOptions
-
-• `Optional` **onRequestOptions**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<`BoundAliases`, ``null``\>
-
-An incoming `OPTIONS` request handler.
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:378
-
-___
-
-### onRequestPatch
-
-• `Optional` **onRequestPatch**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<`BoundAliases`, ``null``\>
-
-An incoming `PATCH` request handler.
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:362
-
-___
-
-### onRequestPost
-
-• `Optional` **onRequestPost**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<`BoundAliases`, ``null``\>
-
-An incoming `POST` request handler.
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:352
-
-___
-
-### onRequestPut
-
-• `Optional` **onRequestPut**: [`IncomingRequestHandler`](../modules/keywork.md#incomingrequesthandler)<`BoundAliases`, ``null``\>
-
-An incoming `PUT` request handler.
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:357
+packages/keywork/dist/index.d.ts:314
 
 ## Methods
 
@@ -205,10 +88,206 @@ This is instead automatically called by the Worker runtime when an incoming requ
 
 `Response` \| `Promise`<`Response`\>
 
-#### Inherited from
+#### Defined in
 
-ExportedHandler.fetch
+packages/keywork/dist/index.d.ts:361
+
+___
+
+### getStaticProps
+
+▸ `Optional` **getStaticProps**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`StaticProps`\>
+
+A method used to fetch static props for rendering React apps in your worker.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<`BoundAliases`\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`StaticProps`\>
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:405
+packages/keywork/dist/index.d.ts:352
+
+___
+
+### onRequest
+
+▸ `Optional` **onRequest**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming request handler for all HTTP methods.
+
+**`remarks`** This will always be a lower priority than an explicitly defined method handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<`BoundAliases`\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:348
+
+___
+
+### onRequestDelete
+
+▸ `Optional` **onRequestDelete**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `DELETE` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<`BoundAliases`\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:334
+
+___
+
+### onRequestGet
+
+▸ `Optional` **onRequestGet**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `GET` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<`BoundAliases`\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:318
+
+___
+
+### onRequestHead
+
+▸ `Optional` **onRequestHead**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `HEAD` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<`BoundAliases`\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:338
+
+___
+
+### onRequestOptions
+
+▸ `Optional` **onRequestOptions**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `OPTIONS` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<`BoundAliases`\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:342
+
+___
+
+### onRequestPatch
+
+▸ `Optional` **onRequestPatch**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `PATCH` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<`BoundAliases`\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:330
+
+___
+
+### onRequestPost
+
+▸ `Optional` **onRequestPost**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `POST` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<`BoundAliases`\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:322
+
+___
+
+### onRequestPut
+
+▸ `Optional` **onRequestPut**(`data`): [`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+An incoming `PUT` request handler.
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `data` | [`IncomingRequestData`](../interfaces/keywork.IncomingRequestData)<`BoundAliases`\> |
+
+#### Returns
+
+[`PossiblePromise`](../modules/keywork#possiblepromise)<`Response`\>
+
+#### Defined in
+
+packages/keywork/dist/index.d.ts:326

@@ -1,6 +1,12 @@
+---
+title: "Interface: PathPattern"
+sidebar_label: "PathPattern"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: PathPattern<Path\>
 
-[keywork](../modules/keywork.md).PathPattern
+[keywork](../modules/keywork).PathPattern
 
 A PathPattern is used to match on some portion of a URL pathname.
 
@@ -9,14 +15,6 @@ A PathPattern is used to match on some portion of a URL pathname.
 | Name | Type |
 | :------ | :------ |
 | `Path` | extends `string` = `string` |
-
-## Table of contents
-
-### Properties
-
-- [caseSensitive](keywork.PathPattern.md#casesensitive)
-- [end](keywork.PathPattern.md#end)
-- [path](keywork.PathPattern.md#path)
 
 ## Properties
 
@@ -29,7 +27,7 @@ the same case.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:534
+packages/keywork/dist/index.d.ts:490
 
 ___
 
@@ -41,7 +39,7 @@ Should be `true` if this pattern should match the entire URL pathname.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:538
+packages/keywork/dist/index.d.ts:494
 
 ___
 
@@ -55,4 +53,4 @@ indicate matching the rest of the URL pathname.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:529
+packages/keywork/dist/index.d.ts:485

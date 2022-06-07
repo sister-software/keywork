@@ -1,25 +1,14 @@
+---
+title: "Class: SnowflakeID"
+sidebar_label: "SnowflakeID"
+sidebar_class_name: "doc-kind-class"
+---
+
 # Class: SnowflakeID
 
-[utils](../modules/utils.md).SnowflakeID
+[utils](../modules/utils).SnowflakeID
 
 A basic implementation of Twitter's original Snowflake ID system.
-
-## Table of contents
-
-### Constructors
-
-- [constructor](utils.SnowflakeID.md#constructor)
-
-### Properties
-
-- [lastTime](utils.SnowflakeID.md#lasttime)
-- [mid](utils.SnowflakeID.md#mid)
-- [offset](utils.SnowflakeID.md#offset)
-- [seq](utils.SnowflakeID.md#seq)
-
-### Methods
-
-- [generate](utils.SnowflakeID.md#generate)
 
 ## Constructors
 
@@ -37,7 +26,7 @@ A basic implementation of Twitter's original Snowflake ID system.
 
 #### Defined in
 
-[packages/utils/src/ids/SnowflakeID.ts:26](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/ids/SnowflakeID.ts#L26)
+[packages/utils/src/ids/SnowflakeID.ts:26](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/ids/SnowflakeID.ts#L26)
 
 ## Properties
 
@@ -47,7 +36,7 @@ A basic implementation of Twitter's original Snowflake ID system.
 
 #### Defined in
 
-[packages/utils/src/ids/SnowflakeID.ts:24](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/ids/SnowflakeID.ts#L24)
+[packages/utils/src/ids/SnowflakeID.ts:24](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/ids/SnowflakeID.ts#L24)
 
 ___
 
@@ -57,7 +46,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/ids/SnowflakeID.ts:22](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/ids/SnowflakeID.ts#L22)
+[packages/utils/src/ids/SnowflakeID.ts:22](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/ids/SnowflakeID.ts#L22)
 
 ___
 
@@ -67,7 +56,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/ids/SnowflakeID.ts:23](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/ids/SnowflakeID.ts#L23)
+[packages/utils/src/ids/SnowflakeID.ts:23](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/ids/SnowflakeID.ts#L23)
 
 ___
 
@@ -77,7 +66,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/ids/SnowflakeID.ts:21](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/ids/SnowflakeID.ts#L21)
+[packages/utils/src/ids/SnowflakeID.ts:21](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/ids/SnowflakeID.ts#L21)
 
 ## Methods
 
@@ -91,4 +80,4 @@ ___
 
 #### Defined in
 
-[packages/utils/src/ids/SnowflakeID.ts:33](https://github.com/nirrius/keywork/blob/361509a/packages/utils/src/ids/SnowflakeID.ts#L33)
+[packages/utils/src/ids/SnowflakeID.ts:33](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/ids/SnowflakeID.ts#L33)

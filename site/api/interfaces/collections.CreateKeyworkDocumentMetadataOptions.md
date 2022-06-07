@@ -1,16 +1,12 @@
+---
+title: "Interface: CreateKeyworkDocumentMetadataOptions"
+sidebar_label: "CreateKeyworkDocumentMetadataOptions"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: CreateKeyworkDocumentMetadataOptions
 
-[collections](../modules/collections.md).CreateKeyworkDocumentMetadataOptions
-
-## Table of contents
-
-### Properties
-
-- [absoluteDocPath](collections.CreateKeyworkDocumentMetadataOptions.md#absolutedocpath)
-- [createdAt](collections.CreateKeyworkDocumentMetadataOptions.md#createdat)
-- [deserializeAs](collections.CreateKeyworkDocumentMetadataOptions.md#deserializeas)
-- [etag](collections.CreateKeyworkDocumentMetadataOptions.md#etag)
-- [relativeDocPath](collections.CreateKeyworkDocumentMetadataOptions.md#relativedocpath)
+[collections](../modules/collections).CreateKeyworkDocumentMetadataOptions
 
 ## Properties
 
@@ -22,7 +18,7 @@ A POSIX-style, absolute path to a document.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:22](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentMetadata.ts#L22)
+[packages/collections/src/KeyworkDocumentMetadata.ts:22](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L22)
 
 ___
 
@@ -34,19 +30,19 @@ Determines the ULID seed.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:28](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentMetadata.ts#L28)
+[packages/collections/src/KeyworkDocumentMetadata.ts:28](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L28)
 
 ___
 
 ### deserializeAs
 
-• `Optional` **deserializeAs**: [`DeserializationTransformers`](../modules/collections.md#deserializationtransformers)
+• `Optional` **deserializeAs**: [`DeserializationTransformers`](../modules/collections#deserializationtransformers)
 
 Defaults to text `String`
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:31](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentMetadata.ts#L31)
+[packages/collections/src/KeyworkDocumentMetadata.ts:31](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L31)
 
 ___
 
@@ -60,7 +56,7 @@ An optional ETag of the value associated with this document.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:38](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentMetadata.ts#L38)
+[packages/collections/src/KeyworkDocumentMetadata.ts:38](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L38)
 
 ___
 
@@ -72,4 +68,4 @@ A POSIX-style, relative path to a document from a collection.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:25](https://github.com/nirrius/keywork/blob/361509a/packages/collections/src/KeyworkDocumentMetadata.ts#L25)
+[packages/collections/src/KeyworkDocumentMetadata.ts:25](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L25)

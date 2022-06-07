@@ -1,6 +1,12 @@
+---
+title: "Interface: CacheControlDirectives"
+sidebar_label: "CacheControlDirectives"
+sidebar_class_name: "doc-kind-interface"
+---
+
 # Interface: CacheControlDirectives
 
-[keywork](../modules/keywork.md).CacheControlDirectives
+[keywork](../modules/keywork).CacheControlDirectives
 
 Directives for the Cache-Control header.
 
@@ -9,14 +15,6 @@ Directives for the Cache-Control header.
 ## Indexable
 
 ▪ [cacheControlKey: `string`]: `number` \| `boolean` \| `string`
-
-## Table of contents
-
-### Properties
-
-- [immutable](keywork.CacheControlDirectives.md#immutable)
-- [max-age](keywork.CacheControlDirectives.md#max-age)
-- [must-revalidate](keywork.CacheControlDirectives.md#must-revalidate)
 
 ## Properties
 

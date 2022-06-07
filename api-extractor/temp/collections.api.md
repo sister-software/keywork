@@ -47,11 +47,17 @@ export class KeyworkCollection<ExpectedType extends DeserializationTypes | {}> {
     constructor(
     kvNamespace: KVNamespace,
     collectionPath: string);
+    // @internal
     protected __documentsPath: PathBuilder;
+    // @internal
     protected __indexByDocumentPath: PathBuilder;
+    // @internal
     protected __indexByIDPath: PathBuilder;
+    // @internal
     protected __indexesPath: PathBuilder;
+    // @internal
     protected __indexPathByPropertyName: Record<keyof ExpectedType, string | undefined>;
+    // @internal
     protected __indexPrefixesPath: PathBuilder;
     // (undocumented)
     addEntryToIndexes<E extends ExpectedType>(entry: E, metadata: KeyworkDocumentMetadata): Promise<void>;

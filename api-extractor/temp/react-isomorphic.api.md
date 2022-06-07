@@ -10,7 +10,6 @@ import { FC } from 'react';
 import { HtmlHTMLAttributes } from 'react';
 import { HydrationOptions } from 'react-dom/client';
 import { IncomingRequestData } from 'keywork';
-import { IncomingRequestHandler } from 'keywork';
 import { KeyworkRequestHandler } from 'keywork';
 import { PathMatch } from 'keywork';
 import { PathPattern } from 'keywork';
@@ -125,17 +124,6 @@ export interface KeyworkRouterProvider {
 }
 
 // @public (undocumented)
-export abstract class KeyworkStaticPropsRequestHandler<StaticProps extends SSRPropsLike, BoundAliases extends {} | null = null> extends KeyworkRequestHandler<BoundAliases> {
-    abstract DocumentComponent?: KeyworkHTMLDocumentComponent;
-    // (undocumented)
-    abstract getStaticProps: GetStaticPropsHandler<StaticProps, BoundAliases>;
-    // (undocumented)
-    onRequestGet: IncomingRequestHandler<BoundAliases>;
-    abstract PageComponent: FC<StaticProps>;
-    abstract Providers?: KeyworkProvidersComponent;
-}
-
-// @public (undocumented)
 export function matchRoute(patternToPageComponent: PatternToPageComponentMap<any>, location: URL): PathMatch<    {} | null> | null;
 
 // @public
@@ -173,6 +161,15 @@ export const StaticPropsProvider: StaticPropsProviderComponent;
 
 // @public (undocumented)
 export type StaticPropsProviderComponent<StaticProps extends NonNullable<SSRPropsLike> = NonNullable<SSRPropsLike>> = FC<StaticPropsProvider<StaticProps>>;
+
+// @public (undocumented)
+export abstract class StaticPropsRequestHandler<StaticProps extends SSRPropsLike, BoundAliases extends {} | null = null> extends KeyworkRequestHandler<BoundAliases> {
+    abstract DocumentComponent?: KeyworkHTMLDocumentComponent;
+    // (undocumented)
+    onRequestGet: (data: IncomingRequestData<BoundAliases>) => Promise<Response>;
+    abstract PageComponent: FC<StaticProps>;
+    abstract Providers?: KeyworkProvidersComponent;
+}
 
 // @public (undocumented)
 export const useKeyworkRouter: <V = KeyworkRouterProvider>() => NonNullable<V>;
