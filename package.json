@@ -32,11 +32,12 @@
     "node": ">= 16.7"
   },
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "site"
   ],
   "scripts": {
     "build:packages": "node --experimental-specifier-resolution=node ./build/build-packages.mjs",
-    "build:docs": "node --experimental-specifier-resolution=node -e 'import(\"./build/utils/extractor/docs.mjs\").then(mod => mod.generateDocs());'",
+    "build:docs": "cd site && npm run build",
     "build:all": "npm run build:packages && npm run build:docs",
     "prepublishOnly": "npm run build:all",
     "test": "jest"
