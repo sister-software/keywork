@@ -20,12 +20,13 @@ import * as fs from 'node:fs/promises'
  * @returns {Promise<T>}
  */
 export async function readJSON(filePath) {
-  const content = await fs.readFile(filePath)
+  const content = await fs.readFile(filePath, 'utf8')
 
   try {
     return JSON.parse(content)
   } catch (error) {
-    fsLogger.error(`Error parsing ${filePath} to JSON`)
+    console.warn(content)
+    console.error(`Error parsing ${filePath} to JSON`)
     throw error
   }
 }

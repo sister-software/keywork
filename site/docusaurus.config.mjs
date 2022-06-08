@@ -144,7 +144,7 @@ const config = {
         },
         items: [
           {
-            to: 'docs/quick-start/overview/getting-started', // 'api' is the 'out' directory
+            to: 'docs/overview/getting-started',
             activeBasePath: 'docs',
             label: 'Documentation',
             position: 'left',

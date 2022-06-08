@@ -24,7 +24,7 @@ Creates a database instance backed by a Cloudflare KV namespace.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDatabase.ts:22](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDatabase.ts#L22)
+[packages/collections/lib/KeyworkDatabase.ts:22](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDatabase.ts#L22)
 
 ## Properties
 
@@ -52,7 +52,7 @@ Gets a `KeyworkCollection` instance that refers to a collection of documents.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDatabase.ts:40](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDatabase.ts#L40)
+[packages/collections/lib/KeyworkDatabase.ts:40](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDatabase.ts#L40)
 
 ___
 
@@ -80,4 +80,4 @@ Gets a `KeyworkDocumentReference` instance that refers to the document at the sp
 
 #### Defined in
 
-[packages/collections/src/KeyworkDatabase.ts:30](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDatabase.ts#L30)
+[packages/collections/lib/KeyworkDatabase.ts:30](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDatabase.ts#L30)

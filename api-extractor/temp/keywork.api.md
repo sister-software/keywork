@@ -7,50 +7,28 @@
 /// <reference types="@cloudflare/workers-types" />
 
 import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types';
+import { ErrorResponse } from '@keywork/utils';
+import { FC } from 'react';
+import type { HtmlHTMLAttributes } from 'react';
+import { HTMLResponse } from '@keywork/utils';
+import { HydrationOptions } from 'react-dom/client';
+import { KeyworkResourceError } from '@keywork/utils';
+import { PathMatch } from 'keywork';
+import { PathPattern } from '@keywork/utils';
+import { PathPattern as PathPattern_2 } from 'keywork';
 import { PrefixedLogger } from '@keywork/utils';
-
-// @public (undocumented)
-export function arrayBufferToBase64(arrayBuffer: ArrayBuffer): string;
+import { ReactDOMServerReadableStream } from 'react-dom/server';
+import type { ReactFragment } from 'react';
+import { ReactNode } from 'react';
+import { RenderToReadableStreamOptions } from 'react-dom/server';
+import { Root } from 'react-dom/client';
 
 export { AssetManifestType }
 
 // @public
-export class CachableResponse extends Response {
-    constructor(
-    body: BodyInit | null,
-    request?: Request,
-    etag?: string | null,
-    cacheControlOptions?: Partial<CacheControlDirectives>,
-    headersInit?: HeadersInit);
-}
-
-// @public
-export interface CacheControlDirectives {
-    // (undocumented)
-    'max-age': number;
-    // (undocumented)
-    'must-revalidate': boolean;
-    // (undocumented)
-    [cacheControlKey: string]: number | boolean | string;
-    // (undocumented)
-    immutable: boolean;
-}
-
-// @public (undocumented)
-export type CacheControlHeader = HeadersInit & {
-    'Cache-Control': string;
-};
-
-// @public (undocumented)
-export type ContentTypeHeader = HeadersInit & {
-    'Content-Type': string;
-};
-
-// @public
-export const convertJSONToETaggableString: (value: {}) => string;
-
-// @public (undocumented)
-export function createCacheControlHeader(options: Partial<CacheControlDirectives> | undefined): CacheControlHeader;
+export function createContextAndNamedHook<T>(
+defaultValue?: T | undefined,
+displayName?: string): readonly [React.Context<T | undefined>, <V = T>() => NonNullable<V>];
 
 // @public (undocumented)
 export const DEFAULT_SESSION_COOKIE_KEY = "_keyworkSessionID";
@@ -58,86 +36,65 @@ export const DEFAULT_SESSION_COOKIE_KEY = "_keyworkSessionID";
 // @public (undocumented)
 export type DefaultWorkerBindings = WorkersSiteStaticContentBinding | WorkersPagesAssetsBinding;
 
-// @internal
-export const _EMPTY_ETAG = "\"0-2jmj7l5rSw0yVb/vlWAYkK/YBwk\"";
-
-// @public (undocumented)
-export interface EntityToETagOptions {
-    weak?: boolean;
-}
-
 // @public
 export type EnvironmentBindingKinds = WorkerEnvFetchBinding | KVNamespace | DurableObjectNamespace;
 
-// @public
-export class ErrorResponse extends Response {
-    constructor(
-    status?: number,
-    statusText?: string,
-    body?: BodyInit | null,
-    headersInit?: HeadersInit);
-    static fromUnknownError(
-    _error: any,
-    publicReason?: string): ErrorResponse;
-}
+// @public (undocumented)
+export function getSSRPropsFromScope<SSRProps extends SSRPropsLike>(globalScope: unknown): SSRProps;
 
 // @public
-export type ETaggable = string | ArrayBuffer;
-
-// @public
-export function fileExtensionToContentTypeHeader(extension: string, mimeTypeFallback?: "txt"): ContentTypeHeader;
-
-// @public
-export const fileNameToExtension: (fileName: string) => string;
-
-// @public
-export function generateETag(entity: ETaggable, options?: EntityToETagOptions): Promise<string>;
+export type GetStaticPropsHandler<
+/** The static props returned by the handler. */
+StaticProps extends {} | null, BoundAliases extends {} | null = null, AdditionalData extends {} | null = null> = (
+data: IncomingRequestData<BoundAliases>,
+additionalData?: AdditionalData) => StaticProps | Promise<StaticProps>;
 
 // @public (undocumented)
-export function getBrowserIdentifier(request: Request): string;
+export function globalScopeHasSSRProps<SSRProps extends SSRPropsLike>(globalScope: unknown): globalScope is GlobalScopeWithKeyworkSSRProps<SSRProps>;
+
+// @public (undocumented)
+export type GlobalScopeSSRKey = typeof globalScopeSSRKey;
 
 // @public
-export class HTMLResponse extends CachableResponse {
-    constructor(
-    htmlContent: string | ReadableStream,
-    request?: Request,
-    etag?: string,
-    cacheControlOptions?: CacheControlDirectives,
-    headersInit?: HeadersInit);
+export const globalScopeSSRKey = "__ keywork_ssr_props";
+
+// @public (undocumented)
+export interface GlobalScopeWithKeyworkSSRProps<SSRProps extends SSRPropsLike = SSRPropsLike> extends Record<GlobalScopeSSRKey, SSRProps> {
+    // (undocumented)
+    document?: unknown;
+    // (undocumented)
+    location: URL;
 }
 
-// @internal (undocumented)
+// @public (undocumented)
 export type _HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS';
+
+// @public
+export function hydrateKeyworkApp(initialChildren: ReactNode, options?: HydrateKeyworkAppOptions): Root;
+
+// @public (undocumented)
+export interface HydrateKeyworkAppOptions {
+    // (undocumented)
+    globalScope?: GlobalScopeWithKeyworkSSRProps;
+    // (undocumented)
+    reactHydrationOptions?: HydrationOptions;
+    // (undocumented)
+    rootID?: string;
+}
 
 // @public
 export interface IncomingRequestData<BoundAliases extends {} | null = null> {
     readonly context: ExecutionContext;
     readonly env: BoundAliases extends null ? DefaultWorkerBindings : BoundAliases & DefaultWorkerBindings;
     readonly request: RequestWithCFProperties;
-    // @beta (undocumented)
+    // @beta
     readonly session: KeyworkSession;
     readonly url: URL;
 }
 
 // @public
-export function isETagMatch(request: Request, etag: string | null | undefined): etag is string;
-
-// @public (undocumented)
-export function isRequestLike(requestish: unknown): requestish is RequestLike;
-
-// @public (undocumented)
-export function isURLLike(urlish: unknown): urlish is URLLike;
-
-// @public
-export class JSONResponse extends CachableResponse {
-    constructor(
-    json: {},
-    request?: Request,
-    etag?: string,
-    cacheControlOptions?: CacheControlDirectives,
-    headersInit?: HeadersInit,
-    pretty?: boolean);
-}
+export type IncomingRequestDataHandler<BoundAliases extends {} | null> = (
+data: IncomingRequestData<BoundAliases>) => Response | Promise<Response>;
 
 // @beta
 export class KeyworkAssetHandler extends KeyworkRequestHandler<WorkersSiteStaticContentBinding> {
@@ -148,29 +105,106 @@ export class KeyworkAssetHandler extends KeyworkRequestHandler<WorkersSiteStatic
     onRequestGet: ({ env, request, context }: IncomingRequestData<WorkersSiteStaticContentBinding>) => Promise<Response>;
 }
 
-// @public
-export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = null, StaticProps extends {} | null = null> {
-    fetch(
-    request: Request,
-    env: BoundAliases,
-    context: ExecutionContext): Promise<Response> | Response;
-    getStaticProps?(data: IncomingRequestData<BoundAliases>): PossiblePromise<StaticProps>;
-    logger: PrefixedLogger;
-    // @internal (undocumented)
-    _onInvalidRequest: ({ request }: IncomingRequestData<BoundAliases>) => ErrorResponse;
-    onRequest?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
-    onRequestDelete?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
-    onRequestGet?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
-    // @internal (undocumented)
-    protected _onRequestGetReactComponent(_data: IncomingRequestData<BoundAliases>): Promise<HTMLResponse>;
-    onRequestHead?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
-    onRequestOptions?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
-    onRequestPatch?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
-    onRequestPost?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
-    onRequestPut?(data: IncomingRequestData<BoundAliases>): PossiblePromise<Response>;
+// @public (undocumented)
+export interface KeyworkBrowserRouterProps {
+    // (undocumented)
+    patternToPageComponent: PatternToPageComponentMap<any>;
 }
 
 // @public
+export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent;
+
+// @public (undocumented)
+export type KeyworkHTMLDocumentComponent = FC<KeyworkHTMLDocumentProps>;
+
+// @public (undocumented)
+export interface KeyworkHTMLDocumentProps {
+    // (undocumented)
+    browserIdentifier?: string;
+    // (undocumented)
+    buildId?: string;
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    className?: string;
+    // (undocumented)
+    htmlAttributes?: HtmlHTMLAttributes<HTMLHtmlElement>;
+    link?: ReactFragment;
+    // (undocumented)
+    location: URL;
+    meta?: ReactFragment;
+    // (undocumented)
+    moduleManifest?: string[];
+    script?: ReactFragment;
+    style?: ReactFragment;
+    title?: string;
+}
+
+// @public (undocumented)
+export const KeyworkPatternToPageComponent: FC<KeyworkBrowserRouterProps>;
+
+// @public (undocumented)
+export const KeyworkProviders: KeyworkProvidersComponent;
+
+// @public
+export type KeyworkProvidersComponent = FC<ProviderWrapperProps>;
+
+// @public
+export abstract class KeyworkRequestHandler<BoundAliases extends {} | null = null, StaticProps extends SSRPropsLike = null> extends _KeyworkRequestHandlerBase<BoundAliases> {
+    protected DocumentComponent?: KeyworkHTMLDocumentComponent;
+    // @internal
+    protected _getHandlerForMethod(method: _HTTPMethod): IncomingRequestDataHandler<BoundAliases>;
+    getStaticProps?: (data: IncomingRequestData<BoundAliases>) => PossiblePromise<StaticProps>;
+    // @internal (undocumented)
+    protected _handlerPrefersReactRenderer(): boolean;
+    // @internal (undocumented)
+    protected _onRequestGetReactComponent(data: IncomingRequestData<BoundAliases>): Promise<HTMLResponse>;
+    protected PageComponent?: FC<StaticProps>;
+    protected Providers?: KeyworkProvidersComponent;
+}
+
+// @public
+export abstract class _KeyworkRequestHandlerBase<BoundAliases extends {} | null = null> {
+    protected fetch(
+    request: Request,
+    env: BoundAliases,
+    context: ExecutionContext): Promise<Response> | Response;
+    // @internal
+    protected _getHandlerForMethod(method: _HTTPMethod): IncomingRequestDataHandler<BoundAliases>;
+    logger: PrefixedLogger;
+    // @internal (undocumented)
+    protected _onInvalidRequest: ({ request }: IncomingRequestData<BoundAliases>) => ErrorResponse;
+    onRequest: IncomingRequestDataHandler<BoundAliases>;
+    onRequestDelete: IncomingRequestDataHandler<BoundAliases>;
+    onRequestGet: IncomingRequestDataHandler<BoundAliases>;
+    onRequestHead: IncomingRequestDataHandler<BoundAliases>;
+    onRequestOptions: IncomingRequestDataHandler<BoundAliases>;
+    onRequestPatch: IncomingRequestDataHandler<BoundAliases>;
+    onRequestPost: IncomingRequestDataHandler<BoundAliases>;
+    onRequestPut: IncomingRequestDataHandler<BoundAliases>;
+    static pattern: PathPattern<string> | string;
+    // @deprecated (undocumented)
+    protected readonly pattern: never;
+}
+
+// @public (undocumented)
+export const KeyworkRouter: FC<KeyworkRouterProps>;
+
+// @public (undocumented)
+export interface KeyworkRouterProps {
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    initialLocation: URL;
+}
+
+// @public (undocumented)
+export interface KeyworkRouterProvider {
+    // (undocumented)
+    location: URL;
+}
+
+// @beta
 export class KeyworkSession {
     constructor(request: Request, cookieKey?: string);
     // (undocumented)
@@ -183,55 +217,40 @@ export class KeyworkSession {
     sessionID: string;
 }
 
-// @public
-export function matchPath<ExpectedParams extends {} | null, Path extends string>(pattern: PathPattern<Path> | Path, pathname: string): PathMatch<ExpectedParams> | null;
-
-// @internal (undocumented)
-export type _Mutable<T> = {
-    -readonly [P in keyof T]: T[P];
-};
+// @public (undocumented)
+export function matchRoute(patternToPageComponent: PatternToPageComponentMap<any>, location: URL): PathMatch<    {} | null> | null;
 
 // @public
-export class NotModifiedResponse extends Response {
-    constructor(etag: string);
-}
-
-// @internal (undocumented)
-export type _ParamParseFailed = {
-    failed: true;
-};
-
-// @internal
-export type _ParamParseKey<Segment extends string> = _ParamParseSegment<Segment> extends string ? _ParamParseSegment<Segment> : string;
-
-// @internal (undocumented)
-export type _ParamParseSegment<Segment extends string> = Segment extends `${infer LeftSegment}/${infer RightSegment}` ? _ParamParseSegment<LeftSegment> extends infer LeftResult ? _ParamParseSegment<RightSegment> extends infer RightResult ? LeftResult extends string ? RightResult extends string ? LeftResult | RightResult : LeftResult : RightResult extends string ? RightResult : _ParamParseFailed : _ParamParseFailed : _ParamParseSegment<RightSegment> extends infer RightResult ? RightResult extends string ? RightResult : _ParamParseFailed : _ParamParseFailed : Segment extends `:${infer Remaining}` ? Remaining : _ParamParseFailed;
-
-// @public
-export type ParsedPathParams<Key extends string = string> = {
-    readonly [key in Key]: string | undefined;
-};
-
-// @public
-export function parsePathname<ExpectedParams extends {} | null>(pattern: PathPattern<string> | string, urlOrRequest: Pick<Request, 'url'> | string | URL): PathMatch<ExpectedParams>;
-
-// @public
-export interface PathMatch<ExpectedParams extends {} | null = null> {
-    params: ExpectedParams;
-    pathname: string;
-    pathnameBase: string;
-    pattern: PathPattern;
+export class PatternToPageComponentMap<StaticProps extends SSRPropsLike> extends Map<PathPattern_2 | string, React.ComponentType<StaticProps>> {
 }
 
 // @public
-export interface PathPattern<Path extends string = string> {
-    caseSensitive?: boolean;
-    end?: boolean;
-    path: Path;
+export type PossiblePromise<T> = T | Promise<T>;
+
+// @public (undocumented)
+export interface ProviderWrapperProps {
+    // (undocumented)
+    children: ReactNode;
 }
 
 // @public (undocumented)
-export type PossiblePromise<T> = T | Promise<T>;
+export interface ReactRenderStreamErrorResult {
+    // (undocumented)
+    error: KeyworkResourceError;
+    // (undocumented)
+    stream: ReactDOMServerReadableStream;
+}
+
+// @public (undocumented)
+export type ReactRenderStreamResult = ReactRenderStreamSuccessResult | ReactRenderStreamErrorResult;
+
+// @public (undocumented)
+export interface ReactRenderStreamSuccessResult {
+    // (undocumented)
+    error: null;
+    // (undocumented)
+    stream: ReactDOMServerReadableStream;
+}
 
 // @public
 export class RedirectHandler extends KeyworkRequestHandler {
@@ -245,7 +264,14 @@ export class RedirectHandler extends KeyworkRequestHandler {
 }
 
 // @public (undocumented)
-export type RequestLike = Pick<Request, 'url'>;
+export function renderReactStream(children: ReactNode, options?: RenderToReadableStreamOptions): Promise<ReactRenderStreamResult>;
+
+// @public (undocumented)
+export function renderStaticPropsAsComponentStream<StaticProps extends NonNullable<SSRPropsLike>>(request: Request, staticProps: StaticProps,
+PageComponent: FC<StaticProps>, DocumentComponent?: KeyworkHTMLDocumentComponent, Providers?: KeyworkProvidersComponent): Promise<Response>;
+
+// @public (undocumented)
+export function renderStaticPropsAsJSON(request: Request, staticProps: NonNullable<SSRPropsLike>): Promise<Response>;
 
 // @public (undocumented)
 export interface RequestWithCFProperties extends Request {
@@ -253,8 +279,40 @@ export interface RequestWithCFProperties extends Request {
     cf: IncomingRequestCfProperties;
 }
 
+// @internal
+export const _SSRPropsEmbed: FC<SSRProviderProps<any>>;
+
 // @public (undocumented)
-export type URLLike = Pick<URL, 'pathname'>;
+export type SSRPropsLike = {} | null;
+
+// @public (undocumented)
+export interface SSRProviderProps<StaticProps extends NonNullable<SSRPropsLike>> {
+    // (undocumented)
+    staticProps: StaticProps;
+}
+
+// @public (undocumented)
+export interface StaticPropsProvider<StaticProps extends NonNullable<SSRPropsLike>> {
+    // (undocumented)
+    children: ReactNode;
+    // (undocumented)
+    staticProps: StaticProps;
+}
+
+// @public (undocumented)
+export const StaticPropsProvider: StaticPropsProviderComponent;
+
+// @public (undocumented)
+export type StaticPropsProviderComponent<StaticProps extends NonNullable<SSRPropsLike> = NonNullable<SSRPropsLike>> = FC<StaticPropsProvider<StaticProps>>;
+
+// @public (undocumented)
+export const useKeyworkRouter: <V = KeyworkRouterProvider>() => NonNullable<V>;
+
+// @public (undocumented)
+export const useMatch: <V = PathMatch<{} | null> | null>() => NonNullable<V>;
+
+// @public (undocumented)
+export const useStaticProps: <V = SSRPropsLike>() => NonNullable<V>;
 
 // @public
 export type WorkerEnvFetchBinding = {
@@ -276,6 +334,9 @@ export interface WorkersSiteStaticContentBinding {
     // (undocumented)
     ASSETS: undefined;
 }
+
+
+export * from "@keywork/utils";
 
 // (No @packageDocumentation comment for this package)
 

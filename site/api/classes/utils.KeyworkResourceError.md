@@ -48,7 +48,7 @@ Error.constructor
 
 #### Defined in
 
-[packages/utils/src/errors.ts:39](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/errors.ts#L39)
+[packages/utils/lib/errors/KeyworkResourceError.ts:36](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/errors/KeyworkResourceError.ts#L36)
 
 ## Properties
 
@@ -120,7 +120,7 @@ Error.message
 
 #### Defined in
 
-[packages/utils/src/errors.ts:43](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/errors.ts#L43)
+[packages/utils/lib/errors/KeyworkResourceError.ts:40](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/errors/KeyworkResourceError.ts#L40)
 
 ## Methods
 
@@ -134,7 +134,7 @@ Error.message
 
 #### Defined in
 
-[packages/utils/src/errors.ts:47](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/errors.ts#L47)
+[packages/utils/lib/errors/KeyworkResourceError.ts:44](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/errors/KeyworkResourceError.ts#L44)
 
 ___
 
@@ -156,4 +156,4 @@ Attempts to convert an unknown error object into a well-formed `KeyworkResourceE
 
 #### Defined in
 
-[packages/utils/src/errors.ts:57](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/errors.ts#L57)
+[packages/utils/lib/errors/KeyworkResourceError.ts:54](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/errors/KeyworkResourceError.ts#L54)

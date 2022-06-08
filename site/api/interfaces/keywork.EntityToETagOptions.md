@@ -24,4 +24,4 @@ but strong etags mean range requests can still be cached.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:116
+packages/utils/dist/index.d.ts:112

@@ -22,7 +22,7 @@ This can be useful for reducing cold read latency on keys that are read relative
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentReference.ts:38](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentReference.ts#L38)
+[packages/collections/lib/KeyworkDocumentReference.ts:38](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentReference.ts#L38)
 
 ___
 
@@ -36,4 +36,4 @@ Determines how the fetched data will be interpreted after fetching.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentReference.ts:44](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentReference.ts#L44)
+[packages/collections/lib/KeyworkDocumentReference.ts:44](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentReference.ts#L44)

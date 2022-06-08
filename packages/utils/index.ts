@@ -12,10 +12,32 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './src/datetime.js'
-export * from './src/errors.js'
-export * from './src/ids/index.js'
-export * from './src/json.js'
-export * from './src/logger.js'
-export * from './src/strings.js'
-export * from './src/url.js'
+/**
+ * ### `@keywork/utils`
+ *
+ * ![npm (scoped)](https://img.shields.io/npm/v/@keywork/utils)
+ * ![npm](https://img.shields.io/npm/dm/@keywork/utils)
+ *
+ * Common core utilities for building web apps.
+ *
+ * - HTTP responses for content like JSON, HTML, and much more!
+ * - Type-safe request handlers that make API endpoints easy.
+ * - Cache headers, cache responses, and even ETag generation for your own content.
+ * - Simplified error handling for your server-side Worker logic.
+ * - URL helpers, path builders.
+ * - ULID and Snowflake ID generation.
+ * - Isomorpic runtime error handling for both the browser, and your Worker.
+ * - Logging that helps you better trace down errors as your app grows.
+ * - All the typical "junk drawer" stuff you usually have to implement when building a web app.
+ *
+ * @packageDocumentation
+ * @module
+ */
+
+export * from './lib/common/index.js'
+export * from './lib/errors/index.js'
+export * from './lib/etags/index.js'
+export * from './lib/headers/index.js'
+export * from './lib/ids/index.js'
+export * from './lib/paths/index.js'
+export * from './lib/responses/index.js'

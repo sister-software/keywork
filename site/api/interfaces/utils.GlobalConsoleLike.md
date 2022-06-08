@@ -27,7 +27,7 @@ sidebar_class_name: "doc-kind-interface"
 
 #### Defined in
 
-[packages/utils/src/logger.ts:19](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L19)
+[packages/utils/lib/common/logger.ts:19](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L19)
 
 ___
 
@@ -48,7 +48,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:20](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L20)
+[packages/utils/lib/common/logger.ts:20](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L20)
 
 ___
 
@@ -69,7 +69,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:21](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L21)
+[packages/utils/lib/common/logger.ts:21](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L21)
 
 ___
 
@@ -90,7 +90,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:22](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L22)
+[packages/utils/lib/common/logger.ts:22](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L22)
 
 ___
 
@@ -111,4 +111,4 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:23](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L23)
+[packages/utils/lib/common/logger.ts:23](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L23)

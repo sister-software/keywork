@@ -38,7 +38,7 @@ Creates an instance associated with specific document within a Cloudflare KV.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentReference.ts:60](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentReference.ts#L60)
+[packages/collections/lib/KeyworkDocumentReference.ts:60](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentReference.ts#L60)
 
 ## Properties
 
@@ -50,7 +50,7 @@ A POSIX-style, absolute path to a document.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentReference.ts:58](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentReference.ts#L58)
+[packages/collections/lib/KeyworkDocumentReference.ts:58](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentReference.ts#L58)
 
 ___
 
@@ -74,7 +74,7 @@ A POSIX-style, relative path to a document from a parent collection
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentReference.ts:55](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentReference.ts#L55)
+[packages/collections/lib/KeyworkDocumentReference.ts:55](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentReference.ts#L55)
 
 ## Methods
 
@@ -99,7 +99,7 @@ the type will attempt to be inferred from the parent collection's known metadata
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentReference.ts:78](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentReference.ts#L78)
+[packages/collections/lib/KeyworkDocumentReference.ts:78](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentReference.ts#L78)
 
 ___
 
@@ -130,7 +130,7 @@ Updates the data associated with this document's path.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentReference.ts:169](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentReference.ts#L169)
+[packages/collections/lib/KeyworkDocumentReference.ts:169](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentReference.ts#L169)
 
 ___
 
@@ -159,4 +159,4 @@ Overwrites the entire entity if it already exists, and creates a new resource if
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentReference.ts:121](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentReference.ts#L121)
+[packages/collections/lib/KeyworkDocumentReference.ts:121](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentReference.ts#L121)

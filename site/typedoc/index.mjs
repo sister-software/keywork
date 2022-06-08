@@ -43,6 +43,8 @@ function cleanBuild(dirtyDirectoryPath) {
   })
 }
 
+let bootstrapped = false
+
 /**
  *
  * @param {import('@docusaurus/types').LoadContext} context
@@ -54,7 +56,9 @@ export async function typeDocPlugin(context, opts) {
   const APIOutputDirExists = await checkFileExists(APIOutputDir)
 
   if (APIOutputDirExists) {
-    await cleanBuild(path.join(APIOutputDir, '**', '*'))
+    if (bootstrapped) {
+      await cleanBuild(path.join(APIOutputDir, '**', '*'))
+    }
   } else {
     await fs.mkdir(APIOutputDir)
   }
@@ -82,6 +86,6 @@ export async function typeDocPlugin(context, opts) {
   })
 
   const pluginInstance = await docsPlugin.default(context, docsOptions)
-
+  bootstrapped = true
   return pluginInstance
 }

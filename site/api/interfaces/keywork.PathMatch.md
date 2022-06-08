@@ -26,7 +26,7 @@ The names and values of dynamic parameters in the URL.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:447
+packages/utils/dist/index.d.ts:461
 
 ___
 
@@ -38,7 +38,7 @@ The portion of the URL pathname that was matched.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:451
+packages/utils/dist/index.d.ts:465
 
 ___
 
@@ -50,7 +50,7 @@ The portion of the URL pathname that was matched before child routes.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:455
+packages/utils/dist/index.d.ts:469
 
 ___
 
@@ -62,4 +62,4 @@ The pattern that was used to match.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:459
+packages/utils/dist/index.d.ts:473

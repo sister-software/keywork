@@ -33,7 +33,7 @@ build({ external: ['__STATIC_CONTENT_MANIFEST']})
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:603
+[packages/keywork/lib/bindings/assets.ts:46](https://github.com/nirrius/keywork/blob/73ad60a/packages/keywork/lib/bindings/assets.ts#L46)
 
 ___
 
@@ -43,4 +43,4 @@ ___
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:602
+[packages/keywork/lib/bindings/assets.ts:45](https://github.com/nirrius/keywork/blob/73ad60a/packages/keywork/lib/bindings/assets.ts#L45)

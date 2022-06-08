@@ -54,7 +54,7 @@ Request.cf
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:531
+[packages/keywork/lib/requests/common.ts:18](https://github.com/nirrius/keywork/blob/73ad60a/packages/keywork/lib/requests/common.ts#L18)
 
 ___
 

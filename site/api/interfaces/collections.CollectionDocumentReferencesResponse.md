@@ -42,7 +42,7 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection/common.ts:22](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection/common.ts#L22)
+[packages/collections/lib/KeyworkCollection/common.ts:22](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkCollection/common.ts#L22)
 
 ___
 

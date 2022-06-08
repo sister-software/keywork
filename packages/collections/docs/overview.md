@@ -32,7 +32,7 @@ kv_namespaces = [
 import { StatusCodes } from 'http-status-codes'
 import { KeyworkCollection } from '@keywork/collections'
 import { KeyworkResourceError } from '@keywork/utils'
-import { IncomingRequestHandler, KeyworkRequestHandler, parsePathname } from 'keywork'
+import { KeyworkRequestHandler, parsePathname } from 'keywork'
 
 interface ExampleAppBindings {
   exampleApp: KVNamespace
@@ -50,18 +50,22 @@ interface ExampleUser {
 }
 
 class UserAPIHandler extends KeyworkRequestHandler<ExampleAppBindings> {
-  onRequestGet = async ({ request, env }: IncomingRequestData<ExampleAppBindings>) => {
+  async onRequestGet({ request, env }: IncomingRequestData<ExampleAppBindings>) {
     const { params } = parsePathname<GetUserParams>('/users/:userID', request)
     const usersCollection = new KeyworkCollection<ExampleUser>(env.exampleApp, 'users')
     const userRef = usersCollection.createDocumentReference(params.userID)
     const userSnapshot = await userRef.fetchSnapshot()
+
     if (!userSnapshot.exists) {
       throw new KeyworkResourceError('User does not exist', StatusCodes.BAD_REQUEST)
     }
+
     const user = userSnapshot.value
+
     if (user.plan !== 'paid') {
       throw new KeyworkResourceError('You must have a paid plan', StatusCodes.PAYMENT_REQUIRED)
     }
+
     if (user.role !== 'admin') {
       throw new KeyworkResourceError('Only an admin can access this page', StatusCodes.FORBIDDEN)
     }

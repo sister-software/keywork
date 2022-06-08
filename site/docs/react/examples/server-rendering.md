@@ -122,7 +122,7 @@ we'll use `getStaticProps` -- along with our React component and interface.
 import { KeyworkRequestHandler, GetStaticPropsHandler } from 'keywork'
 import { StaticTodoPageProps, TodoPage } from './TodoPage.tsx'
 
-export class TodoWorker extends KeyworkRequestHandler {
+export class TodoWorker extends KeyworkRequestHandler<null, StaticTodoPageProps> {
   // A URL path pattern...
   static readonly pattern = '/todos/:todoID/'
   // And our React component from earlier.

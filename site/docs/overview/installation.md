@@ -7,16 +7,16 @@ sidebar_label: Getting Started
 
 ## Install
 
-Keywork apps are framework agnostic and can compliment your existing codebase:
+Keywork apps are framework agnostic and fits in your existing codebase:
 
 ```shell title=Run in the root of your Cloudflare Worker project.
 $ yarn add keywork
 ```
 
-If you're building a React app, Keywork fits right in:
+If you're building a React app, make sure to add the peer dependencies
 
 ```shell title=Run in the root of your Cloudflare Worker project.
-$ yarn add @keywork/react-isomorphic
+$ yarn add react react-dom
 ```
 
 :::info

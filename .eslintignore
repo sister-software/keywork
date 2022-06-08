@@ -1,1 +1,3 @@
 build/header.js
+packages/*/dist/**/*
+node_modules/**/*

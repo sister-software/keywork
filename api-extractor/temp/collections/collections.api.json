@@ -1,8 +1,8 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.24.2",
-    "schemaVersion": 1005,
+    "toolVersion": "7.25.0",
+    "schemaVersion": 1006,
     "oldestForwardsCompatibleVersion": 1001,
     "tsdocConfig": {
       "$schema": "https://developer.microsoft.com/json-schemas/tsdoc/v0/tsdoc.schema.json",
@@ -233,6 +233,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "documents",
@@ -280,6 +281,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "absoluteDocPath",
@@ -307,6 +309,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "createdAt",
@@ -334,6 +337,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": true,
               "releaseTag": "Public",
               "name": "deserializeAs",
@@ -360,6 +364,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": true,
               "releaseTag": "Public",
               "name": "etag",
@@ -386,6 +391,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "relativeDocPath",
@@ -583,7 +589,7 @@
             {
               "kind": "Reference",
               "text": "ETaggable",
-              "canonicalReference": "keywork!ETaggable:type"
+              "canonicalReference": "@keywork/utils!ETaggable:type"
             },
             {
               "kind": "Content",
@@ -683,6 +689,7 @@
                 }
               ],
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -751,13 +758,26 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
+              "typeParameters": [
+                {
+                  "typeParameterName": "E",
+                  "constraintTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                }
+              ],
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 7,
                 "endIndex": 9
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -777,19 +797,7 @@
                   "isOptional": false
                 }
               ],
-              "typeParameters": [
-                {
-                  "typeParameterName": "E",
-                  "constraintTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  },
-                  "defaultTypeTokenRange": {
-                    "startIndex": 0,
-                    "endIndex": 0
-                  }
-                }
-              ],
+              "isOptional": false,
               "name": "addEntryToIndexes"
             },
             {
@@ -810,6 +818,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "collectionPath",
@@ -817,7 +826,8 @@
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": false
             },
             {
               "kind": "Method",
@@ -850,13 +860,13 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 5
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -868,6 +878,7 @@
                   "isOptional": false
                 }
               ],
+              "isOptional": false,
               "name": "createDocumentReference"
             },
             {
@@ -910,13 +921,13 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 7
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -928,6 +939,7 @@
                   "isOptional": false
                 }
               ],
+              "isOptional": false,
               "name": "fetchDocumentMetadataByPath"
             },
             {
@@ -971,13 +983,13 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 7
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -989,6 +1001,7 @@
                   "isOptional": true
                 }
               ],
+              "isOptional": false,
               "name": "fetchDocuments"
             },
             {
@@ -1023,13 +1036,13 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 5
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -1041,6 +1054,7 @@
                   "isOptional": true
                 }
               ],
+              "isOptional": false,
               "name": "fetchDocumentsList"
             },
             {
@@ -1093,13 +1107,13 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 9
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -1111,6 +1125,7 @@
                   "isOptional": true
                 }
               ],
+              "isOptional": false,
               "name": "fetchDocumentsListByID"
             },
             {
@@ -1136,15 +1151,16 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 3
               },
               "releaseTag": "Public",
+              "isProtected": true,
               "overloadIndex": 1,
               "parameters": [],
+              "isOptional": false,
               "name": "fetchIndexPrefixes"
             },
             {
@@ -1170,15 +1186,16 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 3
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [],
+              "isOptional": false,
               "name": "initialize"
             },
             {
@@ -1200,6 +1217,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "kvNamespace",
@@ -1207,7 +1225,8 @@
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": true
             },
             {
               "kind": "Method",
@@ -1227,15 +1246,16 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [],
+              "isOptional": false,
               "name": "permanentlyDeleteThisCollection"
             },
             {
@@ -1261,15 +1281,16 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 3
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [],
+              "isOptional": false,
               "name": "query"
             }
           ],
@@ -1308,6 +1329,7 @@
                 }
               ],
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -1369,13 +1391,13 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 9
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -1387,6 +1409,7 @@
                   "isOptional": false
                 }
               ],
+              "isOptional": false,
               "name": "collection"
             },
             {
@@ -1441,24 +1464,6 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
-              "isStatic": false,
-              "returnTypeTokenRange": {
-                "startIndex": 8,
-                "endIndex": 10
-              },
-              "releaseTag": "Public",
-              "overloadIndex": 1,
-              "parameters": [
-                {
-                  "parameterName": "docPath",
-                  "parameterTypeTokenRange": {
-                    "startIndex": 6,
-                    "endIndex": 7
-                  },
-                  "isOptional": false
-                }
-              ],
               "typeParameters": [
                 {
                   "typeParameterName": "ExpectedType",
@@ -1472,6 +1477,25 @@
                   }
                 }
               ],
+              "isStatic": false,
+              "returnTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 10
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "docPath",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 6,
+                    "endIndex": 7
+                  },
+                  "isOptional": false
+                }
+              ],
+              "isOptional": false,
               "name": "doc"
             },
             {
@@ -1493,6 +1517,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "kvNamespace",
@@ -1500,7 +1525,8 @@
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": true
             }
           ],
           "implementsTokenRanges": []
@@ -1536,6 +1562,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": true,
               "releaseTag": "Public",
               "name": "cacheTtl",
@@ -1563,6 +1590,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": true,
               "releaseTag": "Public",
               "name": "deserializeAs",
@@ -1614,6 +1642,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "absoluteDocPath",
@@ -1640,6 +1669,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "createdAt",
@@ -1667,6 +1697,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "deserializeAs",
@@ -1693,6 +1724,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "etag",
@@ -1719,6 +1751,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "id",
@@ -1745,6 +1778,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "relativeDocPath",
@@ -1771,6 +1805,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "updatedAt",
@@ -1875,6 +1910,7 @@
                 }
               ],
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -1921,6 +1957,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": true,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "absoluteDocPath",
@@ -1928,7 +1965,8 @@
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": false
             },
             {
               "kind": "Method",
@@ -1971,13 +2009,13 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 7
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -1989,6 +2027,7 @@
                   "isOptional": true
                 }
               ],
+              "isOptional": false,
               "name": "fetchSnapshot"
             },
             {
@@ -2010,6 +2049,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": true,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "kvNamespace",
@@ -2017,7 +2057,8 @@
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": true
             },
             {
               "kind": "Property",
@@ -2042,6 +2083,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": true,
               "isOptional": true,
               "releaseTag": "Public",
               "name": "parentCollection",
@@ -2049,7 +2091,8 @@
                 "startIndex": 1,
                 "endIndex": 3
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": true
             },
             {
               "kind": "Method",
@@ -2126,13 +2169,26 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
+              "typeParameters": [
+                {
+                  "typeParameterName": "E",
+                  "constraintTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 13,
                 "endIndex": 15
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -2168,19 +2224,7 @@
                   "isOptional": true
                 }
               ],
-              "typeParameters": [
-                {
-                  "typeParameterName": "E",
-                  "constraintTokenRange": {
-                    "startIndex": 0,
-                    "endIndex": 0
-                  },
-                  "defaultTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  }
-                }
-              ],
+              "isOptional": false,
               "name": "patchValue"
             },
             {
@@ -2236,13 +2280,26 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
+              "typeParameters": [
+                {
+                  "typeParameterName": "E",
+                  "constraintTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  }
+                }
+              ],
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 8,
                 "endIndex": 10
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -2262,19 +2319,7 @@
                   "isOptional": true
                 }
               ],
-              "typeParameters": [
-                {
-                  "typeParameterName": "E",
-                  "constraintTokenRange": {
-                    "startIndex": 0,
-                    "endIndex": 0
-                  },
-                  "defaultTypeTokenRange": {
-                    "startIndex": 1,
-                    "endIndex": 2
-                  }
-                }
-              ],
+              "isOptional": false,
               "name": "putValue"
             },
             {
@@ -2295,6 +2340,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": true,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "relativeDocPath",
@@ -2302,7 +2348,8 @@
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": false
             }
           ],
           "implementsTokenRanges": []
@@ -2394,6 +2441,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "absoluteDocPath",
@@ -2420,6 +2468,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "exists",
@@ -2446,6 +2495,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "metadata",
@@ -2472,6 +2522,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "relativeDocPath",
@@ -2498,6 +2549,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "value",
@@ -2561,6 +2613,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "absoluteDocPath",
@@ -2587,6 +2640,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "exists",
@@ -2614,6 +2668,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "metadata",
@@ -2640,6 +2695,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "relativeDocPath",
@@ -2666,6 +2722,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "value",
@@ -2708,6 +2765,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": true,
               "releaseTag": "Public",
               "name": "expiration",
@@ -2734,6 +2792,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": true,
               "releaseTag": "Public",
               "name": "expirationTtl",

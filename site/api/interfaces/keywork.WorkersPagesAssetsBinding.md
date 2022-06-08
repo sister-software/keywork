@@ -20,7 +20,7 @@ An environment binding available within Worker Pages.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:578
+[packages/keywork/lib/bindings/assets.ts:21](https://github.com/nirrius/keywork/blob/73ad60a/packages/keywork/lib/bindings/assets.ts#L21)
 
 ___
 
@@ -30,4 +30,4 @@ ___
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:579
+[packages/keywork/lib/bindings/assets.ts:22](https://github.com/nirrius/keywork/blob/73ad60a/packages/keywork/lib/bindings/assets.ts#L22)

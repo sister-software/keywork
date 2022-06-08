@@ -18,7 +18,7 @@ import esbuild from 'esbuild'
 import FastGlob from 'fast-glob'
 import path from 'path'
 import { cleanBuild } from './utils/clean.mjs'
-import { generateTypes, runAPIExtractor } from './utils/extractor/index.mjs'
+import { buildTypeScript, formatBuild, runAPIExtractor } from './utils/extractor/index.mjs'
 import { getPackage, getPackageDependencies, packagesDirectory, packagesList, projectRoot } from './utils/packages.mjs'
 
 // const env = process.env.NODE_ENV || 'development'
@@ -60,6 +60,7 @@ const typescriptExtPattern = /\.m[tj]s$/
  * @param {string} packageName
  * @returns {Promise<void>}
  */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 async function buildPackage(packageName) {
   const packageRoot = path.join(packagesDirectory, packageName)
   const sourcePath = path.join(packageRoot)
@@ -89,7 +90,8 @@ await Promise.all(
 )
 
 console.log(`Building ${packagesList.length} packages...`)
-await Promise.all(packagesList.map((pkgName) => buildPackage(pkgName)))
+// await Promise.all(packagesList.map((pkgName) => buildPackage(pkgName)))
 
-await generateTypes()
+await buildTypeScript()
 await runAPIExtractor()
+await formatBuild()

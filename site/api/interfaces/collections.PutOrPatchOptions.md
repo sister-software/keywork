@@ -37,7 +37,7 @@ involving the Keywork software without disclosing the source code of your own ap
 
 #### Defined in
 
-[packages/collections/src/common.ts:16](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/common.ts#L16)
+[packages/collections/lib/common.ts:16](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/common.ts#L16)
 
 ___
 
@@ -47,4 +47,4 @@ ___
 
 #### Defined in
 
-[packages/collections/src/common.ts:17](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/common.ts#L17)
+[packages/collections/lib/common.ts:17](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/common.ts#L17)

@@ -13,22 +13,24 @@
  */
 
 /**
- * Everything you need to handle incoming request in a Worker environment.
- * @module app
+ * ![npm (scoped)](https://img.shields.io/npm/v/keywork)
+ * ![npm](https://img.shields.io/npm/dm/keywork)
+ *
+ * Everything you need to handle incoming requests in a Worker environment.
+ *
+ * - Static prop handlers that feel just like your typical API endpoints.
+ * - Server-side rendering from your worker, made even faster with streamed responses.
+ * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
+ * - Client-side hydration that fits into your existing build pipeline.
+ *
  * @packageDocumentation
+ * @module
  */
 
-export * from './src/bindings/index.js'
-export * from './src/etags/index.js'
-export * from './src/files/files.js'
-export * from './src/headers/cacheControl.js'
-export * from './src/headers/contentType.js'
-export * from './src/headers/userAgent.js'
-export * from './src/KeyworkSession.js'
-export * from './src/paths/index.js'
-export * from './src/requests/index.js'
-export * from './src/responses/CachableResponse.js'
-export * from './src/responses/ErrorResponse.js'
-export * from './src/responses/HTMLResponse.js'
-export * from './src/responses/JSONResponse.js'
-export * from './src/responses/NotModifiedResponse.js'
+export * from '@keywork/utils'
+export * from './lib/bindings/index.js'
+export * from './lib/components/index.js'
+export * from './lib/hooks/index.js'
+export * from './lib/requests/index.js'
+export * from './lib/sessions/index.js'
+export * from './lib/ssr/index.js'

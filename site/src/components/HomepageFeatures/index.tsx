@@ -16,6 +16,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 import clsx from 'clsx'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import React, { ComponentProps, ComponentType } from 'react'
 import styles from './styles.module.css'
 

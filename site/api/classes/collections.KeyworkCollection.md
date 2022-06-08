@@ -35,7 +35,7 @@ sidebar_class_name: "doc-kind-class"
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:70](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L70)
+[packages/collections/lib/KeyworkCollection.ts:70](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkCollection.ts#L70)
 
 ## Properties
 
@@ -74,7 +74,7 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:179](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L179)
+[packages/collections/lib/KeyworkCollection.ts:179](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkCollection.ts#L179)
 
 ___
 
@@ -96,7 +96,7 @@ Create a `KeyworkDocumentReference` instance that refers to the document at the 
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:170](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L170)
+[packages/collections/lib/KeyworkCollection.ts:170](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkCollection.ts#L170)
 
 ___
 
@@ -119,7 +119,7 @@ This is used to determine a document's deserialization ahead of its fetching.
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:134](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L134)
+[packages/collections/lib/KeyworkCollection.ts:134](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkCollection.ts#L134)
 
 ___
 
@@ -141,7 +141,7 @@ Fetches a paginated list of the immediate `KeyworkDocumentReference`.
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:141](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L141)
+[packages/collections/lib/KeyworkCollection.ts:141](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkCollection.ts#L141)
 
 ___
 
@@ -161,7 +161,7 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:121](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L121)
+[packages/collections/lib/KeyworkCollection.ts:121](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkCollection.ts#L121)
 
 ___
 
@@ -183,7 +183,7 @@ Fetches a paginated list of the immediate documents within this collection.
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:114](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L114)
+[packages/collections/lib/KeyworkCollection.ts:114](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkCollection.ts#L114)
 
 ___
 
@@ -197,7 +197,7 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:102](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L102)
+[packages/collections/lib/KeyworkCollection.ts:102](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkCollection.ts#L102)
 
 ___
 
@@ -211,7 +211,7 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:83](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L83)
+[packages/collections/lib/KeyworkCollection.ts:83](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkCollection.ts#L83)
 
 ___
 
@@ -225,7 +225,7 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:231](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L231)
+[packages/collections/lib/KeyworkCollection.ts:231](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkCollection.ts#L231)
 
 ___
 
@@ -239,4 +239,4 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkCollection.ts:227](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkCollection.ts#L227)
+[packages/collections/lib/KeyworkCollection.ts:227](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkCollection.ts#L227)

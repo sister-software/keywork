@@ -40,7 +40,7 @@ Response.constructor
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:150
+packages/utils/dist/index.d.ts:155
 
 ## Properties
 
@@ -332,7 +332,7 @@ try {
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:177
+packages/utils/dist/index.d.ts:183
 
 ___
 

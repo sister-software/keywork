@@ -24,7 +24,7 @@ Directives for the Cache-Control header.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:41
+packages/utils/dist/index.d.ts:39
 
 ___
 
@@ -34,7 +34,7 @@ ___
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:39
+packages/utils/dist/index.d.ts:37
 
 ___
 
@@ -44,4 +44,4 @@ ___
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:40
+packages/utils/dist/index.d.ts:38

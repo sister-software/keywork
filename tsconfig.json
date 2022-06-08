@@ -2,8 +2,7 @@
   "files": [],
   "references": [
     { "path": "./packages/utils" },
-    { "path": "./packages/collections" },
     { "path": "./packages/keywork" },
-    { "path": "./packages/react-isomorphic" }
+    { "path": "./packages/collections" }
   ]
 }

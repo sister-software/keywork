@@ -32,7 +32,7 @@ logger.error('Unexpected error')
 
 #### Defined in
 
-[packages/utils/src/logger.ts:59](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L59)
+[packages/utils/lib/common/logger.ts:59](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L59)
 
 ## Properties
 
@@ -57,7 +57,7 @@ logger.error('Unexpected error')
 
 #### Defined in
 
-[packages/utils/src/logger.ts:52](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L52)
+[packages/utils/lib/common/logger.ts:52](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L52)
 
 ___
 
@@ -82,7 +82,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:51](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L51)
+[packages/utils/lib/common/logger.ts:51](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L51)
 
 ___
 
@@ -107,7 +107,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:57](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L57)
+[packages/utils/lib/common/logger.ts:57](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L57)
 
 ___
 
@@ -132,7 +132,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:55](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L55)
+[packages/utils/lib/common/logger.ts:55](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L55)
 
 ___
 
@@ -157,7 +157,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:54](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L54)
+[packages/utils/lib/common/logger.ts:54](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L54)
 
 ___
 
@@ -167,7 +167,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:50](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L50)
+[packages/utils/lib/common/logger.ts:50](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L50)
 
 ___
 
@@ -192,7 +192,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:56](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L56)
+[packages/utils/lib/common/logger.ts:56](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L56)
 
 ## Methods
 
@@ -212,7 +212,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:90](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L90)
+[packages/utils/lib/common/logger.ts:88](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L88)
 
 ___
 
@@ -232,7 +232,7 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:99](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L99)
+[packages/utils/lib/common/logger.ts:97](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L97)
 
 ___
 
@@ -260,4 +260,4 @@ ___
 
 #### Defined in
 
-[packages/utils/src/logger.ts:104](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/logger.ts#L104)
+[packages/utils/lib/common/logger.ts:102](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/logger.ts#L102)

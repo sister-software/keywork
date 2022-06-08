@@ -23,11 +23,27 @@ Extractor._checkCompilerCompatibility = () => {}
 
 // @ts-check
 
-export function generateTypes() {
-  console.log(`Generating types...`)
+export function buildTypeScript() {
+  console.log(`Building TypeScript...`)
 
   return new Promise((resolve, reject) =>
     exec(`tsc -b`, (err, stdout, stderr) => {
+      console.log(stdout)
+      console.error(stderr)
+      if (err) {
+        reject(err)
+      } else {
+        resolve()
+      }
+    })
+  )
+}
+
+export function formatBuild() {
+  console.log(`Formatting build...`)
+
+  return new Promise((resolve, reject) =>
+    exec(`yarn prettier --write "packages/*/dist/**/*{.js,.ts,.d.ts}"`, (err, stdout, stderr) => {
       console.log(stdout)
       console.error(stderr)
       if (err) {
@@ -80,6 +96,8 @@ const configObject = {
     extractorMessageReporting: {
       default: { logLevel: 'warning' },
       'ae-missing-release-tag': { logLevel: 'none' },
+      // Fixes issues with license header.
+      'ae-misplaced-package-tag': { logLevel: 'none' },
     },
   },
 }

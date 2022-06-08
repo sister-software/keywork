@@ -9,7 +9,8 @@ sidebar_class_name: "doc-kind-class"
 [keywork](../modules/keywork).KeyworkSession
 
 A simple session manager to aid in authenticating users.
-This is under active development.
+
+**`beta`** This is under active development.
 
 ## Constructors
 
@@ -19,34 +20,20 @@ This is under active development.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `request` | `Request` |
-| `cookieKey?` | `string` |
+| Name | Type | Default value |
+| :------ | :------ | :------ |
+| `request` | `Request` | `undefined` |
+| `cookieKey` | `string` | `DEFAULT_SESSION_COOKIE_KEY` |
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:379
+[packages/keywork/lib/sessions/KeyworkSession.ts:31](https://github.com/nirrius/keywork/blob/73ad60a/packages/keywork/lib/sessions/KeyworkSession.ts#L31)
 
 ## Properties
 
 ### cookieKey
 
-• **cookieKey**: `string`
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:376
-
-___
-
-### createClientID
-
-• `Private` **createClientID**: `any`
-
-#### Defined in
-
-packages/keywork/dist/index.d.ts:381
+• **cookieKey**: `string` = `DEFAULT_SESSION_COOKIE_KEY`
 
 ___
 
@@ -56,7 +43,7 @@ ___
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:378
+[packages/keywork/lib/sessions/KeyworkSession.ts:29](https://github.com/nirrius/keywork/blob/73ad60a/packages/keywork/lib/sessions/KeyworkSession.ts#L29)
 
 ___
 
@@ -66,7 +53,7 @@ ___
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:377
+[packages/keywork/lib/sessions/KeyworkSession.ts:28](https://github.com/nirrius/keywork/blob/73ad60a/packages/keywork/lib/sessions/KeyworkSession.ts#L28)
 
 ## Methods
 
@@ -86,4 +73,18 @@ packages/keywork/dist/index.d.ts:377
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:380
+[packages/keywork/lib/sessions/KeyworkSession.ts:44](https://github.com/nirrius/keywork/blob/73ad60a/packages/keywork/lib/sessions/KeyworkSession.ts#L44)
+
+___
+
+### createClientID
+
+▸ `Private` **createClientID**(): `string`
+
+#### Returns
+
+`string`
+
+#### Defined in
+
+[packages/keywork/lib/sessions/KeyworkSession.ts:56](https://github.com/nirrius/keywork/blob/73ad60a/packages/keywork/lib/sessions/KeyworkSession.ts#L56)

@@ -16,10 +16,10 @@ Keywork has everything you need to serve React apps from your Worker.
 
 # Install
 
-If you haven't already done so, install both the `keywork` and `@keywork/react-isomorphic` modules.
+If you haven't already done so, install the `keywork` module.
 
 ```shell title=Run in the root of your Worker project.
-$ yarn add keywork @keywork/react-isomorphic
+$ yarn add keywork
 ```
 
 :::info

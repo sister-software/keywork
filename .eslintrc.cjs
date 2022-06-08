@@ -20,9 +20,10 @@ const headerPath = path.resolve(__dirname, 'build', 'header.js')
 const rawHeaderContent = fs.readFileSync(headerPath, 'utf8')
 const headerLines = rawHeaderContent.replace('/**', '*').replace('*/\n', '').split('\n')
 
-module.exports = {
+/** @type {import('eslint').ESLint.Options}*/
+const config = {
   root: true,
-  ignorePatterns: ['./**/dist/**/*', './node_modules/**/*'],
+  ignorePatterns: ['./packages/*/dist/**/*', './node_modules/**/*'],
   parser: '@typescript-eslint/parser',
   plugins: ['@typescript-eslint', 'eslint-plugin-tsdoc', 'header'],
   settings: {
@@ -36,6 +37,7 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:import/recommended',
@@ -76,3 +78,5 @@ module.exports = {
     ],
   },
 }
+
+module.exports = config

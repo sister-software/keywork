@@ -38,7 +38,7 @@ A cachable request containing HTML content.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:233
+packages/utils/dist/index.d.ts:259
 
 ## Properties
 

@@ -15,20 +15,7 @@
 ![npm (scoped)](https://img.shields.io/npm/v/keywork)
 ![npm](https://img.shields.io/npm/dm/keywork)
 
-Everything you need to handle incoming request in a Worker environment.
-
-- HTTP responses for content like JSON, HTML, and much more!
-- Type-safe request handlers that make API endpoints easy.
-- Cache headers, cache responses, and even ETag generation for your own content.
-- Simplified error handling for your server-side Worker logic.
-
-### `@keywork/react-isomorphic`
-
-![npm (scoped)](https://img.shields.io/npm/v/@keywork/react-isomorphic)
-![npm](https://img.shields.io/npm/dm/@keywork/react-isomorphic)
-
-
-Everything you need to serve React apps from your Worker.
+Everything you need to handle incoming requests in a Worker environment.
 
 - Static prop handlers that feel just like your typical API endpoints.
 - Server-side rendering from your worker, made even faster with streamed responses.
@@ -40,12 +27,11 @@ Everything you need to serve React apps from your Worker.
 ![npm (scoped)](https://img.shields.io/npm/v/@keywork/collections)
 ![npm](https://img.shields.io/npm/dm/@keywork/collections)
 
-
 The missing piece that unlocks the full power of storing and querying data from your Worker.
 
 - A NoSQL _eventually-consistent_ ODM for Cloudflare's [Worker KV](https://developers.cloudflare.com/workers/runtime-apis/kv/).
 - An API reminiscent of Firebase and MongoDB, perfect for migrating your existing backend to Cloudflare's network.
-- Extends Worker KV's API without abstracting away important details
+- Extends Worker KV's API without abstracting away important details.
 
 ### `@keywork/utils`
 
@@ -54,6 +40,10 @@ The missing piece that unlocks the full power of storing and querying data from 
 
 Common core utilities for building web apps.
 
+- HTTP responses for content like JSON, HTML, and much more!
+- Type-safe request handlers that make API endpoints easy.
+- Cache headers, cache responses, and even ETag generation for your own content.
+- Simplified error handling for your server-side Worker logic.
 - URL helpers, path builders.
 - ULID and Snowflake ID generation.
 - Isomorpic runtime error handling for both the browser, and your Worker.

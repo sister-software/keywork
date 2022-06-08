@@ -12,10 +12,26 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './src/common.js'
-export * from './src/KeyworkCollection.js'
-export * from './src/KeyworkCollection/common.js'
-export * from './src/KeyworkDatabase.js'
-export * from './src/KeyworkDocumentMetadata.js'
-export * from './src/KeyworkDocumentReference.js'
-export * from './src/KeyworkDocumentSnapshot.js'
+/**
+ * ### `@keywork/collections` (Beta)
+ *
+ * ![npm (scoped)](https://img.shields.io/npm/v/@keywork/collections)
+ * ![npm](https://img.shields.io/npm/dm/@keywork/collections)
+ *
+ * The missing piece that unlocks the full power of storing and querying data from your Worker.
+ *
+ * - A NoSQL _eventually-consistent_ ODM for Cloudflare's [Worker KV](https://developers.cloudflare.com/workers/runtime-apis/kv/).
+ * - An API reminiscent of Firebase and MongoDB, perfect for migrating your existing backend to Cloudflare's network.
+ * - Extends Worker KV's API without abstracting away important details.
+ *
+ * @packageDocumentation
+ * @module
+ */
+
+export * from './lib/common.js'
+export * from './lib/KeyworkCollection.js'
+export * from './lib/KeyworkCollection/common.js'
+export * from './lib/KeyworkDatabase.js'
+export * from './lib/KeyworkDocumentMetadata.js'
+export * from './lib/KeyworkDocumentReference.js'
+export * from './lib/KeyworkDocumentSnapshot.js'

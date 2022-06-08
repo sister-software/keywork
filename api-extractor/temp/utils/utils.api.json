@@ -1,8 +1,8 @@
 {
   "metadata": {
     "toolPackage": "@microsoft/api-extractor",
-    "toolVersion": "7.24.2",
-    "schemaVersion": 1005,
+    "toolVersion": "7.25.0",
+    "schemaVersion": 1006,
     "oldestForwardsCompatibleVersion": 1001,
     "tsdocConfig": {
       "$schema": "https://developer.microsoft.com/json-schemas/tsdoc/v0/tsdoc.schema.json",
@@ -164,6 +164,51 @@
       "members": [
         {
           "kind": "Function",
+          "canonicalReference": "@keywork/utils!arrayBufferToBase64:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function arrayBufferToBase64(arrayBuffer: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "arrayBuffer",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "arrayBufferToBase64"
+        },
+        {
+          "kind": "Function",
           "canonicalReference": "@keywork/utils!arrayBufferToString:function(1)",
           "docComment": "",
           "excerptTokens": [
@@ -208,6 +253,433 @@
           "name": "arrayBufferToString"
         },
         {
+          "kind": "Class",
+          "canonicalReference": "@keywork/utils!CachableResponse:class",
+          "docComment": "/**\n * A client-side cachable response.\n *\n * @remarks\n *\n * Etag caching is supported when `CachableResponse` is constructed with the needed parameters. You may want to disable caching in your browser development tools to avoid this behavior while debugging.\n *\n * @category\n *\n * HTTP Responses\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class CachableResponse extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "Response",
+              "canonicalReference": "!Response:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "CachableResponse",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@keywork/utils!CachableResponse:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `CachableResponse` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(\n    body: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "BodyInit",
+                  "canonicalReference": "!BodyInit:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | null"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    request?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Request",
+                  "canonicalReference": "!Request:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    etag?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | null"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    cacheControlOptions?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Partial",
+                  "canonicalReference": "!Partial:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": "<"
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CacheControlDirectives",
+                  "canonicalReference": "@keywork/utils!CacheControlDirectives:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ">"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    headersInit?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HeadersInit",
+                  "canonicalReference": "!HeadersInit:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "body",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "request",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 4,
+                    "endIndex": 5
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "etag",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 6,
+                    "endIndex": 7
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "cacheControlOptions",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 8,
+                    "endIndex": 12
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "headersInit",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 13,
+                    "endIndex": 14
+                  },
+                  "isOptional": true
+                }
+              ]
+            }
+          ],
+          "extendsTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@keywork/utils!CacheControlDirectives:interface",
+          "docComment": "/**\n * Directives for the Cache-Control header.\n *\n * @category\n *\n * HTTP Responses\n *\n * @see\n *\n * {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control MDN}\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface CacheControlDirectives "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "CacheControlDirectives",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@keywork/utils!CacheControlDirectives#\"max-age\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "'max-age': "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "\"max-age\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@keywork/utils!CacheControlDirectives#\"must-revalidate\":member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "'must-revalidate': "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "\"must-revalidate\"",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "IndexSignature",
+              "canonicalReference": "@keywork/utils!CacheControlDirectives:index(1)",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "[cacheControlKey: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "]: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number | boolean | string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "returnTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "releaseTag": "Public",
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "cacheControlKey",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ]
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@keywork/utils!CacheControlDirectives#immutable:member",
+              "docComment": "",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "immutable: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "immutable",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@keywork/utils!CacheControlHeader:type",
+          "docComment": "/**\n * @remarks\n *\n * Keywork is free software for non-commercial purposes. You can be released from the requirements of the license by purchasing a commercial license. Buying such a license is mandatory as soon as you develop commercial activities involving the Keywork software without disclosing the source code of your own applications.\n *\n * @file\n *\n * This file is part of the Keywork project.\n *\n * @copyright\n *\n * Nirrius, LLC. All rights reserved.\n *\n * @author\n *\n * Teffen Ellis, et al.\n *\n * @license\n *\n * AGPL-3.0\n *\n * @see\n *\n * LICENSE.md in the project root for further licensing information.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type CacheControlHeader = "
+            },
+            {
+              "kind": "Reference",
+              "text": "HeadersInit",
+              "canonicalReference": "!HeadersInit:type"
+            },
+            {
+              "kind": "Content",
+              "text": " & {\n    'Cache-Control': string;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "CacheControlHeader",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@keywork/utils!ContentTypeHeader:type",
+          "docComment": "/**\n * @remarks\n *\n * Keywork is free software for non-commercial purposes. You can be released from the requirements of the license by purchasing a commercial license. Buying such a license is mandatory as soon as you develop commercial activities involving the Keywork software without disclosing the source code of your own applications.\n *\n * @file\n *\n * This file is part of the Keywork project.\n *\n * @copyright\n *\n * Nirrius, LLC. All rights reserved.\n *\n * @author\n *\n * Teffen Ellis, et al.\n *\n * @license\n *\n * AGPL-3.0\n *\n * @see\n *\n * LICENSE.md in the project root for further licensing information.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type ContentTypeHeader = "
+            },
+            {
+              "kind": "Reference",
+              "text": "HeadersInit",
+              "canonicalReference": "!HeadersInit:type"
+            },
+            {
+              "kind": "Content",
+              "text": " & {\n    'Content-Type': string;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ContentTypeHeader",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Variable",
+          "canonicalReference": "@keywork/utils!convertJSONToETaggableString:var",
+          "docComment": "/**\n * Wraps `JSON.stringify` to ensure that JSON pretty printing doesn't influence ETag generation.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "convertJSONToETaggableString: "
+            },
+            {
+              "kind": "Content",
+              "text": "(value: {}) => string"
+            }
+          ],
+          "isReadonly": true,
+          "releaseTag": "Public",
+          "name": "convertJSONToETaggableString",
+          "variableTypeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@keywork/utils!createCacheControlHeader:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function createCacheControlHeader(options: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Partial",
+              "canonicalReference": "!Partial:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "CacheControlDirectives",
+              "canonicalReference": "@keywork/utils!CacheControlDirectives:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "> | undefined"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "CacheControlHeader",
+              "canonicalReference": "@keywork/utils!CacheControlHeader:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 6,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 5
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "createCacheControlHeader"
+        },
+        {
           "kind": "Variable",
           "canonicalReference": "@keywork/utils!DURATION_FIVE_MINUTES:var",
           "docComment": "/**\n * 5 minutes in milliseconds.\n */\n",
@@ -221,6 +693,7 @@
               "text": "number"
             }
           ],
+          "isReadonly": true,
           "releaseTag": "Public",
           "name": "DURATION_FIVE_MINUTES",
           "variableTypeTokenRange": {
@@ -242,6 +715,7 @@
               "text": "number"
             }
           ],
+          "isReadonly": true,
           "releaseTag": "Public",
           "name": "DURATION_ONE_DAY",
           "variableTypeTokenRange": {
@@ -263,6 +737,7 @@
               "text": "number"
             }
           ],
+          "isReadonly": true,
           "releaseTag": "Public",
           "name": "DURATION_ONE_HOUR",
           "variableTypeTokenRange": {
@@ -284,12 +759,56 @@
               "text": "number"
             }
           ],
+          "isReadonly": true,
           "releaseTag": "Public",
           "name": "DURATION_ONE_WEEK",
           "variableTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
           }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@keywork/utils!EntityToETagOptions:interface",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface EntityToETagOptions "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "EntityToETagOptions",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@keywork/utils!EntityToETagOptions#weak:member",
+              "docComment": "/**\n * Indicates that a weak validator is used. Weak etags are easy to generate, but are far less useful for comparisons. Strong validators are ideal for comparisons but can be very difficult to generate efficiently. Weak ETag values of two representations of the same resources might be semantically equivalent, but not byte-for-byte identical. This means weak etags prevent caching when byte range requests are used, but strong etags mean range requests can still be cached.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "weak?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "weak",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
           "kind": "Interface",
@@ -322,6 +841,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "status",
@@ -348,6 +868,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "statusCode",
@@ -358,6 +879,388 @@
             }
           ],
           "extendsTokenRanges": []
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "@keywork/utils!ErrorResponse:class",
+          "docComment": "/**\n * An error response sent to a client when a request is invalid in some way.\n *\n * @remarks\n *\n * If an error object is available and publically visible, consider {@link ErrorResponse.fromUnknownError}\n *\n * @category\n *\n * HTTP Responses\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class ErrorResponse extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "Response",
+              "canonicalReference": "!Response:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ErrorResponse",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@keywork/utils!ErrorResponse:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `ErrorResponse` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(\n    status?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "number"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    statusText?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    body?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "BodyInit",
+                  "canonicalReference": "!BodyInit:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": " | null"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    headersInit?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HeadersInit",
+                  "canonicalReference": "!HeadersInit:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "status",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "statusText",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "body",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 7
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "headersInit",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 8,
+                    "endIndex": 9
+                  },
+                  "isOptional": true
+                }
+              ]
+            },
+            {
+              "kind": "Method",
+              "canonicalReference": "@keywork/utils!ErrorResponse.fromUnknownError:member(1)",
+              "docComment": "/**\n * Given an error-like object, attempt respond with a `KeyworkResourceError`.\n *\n * @example\n *\n * Handling a error from an incoming request.\n * ```ts\n * try {\n *   result = await fetchFoobarResource()\n * } catch (error) {\n *   // Log the error internally...\n *   console.error(error)\n *\n *   // Respond with a public reason...\n *   return ErrorResponse.fromUnknownError(error, 'An error occured while fetching foobar.')\n * }\n * ```\n *\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "static fromUnknownError(\n    _error: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "any"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    publicReason?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": "): "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ErrorResponse",
+                  "canonicalReference": "@keywork/utils!ErrorResponse:class"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isStatic": true,
+              "returnTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "_error",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "publicReason",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                }
+              ],
+              "isOptional": false,
+              "name": "fromUnknownError"
+            }
+          ],
+          "extendsTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@keywork/utils!ETaggable:type",
+          "docComment": "/**\n * Types that can be converted into ETags.\n *\n * @public\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type ETaggable = "
+            },
+            {
+              "kind": "Content",
+              "text": "string | "
+            },
+            {
+              "kind": "Reference",
+              "text": "ArrayBuffer",
+              "canonicalReference": "!ArrayBuffer:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ETaggable",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 3
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@keywork/utils!fileExtensionToContentTypeHeader:function(1)",
+          "docComment": "/**\n * Transforms a given file extension into a `ContentTypeHeader`\n *\n * @param extension - File extension, preferrably without the leading dot. e.g. `\"txt\"`, `\"html\"`\n *\n * @param mimeTypeFallback - An optional fallback if the mimeType is not known. Defaults to `\"text/plain\"`\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function fileExtensionToContentTypeHeader(extension: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ", mimeTypeFallback?: "
+            },
+            {
+              "kind": "Content",
+              "text": "\"txt\""
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "ContentTypeHeader",
+              "canonicalReference": "@keywork/utils!ContentTypeHeader:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "extension",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "mimeTypeFallback",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "fileExtensionToContentTypeHeader"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@keywork/utils!generateETag:function(1)",
+          "docComment": "/**\n * Create a simple ETag.\n *\n * @param entity - Either a `string`, `ArrayBuffer`. If working with JSON, run the value through `JSON.stringify` first.\n *\n * @param options - See `EntityToETagOptions`\n *\n * @returns \n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function generateETag(entity: "
+            },
+            {
+              "kind": "Reference",
+              "text": "ETaggable",
+              "canonicalReference": "@keywork/utils!ETaggable:type"
+            },
+            {
+              "kind": "Content",
+              "text": ", options?: "
+            },
+            {
+              "kind": "Reference",
+              "text": "EntityToETagOptions",
+              "canonicalReference": "@keywork/utils!EntityToETagOptions:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "Promise",
+              "canonicalReference": "!Promise:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "entity",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "options",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "generateETag"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@keywork/utils!getBrowserIdentifier:function(1)",
+          "docComment": "/**\n * @remarks\n *\n * Keywork is free software for non-commercial purposes. You can be released from the requirements of the license by purchasing a commercial license. Buying such a license is mandatory as soon as you develop commercial activities involving the Keywork software without disclosing the source code of your own applications.\n *\n * @file\n *\n * This file is part of the Keywork project.\n *\n * @copyright\n *\n * Nirrius, LLC. All rights reserved.\n *\n * @author\n *\n * Teffen Ellis, et al.\n *\n * @license\n *\n * AGPL-3.0\n *\n * @see\n *\n * LICENSE.md in the project root for further licensing information.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function getBrowserIdentifier(request: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Request",
+              "canonicalReference": "!Request:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "request",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "getBrowserIdentifier"
         },
         {
           "kind": "Interface",
@@ -681,6 +1584,501 @@
           "extendsTokenRanges": []
         },
         {
+          "kind": "Function",
+          "canonicalReference": "@keywork/utils!hexToDec:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function hexToDec(hexStr: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 4
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "hexStr",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "hexToDec"
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "@keywork/utils!HTMLResponse:class",
+          "docComment": "/**\n * A cachable request containing HTML content.\n *\n * @category\n *\n * HTTP Responses\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class HTMLResponse extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "CachableResponse",
+              "canonicalReference": "@keywork/utils!CachableResponse:class"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "HTMLResponse",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@keywork/utils!HTMLResponse:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `HTMLResponse` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(\n    htmlContent: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string | "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "ReadableStream",
+                  "canonicalReference": "!ReadableStream:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    request?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Request",
+                  "canonicalReference": "!Request:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    etag?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    cacheControlOptions?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CacheControlDirectives",
+                  "canonicalReference": "@keywork/utils!CacheControlDirectives:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    headersInit?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HeadersInit",
+                  "canonicalReference": "!HeadersInit:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "htmlContent",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 3
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "request",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 4,
+                    "endIndex": 5
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "etag",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 6,
+                    "endIndex": 7
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "cacheControlOptions",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 8,
+                    "endIndex": 9
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "headersInit",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 10,
+                    "endIndex": 11
+                  },
+                  "isOptional": true
+                }
+              ]
+            }
+          ],
+          "extendsTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@keywork/utils!isETagMatch:function(1)",
+          "docComment": "/**\n * Utility function to check if a given request's headers match an etag. If the etag matches, the client may use the locally cache resource.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function isETagMatch(request: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Request",
+              "canonicalReference": "!Request:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", etag: "
+            },
+            {
+              "kind": "Content",
+              "text": "string | null | undefined"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "etag",
+              "canonicalReference": "@keywork/utils!~etag"
+            },
+            {
+              "kind": "Content",
+              "text": " is string"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 7
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "request",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "etag",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isETagMatch"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@keywork/utils!isRequestLike:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function isRequestLike(requestish: "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "requestish",
+              "canonicalReference": "@keywork/utils!~requestish"
+            },
+            {
+              "kind": "Content",
+              "text": " is "
+            },
+            {
+              "kind": "Reference",
+              "text": "RequestLike",
+              "canonicalReference": "@keywork/utils!RequestLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "requestish",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isRequestLike"
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@keywork/utils!isURLLike:function(1)",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function isURLLike(urlish: "
+            },
+            {
+              "kind": "Content",
+              "text": "unknown"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "urlish",
+              "canonicalReference": "@keywork/utils!~urlish"
+            },
+            {
+              "kind": "Content",
+              "text": " is "
+            },
+            {
+              "kind": "Reference",
+              "text": "URLLike",
+              "canonicalReference": "@keywork/utils!URLLike:type"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 3,
+            "endIndex": 6
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "urlish",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            }
+          ],
+          "name": "isURLLike"
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "@keywork/utils!JSONResponse:class",
+          "docComment": "/**\n * A response sent to the client containing a JSON object.\n *\n * @remarks\n *\n * Etag caching is supported when `JSONResponse` is constructed with the needed parameters. You may want to disable caching in your browser development tools to avoid this behavior while debugging.\n *\n * @category\n *\n * HTTP Responses\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class JSONResponse extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "CachableResponse",
+              "canonicalReference": "@keywork/utils!CachableResponse:class"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "JSONResponse",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@keywork/utils!JSONResponse:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `JSONResponse` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(\n    json: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "{}"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    request?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "Request",
+                  "canonicalReference": "!Request:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    etag?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    cacheControlOptions?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "CacheControlDirectives",
+                  "canonicalReference": "@keywork/utils!CacheControlDirectives:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    headersInit?: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "HeadersInit",
+                  "canonicalReference": "!HeadersInit:type"
+                },
+                {
+                  "kind": "Content",
+                  "text": ", \n    pretty?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "json",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                },
+                {
+                  "parameterName": "request",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 3,
+                    "endIndex": 4
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "etag",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 5,
+                    "endIndex": 6
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "cacheControlOptions",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 7,
+                    "endIndex": 8
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "headersInit",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 9,
+                    "endIndex": 10
+                  },
+                  "isOptional": true
+                },
+                {
+                  "parameterName": "pretty",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 11,
+                    "endIndex": 12
+                  },
+                  "isOptional": true
+                }
+              ]
+            }
+          ],
+          "extendsTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "implementsTokenRanges": []
+        },
+        {
           "kind": "Enum",
           "canonicalReference": "@keywork/utils!KeyworkQueryParamKeys:enum",
           "docComment": "/**\n * @remarks\n *\n * Keywork is free software for non-commercial purposes. You can be released from the requirements of the license by purchasing a commercial license. Buying such a license is mandatory as soon as you develop commercial activities involving the Keywork software without disclosing the source code of your own applications.\n *\n * @file\n *\n * This file is part of the Keywork project.\n *\n * @copyright\n *\n * Nirrius, LLC. All rights reserved.\n *\n * @author\n *\n * Teffen Ellis, et al.\n *\n * @license\n *\n * AGPL-3.0\n *\n * @see\n *\n * LICENSE.md in the project root for further licensing information.\n */\n",
@@ -786,6 +2184,7 @@
                 }
               ],
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -833,13 +2232,13 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": true,
               "returnTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 4
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -851,6 +2250,7 @@
                   "isOptional": false
                 }
               ],
+              "isOptional": false,
               "name": "fromUnknownError"
             },
             {
@@ -871,6 +2271,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": true,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "message",
@@ -878,7 +2279,8 @@
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": false
             },
             {
               "kind": "Property",
@@ -898,6 +2300,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "status",
@@ -905,7 +2308,8 @@
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": false
             },
             {
               "kind": "Property",
@@ -925,6 +2329,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "statusText",
@@ -932,7 +2337,8 @@
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": false
             },
             {
               "kind": "Method",
@@ -953,15 +2359,16 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [],
+              "isOptional": false,
               "name": "toJSON"
             }
           ],
@@ -970,6 +2377,417 @@
             "endIndex": 2
           },
           "implementsTokenRanges": []
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@keywork/utils!matchPath:function(1)",
+          "docComment": "/**\n * Performs pattern matching on a URL pathname and returns information about the match.\n *\n * @see\n *\n * https://reactrouter.com/docs/en/v6/api#matchpath\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function matchPath<ExpectedParams extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{} | null"
+            },
+            {
+              "kind": "Content",
+              "text": ", Path extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": ">(pattern: "
+            },
+            {
+              "kind": "Reference",
+              "text": "PathPattern",
+              "canonicalReference": "@keywork/utils!PathPattern:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<Path> | Path"
+            },
+            {
+              "kind": "Content",
+              "text": ", pathname: "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "PathMatch",
+              "canonicalReference": "@keywork/utils!PathMatch:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<ExpectedParams> | null"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 10,
+            "endIndex": 12
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "pattern",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 7
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "pathname",
+              "parameterTypeTokenRange": {
+                "startIndex": 8,
+                "endIndex": 9
+              },
+              "isOptional": false
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "ExpectedParams",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            },
+            {
+              "typeParameterName": "Path",
+              "constraintTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "matchPath"
+        },
+        {
+          "kind": "Class",
+          "canonicalReference": "@keywork/utils!NotModifiedResponse:class",
+          "docComment": "/**\n * Given that a request's etag header matches an server entity or resource, a `NotModifiedResponse` should be sent to the requestor as an indication that the client's cache is still applicable.\n *\n * @category\n *\n * HTTP Responses\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare class NotModifiedResponse extends "
+            },
+            {
+              "kind": "Reference",
+              "text": "Response",
+              "canonicalReference": "!Response:interface"
+            },
+            {
+              "kind": "Content",
+              "text": " "
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "NotModifiedResponse",
+          "members": [
+            {
+              "kind": "Constructor",
+              "canonicalReference": "@keywork/utils!NotModifiedResponse:constructor(1)",
+              "docComment": "/**\n * Constructs a new instance of the `NotModifiedResponse` class\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "constructor(etag: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ");"
+                }
+              ],
+              "releaseTag": "Public",
+              "isProtected": false,
+              "overloadIndex": 1,
+              "parameters": [
+                {
+                  "parameterName": "etag",
+                  "parameterTypeTokenRange": {
+                    "startIndex": 1,
+                    "endIndex": 2
+                  },
+                  "isOptional": false
+                }
+              ]
+            }
+          ],
+          "extendsTokenRange": {
+            "startIndex": 1,
+            "endIndex": 2
+          },
+          "implementsTokenRanges": []
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@keywork/utils!numberInRange:function(1)",
+          "docComment": "/**\n * @remarks\n *\n * Keywork is free software for non-commercial purposes. You can be released from the requirements of the license by purchasing a commercial license. Buying such a license is mandatory as soon as you develop commercial activities involving the Keywork software without disclosing the source code of your own applications.\n *\n * @file\n *\n * This file is part of the Keywork project.\n *\n * @copyright\n *\n * Nirrius, LLC. All rights reserved.\n *\n * @author\n *\n * Teffen Ellis, et al.\n *\n * @license\n *\n * AGPL-3.0\n *\n * @see\n *\n * LICENSE.md in the project root for further licensing information.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function numberInRange(given: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ", minimum?: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ", maximum?: "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Content",
+              "text": "number"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 7,
+            "endIndex": 8
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "given",
+              "parameterTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "minimum",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              },
+              "isOptional": true
+            },
+            {
+              "parameterName": "maximum",
+              "parameterTypeTokenRange": {
+                "startIndex": 5,
+                "endIndex": 6
+              },
+              "isOptional": true
+            }
+          ],
+          "name": "numberInRange"
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@keywork/utils!ParsedPathParams:type",
+          "docComment": "/**\n * The parameters that were parsed from the URL path.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type ParsedPathParams<Key extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string "
+            },
+            {
+              "kind": "Content",
+              "text": "= "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "> = "
+            },
+            {
+              "kind": "Content",
+              "text": "{\n    readonly [key in Key]: string | undefined;\n}"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "ParsedPathParams",
+          "typeParameters": [
+            {
+              "typeParameterName": "Key",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              }
+            }
+          ],
+          "typeTokenRange": {
+            "startIndex": 5,
+            "endIndex": 6
+          }
+        },
+        {
+          "kind": "Function",
+          "canonicalReference": "@keywork/utils!parsePathname:function(1)",
+          "docComment": "/**\n * Performs pattern matching on a URL pathname and returns information about the match.\n *\n * @throws\n *\n * {@link @keywork/utils/KeyworkResourceError}\n *\n * @see\n *\n * {@link https://reactrouter.com/docs/en/v6/api#matchpath}\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare function parsePathname<ExpectedParams extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{} | null"
+            },
+            {
+              "kind": "Content",
+              "text": ">(pattern: "
+            },
+            {
+              "kind": "Reference",
+              "text": "PathPattern",
+              "canonicalReference": "@keywork/utils!PathPattern:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<string> | string"
+            },
+            {
+              "kind": "Content",
+              "text": ", urlOrRequest: "
+            },
+            {
+              "kind": "Reference",
+              "text": "Pick",
+              "canonicalReference": "!Pick:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Request",
+              "canonicalReference": "!Request:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", 'url'> | string | "
+            },
+            {
+              "kind": "Reference",
+              "text": "URL",
+              "canonicalReference": "!URL:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "): "
+            },
+            {
+              "kind": "Reference",
+              "text": "PathMatch",
+              "canonicalReference": "@keywork/utils!PathMatch:interface"
+            },
+            {
+              "kind": "Content",
+              "text": "<ExpectedParams>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "returnTypeTokenRange": {
+            "startIndex": 12,
+            "endIndex": 14
+          },
+          "releaseTag": "Public",
+          "overloadIndex": 1,
+          "parameters": [
+            {
+              "parameterName": "pattern",
+              "parameterTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 5
+              },
+              "isOptional": false
+            },
+            {
+              "parameterName": "urlOrRequest",
+              "parameterTypeTokenRange": {
+                "startIndex": 6,
+                "endIndex": 11
+              },
+              "isOptional": false
+            }
+          ],
+          "typeParameters": [
+            {
+              "typeParameterName": "ExpectedParams",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 0,
+                "endIndex": 0
+              }
+            }
+          ],
+          "name": "parsePathname"
         },
         {
           "kind": "TypeAlias",
@@ -1004,6 +2822,286 @@
             "startIndex": 1,
             "endIndex": 4
           }
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@keywork/utils!PathMatch:interface",
+          "docComment": "/**\n * A PathMatch contains info about how a PathPattern matched on a URL pathname.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface PathMatch<ExpectedParams extends "
+            },
+            {
+              "kind": "Content",
+              "text": "{} | null "
+            },
+            {
+              "kind": "Content",
+              "text": "= "
+            },
+            {
+              "kind": "Content",
+              "text": "null"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "ExpectedParams",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              }
+            }
+          ],
+          "name": "PathMatch",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@keywork/utils!PathMatch#params:member",
+              "docComment": "/**\n * The names and values of dynamic parameters in the URL.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "params: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "ExpectedParams"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "params",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@keywork/utils!PathMatch#pathname:member",
+              "docComment": "/**\n * The portion of the URL pathname that was matched.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "pathname: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "pathname",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@keywork/utils!PathMatch#pathnameBase:member",
+              "docComment": "/**\n * The portion of the URL pathname that was matched before child routes.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "pathnameBase: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "string"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "pathnameBase",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@keywork/utils!PathMatch#pattern:member",
+              "docComment": "/**\n * The pattern that was used to match.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "pattern: "
+                },
+                {
+                  "kind": "Reference",
+                  "text": "PathPattern",
+                  "canonicalReference": "@keywork/utils!PathPattern:interface"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "pattern",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
+        },
+        {
+          "kind": "Interface",
+          "canonicalReference": "@keywork/utils!PathPattern:interface",
+          "docComment": "/**\n * A PathPattern is used to match on some portion of a URL pathname.\n */\n",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export interface PathPattern<Path extends "
+            },
+            {
+              "kind": "Content",
+              "text": "string "
+            },
+            {
+              "kind": "Content",
+              "text": "= "
+            },
+            {
+              "kind": "Content",
+              "text": "string"
+            },
+            {
+              "kind": "Content",
+              "text": "> "
+            }
+          ],
+          "releaseTag": "Public",
+          "typeParameters": [
+            {
+              "typeParameterName": "Path",
+              "constraintTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              },
+              "defaultTypeTokenRange": {
+                "startIndex": 3,
+                "endIndex": 4
+              }
+            }
+          ],
+          "name": "PathPattern",
+          "members": [
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@keywork/utils!PathPattern#caseSensitive:member",
+              "docComment": "/**\n * Should be `true` if the static portions of the `path` should be matched in the same case.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "caseSensitive?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "caseSensitive",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@keywork/utils!PathPattern#end:member",
+              "docComment": "/**\n * Should be `true` if this pattern should match the entire URL pathname.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "end?: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "boolean"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": true,
+              "releaseTag": "Public",
+              "name": "end",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            },
+            {
+              "kind": "PropertySignature",
+              "canonicalReference": "@keywork/utils!PathPattern#path:member",
+              "docComment": "/**\n * A string to match against a URL pathname. May contain `:id`-style segments to indicate placeholders for dynamic parameters. May also end with `/*` to indicate matching the rest of the URL pathname.\n */\n",
+              "excerptTokens": [
+                {
+                  "kind": "Content",
+                  "text": "path: "
+                },
+                {
+                  "kind": "Content",
+                  "text": "Path"
+                },
+                {
+                  "kind": "Content",
+                  "text": ";"
+                }
+              ],
+              "isReadonly": false,
+              "isOptional": false,
+              "releaseTag": "Public",
+              "name": "path",
+              "propertyTypeTokenRange": {
+                "startIndex": 1,
+                "endIndex": 2
+              }
+            }
+          ],
+          "extendsTokenRanges": []
         },
         {
           "kind": "Class",
@@ -1041,6 +3139,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "_error",
@@ -1048,7 +3147,8 @@
                 "startIndex": 1,
                 "endIndex": 3
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": true
             },
             {
               "kind": "Property",
@@ -1073,6 +3173,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "_log",
@@ -1080,7 +3181,8 @@
                 "startIndex": 1,
                 "endIndex": 3
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": false
             },
             {
               "kind": "Constructor",
@@ -1109,6 +3211,7 @@
                 }
               ],
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -1152,6 +3255,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "debug",
@@ -1159,7 +3263,8 @@
                 "startIndex": 1,
                 "endIndex": 3
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": false
             },
             {
               "kind": "Property",
@@ -1179,6 +3284,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "error",
@@ -1186,7 +3292,8 @@
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": false
             },
             {
               "kind": "Property",
@@ -1211,6 +3318,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "info",
@@ -1218,7 +3326,8 @@
                 "startIndex": 1,
                 "endIndex": 3
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": false
             },
             {
               "kind": "Method",
@@ -1246,13 +3355,13 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 3,
                 "endIndex": 4
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -1264,6 +3373,7 @@
                   "isOptional": false
                 }
               ],
+              "isOptional": false,
               "name": "json"
             },
             {
@@ -1313,13 +3423,26 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
+              "typeParameters": [
+                {
+                  "typeParameterName": "T",
+                  "constraintTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  },
+                  "defaultTypeTokenRange": {
+                    "startIndex": 0,
+                    "endIndex": 0
+                  }
+                }
+              ],
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 8,
                 "endIndex": 9
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -1347,19 +3470,7 @@
                   "isOptional": false
                 }
               ],
-              "typeParameters": [
-                {
-                  "typeParameterName": "T",
-                  "constraintTokenRange": {
-                    "startIndex": 0,
-                    "endIndex": 0
-                  },
-                  "defaultTypeTokenRange": {
-                    "startIndex": 0,
-                    "endIndex": 0
-                  }
-                }
-              ],
+              "isOptional": false,
               "name": "jsonEntries"
             },
             {
@@ -1385,6 +3496,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "log",
@@ -1392,7 +3504,8 @@
                 "startIndex": 1,
                 "endIndex": 3
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": false
             },
             {
               "kind": "Property",
@@ -1412,6 +3525,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "logPrefix",
@@ -1419,7 +3533,8 @@
                 "startIndex": 1,
                 "endIndex": 2
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": true
             },
             {
               "kind": "Property",
@@ -1444,6 +3559,7 @@
                   "text": ";"
                 }
               ],
+              "isReadonly": false,
               "isOptional": false,
               "releaseTag": "Public",
               "name": "warn",
@@ -1451,7 +3567,8 @@
                 "startIndex": 1,
                 "endIndex": 3
               },
-              "isStatic": false
+              "isStatic": false,
+              "isProtected": false
             }
           ],
           "implementsTokenRanges": []
@@ -1514,11 +3631,51 @@
               "canonicalReference": "@keywork/utils!PrettyJSON:type"
             }
           ],
+          "isReadonly": true,
           "releaseTag": "Public",
           "name": "prettyJSON",
           "variableTypeTokenRange": {
             "startIndex": 1,
             "endIndex": 2
+          }
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@keywork/utils!RequestLike:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type RequestLike = "
+            },
+            {
+              "kind": "Reference",
+              "text": "Pick",
+              "canonicalReference": "!Pick:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "Request",
+              "canonicalReference": "!Request:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", 'url'>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "RequestLike",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
           }
         },
         {
@@ -1536,6 +3693,7 @@
               "canonicalReference": "@keywork/utils!PathBuilder:type"
             }
           ],
+          "isReadonly": true,
           "releaseTag": "Public",
           "name": "resolveDocPath",
           "variableTypeTokenRange": {
@@ -1575,6 +3733,7 @@
                 }
               ],
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [
                 {
@@ -1605,15 +3764,16 @@
                   "text": ";"
                 }
               ],
-              "isOptional": false,
               "isStatic": false,
               "returnTypeTokenRange": {
                 "startIndex": 1,
                 "endIndex": 2
               },
               "releaseTag": "Public",
+              "isProtected": false,
               "overloadIndex": 1,
               "parameters": [],
+              "isOptional": false,
               "name": "generate"
             }
           ],
@@ -1663,6 +3823,45 @@
             }
           ],
           "name": "stringToArrayBuffer"
+        },
+        {
+          "kind": "TypeAlias",
+          "canonicalReference": "@keywork/utils!URLLike:type",
+          "docComment": "",
+          "excerptTokens": [
+            {
+              "kind": "Content",
+              "text": "export declare type URLLike = "
+            },
+            {
+              "kind": "Reference",
+              "text": "Pick",
+              "canonicalReference": "!Pick:type"
+            },
+            {
+              "kind": "Content",
+              "text": "<"
+            },
+            {
+              "kind": "Reference",
+              "text": "URL",
+              "canonicalReference": "!URL:interface"
+            },
+            {
+              "kind": "Content",
+              "text": ", 'pathname'>"
+            },
+            {
+              "kind": "Content",
+              "text": ";"
+            }
+          ],
+          "releaseTag": "Public",
+          "name": "URLLike",
+          "typeTokenRange": {
+            "startIndex": 1,
+            "endIndex": 5
+          }
         }
       ]
     }

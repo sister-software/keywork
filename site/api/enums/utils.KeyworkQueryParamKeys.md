@@ -33,7 +33,7 @@ The current build ID. Used to bust caches on static assets.
 
 #### Defined in
 
-[packages/utils/src/url.ts:17](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/url.ts#L17)
+[packages/utils/lib/common/url.ts:17](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/url.ts#L17)
 
 ___
 
@@ -46,4 +46,4 @@ only needs the static props for an upcoming page transition.
 
 #### Defined in
 
-[packages/utils/src/url.ts:22](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/utils/src/url.ts#L22)
+[packages/utils/lib/common/url.ts:22](https://github.com/nirrius/keywork/blob/73ad60a/packages/utils/lib/common/url.ts#L22)

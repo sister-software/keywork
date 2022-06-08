@@ -44,7 +44,7 @@
   "devDependencies": {
     "@ava/typescript": "^3.0.1",
     "@cloudflare/workers-types": "^3.11.0",
-    "@microsoft/api-extractor": "^7.24.2",
+    "@microsoft/api-extractor": "^7.25.0",
     "@microsoft/tsdoc-config": "^0.16.1",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
@@ -67,7 +67,7 @@
     "rimraf": "^3.0.2",
     "title-case": "^3.0.3",
     "tsconfig-paths": "^4.0.0",
-    "typescript": "beta"
+    "typescript": "^4.7.3"
   },
   "browserslist": [
     "last 2 Chrome versions",

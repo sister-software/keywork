@@ -16,7 +16,7 @@ sidebar_class_name: "doc-kind-interface"
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentSnapshot.ts:18](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentSnapshot.ts#L18)
+[packages/collections/lib/KeyworkDocumentSnapshot.ts:18](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentSnapshot.ts#L18)
 
 ___
 
@@ -26,7 +26,7 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentSnapshot.ts:20](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentSnapshot.ts#L20)
+[packages/collections/lib/KeyworkDocumentSnapshot.ts:20](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentSnapshot.ts#L20)
 
 ___
 
@@ -36,7 +36,7 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentSnapshot.ts:22](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentSnapshot.ts#L22)
+[packages/collections/lib/KeyworkDocumentSnapshot.ts:22](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentSnapshot.ts#L22)
 
 ___
 
@@ -46,7 +46,7 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentSnapshot.ts:19](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentSnapshot.ts#L19)
+[packages/collections/lib/KeyworkDocumentSnapshot.ts:19](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentSnapshot.ts#L19)
 
 ___
 
@@ -56,4 +56,4 @@ ___
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentSnapshot.ts:21](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentSnapshot.ts#L21)
+[packages/collections/lib/KeyworkDocumentSnapshot.ts:21](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentSnapshot.ts#L21)

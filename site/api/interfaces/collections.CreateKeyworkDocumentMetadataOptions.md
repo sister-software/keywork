@@ -18,7 +18,7 @@ A POSIX-style, absolute path to a document.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:22](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L22)
+[packages/collections/lib/KeyworkDocumentMetadata.ts:22](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentMetadata.ts#L22)
 
 ___
 
@@ -30,7 +30,7 @@ Determines the ULID seed.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:28](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L28)
+[packages/collections/lib/KeyworkDocumentMetadata.ts:28](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentMetadata.ts#L28)
 
 ___
 
@@ -42,7 +42,7 @@ Defaults to text `String`
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:31](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L31)
+[packages/collections/lib/KeyworkDocumentMetadata.ts:31](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentMetadata.ts#L31)
 
 ___
 
@@ -56,7 +56,7 @@ An optional ETag of the value associated with this document.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:38](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L38)
+[packages/collections/lib/KeyworkDocumentMetadata.ts:38](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentMetadata.ts#L38)
 
 ___
 
@@ -68,4 +68,4 @@ A POSIX-style, relative path to a document from a collection.
 
 #### Defined in
 
-[packages/collections/src/KeyworkDocumentMetadata.ts:25](https://github.com/nirrius/keywork/blob/6b5e3cc/packages/collections/src/KeyworkDocumentMetadata.ts#L25)
+[packages/collections/lib/KeyworkDocumentMetadata.ts:25](https://github.com/nirrius/keywork/blob/73ad60a/packages/collections/lib/KeyworkDocumentMetadata.ts#L25)

@@ -27,7 +27,7 @@ the same case.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:490
+packages/utils/dist/index.d.ts:504
 
 ___
 
@@ -39,7 +39,7 @@ Should be `true` if this pattern should match the entire URL pathname.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:494
+packages/utils/dist/index.d.ts:508
 
 ___
 
@@ -53,4 +53,4 @@ indicate matching the rest of the URL pathname.
 
 #### Defined in
 
-packages/keywork/dist/index.d.ts:485
+packages/utils/dist/index.d.ts:499
