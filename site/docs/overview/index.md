@@ -14,8 +14,6 @@ Keywork may be right for you if...
 - Your application routing logic is too complex for Cloudflare Pages
 - You'd like to use Workers KV as a NoSQL database like MongoDB or Firebase
 
-**Keywork** is a batteries-included, _magic-free_, library for building web apps on Cloudflare Workers.
-
 ## Features
 
 - 💪 Written in TypeScript
