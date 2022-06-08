@@ -13,7 +13,7 @@ Keywork apps are framework agnostic and fits in your existing codebase:
 $ yarn add keywork
 ```
 
-If you're building a React app, make sure to add the peer dependencies
+If you're building a React app, make sure to add the peer dependencies:
 
 ```shell title=Run in the root of your Cloudflare Worker project.
 $ yarn add react react-dom

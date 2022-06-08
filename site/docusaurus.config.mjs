@@ -144,7 +144,7 @@ const config = {
         },
         items: [
           {
-            to: 'docs/overview/getting-started',
+            to: 'docs/overview/',
             activeBasePath: 'docs',
             label: 'Documentation',
             position: 'left',
