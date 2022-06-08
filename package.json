@@ -29,7 +29,7 @@
   "types": "./dist/index.d.ts",
   "sideEffects": false,
   "engines": {
-    "node": ">= 16.10"
+    "node": ">= 17.4"
   },
   "workspaces": [
     "packages/*",
