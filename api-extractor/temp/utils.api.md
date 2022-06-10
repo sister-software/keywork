@@ -254,6 +254,30 @@ export type PrettyJSON = (...args: Parameters<typeof JSON.stringify>) => string;
 // @public (undocumented)
 export const prettyJSON: PrettyJSON;
 
+// @public
+class ReadableStream_2 implements globalThis.ReadableStream {
+    // (undocumented)
+    [Symbol.asyncIterator](_options?: ReadableStreamValuesOptions | undefined): AsyncIterableIterator<any>;
+    constructor(underlyingSource?: UnderlyingSource, _queuingStrategy?: StreamQueuingStrategy);
+    // (undocumented)
+    cancel(reason?: any): Promise<void>;
+    // (undocumented)
+    getReader(options: ReadableStreamGetReaderOptions): ReadableStreamBYOBReader;
+    // (undocumented)
+    getReader(): ReadableStreamDefaultReader;
+    // (undocumented)
+    get locked(): boolean;
+    // (undocumented)
+    pipeThrough(transform: ReadableStreamTransform, options?: PipeToOptions | undefined): globalThis.ReadableStream;
+    // (undocumented)
+    pipeTo(destination: WritableStream, options?: PipeToOptions | undefined): Promise<void>;
+    // (undocumented)
+    tee(): [globalThis.ReadableStream, globalThis.ReadableStream];
+    // (undocumented)
+    values(options?: ReadableStreamValuesOptions | undefined): AsyncIterableIterator<any>;
+}
+export { ReadableStream_2 as ReadableStream }
+
 // @public (undocumented)
 export type RequestLike = Pick<Request, 'url'>;
 
