@@ -12,6 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+/**
+ * A JSON representation of a `KeyworkResourceError`
+ * @category Error Handling
+ */
 export interface ErrorJSONBody {
   status: string
   statusCode: number

@@ -15,6 +15,12 @@
 import { PlainText } from '../files/extensions/PlainText.js'
 import { extensionToMimeType, fileNameToExtension } from '../files/index.js'
 
+/**
+ * Response headers with Content-Type.
+ *
+ * @category HTTP Headers
+ * @public
+ */
 export type ContentTypeHeader = HeadersInit & {
   'Content-Type': string
 }
@@ -24,6 +30,9 @@ export type ContentTypeHeader = HeadersInit & {
  * @param extension File extension, preferrably without the leading dot.
  * e.g. `"txt"`, `"html"`
  * @param mimeTypeFallback An optional fallback if the mimeType is not known. Defaults to `"text/plain"`
+ *
+ * @category HTTP Headers
+ * @public
  */
 export function fileExtensionToContentTypeHeader(
   extension: string,

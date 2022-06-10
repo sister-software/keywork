@@ -15,6 +15,11 @@
 import { KeyworkResourceError } from '../errors/KeyworkResourceError.js'
 import { prettyJSON } from './json.js'
 
+/**
+ * An common shape of the `Console` interface.
+ *
+ * @category Logging
+ */
 export interface GlobalConsoleLike {
   debug(message?: any, ...optionalParams: any[]): void
   error(message?: any, ...optionalParams: any[]): void
@@ -29,7 +34,10 @@ export interface GlobalConsoleLike {
 const _timestamp = (date = new Date()) => `[${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}]`
 _timestamp.toString = () => _timestamp()
 
-const logTypes = new Map<keyof GlobalConsoleLike, string>([
+/**
+ * @internal
+ */
+const _logTypes = new Map<keyof GlobalConsoleLike, string>([
   ['log', '💬'],
   ['info', '💡'],
   ['warn', '⚠️'],
@@ -37,7 +45,7 @@ const logTypes = new Map<keyof GlobalConsoleLike, string>([
 ])
 
 /**
- * A isomorphic logger available in the browser and worker environment.
+ * A isomorphic logger available in both the browser and worker environments.
  *
  * @example
  * ```ts
@@ -45,6 +53,10 @@ const logTypes = new Map<keyof GlobalConsoleLike, string>([
  * logger.info('Fetching todo', todoID)
  * logger.error('Unexpected error')
  * ```
+ *
+ * @category Logging
+ * @category Error Handling
+ * @public
  */
 export class PrefixedLogger {
   protected logPrefix: string
@@ -69,7 +81,7 @@ export class PrefixedLogger {
     this._log = globalConsole.log.bind(globalConsole)
 
     // @ts-ignore Iteratable
-    for (const [logType, logTypeLabel] of logTypes.entries()) {
+    for (const [logType, logTypeLabel] of _logTypes.entries()) {
       const bindArgs = [
         //
         `%c%s%c%s`,

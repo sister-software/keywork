@@ -12,6 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+/**
+ * A somewhat simple user-agent parser.
+ *
+ * @category HTTP Headers
+ * @beta
+ */
 export function getBrowserIdentifier(request: Request): string {
   const userAgent = (request.headers.get('user-agent') || '').toLowerCase()
 

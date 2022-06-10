@@ -14,6 +14,9 @@
 
 /**
  * A PathPattern is used to match on some portion of a URL pathname.
+ *
+ * @category URL Parsing
+ * @category Routing
  */
 export interface PathPattern<Path extends string = string> {
   /**
@@ -35,6 +38,9 @@ export interface PathPattern<Path extends string = string> {
 
 /**
  * A PathMatch contains info about how a PathPattern matched on a URL pathname.
+ *
+ * @category URL Parsing
+ * @category Routing
  */
 export interface PathMatch<ExpectedParams extends {} | null = null> {
   /**
@@ -116,20 +122,45 @@ export type _ParamParseSegment<Segment extends string> =
 export type _ParamParseKey<Segment extends string> = _ParamParseSegment<Segment> extends string
   ? _ParamParseSegment<Segment>
   : string
+
 /**
  * The parameters that were parsed from the URL path.
+ *
+ * @category URL Parsing
+ * @category Routing
  */
 export type ParsedPathParams<Key extends string = string> = {
   readonly [key in Key]: string | undefined
 }
 
+/**
+ * An object that has a `url` property.
+ *
+ * @category Type Casting
+ */
 export type RequestLike = Pick<Request, 'url'>
+
+/**
+ * An object that has a `pathname` property.
+ *
+ * @category Type Casting
+ */
 export type URLLike = Pick<URL, 'pathname'>
 
+/**
+ * Checks if the given object is shaped like a `Request`
+ * @param requestish An object that's possibly a `Request`
+ * @category Type Casting
+ */
 export function isRequestLike(requestish: unknown): requestish is RequestLike {
   return Boolean(requestish && typeof requestish === 'object' && (requestish as any).url)
 }
 
+/**
+ * Checks if the given object is shaped like a `URL`
+ * @param requestish An object that's possibly a `URL`
+ * @category Type Casting
+ */
 export function isURLLike(urlish: unknown): urlish is URLLike {
   return Boolean(urlish && typeof urlish === 'object' && (urlish as any).pathname)
 }

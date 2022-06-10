@@ -22,8 +22,9 @@ import { NotModifiedResponse } from './NotModifiedResponse.js'
  *
  * @remarks Etag caching is supported when `CachableResponse` is constructed with the needed parameters.
  * You may want to disable caching in your browser development tools to avoid this behavior while debugging.
-
-* @category HTTP Responses
+ *
+ * @category HTTP Responses
+ * @category Caching
  */
 export class CachableResponse extends Response {
   constructor(

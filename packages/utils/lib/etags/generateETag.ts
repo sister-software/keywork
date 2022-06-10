@@ -12,10 +12,14 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, stringToArrayBuffer } from '@keywork/utils'
 import { StatusCodes } from 'http-status-codes'
+import { arrayBufferToBase64, stringToArrayBuffer } from '../common/strings'
+import { KeyworkResourceError } from '../errors/index.js'
 import { ETaggable, _EMPTY_ETAG } from './common.js'
 
+/**
+ * @category Caching
+ */
 export interface EntityToETagOptions {
   /**
    * Indicates that a weak validator is used.
@@ -35,7 +39,8 @@ export interface EntityToETagOptions {
  * @param entity Either a `string`, `ArrayBuffer`.
  * If working with JSON, run the value through `JSON.stringify` first.
  * @param options See `EntityToETagOptions`
- * @returns
+ *
+ * @category Caching
  */
 export async function generateETag(entity: ETaggable, options?: EntityToETagOptions): Promise<string> {
   let entityBuffer: ArrayBuffer
@@ -65,8 +70,4 @@ export async function generateETag(entity: ETaggable, options?: EntityToETagOpti
   const etag = options?.weak ? 'W/' + etagBody : etagBody
 
   return etag
-}
-
-export function arrayBufferToBase64(arrayBuffer: ArrayBuffer): string {
-  return btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)))
 }

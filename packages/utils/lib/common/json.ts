@@ -12,8 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+/**
+ * @category JSON
+ */
 export type PrettyJSON = (...args: Parameters<typeof JSON.stringify>) => string
 
+/**
+ * Stringifies JSON into an indented string.
+ *
+ * @category JSON
+ */
 export const prettyJSON: PrettyJSON = (value, replacer = null, space = 2) => {
   return JSON.stringify(value, replacer, space)
 }

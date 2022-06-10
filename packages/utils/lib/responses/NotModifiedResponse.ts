@@ -19,6 +19,7 @@ import { getReasonPhrase, StatusCodes } from 'http-status-codes'
  * a `NotModifiedResponse` should be sent to the requestor as an indication that the client's cache is still applicable.
  *
  * @category HTTP Responses
+ * @category Caching
  */
 export class NotModifiedResponse extends Response {
   constructor(etag: string) {

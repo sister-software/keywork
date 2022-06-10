@@ -21,6 +21,7 @@ import { getReasonPhrase, StatusCodes } from 'http-status-codes'
  * consider {@link ErrorResponse.fromUnknownError}
  *
  * @category HTTP Responses
+ * @category Error Handling
  */
 export class ErrorResponse extends Response {
   constructor(

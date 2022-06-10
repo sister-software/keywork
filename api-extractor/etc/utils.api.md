@@ -132,10 +132,10 @@ export class HTMLResponse extends CachableResponse {
 // @public
 export function isETagMatch(request: Request, etag: string | null | undefined): etag is string;
 
-// @public (undocumented)
+// @public
 export function isRequestLike(requestish: unknown): requestish is RequestLike;
 
-// @public (undocumented)
+// @public
 export function isURLLike(urlish: unknown): urlish is URLLike;
 
 // @public

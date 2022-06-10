@@ -12,6 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+/**
+ * Limits a given number to minimum and maximum domain.
+ * @category Number
+ */
 export function numberInRange(given: number, minimum = 0, maximum = Infinity) {
   return Math.max(Math.min(given, maximum), minimum)
 }
@@ -92,6 +96,9 @@ function convertBase(str: string, fromBase: number, toBase: number): string {
   return out
 }
 
+/**
+ * @category Number
+ */
 export function hexToDec(hexStr: string): string {
   if (hexStr.substring(0, 2) === '0x') hexStr = hexStr.substring(2)
   hexStr = hexStr.toLowerCase()

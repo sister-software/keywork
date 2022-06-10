@@ -14,6 +14,13 @@
 
 import { DURATION_ONE_WEEK } from '../common/index.js'
 
+/**
+ * Response headers with Cache-Control.
+ *
+ * @category Caching
+ * @category HTTP Responses
+ * @public
+ */
 export type CacheControlHeader = HeadersInit & {
   'Cache-Control': string
 }
@@ -21,7 +28,10 @@ export type CacheControlHeader = HeadersInit & {
 /**
  * Directives for the Cache-Control header.
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control MDN}
- * @category HTTP Responses
+ *
+ * @category Caching
+ * @category HTTP Headers
+ * @public
  */
 export interface CacheControlDirectives {
   [cacheControlKey: string]: number | boolean | string
@@ -31,6 +41,16 @@ export interface CacheControlDirectives {
   immutable: boolean
 }
 
+/**
+ * Creates a `Cache-Control` header from the given object.
+ * Generally, this is an internal function, but it may prove useful in unusual circumstances.
+ *
+ * @see {@link {CachableResponse}}
+ *
+ * @category Caching
+ * @category HTTP Headers
+ * @public
+ */
 export function createCacheControlHeader(options: Partial<CacheControlDirectives> | undefined): CacheControlHeader {
   options = options || { 'max-age': DURATION_ONE_WEEK, 'must-revalidate': true }
 
