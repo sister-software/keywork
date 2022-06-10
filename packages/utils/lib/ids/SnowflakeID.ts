@@ -18,7 +18,6 @@ import { hexToDec } from '../common/index.js'
  * A basic implementation of Twitter's original Snowflake ID system.
  *
  * @category Sessions
- * @beta
  */
 export class SnowflakeID {
   private seq: number
