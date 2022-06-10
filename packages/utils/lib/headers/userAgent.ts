@@ -16,7 +16,7 @@
  * A somewhat simple user-agent parser.
  *
  * @category HTTP Headers
- * @beta
+ * @public
  */
 export function getBrowserIdentifier(request: Request): string {
   const userAgent = (request.headers.get('user-agent') || '').toLowerCase()
