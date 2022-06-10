@@ -44,7 +44,7 @@ class MockReadableStreamDefaultController implements ReadableStreamDefaultContro
 /**
  * The `ReadableStream` interface of the [Streams API](https://developer.mozilla.org//en-US/docs/Web/API/Streams_API)
  * represents a readable stream of byte data.
- * The [Fetch API](/en-US/docs/Web/API/Fetch_API) offers a concrete instance
+ * The [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) offers a concrete instance
  * of a `ReadableStream` through the [`body`](https://developer.mozilla.org/en-US/docs/Web/API/Response/body) property
  * of a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) object.
  *
