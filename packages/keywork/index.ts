@@ -18,7 +18,7 @@
  *
  * Everything you need to handle incoming requests in a Worker environment.
  *
- * - Static prop handlers that feel just like your typical API endpoints.
+ * - React static prop handlers that feel just like your typical API endpoints.
  * - Server-side rendering from your worker, made even faster with streamed responses.
  * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
  * - Client-side hydration that fits into your existing build pipeline.

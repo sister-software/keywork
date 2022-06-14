@@ -6,10 +6,10 @@
 
 /// <reference types="@cloudflare/workers-types" />
 
-// @public (undocumented)
+// @public
 export function arrayBufferToBase64(arrayBuffer: ArrayBuffer): string;
 
-// @public (undocumented)
+// @public
 export function arrayBufferToString(buf: ArrayBuffer): string;
 
 // @public
@@ -34,12 +34,12 @@ export interface CacheControlDirectives {
     immutable: boolean;
 }
 
-// @public (undocumented)
+// @public
 export type CacheControlHeader = HeadersInit & {
     'Cache-Control': string;
 };
 
-// @public (undocumented)
+// @public
 export type ContentTypeHeader = HeadersInit & {
     'Content-Type': string;
 };
@@ -47,7 +47,7 @@ export type ContentTypeHeader = HeadersInit & {
 // @public
 export const convertJSONToETaggableString: (value: {}) => string;
 
-// @public (undocumented)
+// @public
 export function createCacheControlHeader(options: Partial<CacheControlDirectives> | undefined): CacheControlHeader;
 
 // @public
@@ -70,7 +70,7 @@ export interface EntityToETagOptions {
     weak?: boolean;
 }
 
-// @public (undocumented)
+// @public
 export interface ErrorJSONBody {
     // (undocumented)
     status: string;
@@ -99,10 +99,10 @@ export function fileExtensionToContentTypeHeader(extension: string, mimeTypeFall
 // @public
 export function generateETag(entity: ETaggable, options?: EntityToETagOptions): Promise<string>;
 
-// @public (undocumented)
+// @public
 export function getBrowserIdentifier(request: Request): string;
 
-// @public (undocumented)
+// @public
 export interface GlobalConsoleLike {
     // (undocumented)
     debug(message?: any, ...optionalParams: any[]): void;
@@ -183,7 +183,7 @@ export class NotModifiedResponse extends Response {
     constructor(etag: string);
 }
 
-// @public (undocumented)
+// @public
 export function numberInRange(given: number, minimum?: number, maximum?: number): number;
 
 // @internal (undocumented)
@@ -251,7 +251,7 @@ export class PrefixedLogger {
 // @public (undocumented)
 export type PrettyJSON = (...args: Parameters<typeof JSON.stringify>) => string;
 
-// @public (undocumented)
+// @public
 export const prettyJSON: PrettyJSON;
 
 // @public
@@ -278,13 +278,13 @@ class ReadableStream_2 implements globalThis.ReadableStream {
 }
 export { ReadableStream_2 as ReadableStream }
 
-// @public (undocumented)
+// @public
 export type RequestLike = Pick<Request, 'url'>;
 
 // @public
 export const resolveDocPath: PathBuilder;
 
-// @public
+// @beta
 export class SnowflakeID {
     constructor(options?: {
         mid?: number;
@@ -294,10 +294,10 @@ export class SnowflakeID {
     generate(): string;
 }
 
-// @public (undocumented)
+// @public
 export function stringToArrayBuffer(str: string): ArrayBuffer;
 
-// @public (undocumented)
+// @public
 export type URLLike = Pick<URL, 'pathname'>;
 
 // (No @packageDocumentation comment for this package)
