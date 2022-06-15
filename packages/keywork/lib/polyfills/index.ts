@@ -29,10 +29,16 @@
  *
  * esbuild.build({
  *   format: 'esm',
- *   entryPoints: ['...'],
+ *   entryPoints,
+ *   keepNames: true,
  *   inject: [ require.resolve('keywork/polyfills/ReadableStream') ]
  * })
  * ```
+ *
+ * :::note
+ * Make sure to set `keepNames` to preserve the polyfill's class names during minification.
+ *
+ * :::
  *
  * @packageDocumentation
  * @module polyfills
