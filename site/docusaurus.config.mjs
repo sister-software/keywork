@@ -16,11 +16,12 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 
 // eslint-disable-next-line import/extensions
-import { allPackageEntryPoints } from '../build/utils/packages.mjs'
-import { typeDocPlugin } from './typedoc/index.mjs'
-
 import docsPlugin from '@docusaurus/plugin-content-docs'
 import { createRequire } from 'module'
+import { readAllPackageEntryPoints } from '../build/utils/packages.mjs'
+import { typeDocPlugin } from './typedoc/index.mjs'
+
+const allPackageEntryPoints = await readAllPackageEntryPoints()
 const require = createRequire(import.meta.url)
 const lightCodeTheme = require('prism-react-renderer/themes/okaidia')
 const validationUtils = require('@docusaurus/utils-validation')

@@ -27,3 +27,15 @@ export const projectRoot = path.dirname(__filename)
  */
 export const projectPath = path.join.bind(null, projectRoot)
 export const packagesDirectory = path.join(projectRoot, 'packages')
+
+/**
+ *
+ * @param {string} filePath
+ * @param {string} extension
+ * @returns {string}
+ */
+export function changeExtension(filePath, extension) {
+  const parsedPath = path.parse(filePath)
+
+  return parsedPath.dir + path.sep + parsedPath.name + extension
+}

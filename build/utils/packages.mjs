@@ -12,9 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import FastGlob from 'fast-glob'
 import fs from 'fs/promises'
 import path from 'path'
-import { packagesDirectory, projectPath } from '../../paths.mjs'
+import { changeExtension, packagesDirectory, projectPath } from '../../paths.mjs'
 import { readJSON } from './files.mjs'
 const tsconfig = await readJSON(projectPath('tsconfig.json'))
 
@@ -57,43 +58,44 @@ export async function readPackageJSON(packagePath) {
  */
 export async function readPackageEntryPoints(packagePath) {
   const packageJSON = await readPackageJSON(packagePath)
-  const relativeEntryPoints = []
+  const absoluteEntryPoints = new Set()
 
   if (typeof packageJSON.exports === 'string') {
-    relativeEntryPoints.push(packageJSON.exports)
+    absoluteEntryPoints.add(packageJSON.exports)
   } else if (typeof packageJSON.exports === 'object') {
     for (const relativeExportPath of Object.values(packageJSON.exports)) {
-      if (!relativeExportPath.endsWith('.js')) continue
-      relativeEntryPoints.push(relativeExportPath)
+      if (relativeExportPath.endsWith('.json')) continue
+      const absolutePath = path.resolve(packagePath, relativeExportPath)
+      const entries = await FastGlob(absolutePath)
+
+      console.log('pattern', absolutePath, entries)
+      entries.forEach((entry) => absoluteEntryPoints.add(entry))
     }
   } else if (packageJSON.main) {
-    relativeEntryPoints.push(packageJSON.main)
+    absoluteEntryPoints.add(packageJSON.main)
   }
 
-  const absoluteEntryPoints = relativeEntryPoints.map((relativeEntryPoint) => {
-    return path.resolve(packagePath, relativeEntryPoint)
-  })
-
-  return absoluteEntryPoints
+  return Array.from(absoluteEntryPoints)
 }
 
-export const allPackageEntryPoints = await Promise.all(
-  packagesList.map(async (packageName) => {
-    const packagePath = path.join(packagesDirectory, packageName)
-    const entryPoints = await readPackageEntryPoints(packagePath)
-    const outputPath = path.resolve(packagePath, 'dist', 'lib')
+export function readAllPackageEntryPoints() {
+  return Promise.all(
+    packagesList.map(async (packageName) => {
+      const packagePath = path.join(packagesDirectory, packageName)
+      const entryPoints = await readPackageEntryPoints(packagePath)
+      const sourceMapPaths = entryPoints.map((entryPoint) => {
+        return changeExtension(entryPoint, '.js.map')
+      })
 
-    // console.log('RAW', entryPoints)
-    return entryPoints.map((entryPoint) => {
-      const relativePath = path.resolve(
-        outputPath,
-        path.relative(entryPoint, outputPath),
-        'lib',
-        path.relative(outputPath, entryPoint)
+      return Promise.all(
+        sourceMapPaths.map(async (sourceMapPath) => {
+          const content = await fs.readFile(sourceMapPath, 'utf8')
+          const sourceMap = JSON.parse(content)
+          const [relativePath] = sourceMap.sources
+
+          return path.resolve(sourceMapPath, '..', relativePath)
+        })
       )
-
-      return path.join(path.dirname(relativePath), 'index.ts')
     })
-    // return path.join(packagesDirectory, packageName, 'index.ts')
-  })
-).then(($) => $.flat())
+  ).then(($) => $.flat())
+}

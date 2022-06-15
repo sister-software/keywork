@@ -1,7 +1,7 @@
 {
   "name": "keywork",
   "license": "AGPL-3.0",
-  "version": "2.3.0",
+  "version": "2.4.0",
   "description": "Everything you need to handle incoming requests in a Worker environment.",
   "keywords": [
     "cloudflare",
@@ -38,7 +38,7 @@
     "./headers": "./dist/lib/headers/index.js",
     "./ids": "./dist/lib/ids/index.js",
     "./paths": "./dist/lib/paths/index.js",
-    "./polyfills": "./dist/lib/polyfills/index.js",
+    "./polyfills/*": "./dist/lib/polyfills/*/index.js",
     "./react": "./dist/lib/react/index.js",
     "./requests": "./dist/lib/requests/index.js",
     "./responses": "./dist/lib/responses/index.js",
