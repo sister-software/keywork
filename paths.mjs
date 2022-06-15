@@ -24,6 +24,7 @@ export const projectRoot = path.dirname(__filename)
 
 /**
  * A path builder to the absolute project root.
+ * @type {(...paths: string[]) => string}
  */
 export const projectPath = path.join.bind(null, projectRoot)
 export const packagesDirectory = path.join(projectRoot, 'packages')
