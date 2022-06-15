@@ -13,18 +13,16 @@
  */
 
 /**
- * ### `keywork/requests`
+ * ### `keywork/react`
  *
- * Everything you need to handle incoming requests in a Worker environment.
  * - Server-side rendering from your worker, made even faster with streamed responses.
  * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
+ * - Client-side hydration that fits into your existing build pipeline.
  *
  * @packageDocumentation
- * @module requests
+ * @module react
  */
 
-export * from './common.js'
-export * from './IncomingRequestData.js'
-export * from './KeyworkRequestHandler.js'
-export * from './KeyworkRequestHandlerBase.js'
-export * from './RedirectHandler.js'
+export * from './components/index.js'
+export * from './hooks/index.js'
+export * from './ssr/index.js'

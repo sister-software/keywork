@@ -15,7 +15,7 @@
 import { Extractor, ExtractorConfig } from '@microsoft/api-extractor'
 import { exec } from 'child_process'
 import path from 'path'
-import { getPackage, packagesDirectory, projectRoot } from '../packages.mjs'
+import { packagesDirectory, projectPath } from '../../../paths.mjs'
 
 ExtractorConfig._declarationFileExtensionRegExp = /\.d\.m?ts$/i
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -58,8 +58,7 @@ export function formatBuild() {
 /** @type {import('@microsoft/api-extractor').IConfigFile} */
 const configObject = {
   projectFolder: '<lookup>',
-  mainEntryPointFilePath: '<projectFolder>/packages/<unscopedPackageName>/dist/index.d.ts',
-  compiler: { tsconfigFilePath: path.join(projectRoot, 'tsconfig.json') },
+  compiler: { tsconfigFilePath: projectPath('tsconfig.json') },
   apiReport: {
     enabled: true,
     reportFileName: '<unscopedPackageName>.api.md',
@@ -101,19 +100,25 @@ const configObject = {
     },
   },
 }
+
+/** @typedef {import('../../../packages/keywork/package.json') T_npm_packageJSON } */
+
 /**
  * Creates a prepared API extractor config.
  * @param {string} packageName
+ * @param {T_npm_packageJSON} packageJSON
  */
-export async function createExtractorConfig(packageName) {
+export async function createExtractorConfig(packageJSON) {
   const packageRoot = path.join(packagesDirectory, packageName)
-
+  // const packageJSON = await getPackageJSON(packageRoot)
   const extractorConfig = ExtractorConfig.prepare({
-    projectFolderLookupToken: projectRoot,
+    projectFolderLookupToken: projectPath(),
     packageJsonFullPath: path.join(packageRoot, 'package.json'),
-    packageJson: await getPackage(packageRoot),
-    configObjectFullPath: path.join(packageRoot, 'api-extractor.json'),
-    configObject,
+    packageJson: packageJSON,
+    configObject: {
+      ...configObject,
+      mainEntryPointFilePath: '<projectFolder>/packages/<unscopedPackageName>/dist/index.d.ts',
+    },
   })
 
   return extractorConfig

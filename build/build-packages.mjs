@@ -14,71 +14,15 @@
 
 /* eslint-disable tsdoc/syntax */
 
-import esbuild from 'esbuild'
-import FastGlob from 'fast-glob'
 import path from 'path'
+import { packagesDirectory } from '../paths.mjs'
 import { cleanBuild } from './utils/clean.mjs'
-import { buildTypeScript, formatBuild, runAPIExtractor } from './utils/extractor/index.mjs'
-import { getPackage, getPackageDependencies, packagesDirectory, packagesList, projectRoot } from './utils/packages.mjs'
-
+import { buildTypeScript, formatBuild } from './utils/extractor/index.mjs'
+import { packagesList } from './utils/packages.mjs'
 // const env = process.env.NODE_ENV || 'development'
-const watch = process.argv.some((arg) => arg === '--watch')
-
-/**
- * Common build options for all packages
- * @type {esbuild.BuildOptions}
- */
-const buildOptionsBase = {
-  platform: 'node',
-  target: 'esnext',
-  sourcemap: true,
-  sourcesContent: false,
-  // Mark root package's dependencies as external, include root devDependencies
-  // (e.g. test runner) as we don't want these bundled
-  external: [
-    ...getPackageDependencies(await getPackage(projectRoot), true),
-    // Make sure we're not bundling any packages we're building, we want to
-    // test against the actual code we'll publish for instance
-    'keywork',
-    '@keywork/*',
-    // Make sure all Jest packages aren't bundled
-    '@jest/*',
-    'jest*',
-    // Mark sites manifest as external, it's added by SitesPlugin
-    '__STATIC_CONTENT_MANIFEST',
-  ],
-  logLevel: watch ? 'info' : 'warning',
-  watch,
-}
+// const watch = process.argv.some((arg) => arg === '--watch')
 
 const distDirName = 'dist'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const typescriptExtPattern = /\.m[tj]s$/
-
-/**
- * Builds a package and its tests stored in packages/<name>/
- * @param {string} packageName
- * @returns {Promise<void>}
- */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-async function buildPackage(packageName) {
-  const packageRoot = path.join(packagesDirectory, packageName)
-  const sourcePath = path.join(packageRoot)
-
-  const entryPoints = await FastGlob(path.join(sourcePath, '**/*.{ts,mts,tsx,cts}'))
-  const outPath = path.join(packageRoot, distDirName)
-
-  console.log('Building', packageRoot)
-  await esbuild.build({
-    ...buildOptionsBase,
-    outbase: sourcePath,
-    format: 'esm',
-    entryPoints,
-    external: undefined,
-    outdir: path.join(outPath),
-  })
-}
-
 // Clear previous builds.
 await Promise.all(
   packagesList.map((packageName) => {
@@ -93,5 +37,5 @@ console.log(`Building ${packagesList.length} packages...`)
 // await Promise.all(packagesList.map((pkgName) => buildPackage(pkgName)))
 
 await buildTypeScript()
-await runAPIExtractor()
+// await runAPIExtractor()
 await formatBuild()

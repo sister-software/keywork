@@ -22,10 +22,7 @@ Everything you need to handle incoming requests in a Worker environment.
 - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
 - Client-side hydration that fits into your existing build pipeline.
 
-### `@keywork/collections` (Beta)
-
-![npm (scoped)](https://img.shields.io/npm/v/@keywork/collections)
-![npm](https://img.shields.io/npm/dm/@keywork/collections)
+### Collections (Beta)
 
 The missing piece that unlocks the full power of storing and querying data from your Worker.
 
@@ -33,12 +30,7 @@ The missing piece that unlocks the full power of storing and querying data from 
 - An API reminiscent of Firebase and MongoDB, perfect for migrating your existing backend to Cloudflare's network.
 - Extends Worker KV's API without abstracting away important details.
 
-### `@keywork/utils`
-
-![npm (scoped)](https://img.shields.io/npm/v/@keywork/utils)
-![npm](https://img.shields.io/npm/dm/@keywork/utils)
-
-Common core utilities for building web apps.
+### Common core utilities for building web apps.
 
 - HTTP responses for content like JSON, HTML, and much more!
 - Type-safe request handlers that make API endpoints easy.

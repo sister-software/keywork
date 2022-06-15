@@ -12,11 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ErrorResponse, HTMLResponse, KeyworkQueryParamKeys } from '@keywork/utils'
+import {
+  KeyworkHTMLDocumentComponent,
+  KeyworkProvidersComponent,
+  renderStaticPropsAsComponentStream,
+  renderStaticPropsAsJSON,
+  SSRPropsLike,
+} from 'keywork/react'
+import { ErrorResponse, HTMLResponse } from 'keywork/responses'
+import { KeyworkQueryParamKeys } from 'keywork/utilities'
 import type { FC } from 'react'
-import { KeyworkHTMLDocumentComponent, KeyworkProvidersComponent } from '../components/index.js'
-import { SSRPropsLike } from '../ssr/index.js'
-import { renderStaticPropsAsComponentStream, renderStaticPropsAsJSON } from '../ssr/rendering/staticProps.js'
 import { PossiblePromise, _HTTPMethod } from './common.js'
 import { IncomingRequestData } from './IncomingRequestData.js'
 import { _KeyworkRequestHandlerBase } from './KeyworkRequestHandlerBase.js'

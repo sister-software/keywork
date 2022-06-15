@@ -6,9 +6,9 @@
       "esnext"
     ],
     "paths": {
+      "@keywork/polyfills/*": ["packages/polyfills/lib/*/index.ts"],
       "keywork": ["packages/keywork/index.ts"],
-      "@keywork/utils": ["packages/utils/index.ts"],
-      "@keywork/collections": ["packages/collections/index.ts"],
+      "keywork/*": ["packages/keywork/lib/*/index.ts"],
     },
     "types": [],
     "jsx": "react-jsx",

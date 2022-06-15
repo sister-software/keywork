@@ -13,18 +13,14 @@
  */
 
 /**
- * ### `keywork/requests`
+ * ### `keywork/paths`
  *
- * Everything you need to handle incoming requests in a Worker environment.
- * - Server-side rendering from your worker, made even faster with streamed responses.
- * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
+ * Utilities for parsing paths and URLs.
  *
  * @packageDocumentation
- * @module requests
+ * @module paths
  */
 
 export * from './common.js'
-export * from './IncomingRequestData.js'
-export * from './KeyworkRequestHandler.js'
-export * from './KeyworkRequestHandlerBase.js'
-export * from './RedirectHandler.js'
+export * from './matchPath.js'
+export * from './parsePathname.js'

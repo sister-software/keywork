@@ -6,9 +6,5 @@
     "types": [
       "@cloudflare/workers-types"
     ]
-  },
-
-  "references": [
-    { "path": "../utils" }
-  ]
+  }
 }

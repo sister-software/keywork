@@ -13,18 +13,11 @@
  */
 
 /**
- * ### `keywork/requests`
- *
- * Everything you need to handle incoming requests in a Worker environment.
- * - Server-side rendering from your worker, made even faster with streamed responses.
- * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
+ * ### `keywork/errors`
  *
  * @packageDocumentation
- * @module requests
+ * @module errors
  */
 
 export * from './common.js'
-export * from './IncomingRequestData.js'
-export * from './KeyworkRequestHandler.js'
-export * from './KeyworkRequestHandlerBase.js'
-export * from './RedirectHandler.js'
+export * from './KeyworkResourceError.js'

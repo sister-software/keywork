@@ -2029,6 +2029,15 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
+"@keywork/utils@^2.2.0":
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/@keywork/utils/-/utils-2.2.0.tgz#891bb727d1fc1a9e3bed915d97c45672b8a3b8c3"
+  integrity sha512-fJdTKfgbLa1iJAJVB+4X10/8V6Me714QSqkSaef81kImpaCts28GIzyH4PKtac0f6Ahij91vXkPfRBAqJopK1A==
+  dependencies:
+    deepmerge "^4.2.2"
+    lodash.isplainobject "^4.0.6"
+    ulidx "^0.3.0"
+
 "@leichtgewicht/ip-codec@^2.0.1":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"

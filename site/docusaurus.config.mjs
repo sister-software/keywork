@@ -16,8 +16,7 @@
 // Note: type annotations allow type checking and IDEs autocompletion
 
 // eslint-disable-next-line import/extensions
-import * as path from 'path'
-import { packagesDirectory, packagesList } from '../build/utils/packages.mjs'
+import { allPackageEntryPoints } from '../build/utils/packages.mjs'
 import { typeDocPlugin } from './typedoc/index.mjs'
 
 import docsPlugin from '@docusaurus/plugin-content-docs'
@@ -78,9 +77,7 @@ const config = {
       typeDocPlugin,
       {
         typeDocOptions: {
-          entryPoints: packagesList.map((packageName) => {
-            return path.join(packagesDirectory, packageName, 'index.ts')
-          }),
+          entryPoints: allPackageEntryPoints,
           githubPages: false,
           excludeInternal: true,
           hideGenerator: true,

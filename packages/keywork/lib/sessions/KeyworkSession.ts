@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { SnowflakeID } from '@keywork/utils'
 import { parse as parseCookies, serialize as serializeCookies } from 'cookie'
+import { SnowflakeID } from 'keywork/ids'
 
 export const DEFAULT_SESSION_COOKIE_KEY = '_keyworkSessionID'
 

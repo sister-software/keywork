@@ -18,7 +18,7 @@ import * as path from 'path'
 import { titleCase } from 'title-case'
 import TypeDoc from 'typedoc'
 import { MarkdownTheme } from 'typedoc-plugin-markdown'
-import { projectRoot } from '../../build/utils/packages.mjs'
+import { projectPath } from '../../paths.mjs'
 
 /**
  *
@@ -232,7 +232,7 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
   bootstrap(options) {
     super.bootstrap({
       ...options,
-      tsconfig: path.join(projectRoot, 'tsconfig.json'),
+      tsconfig: projectPath('tsconfig.json'),
       plugin: ['typedoc-plugin-markdown', ...(options.plugin || [])],
     })
 

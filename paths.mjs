@@ -12,19 +12,18 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * ### `keywork/requests`
- *
- * Everything you need to handle incoming requests in a Worker environment.
- * - Server-side rendering from your worker, made even faster with streamed responses.
- * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
- *
- * @packageDocumentation
- * @module requests
- */
+import * as path from 'path'
+import { fileURLToPath } from 'url'
 
-export * from './common.js'
-export * from './IncomingRequestData.js'
-export * from './KeyworkRequestHandler.js'
-export * from './KeyworkRequestHandlerBase.js'
-export * from './RedirectHandler.js'
+const __filename = fileURLToPath(import.meta.url)
+
+/**
+ * The absolute path to the project root.
+ */
+export const projectRoot = path.dirname(__filename)
+
+/**
+ * A path builder to the absolute project root.
+ */
+export const projectPath = path.join.bind(null, projectRoot)
+export const packagesDirectory = path.join(projectRoot, 'packages')

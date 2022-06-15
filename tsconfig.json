@@ -1,8 +1,6 @@
 {
   "files": [],
   "references": [
-    { "path": "./packages/utils" },
-    { "path": "./packages/keywork" },
-    { "path": "./packages/collections" }
+    { "path": "./packages/keywork" }
   ]
 }

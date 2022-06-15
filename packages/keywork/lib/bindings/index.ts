@@ -12,6 +12,15 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+/**
+ * ### `keywork/bindings`
+ *
+ * Environment binding Utilities
+ *
+ * @packageDocumentation
+ * @module bindings
+ */
+
 export * from './assets.js'
 export * from './environment.js'
 export * from './fetch.js'

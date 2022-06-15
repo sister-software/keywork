@@ -14,17 +14,9 @@
 
 import fs from 'fs/promises'
 import path from 'path'
-import { fileURLToPath } from 'url'
+import { packagesDirectory, projectPath } from '../../paths.mjs'
 import { readJSON } from './files.mjs'
-
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-
-export const projectRoot = path.resolve(__dirname, '..', '..')
-
-export const packagesDirectory = path.join(projectRoot, 'packages')
-
-const tsconfig = await readJSON(path.join(projectRoot, 'tsconfig.json'))
+const tsconfig = await readJSON(projectPath('tsconfig.json'))
 
 /** @type string[] Package names */
 export const packagesList = tsconfig.references.map((reference) => {
@@ -33,21 +25,7 @@ export const packagesList = tsconfig.references.map((reference) => {
 
 export const scope = '@keywork'
 
-/** @typedef {import('../../package.json') T_npm_packageJSON } */
-
-/**
- * Recursively walks a directory, returning a list of all files contained within
- * @param {string} rootPath
- * @returns {Promise<string[]>}
- */
-export async function walk(rootPath) {
-  const fileNames = await fs.readdir(rootPath)
-  const walkPromises = fileNames.map(async (fileName) => {
-    const filePath = path.join(rootPath, fileName)
-    return (await fs.stat(filePath)).isDirectory() ? await walk(filePath) : [filePath]
-  })
-  return (await Promise.all(walkPromises)).flat()
-}
+/** @typedef {import('../../packages/keywork/package.json') T_npm_packageJSON } */
 
 /**
  * Gets a list of dependency names from the passed package
@@ -65,31 +43,57 @@ export function getPackageDependencies(pkg, includeDev) {
 }
 
 /**
- * Gets the contents of the package.json file in <pkgRoot>
- * @param {string} pkgRoot
+ * Gets the contents of the package.json file in <packagePath>
+ * @param {string} packagePath
  *
  * @returns {Promise<(T_npm_packageJSON>}
  */
-export async function getPackage(pkgRoot) {
-  return JSON.parse(await fs.readFile(path.join(pkgRoot, 'package.json'), 'utf8'))
+export async function readPackageJSON(packagePath) {
+  return JSON.parse(await fs.readFile(path.join(packagePath, 'package.json'), 'utf8'))
 }
 
-export const rewritePlugin = () => {
-  /** @type {import('esbuild').Plugin} */
-  const plugin = {
-    name: 'rewrite-mjs-ext',
-    setup(build) {
-      build.onLoad({ filter: /react/ }, (args) => {
-        console.log(args)
-        // if (pkgDeps.has(args.path)) return { external: true }
+/**
+ * @param {string} packagePath
+ */
+export async function readPackageEntryPoints(packagePath) {
+  const packageJSON = await readPackageJSON(packagePath)
+  const relativeEntryPoints = []
 
-        // if (args.importer) {
-        //   const path = changeExtension(args.path, '.cjs')
-        //   return { path, external: true }
-        // }
-      })
-    },
+  if (typeof packageJSON.exports === 'string') {
+    relativeEntryPoints.push(packageJSON.exports)
+  } else if (typeof packageJSON.exports === 'object') {
+    for (const relativeExportPath of Object.values(packageJSON.exports)) {
+      if (!relativeExportPath.endsWith('.js')) continue
+      relativeEntryPoints.push(relativeExportPath)
+    }
+  } else if (packageJSON.main) {
+    relativeEntryPoints.push(packageJSON.main)
   }
 
-  return plugin
+  const absoluteEntryPoints = relativeEntryPoints.map((relativeEntryPoint) => {
+    return path.resolve(packagePath, relativeEntryPoint)
+  })
+
+  return absoluteEntryPoints
 }
+
+export const allPackageEntryPoints = await Promise.all(
+  packagesList.map(async (packageName) => {
+    const packagePath = path.join(packagesDirectory, packageName)
+    const entryPoints = await readPackageEntryPoints(packagePath)
+    const outputPath = path.resolve(packagePath, 'dist', 'lib')
+
+    // console.log('RAW', entryPoints)
+    return entryPoints.map((entryPoint) => {
+      const relativePath = path.resolve(
+        outputPath,
+        path.relative(entryPoint, outputPath),
+        'lib',
+        path.relative(outputPath, entryPoint)
+      )
+
+      return path.join(path.dirname(relativePath), 'index.ts')
+    })
+    // return path.join(packagesDirectory, packageName, 'index.ts')
+  })
+).then(($) => $.flat())

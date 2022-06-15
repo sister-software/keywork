@@ -12,4 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+/**
+ * ### `keywork/sessions` (beta)
+ *
+ * Session management to aid in authenticating users.
+ *
+ * @packageDocumentation
+ * @module sessions
+ */
 export * from './KeyworkSession.js'

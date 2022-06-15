@@ -13,18 +13,29 @@
  */
 
 /**
- * ### `keywork/requests`
+ * # `@keywork/polyfills`
  *
- * Everything you need to handle incoming requests in a Worker environment.
- * - Server-side rendering from your worker, made even faster with streamed responses.
- * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
+ * Polyfills for building Keywork apps on Cloudflare Workers
+ *
+ * ## `ReadableStream`
+ * Polyfill for building Keywork apps on Cloudflare Pages.
+ *
+ * ### Usage with ESBuild
+ *
+ * ```js
+ * import esbuild from 'esbuild'
+ * import { createRequire } from 'module'
+ * const require = createRequire(import.meta.url)
+ *
+ * esbuild.build({
+ *   format: 'esm',
+ *   entryPoints: ['...'],
+ *   inject: [ require.resolve('keywork/polyfills/ReadableStream.js') ]
+ * })
+ * ```
  *
  * @packageDocumentation
- * @module requests
+ * @module polyfills
  */
 
-export * from './common.js'
-export * from './IncomingRequestData.js'
-export * from './KeyworkRequestHandler.js'
-export * from './KeyworkRequestHandlerBase.js'
-export * from './RedirectHandler.js'
+export * from './ReadableStream.js'

@@ -48,7 +48,7 @@ export interface WorkersSiteStaticContentBinding {
 
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
-import { KeyworkResourceError } from '@keywork/utils'
+import { KeyworkResourceError } from 'keywork/errors'
 import { IncomingRequestData, KeyworkRequestHandler } from '../requests/index.js'
 import { WorkerEnvFetchBinding } from './fetch.js'
 

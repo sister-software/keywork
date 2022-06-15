@@ -13,18 +13,12 @@
  */
 
 /**
- * ### `keywork/requests`
+ * ### `keywork/caching`
  *
- * Everything you need to handle incoming requests in a Worker environment.
- * - Server-side rendering from your worker, made even faster with streamed responses.
- * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
- *
+ * Utilities for managing ETags and caching.
  * @packageDocumentation
- * @module requests
+ * @module caching
  */
 
 export * from './common.js'
-export * from './IncomingRequestData.js'
-export * from './KeyworkRequestHandler.js'
-export * from './KeyworkRequestHandlerBase.js'
-export * from './RedirectHandler.js'
+export * from './generateETag.js'
