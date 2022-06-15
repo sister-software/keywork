@@ -30,12 +30,11 @@
  * esbuild.build({
  *   format: 'esm',
  *   entryPoints: ['...'],
- *   inject: [ require.resolve('keywork/polyfills/ReadableStream.js') ]
+ *   inject: [ require.resolve('keywork/polyfills/ReadableStream') ]
  * })
  * ```
  *
  * @packageDocumentation
  * @module polyfills
  */
-
 export * from './ReadableStream.js'

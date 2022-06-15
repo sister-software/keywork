@@ -68,7 +68,6 @@ export async function readPackageEntryPoints(packagePath) {
       const absolutePath = path.resolve(packagePath, relativeExportPath)
       const entries = await FastGlob(absolutePath)
 
-      console.log('pattern', absolutePath, entries)
       entries.forEach((entry) => absoluteEntryPoints.add(entry))
     }
   } else if (packageJSON.main) {

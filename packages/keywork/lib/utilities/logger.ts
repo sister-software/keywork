@@ -19,6 +19,7 @@ import { prettyJSON } from './json.js'
  * An common shape of the `Console` interface.
  *
  * @category Logging
+ * @ignore
  */
 export interface GlobalConsoleLike {
   debug(message?: any, ...optionalParams: any[]): void
