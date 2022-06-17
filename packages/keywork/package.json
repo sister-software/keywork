@@ -1,7 +1,7 @@
 {
   "name": "keywork",
   "license": "AGPL-3.0",
-  "version": "2.5.1",
+  "version": "2.6.1",
   "description": "Everything you need to handle incoming requests in a Worker environment.",
   "keywords": [
     "cloudflare",

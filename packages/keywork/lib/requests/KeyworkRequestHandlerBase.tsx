@@ -16,7 +16,7 @@ import { PathPattern } from 'keywork/paths'
 import { ErrorResponse } from 'keywork/responses'
 import { KeyworkSession } from 'keywork/sessions'
 import { PrefixedLogger } from 'keywork/utilities'
-import { HTTPMethod, KeyworkPageFunctionData, WorkerRequestHandler } from './common.js'
+import { HTTPMethod, KeyworkPageFunctionData, PossiblePromise, WorkerRequestHandler } from './common.js'
 
 /**
  * An extendable base class for handling incoming requests from a Worker.
@@ -164,28 +164,38 @@ export abstract class _KeyworkRequestHandlerBase<
    * Generally, `KeyworkRequestHandler#fetch` should not be used within your app.
    * This is instead automatically called by the Worker runtime when an incoming request is received.
    *
-   * :::note
-   * This method should not be used with Cloudflare Pages unless you've disabled function routing
-   * with [advanced mode](https://developers.cloudflare.com/pages/platform/functions/#advanced-mode)
-   * :::
-   *
-   * @protected
+   * @public
    */
-  fetch: WorkerRequestHandler<BoundAliases> = (request, env, context) => {
-    const handler = this._getHandlerForMethod(request.method as HTTPMethod)
-    const session = new KeyworkSession(request)
+  fetch: {
+    (...args: Parameters<PagesFunction<BoundAliases, ParamKeys, Data>>): PossiblePromise<Response>
+    (...args: Parameters<WorkerRequestHandler<BoundAliases>>): PossiblePromise<Response>
+  } = (...args: unknown[]): PossiblePromise<Response> => {
+    let eventContext: EventContext<BoundAliases, ParamKeys, Data>
 
-    const eventContext: EventContext<BoundAliases, ParamKeys, Data> = {
-      request,
-      env: env as any,
-      waitUntil: context.waitUntil,
-      data: {
-        session,
-      } as Data,
-      params: {} as Params<ParamKeys>,
-      functionPath: '',
-      next: this.next,
+    if (args.length >= 3) {
+      const [request, env, executionContext] = args as Parameters<WorkerRequestHandler<BoundAliases>>
+
+      eventContext = {
+        request,
+        env: env as any,
+        waitUntil: executionContext.waitUntil,
+        data: {} as Data,
+        params: {} as Params<ParamKeys>,
+        functionPath: '',
+        next: this.next,
+      }
+    } else {
+      // Args are already in a PagesFunction shape.
+      // eslint-disable-next-line @typescript-eslint/no-extra-semi
+      ;[eventContext] = args as Parameters<PagesFunction<BoundAliases, ParamKeys, Data>>
     }
+
+    eventContext.data = {
+      ...eventContext.data,
+      session: new KeyworkSession(eventContext.request),
+    }
+
+    const handler = this._getHandlerForMethod(eventContext.request.method as HTTPMethod)
 
     try {
       if (!handler) return this._onInvalidRequest(eventContext)
