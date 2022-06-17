@@ -1,7 +1,7 @@
 {
   "name": "keywork",
   "license": "AGPL-3.0",
-  "version": "2.6.1",
+  "version": "2.7.0",
   "description": "Everything you need to handle incoming requests in a Worker environment.",
   "keywords": [
     "cloudflare",
@@ -31,6 +31,7 @@
   "exports": {
     "./package.json": "./package.json",
     "./bindings": "./bindings/index.js",
+    "./bundling": "./bundling/index.js",
     "./caching": "./caching/index.js",
     "./collections": "./collections/index.js",
     "./errors": "./errors/index.js",
