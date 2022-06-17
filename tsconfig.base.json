@@ -6,7 +6,6 @@
       "esnext"
     ],
     "paths": {
-      "@keywork/polyfills/*": ["packages/polyfills/lib/*/index.ts"],
       "keywork": ["packages/keywork/index.ts"],
       "keywork/*": ["packages/keywork/lib/*/index.ts"],
     },

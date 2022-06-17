@@ -13,34 +13,14 @@
  */
 
 import * as fs from 'fs/promises'
-import { constants } from 'node:fs'
 import * as path from 'path'
 import { titleCase } from 'title-case'
 import TypeDoc from 'typedoc'
 import { MarkdownTheme } from 'typedoc-plugin-markdown'
+import { checkFileExists, FileNames } from '../../build/utils/files.mjs'
 import { projectPath } from '../../paths.mjs'
 
-/**
- *
- * @param {string} filePath
- * @returns whether the file exists.
- */
-export function checkFileExists(filePath) {
-  return fs
-    .access(filePath, constants.F_OK)
-    .then(() => true)
-    .catch(() => false)
-}
-
 // @ts-check
-
-const FileNames = {
-  Readme: 'README.md',
-  Index: 'index.md',
-  Category: '_category_.json',
-  CNAME: 'CNAME',
-  ModuleIndex: 'modules.md',
-}
 
 const defaultCategory = {
   collapsible: true,

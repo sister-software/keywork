@@ -13,7 +13,6 @@
  */
 
 import { StatusCodes } from 'http-status-codes'
-import { IncomingRequestData } from './IncomingRequestData.js'
 import { KeyworkRequestHandler } from './KeyworkRequestHandler.js'
 
 /**
@@ -43,7 +42,7 @@ export class RedirectHandler extends KeyworkRequestHandler {
     super()
   }
 
-  public onRequest = ({ request }: IncomingRequestData) => {
+  public onRequest: PagesFunction = ({ request }) => {
     this.logger.info(`Redirect from ${request.url} to ${this.destinationURL.toString()}`)
 
     return Response.redirect(this.destinationURL.toString(), this.statusCode)

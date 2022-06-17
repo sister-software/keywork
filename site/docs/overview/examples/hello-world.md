@@ -33,13 +33,14 @@ export class HelloWorldWorker extends KeyworkRequestHandler {
     const {
       /** The incoming request */
       request,
-      /** The incoming request URL object */
-      url,
       /** Any bound environment properties defined in your `wrangler.toml` file */
       env,
       /** An execution context for running async tasks after the response is sent. */
       context,
     } = data
+
+    /** The incoming request URL object */
+    const url = new URL(request.url)
 
     return new Response(`Hello from ${url.pathname}`)
   }
@@ -91,7 +92,9 @@ interface HelloResponseBody {
 }
 
 class HelloWorker extends KeyworkRequestHandler {
-  onRequestGet({ url }: IncomingRequestData) {
+  onRequestGet: PagesFunction = ({ request }) => {
+    const url = new URL(request.url)
+
     const body: HelloResponseBody = {
       url: url.toString(),
       date: new Date().toJSON(),

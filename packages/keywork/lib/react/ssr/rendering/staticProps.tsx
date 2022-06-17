@@ -37,16 +37,16 @@ export async function renderStaticPropsAsJSON(
 }
 
 export async function renderStaticPropsAsComponentStream<StaticProps extends NonNullable<SSRPropsLike>>(
-  request: Request,
+  context: EventContext<unknown, any, any>,
   staticProps: StaticProps,
   /** The React component to render for this specific page. */
   PageComponent: FC<StaticProps>,
   DocumentComponent?: KeyworkHTMLDocumentComponent,
   Providers?: KeyworkProvidersComponent
 ): Promise<Response> {
-  const location = new URL(request.url)
+  const location = new URL(context.request.url)
 
-  const browserIdentifier = getBrowserIdentifier(request)
+  const browserIdentifier = getBrowserIdentifier(context.request)
   DocumentComponent = DocumentComponent || KeyworkHTMLDocument
   Providers = Providers || KeyworkProviders
 

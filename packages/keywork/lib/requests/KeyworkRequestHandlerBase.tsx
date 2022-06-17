@@ -14,18 +14,26 @@
 
 import { PathPattern } from 'keywork/paths'
 import { ErrorResponse } from 'keywork/responses'
+import { KeyworkSession } from 'keywork/sessions'
 import { PrefixedLogger } from 'keywork/utilities'
-import { KeyworkSession } from '../sessions/KeyworkSession.js'
-import { RequestWithCFProperties, _HTTPMethod } from './common.js'
-import { IncomingRequestData, IncomingRequestDataHandler } from './IncomingRequestData.js'
+import { HTTPMethod, KeyworkPageFunctionData, WorkerRequestHandler } from './common.js'
 
 /**
  * An extendable base class for handling incoming requests from a Worker.
  *
+ * @typeDef BoundAliases The bound aliases, usually defined in your wrangler.toml file.
+ * @typeDef StaticProps Optional static props returned by `getStaticProps`
+ * @typeDef ParamKeys Optional string union of route path parameters. Only supported in Cloudflare Pages.
+ * @typeDef Data Optional extra data to be passed to a route handler.
+ *
  * @ignore
  * @protected
  */
-export abstract class _KeyworkRequestHandlerBase<BoundAliases extends {} | null = null> {
+export abstract class _KeyworkRequestHandlerBase<
+  BoundAliases extends {} | null = null,
+  ParamKeys extends string = any,
+  Data extends KeyworkPageFunctionData = KeyworkPageFunctionData
+> {
   /**
    * A `path-to-regexp` style pattern.
    *
@@ -45,57 +53,57 @@ export abstract class _KeyworkRequestHandlerBase<BoundAliases extends {} | null 
   public logger = new PrefixedLogger('Keywork Route Handler')
 
   //#region Request method handlers
-  // NOTE: Each method is marked as initialized to aid TypeScript's autocomplete.
-  // Otherwise, `undefined` will be included.
+  // NOTE: Each method is marked as initialized to prevent TypeScript
+  // from autocompleting `undefined`
 
   /**
    * An incoming `GET` request handler.
    *
    * @public
    */
-  public onRequestGet!: IncomingRequestDataHandler<BoundAliases>
+  public onRequestGet!: PagesFunction<BoundAliases, ParamKeys, Data>
 
   /**
    * An incoming `POST` request handler.
    *
    * @public
    */
-  public onRequestPost!: IncomingRequestDataHandler<BoundAliases>
+  public onRequestPost!: PagesFunction<BoundAliases, ParamKeys, Data>
 
   /**
    * An incoming `PUT` request handler.
    *
    * @public
    */
-  public onRequestPut!: IncomingRequestDataHandler<BoundAliases>
+  public onRequestPut!: PagesFunction<BoundAliases, ParamKeys, Data>
 
   /**
    * An incoming `PATCH` request handler.
    *
    * @public
    */
-  public onRequestPatch!: IncomingRequestDataHandler<BoundAliases>
+  public onRequestPatch!: PagesFunction<BoundAliases, ParamKeys, Data>
 
   /**
    * An incoming `DELETE` request handler.
    *
    * @public
    */
-  public onRequestDelete!: IncomingRequestDataHandler<BoundAliases>
+  public onRequestDelete!: PagesFunction<BoundAliases, ParamKeys, Data>
 
   /**
    * An incoming `HEAD` request handler.
    *
    * @public
    */
-  public onRequestHead!: IncomingRequestDataHandler<BoundAliases>
+  public onRequestHead!: PagesFunction<BoundAliases, ParamKeys, Data>
 
   /**
    * An incoming `OPTIONS` request handler.
    *
    * @public
    */
-  public onRequestOptions!: IncomingRequestDataHandler<BoundAliases>
+  public onRequestOptions!: PagesFunction<BoundAliases, ParamKeys, Data>
 
   /**
    * An incoming request handler for all HTTP methods.
@@ -105,14 +113,14 @@ export abstract class _KeyworkRequestHandlerBase<BoundAliases extends {} | null 
    *
    * @public
    */
-  public onRequest!: IncomingRequestDataHandler<BoundAliases>
+  public onRequest!: PagesFunction<BoundAliases, ParamKeys, Data>
 
   //#endregion
 
   /**
    * @internal
    */
-  protected _onInvalidRequest = ({ request }: IncomingRequestData<BoundAliases>) => {
+  protected _onInvalidRequest: PagesFunction<BoundAliases, ParamKeys, Data> = ({ request }) => {
     return new ErrorResponse(405, `Method ${request.method} was rejected.`)
   }
 
@@ -121,7 +129,7 @@ export abstract class _KeyworkRequestHandlerBase<BoundAliases extends {} | null 
    *
    * @internal
    */
-  protected _getHandlerForMethod(method: _HTTPMethod) {
+  protected _getHandlerForMethod(method: HTTPMethod): PagesFunction<BoundAliases, ParamKeys, Data> {
     switch (method) {
       case 'GET':
         return this.onRequestGet
@@ -142,6 +150,12 @@ export abstract class _KeyworkRequestHandlerBase<BoundAliases extends {} | null 
     }
   }
 
+  next: EventContext<BoundAliases, ParamKeys, Data>['next'] = async (input, init) => {
+    if (!input || typeof input === 'string') return new Response(input, init)
+
+    return fetch(input.clone())
+  }
+
   /**
    * The Worker's primary incoming fetch handler.
    *
@@ -150,36 +164,36 @@ export abstract class _KeyworkRequestHandlerBase<BoundAliases extends {} | null 
    * Generally, `KeyworkRequestHandler#fetch` should not be used within your app.
    * This is instead automatically called by the Worker runtime when an incoming request is received.
    *
+   * :::note
+   * This method should not be used with Cloudflare Pages unless you've disabled function routing
+   * with [advanced mode](https://developers.cloudflare.com/pages/platform/functions/#advanced-mode)
+   * :::
+   *
    * @protected
    */
-  protected fetch(
-    /** The incoming request. */
-    request: Request,
-    /** The bound aliases, usually defined in your wrangler.toml file. */
-    env: BoundAliases,
-    /** The Worker context object.  */
-    context: ExecutionContext
-  ): Promise<Response> | Response {
-    const handler = this._getHandlerForMethod(request.method as _HTTPMethod)
-
+  fetch: WorkerRequestHandler<BoundAliases> = (request, env, context) => {
+    const handler = this._getHandlerForMethod(request.method as HTTPMethod)
     const session = new KeyworkSession(request)
-    const url = new URL(request.url)
 
-    const data: IncomingRequestData<BoundAliases> = {
-      request: request as RequestWithCFProperties,
+    const eventContext: EventContext<BoundAliases, ParamKeys, Data> = {
+      request,
       env: env as any,
-      context,
-      session,
-      url,
+      waitUntil: context.waitUntil,
+      data: {
+        session,
+      } as Data,
+      params: {} as Params<ParamKeys>,
+      functionPath: '',
+      next: this.next,
     }
 
     try {
-      if (!handler) return this._onInvalidRequest(data)
+      if (!handler) return this._onInvalidRequest(eventContext)
 
-      return handler(data)
+      return handler.call(this, eventContext)
     } catch (_error) {
       this.logger.error(_error)
-      this.logger.debug(data)
+      this.logger.debug(eventContext)
       return ErrorResponse.fromUnknownError(_error, 'A server error occurred. Please try again later.')
     }
   }

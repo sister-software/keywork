@@ -24,7 +24,6 @@
  */
 
 export * from './common.js'
-export * from './IncomingRequestData.js'
 export * from './KeyworkRequestHandler.js'
 export * from './KeyworkRequestHandlerBase.js'
 export * from './RedirectHandler.js'

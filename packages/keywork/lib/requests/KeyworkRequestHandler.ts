@@ -22,8 +22,7 @@ import {
 import { ErrorResponse, HTMLResponse } from 'keywork/responses'
 import { KeyworkQueryParamKeys } from 'keywork/utilities'
 import type { FC } from 'react'
-import { PossiblePromise, _HTTPMethod } from './common.js'
-import { IncomingRequestData } from './IncomingRequestData.js'
+import { HTTPMethod, PossiblePromise } from './common.js'
 import { _KeyworkRequestHandlerBase } from './KeyworkRequestHandlerBase.js'
 
 /**
@@ -36,28 +35,37 @@ import { _KeyworkRequestHandlerBase } from './KeyworkRequestHandlerBase.js'
  *
  * - Always attempt to handle runtime errors gracefully, and respond with `KeyworkResourceError` when necessary.
  *
+ * @typeDef BoundAliases The bound aliases, usually defined in your wrangler.toml file.
+ * @typeDef StaticProps Optional static props returned by `getStaticProps`
+ * @typeDef ParamKeys Optional string union of route path parameters. Only supported in Cloudflare Pages.
+ * @typeDef Data Optional extra data to be passed to a route handler.
+ *
  * @category Incoming Request Handlers
  * @public
  */
 export abstract class KeyworkRequestHandler<
   BoundAliases extends {} | null = null,
-  StaticProps extends SSRPropsLike = null
-> extends _KeyworkRequestHandlerBase<BoundAliases> {
+  StaticProps extends SSRPropsLike = {},
+  ParamKeys extends string = any,
+  Data extends Record<string, unknown> = Record<string, unknown>
+> extends _KeyworkRequestHandlerBase<BoundAliases, ParamKeys, Data> {
+  // NOTE: Each property is marked as initialized to prevent TypeScript
+  // from autocompleting `undefined`
   /**
    * The React component to render for this specific page.
    */
-  protected PageComponent?: FC<StaticProps>
+  protected PageComponent!: FC<StaticProps>
 
   /**
    * A React component which wraps the SSR routes.
    * Use this if you need to inject a provider into the SSR pipeline.
    */
-  protected Providers?: KeyworkProvidersComponent
+  protected Providers!: KeyworkProvidersComponent
   /**
    * A HTML Document React component which wraps the entire application.
    * Use this if you need to replace the default HTML Document.
    */
-  protected DocumentComponent?: KeyworkHTMLDocumentComponent
+  protected DocumentComponent!: KeyworkHTMLDocumentComponent
 
   /**
    * A method used to fetch static props for rendering React apps in your worker.
@@ -91,39 +99,40 @@ export abstract class KeyworkRequestHandler<
    * }
    * ```
    *
+   * @public
    */
-  public getStaticProps?: (data: IncomingRequestData<BoundAliases>) => PossiblePromise<StaticProps>
+  public getStaticProps!: (context: EventContext<BoundAliases, ParamKeys, Data>) => PossiblePromise<StaticProps>
 
   /**
    * @internal
    */
-  protected async _onRequestGetReactComponent(data: IncomingRequestData<BoundAliases>): Promise<HTMLResponse> {
-    const { request, url: location } = data
-    const onlySendStaticProps = location.searchParams.has(KeyworkQueryParamKeys.StaticProps)
+  protected _onRequestGetReactComponent: PagesFunction<BoundAliases, ParamKeys, Data> = async (
+    context
+  ): Promise<HTMLResponse> => {
+    const location = new URL(context.request.url)
 
-    if (!this.getStaticProps) {
-      return new ErrorResponse(500, 'Request handler missing method `getStaticProps`')
-    }
+    const onlySendStaticProps = location.searchParams.has(KeyworkQueryParamKeys.StaticProps)
+    let staticProps = {} as NonNullable<StaticProps>
 
     if (!this.PageComponent) {
       return new ErrorResponse(500, 'Request handler missing method `PageComponent`')
     }
 
-    let staticProps: NonNullable<StaticProps>
-
-    try {
-      staticProps = ((await this.getStaticProps(data)) || {}) as NonNullable<StaticProps>
-    } catch (error) {
-      this.logger.error(error)
-      return ErrorResponse.fromUnknownError(error)
+    if (this.getStaticProps) {
+      try {
+        staticProps = (await this.getStaticProps(context)) as NonNullable<StaticProps>
+      } catch (error) {
+        this.logger.error(error)
+        return ErrorResponse.fromUnknownError(error)
+      }
     }
 
     if (onlySendStaticProps) {
-      return renderStaticPropsAsJSON(request, staticProps || {})
+      return renderStaticPropsAsJSON(context.request, staticProps || {})
     }
 
     return renderStaticPropsAsComponentStream(
-      request,
+      context,
       staticProps,
       this.PageComponent as any,
       this.DocumentComponent as any,
@@ -135,16 +144,14 @@ export abstract class KeyworkRequestHandler<
    * @internal
    */
   protected _handlerPrefersReactRenderer(): boolean {
-    return Boolean(this.getStaticProps && this.PageComponent)
+    return Boolean(this.PageComponent)
   }
 
   /**
    * Returns a specific handler for the given HTTP method.
-   * This is overridden to prefer `_onRequestGetReactComponent` when `getStaticProps` is defined.
-   *
    * @internal
    */
-  protected override _getHandlerForMethod(method: _HTTPMethod) {
+  protected override _getHandlerForMethod(method: HTTPMethod) {
     if (method === 'GET' && this._handlerPrefersReactRenderer()) {
       return this._onRequestGetReactComponent
     }

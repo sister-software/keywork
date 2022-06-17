@@ -16,7 +16,7 @@ import FastGlob from 'fast-glob'
 import fs from 'fs/promises'
 import path from 'path'
 import { changeExtension, packagesDirectory, projectPath } from '../../paths.mjs'
-import { readJSON } from './files.mjs'
+import { FileNames, readJSON } from './files.mjs'
 const tsconfig = await readJSON(projectPath('tsconfig.json'))
 
 /** @type string[] Package names */
@@ -65,7 +65,7 @@ export async function readPackageEntryPoints(packagePath) {
   } else if (typeof packageJSON.exports === 'object') {
     for (const relativeExportPath of Object.values(packageJSON.exports)) {
       if (relativeExportPath.endsWith('.json')) continue
-      const absolutePath = path.resolve(packagePath, relativeExportPath)
+      const absolutePath = path.resolve(packagePath, FileNames.DistDirectory, relativeExportPath)
       const entries = await FastGlob(absolutePath)
 
       entries.forEach((entry) => absoluteEntryPoints.add(entry))
@@ -92,7 +92,7 @@ export function readAllPackageEntryPoints() {
           const sourceMap = JSON.parse(content)
           const [relativePath] = sourceMap.sources
 
-          return path.resolve(sourceMapPath, '..', relativePath)
+          return path.resolve(sourceMapPath, relativePath)
         })
       )
     })

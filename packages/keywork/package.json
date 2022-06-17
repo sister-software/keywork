@@ -1,7 +1,7 @@
 {
   "name": "keywork",
   "license": "AGPL-3.0",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "Everything you need to handle incoming requests in a Worker environment.",
   "keywords": [
     "cloudflare",
@@ -30,29 +30,26 @@
   "typedocMain": "src/index.ts",
   "exports": {
     "./package.json": "./package.json",
-    "./bindings": "./dist/lib/bindings/index.js",
-    "./caching": "./dist/lib/caching/index.js",
-    "./collections": "./dist/lib/collections/index.js",
-    "./errors": "./dist/lib/errors/index.js",
-    "./files": "./dist/lib/files/index.js",
-    "./headers": "./dist/lib/headers/index.js",
-    "./ids": "./dist/lib/ids/index.js",
-    "./paths": "./dist/lib/paths/index.js",
-    "./polyfills/*": "./dist/lib/polyfills/*.js",
-    "./react": "./dist/lib/react/index.js",
-    "./requests": "./dist/lib/requests/index.js",
-    "./responses": "./dist/lib/responses/index.js",
-    "./sessions": "./dist/lib/sessions/index.js",
-    "./utilities": "./dist/lib/utilities/index.js"
+    "./bindings": "./bindings/index.js",
+    "./caching": "./caching/index.js",
+    "./collections": "./collections/index.js",
+    "./errors": "./errors/index.js",
+    "./files": "./files/index.js",
+    "./headers": "./headers/index.js",
+    "./ids": "./ids/index.js",
+    "./paths": "./paths/index.js",
+    "./polyfills/*": "./polyfills/*.js",
+    "./react": "./react/index.js",
+    "./requests": "./requests/index.js",
+    "./responses": "./responses/index.js",
+    "./sessions": "./sessions/index.js",
+    "./utilities": "./utilities/index.js"
   },
-  "types": "./dist/index.d.ts",
+  "types": "./index.d.ts",
   "sideEffects": false,
   "engines": {
     "node": ">= 17.4"
   },
-  "files": [
-    "dist"
-  ],
   "scripts": {
     "test": "jest"
   },

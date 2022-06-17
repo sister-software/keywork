@@ -19,7 +19,8 @@ import { createRequire } from 'module'
 import * as fs from 'node:fs/promises'
 import path from 'path'
 import rimraf from 'rimraf'
-import { checkFileExists, DocusaurusTypeDoc } from './theme.mjs'
+import { checkFileExists } from '../../build/utils/files.mjs'
+import { DocusaurusTypeDoc } from './theme.mjs'
 const require = createRequire(import.meta.url)
 
 const validationUtils = require('@docusaurus/utils-validation')

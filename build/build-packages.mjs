@@ -14,28 +14,55 @@
 
 /* eslint-disable tsdoc/syntax */
 
-import path from 'path'
+import fs from 'node:fs/promises'
+import path from 'node:path'
 import { packagesDirectory } from '../paths.mjs'
 import { cleanBuild } from './utils/clean.mjs'
 import { buildTypeScript, formatBuild } from './utils/extractor/index.mjs'
+import { FileNames } from './utils/files.mjs'
 import { packagesList } from './utils/packages.mjs'
 // const env = process.env.NODE_ENV || 'development'
 // const watch = process.argv.some((arg) => arg === '--watch')
 
-const distDirName = 'dist'
+/**
+ * @param {string} packageName
+ */
+export function getPackagePaths(packageName) {
+  console.log(`Preparing package: ${packageName}`)
+
+  const packageRoot = path.join(packagesDirectory, packageName)
+  const outPath = path.join(packageRoot, FileNames.OutDirectory)
+  const distPath = path.join(packageRoot, FileNames.DistDirectory)
+
+  return {
+    packageRoot,
+    outPath,
+    distPath,
+  }
+}
+
+/**
+ * @param {string} packageName
+ */
+async function preparePackage(packageName) {
+  const { packageRoot, outPath, distPath } = getPackagePaths(packageName)
+
+  await fs.rename(path.join(outPath, FileNames.LibDirectory), distPath)
+  await fs.copyFile(path.join(packageRoot, FileNames.PackageJSON), path.join(distPath, FileNames.PackageJSON))
+}
+
 // Clear previous builds.
 await Promise.all(
   packagesList.map((packageName) => {
-    const packageRoot = path.join(packagesDirectory, packageName)
-    const outPath = path.join(packageRoot, distDirName)
+    const { outPath, distPath } = getPackagePaths(packageName)
 
-    return cleanBuild(outPath)
+    return Promise.all([outPath, distPath].map(($) => cleanBuild($)))
   })
 )
 
-console.log(`Building ${packagesList.length} packages...`)
-// await Promise.all(packagesList.map((pkgName) => buildPackage(pkgName)))
+console.log(`Building ${packagesList.length} package(s)...`)
 
 await buildTypeScript()
-// await runAPIExtractor()
+await Promise.all(packagesList.map((packageName) => preparePackage(packageName)))
+
 await formatBuild()

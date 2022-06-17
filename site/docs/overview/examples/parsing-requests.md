@@ -21,7 +21,9 @@ export class TodoListHandler extends KeyworkRequestHandler {
   // We use a static property to allow for complex, multi-worker routing in later examples.
   static pattern = '/todos/:todoID'
 
-  async onRequestGet({ url }: IncomingRequestData) {
+  onRequestGet: PagesFunction = async ({ request }) => {
+    const url = new URL(request.url)
+
     // Don't worry if the url doesn't match the expected pattern
     // `RequestHandler` will gracefully handle runtime errors.
     const params = parsePathname<GetTodoParams>(TodoListWorker.pattern, url)

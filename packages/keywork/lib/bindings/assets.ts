@@ -43,16 +43,15 @@ export interface WorkersPagesAssetsBinding {
  */
 export interface WorkersSiteStaticContentBinding {
   __STATIC_CONTENT: KVNamespace
-  ASSETS: undefined
 }
 
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
+import { ErrorResponse } from '@keywork/utils'
+import { getReasonPhrase, StatusCodes } from 'http-status-codes'
 import { KeyworkResourceError } from 'keywork/errors'
-import { IncomingRequestData, KeyworkRequestHandler } from '../requests/index.js'
+import { KeyworkRequestHandler } from 'keywork/requests'
 import { WorkerEnvFetchBinding } from './fetch.js'
-
-// import manifestJSON from '__STATIC_CONTENT_MANIFEST'
 
 /**
  * Handles incoming requests for static assets uploaded to Cloudflare KV.
@@ -60,7 +59,15 @@ import { WorkerEnvFetchBinding } from './fetch.js'
  * @category {Static Asset Management}
  */
 export class KeyworkAssetHandler extends KeyworkRequestHandler<WorkersSiteStaticContentBinding> {
+  /**
+   * Injected via:
+   *
+   * ```ts
+   * import manifestJSON from '__STATIC_CONTENT_MANIFEST'
+   * ```
+   */
   protected assetManifest: AssetManifestType
+
   constructor(rawAssetManifest: string) {
     super()
 
@@ -72,19 +79,25 @@ export class KeyworkAssetHandler extends KeyworkRequestHandler<WorkersSiteStatic
       throw new KeyworkResourceError('An error occurred while parsing the asset manifest.')
     }
   }
-  onRequestGet = ({ env, request, context }: IncomingRequestData<WorkersSiteStaticContentBinding>) => {
-    return getAssetFromKV(
-      {
-        request,
-        waitUntil(promise) {
-          return context.waitUntil(promise)
+  public onRequestGet: PagesFunction<WorkersSiteStaticContentBinding> = ({ env, request, waitUntil }) => {
+    if (env.__STATIC_CONTENT) {
+      return getAssetFromKV(
+        {
+          request,
+          waitUntil,
         },
-      },
-      {
-        ASSET_NAMESPACE: env.__STATIC_CONTENT,
-        ASSET_MANIFEST: this.assetManifest,
-      }
-    )
+        {
+          ASSET_NAMESPACE: env.__STATIC_CONTENT,
+          ASSET_MANIFEST: this.assetManifest,
+        }
+      )
+    }
+
+    if (env.ASSETS) {
+      return env.ASSETS.fetch(request)
+    }
+
+    return new ErrorResponse(StatusCodes.BAD_REQUEST, getReasonPhrase(StatusCodes.BAD_REQUEST))
   }
 }
 

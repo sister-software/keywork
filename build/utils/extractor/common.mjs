@@ -16,6 +16,7 @@ import { Extractor, ExtractorConfig } from '@microsoft/api-extractor'
 import { exec } from 'child_process'
 import path from 'path'
 import { packagesDirectory, projectPath } from '../../../paths.mjs'
+import { readPackageJSON } from '../packages.mjs'
 
 ExtractorConfig._declarationFileExtensionRegExp = /\.d\.m?ts$/i
 // eslint-disable-next-line @typescript-eslint/no-empty-function
@@ -103,14 +104,15 @@ const configObject = {
 
 /** @typedef {import('../../../packages/keywork/package.json') T_npm_packageJSON } */
 
+//  * @param {T_npm_packageJSON} packageJSON
 /**
  * Creates a prepared API extractor config.
  * @param {string} packageName
- * @param {T_npm_packageJSON} packageJSON
  */
-export async function createExtractorConfig(packageJSON) {
+export async function createExtractorConfig(packageName) {
   const packageRoot = path.join(packagesDirectory, packageName)
-  // const packageJSON = await getPackageJSON(packageRoot)
+  const packageJSON = await readPackageJSON(packageRoot)
+
   const extractorConfig = ExtractorConfig.prepare({
     projectFolderLookupToken: projectPath(),
     packageJsonFullPath: path.join(packageRoot, 'package.json'),
