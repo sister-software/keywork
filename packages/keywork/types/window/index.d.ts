@@ -12,8 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export {}
-
 declare global {
+  export namespace WebAssembly {
+    export class Module {}
+  }
   export interface Window {}
 }
+
+export {}
