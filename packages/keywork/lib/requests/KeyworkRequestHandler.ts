@@ -22,7 +22,7 @@ import {
 import { ErrorResponse, HTMLResponse } from 'keywork/responses'
 import { KeyworkQueryParamKeys } from 'keywork/utilities'
 import type { FC } from 'react'
-import { HTTPMethod, PossiblePromise } from './common.js'
+import { GetStaticProps, HTTPMethod } from './common.js'
 import { _KeyworkRequestHandlerBase } from './KeyworkRequestHandlerBase.js'
 
 /**
@@ -101,7 +101,7 @@ export abstract class KeyworkRequestHandler<
    *
    * @public
    */
-  public getStaticProps!: (context: EventContext<BoundAliases, ParamKeys, Data>) => PossiblePromise<StaticProps>
+  public getStaticProps: GetStaticProps<BoundAliases, StaticProps, ParamKeys, Data> | undefined
 
   /**
    * @internal

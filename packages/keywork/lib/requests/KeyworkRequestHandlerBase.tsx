@@ -53,57 +53,55 @@ export abstract class _KeyworkRequestHandlerBase<
   public logger = new PrefixedLogger('Keywork Route Handler')
 
   //#region Request method handlers
-  // NOTE: Each method is marked as initialized to prevent TypeScript
-  // from autocompleting `undefined`
 
   /**
    * An incoming `GET` request handler.
    *
    * @public
    */
-  public onRequestGet!: PagesFunction<BoundAliases, ParamKeys, Data>
+  public onRequestGet: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming `POST` request handler.
    *
    * @public
    */
-  public onRequestPost!: PagesFunction<BoundAliases, ParamKeys, Data>
+  public onRequestPost: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming `PUT` request handler.
    *
    * @public
    */
-  public onRequestPut!: PagesFunction<BoundAliases, ParamKeys, Data>
+  public onRequestPut: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming `PATCH` request handler.
    *
    * @public
    */
-  public onRequestPatch!: PagesFunction<BoundAliases, ParamKeys, Data>
+  public onRequestPatch: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming `DELETE` request handler.
    *
    * @public
    */
-  public onRequestDelete!: PagesFunction<BoundAliases, ParamKeys, Data>
+  public onRequestDelete: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming `HEAD` request handler.
    *
    * @public
    */
-  public onRequestHead!: PagesFunction<BoundAliases, ParamKeys, Data>
+  public onRequestHead: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming `OPTIONS` request handler.
    *
    * @public
    */
-  public onRequestOptions!: PagesFunction<BoundAliases, ParamKeys, Data>
+  public onRequestOptions: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming request handler for all HTTP methods.
@@ -113,7 +111,7 @@ export abstract class _KeyworkRequestHandlerBase<
    *
    * @public
    */
-  public onRequest!: PagesFunction<BoundAliases, ParamKeys, Data>
+  public onRequest: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
 
   //#endregion
 
@@ -129,7 +127,7 @@ export abstract class _KeyworkRequestHandlerBase<
    *
    * @internal
    */
-  protected _getHandlerForMethod(method: HTTPMethod): PagesFunction<BoundAliases, ParamKeys, Data> {
+  protected _getHandlerForMethod(method: HTTPMethod): PagesFunction<BoundAliases, ParamKeys, Data> | undefined {
     switch (method) {
       case 'GET':
         return this.onRequestGet

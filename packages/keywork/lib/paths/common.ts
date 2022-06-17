@@ -158,7 +158,7 @@ export function isRequestLike(requestish: unknown): requestish is RequestLike {
 
 /**
  * Checks if the given object is shaped like a `URL`
- * @param requestish An object that's possibly a `URL`
+ * @param urlish An object that's possibly a `URL`
  * @category Type Casting
  */
 export function isURLLike(urlish: unknown): urlish is URLLike {
