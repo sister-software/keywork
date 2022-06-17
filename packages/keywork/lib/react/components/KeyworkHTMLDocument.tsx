@@ -40,6 +40,26 @@ export interface KeyworkHTMLDocumentProps {
 export type KeyworkHTMLDocumentComponent = FC<KeyworkHTMLDocumentProps>
 
 /**
+ * The default ID assigned to the React root element.
+ *
+ * @example
+ * ```tsx
+ * <div id={KeyworkHTMLDocumentAppRoot}>{children}</div>
+ * ```
+ */
+export const KeyworkHTMLDocumentAppRoot = 'app-root'
+
+/**
+ * The default ID assigned to the React root element.
+ *
+ * @example
+ * ```tsx
+ * <div id={KeyworkHTMLDocumentStyleRoot}>{children}</div>
+ * ```
+ */
+export const KeyworkHTMLDocumentStyleRoot = 'style-root'
+
+/**
  * A server-side render of a given HTML document.
  *
  */
@@ -90,8 +110,8 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
         {script}
       </head>
       <body>
-        <div id="app-root">{children}</div>
-        <div id="style-root" />
+        <div id={KeyworkHTMLDocumentAppRoot}>{children}</div>
+        <div id={KeyworkHTMLDocumentStyleRoot} />
 
         <script type="module" src={`/index.js?${$assetSearchParams}`}></script>
       </body>

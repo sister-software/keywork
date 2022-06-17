@@ -18,10 +18,8 @@ import type { ReactNode } from 'react'
 const logger = new PrefixedLogger('Hydrate')
 
 import { hydrateRoot, HydrationOptions } from 'react-dom/client'
-import { KeyworkRouter, StaticPropsProvider } from '../components/index.js'
+import { KeyworkHTMLDocumentAppRoot, KeyworkRouter, StaticPropsProvider } from '../components/index.js'
 import { getSSRPropsFromScope, globalScopeHasSSRProps, GlobalScopeWithKeyworkSSRProps } from './props.js'
-
-const keyworkRootID = 'app-root'
 
 export interface HydrateKeyworkAppOptions {
   rootID?: string
@@ -36,7 +34,7 @@ export interface HydrateKeyworkAppOptions {
  * @param initialChildren This should be the current page's component, along with any needed providers.
  */
 export function hydrateKeyworkApp(initialChildren: ReactNode, options?: HydrateKeyworkAppOptions) {
-  const rootID = options?.rootID || keyworkRootID
+  const rootID = options?.rootID || KeyworkHTMLDocumentAppRoot
   const globalScope = options?.globalScope || self
 
   if (!globalScopeHasSSRProps(globalScope) || !globalScope.document) {
