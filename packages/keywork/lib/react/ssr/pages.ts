@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { matchPath, PathPattern } from 'keywork/paths'
+import { matchPath } from 'keywork/paths'
 import { SSRPropsLike } from './props'
 
 /**
@@ -35,13 +35,9 @@ import { SSRPropsLike } from './props'
  * ])
  * ```
  *
- * :::caution
- * While this type allows `PathPattern` objects, this matching isn't yet fully supported.
- *
- * :::
  */
 export class PatternToPageComponentMap<StaticProps extends SSRPropsLike> extends Map<
-  PathPattern | string,
+  string,
   React.ComponentType<StaticProps>
 > {}
 

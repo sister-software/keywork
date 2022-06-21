@@ -13,7 +13,7 @@
  */
 
 /**
- * ### `keywork/utils`
+ * ### `keywork/utilities`
  *
  * Common core utilities for building web apps.
  *

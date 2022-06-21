@@ -12,22 +12,20 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * An environment binding available within Worker Pages.
- *
- * @remarks This binding only exists in Worker __Pages__.
- */
-export interface WorkersPagesAssetsBinding {
-  ASSETS: WorkerEnvFetchBinding
-  __STATIC_CONTENT: undefined
-}
+import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
+import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
+import { getReasonPhrase, StatusCodes } from 'http-status-codes'
+import { KeyworkResourceError } from 'keywork/errors'
+import { AbstractKeyworkRouter, RouteRequestHandler } from 'keywork/requests'
+import { ErrorResponse } from 'keywork/responses'
 
 /**
  * An environment binding available within Worker Sites.
  * This is often used with the `@cloudflare/kv-asset-handler` package.
  *
- * @remarks This binding only exists in Worker __Sites__.
- * Worker __Pages__ instead uses `env.ASSETS`
+ * @remarks
+ * This binding only exists in Worker __Sites__.
+ * Cloudflare __Pages__ instead uses `env.ASSETS`
  *
  *
  * When using ESBuild, ensure that the virtual module `__STATIC_CONTENT_MANIFEST`
@@ -39,26 +37,26 @@ export interface WorkersPagesAssetsBinding {
  * build({ external: ['__STATIC_CONTENT_MANIFEST']})
  * ```
  *
+ * For usage with TypeScript, you'll need to define a module type as well:
+ *
+ * ```ts
+ * // types/cloudflare-worker.d.ts
+ * declare module '__STATIC_CONTENT_MANIFEST'
+ * ```
+ *
  * @see {@link https://developers.cloudflare.com/pages/platform/functions/#advanced-mode Cloudflare Worker Pages API}
  */
 export interface WorkersSiteStaticContentBinding {
   __STATIC_CONTENT: KVNamespace
 }
 
-import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
-import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
-import { ErrorResponse } from '@keywork/utils'
-import { getReasonPhrase, StatusCodes } from 'http-status-codes'
-import { KeyworkResourceError } from 'keywork/errors'
-import { KeyworkRequestHandler } from 'keywork/requests'
-import { WorkerEnvFetchBinding } from './fetch.js'
-
 /**
  * Handles incoming requests for static assets uploaded to Cloudflare KV.
  * @beta This is under active development
  * @category {Static Asset Management}
+ * @see {WorkersSiteStaticContentBinding}
  */
-export class KeyworkAssetHandler extends KeyworkRequestHandler<WorkersSiteStaticContentBinding> {
+export class KeyworkAssetHandler extends AbstractKeyworkRouter<WorkersSiteStaticContentBinding> {
   /**
    * Injected via:
    *
@@ -66,7 +64,7 @@ export class KeyworkAssetHandler extends KeyworkRequestHandler<WorkersSiteStatic
    * import manifestJSON from '__STATIC_CONTENT_MANIFEST'
    * ```
    */
-  protected assetManifest: AssetManifestType
+  protected assetManifest: AssetManifestType = {}
 
   constructor(rawAssetManifest: string) {
     super()
@@ -79,7 +77,7 @@ export class KeyworkAssetHandler extends KeyworkRequestHandler<WorkersSiteStatic
       throw new KeyworkResourceError('An error occurred while parsing the asset manifest.')
     }
   }
-  public onRequestGet: PagesFunction<WorkersSiteStaticContentBinding> = ({ env, request, waitUntil }) => {
+  public onRequestGet: RouteRequestHandler<WorkersSiteStaticContentBinding> = ({ env, request, waitUntil }) => {
     if (env.__STATIC_CONTENT) {
       return getAssetFromKV(
         {
@@ -91,10 +89,6 @@ export class KeyworkAssetHandler extends KeyworkRequestHandler<WorkersSiteStatic
           ASSET_MANIFEST: this.assetManifest,
         }
       )
-    }
-
-    if (env.ASSETS) {
-      return env.ASSETS.fetch(request)
     }
 
     return new ErrorResponse(StatusCodes.BAD_REQUEST, getReasonPhrase(StatusCodes.BAD_REQUEST))

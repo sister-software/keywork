@@ -29,6 +29,7 @@
   "type": "module",
   "typedocMain": "src/index.ts",
   "exports": {
+    ".": "./index.js",
     "./package.json": "./package.json",
     "./bindings": "./bindings/index.js",
     "./bundling": "./bundling/index.js",
@@ -41,7 +42,7 @@
     "./paths": "./paths/index.js",
     "./polyfills/*": "./polyfills/*.js",
     "./react": "./react/index.js",
-    "./requests": "./requests/index.js",
+    "./routing": "./routing/index.js",
     "./responses": "./responses/index.js",
     "./sessions": "./sessions/index.js",
     "./utilities": "./utilities/index.js"
@@ -56,7 +57,6 @@
   },
   "dependencies": {
     "@cloudflare/kv-asset-handler": "^0.2.0",
-    "@keywork/utils": "^2.2.0",
     "classnames": "^2.3.1",
     "cookie": "^0.5.0",
     "deepmerge": "^4.2.2",

@@ -13,7 +13,8 @@
  */
 
 import { StatusCodes } from 'http-status-codes'
-import { KeyworkRequestHandler } from './KeyworkRequestHandler.js'
+import { AbstractKeyworkRouter } from './AbstractKeyworkRouter.js'
+import { RouteRequestHandler } from './common.js'
 
 /**
  * A higher-order function for redirecting requests via `KeyworkRequestHandler`.
@@ -32,7 +33,7 @@ import { KeyworkRequestHandler } from './KeyworkRequestHandler.js'
  * @category Incoming Request Handlers
  * @public
  */
-export class RedirectHandler extends KeyworkRequestHandler {
+export class RedirectHandler extends AbstractKeyworkRouter {
   constructor(
     /** URL A url-like string or URL object */
     public destinationURL: string | URL,
@@ -42,7 +43,7 @@ export class RedirectHandler extends KeyworkRequestHandler {
     super()
   }
 
-  public onRequest: PagesFunction = ({ request }) => {
+  public onRequest: RouteRequestHandler = ({ request }) => {
     this.logger.info(`Redirect from ${request.url} to ${this.destinationURL.toString()}`)
 
     return Response.redirect(this.destinationURL.toString(), this.statusCode)

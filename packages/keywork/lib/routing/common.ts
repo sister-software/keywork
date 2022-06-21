@@ -65,12 +65,18 @@ export type PossiblePromise<T> = T | Promise<T>
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  *
  * @see {ExportedHandlerFetchHandler} A near-identical type defined by Cloudflare.
+ * @category Routing
  */
 export type WorkerRequestHandler<BoundAliases extends {} | null = null> = (
   request: RequestWithCFProperties,
   env: BoundAliases,
-  /** The Worker context object.  */
-  context: ExecutionContext
+  /**
+   * The Worker context object.
+   *
+   * @remarks
+   * `passThroughOnException` is not available as it does not apply to Cloudflare Pages
+   */
+  context: Omit<ExecutionContext, 'passThroughOnException'>
 ) => PossiblePromise<Response>
 
 /**
@@ -79,6 +85,25 @@ export type WorkerRequestHandler<BoundAliases extends {} | null = null> = (
 export interface KeyworkPageFunctionData extends Record<string, unknown> {
   session?: KeyworkSession
 }
+
+/**
+ * A function or method that handles incoming requests and replies with a `Response`.
+ *
+ * @remarks
+ * Generally, this is interface is assigned to a KeyworkRouter method, such as `onRequestGet`
+ * The `EventContext` argument is provided by the router's `fetch` method.
+ *
+ * @typeDef BoundAliases The bound aliases, usually defined in your wrangler.toml file.
+ * @typeDef ParamKeys Optional string union of route path parameters. Only supported in Cloudflare Pages.
+ * @typeDef Data Optional extra data to be passed to a route handler.
+ *
+ * @category Routing
+ */
+export type RouteRequestHandler<
+  BoundAliases extends {} | null = null,
+  ParamKeys extends string = any,
+  Data extends Record<string, unknown> = Record<string, unknown>
+> = (context: EventContext<BoundAliases, ParamKeys, Data>) => PossiblePromise<Response>
 
 /**
  * A method used to fetch static props for rendering React apps in your worker.

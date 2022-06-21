@@ -12,11 +12,23 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { PathPattern } from 'keywork/paths'
+import { matchPath, PathPattern } from 'keywork/paths'
 import { ErrorResponse } from 'keywork/responses'
 import { KeyworkSession } from 'keywork/sessions'
 import { PrefixedLogger } from 'keywork/utilities'
-import { HTTPMethod, KeyworkPageFunctionData, PossiblePromise, WorkerRequestHandler } from './common.js'
+import {
+  HTTPMethod,
+  KeyworkPageFunctionData,
+  PossiblePromise,
+  RequestWithCFProperties,
+  RouteRequestHandler,
+  WorkerRequestHandler,
+} from './common.js'
+
+/**
+ * @ignore
+ */
+const $KeyworkRequestHandler = Symbol('KeyworkRequestHandler')
 
 /**
  * An extendable base class for handling incoming requests from a Worker.
@@ -29,11 +41,13 @@ import { HTTPMethod, KeyworkPageFunctionData, PossiblePromise, WorkerRequestHand
  * @ignore
  * @protected
  */
-export abstract class _KeyworkRequestHandlerBase<
+export abstract class AbstractKeyworkRouter<
   BoundAliases extends {} | null = null,
   ParamKeys extends string = any,
   Data extends KeyworkPageFunctionData = KeyworkPageFunctionData
 > {
+  [$KeyworkRequestHandler] = true
+
   /**
    * A `path-to-regexp` style pattern.
    *
@@ -59,49 +73,49 @@ export abstract class _KeyworkRequestHandlerBase<
    *
    * @public
    */
-  public onRequestGet: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
+  public onRequestGet: RouteRequestHandler<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming `POST` request handler.
    *
    * @public
    */
-  public onRequestPost: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
+  public onRequestPost: RouteRequestHandler<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming `PUT` request handler.
    *
    * @public
    */
-  public onRequestPut: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
+  public onRequestPut: RouteRequestHandler<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming `PATCH` request handler.
    *
    * @public
    */
-  public onRequestPatch: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
+  public onRequestPatch: RouteRequestHandler<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming `DELETE` request handler.
    *
    * @public
    */
-  public onRequestDelete: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
+  public onRequestDelete: RouteRequestHandler<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming `HEAD` request handler.
    *
    * @public
    */
-  public onRequestHead: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
+  public onRequestHead: RouteRequestHandler<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming `OPTIONS` request handler.
    *
    * @public
    */
-  public onRequestOptions: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
+  public onRequestOptions: RouteRequestHandler<BoundAliases, ParamKeys, Data> | undefined
 
   /**
    * An incoming request handler for all HTTP methods.
@@ -111,14 +125,14 @@ export abstract class _KeyworkRequestHandlerBase<
    *
    * @public
    */
-  public onRequest: PagesFunction<BoundAliases, ParamKeys, Data> | undefined
+  public onRequest: RouteRequestHandler<BoundAliases, ParamKeys, Data> | undefined
 
   //#endregion
 
   /**
    * @internal
    */
-  protected _onInvalidRequest: PagesFunction<BoundAliases, ParamKeys, Data> = ({ request }) => {
+  protected _onInvalidRequest: RouteRequestHandler<BoundAliases, ParamKeys, Data> = ({ request }) => {
     return new ErrorResponse(405, `Method ${request.method} was rejected.`)
   }
 
@@ -127,7 +141,7 @@ export abstract class _KeyworkRequestHandlerBase<
    *
    * @internal
    */
-  protected _getHandlerForMethod(method: HTTPMethod): PagesFunction<BoundAliases, ParamKeys, Data> | undefined {
+  protected _getHandlerForMethod(method: HTTPMethod): RouteRequestHandler<BoundAliases, ParamKeys, Data> | undefined {
     switch (method) {
       case 'GET':
         return this.onRequestGet
@@ -144,14 +158,16 @@ export abstract class _KeyworkRequestHandlerBase<
       case 'OPTIONS':
         return this.onRequestOptions
       default:
-        return this.onRequest
+        return undefined
     }
   }
 
-  next: EventContext<BoundAliases, ParamKeys, Data>['next'] = async (input, init) => {
-    if (!input || typeof input === 'string') return new Response(input, init)
+  protected _nextStub: EventContext<BoundAliases, ParamKeys, Data>['next'] = async (request, requestInit) => {
+    if (!request || typeof request === 'string') {
+      return new Response(request, requestInit)
+    }
 
-    return fetch(input.clone())
+    return fetch(request.clone())
   }
 
   /**
@@ -165,12 +181,14 @@ export abstract class _KeyworkRequestHandlerBase<
    * @public
    */
   fetch: {
-    (...args: Parameters<PagesFunction<BoundAliases, ParamKeys, Data>>): PossiblePromise<Response>
+    (...args: Parameters<RouteRequestHandler<BoundAliases, ParamKeys, Data>>): PossiblePromise<Response>
     (...args: Parameters<WorkerRequestHandler<BoundAliases>>): PossiblePromise<Response>
   } = (...args: unknown[]): PossiblePromise<Response> => {
-    let eventContext: EventContext<BoundAliases, ParamKeys, Data>
+    // First, normalize the arguments between Cloudflare Pages and Worker Sites...
+    let eventContext: Omit<EventContext<BoundAliases, ParamKeys, Data>, 'passThroughOnException'>
 
     if (args.length >= 3) {
+      // Worker Site...
       const [request, env, executionContext] = args as Parameters<WorkerRequestHandler<BoundAliases>>
 
       eventContext = {
@@ -180,12 +198,12 @@ export abstract class _KeyworkRequestHandlerBase<
         data: {} as Data,
         params: {} as Params<ParamKeys>,
         functionPath: '',
-        next: this.next,
+        next: this._nextStub,
       }
     } else {
-      // Args are already in a PagesFunction shape.
+      // Args are already in a RouteRequestHandler shape.
       // eslint-disable-next-line @typescript-eslint/no-extra-semi
-      ;[eventContext] = args as Parameters<PagesFunction<BoundAliases, ParamKeys, Data>>
+      ;[eventContext] = args as Parameters<RouteRequestHandler<BoundAliases, ParamKeys, Data>>
     }
 
     eventContext.data = {
@@ -193,7 +211,20 @@ export abstract class _KeyworkRequestHandlerBase<
       session: new KeyworkSession(eventContext.request),
     }
 
-    const handler = this._getHandlerForMethod(eventContext.request.method as HTTPMethod)
+    const url = new URL(eventContext.request.url)
+    const router = this.matchRoute(url)
+
+    if (router) {
+      eventContext.next = async (input, requestInit) => {
+        const request = (input ? new Request(input, requestInit) : eventContext.request) as RequestWithCFProperties
+
+        return router.fetch(request, eventContext.env, eventContext)
+      }
+    }
+
+    // With our event context constructed, we can check for any defined methods...
+    // If a method exists and routes are defined, it acts like middleware.
+    const handler = this._getHandlerForMethod(eventContext.request.method as HTTPMethod) || this.onRequest
 
     try {
       if (!handler) return this._onInvalidRequest(eventContext)
@@ -205,4 +236,43 @@ export abstract class _KeyworkRequestHandlerBase<
       return ErrorResponse.fromUnknownError(_error, 'A server error occurred. Please try again later.')
     }
   }
+
+  protected routePatternToHandler: Map<string, RouterLike<BoundAliases>>
+
+  constructor(routePatterns?: Array<[string, RouterLike<BoundAliases>]>) {
+    this.routePatternToHandler = new Map(routePatterns)
+  }
+
+  public matchRoute(location: URL): RouterLike<BoundAliases> | null {
+    const patternMatch = Array.from(this.routePatternToHandler.keys()).find((pattern) => {
+      return matchPath(pattern, location.pathname)
+    })
+
+    const routeHandler = this.routePatternToHandler.get(patternMatch || '')
+
+    if (!routeHandler) return null
+
+    return routeHandler
+  }
 }
+
+/**
+ *
+ * @internal
+ * @ignore
+ */
+export function isKeyworkRouterLike<BoundAliases extends {} | null = null>(
+  routerLike: unknown
+): routerLike is AbstractKeyworkRouter<BoundAliases> {
+  return Boolean(
+    routerLike instanceof AbstractKeyworkRouter ||
+      (routerLike && typeof routerLike === 'object' && $KeyworkRequestHandler in routerLike)
+  )
+}
+
+/**
+ * Either a router or an env binding with a fetcher.
+ */
+export type RouterLike<BoundAliases extends {} | null = null> =
+  | AbstractKeyworkRouter<BoundAliases, any, any>
+  | { fetch: WorkerRequestHandler<BoundAliases> }

@@ -22,7 +22,7 @@ import { matchPath } from './matchPath.js'
  *
  * @see {@link https://reactrouter.com/docs/en/v6/api#matchpath}
  *
- * @throws {@link @keywork/utils/KeyworkResourceError}
+ * @throws {KeyworkResourceError}
  * @category URL Parsing
  */
 export function parsePathname<ExpectedParams extends {} | null>(

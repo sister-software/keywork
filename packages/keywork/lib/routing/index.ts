@@ -12,16 +12,18 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { WorkersPagesAssetsBinding, WorkersSiteStaticContentBinding } from './assets/index.js'
-import type { WorkerEnvFetchBinding } from './fetch.js'
-
 /**
- * Either:
+ * ### `keywork/routing`
  *
- * - `WorkerEnvFetchBinding` A `fetch` binding, usually an asset KV or external Worker.
- * - `KVNamespace` A KV binding.
- * - `DurableObjectNamespace` A Durable Object.
+ * Everything you need to handle incoming requests in a Worker environment.
+ * - Server-side rendering from your worker, made even faster with streamed responses.
+ * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
+ *
+ * @packageDocumentation
+ * @module requests
  */
-export type EnvironmentBindingKinds = WorkerEnvFetchBinding | KVNamespace | DurableObjectNamespace
 
-export type DefaultWorkerBindings = WorkersSiteStaticContentBinding | WorkersPagesAssetsBinding
+export * from './AbstractKeyworkRouter.js'
+export * from './common.js'
+export * from './KeyworkRouter.js'
+export * from './RedirectHandler.js'

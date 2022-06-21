@@ -22,8 +22,8 @@ import {
 import { ErrorResponse, HTMLResponse } from 'keywork/responses'
 import { KeyworkQueryParamKeys } from 'keywork/utilities'
 import type { FC } from 'react'
-import { GetStaticProps, HTTPMethod } from './common.js'
-import { _KeyworkRequestHandlerBase } from './KeyworkRequestHandlerBase.js'
+import { AbstractKeyworkRouter } from './AbstractKeyworkRouter.js'
+import { GetStaticProps, HTTPMethod, RouteRequestHandler } from './common.js'
 
 /**
  * An extendable base class for handling incoming requests from a Worker.
@@ -43,29 +43,27 @@ import { _KeyworkRequestHandlerBase } from './KeyworkRequestHandlerBase.js'
  * @category Incoming Request Handlers
  * @public
  */
-export abstract class KeyworkRequestHandler<
+export abstract class KeyworkRouter<
   BoundAliases extends {} | null = null,
   StaticProps extends SSRPropsLike = {},
   ParamKeys extends string = any,
   Data extends Record<string, unknown> = Record<string, unknown>
-> extends _KeyworkRequestHandlerBase<BoundAliases, ParamKeys, Data> {
-  // NOTE: Each property is marked as initialized to prevent TypeScript
-  // from autocompleting `undefined`
+> extends AbstractKeyworkRouter<BoundAliases, ParamKeys, Data> {
   /**
    * The React component to render for this specific page.
    */
-  protected PageComponent!: FC<StaticProps>
+  protected PageComponent?: FC<StaticProps>
 
   /**
    * A React component which wraps the SSR routes.
    * Use this if you need to inject a provider into the SSR pipeline.
    */
-  protected Providers!: KeyworkProvidersComponent
+  protected Providers?: KeyworkProvidersComponent
   /**
    * A HTML Document React component which wraps the entire application.
    * Use this if you need to replace the default HTML Document.
    */
-  protected DocumentComponent!: KeyworkHTMLDocumentComponent
+  protected DocumentComponent?: KeyworkHTMLDocumentComponent
 
   /**
    * A method used to fetch static props for rendering React apps in your worker.
@@ -98,7 +96,7 @@ export abstract class KeyworkRequestHandler<
    *   }
    * }
    * ```
-   *
+   * @category Routing
    * @public
    */
   public getStaticProps: GetStaticProps<BoundAliases, StaticProps, ParamKeys, Data> | undefined
@@ -106,7 +104,7 @@ export abstract class KeyworkRequestHandler<
   /**
    * @internal
    */
-  protected _onRequestGetReactComponent: PagesFunction<BoundAliases, ParamKeys, Data> = async (
+  protected _onRequestGetReactComponent: RouteRequestHandler<BoundAliases, ParamKeys, Data> = async (
     context
   ): Promise<HTMLResponse> => {
     const location = new URL(context.request.url)

@@ -35,9 +35,9 @@
     "site"
   ],
   "scripts": {
-    "build:packages": "node --experimental-specifier-resolution=node ./build/build-packages.mjs",
+    "build": "node --experimental-specifier-resolution=node ./build/build-packages.mjs",
     "build:docs": "cd site && npm run build",
-    "build:all": "npm run build:packages && npm run build:docs",
+    "build:all": "npm run build && npm run build:docs",
     "prepublishOnly": "npm run build:all",
     "test": "jest"
   },
