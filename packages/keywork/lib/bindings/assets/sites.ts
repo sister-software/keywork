@@ -16,8 +16,8 @@ import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
 import { getReasonPhrase, StatusCodes } from 'http-status-codes'
 import { KeyworkResourceError } from 'keywork/errors'
-import { AbstractKeyworkRouter, RouteRequestHandler } from 'keywork/requests'
 import { ErrorResponse } from 'keywork/responses'
+import { AbstractKeyworkRouter, RouteRequestHandler } from 'keywork/routing'
 
 /**
  * An environment binding available within Worker Sites.

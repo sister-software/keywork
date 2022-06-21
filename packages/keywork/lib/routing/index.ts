@@ -20,7 +20,7 @@
  * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
  *
  * @packageDocumentation
- * @module requests
+ * @module routing
  */
 
 export * from './AbstractKeyworkRouter.js'

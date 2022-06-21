@@ -21,6 +21,6 @@
  * @module bindings
  */
 
-export * from './assets.js'
+export * from './assets/index.js'
 export * from './environment.js'
 export * from './fetch.js'

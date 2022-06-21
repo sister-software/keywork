@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { AbstractKeyworkRouter, RouteRequestHandler } from 'keywork/requests'
+import { AbstractKeyworkRouter, RouteRequestHandler } from 'keywork/routing'
 import { WorkerEnvFetchBinding } from '../fetch.js'
 
 /**
