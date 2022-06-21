@@ -25,15 +25,31 @@ import { KeyworkResourceError } from 'keywork/errors'
  */
 export class ErrorResponse extends Response {
   constructor(
-    /** status An optional HTTP response status code. */
+    /**
+     * An optional HTTP response status code.
+     */
     status: number = StatusCodes.INTERNAL_SERVER_ERROR,
-    /** statusText An optional explation for the error. */
-    statusText = getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR),
-    /** body An optional body to include with the response. */
+    /**
+     * An explanation for the error. Uses the `status` code as a default value.
+     */
+    statusText?: string,
+    /**
+     * Body to include with the response.
+     */
     body?: BodyInit | null,
-    /** headersInit Optional headers to include with the response. */
+    /**
+     *  Headers to include with the response.
+     */
     headersInit?: HeadersInit
   ) {
+    if (!statusText) {
+      try {
+        statusText = getReasonPhrase(status)
+      } catch (error) {
+        statusText = getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR)
+      }
+    }
+
     super(body, {
       status,
       statusText,
