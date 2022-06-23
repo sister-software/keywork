@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { createContextAndNamedHook } from 'keywork/react/hooks'
 import type { FC, ReactNode } from 'react'
-import { createContextAndNamedHook } from '../hooks/createNamedContextHook.js'
-import { SSRPropsLike } from '../ssr/index.js'
+import { SSRPropsLike } from './constants.js'
 
 const [StaticPropsContext, useStaticProps] = createContextAndNamedHook<SSRPropsLike>()
 export { useStaticProps }

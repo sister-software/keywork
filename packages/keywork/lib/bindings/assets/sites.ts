@@ -17,7 +17,7 @@ import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
 import { getReasonPhrase, StatusCodes } from 'http-status-codes'
 import { KeyworkResourceError } from 'keywork/errors'
 import { ErrorResponse } from 'keywork/responses'
-import { AbstractKeyworkRouter, RouteRequestHandler } from 'keywork/routing'
+import { KeyworkRouter, RouteRequestHandler } from 'keywork/routing'
 
 /**
  * An environment binding available within Worker Sites.
@@ -56,7 +56,7 @@ export interface WorkersSiteStaticContentBinding {
  * @category {Static Asset Management}
  * @see {WorkersSiteStaticContentBinding}
  */
-export class KeyworkAssetHandler extends AbstractKeyworkRouter<WorkersSiteStaticContentBinding> {
+export class KeyworkAssetHandler extends KeyworkRouter<WorkersSiteStaticContentBinding> {
   /**
    * Injected via:
    *
@@ -76,6 +76,8 @@ export class KeyworkAssetHandler extends AbstractKeyworkRouter<WorkersSiteStatic
       this.logger.warn('Is this well-formed JSON?', rawAssetManifest)
       throw new KeyworkResourceError('An error occurred while parsing the asset manifest.')
     }
+
+    this.get('*', this.onRequestGet)
   }
   public onRequestGet: RouteRequestHandler<WorkersSiteStaticContentBinding> = ({ env, request, waitUntil }) => {
     if (env.__STATIC_CONTENT) {

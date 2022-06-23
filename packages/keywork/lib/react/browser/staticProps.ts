@@ -13,20 +13,7 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-
-export type SSRPropsLike = {} | null
-
-/**
- * The global key where SSR props are assigned.
- * @remarks This includes a space to prevent autocomplete from listing this key.
- */
-export const globalScopeSSRKey = '__ keywork_ssr_props'
-export type GlobalScopeSSRKey = typeof globalScopeSSRKey
-export interface GlobalScopeWithKeyworkSSRProps<SSRProps extends SSRPropsLike = SSRPropsLike>
-  extends Record<GlobalScopeSSRKey, SSRProps> {
-  document?: unknown
-  location: URL
-}
+import { globalScopeSSRKey, GlobalScopeWithKeyworkSSRProps, SSRPropsLike } from 'keywork/react/common'
 
 export function globalScopeHasSSRProps<SSRProps extends SSRPropsLike>(
   globalScope: unknown

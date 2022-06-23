@@ -13,16 +13,10 @@
  */
 
 /**
- * ### `keywork/react`
- *
- * - Server-side rendering from your worker, made even faster with streamed responses.
- * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
- * - Client-side hydration that fits into your existing build pipeline.
+ * ### `keywork/react/common`
  *
  * @packageDocumentation
- * @module react
+ * @module react.hooks
  */
 
-export * from './components/index.js'
-export * from './hooks/index.js'
-export * from './ssr/index.js'
+export * from './common/index.js'

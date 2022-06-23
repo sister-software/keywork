@@ -12,17 +12,14 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { createContextAndNamedHook } from 'keywork/react/hooks'
 import { FC, ReactNode, useMemo } from 'react'
-import { createContextAndNamedHook } from '../hooks/createNamedContextHook.js'
 
 export interface KeyworkRouterProvider {
   location: URL
 }
 
-const [KeyworkBrowserRouterContext, useKeyworkRouter] = createContextAndNamedHook<KeyworkRouterProvider>(
-  undefined,
-  'KeyworkRouter'
-)
+const [RouteContext, useKeyworkRouter] = createContextAndNamedHook<KeyworkRouterProvider>(undefined, 'RouteContext')
 export { useKeyworkRouter }
 
 export interface KeyworkRouterProps {
@@ -30,7 +27,7 @@ export interface KeyworkRouterProps {
   children: ReactNode
 }
 
-export const KeyworkRouter: FC<KeyworkRouterProps> = ({ initialLocation, children }) => {
+export const RouteProvider: FC<KeyworkRouterProps> = ({ initialLocation, children }) => {
   const value = useMemo<KeyworkRouterProvider>(
     () => ({
       location: initialLocation,
@@ -38,5 +35,5 @@ export const KeyworkRouter: FC<KeyworkRouterProps> = ({ initialLocation, childre
     [initialLocation]
   )
 
-  return <KeyworkBrowserRouterContext.Provider value={value}>{children}</KeyworkBrowserRouterContext.Provider>
+  return <RouteContext.Provider value={value}>{children}</RouteContext.Provider>
 }

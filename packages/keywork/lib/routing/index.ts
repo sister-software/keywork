@@ -16,14 +16,17 @@
  * ### `keywork/routing`
  *
  * Everything you need to handle incoming requests in a Worker environment.
+ *
  * - Server-side rendering from your worker, made even faster with streamed responses.
  * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
+ * - Utilities for parsing paths and URLs.
  *
  * @packageDocumentation
  * @module routing
  */
 
-export * from './AbstractKeyworkRouter.js'
 export * from './common.js'
 export * from './KeyworkRouter.js'
+export * from './paths/parsePathname.js'
 export * from './RedirectHandler.js'
+export * from './RouteRequestHandler.js'

@@ -7,7 +7,7 @@
     ],
     "paths": {
       "keywork": ["packages/keywork/index.ts"],
-      "keywork/*": ["packages/keywork/lib/*/index.ts"],
+      "keywork/*": ["packages/keywork/lib/*/index.ts"]
     },
     "types": [],
     "jsx": "react-jsx",
@@ -23,7 +23,14 @@
     "declarationMap": true,
     "composite": true,
     "checkJs": true,
-    "allowJs": true
+    "allowJs": true,
+    "plugins": [
+      // Transform paths in output .js files
+      { "transform": "typescript-transform-paths" },
+
+      // Transform paths in output .d.ts files (Include this line if you output declarations files)
+      { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    ]
   },
   "exclude": [
     "**/dist/**/*"

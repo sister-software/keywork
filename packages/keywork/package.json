@@ -2,7 +2,7 @@
   "name": "keywork",
   "license": "AGPL-3.0",
   "version": "2.7.0",
-  "description": "Everything you need to handle incoming requests in a Worker environment.",
+  "description": "A batteries-included, _magic-free_, library for building web apps on Cloudflare Workers.",
   "keywords": [
     "cloudflare",
     "workers",
@@ -29,7 +29,6 @@
   "type": "module",
   "typedocMain": "src/index.ts",
   "exports": {
-    ".": "./index.js",
     "./package.json": "./package.json",
     "./bindings": "./bindings/index.js",
     "./bundling": "./bundling/index.js",
@@ -42,6 +41,9 @@
     "./paths": "./paths/index.js",
     "./polyfills/*": "./polyfills/*.js",
     "./react": "./react/index.js",
+    "./react/common": "./react/common/index.js",
+    "./react/worker": "./react/worker/index.js",
+    "./react/browser": "./react/browser/index.js",
     "./routing": "./routing/index.js",
     "./responses": "./responses/index.js",
     "./sessions": "./sessions/index.js",

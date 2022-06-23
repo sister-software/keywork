@@ -16,16 +16,13 @@ import { convertJSONToETaggableString, generateETag } from 'keywork/caching'
 import { getBrowserIdentifier } from 'keywork/headers'
 import { ErrorResponse, HTMLResponse, JSONResponse } from 'keywork/responses'
 
+import { RouteProvider, SSRPropsLike, StaticPropsProvider } from 'keywork/react/common'
 import type { FC } from 'react'
-import {
-  KeyworkHTMLDocument,
-  KeyworkHTMLDocumentComponent,
-  KeyworkProviders,
-  KeyworkProvidersComponent,
-  KeyworkRouter,
-  StaticPropsProvider,
-} from '../../components/index.js'
-import { ReactRenderStreamResult, renderReactStream, SSRPropsLike, _SSRPropsEmbed } from '../index.js'
+import { IncomingRequestContext } from '../../routing/common.js'
+import { KeyworkHTMLDocument, KeyworkHTMLDocumentComponent } from './KeyworkHTMLDocument.js'
+import { KeyworkProviders, KeyworkProvidersComponent } from './KeyworkProvidersComponent.js'
+import { _SSRPropsEmbed } from './SSRPropsEmbed.js'
+import { ReactRenderStreamResult, renderReactStream } from './stream.js'
 
 export async function renderStaticPropsAsJSON(
   request: Request,
@@ -37,7 +34,7 @@ export async function renderStaticPropsAsJSON(
 }
 
 export async function renderStaticPropsAsComponentStream<StaticProps extends NonNullable<SSRPropsLike>>(
-  context: EventContext<unknown, any, any>,
+  context: IncomingRequestContext<any, any, any>,
   staticProps: StaticProps,
   /** The React component to render for this specific page. */
   PageComponent: FC<StaticProps>,
@@ -52,7 +49,7 @@ export async function renderStaticPropsAsComponentStream<StaticProps extends Non
 
   const appDocument = (
     <StaticPropsProvider staticProps={staticProps}>
-      <KeyworkRouter initialLocation={location}>
+      <RouteProvider initialLocation={location}>
         <Providers>
           <DocumentComponent browserIdentifier={browserIdentifier} location={location}>
             <PageComponent {...staticProps} />
@@ -60,7 +57,7 @@ export async function renderStaticPropsAsComponentStream<StaticProps extends Non
             <_SSRPropsEmbed staticProps={staticProps} />
           </DocumentComponent>
         </Providers>
-      </KeyworkRouter>
+      </RouteProvider>
     </StaticPropsProvider>
   )
 

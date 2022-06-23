@@ -38,6 +38,7 @@
     "build": "node --experimental-specifier-resolution=node ./build/build-packages.mjs",
     "build:docs": "cd site && npm run build",
     "build:all": "npm run build && npm run build:docs",
+    "prepare": "ts-patch install -s",
     "prepublishOnly": "npm run build:all",
     "test": "jest"
   },
@@ -66,8 +67,10 @@
     "prettier-plugin-organize-imports": "^2.3.4",
     "rimraf": "^3.0.2",
     "title-case": "^3.0.3",
+    "ts-patch": "^2.0.1",
     "tsconfig-paths": "^4.0.0",
-    "typescript": "^4.7.3"
+    "typescript": "^4.7.3",
+    "typescript-transform-paths": "^3.3.1"
   },
   "browserslist": [
     "last 2 Chrome versions",

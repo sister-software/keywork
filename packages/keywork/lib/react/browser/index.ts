@@ -12,8 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+/**
+ * ### `keywork/react/browser`
+ *
+ * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
+ * - Client-side hydration that fits into your existing build pipeline.
+ *
+ * @packageDocumentation
+ * @module react.browser
+ */
+
 export * from './hydration.js'
-export * from './pages.js'
-export * from './props.js'
-export * from './rendering/index.js'
-export * from './SSRPropsEmbed.js'
+export * from './PatternToPageComponentMap.js'
+export * from './staticProps.js'

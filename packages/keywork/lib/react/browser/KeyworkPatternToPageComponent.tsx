@@ -13,11 +13,11 @@
  */
 
 import { PathMatch } from 'keywork/paths'
+import { createContextAndNamedHook } from 'keywork/react/hooks'
 import { FC, useMemo } from 'react'
-import { createContextAndNamedHook } from '../hooks/createNamedContextHook.js'
-import { matchRoute, PatternToPageComponentMap } from '../ssr/index.js'
-import { useKeyworkRouter } from './KeyworkRouter.js'
-import { useStaticProps } from './StaticPropsProvider.js'
+import { useKeyworkRouter } from '../common/RouteProvider.js'
+import { useStaticProps } from '../common/StaticPropsProvider.js'
+import { matchRoute, PatternToPageComponentMap } from './PatternToPageComponentMap.js'
 export interface KeyworkBrowserRouterProps {
   patternToPageComponent: PatternToPageComponentMap<any>
 }

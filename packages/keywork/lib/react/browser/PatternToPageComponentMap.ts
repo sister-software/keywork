@@ -13,7 +13,7 @@
  */
 
 import { matchPath } from 'keywork/paths'
-import { SSRPropsLike } from './props'
+import { SSRPropsLike } from 'keywork/react/common'
 
 /**
  * A **client-side** mapping of path patterns to their respective page components.

@@ -13,6 +13,7 @@
  */
 
 import classNames from 'classnames'
+import { KeyworkHTMLDocumentAppRoot, KeyworkHTMLDocumentStyleRoot } from 'keywork/react/common'
 import { KeyworkQueryParamKeys } from 'keywork/utilities'
 import type { FC, HtmlHTMLAttributes, ReactFragment, ReactNode } from 'react'
 
@@ -38,26 +39,6 @@ export interface KeyworkHTMLDocumentProps {
 }
 
 export type KeyworkHTMLDocumentComponent = FC<KeyworkHTMLDocumentProps>
-
-/**
- * The default ID assigned to the React root element.
- *
- * @example
- * ```tsx
- * <div id={KeyworkHTMLDocumentAppRoot}>{children}</div>
- * ```
- */
-export const KeyworkHTMLDocumentAppRoot = 'app-root'
-
-/**
- * The default ID assigned to the React root element.
- *
- * @example
- * ```tsx
- * <div id={KeyworkHTMLDocumentStyleRoot}>{children}</div>
- * ```
- */
-export const KeyworkHTMLDocumentStyleRoot = 'style-root'
 
 /**
  * A server-side render of a given HTML document.

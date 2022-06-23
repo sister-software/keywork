@@ -13,8 +13,8 @@
  */
 
 import { StatusCodes } from 'http-status-codes'
-import { AbstractKeyworkRouter } from './AbstractKeyworkRouter.js'
-import { RouteRequestHandler } from './common.js'
+import { KeyworkRouter } from './KeyworkRouter.js'
+import { RouteRequestHandler } from './RouteRequestHandler.js'
 
 /**
  * A higher-order function for redirecting requests via `KeyworkRequestHandler`.
@@ -33,7 +33,7 @@ import { RouteRequestHandler } from './common.js'
  * @category Incoming Request Handlers
  * @public
  */
-export class RedirectHandler extends AbstractKeyworkRouter {
+export class RedirectHandler extends KeyworkRouter {
   constructor(
     /** URL A url-like string or URL object */
     public destinationURL: string | URL,
@@ -41,6 +41,8 @@ export class RedirectHandler extends AbstractKeyworkRouter {
     public statusCode: number = StatusCodes.MOVED_TEMPORARILY
   ) {
     super()
+
+    this.all('*', this.onRequest)
   }
 
   public onRequest: RouteRequestHandler = ({ request }) => {

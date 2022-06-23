@@ -12,4 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+/**
+ * ### `keywork/react/common`
+ *
+ * @packageDocumentation
+ * @module react.hooks
+ */
+
 export * from './createNamedContextHook.js'

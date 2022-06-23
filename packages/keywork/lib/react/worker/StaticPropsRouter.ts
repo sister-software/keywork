@@ -12,18 +12,14 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import {
-  KeyworkHTMLDocumentComponent,
-  KeyworkProvidersComponent,
-  renderStaticPropsAsComponentStream,
-  renderStaticPropsAsJSON,
-  SSRPropsLike,
-} from 'keywork/react'
+import { GetStaticProps, SSRPropsLike } from 'keywork/react/common'
 import { ErrorResponse, HTMLResponse } from 'keywork/responses'
+import { KeyworkRouter, RouteRequestHandler } from 'keywork/routing'
 import { KeyworkQueryParamKeys } from 'keywork/utilities'
 import type { FC } from 'react'
-import { AbstractKeyworkRouter } from './AbstractKeyworkRouter.js'
-import { GetStaticProps, HTTPMethod, RouteRequestHandler } from './common.js'
+import { KeyworkHTMLDocumentComponent } from './KeyworkHTMLDocument.js'
+import { KeyworkProvidersComponent } from './KeyworkProvidersComponent.js'
+import { renderStaticPropsAsComponentStream, renderStaticPropsAsJSON } from './staticProps.js'
 
 /**
  * An extendable base class for handling incoming requests from a Worker.
@@ -35,20 +31,20 @@ import { GetStaticProps, HTTPMethod, RouteRequestHandler } from './common.js'
  *
  * - Always attempt to handle runtime errors gracefully, and respond with `KeyworkResourceError` when necessary.
  *
- * @typeDef BoundAliases The bound aliases, usually defined in your wrangler.toml file.
- * @typeDef StaticProps Optional static props returned by `getStaticProps`
- * @typeDef ParamKeys Optional string union of route path parameters. Only supported in Cloudflare Pages.
- * @typeDef Data Optional extra data to be passed to a route handler.
+ * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
+ * @typeParam StaticProps Optional static props returned by `getStaticProps`
+ * @typeParam ParamKeys Optional string union of route path parameters. Only supported in Cloudflare Pages.
+ * @typeParam Data Optional extra data to be passed to a route handler.
  *
  * @category Incoming Request Handlers
+ * @deprecated This will likely be folded into `renderStaticPropsAsComponentStream`
  * @public
  */
-export abstract class KeyworkRouter<
+export abstract class StaticPropsRouter<
   BoundAliases extends {} | null = null,
   StaticProps extends SSRPropsLike = {},
-  ParamKeys extends string = any,
   Data extends Record<string, unknown> = Record<string, unknown>
-> extends AbstractKeyworkRouter<BoundAliases, ParamKeys, Data> {
+> extends KeyworkRouter<BoundAliases, Data> {
   /**
    * The React component to render for this specific page.
    */
@@ -99,12 +95,12 @@ export abstract class KeyworkRouter<
    * @category Routing
    * @public
    */
-  public getStaticProps: GetStaticProps<BoundAliases, StaticProps, ParamKeys, Data> | undefined
+  public getStaticProps: GetStaticProps<BoundAliases, StaticProps, Data> | undefined
 
   /**
    * @internal
    */
-  protected _onRequestGetReactComponent: RouteRequestHandler<BoundAliases, ParamKeys, Data> = async (
+  protected _onRequestGetReactComponent: RouteRequestHandler<BoundAliases, any, Data> = async (
     context
   ): Promise<HTMLResponse> => {
     const location = new URL(context.request.url)
@@ -136,24 +132,5 @@ export abstract class KeyworkRouter<
       this.DocumentComponent as any,
       this.Providers as any
     )
-  }
-
-  /**
-   * @internal
-   */
-  protected _handlerPrefersReactRenderer(): boolean {
-    return Boolean(this.PageComponent)
-  }
-
-  /**
-   * Returns a specific handler for the given HTTP method.
-   * @internal
-   */
-  protected override _getHandlerForMethod(method: HTTPMethod) {
-    if (method === 'GET' && this._handlerPrefersReactRenderer()) {
-      return this._onRequestGetReactComponent
-    }
-
-    return super._getHandlerForMethod(method)
   }
 }

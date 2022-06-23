@@ -17,9 +17,14 @@ import { PrefixedLogger } from 'keywork/utilities'
 import type { ReactNode } from 'react'
 const logger = new PrefixedLogger('Hydrate')
 
+import {
+  GlobalScopeWithKeyworkSSRProps,
+  KeyworkHTMLDocumentAppRoot,
+  RouteProvider,
+  StaticPropsProvider,
+} from 'keywork/react/common'
 import { hydrateRoot, HydrationOptions } from 'react-dom/client'
-import { KeyworkHTMLDocumentAppRoot, KeyworkRouter, StaticPropsProvider } from '../components/index.js'
-import { getSSRPropsFromScope, globalScopeHasSSRProps, GlobalScopeWithKeyworkSSRProps } from './props.js'
+import { getSSRPropsFromScope, globalScopeHasSSRProps } from './staticProps.js'
 
 export interface HydrateKeyworkAppOptions {
   rootID?: string
@@ -50,7 +55,7 @@ export function hydrateKeyworkApp(initialChildren: ReactNode, options?: HydrateK
   logger.debug(`Hydrating: ${location}`)
   const appElement = (
     <StaticPropsProvider staticProps={staticProps}>
-      <KeyworkRouter initialLocation={location}>{initialChildren}</KeyworkRouter>
+      <RouteProvider initialLocation={location}>{initialChildren}</RouteProvider>
     </StaticPropsProvider>
   )
 

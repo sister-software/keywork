@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { globalScopeSSRKey, SSRPropsLike } from 'keywork/react/common'
 import type { FC } from 'react'
-import { globalScopeSSRKey, SSRPropsLike } from './props.js'
 
 export interface SSRProviderProps<StaticProps extends NonNullable<SSRPropsLike>> {
   staticProps: StaticProps

@@ -13,14 +13,17 @@
  */
 
 /**
- * ### `keywork/paths`
+ * ### `keywork/react/worker`
  *
- * Utilities for parsing paths and URLs.
+ * - Server-side rendering from your worker, made even faster with streamed responses.
+ * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
+ * - Client-side hydration that fits into your existing build pipeline.
  *
  * @packageDocumentation
- * @module paths
+ * @module react.worker
  */
 
-export * from './common.js'
-export * from './matchPath.js'
-export * from './parsePathname.js'
+export * from './KeyworkHTMLDocument.js'
+export * from './KeyworkProvidersComponent.js'
+export * from './SSRPropsEmbed.js'
+export * from './StaticPropsRouter.js'

@@ -12,15 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { AbstractKeyworkRouter, RouteRequestHandler } from 'keywork/routing'
+import { KeyworkRouter, RouteRequestHandler } from 'keywork/routing'
 import { WorkerEnvFetchBinding } from '../fetch.js'
 
 /**
- * An environment binding available within Worker Pages.
+ * An asset environment binding available within Cloudflare Pages.
  *
  * @remarks
  * This binding only exists in Cloudflare __Pages__.
- * For Worker Sites, use
+ *
+ * @see {WorkersSiteStaticContentBinding} For Worker Sites
  */
 export interface WorkersPagesAssetsBinding {
   ASSETS: WorkerEnvFetchBinding
@@ -33,7 +34,13 @@ export interface WorkersPagesAssetsBinding {
  * @beta This is under active development
  * @category {Static Asset Management}
  */
-export class KeyworkAssetsRouter extends AbstractKeyworkRouter<WorkersPagesAssetsBinding> {
+export class KeyworkAssetsRouter extends KeyworkRouter<WorkersPagesAssetsBinding> {
+  constructor() {
+    super()
+
+    this.get('*', this.onRequestGet)
+  }
+
   onRequestGet: RouteRequestHandler<WorkersPagesAssetsBinding> = ({ env, request }) => {
     return env.ASSETS.fetch(request)
   }
