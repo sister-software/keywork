@@ -15,7 +15,7 @@
 import deepmerge from 'deepmerge'
 import { convertJSONToETaggableString, generateETag } from 'keywork/caching'
 import { KeyworkResourceError } from 'keywork/errors'
-import { resolveDocPath } from 'keywork/uri'
+import { resolvePathSegments } from 'keywork/uri'
 import type { DeserializationTransformers, DeserializationTypes, PutOrPatchOptions } from './common.js'
 import type { KeyworkCollection } from './KeyworkCollection.js'
 import {
@@ -67,7 +67,7 @@ export class KeyworkDocumentReference<
   ) {
     this.relativeDocPath = relativeDocPath
     this.absoluteDocPath = this.parentCollection
-      ? resolveDocPath(this.parentCollection.collectionPath, relativeDocPath)
+      ? resolvePathSegments(this.parentCollection.collectionPath, relativeDocPath)
       : relativeDocPath
   }
 

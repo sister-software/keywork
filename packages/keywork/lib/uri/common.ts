@@ -175,8 +175,8 @@ export type PathBuilder = (...collectionPath: Array<string | undefined>) => stri
  *
  * @category Path Parsing
  */
-export const resolveDocPath: PathBuilder = (...collectionPath) => {
-  return collectionPath
+export const resolvePathSegments: PathBuilder = (...pathSegments) => {
+  return pathSegments
     .filter((piece) => !!piece)
     .join('/')
     .replaceAll('//', '/')

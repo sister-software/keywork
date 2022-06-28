@@ -15,16 +15,15 @@
 import { StatusCodes } from 'http-status-codes'
 import { ErrorResponse } from 'keywork/responses'
 import { KeyworkSession } from 'keywork/sessions'
-import { matchPath } from 'keywork/uri'
+import { matchPath, resolvePathSegments } from 'keywork/uri'
 import { PrefixedLogger } from 'keywork/utilities'
 import {
-  HTTPMethod,
   IncomingRequestEvent,
   IncomingRequestEventData,
-  NormalizedHTTPMethod,
   RequestWithCFProperties,
   WorkerRequestHandler,
 } from './common.js'
+import { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from './http.js'
 import { ParsedRoute, RouteMethodDeclaration, RouteRequestHandler } from './RouteRequestHandler.js'
 
 /**
@@ -34,18 +33,15 @@ import { ParsedRoute, RouteMethodDeclaration, RouteRequestHandler } from './Rout
  */
 const $ClassID = 'Keywork.WorkerRouter'
 
-const methodVerbToNormalized = new Map<HTTPMethod, NormalizedHTTPMethod>([
-  ['GET', 'get'],
-  ['POST', 'post'],
-  ['PUT', 'put'],
-  ['PATCH', 'patch'],
-  ['DELETE', 'delete'],
-  ['HEAD', 'head'],
-  ['OPTIONS', 'options'],
-  ['*', 'all'],
-])
-
-const normalizedMethodVerbs = Array.from(methodVerbToNormalized.values())
+/**
+ * Middleware declaration in the convenient shape of `Map`'s constructor parameters.
+ *
+ * @typeParam PathPatternPrefix A path prefix defining where the middleware should be mounted. Combines with the given router's routes.
+ */
+export type MiddlewareDeclaration<PathPatternPrefix extends string = string> = readonly [
+  PathPatternPrefix,
+  WorkerRouter<any>
+]
 
 /**
  * Options to configure the Worker Router.
@@ -57,9 +53,10 @@ export interface WorkerRouterOptions {
    */
   displayName?: string
   /**
-   * Middleware to apply to the router during construction. Middleware can also be applied via `WorkerRouter#use`.
+   * Middleware to apply to the router during construction.
+   * Middleware can also be applied via `WorkerRouter#use`.
    */
-  middleware?: WorkerRouter<any>[]
+  middleware?: readonly MiddlewareDeclaration[]
 }
 
 /**
@@ -73,8 +70,21 @@ export interface WorkerRouterOptions {
  * @category Routers
  */
 export class WorkerRouter<BoundAliases extends {} | null = null> {
-  routesByVerb = new Map<NormalizedHTTPMethod, ParsedRoute<BoundAliases>[]>(
-    normalizedMethodVerbs.map((normalizedVerb) => {
+  /**
+   * This router's known routes, categorized by their normalized HTTP method verbs into arrays of route handlers.
+   *
+   * e.g.
+   * ```
+   * GET: [{'/', routeHandler1}, {'/foo/' routeHandler2}, {'/bar/', routeHandler3}...]
+   * POST: [{'/', routeHandler1}, {'/foo/' routeHandler2}, {'/bar/', routeHandler3}...]
+   * ...etc
+   * ```
+   *
+   * Route handlers are prioritized in order of insertion,
+   * however, a handler can act as middleware by continuing the chain by returning `next()`
+   */
+  protected readonly routesByVerb = new Map<RouterMethod, ParsedRoute<BoundAliases>[]>(
+    Array.from(methodVerbToRouterMethod.values(), (normalizedVerb) => {
       return [normalizedVerb, []]
     })
   )
@@ -89,7 +99,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    * This is mostly for internal use.
    */
   protected _addHTTPMethodHandler(
-    normalizedVerb: NormalizedHTTPMethod,
+    normalizedVerb: RouterMethod,
     pathPattern: string,
     ...handlers: Array<RouteRequestHandler<BoundAliases, any, any>>
   ): void {
@@ -118,6 +128,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    *
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET Documentation on MDN}
    *
+   * @category HTTP Method Handler
    * @public
    */
   public get<ExpectedParams extends {} | null = null, Data extends IncomingRequestEventData = IncomingRequestEventData>(
@@ -136,6 +147,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    * @see {fileExtensionToContentTypeHeader}
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/POST Documentation on MDN}
    *
+   * @category HTTP Method Handler
    * @public
    */
   public post<
@@ -154,6 +166,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    *
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT Documentation on MDN}
    *
+   * @category HTTP Method Handler
    * @public
    */
   public put<ExpectedParams extends {} | null = null, Data extends IncomingRequestEventData = IncomingRequestEventData>(
@@ -167,6 +180,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    *
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH Documentation on MDN}
    *
+   * @category HTTP Method Handler
    * @public
    */
   public patch<
@@ -184,6 +198,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    *
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE Documentation on MDN}
    *
+   * @category HTTP Method Handler
    * @public
    */
   public delete<
@@ -204,6 +219,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    * without actually downloading the file.
    *
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/HEAD Documentation on MDN}
+   * @category HTTP Method Handler
    * @public
    */
   public head<
@@ -223,6 +239,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/OPTIONS Documentation on MDN}
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS Understanding CORS on MDN}
    *
+   * @category HTTP Method Handler
    * @public
    */
   public options<
@@ -236,8 +253,10 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    * Defines a handler for incoming all HTTP requests.
    *
    * @remarks
-   * This will always be a **lower priority** than an explicitly defined method handler.
-
+   * This will always be a **higher priority** than an explicitly defined method handler.
+   * If you're creating a router as middleware, `WorkerRouter#all` can be especially useful for intercepting incoming requests.
+   *
+   * @category HTTP Method Handler
    * @public
    */
   public all<ExpectedParams extends {} | null = null, Data extends IncomingRequestEventData = IncomingRequestEventData>(
@@ -254,9 +273,22 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    * Combines additional routers and their respective route handlers to this router.
    *
    * @remarks
-   * Route handlers are matched in the order of declaration.
-   * If you want to use another router as middleware,
-   * call `use` with the middleware router before defining your route handlers.
+   * Route handlers are matched in the order of their declaration:
+   *
+   * ```ts
+   * const app = new WorkerRouter()
+   *
+   * app.get('/foo', ({request}) => {
+   *   return new Response('This handler got here first!')
+   * })
+   *
+   * app.get('/foo', ({request}) => {
+   *   return new Response('This handler won't be called!')
+   * })
+   * ```
+   *
+   * However, if you want another router to act as middleware,
+   * Call `use` before defining your route handlers:
    *
    * ```ts
    * const authenticationRouter = new WorkerRouter()
@@ -266,12 +298,13 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    *     return new KeyworkResourceError(401, "You need to be signed in to do that!")
    *   }
    *
+   *   // Pass the request along to the next matching route handler.
    *   return next()
    * })
    *
    * const app = new WorkerRouter()
    *
-   * app.use(authenticationRouter)
+   * app.use('/', authenticationRouter)
    *
    * app.get('/user/profile', ({request}) => {
    *   return new Response("Some user only content.")
@@ -279,32 +312,37 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    * ```
    *
    * @public
-   * middleware by using the router.use() and router.METHOD() functions.
    */
-  public use(...routers: WorkerRouter<any>[]): void {
-    for (const router of routers) {
-      this.applyRouter(router)
-    }
-  }
+  public use(router: WorkerRouter<any>): void
+  public use(pathPattern: string, router: WorkerRouter<any>): void
+  public use(...args: unknown[]): void {
+    let pathPattern: string
+    let router: WorkerRouter<any>
 
-  /**
-   * Blends a given router into the current route map.
-   * @ignore
-   */
-  protected applyRouter(router: WorkerRouter<any>): void {
+    if (args.length > 1) {
+      // Path pattern was provided...
+      pathPattern = args[0] as string
+      router = args[1] as WorkerRouter<any>
+    } else {
+      // Path pattern defaults to root...
+      pathPattern = '/'
+      router = args[0] as WorkerRouter<any>
+    }
+
     for (const [verb, routes] of router.routesByVerb.entries()) {
       for (const route of routes) {
-        this._addHTTPMethodHandler(verb, route.pathPattern, route.handler)
+        this._addHTTPMethodHandler(verb, resolvePathSegments(pathPattern, route.pathPattern), route.handler)
       }
     }
   }
 
   //#endregion
 
-  //#region Construction
+  //#region Debugging
 
   /**
    * A display name used for debugging and log messages.
+   * @category Debug
    */
   public displayName: string
 
@@ -313,12 +351,50 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    */
   public readonly logger: PrefixedLogger
 
+  /**
+   * Collates the known routes by HTTP method verb.
+   *
+   * @see {WorkerRouter#$prettyPrintRoutes}
+   * @category Debug
+   * @public
+   */
+  public $getRoutesByHTTPMethod(): Array<[HTTPMethod, string[]]> {
+    return Array.from(this.routesByVerb.entries(), ([routerMethod, parsedRoutes]) => {
+      const httpMethod = routerMethodToHTTPMethod.get(routerMethod)!
+
+      return [httpMethod, parsedRoutes.map((parsedRoute) => parsedRoute.pathPattern)]
+    })
+  }
+
+  /**
+   * Outputs the known routes to the console.
+   * @category Debug
+   * @public
+   */
+  public $prettyPrintRoutes(): void {
+    const routesByHttpMethod = this.$getRoutesByHTTPMethod()
+
+    for (const [httpMethod, pathPatterns] of routesByHttpMethod) {
+      this.logger.log(httpMethod)
+
+      for (const pathPattern of pathPatterns) {
+        this.logger.log(httpMethod, pathPattern)
+      }
+    }
+  }
+
+  //#endregion
+
+  //#region Construction
+
   constructor(options?: WorkerRouterOptions) {
     this.displayName = options?.displayName || 'Keywork Router'
     this.logger = new PrefixedLogger(this.displayName)
 
     if (options?.middleware) {
-      this.use(...options.middleware)
+      for (const middlewareDeclaration of options.middleware) {
+        this.use(...middlewareDeclaration)
+      }
     }
   }
 
@@ -329,8 +405,8 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
    *
    * @internal
    */
-  protected _getParsedRoutesForMethod(normalizedMethodVerb: NormalizedHTTPMethod): ParsedRoute<BoundAliases>[] {
-    const verbs: readonly NormalizedHTTPMethod[] = [normalizedMethodVerb, 'all']
+  protected _getParsedRoutesForMethod(normalizedMethodVerb: RouterMethod): ParsedRoute<BoundAliases>[] {
+    const verbs: readonly RouterMethod[] = ['all', normalizedMethodVerb]
 
     const handlers = verbs.flatMap((verb) => this.routesByVerb.get(verb)!)
 
@@ -381,10 +457,10 @@ export class WorkerRouter<BoundAliases extends {} | null = null> {
 
     // With our event context constructed, we can check for any defined methods...
     // If a method exists and routes are defined, it acts like middleware.
-    const normalizedMethodVerb = methodVerbToNormalized.get(eventContext.request.method as HTTPMethod)
-    const routes = normalizedMethodVerb ? this._getParsedRoutesForMethod(normalizedMethodVerb) : null
+    const routerMethod = methodVerbToRouterMethod.get(eventContext.request.method as HTTPMethod)
+    const routes = routerMethod ? this._getParsedRoutesForMethod(routerMethod) : null
 
-    if (!normalizedMethodVerb || !routes || !routes.length) {
+    if (!routerMethod || !routes || !routes.length) {
       return new ErrorResponse(StatusCodes.NOT_IMPLEMENTED)
     }
 

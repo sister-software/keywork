@@ -12,19 +12,19 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { resolveDocPath } from 'keywork/uri'
+import { resolvePathSegments } from 'keywork/uri'
 
 /** Key to a collection's documents. */
 export const COLLECTION_KEY = '__COLLECTION'
 
 /** Key to a collection's namespace. */
-export const DOCUMENTS_KEY = resolveDocPath('__DOCUMENTS')
+export const DOCUMENTS_KEY = resolvePathSegments('__DOCUMENTS')
 
 /** Key to a collection's known index prefixes. */
-export const COLLECTION_INDEX_PREFIXES = resolveDocPath(COLLECTION_KEY, '__INDEX_BY')
+export const COLLECTION_INDEX_PREFIXES = resolvePathSegments(COLLECTION_KEY, '__INDEX_BY')
 
 /** Key to a collection's default indexing by ID. */
-export const INDEXES_ID_PREFIX = resolveDocPath(COLLECTION_INDEX_PREFIXES, '__ID')
+export const INDEXES_ID_PREFIX = resolvePathSegments(COLLECTION_INDEX_PREFIXES, '__ID')
 
 /** Key to a collection's default indexing by ID. */
-export const INDEXES_DOCUMENT_PATH_PREFIX = resolveDocPath(COLLECTION_INDEX_PREFIXES, '__DOCUMENT_PATH')
+export const INDEXES_DOCUMENT_PATH_PREFIX = resolvePathSegments(COLLECTION_INDEX_PREFIXES, '__DOCUMENT_PATH')

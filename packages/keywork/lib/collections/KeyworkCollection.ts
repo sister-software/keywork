@@ -13,7 +13,7 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { PathBuilder, resolveDocPath } from 'keywork/uri'
+import { PathBuilder, resolvePathSegments } from 'keywork/uri'
 import type { DeserializationTypes } from './common.js'
 import type { CollectionDocumentReferencesResponse, FetchListOptions } from './KeyworkCollection/common.js'
 import {
@@ -74,11 +74,11 @@ export class KeyworkCollection<
     /** A slash-separated path to a collection. */
     public collectionPath: string // options: KeyworkCollectionOptions = {}
   ) {
-    this.__documentsPath = resolveDocPath.bind(null, this.collectionPath, DOCUMENTS_KEY)
-    this.__indexesPath = resolveDocPath.bind(null, this.collectionPath, COLLECTION_KEY)
-    this.__indexPrefixesPath = resolveDocPath.bind(null, this.collectionPath, COLLECTION_INDEX_PREFIXES)
-    this.__indexByIDPath = resolveDocPath.bind(null, this.collectionPath, INDEXES_ID_PREFIX)
-    this.__indexByDocumentPath = resolveDocPath.bind(null, this.collectionPath, INDEXES_DOCUMENT_PATH_PREFIX)
+    this.__documentsPath = resolvePathSegments.bind(null, this.collectionPath, DOCUMENTS_KEY)
+    this.__indexesPath = resolvePathSegments.bind(null, this.collectionPath, COLLECTION_KEY)
+    this.__indexPrefixesPath = resolvePathSegments.bind(null, this.collectionPath, COLLECTION_INDEX_PREFIXES)
+    this.__indexByIDPath = resolvePathSegments.bind(null, this.collectionPath, INDEXES_ID_PREFIX)
+    this.__indexByDocumentPath = resolvePathSegments.bind(null, this.collectionPath, INDEXES_DOCUMENT_PATH_PREFIX)
   }
 
   public async initialize() {
@@ -209,7 +209,7 @@ export class KeyworkCollection<
             const serializedValue = JSON.stringify(value)
 
             await this.kvNamespace.put(
-              resolveDocPath(indexPath as string, metadata.id, serializedValue),
+              resolvePathSegments(indexPath as string, metadata.id, serializedValue),
               serializedMetadata,
               putOptions
             )
