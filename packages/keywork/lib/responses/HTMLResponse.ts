@@ -18,7 +18,7 @@ import { CachableResponse } from './CachableResponse.js'
 
 /**
  * A cachable request containing HTML content.
- * @category HTTP Responses
+ * @category HTTP Response
  */
 export class HTMLResponse extends CachableResponse {
   constructor(

@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { resolveDocPath } from 'keywork/paths'
+import { resolveDocPath } from 'keywork/uri'
 
 /** Key to a collection's documents. */
 export const COLLECTION_KEY = '__COLLECTION'

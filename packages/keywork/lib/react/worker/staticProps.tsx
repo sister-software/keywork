@@ -18,7 +18,7 @@ import { ErrorResponse, HTMLResponse, JSONResponse } from 'keywork/responses'
 
 import { RouteProvider, SSRPropsLike, StaticPropsProvider } from 'keywork/react/common'
 import type { FC } from 'react'
-import { IncomingRequestContext } from '../../routing/common.js'
+import { IncomingRequestEvent } from '../../routing/common.js'
 import { KeyworkHTMLDocument, KeyworkHTMLDocumentComponent } from './KeyworkHTMLDocument.js'
 import { KeyworkProviders, KeyworkProvidersComponent } from './KeyworkProvidersComponent.js'
 import { _SSRPropsEmbed } from './SSRPropsEmbed.js'
@@ -34,7 +34,7 @@ export async function renderStaticPropsAsJSON(
 }
 
 export async function renderStaticPropsAsComponentStream<StaticProps extends NonNullable<SSRPropsLike>>(
-  context: IncomingRequestContext<any, any, any>,
+  context: IncomingRequestEvent<any, any, any>,
   staticProps: StaticProps,
   /** The React component to render for this specific page. */
   PageComponent: FC<StaticProps>,

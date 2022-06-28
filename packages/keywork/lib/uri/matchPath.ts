@@ -18,7 +18,7 @@ import { ParsedPathParams, PathMatch, PathPattern, _Mutable } from './common.js'
  * Performs pattern matching on a URL pathname and returns information about
  * the match.
  *
- * @category Routing
+ * @category Path Parsing
  * @see https://reactrouter.com/docs/en/v6/api#matchpath
  */
 export function matchPath<ExpectedParams extends {} | null, Path extends string>(

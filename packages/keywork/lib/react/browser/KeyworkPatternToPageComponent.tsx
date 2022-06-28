@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { PathMatch } from 'keywork/paths'
 import { createContextAndNamedHook } from 'keywork/react/hooks'
+import { PathMatch } from 'keywork/uri'
 import { FC, useMemo } from 'react'
 import { useKeyworkRouter } from '../common/RouteProvider.js'
 import { useStaticProps } from '../common/StaticPropsProvider.js'

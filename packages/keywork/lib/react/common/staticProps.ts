@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { IncomingRequestContext } from 'keywork/routing'
+import { IncomingRequestEvent } from 'keywork/routing'
 import { SSRPropsLike } from './constants.js'
 
 /**
@@ -26,4 +26,4 @@ export type GetStaticProps<
   BoundAliases extends {} | null = null,
   StaticProps extends SSRPropsLike = {},
   Data extends Record<string, unknown> = Record<string, unknown>
-> = (context: IncomingRequestContext<BoundAliases, any, Data>) => Promise<StaticProps> | StaticProps
+> = (context: IncomingRequestEvent<BoundAliases, any, Data>) => Promise<StaticProps> | StaticProps

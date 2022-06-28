@@ -13,7 +13,7 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { PathBuilder, resolveDocPath } from 'keywork/paths'
+import { PathBuilder, resolveDocPath } from 'keywork/uri'
 import type { DeserializationTypes } from './common.js'
 import type { CollectionDocumentReferencesResponse, FetchListOptions } from './KeyworkCollection/common.js'
 import {

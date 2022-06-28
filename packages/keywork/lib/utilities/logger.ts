@@ -18,7 +18,7 @@ import { prettyJSON } from './json.js'
 /**
  * An common shape of the `Console` interface.
  *
- * @category Logging
+ * @category Logger
  * @ignore
  */
 export interface GlobalConsoleLike {
@@ -55,8 +55,8 @@ const _logTypes = new Map<keyof GlobalConsoleLike, string>([
  * logger.error('Unexpected error')
  * ```
  *
- * @category Logging
- * @category Error Handling
+ * @category Logger
+ * @category Error
  * @public
  */
 export class PrefixedLogger {

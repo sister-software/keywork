@@ -12,31 +12,34 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { IncomingRequestContext, KeyworkPageFunctionData } from './common.js'
+import { IncomingRequestEvent, IncomingRequestEventData } from './common.js'
 
 /**
  * A function or method that handles incoming requests and replies with a `Response`.
  *
  * @remarks
- * Generally, this is interface is assigned to a KeyworkRouter method, such as `onRequestGet`
+ * Generally, this is interface is assigned to a WorkerRouter method, such as `onRequestGet`
  * The `EventContext` argument is provided by the router's `fetch` method.
  *
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  * @typeParam ExpectedParams Optional string union of route path parameters. Only supported in Cloudflare Pages.
  * @typeParam Data Optional extra data to be passed to a route handler.
  *
- * @category Routing
+ * @category Router
  */
 export type RouteRequestHandler<
   BoundAliases extends {} | null = null,
   ExpectedParams extends {} | null = null,
   Data extends Record<string, unknown> = Record<string, unknown>
-> = (context: IncomingRequestContext<BoundAliases, ExpectedParams, Data>) => Promise<Response> | Response
+> = (context: IncomingRequestEvent<BoundAliases, ExpectedParams, Data>) => Promise<Response> | Response
 
+/**
+ * @ignore
+ */
 export type RouteMethodDeclaration<
   BoundAliases extends {} | null = null,
   ExpectedParams extends {} | null = null,
-  Data extends KeyworkPageFunctionData = KeyworkPageFunctionData
+  Data extends IncomingRequestEventData = IncomingRequestEventData
 > = (
   /**
    * A `path-to-regexp` style pattern.
@@ -50,10 +53,10 @@ export type RouteMethodDeclaration<
   ...handlers: Array<RouteRequestHandler<BoundAliases, ExpectedParams, Data>>
 ) => void
 
-export interface ParsedRoute<
-  BoundAliases extends {} | null = null,
-  Data extends KeyworkPageFunctionData = KeyworkPageFunctionData
-> {
+/**
+ * @ignore
+ */
+export interface ParsedRoute<BoundAliases extends {} | null = null> {
   pathPattern: string
-  handler: RouteRequestHandler<BoundAliases, any, Data>
+  handler: RouteRequestHandler<BoundAliases, any, any>
 }

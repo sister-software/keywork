@@ -26,7 +26,7 @@
  */
 
 export * from './common.js'
-export * from './KeyworkRouter.js'
-export * from './paths/parsePathname.js'
 export * from './RedirectHandler.js'
 export * from './RouteRequestHandler.js'
+export * from './ServiceBindingRouter.js'
+export * from './WorkerRouter.js'

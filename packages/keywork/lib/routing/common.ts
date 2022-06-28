@@ -12,6 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { WorkerEnvFetchBinding } from 'keywork/bindings'
 import { KeyworkSession } from 'keywork/sessions'
 
 /**
@@ -21,7 +22,7 @@ import { KeyworkSession } from 'keywork/sessions'
 export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS' | '*'
 
 /**
- * HTTP method normalized for the `KeyworkRouter` methods.
+ * HTTP method normalized for the `WorkerRouter` methods.
  * @ignore
  */
 
@@ -34,6 +35,7 @@ export type NormalizedHTTPMethod = 'get' | 'post' | 'put' | 'patch' | 'delete' |
  * Comments via Cloudflare:
  * >In addition to the properties on the standard Request object,
  * >the cf object contains extra information about the request provided by Cloudflare's edge.
+ *
  * @public
  */
 export interface RequestWithCFProperties extends Request {
@@ -41,11 +43,21 @@ export interface RequestWithCFProperties extends Request {
 }
 
 /**
- * An object containing contextual data for a single and specific incoming HTTP request.
+ * Additional data associated with the `IncomingRequestEvent`.
+ *
+ * @category Request
+ * @public
+ */
+export interface IncomingRequestEventData extends Record<string, unknown> {
+  session?: KeyworkSession
+}
+
+/**
+ * An event object containing contextual data for a single and specific incoming HTTP request.
  *
  * @remarks
- * Generally, this interface is exclusive to {@link KeyworkRequestHandler#fetch}
- * and passed to your subclass's route handlers.
+ * Generally, this interface is exclusive to {@link WorkerRouter#fetch}
+ * and automatically passed to your subclass's route handlers.
  *
  * This is nearly identical to `EventContext` defined in the `@cloudflare/workers-types` package.
  * However, the `IncomingRequestContext` type includes Keywork-specific helpers.
@@ -54,22 +66,32 @@ export interface RequestWithCFProperties extends Request {
  * @typeParam ExpectedParams URL parameters parsed from the incoming request's URL and the route's pattern.
  * @typeParam Data Optional extra data to be passed to a route handler.
  *
+ * @category Request
+ *
  * @public
  */
-export interface IncomingRequestContext<
+export interface IncomingRequestEvent<
   BoundAliases extends {} | null = null,
   ExpectedParams extends {} | null = null,
   Data extends Record<string, unknown> = Record<string, unknown>
 > {
   request: RequestWithCFProperties
-  readonly waitUntil: (promise: Promise<any>) => void
+  /**
+   * Extends the lifetime of the route handler even after a `Response` is sent to a client.
+   */
+  readonly waitUntil: (
+    /**
+     * The given promise argument will inform the Workers runtime to stay alive until the task completes.
+     */
+    nonBlockingTask: Promise<any>
+  ) => void
   /**
    * When invoked, will execute a route handler defined after the current.
    *
    * @remarks
    * This is similar to Express.js Middleware.
    */
-  next: typeof defaultFetcher.fetch
+  next: MiddlewareFetch
   readonly env: BoundAliases
 
   /**
@@ -86,7 +108,7 @@ export interface IncomingRequestContext<
  * A function within the Worker that receives all incoming requests.
  *
  * @remarks
- * Generally, this interface is exclusive to {@link KeyworkRequestHandler#fetch}
+ * Generally, this interface is exclusive to {@link WorkerRouter#fetch}
  * and passed to your subclass' route handlers.
  *
  * This is nearly identical to `ExportedHandlerFetchHandler`
@@ -107,7 +129,8 @@ export interface IncomingRequestContext<
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  *
  * @see {ExportedHandlerFetchHandler} A near-identical type defined by Cloudflare.
- * @category Routing
+ *
+ * @category Request
  */
 export type WorkerRequestHandler<BoundAliases extends {} | null = null> = (
   request: RequestWithCFProperties,
@@ -118,36 +141,33 @@ export type WorkerRequestHandler<BoundAliases extends {} | null = null> = (
    * @remarks
    * `passThroughOnException` is not available as it does not apply to Cloudflare Pages
    */
-  context: IncomingRequestContext<BoundAliases, any, any>
+  context: IncomingRequestEvent<BoundAliases, any, any>
 ) => Promise<Response> | Response
 
 /**
- * Additional data associated with the request.
- */
-export interface KeyworkPageFunctionData extends Record<string, unknown> {
-  session?: KeyworkSession
-}
-
-/**
+ * Middleware implementation of `fetch`
  *
- * @ignore
+ * This type is identical to `typeof fetch` with optional arguments.
+ *
+ * @category Request
  */
-export interface KeyworkRouterLike<BoundAliases extends {} | null = null> {
-  fetch: WorkerRequestHandler<BoundAliases>
-}
+export type MiddlewareFetch = (
+  /**
+   * An optional override of the `Request` provided in the route handler's `IncomingRequestContext`
+   */
+  requestOrUrl?: Request | string,
+  /**
+   * An optional override of the `Request` provided in the route handler's `IncomingRequestContext`
+   */
+  requestInit?: RequestInit | Request
+) => Response | Promise<Response>
 
 /**
- * Either a router or an env binding with a fetcher.
+ * @deprecated This will likely be removed in a future Keywork version.
  * @ignore
  */
-export type RouterOrFetcher = KeyworkRouterLike<any> | Fetcher
-
-/**
- * Middleware.
- * @ignore
- */
-export const defaultFetcher = {
-  fetch: (requestOrUrl?: Request | string, requestInit?: RequestInit | Request) => {
+export const _defaultFetcher: WorkerEnvFetchBinding = {
+  fetch: (requestOrUrl, requestInit) => {
     if (!requestOrUrl || typeof requestOrUrl === 'string') {
       return Promise.resolve(new Response(requestOrUrl, requestInit))
     }

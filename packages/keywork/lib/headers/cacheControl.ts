@@ -17,8 +17,8 @@ import { DURATION_ONE_WEEK } from '../utilities/index.js'
 /**
  * Response headers with Cache-Control.
  *
- * @category Caching
- * @category HTTP Responses
+ * @category Cache
+ * @category HTTP Response
  * @public
  */
 export type CacheControlHeader = HeadersInit & {
@@ -29,7 +29,7 @@ export type CacheControlHeader = HeadersInit & {
  * Directives for the Cache-Control header.
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control MDN}
  *
- * @category Caching
+ * @category Cache
  * @category HTTP Headers
  * @public
  */
@@ -47,7 +47,7 @@ export interface CacheControlDirectives {
  *
  * @see {@link {CachableResponse}}
  *
- * @category Caching
+ * @category Cache
  * @category HTTP Headers
  * @public
  */

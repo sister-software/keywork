@@ -21,7 +21,7 @@ import { CachableResponse } from './CachableResponse.js'
  *
  * @remarks Etag caching is supported when `JSONResponse` is constructed with the needed parameters.
  * You may want to disable caching in your browser development tools to avoid this behavior while debugging.
- * @category HTTP Responses
+ * @category HTTP Response
  * @category JSON
  */
 export class JSONResponse extends CachableResponse {

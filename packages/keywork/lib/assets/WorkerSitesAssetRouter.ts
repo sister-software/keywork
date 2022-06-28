@@ -17,7 +17,7 @@ import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
 import { getReasonPhrase, StatusCodes } from 'http-status-codes'
 import { KeyworkResourceError } from 'keywork/errors'
 import { ErrorResponse } from 'keywork/responses'
-import { KeyworkRouter, RouteRequestHandler } from 'keywork/routing'
+import { RouteRequestHandler, WorkerRouter } from 'keywork/routing'
 
 /**
  * An environment binding available within Worker Sites.
@@ -45,6 +45,8 @@ import { KeyworkRouter, RouteRequestHandler } from 'keywork/routing'
  * ```
  *
  * @see {@link https://developers.cloudflare.com/pages/platform/functions/#advanced-mode Cloudflare Worker Pages API}
+ *
+ * @category Asset Router
  */
 export interface WorkersSiteStaticContentBinding {
   __STATIC_CONTENT: KVNamespace
@@ -53,10 +55,10 @@ export interface WorkersSiteStaticContentBinding {
 /**
  * Handles incoming requests for static assets uploaded to Cloudflare KV.
  * @beta This is under active development
- * @category {Static Asset Management}
+ * @category Asset Router
  * @see {WorkersSiteStaticContentBinding}
  */
-export class KeyworkAssetHandler extends KeyworkRouter<WorkersSiteStaticContentBinding> {
+export class WorkerSitesAssetRouter extends WorkerRouter<WorkersSiteStaticContentBinding> {
   /**
    * Injected via:
    *
@@ -67,7 +69,7 @@ export class KeyworkAssetHandler extends KeyworkRouter<WorkersSiteStaticContentB
   protected assetManifest: AssetManifestType = {}
 
   constructor(rawAssetManifest: string) {
-    super()
+    super({ displayName: 'Worker Sites Assets' })
 
     try {
       this.assetManifest = JSON.parse(rawAssetManifest)
@@ -97,4 +99,5 @@ export class KeyworkAssetHandler extends KeyworkRouter<WorkersSiteStaticContentB
   }
 }
 
+// Re-exported to avoid type-mismatching downstream.
 export type { AssetManifestType }

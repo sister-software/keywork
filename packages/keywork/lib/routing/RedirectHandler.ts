@@ -13,11 +13,11 @@
  */
 
 import { StatusCodes } from 'http-status-codes'
-import { KeyworkRouter } from './KeyworkRouter.js'
+import { PrefixedLogger } from '../utilities/logger.js'
 import { RouteRequestHandler } from './RouteRequestHandler.js'
 
 /**
- * A higher-order function for redirecting requests via `KeyworkRequestHandler`.
+ * A route request handler for redirecting requests.
  *
  * @returns The incoming request handler.
  *
@@ -33,21 +33,22 @@ import { RouteRequestHandler } from './RouteRequestHandler.js'
  * @category Incoming Request Handlers
  * @public
  */
-export class RedirectHandler extends KeyworkRouter {
-  constructor(
-    /** URL A url-like string or URL object */
-    public destinationURL: string | URL,
-    /** An optional status code. Defaults to `302` */
-    public statusCode: number = StatusCodes.MOVED_TEMPORARILY
-  ) {
-    super()
+export function createRouteRedirect(
+  /** URL A url-like string or URL object */
+  destinationURL: string | URL,
+  /**
+   * An optional status code.
+   * @defaultValue `302` MOVED_TEMPORARILY
+   */
+  statusCode: number = StatusCodes.MOVED_TEMPORARILY
+): RouteRequestHandler {
+  const logger = new PrefixedLogger('Redirect')
 
-    this.all('*', this.onRequest)
+  const routeRequestHandler: RouteRequestHandler = ({ request }) => {
+    logger.info(`Redirecting from ${request.url} to ${destinationURL.toString()}`)
+
+    return Response.redirect(destinationURL.toString(), statusCode)
   }
 
-  public onRequest: RouteRequestHandler = ({ request }) => {
-    this.logger.info(`Redirect from ${request.url} to ${this.destinationURL.toString()}`)
-
-    return Response.redirect(this.destinationURL.toString(), this.statusCode)
-  }
+  return routeRequestHandler
 }

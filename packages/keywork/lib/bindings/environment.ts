@@ -12,7 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { WorkersPagesAssetsBinding, WorkersSiteStaticContentBinding } from './assets/index.js'
 import type { WorkerEnvFetchBinding } from './fetch.js'
 
 /**
@@ -23,5 +22,3 @@ import type { WorkerEnvFetchBinding } from './fetch.js'
  * - `DurableObjectNamespace` A Durable Object.
  */
 export type EnvironmentBindingKinds = WorkerEnvFetchBinding | KVNamespace | DurableObjectNamespace
-
-export type DefaultWorkerBindings = WorkersSiteStaticContentBinding | WorkersPagesAssetsBinding

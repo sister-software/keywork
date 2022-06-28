@@ -14,7 +14,7 @@
 
 import { GetStaticProps, SSRPropsLike } from 'keywork/react/common'
 import { ErrorResponse, HTMLResponse } from 'keywork/responses'
-import { KeyworkRouter, RouteRequestHandler } from 'keywork/routing'
+import { RouteRequestHandler, WorkerRouter } from 'keywork/routing'
 import { KeyworkQueryParamKeys } from 'keywork/utilities'
 import type { FC } from 'react'
 import { KeyworkHTMLDocumentComponent } from './KeyworkHTMLDocument.js'
@@ -26,7 +26,7 @@ import { renderStaticPropsAsComponentStream, renderStaticPropsAsJSON } from './s
  *
  * In the "Module Worker" format, incoming HTTP events are handled by defining and exporting an object with method handlers corresponding to event names.
  *
- * To create a route handler, start by first extending the `KeyworkRequestHandler` class.
+ * To create a route handler, start by first extending the `WorkerRouter` class.
  * Your implementation must at least include a `onRequestGet` handler, or a method-agnostic `onRequest` handler.
  *
  * - Always attempt to handle runtime errors gracefully, and respond with `KeyworkResourceError` when necessary.
@@ -34,7 +34,6 @@ import { renderStaticPropsAsComponentStream, renderStaticPropsAsJSON } from './s
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  * @typeParam StaticProps Optional static props returned by `getStaticProps`
  * @typeParam ParamKeys Optional string union of route path parameters. Only supported in Cloudflare Pages.
- * @typeParam Data Optional extra data to be passed to a route handler.
  *
  * @category Incoming Request Handlers
  * @deprecated This will likely be folded into `renderStaticPropsAsComponentStream`
@@ -44,7 +43,7 @@ export abstract class StaticPropsRouter<
   BoundAliases extends {} | null = null,
   StaticProps extends SSRPropsLike = {},
   Data extends Record<string, unknown> = Record<string, unknown>
-> extends KeyworkRouter<BoundAliases, Data> {
+> extends WorkerRouter<BoundAliases> {
   /**
    * The React component to render for this specific page.
    */
@@ -66,10 +65,10 @@ export abstract class StaticPropsRouter<
    *
    * @example
    * ```ts
-   * import { KeyworkRequestHandler, GetStaticPropsHandler } from 'keywork'
+   * import { WorkerRouter, GetStaticPropsHandler } from 'keywork'
    * import { StaticTodoPageProps, TodoPage } from './TodoPage.tsx'
    *
-   * export class TodoWorker extends KeyworkRequestHandler<null, StaticTodoPageProps> {
+   * export class TodoWorker extends WorkerRouter<null, StaticTodoPageProps> {
    *   // A URL path pattern...
    *   static readonly pattern = '/todos/:todoID/'
    *   // And our React component from earlier.
@@ -92,7 +91,7 @@ export abstract class StaticPropsRouter<
    *   }
    * }
    * ```
-   * @category Routing
+   * @category Route
    * @public
    */
   public getStaticProps: GetStaticProps<BoundAliases, StaticProps, Data> | undefined

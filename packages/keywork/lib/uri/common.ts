@@ -16,7 +16,7 @@
  * A PathPattern is used to match on some portion of a URL pathname.
  *
  * @category URL Parsing
- * @category Routing
+ * @category Route
  */
 export interface PathPattern<Path extends string = string> {
   /**
@@ -40,7 +40,7 @@ export interface PathPattern<Path extends string = string> {
  * A PathMatch contains info about how a PathPattern matched on a URL pathname.
  *
  * @category URL Parsing
- * @category Routing
+ * @category Route
  */
 export interface PathMatch<ExpectedParams extends {} | null = null> {
   /**
@@ -127,7 +127,7 @@ export type _ParamParseKey<Segment extends string> = _ParamParseSegment<Segment>
  * The parameters that were parsed from the URL path.
  *
  * @category URL Parsing
- * @category Routing
+ * @category Route
  */
 export type ParsedPathParams<Key extends string = string> = {
   readonly [key in Key]: string | undefined
@@ -136,21 +136,21 @@ export type ParsedPathParams<Key extends string = string> = {
 /**
  * An object that has a `url` property.
  *
- * @category Type Casting
+ * @category Type Cast
  */
 export type RequestLike = Pick<Request, 'url'>
 
 /**
  * An object that has a `pathname` property.
  *
- * @category Type Casting
+ * @category Type Cast
  */
 export type URLLike = Pick<URL, 'pathname'>
 
 /**
  * Checks if the given object is shaped like a `Request`
  * @param requestish An object that's possibly a `Request`
- * @category Type Casting
+ * @category Type Cast
  */
 export function isRequestLike(requestish: unknown): requestish is RequestLike {
   return Boolean(requestish && typeof requestish === 'object' && (requestish as any).url)
@@ -159,21 +159,21 @@ export function isRequestLike(requestish: unknown): requestish is RequestLike {
 /**
  * Checks if the given object is shaped like a `URL`
  * @param urlish An object that's possibly a `URL`
- * @category Type Casting
+ * @category Type Cast
  */
 export function isURLLike(urlish: unknown): urlish is URLLike {
   return Boolean(urlish && typeof urlish === 'object' && (urlish as any).pathname)
 }
 
 /**
- * @category URL Parsing
+ * @category Path Parsing
  */
 export type PathBuilder = (...collectionPath: Array<string | undefined>) => string
 
 /**
  * Resolves a POSIX-like path into slash delineated segments.
  *
- * @category URL Parsing
+ * @category Path Parsing
  */
 export const resolveDocPath: PathBuilder = (...collectionPath) => {
   return collectionPath

@@ -23,8 +23,8 @@ import { matchPath } from './matchPath.js'
  * @see {@link https://reactrouter.com/docs/en/v6/api#matchpath}
  *
  * @throws {KeyworkResourceError}
- * @category Routing
- * @category URL Parsing
+ * @category Route
+ * @category Path Parsing
  */
 export function parsePathname<ExpectedParams extends {} | null>(
   pattern: PathPattern<string> | string,

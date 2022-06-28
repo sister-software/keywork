@@ -30,6 +30,7 @@
   "typedocMain": "src/index.ts",
   "exports": {
     "./package.json": "./package.json",
+    "./assets": "./assets/index.js",
     "./bindings": "./bindings/index.js",
     "./bundling": "./bundling/index.js",
     "./caching": "./caching/index.js",
@@ -38,7 +39,6 @@
     "./files": "./files/index.js",
     "./headers": "./headers/index.js",
     "./ids": "./ids/index.js",
-    "./paths": "./paths/index.js",
     "./polyfills/*": "./polyfills/*.js",
     "./react": "./react/index.js",
     "./react/common": "./react/common/index.js",
@@ -47,6 +47,7 @@
     "./routing": "./routing/index.js",
     "./responses": "./responses/index.js",
     "./sessions": "./sessions/index.js",
+    "./uri": "./uri/index.js",
     "./utilities": "./utilities/index.js"
   },
   "types": "./index.d.ts",

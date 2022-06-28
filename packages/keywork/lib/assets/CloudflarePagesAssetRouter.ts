@@ -12,11 +12,22 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { ServiceBindingRouter } from 'keywork/routing'
+import { AssetBindingAliases } from './common.js'
+
 /**
- * A JSON representation of a `KeyworkResourceError`
- * @category Error
+ * Handles incoming requests for static assets uploaded to Cloudflare Pages.
+ *
+ * @remarks
+ * This binding only exists in Cloudflare __Pages__.
+ *
+ * @see {WorkerSitesAssetRouter} If you're using Worker Sites
+ * @category Asset Router
  */
-export interface ErrorJSONBody {
-  status: string
-  statusCode: number
+export class CloudflarePagesAssetRouter extends ServiceBindingRouter<AssetBindingAliases.CloudflarePages> {
+  constructor() {
+    super(AssetBindingAliases.CloudflarePages, {
+      displayName: 'Cloudflare Pages Assets',
+    })
+  }
 }

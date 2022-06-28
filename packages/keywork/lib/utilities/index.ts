@@ -32,8 +32,10 @@
  */
 
 export * from './datetime.js'
+export * from './disposable.js'
 export * from './json.js'
 export * from './logger.js'
 export * from './numbers.js'
 export * from './strings.js'
+export * from './timers.js'
 export * from './url.js'

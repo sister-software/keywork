@@ -22,6 +22,6 @@
  * @module react.browser
  */
 
-export * from './hydration.js'
+export * from './KeyworkApp.js'
 export * from './PatternToPageComponentMap.js'
 export * from './staticProps.js'

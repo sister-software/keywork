@@ -13,10 +13,14 @@
  */
 
 /**
- * A JSON representation of a `KeyworkResourceError`
- * @category Error
+ * ### `keywork/uri`
+ *
+ * Utilities for parsing paths and URLs.
+ *
+ * @packageDocumentation
+ * @module uri
  */
-export interface ErrorJSONBody {
-  status: string
-  statusCode: number
-}
+
+export * from './common.js'
+export * from './matchPath.js'
+export * from './parsePathName.js'

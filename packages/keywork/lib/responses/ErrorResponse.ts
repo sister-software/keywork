@@ -20,8 +20,8 @@ import { KeyworkResourceError } from 'keywork/errors'
  * @remarks If an error object is available and publically visible,
  * consider {@link ErrorResponse.fromUnknownError}
  *
- * @category HTTP Responses
- * @category Error Handling
+ * @category HTTP Response
+ * @category Error
  */
 export class ErrorResponse extends Response {
   constructor(

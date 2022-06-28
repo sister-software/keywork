@@ -31,7 +31,7 @@ import { ErrorJSONBody } from './common.js'
  * }
  * ```
  * @public
- * @category Error Handling
+ * @category Error
  */
 export class KeyworkResourceError extends Error {
   constructor(public statusText: string, public status: number = StatusCodes.INTERNAL_SERVER_ERROR) {

@@ -13,10 +13,8 @@
  */
 
 /**
- * A JSON representation of a `KeyworkResourceError`
- * @category Error
+ * @ignore
  */
-export interface ErrorJSONBody {
-  status: string
-  statusCode: number
+export interface Disposable {
+  dispose(): void | Promise<void>
 }

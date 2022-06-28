@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { matchPath } from 'keywork/paths'
 import { SSRPropsLike } from 'keywork/react/common'
+import { matchPath } from 'keywork/uri'
 
 /**
  * A **client-side** mapping of path patterns to their respective page components.

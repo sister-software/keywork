@@ -12,5 +12,15 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './pages.js'
-export * from './sites.js'
+/**
+ * ### `keywork/assets`
+ *
+ * Static Asset Utilities
+ *
+ * @packageDocumentation
+ * @module assets
+ */
+
+export * from './CloudflarePagesAssetRouter.js'
+export * from './common.js'
+export * from './WorkerSitesAssetRouter.js'

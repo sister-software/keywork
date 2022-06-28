@@ -18,7 +18,7 @@ import { arrayBufferToBase64, stringToArrayBuffer } from '../utilities/strings'
 import { ETaggable, _EMPTY_ETAG } from './common.js'
 
 /**
- * @category Caching
+ * @category Cache
  */
 export interface EntityToETagOptions {
   /**
@@ -40,7 +40,7 @@ export interface EntityToETagOptions {
  * If working with JSON, run the value through `JSON.stringify` first.
  * @param options See `EntityToETagOptions`
  *
- * @category Caching
+ * @category Cache
  */
 export async function generateETag(entity: ETaggable, options?: EntityToETagOptions): Promise<string> {
   let entityBuffer: ArrayBuffer

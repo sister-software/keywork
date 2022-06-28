@@ -15,7 +15,7 @@
 import deepmerge from 'deepmerge'
 import { convertJSONToETaggableString, generateETag } from 'keywork/caching'
 import { KeyworkResourceError } from 'keywork/errors'
-import { resolveDocPath } from 'keywork/paths'
+import { resolveDocPath } from 'keywork/uri'
 import type { DeserializationTransformers, DeserializationTypes, PutOrPatchOptions } from './common.js'
 import type { KeyworkCollection } from './KeyworkCollection.js'
 import {
