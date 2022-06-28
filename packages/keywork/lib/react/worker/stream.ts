@@ -27,11 +27,13 @@ const renderToReadableStream: typeof RenderToReadableStream = _renderToReadableS
 
 export interface ReactRenderStreamSuccessResult {
   stream: ReactDOMServerReadableStream
+  controller: AbortController
   error: null
 }
 
 export interface ReactRenderStreamErrorResult {
   stream: ReactDOMServerReadableStream
+  controller: AbortController
   error: KeyworkResourceError
 }
 
@@ -56,5 +58,6 @@ export async function renderReactStream(
   return {
     stream,
     error,
+    controller,
   }
 }

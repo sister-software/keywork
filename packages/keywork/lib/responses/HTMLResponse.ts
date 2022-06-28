@@ -17,7 +17,7 @@ import { fileExtensionToContentTypeHeader } from '../headers/contentType.js'
 import { CachableResponse } from './CachableResponse.js'
 
 /**
- * A cachable request containing HTML content.
+ * A cachable response containing HTML content.
  * @category HTTP Response
  */
 export class HTMLResponse extends CachableResponse {

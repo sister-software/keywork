@@ -23,7 +23,7 @@
  * @module react.worker
  */
 
+export * from './ComponentResponse.js'
 export * from './KeyworkHTMLDocument.js'
 export * from './KeyworkProvidersComponent.js'
 export * from './SSRPropsEmbed.js'
-export * from './StaticPropsRouter.js'

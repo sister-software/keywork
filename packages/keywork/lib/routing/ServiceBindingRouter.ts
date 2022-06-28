@@ -17,6 +17,8 @@ import { ErrorResponse } from 'keywork/responses'
 import { RouteRequestHandler } from './RouteRequestHandler.js'
 import { WorkerRouter, WorkerRouterOptions } from './WorkerRouter.js'
 
+// TODO This may do better as a RouteRequestHandler
+
 /**
  * A router that proxies requests directly to an environment binding, such as a service binding.
  *
@@ -39,9 +41,11 @@ export class ServiceBindingRouter<BindingAlias extends string> extends WorkerRou
       displayName: `Service Binding [${bindingAlias}]`,
       ...options,
     })
+
+    this.all('*', this.onRequest)
   }
 
-  onRequest: RouteRequestHandler<Record<BindingAlias, WorkerEnvFetchBinding>> = ({ env, request }) => {
+  private onRequest: RouteRequestHandler<Record<BindingAlias, WorkerEnvFetchBinding>> = ({ env, request }) => {
     if (!env || typeof env !== 'object') {
       const publicError = `\`env\` is not present.`
       console.warn(publicError)
