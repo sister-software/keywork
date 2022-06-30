@@ -15,6 +15,21 @@
 import { ParsedPathParams, PathMatch, PathPattern, _Mutable } from './common.js'
 
 /**
+ * Converts a given `PathPattern` or `string` into object form.
+ * @category Path Parsing
+ */
+export function normalizePathPattern<Path extends string>(
+  pattern: PathPattern<Path> | Path,
+  { caseSensitive = false, end = true } = {}
+): PathPattern<Path> {
+  if (typeof pattern === 'string') {
+    return { path: pattern, caseSensitive, end }
+  }
+
+  return pattern
+}
+
+/**
  * Performs pattern matching on a URL pathname and returns information about
  * the match.
  *
@@ -22,15 +37,20 @@ import { ParsedPathParams, PathMatch, PathPattern, _Mutable } from './common.js'
  * @see https://reactrouter.com/docs/en/v6/api#matchpath
  */
 export function matchPath<ExpectedParams extends {} | null, Path extends string>(
-  pattern: PathPattern<Path> | Path,
+  patternLike: PathPattern<Path> | Path,
   pathname: string
 ): PathMatch<ExpectedParams> | null {
-  if (typeof pattern === 'string') {
-    pattern = { path: pattern, caseSensitive: false, end: true }
-  }
+  const pattern = normalizePathPattern(patternLike)
+  // TODO: Consider merging these arguments.
+  const compiledPath = compilePath(pattern)
 
-  const [matcher, paramNames] = compilePath(pattern.path, pattern.caseSensitive, pattern.end)
+  return matchPathPrecompiled(compiledPath, pathname)
+}
 
+export function matchPathPrecompiled<ExpectedParams extends {} | null>(
+  { matcher, paramNames, pattern }: CompiledPath,
+  pathname: string
+): PathMatch<ExpectedParams> | null {
   const match = pathname.match(matcher)
   if (!match) return null
 
@@ -59,20 +79,32 @@ export function matchPath<ExpectedParams extends {} | null, Path extends string>
   return pathMatch
 }
 
-function compilePath(path: string, caseSensitive = false, end = true): [RegExp, string[]] {
-  if (!(path === '*' || !path.endsWith('*') || path.endsWith('/*'))) {
+/**
+ * @ignore
+ */
+export interface CompiledPath {
+  matcher: RegExp
+  paramNames: string[]
+  pattern: PathPattern
+}
+
+/**
+ * @ignore
+ */
+export function compilePath(pattern: PathPattern): CompiledPath {
+  if (!(pattern.path === '*' || !pattern.path.endsWith('*') || pattern.path.endsWith('/*'))) {
     console.warn(
-      `Route path "${path}" will be treated as if it were ` +
-        `"${path.replace(/\*$/, '/*')}" because the \`*\` character must ` +
+      `Route path "${pattern.path}" will be treated as if it were ` +
+        `"${pattern.path.replace(/\*$/, '/*')}" because the \`*\` character must ` +
         `always follow a \`/\` in the pattern. To get rid of this warning, ` +
-        `please change the route path to "${path.replace(/\*$/, '/*')}".`
+        `please change the route path to "${pattern.path.replace(/\*$/, '/*')}".`
     )
   }
 
   const paramNames: string[] = []
   let regexpSource =
     '^' +
-    path
+    pattern.path
       .replace(/\/*\*?$/, '') // Ignore trailing / and /*, we'll handle it below
       .replace(/^\/*/, '/') // Make sure it has a leading /
       .replace(/[\\.*+^$?{}|()[\]]/g, '\\$&') // Escape special regex chars
@@ -81,14 +113,14 @@ function compilePath(path: string, caseSensitive = false, end = true): [RegExp, 
         return '([^\\/]+)'
       })
 
-  if (path.endsWith('*')) {
+  if (pattern.path.endsWith('*')) {
     paramNames.push('*')
     regexpSource +=
-      path === '*' || path === '/*'
+      pattern.path === '*' || pattern.path === '/*'
         ? '(.*)$' // Already matched the initial /, just match the rest
         : '(?:\\/(.+)|\\/*)$' // Don't include the / in params["*"]
   } else {
-    regexpSource += end
+    regexpSource += pattern.end
       ? '\\/*$' // When matching to the end, ignore trailing slashes
       : // Otherwise, match a word boundary or a proceeding /. The word boundary restricts
         // parent routes to matching only their own words and nothing more, e.g. parent
@@ -99,9 +131,13 @@ function compilePath(path: string, caseSensitive = false, end = true): [RegExp, 
         '(?:(?=[.~-]|%[0-9A-F]{2})|\\b|\\/|$)'
   }
 
-  const matcher = new RegExp(regexpSource, caseSensitive ? undefined : 'i')
+  const matcher = new RegExp(regexpSource, pattern.caseSensitive ? undefined : 'i')
 
-  return [matcher, paramNames]
+  return {
+    pattern,
+    matcher,
+    paramNames,
+  }
 }
 
 function safelyDecodeURIComponent(value: string, paramName: string) {

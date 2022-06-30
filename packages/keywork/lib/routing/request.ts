@@ -12,11 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkSession } from 'keywork/sessions'
-import { MiddlewareFetch } from './middleware.js'
+import type { KeyworkSession } from 'keywork/sessions'
+import { PathMatch } from '../uri/common.js'
+import type { MiddlewareFetch } from './middleware.js'
 
 /**
- * The incoming request sent received by the Worker.
+ * The incoming request received by the Worker.
  *
  * @remarks
  * Comments via Cloudflare:
@@ -46,8 +47,12 @@ export interface IncomingRequestEventData extends Record<string, unknown> {
  * Generally, this interface is exclusive to {@link WorkerRouter#fetch}
  * and automatically passed to your subclass's route handlers.
  *
- * This is nearly identical to `EventContext` defined in the `@cloudflare/workers-types` package.
- * However, the `IncomingRequestContext` type includes Keywork-specific helpers.
+ * This is similar to `EventContext` defined in the `@cloudflare/workers-types` package.
+ * However, the `IncomingRequestEvent` type includes additional information from `WorkerRouter`.
+ *
+ * ### Caveats
+ *
+ * - The `request.url` property will be updated by route handler of `WorkerRouter`.
  *
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  * @typeParam ExpectedParams URL parameters parsed from the incoming request's URL and the route's pattern.
@@ -61,8 +66,22 @@ export interface IncomingRequestEvent<
   BoundAliases extends {} | null = null,
   ExpectedParams extends {} | null = null,
   Data extends Record<string, unknown> = Record<string, unknown>
-> {
+> extends PathMatch<ExpectedParams> {
+  /**
+   * The incoming request received by the Worker.
+   *
+   * @remarks
+   * Both the request's `url` property and the parent `IncomingRequestEvent` will reflect
+   * the current parsed route handler of `WorkerRouter`.
+   * @see {IncomingRequestEvent#originalURL}
+   */
   request: RequestWithCFProperties
+
+  /**
+   * The original URL associated with the `IncomingRequestEvent`.
+   */
+  originalURL: string
+
   /**
    * Extends the lifetime of the route handler even after a `Response` is sent to a client.
    */
@@ -77,56 +96,13 @@ export interface IncomingRequestEvent<
    *
    * @remarks
    * This is similar to Express.js Middleware.
+   * Providing a request argument will override the path param parsing within `WorkerRouter`.
    */
   next: MiddlewareFetch
   readonly env: BoundAliases
 
   /**
-   * URL parameters parsed from the incoming request's URL and the route's pattern.
-   */
-  params: ExpectedParams
-  /**
    * Optional extra data to be passed to a route handler.
    */
   data: Data
 }
-
-/**
- * A function within the Worker that receives all incoming requests.
- *
- * @remarks
- * Generally, this interface is exclusive to {@link WorkerRouter#fetch}
- * and passed to your subclass' route handlers.
- *
- * This is nearly identical to `ExportedHandlerFetchHandler`
- * defined in the `@cloudflare/workers-types` package.
- * However, the `WorkerRequestHandler` type includes Keywork-specific helpers.
- *
- * :::note
- * This interface should not be used with Cloudflare Pages unless you've disabled function routing
- * with [advanced mode](https://developers.cloudflare.com/pages/platform/functions/#advanced-mode)
- * :::
- *
- * :::note
- * `WorkerRequestHandler` shouldn't be confused with [`PagesFunction`](https://github.com/cloudflare/workers-types/blob/master/manual-ts/pages.d.ts)
- *
- * Cloudflare **Pages** instead uses named exports e.g. `export const onRequest = ...`
- * :::
- *
- * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
- *
- * @see {ExportedHandlerFetchHandler} A near-identical type defined by Cloudflare.
- *
- * @category Request
- */
-export type WorkerRequestHandler<BoundAliases extends {} | null = null> = (
-  request: RequestWithCFProperties,
-  env: BoundAliases,
-  /**
-   * The Worker context object.
-   *
-   * @remarks
-   * `passThroughOnException` is not available as it does not apply to Cloudflare Pages
-   */
-  context: IncomingRequestEvent<BoundAliases, any, any>
-) => Promise<Response> | Response

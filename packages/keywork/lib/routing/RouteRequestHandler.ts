@@ -12,7 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { IncomingRequestEvent, IncomingRequestEventData } from './common.js'
+import { CompiledPath, PathMatch } from 'keywork/uri'
+import { KeyworkFetcher } from './fetcher.js'
+import { IncomingRequestEvent, IncomingRequestEventData } from './request.js'
 
 /**
  * A function or method that handles incoming requests and replies with a `Response`.
@@ -57,6 +59,11 @@ export type RouteMethodDeclaration<
  * @ignore
  */
 export interface ParsedRoute<BoundAliases extends {} | null = null> {
-  pathPattern: string
-  handler: RouteRequestHandler<BoundAliases, any, any>
+  compiledPath: CompiledPath
+  fetcher: KeyworkFetcher<BoundAliases>
+}
+
+export interface RouteMatch<ExpectedParams extends {} | null = null> {
+  match: PathMatch<ExpectedParams>
+  fetcher: KeyworkFetcher<any>
 }

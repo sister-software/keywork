@@ -45,6 +45,7 @@ export interface PathPattern<Path extends string = string> {
 export interface PathMatch<ExpectedParams extends {} | null = null> {
   /**
    * The names and values of dynamic parameters in the URL.
+   * Parameters are parsed using the incoming request's URL and the route's pattern.
    */
   params: ExpectedParams
   /**

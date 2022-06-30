@@ -42,3 +42,14 @@ export function stringToArrayBuffer(str: string): ArrayBuffer {
 export function arrayBufferToBase64(arrayBuffer: ArrayBuffer): string {
   return btoa(String.fromCharCode(...new Uint8Array(arrayBuffer)))
 }
+
+/**
+ * Convenience method to get a substring's start offset.
+ */
+export function findSubstringStartOffset(str: string, searchStr: string): number | null {
+  const indexMatch = str.indexOf(searchStr)
+
+  if (indexMatch === -1) return null
+
+  return indexMatch + searchStr.length
+}

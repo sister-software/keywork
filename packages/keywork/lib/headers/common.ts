@@ -12,22 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { RequestWithCFProperties } from './request.js'
-
 /**
- * Middleware implementation of `fetch`
- *
- * This type is identical to `typeof fetch` with optional arguments.
- *
- * @category Request
+ * @ignore
  */
-export type MiddlewareFetch = (
-  /**
-   * An optional override of the `Request` provided in the route handler's `IncomingRequestContext`
-   */
-  requestOrUrl?: RequestWithCFProperties | string,
-  /**
-   * An optional override of the `Request` provided in the route handler's `IncomingRequestContext`
-   */
-  requestInit?: RequestInit | Request
-) => Response | Promise<Response>
+export const KeyworkHeaders = {
+  'X-Powered-By': 'Keywork',
+}

@@ -25,8 +25,8 @@
  * @module routing
  */
 
-export * from './common.js'
 export * from './RedirectHandler.js'
+export * from './request.js'
 export * from './RouteRequestHandler.js'
 export * from './ServiceBindingRouter.js'
 export * from './WorkerRouter.js'
