@@ -28,5 +28,11 @@ export function createBrowserBuildOptions(entryPoints: string[], outdir: string)
     keepNames: true,
     outdir,
     platform: 'browser',
+    banner: {
+      js: `/**
+* @file This bundle is generated to run in browser environment.
+*/
+/* eslint-disable */`,
+    },
   }
 }

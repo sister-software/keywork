@@ -44,5 +44,11 @@ export function createWorkerBuildOptions(entryPoints: string[], outfile = Bundle
     outfile,
     // 'browser' is the most accurate platform for workers.
     platform: 'browser',
+    banner: {
+      js: `/**
+* @file This bundle is generated to run in a V8 Isolate environment, such as Cloudflare Workers.
+*/
+/* eslint-disable */`,
+    },
   }
 }
