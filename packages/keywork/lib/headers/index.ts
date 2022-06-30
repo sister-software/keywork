@@ -22,5 +22,6 @@
  */
 
 export * from './cacheControl.js'
+export * from './common.js'
 export * from './contentType.js'
 export * from './userAgent.js'

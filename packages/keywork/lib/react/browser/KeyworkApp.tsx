@@ -20,6 +20,7 @@ import {
   GlobalScopeWithKeyworkSSRProps,
   KeyworkHTMLDocumentAppRoot,
   RouteProvider,
+  SSRPropsLike,
   StaticPropsProvider,
 } from 'keywork/react/common'
 import { hydrateRoot, HydrationOptions, Root } from 'react-dom/client'
@@ -31,8 +32,10 @@ export interface HydrateKeyworkAppOptions {
   reactHydrationOptions?: HydrationOptions
 }
 
+export type HydrationCallback<StaticProps extends SSRPropsLike | null = null> = (staticProps: StaticProps) => ReactNode
+
 /**
- *
+ * A class representing a Keywork App's lifecycle.
  */
 export class KeyworkApp implements Disposable {
   private logger = new PrefixedLogger('KeyworkApp')
@@ -45,7 +48,10 @@ export class KeyworkApp implements Disposable {
    * @param initialChildren This should be the current page's component, along with any needed providers.
    */
   // Note that this is defined as an instance member to allow `promise.then` chaining.
-  hydrate = (initialChildren: ReactNode, options?: HydrateKeyworkAppOptions): void => {
+  hydrate = <StaticProps extends SSRPropsLike | null = null>(
+    initialChildren: HydrationCallback<StaticProps>,
+    options?: HydrateKeyworkAppOptions
+  ): void => {
     this.logger.debug('Hydrating...')
 
     const rootID = options?.rootID || KeyworkHTMLDocumentAppRoot
@@ -65,13 +71,15 @@ export class KeyworkApp implements Disposable {
 
     const appElement = (
       <StaticPropsProvider staticProps={staticProps}>
-        <RouteProvider initialLocation={location}>{initialChildren}</RouteProvider>
+        <RouteProvider initialLocation={location}>{initialChildren(staticProps)}</RouteProvider>
       </StaticPropsProvider>
     )
 
     this.root = hydrateRoot(container, appElement, options?.reactHydrationOptions)
 
     this.logger.debug('Hydrated!')
+
+    container?.remove()
   }
 
   dispose() {

@@ -14,6 +14,7 @@
 
 import type { IncomingRequestEvent, RequestWithCFProperties } from './request.js'
 import type { RouteRequestHandler } from './RouteRequestHandler.js'
+import { ResponseLike } from './WorkerRouter/body.js'
 
 /**
  * A function within the Worker that receives all incoming requests.
@@ -68,8 +69,8 @@ export interface KeyworkFetcher<BoundAliases extends {} | null = null> {
   displayName?: string
 
   fetch: {
-    (...args: Parameters<RouteRequestHandler<BoundAliases, any, any>>): Response | Promise<Response>
-    (...args: Parameters<WorkerRequestHandler<BoundAliases>>): Response | Promise<Response>
+    (...args: Parameters<RouteRequestHandler<BoundAliases, any, any>>): ResponseLike | Promise<ResponseLike>
+    (...args: Parameters<WorkerRequestHandler<BoundAliases>>): ResponseLike | Promise<ResponseLike>
   }
 }
 

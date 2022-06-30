@@ -15,6 +15,7 @@
 import { CompiledPath, PathMatch } from 'keywork/uri'
 import { KeyworkFetcher } from './fetcher.js'
 import { IncomingRequestEvent, IncomingRequestEventData } from './request.js'
+import { ResponseLike } from './WorkerRouter/body.js'
 
 /**
  * A function or method that handles incoming requests and replies with a `Response`.
@@ -33,7 +34,7 @@ export type RouteRequestHandler<
   BoundAliases extends {} | null = null,
   ExpectedParams extends {} | null = null,
   Data extends Record<string, unknown> = Record<string, unknown>
-> = (context: IncomingRequestEvent<BoundAliases, ExpectedParams, Data>) => Promise<Response> | Response
+> = (context: IncomingRequestEvent<BoundAliases, ExpectedParams, Data>) => Promise<ResponseLike> | ResponseLike
 
 /**
  * @ignore

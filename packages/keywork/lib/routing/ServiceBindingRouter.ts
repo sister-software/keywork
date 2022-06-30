@@ -15,7 +15,7 @@
 import { WorkerEnvFetchBinding } from 'keywork/bindings'
 import { ErrorResponse } from 'keywork/responses'
 import { RouteRequestHandler } from './RouteRequestHandler.js'
-import { WorkerRouter, WorkerRouterOptions } from './WorkerRouter.js'
+import { WorkerRouter, WorkerRouterOptions } from './WorkerRouter/index.js'
 
 // TODO This may do better as a RouteRequestHandler
 

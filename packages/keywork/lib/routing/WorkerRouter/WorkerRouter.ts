@@ -13,55 +13,24 @@
  */
 
 import { StatusCodes } from 'http-status-codes'
+import { KeyworkResourceError } from 'keywork/errors'
+import { KeyworkHeaders } from 'keywork/headers'
+import {
+  KeyworkHTMLDocument,
+  KeyworkHTMLDocumentComponent,
+  KeyworkProviders,
+  KeyworkProvidersComponent,
+} from 'keywork/react/worker'
 import { ErrorResponse } from 'keywork/responses'
 import { KeyworkSession } from 'keywork/sessions'
 import { compilePath, matchPathPrecompiled, normalizePathPattern, PathPattern } from 'keywork/uri'
 import { Disposable, findSubstringStartOffset, PrefixedLogger } from 'keywork/utilities'
-import { KeyworkResourceError } from '../errors/KeyworkResourceError.js'
-import { KeyworkHeaders } from '../headers/common.js'
-import { isKeyworkFetcher, KeyworkFetcher, WorkerRequestHandler } from './fetcher.js'
-import { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from './http.js'
-import { IncomingRequestEvent, IncomingRequestEventData } from './request.js'
-import { ParsedRoute, RouteMatch, RouteMethodDeclaration, RouteRequestHandler } from './RouteRequestHandler.js'
-
-/**
- * Used in place of the reference-sensitive `instanceof`
- * @see {isRouterLike}
- * @ignore
- */
-const $ClassID = 'Keywork.WorkerRouter'
-
-/**
- * Middleware declaration in the convenient shape of `Map`'s constructor parameters.
- *
- * @typeParam PathPatternPrefix A path prefix defining where the middleware should be mounted. Combines with the given router's routes.
- */
-export type MiddlewareDeclaration<PathPatternPrefix extends string = string> = readonly [
-  PathPatternPrefix,
-  WorkerRouter<any>
-]
-
-/**
- * Options to configure the Worker Router.
- */
-export interface WorkerRouterOptions {
-  /**
-   * A display name used for debugging and log messages.
-   * @defaultValue `'Keywork Router'`
-   */
-  displayName?: string
-  /**
-   * Middleware to apply to the router during construction.
-   * Middleware can also be applied via `WorkerRouter#use`.
-   */
-  middleware?: readonly MiddlewareDeclaration[]
-
-  /**
-   * Whether debugging headers should be included.
-   * @defaultValue `true`
-   */
-  includeDebugHeaders?: boolean
-}
+import { isKeyworkFetcher, KeyworkFetcher, WorkerRequestHandler } from '../fetcher.js'
+import { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from '../http.js'
+import { IncomingRequestEvent, IncomingRequestEventData } from '../request.js'
+import { ParsedRoute, RouteMatch, RouteMethodDeclaration, RouteRequestHandler } from '../RouteRequestHandler.js'
+import { convertToResponse } from './body.js'
+import { $ClassID, WorkerRouterOptions } from './common.js'
 
 /**
  * An extendable base class for handling incoming requests from a Worker.
@@ -338,21 +307,44 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   public use(fetcher: KeyworkFetcher<any>): void
   public use(mountPathPattern: PathPattern | string, fetcher: KeyworkFetcher<any>): void
   public use(...args: unknown[]): void {
-    let mountPathPattern: PathPattern
+    let mountPathPattern: PathPattern | string
     let fetcher: KeyworkFetcher<any>
 
     if (args.length > 1) {
       // Path pattern was provided...
-      mountPathPattern = normalizePathPattern(args[0] as string, { end: true })
+      mountPathPattern = args[0] as PathPattern | string
       fetcher = args[1] as KeyworkFetcher<any>
     } else {
       // Path pattern defaults to root...
-      mountPathPattern = normalizePathPattern('/', { end: true })
+      mountPathPattern = '/'
       fetcher = args[0] as KeyworkFetcher<any>
     }
 
-    this._addHTTPMethodHandler('all', mountPathPattern, fetcher)
+    this._addHTTPMethodHandler(
+      'all',
+      normalizePathPattern(mountPathPattern, {
+        end: false,
+      }),
+      fetcher
+    )
   }
+
+  //#endregion
+
+  //#region React
+
+  /**
+   * A HTML Document React component which wraps the entire application.
+   * Use this if you need to replace the default HTML Document.
+   * @category React
+   */
+  DocumentComponent: KeyworkHTMLDocumentComponent
+  /**
+   * A React component which wraps the SSR routes.
+   * Use this if you need to inject a provider into the SSR pipeline.
+   * @category React
+   */
+  Providers: KeyworkProvidersComponent
 
   //#endregion
 
@@ -420,6 +412,9 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     this.displayName = options?.displayName || 'Keywork Router'
     this.logger = new PrefixedLogger(this.displayName)
     this.includeDebugHeaders = options?.includeDebugHeaders || true
+
+    this.DocumentComponent = options?.DocumentComponent || KeyworkHTMLDocument
+    this.Providers = options?.Providers || KeyworkProviders
 
     if (options?.middleware) {
       for (const middlewareDeclaration of options.middleware) {
@@ -515,7 +510,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   /**
    * @ignore
    */
-  protected delegateFetchEvent: RouteRequestHandler<BoundAliases, any, any> = async (event) => {
+  protected delegateFetchEvent = async (event: IncomingRequestEvent<BoundAliases, any, any>): Promise<Response> => {
     // With our event context constructed, we can check for any defined methods...
     // If a method exists and routes are defined, it acts like middleware.
     const routerMethod = methodVerbToRouterMethod.get(event.request.method as HTTPMethod)
@@ -555,23 +550,18 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       const url = new URL(event.request.url)
       const { match, fetcher } = matchedRoute
 
-      const pathNameOffset = findSubstringStartOffset(url.pathname, match.pathnameBase)
-      if (pathNameOffset) {
-        console.log('GOT PATH OFFSET', pathNameOffset)
-        console.log('CUTTING', url.pathname, pathNameOffset)
-        match.pathname = url.pathname.substring(pathNameOffset)
-        match.pathnameBase = '/'
+      if (!match.pattern.end) {
+        // The current pattern only matches the beginning of the pathname.
+        // So, we remove the matched portion which allows any nested routes to
+        // behave as if the pathname did not include any unforseen prefixes.
+        const pathNameOffset = findSubstringStartOffset(url.pathname, match.pathnameBase)
+        if (pathNameOffset) {
+          match.pathname = url.pathname.substring(pathNameOffset)
+          match.pathnameBase = '/'
 
-        url.pathname = match.pathname
+          url.pathname = match.pathname
+        }
       }
-
-      // if (match.pathnameBase !== '/') {
-      //   const pathNameOffset = findSubstringStartOffset(url.pathname, match.pathnameBase)
-
-      //   if (pathNameOffset) {
-      //     url.pathname = match.pathname.substring(pathNameOffset)
-      //   }
-      // }
 
       /** A clone of the initial request, with a new URL to match the remaining pathname parameters.  */
       const request = input ? new Request(input, requestInit) : new Request(url.toString(), event.request)
@@ -585,8 +575,8 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
           return event.next(...args)
         },
       }
-      const response = await fetcher.fetch(currentEvent)
-
+      const responseLike = await fetcher.fetch(currentEvent)
+      const response = convertToResponse(responseLike, this)
       this._applyHeaders(response)
 
       return response
@@ -646,21 +636,4 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     this.logger.debug('Disposing...', reason)
     this.routesByVerb.clear()
   }
-}
-
-/**
- * Checks if a given object is indeed a `WorkerRouter`
- *
- * This fixes some weirdness where `instanceof` may get clobbered
- * by a user's ESBuild configuration.
- *
- * @internal
- * @ignore
- */
-export function isRouterLike<BoundAliases extends {} | null = null>(
-  routerLike: unknown
-): routerLike is WorkerRouter<BoundAliases> {
-  return Boolean(
-    routerLike instanceof WorkerRouter || (routerLike && typeof routerLike === 'object' && $ClassID in routerLike)
-  )
 }

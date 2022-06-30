@@ -18,7 +18,6 @@ import { KeyworkQueryParamKeys } from 'keywork/utilities'
 import type { FC, HtmlHTMLAttributes, ReactFragment, ReactNode } from 'react'
 
 export interface KeyworkHTMLDocumentProps {
-  location: URL
   moduleManifest?: string[]
   browserIdentifier?: string
   className?: string
@@ -46,7 +45,6 @@ export type KeyworkHTMLDocumentComponent = FC<KeyworkHTMLDocumentProps>
  */
 export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
   children,
-  location,
   browserIdentifier,
   className,
   buildId,
@@ -69,7 +67,6 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
       lang="en-US"
       className={classNames('static has-pointer', className)}
       data-browser={browserIdentifier}
-      data-route={location.pathname || '/'}
       {...htmlAttributes}
     >
       <head>
@@ -94,7 +91,7 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
         <div id={KeyworkHTMLDocumentAppRoot}>{children}</div>
         <div id={KeyworkHTMLDocumentStyleRoot} />
 
-        <script type="module" src={`/index.js?${$assetSearchParams}`}></script>
+        <script type="module" src={`/main.js?${$assetSearchParams}`}></script>
       </body>
     </html>
   )
