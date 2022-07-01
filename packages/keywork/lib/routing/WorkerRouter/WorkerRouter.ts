@@ -30,7 +30,14 @@ import { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPM
 import { IncomingRequestEvent, IncomingRequestEventData } from '../request.js'
 import { ParsedRoute, RouteMatch, RouteMethodDeclaration, RouteRequestHandler } from '../RouteRequestHandler.js'
 import { convertToResponse } from './body.js'
-import { $ClassID, WorkerRouterOptions } from './common.js'
+import { isMiddlewareDeclarationOption, WorkerRouterOptions } from './common.js'
+
+/**
+ * Used in place of the reference-sensitive `instanceof`
+ * @see {isWorkerRouter}
+ * @ignore
+ */
+export const $ClassID = 'Keywork.WorkerRouter'
 
 /**
  * An extendable base class for handling incoming requests from a Worker.
@@ -307,26 +314,23 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   public use(fetcher: KeyworkFetcher<any>): void
   public use(mountPathPattern: PathPattern | string, fetcher: KeyworkFetcher<any>): void
   public use(...args: unknown[]): void {
-    let mountPathPattern: PathPattern | string
+    let mountPathPattern: PathPattern
     let fetcher: KeyworkFetcher<any>
 
     if (args.length > 1) {
       // Path pattern was provided...
-      mountPathPattern = args[0] as PathPattern | string
+      mountPathPattern = normalizePathPattern(args[0] as PathPattern | string, {
+        end: false,
+      })
+
       fetcher = args[1] as KeyworkFetcher<any>
     } else {
       // Path pattern defaults to root...
-      mountPathPattern = '/'
+      mountPathPattern = { path: '*', caseSensitive: false, end: true }
       fetcher = args[0] as KeyworkFetcher<any>
     }
 
-    this._addHTTPMethodHandler(
-      'all',
-      normalizePathPattern(mountPathPattern, {
-        end: false,
-      }),
-      fetcher
-    )
+    this._addHTTPMethodHandler('all', mountPathPattern, fetcher)
   }
 
   //#endregion
@@ -390,10 +394,14 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     for (const { httpMethod, parsedRoutes } of routesByHttpMethod) {
       if (!parsedRoutes.length) continue
 
-      this.logger.log(httpMethod)
+      this.logger.log('METHOD:', httpMethod)
 
       for (const { compiledPath, fetcher } of parsedRoutes) {
         this.logger.log(fetcher.displayName || '', compiledPath.pattern.path, compiledPath.matcher)
+
+        if (WorkerRouter.isRouter(fetcher)) {
+          fetcher.$prettyPrintRoutes()
+        }
       }
     }
   }
@@ -418,7 +426,11 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
 
     if (options?.middleware) {
       for (const middlewareDeclaration of options.middleware) {
-        this.use(...middlewareDeclaration)
+        if (isMiddlewareDeclarationOption(middlewareDeclaration)) {
+          this.use(...middlewareDeclaration)
+        } else {
+          this.use(middlewareDeclaration)
+        }
       }
     }
   }
@@ -508,6 +520,22 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   }
 
   /**
+   * Finds the matching routes for a given pathname.
+   */
+  protected _findMatchingRoutes(routes: ParsedRoute<any>[], pathname: string): RouteMatch<any>[] {
+    // Given the current URL, attempt to find a matching route handler...
+    const matches: RouteMatch<any>[] = []
+    for (const route of routes) {
+      const match = matchPathPrecompiled(route.compiledPath, pathname)
+      if (!match) continue
+
+      matches.push({ match, fetcher: route.fetcher })
+    }
+
+    return matches
+  }
+
+  /**
    * @ignore
    */
   protected delegateFetchEvent = async (event: IncomingRequestEvent<BoundAliases, any, any>): Promise<Response> => {
@@ -520,14 +548,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       return new ErrorResponse(StatusCodes.NOT_IMPLEMENTED)
     }
 
-    // Given the current URL, attempt to find a matching route handler...
-    const matches: RouteMatch<any>[] = []
-    for (const route of routes) {
-      const match = matchPathPrecompiled(route.compiledPath, event.pathname)
-      if (!match) continue
-
-      matches.push({ match, fetcher: route.fetcher })
-    }
+    const matches = this._findMatchingRoutes(routes, event.pathname)
 
     let routeIndex = 0
 
@@ -535,16 +556,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       const matchedRoute = matches[routeIndex]
 
       if (!matchedRoute) {
-        if (routeIndex > 0) {
-          return new ErrorResponse(
-            StatusCodes.INTERNAL_SERVER_ERROR,
-            `\`eventContext.next()\` was called ${routeIndex + 1} times but only ${
-              matches.length
-            } routes are defined for \`${event.pathname}\``
-          )
-        }
-
-        return new ErrorResponse(StatusCodes.NOT_FOUND, `No route matches \`${event.pathname}\``)
+        return null
       }
 
       const url = new URL(event.request.url)
@@ -556,7 +568,8 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
         // behave as if the pathname did not include any unforseen prefixes.
         const pathNameOffset = findSubstringStartOffset(url.pathname, match.pathnameBase)
         if (pathNameOffset) {
-          match.pathname = url.pathname.substring(pathNameOffset)
+          // Add '/' to allow omitting of trailing-slash.
+          match.pathname = url.pathname.substring(pathNameOffset) || '/'
           match.pathnameBase = '/'
 
           url.pathname = match.pathname
@@ -575,6 +588,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
           return event.next(...args)
         },
       }
+
       const responseLike = await fetcher.fetch(currentEvent)
       const response = convertToResponse(responseLike, this)
       this._applyHeaders(response)
@@ -582,19 +596,46 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       return response
     }
 
-    let response: Response
+    /** The response that will be sent to the client. */
+    let finalResponse: Response | null = null
+    /**
+     * The current response may be `null`, indicating that this router has no matching handler,
+     * and a 404 is an appropriate fallback.
+     * However, if we're in a nested router, a `null` value indicates that the parent router
+     * should continue as if `next` was called to a sibling router.
+     */
 
-    try {
-      response = await event.next()
-    } catch (_error) {
-      this.logger.error(_error)
-      this.logger.debug(event)
+    while (!finalResponse) {
+      let currentResponse: Response | null = null
 
-      response = ErrorResponse.fromUnknownError(_error, 'A server error occurred. Please try again later.')
+      try {
+        // Attempt to match and handle the request...
+        currentResponse = await event.next()
+        routeIndex++
+      } catch (error) {
+        this.logger.error(error)
+        this.logger.debug(event)
+
+        currentResponse = ErrorResponse.fromUnknownError(error, 'A server error occurred. Please try again later.')
+      }
+
+      if (!currentResponse || currentResponse.status === StatusCodes.NOT_FOUND) {
+        if (matches[routeIndex]) {
+          // There's another sibling route ahead.
+          continue
+        }
+
+        // There aren't any remaining route handlers at this layer.
+        finalResponse =
+          currentResponse || this._createHTTPError(StatusCodes.NOT_FOUND, `No route matches \`${event.pathname}\``)
+      } else {
+        // We're good.
+        finalResponse = currentResponse
+      }
     }
 
-    this._applyHeaders(response)
-    return response
+    this._applyHeaders(finalResponse)
+    return finalResponse
   }
 
   /**
@@ -606,6 +647,14 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
         response.headers.set(key, value)
       }
     }
+  }
+
+  /**
+   * Creates an either a default `ErrorResponse`, or if defined, a fallback route matching the HTTP status code.
+   * @beta
+   */
+  private _createHTTPError(status: StatusCodes, publicReason?: string): Response {
+    return new ErrorResponse(status, publicReason)
   }
 
   /**
@@ -629,6 +678,12 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   readonly [$ClassID] = true as boolean
   /** @ignore */
   static readonly [$ClassID] = true as boolean
+
+  static isRouter<BoundAliases extends {} | null = null>(
+    routerLike: KeyworkFetcher<BoundAliases> | WorkerRouter<BoundAliases>
+  ): routerLike is WorkerRouter<BoundAliases> {
+    return Boolean(routerLike instanceof WorkerRouter || $ClassID in routerLike)
+  }
 
   //#endregion
 

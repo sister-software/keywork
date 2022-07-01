@@ -17,7 +17,7 @@ import type { RequestWithCFProperties } from './request.js'
 /**
  * Middleware implementation of `fetch`
  *
- * This type is identical to `typeof fetch` with optional arguments.
+ * This type is similar to `typeof fetch` with the option to return `null` to fallthrough.
  *
  * @category Request
  */
@@ -30,4 +30,4 @@ export type MiddlewareFetch = (
    * An optional override of the `Request` provided in the route handler's `IncomingRequestContext`
    */
   requestInit?: RequestInit | Request
-) => Response | Promise<Response>
+) => (Response | null) | Promise<Response | null>

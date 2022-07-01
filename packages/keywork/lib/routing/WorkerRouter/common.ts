@@ -38,7 +38,7 @@ export interface WorkerRouterOptions {
    * Middleware to apply to the router during construction.
    * Middleware can also be applied via `WorkerRouter#use`.
    */
-  middleware?: readonly MiddlewareDeclaration[]
+  middleware?: Array<MiddlewareDeclarationLike>
 
   /**
    * Whether debugging headers should be included.
@@ -57,9 +57,16 @@ export interface WorkerRouterOptions {
   Providers?: KeyworkProvidersComponent
 }
 
+/** @ignore */
+export type MiddlewareDeclarationLike = WorkerRouter<any> | MiddlewareDeclaration
+
 /**
- * Used in place of the reference-sensitive `instanceof`
- * @see {isRouterLike}
+ * Utility function for parsing middleware options.
  * @ignore
+ * @category Type Cast
  */
-export const $ClassID = 'Keywork.WorkerRouter'
+export function isMiddlewareDeclarationOption(
+  optionValue: MiddlewareDeclarationLike
+): optionValue is MiddlewareDeclaration {
+  return Array.isArray(optionValue)
+}
