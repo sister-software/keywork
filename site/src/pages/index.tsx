@@ -29,7 +29,7 @@ function HomepageHeader() {
 
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
-          <Link className="button button--primary button--lg" to="/docs/overview/getting-started">
+          <Link className="button button--primary button--lg" to="/docs/overview/">
             Let&#39;s go!
           </Link>
         </div>
@@ -43,7 +43,8 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
-      description="A batteries-included, magic-free, library for building web apps on Cloudflare Workers.">
+      description="A batteries-included, magic-free, library for building web apps on Cloudflare Workers."
+    >
       <HomepageHeader />
 
       <div className="background-container" />

@@ -1,109 +1,126 @@
 ---
 id: hello-world
-title: Hello World Example
+title: Keywork says "Hello!"
 sidebar_position: 1
 sidebar_label: Hello World
 ---
 
+Building a web app can be intimidating, so let's start with a small example:
+A Keywork app that displays "hello world" in the browser.
+
+By the end of this example, you'll know how to use the [`WorkerRouter`](/api/classes/routing.WorkerRouter)
+class to handling incoming requests.
+
+:::info
+If you're already familiar with Cloudflare Workers, this might seem like a bit of review.
+And if you'd just like to skip to the final result, checkout the [example repo](https://github.com/nirrius/keywork-example-react-esbuild).\_
+
+:::
+
 ## Handling incoming requests
 
-The core concept of Keywork is handling the entire lifecycle of an incoming HTTP request:
+The core focus of Keywork is the routing of incoming HTTP requests from the user's browser,
+to your app's router endpoints.
 
 1. Define an incoming request handler class by extending `KeyworkRequestHandler`
 2. Your Worker's entrypoint exports your class
 3. A user sends incoming request from the browser, e.g. example.com
 4. The Worker runtime sends the incoming data to your request handler class
-5. Your incoming request handler returns a `Response`
+5. Your incoming request handler returns a `Response` object.
 
 :::info
-While optional, Keywork is a TypeScript-first library.
-Example code is always written with type annotations.
+Heads up! While optional, Keywork is a TypeScript-first library.
+Examples are always written with type annotations, but they can be omitted if you'd like.
 
 :::
 
 ### Define an incoming request handler
 
-Building an app with Keywork starts by extending the `KeyworkRequestHandler` class.
+Building an app with Keywork starts creating a [`WorkerRouter`](/api/classes/routing.WorkerRouter)
+class:
 
-```ts title=workers/HelloWorld.ts
-import { KeyworkRequestHandler, IncomingRequestData } from 'keywork'
+```ts title=_worker.ts
+import { WorkerRouter } from 'keywork/routing'
 
-export class HelloWorldWorker extends KeyworkRequestHandler {
-  onRequestGet(data: IncomingRequestData) {
-    const {
-      /** The incoming request */
-      request,
-      /** Any bound environment properties defined in your `wrangler.toml` file */
-      env,
-      /** An execution context for running async tasks after the response is sent. */
-      context,
-    } = data
+// Create a router to receive all incoming requests...
+const app = new WorkerRouter()
 
-    /** The incoming request URL object */
-    const url = new URL(request.url)
+// e.g. GET http://example.com/
+app.get('/', (event) => {
+  // Parse the incoming request URL...
+  const url = new URL(event.request.url)
 
-    return new Response(`Hello from ${url.pathname}`)
-  }
-}
+  return `Hello from ${url.pathname}`
+})
+
+// Finally, export our router so that Cloudflare Workers can send our app requests...
+export default app
 ```
 
-The `KeyworkRequestHandler` class we extend from does much of the heavy lifting
-that makes _working_ with Workers easier, and gives us the optional type-safety of TypeScript.
+Much like Express.js, we can define route handlers by invoking methods on `app` that correspond with HTTP methods:
 
-Because the `HelloWorldWorker` class implements a `onRequestGet` method,
-it will handle all incoming `GET` requests.
-
-:::info
-If you're familiar with either Worker Sites, or Worker Pages, this will look familiar!
-
-:::
-
-### Putting it all together...
-
-Now with our request handler written,
-we construct an instance of `HelloWorldWorker` from the main entrypoint of our Worker:
-
-```ts title=workers/_worker.ts
-import { HelloWorldWorker } from './HelloWorldWorker'
-
-const incomingRequestHandler = new HelloWorldWorker()
-
-export default incomingRequestHandler
+```ts
+GET    => app.get([path pattern], [RouteRequestHandler])
+POST   => app.post([path pattern], [RouteRequestHandler])
+DELETE => app.delete([path pattern], [RouteRequestHandler])
 ```
 
-Notice that we use `export default` on the instance?
+In this case, we use `app.get` to define route a `RouteRequestHandler`
+callback that executes when an incoming request is received at the root of our app: `'/'`.
+
+Inside our `RouteRequestHandler` callback, we have an [`event`](/api/interfaces/routing.IncomingRequestEvent)
+object that contains information about the request.
+And in this example, we use `event.request.url` to parse the URL from whence the request originated.
+
+Notice that we use `export default` on `app`?
 This instructs Cloudflare's Worker runtime to direct all incoming requests to our handler.
 
 :::info
-Separating your `RequestHandler` classes into their own files can be helpful
 If you're building an app with multiple pages and API endpoints.
-Check out the [routing](./routing) example for more info.
+Splitting your app into multiple routers in their own files can keep your app managable.
+
 :::
 
-## Responding with JSON
+## Responding with type-safe JSON
 
-```ts title=worker.ts
-import { KeyworkRequestHandler, IncomingRequestData, JSONResponse } from 'keywork'
+Keywork gives us the optional type-safety of TypeScript.
+And since we've already demostrated how to send plaintext,
+Let's illustrate this feature by adding a JSON endpoint to our router:
 
+```ts title=_worker.ts
+import { WorkerRouter } from 'keywork/routing'
+
+const app = new WorkerRouter()
+
+app.get('/', (event) => {
+  const url = new URL(event.request.url)
+
+  return `Hello from ${url.pathname}`
+})
+
+// Define a TypeScript interface to enforce the shape
 interface HelloResponseBody {
   url: string
   date: string
   message: string
 }
 
-class HelloWorker extends KeyworkRequestHandler {
-  onRequestGet: PagesFunction = ({ request }) => {
-    const url = new URL(request.url)
+app.get('/hello.json', (event) => {
+  const url = new URL(event.request.url)
 
-    const body: HelloResponseBody = {
-      url: url.toString(),
-      date: new Date().toJSON(),
-      message: 'Keywork rocks!',
-    }
-
-    return new JSONResponse(body)
+  const body: HelloResponseBody = {
+    url: url.toString(),
+    date: new Date().toJSON(),
+    message: 'Keywork rocks!',
   }
-}
 
-export default new HelloWorker()
+  return body
+})
+
+export default app
 ```
+
+If you're familiar with Worker Sites, or Cloudflare Pages, you may have noticed that
+`WorkerRouter` reduces much of the low-level boilerplate.
+The Keywork API attempts to bridge the gap between existing web development patterns,
+and the native Worker API.

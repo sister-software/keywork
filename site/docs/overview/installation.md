@@ -7,7 +7,7 @@ sidebar_label: Getting Started
 
 ## Install
 
-Keywork apps are framework agnostic and fits in your existing codebase:
+Keywork apps are framework agnostic and fit in your existing codebase:
 
 ```shell title=Run in the root of your Cloudflare Worker project.
 $ yarn add keywork

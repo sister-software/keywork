@@ -13,7 +13,9 @@
  */
 
 /**
- * ### `keywork/react/common`
+ * ### `keywork/react/hooks`
+ *
+ * React Hook Utilities
  *
  * @packageDocumentation
  * @module react.hooks

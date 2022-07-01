@@ -15,7 +15,7 @@
 /**
  * ### `keywork/assets`
  *
- * Static Asset Utilities
+ * Static asset utilities with support for Cloudflare Pages and Worker Sites.
  *
  * @packageDocumentation
  * @module assets
