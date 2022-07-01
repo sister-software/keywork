@@ -38,7 +38,8 @@ export const KeyworkHTMLDocumentAppRoot = 'app-root'
  */
 export const KeyworkHTMLDocumentStyleRoot = 'style-root'
 
-export const globalScopeSSRKey = '__ keywork_ssr_props'
+export const globalScopeSSRKey = ':KeyworkSSRProps:'
+export const globalScopeSSRElementID = ':KeyworkSSRPropsElement:'
 
 /**
  * The global key where SSR props are assigned.

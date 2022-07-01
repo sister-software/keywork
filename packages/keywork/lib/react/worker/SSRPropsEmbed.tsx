@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { globalScopeSSRKey, SSRPropsLike } from 'keywork/react/common'
+import { globalScopeSSRElementID, globalScopeSSRKey, SSRPropsLike } from 'keywork/react/common'
 import type { FC } from 'react'
 
 export interface SSRProviderProps<StaticProps extends NonNullable<SSRPropsLike>> {
@@ -26,7 +26,7 @@ export interface SSRProviderProps<StaticProps extends NonNullable<SSRPropsLike>>
 export const _SSRPropsEmbed: FC<SSRProviderProps<any>> = ({ staticProps }) => {
   return (
     <script
-      id="__ssr_props-container"
+      id={globalScopeSSRElementID}
       type="text/javascript"
       dangerouslySetInnerHTML={{
         __html: `;(function() {

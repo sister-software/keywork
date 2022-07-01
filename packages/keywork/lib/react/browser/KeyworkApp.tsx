@@ -78,8 +78,6 @@ export class KeyworkApp implements Disposable {
     this.root = hydrateRoot(container, appElement, options?.reactHydrationOptions)
 
     this.logger.debug('Hydrated!')
-
-    container?.remove()
   }
 
   dispose() {
