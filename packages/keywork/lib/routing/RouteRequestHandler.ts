@@ -22,7 +22,7 @@ import { ResponseLike } from './WorkerRouter/body.js'
  *
  * @remarks
  * Generally, this is interface is assigned to a WorkerRouter method, such as `onRequestGet`
- * The `EventContext` argument is provided by the router's `fetch` method.
+ * The `IncomingRequestEvent` argument is provided by the router's `fetch` method.
  *
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  * @typeParam ExpectedParams Optional string union of route path parameters. Only supported in Cloudflare Pages.
@@ -33,8 +33,9 @@ import { ResponseLike } from './WorkerRouter/body.js'
 export type RouteRequestHandler<
   BoundAliases extends {} | null = null,
   ExpectedParams extends {} | null = null,
-  Data extends Record<string, unknown> = Record<string, unknown>
-> = (context: IncomingRequestEvent<BoundAliases, ExpectedParams, Data>) => Promise<ResponseLike> | ResponseLike
+  Data extends Record<string, unknown> = Record<string, unknown>,
+  ExpectedReturn extends ResponseLike = ResponseLike
+> = (event: IncomingRequestEvent<BoundAliases, ExpectedParams, Data>) => Promise<ExpectedReturn> | ExpectedReturn
 
 /**
  * @ignore
