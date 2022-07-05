@@ -19,7 +19,7 @@
  * - Client-side hydration that fits into your existing build pipeline.
  *
  * @packageDocumentation
- * @module React.Browser
+ * @module react.browser
  */
 
 export * from './KeyworkApp.js'

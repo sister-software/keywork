@@ -18,7 +18,7 @@
  * React Hook Utilities
  *
  * @packageDocumentation
- * @module React Hooks
+ * @module react.hooks
  */
 
 export * from './createNamedContextHook.js'

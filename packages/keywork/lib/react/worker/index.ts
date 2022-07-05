@@ -19,7 +19,7 @@
  * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
  *
  * @packageDocumentation
- * @module React.Worker
+ * @module react.worker
  */
 
 export * from './KeyworkHTMLDocument.js'
