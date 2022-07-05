@@ -24,6 +24,7 @@ import type { MiddlewareFetch } from './middleware.js'
  * >In addition to the properties on the standard Request object,
  * >the cf object contains extra information about the request provided by Cloudflare's edge.
  *
+ * @category Request
  * @public
  */
 export interface RequestWithCFProperties extends Request {
@@ -36,9 +37,7 @@ export interface RequestWithCFProperties extends Request {
  * @category Request
  * @public
  */
-export interface IncomingRequestEventData extends Record<string, unknown> {
-  session?: KeyworkSession
-}
+export interface IncomingRequestEventData extends Record<string, unknown> {}
 
 /**
  * An event object containing contextual data for a single and specific incoming HTTP request.
@@ -81,6 +80,11 @@ export interface IncomingRequestEvent<
    * The original URL associated with the `IncomingRequestEvent`.
    */
   originalURL: string
+
+  /**
+   * The original URL associated with the `IncomingRequestEvent`.
+   */
+  session: KeyworkSession | null
 
   /**
    * Extends the lifetime of the route handler even after a `Response` is sent to a client.

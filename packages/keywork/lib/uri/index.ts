@@ -18,7 +18,7 @@
  * Utilities for parsing paths and URLs.
  *
  * @packageDocumentation
- * @module uri
+ * @module URI
  */
 
 export * from './common.js'

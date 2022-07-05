@@ -79,13 +79,19 @@ export class ErrorResponse extends Response {
     /** Any kind of unknown error, usually from a try/catch block. */
     _error: any,
     /** A publically visible reason the error occurred, sent back to the client. */
-    publicReason?: string
+    publicReason?: string,
+    /**
+     *  Headers to include with the response.
+     */
+    headersInit?: HeadersInit
   ) {
     const resourceAccessError = KeyworkResourceError.fromUnknownError(_error)
 
     return new ErrorResponse(
       resourceAccessError.status,
-      publicReason || getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR)
+      publicReason || getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR),
+      undefined,
+      headersInit
     )
   }
 }

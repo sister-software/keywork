@@ -28,7 +28,7 @@ import { ResponseLike } from './WorkerRouter/body.js'
  * @typeParam ExpectedParams Optional string union of route path parameters. Only supported in Cloudflare Pages.
  * @typeParam Data Optional extra data to be passed to a route handler.
  *
- * @category Router
+ * @category Request Handler
  */
 export type RouteRequestHandler<
   BoundAliases extends {} | null = null,
@@ -50,7 +50,7 @@ export type RouteMethodDeclaration<
    *
    * @see {@link https://www.npmjs.com/package/path-to-regexp NPM Package}
    */
-  paramPattern: string,
+  paramPattern: string | RegExp,
   /**
    * One or more callback functions to handle an incoming request.
    */
@@ -65,6 +65,9 @@ export interface ParsedRoute<BoundAliases extends {} | null = null> {
   fetcher: KeyworkFetcher<BoundAliases>
 }
 
+/**
+ * @ignore
+ */
 export interface RouteMatch<ExpectedParams extends {} | null = null> {
   match: PathMatch<ExpectedParams>
   fetcher: KeyworkFetcher<any>

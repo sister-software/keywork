@@ -18,3 +18,18 @@
 export const KeyworkHeaders = {
   'X-Powered-By': 'Keywork',
 }
+
+/**
+ * Merges the given source headers into the destination.
+ *
+ * @remarks
+ * This mutates the `destination` headers.
+ *
+ */
+export function mergeHeaders(destination: Headers, ...sources: Headers[]): void {
+  for (const source of sources) {
+    for (const [name, value] of source.entries()) {
+      destination.set(name, value)
+    }
+  }
+}

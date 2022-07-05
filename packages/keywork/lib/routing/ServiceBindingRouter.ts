@@ -24,7 +24,7 @@ import { WorkerRouter, WorkerRouterOptions } from './WorkerRouter/index.js'
  *
  * @typeParam BindingAlias The bound alias, usually defined in your wrangler.toml file.
  *
- * @category Routers
+ * @category Router
  * @public
  */
 export class ServiceBindingRouter<BindingAlias extends string> extends WorkerRouter<

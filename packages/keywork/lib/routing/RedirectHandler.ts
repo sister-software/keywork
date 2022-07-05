@@ -30,7 +30,7 @@ import { RouteRequestHandler } from './RouteRequestHandler.js'
  * export default redirectToExample
  * ```
  *
- * @category Incoming Request Handlers
+ * @category Request Handler
  * @public
  */
 export function createRouteRedirect(

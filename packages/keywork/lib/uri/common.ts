@@ -18,7 +18,7 @@
  * @category URL Parsing
  * @category Route
  */
-export interface PathPattern<Path extends string = string> {
+export interface PathPattern<Path extends string | RegExp = string> {
   /**
    * A string to match against a URL pathname. May contain `:id`-style segments
    * to indicate placeholders for dynamic parameters. May also end with `/*` to

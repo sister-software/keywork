@@ -13,20 +13,24 @@
  */
 
 import { KeyworkHTMLDocumentComponent, KeyworkProvidersComponent } from 'keywork/react/worker'
+import { KeyworkSessionOptions } from '../../sessions/KeyworkSession.js'
+import { KeyworkFetcher } from '../fetcher.js'
 import type { WorkerRouter } from './WorkerRouter.js'
 
 /**
  * Middleware declaration in the convenient shape of `Map`'s constructor parameters.
  *
+ * @category Options
  * @typeParam PathPatternPrefix A path prefix defining where the middleware should be mounted. Combines with the given router's routes.
  */
 export type MiddlewareDeclaration<PathPatternPrefix extends string = string> = readonly [
   PathPatternPrefix,
-  WorkerRouter<any>
+  WorkerRouter<any> | KeyworkFetcher<any>
 ]
 
 /**
  * Options to configure the Worker Router.
+ * @category Options
  */
 export interface WorkerRouterOptions {
   /**
@@ -55,6 +59,8 @@ export interface WorkerRouterOptions {
    * Use this if you need to inject a provider into the SSR pipeline.
    */
   Providers?: KeyworkProvidersComponent
+
+  session?: KeyworkSessionOptions | boolean
 }
 
 /** @ignore */

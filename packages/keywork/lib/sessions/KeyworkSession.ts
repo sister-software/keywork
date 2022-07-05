@@ -12,50 +12,105 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { parse as parseCookies, serialize as serializeCookies } from 'cookie'
-import { SnowflakeID } from 'keywork/ids'
+import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'cookie'
+import { ulid } from 'keywork/ids'
 
+/**
+ * The default session cookie key.
+ * @internal
+ */
 export const DEFAULT_SESSION_COOKIE_KEY = '_keyworkSessionID'
+
+/**
+ * The default cookie serialization options.
+ * @internal
+ */
+export const DEFAULT_COOKIE_SERIALIZE_OPTIONS: CookieSerializeOptions = {
+  sameSite: 'strict',
+  secure: true,
+  httpOnly: true,
+  maxAge: 60 * 60 * 24 * 90,
+} as const
+
+export interface KeyworkSessionOptions {
+  /**
+   * The key used to read from the cookie header.
+   * @defaultValue {@link DEFAULT_SESSION_COOKIE_KEY}
+   */
+  cookieKey?: string
+
+  /**
+   * @defaultValue {@link DEFAULT_COOKIE_SERIALIZE_OPTIONS}
+   */
+
+  serializeOptions?: CookieSerializeOptions
+}
 
 /**
  * A simple session manager to aid in authenticating users.
  *
  * @category Session Management
  *
- * @beta This is under active development.
  */
 export class KeyworkSession {
-  public sessionID: string
+  /**
+   * The user's current session ID, derived from the `Request` cookie header.
+   */
+  public readonly sessionID: string
+  /**
+   * `true` if this session has just been created.
+   * `false` if the `Request` included a session cookie.
+   */
   public readonly isNewSession: boolean
 
-  constructor(request: Request, public cookieKey = DEFAULT_SESSION_COOKIE_KEY) {
-    const cookies = parseCookies(request.headers.get('Cookie') || '')
-    const storedSessionID = cookies[this.cookieKey]
+  /**
+   * The key used to read from the cookie header.
+   */
+  public readonly cookieKey: string
 
-    if (storedSessionID) {
-      this.sessionID = storedSessionID
+  public serializeOptions: CookieSerializeOptions
+
+  constructor(
+    /** The incoming request */
+    request: Request,
+    options?: KeyworkSessionOptions
+  )
+  constructor(
+    /**
+     * The user's current session ID
+     */
+    sessionID: string,
+    options?: KeyworkSessionOptions
+  )
+  constructor(
+    /** The incoming request */
+    requestOrSessionID: Request | string,
+    options?: KeyworkSessionOptions
+  ) {
+    let sessionID: string
+    this.cookieKey = options?.cookieKey || DEFAULT_SESSION_COOKIE_KEY
+    this.serializeOptions = options?.serializeOptions || DEFAULT_COOKIE_SERIALIZE_OPTIONS
+
+    if (typeof requestOrSessionID === 'string') {
+      sessionID = requestOrSessionID
+    } else {
+      const cookies = parseCookies(requestOrSessionID.headers.get('Cookie') || '')
+      sessionID = cookies[this.cookieKey]
+    }
+
+    if (sessionID) {
+      this.sessionID = sessionID
       this.isNewSession = false
     } else {
-      this.sessionID = this.createClientID()
+      this.sessionID = ulid()
       this.isNewSession = true
     }
   }
 
-  public assignSessionHeaders(headers: Headers) {
-    headers.set(
-      'Set-Cookie',
-      serializeCookies(this.cookieKey, this.sessionID, {
-        sameSite: 'strict',
-        secure: true,
-        httpOnly: true,
-        maxAge: 60 * 60 * 24 * 90,
-      })
-    )
-  }
-
-  private createClientID() {
-    const snowflake = new SnowflakeID()
-
-    return snowflake.generate()
+  /**
+   * @ignore
+   */
+  public _assignSessionHeaders(headers: Headers) {
+    headers.set('Set-Cookie', serializeCookies(this.cookieKey, this.sessionID, this.serializeOptions))
   }
 }

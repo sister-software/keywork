@@ -16,7 +16,7 @@
  * ### `keywork/react/common`
  *
  * @packageDocumentation
- * @module react.hooks
+ * @module React
  */
 
 export * from './common/index.js'

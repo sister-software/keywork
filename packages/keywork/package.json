@@ -1,7 +1,7 @@
 {
   "name": "keywork",
   "license": "AGPL-3.0",
-  "version": "2.7.0",
+  "version": "3.0.0",
   "description": "A batteries-included, _magic-free_, library for building web apps on Cloudflare Workers.",
   "keywords": [
     "cloudflare",
@@ -68,15 +68,15 @@
     "ulidx": "^0.3.0"
   },
   "peerDependencies": {
-    "react": ">=18.1",
-    "react-dom": ">=18.1"
+    "react": ">=18.2",
+    "react-dom": ">=18.2"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^3.11.0",
     "@types/lodash.isplainobject": "^4.0.7",
     "@types/cookie": "^0.5.1",
-    "@types/react-dom": "^18.0.4",
-    "react": ">=18.1",
-    "react-dom": ">=18.1"
+    "@types/react-dom": "^18.0.5",
+    "react": "^18.2",
+    "react-dom": "^18.2"
   }
 }

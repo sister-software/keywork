@@ -14,7 +14,7 @@
 
 import { StatusCodes } from 'http-status-codes'
 import { KeyworkResourceError } from 'keywork/errors'
-import { KeyworkHeaders } from 'keywork/headers'
+import { KeyworkHeaders, mergeHeaders } from 'keywork/headers'
 import {
   KeyworkHTMLDocument,
   KeyworkHTMLDocumentComponent,
@@ -22,7 +22,7 @@ import {
   KeyworkProvidersComponent,
 } from 'keywork/react/worker'
 import { ErrorResponse } from 'keywork/responses'
-import { KeyworkSession } from 'keywork/sessions'
+import { KeyworkSession, KeyworkSessionOptions } from 'keywork/sessions'
 import { compilePath, matchPathPrecompiled, normalizePathPattern, PathPattern } from 'keywork/uri'
 import { Disposable, findSubstringStartOffset, PrefixedLogger } from 'keywork/utilities'
 import { isKeyworkFetcher, KeyworkFetcher, WorkerRequestHandler } from '../fetcher.js'
@@ -40,14 +40,12 @@ import { isMiddlewareDeclarationOption, WorkerRouterOptions } from './common.js'
 export const $ClassID = 'Keywork.WorkerRouter'
 
 /**
- * An extendable base class for handling incoming requests from a Worker.
+ * Routes incoming HTTP requests from the user's browser to your app's route endpoints.
  *
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  * @typeParam Data Optional extra data to be passed to a route handler.
  *
- * @ignore
- * @protected
- * @category Routers
+ * @category Router
  */
 export class WorkerRouter<BoundAliases extends {} | null = null> implements KeyworkFetcher<BoundAliases>, Disposable {
   /**
@@ -75,8 +73,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    */
   protected _addHTTPMethodHandler<Path extends string>(
     normalizedVerb: RouterMethod,
-    // mountPathPatternLike: PathPattern<Path> | Path,
-    pathPatternLike: PathPattern<Path> | Path,
+    pathPatternLike: PathPattern<Path> | Path | RegExp,
     ...fetchersLike: Array<KeyworkFetcher<BoundAliases> | RouteRequestHandler<BoundAliases, any, any>>
   ): void {
     const parsedHandlersCollection = this.routesByVerb.get(normalizedVerb)!
@@ -406,34 +403,28 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     }
   }
 
+  //#endregion
+
+  //#region Options
+
   /**
    * @ignore
-   * @category Debug
+   * @category options
    */
   readonly includeDebugHeaders: boolean
 
-  //#endregion
-
-  //#region Construction
-
-  constructor(options?: WorkerRouterOptions) {
-    this.displayName = options?.displayName || 'Keywork Router'
-    this.logger = new PrefixedLogger(this.displayName)
-    this.includeDebugHeaders = options?.includeDebugHeaders || true
-
-    this.DocumentComponent = options?.DocumentComponent || KeyworkHTMLDocument
-    this.Providers = options?.Providers || KeyworkProviders
-
-    if (options?.middleware) {
-      for (const middlewareDeclaration of options.middleware) {
-        if (isMiddlewareDeclarationOption(middlewareDeclaration)) {
-          this.use(...middlewareDeclaration)
-        } else {
-          this.use(middlewareDeclaration)
-        }
+  /**
+   * @ignore
+   * @category options
+   */
+  readonly session:
+    | {
+        enabled: true
+        options: KeyworkSessionOptions
       }
-    }
-  }
+    | {
+        enabled: false
+      }
 
   //#endregion
 
@@ -455,15 +446,15 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
 
       // Update the URL params...
       const requestURL = new URL(request.url)
+      const session = this.session.enabled ? new KeyworkSession(request, this.session.options) : null
 
       const event: IncomingRequestEvent<BoundAliases, any, any> = {
         request,
         originalURL: request.url,
         env,
         waitUntil: executionContext.waitUntil,
-        data: {
-          session: new KeyworkSession(request),
-        },
+        session,
+        data: {},
         params: {},
         pathname: requestURL.pathname,
         pathnameBase: '/',
@@ -510,10 +501,9 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
 
       const response = ErrorResponse.fromUnknownError(
         error,
-        'A server error occurred while parsing the request. See logs for additional information.'
+        'A server error occurred while parsing the request. See logs for additional information.',
+        this._createDefaultHeaders(null)
       )
-
-      this._applyHeaders(response)
 
       return response
     }
@@ -591,7 +581,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
 
       const responseLike = await fetcher.fetch(currentEvent)
       const response = convertToResponse(responseLike, this)
-      this._applyHeaders(response)
+      mergeHeaders(response.headers, this._createDefaultHeaders(currentEvent))
 
       return response
     }
@@ -634,19 +624,28 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       }
     }
 
-    this._applyHeaders(finalResponse)
     return finalResponse
   }
 
   /**
+   * Creates the default headers for a given Keywork request.
+   *
    * @ignore
    */
-  _applyHeaders(response: Response) {
+  protected _createDefaultHeaders(event: IncomingRequestEvent<BoundAliases, any, any> | null): Headers {
+    const headers = new Headers()
+
     if (this.includeDebugHeaders) {
       for (const [key, value] of Object.entries(KeyworkHeaders)) {
-        response.headers.set(key, value)
+        headers.set(key, value)
       }
     }
+
+    if (event?.session) {
+      event.session._assignSessionHeaders(headers)
+    }
+
+    return headers
   }
 
   /**
@@ -654,7 +653,10 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @beta
    */
   private _createHTTPError(status: StatusCodes, publicReason?: string): Response {
-    return new ErrorResponse(status, publicReason)
+    const response = new ErrorResponse(status, publicReason)
+    mergeHeaders(response.headers, this._createDefaultHeaders(null))
+
+    return response
   }
 
   /**
@@ -687,8 +689,40 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
 
   //#endregion
 
+  //#region Lifecyle
+
+  constructor(options?: WorkerRouterOptions) {
+    this.displayName = options?.displayName || 'Keywork Router'
+    this.logger = new PrefixedLogger(this.displayName)
+    this.includeDebugHeaders = options?.includeDebugHeaders || true
+
+    if (options?.session) {
+      this.session = {
+        enabled: true,
+        options: typeof options.session === 'boolean' ? {} : options.session,
+      }
+    } else {
+      this.session = { enabled: false }
+    }
+
+    this.DocumentComponent = options?.DocumentComponent || KeyworkHTMLDocument
+    this.Providers = options?.Providers || KeyworkProviders
+
+    if (options?.middleware) {
+      for (const middlewareDeclaration of options.middleware) {
+        if (isMiddlewareDeclarationOption(middlewareDeclaration)) {
+          this.use(...middlewareDeclaration)
+        } else {
+          this.use(middlewareDeclaration)
+        }
+      }
+    }
+  }
+
   dispose(reason = 'default') {
     this.logger.debug('Disposing...', reason)
     this.routesByVerb.clear()
   }
+
+  //#endregion
 }

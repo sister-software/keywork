@@ -17,14 +17,14 @@ Keywork may be right for you if...
 - Your routing logic is outgrowing Cloudflare Pages
 - You'd like to use Workers KV as a NoSQL database like MongoDB or Firebase
 
+## Features
+
 - 💪 Written in TypeScript
 - 📚 ES6 modules support
 - 🔥 Compatible with [Miniflare](https://miniflare.dev/)
 - 🙏 Just works
 
-# Features
-
-## Routing
+### Routing
 
 Keywork has everything you need to handle incoming requests in a Cloudflare Worker environment.
 Application routing remains _magic-free_, and uses an Express.js inspired API that doesn't stray far from
@@ -35,7 +35,7 @@ guidence as your web app grows, without locking you into a specific pattern.
 
 _[Routing API](/api/modules/routing)_
 
-## React just works
+### React just works
 
 At long last, Keywork takes React beyond the basics of static site generation, and into full dynamic pages.
 
@@ -49,10 +49,11 @@ Keywork handles client-side hydration, and fits into your existing architecture 
 And with rendering made even faster with built-in support for streamed responses,
 your app is delivered and interactive in seconds.
 
-_[React Browser API](/api/modules/react.browser)_
-_[React Worker API](/api/modules/react.worker)_
+_[React Browser API](/api/modules/react-browser)_
 
-## Code bundling without the guesswork
+_[React Worker API](/api/modules/react-worker)_
+
+### Code bundling without the guesswork
 
 Using Keywork means spending less of your precious time configuring ESBuild,
 and allows you to focus on the task at hand — building great web apps.
@@ -61,7 +62,7 @@ you can skip the boilerplate and start coding in seconds.
 
 _[Bundling API](/api/modules/bundling)_
 
-## Core utilities for building web apps
+### Core utilities for building web apps
 
 All the typical "junk drawer" stuff you usually have to implement when building a web app,
 including...

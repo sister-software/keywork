@@ -53,6 +53,7 @@
   --ifm-breadcrumb-item-background-active: var(--nirrius-green-light);
   --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-menu-color: var(--ifm-color-emphasis-1000);
+  --docusaurus-highlighted-code-line-bg: hsl(180deg 70% 78% / 15%);
 }
 
 /*  header */

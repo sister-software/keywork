@@ -16,7 +16,7 @@
  * ### `keywork/react/common`
  *
  * @packageDocumentation
- * @module react.common
+ * @module react
  */
 
 export * from '../browser/KeyworkPatternToPageComponent.js'
