@@ -12,12 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { StatusCodes } from 'http-status-codes'
-import { ErrorJSONBody } from './common.js'
+import HTTPStatus from 'http-status'
+import { ErrorJSONBody } from './common.ts'
 
 /**
  * An error class that feels fits nicely into an incoming HTTP request handler.
- * This pairs well with the `http-status-codes` NPM package.
+ * This pairs well with the `http-status` NPM package.
  *
  * @example
  * Check if a user has permission to do some action.
@@ -34,7 +34,7 @@ import { ErrorJSONBody } from './common.js'
  * @category Error
  */
 export class KeyworkResourceError extends Error {
-  constructor(public statusText: string, public status: number = StatusCodes.INTERNAL_SERVER_ERROR) {
+  constructor(public statusText: string, public status: number = HTTPStatus.INTERNAL_SERVER_ERROR) {
     super(statusText)
   }
 

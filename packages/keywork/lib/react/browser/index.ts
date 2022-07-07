@@ -22,6 +22,6 @@
  * @module react.browser
  */
 
-export * from './KeyworkApp.js'
-export * from './PatternToPageComponentMap.js'
-export * from './staticProps.js'
+export * from './KeyworkApp.tsx'
+export * from './PatternToPageComponentMap.ts'
+export * from './staticProps.ts'

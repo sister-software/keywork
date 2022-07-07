@@ -13,7 +13,7 @@
  */
 
 import { ServiceBindingRouter } from 'keywork/routing'
-import { AssetBindingAliases } from './common.js'
+import { AssetBindingAliases } from './common.ts'
 
 /**
  * Handles incoming requests for static assets uploaded to Cloudflare Pages.

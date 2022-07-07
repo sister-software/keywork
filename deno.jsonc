@@ -1,0 +1,32 @@
+{
+  "$schema": "https://cdn.deno.land/deno/versions/v1.23.3/raw/cli/schemas/config-file.v1.json",
+  "compilerOptions": {
+    "lib": [
+      "deno.worker"
+    ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
+    "strict": true,
+    "experimentalDecorators": true,
+    "checkJs": false,
+    "allowJs": true
+  },
+  "importMap": "./import_map.json",
+  "lint": {
+    "rules": {
+      "exclude": [
+        "ban-types",
+        "no-explicit-any",
+        "no-extra-semi",
+        "no-empty-interface"
+      ]
+    }
+  },
+  "fmt": {
+    "options": {
+      "singleQuote": true,
+      "lineWidth": 120,
+      "proseWrap": "preserve"
+    }
+  }
+}

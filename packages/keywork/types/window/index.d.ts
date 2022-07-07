@@ -14,8 +14,10 @@
 
 declare global {
   export namespace WebAssembly {
+    // @ts-expect-error Partial fix for ESBuild
     export class Module {}
   }
+  // deno-lint-ignore no-empty-interface
   export interface Window {}
 }
 

@@ -12,21 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import HTTPStatus from 'http-status'
+import { IncomingMessageForClient, ServerResponse } from 'https://deno.land/std@0.147.0/node/http.ts'
 
-/**
- * Given that a request's etag header matches an server entity or resource,
- * a `NotModifiedResponse` should be sent to the requestor as an indication that the client's cache is still applicable.
- *
- * @category HTTP Response
- * @category Cache
- */
-export class NotModifiedResponse extends Response {
-  constructor(etag: string) {
-    super(undefined, {
-      status: HTTPStatus.NOT_MODIFIED,
-      statusText: HTTPStatus[HTTPStatus.NOT_MODIFIED].toString(),
-      headers: { ETag: etag },
-    })
-  }
-}
+export class Request extends IncomingMessageForClient {}
+
+export class Response extends ServerResponse {}

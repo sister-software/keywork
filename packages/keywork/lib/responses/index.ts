@@ -21,9 +21,9 @@
  * @module responses
  */
 
-export * from './CachableResponse.js'
-export * from './ErrorResponse.js'
-export * from './HTMLResponse.js'
-export * from './JSONResponse.js'
-export * from './JSXResponse.js'
-export * from './NotModifiedResponse.js'
+export * from './CachableResponse.ts'
+export * from './ErrorResponse.ts'
+export * from './HTMLResponse.ts'
+export * from './JSONResponse.ts'
+export * from './JSXResponse.ts'
+export * from './NotModifiedResponse.ts'

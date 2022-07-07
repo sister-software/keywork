@@ -21,5 +21,5 @@
  * @module IDs
  */
 
-export * from './SnowflakeID.js'
-export * from './ulid.js'
+export * from './SnowflakeID.ts'
+export * from './ulid.ts'

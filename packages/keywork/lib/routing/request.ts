@@ -13,8 +13,53 @@
  */
 
 import type { KeyworkSession } from 'keywork/sessions'
-import { PathMatch } from '../uri/common.js'
-import type { MiddlewareFetch } from './middleware.js'
+import { PathMatch } from '../uri/common.ts'
+import type { MiddlewareFetch } from './middleware.ts'
+
+/** @ignore */
+export interface IncomingRequestCfProperties {
+  asn: number
+  botManagement?: IncomingRequestCfPropertiesBotManagement
+  city?: string
+  clientTcpRtt: number
+  clientTrustScore?: number
+  colo: string
+  continent?: string
+  country: string
+  httpProtocol: string
+  latitude?: string
+  longitude?: string
+  metroCode?: string
+  postalCode?: string
+  region?: string
+  regionCode?: string
+  requestPriority: string
+  timezone?: string
+  tlsVersion: string
+  tlsCipher: string
+  tlsClientAuth: IncomingRequestCfPropertiesTLSClientAuth
+}
+
+/** @ignore */
+export interface IncomingRequestCfPropertiesBotManagement {
+  score: number
+  staticResource: boolean
+  verifiedBot: boolean
+}
+
+/** @ignore */
+export interface IncomingRequestCfPropertiesTLSClientAuth {
+  certIssuerDNLegacy: string
+  certIssuerDN: string
+  certPresented: '0' | '1'
+  certSubjectDNLegacy: string
+  certSubjectDN: string
+  certNotBefore: string
+  certNotAfter: string
+  certSerial: string
+  certFingerprintSHA1: string
+  certVerified: string
+}
 
 /**
  * The incoming request received by the Worker.
@@ -37,6 +82,7 @@ export interface RequestWithCFProperties extends Request {
  * @category Request
  * @public
  */
+// deno-lint-ignore no-empty-interface
 export interface IncomingRequestEventData extends Record<string, unknown> {}
 
 /**

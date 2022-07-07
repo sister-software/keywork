@@ -19,8 +19,8 @@
  * @module react.common
  */
 
-export * from '../browser/KeyworkPatternToPageComponent.js'
-export * from './constants.js'
-export * from './RouteProvider.js'
-export * from './staticProps.js'
-export * from './StaticPropsProvider.js'
+export * from '../browser/KeyworkPatternToPageComponent.tsx'
+export * from './constants.ts'
+export * from './RouteProvider.tsx'
+export * from './staticProps.ts'
+export * from './StaticPropsProvider.tsx'

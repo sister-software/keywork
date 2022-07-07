@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { StatusCodes } from 'http-status-codes'
+import HTTPStatus from 'http-status'
 import { KeyworkResourceError } from 'keywork/errors'
 import { KeyworkHeaders, mergeHeaders } from 'keywork/headers'
 import {
@@ -25,12 +25,12 @@ import { ErrorResponse } from 'keywork/responses'
 import { KeyworkSession, KeyworkSessionOptions } from 'keywork/sessions'
 import { compilePath, matchPathPrecompiled, normalizePathPattern, PathPattern } from 'keywork/uri'
 import { Disposable, findSubstringStartOffset, PrefixedLogger } from 'keywork/utilities'
-import { isKeyworkFetcher, KeyworkFetcher, WorkerRequestHandler } from '../fetcher.js'
-import { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from '../http.js'
-import { IncomingRequestEvent, IncomingRequestEventData } from '../request.js'
-import { ParsedRoute, RouteMatch, RouteMethodDeclaration, RouteRequestHandler } from '../RouteRequestHandler.js'
-import { convertToResponse } from './body.js'
-import { isMiddlewareDeclarationOption, WorkerRouterOptions } from './common.js'
+import { isKeyworkFetcher, KeyworkFetcher, WorkerRequestHandler } from '../fetcher.ts'
+import { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from '../http.ts'
+import { IncomingRequestEvent, IncomingRequestEventData } from '../request.ts'
+import { ParsedRoute, RouteMatch, RouteMethodDeclaration, RouteRequestHandler } from '../RouteRequestHandler.ts'
+import { convertToResponse } from './body.ts'
+import { isMiddlewareDeclarationOption, WorkerRouterOptions } from './common.ts'
 
 /**
  * Used in place of the reference-sensitive `instanceof`
@@ -474,7 +474,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
 
     throw new KeyworkResourceError(
       'A server error occurred while parsing the request. See logs for additional details',
-      StatusCodes.BAD_REQUEST
+      HTTPStatus.BAD_REQUEST
     )
   }
 
@@ -491,7 +491,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   fetch: {
     (...args: Parameters<RouteRequestHandler<BoundAliases, any, any>>): Promise<Response>
     (...args: Parameters<WorkerRequestHandler<BoundAliases>>): Promise<Response>
-  } = async (...args: unknown[]): Promise<Response> => {
+  } = (...args: unknown[]): Promise<Response> => {
     try {
       // eslint-disable-next-line prefer-spread
       const event = this.createIncomingRequestEventFromArgs.apply(this, args)
@@ -505,7 +505,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
         this._createDefaultHeaders(null)
       )
 
-      return response
+      return Promise.resolve(response)
     }
   }
 
@@ -535,7 +535,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     const routes = routerMethod ? this._getParsedRoutesForMethod(routerMethod) : null
 
     if (!routerMethod || !routes || !routes.length) {
-      return new ErrorResponse(StatusCodes.NOT_IMPLEMENTED)
+      return new ErrorResponse(HTTPStatus.NOT_IMPLEMENTED)
     }
 
     const matches = this._findMatchingRoutes(routes, event.pathname)
@@ -609,7 +609,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
         currentResponse = ErrorResponse.fromUnknownError(error, 'A server error occurred. Please try again later.')
       }
 
-      if (!currentResponse || currentResponse.status === StatusCodes.NOT_FOUND) {
+      if (!currentResponse || currentResponse.status === HTTPStatus.NOT_FOUND) {
         if (matches[routeIndex]) {
           // There's another sibling route ahead.
           continue
@@ -617,7 +617,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
 
         // There aren't any remaining route handlers at this layer.
         finalResponse =
-          currentResponse || this._createHTTPError(StatusCodes.NOT_FOUND, `No route matches \`${event.pathname}\``)
+          currentResponse || this._createHTTPError(HTTPStatus.NOT_FOUND, `No route matches \`${event.pathname}\``)
       } else {
         // We're good.
         finalResponse = currentResponse
@@ -652,7 +652,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * Creates an either a default `ErrorResponse`, or if defined, a fallback route matching the HTTP status code.
    * @beta
    */
-  private _createHTTPError(status: StatusCodes, publicReason?: string): Response {
+  private _createHTTPError(status: number, publicReason?: string): Response {
     const response = new ErrorResponse(status, publicReason)
     mergeHeaders(response.headers, this._createDefaultHeaders(null))
 

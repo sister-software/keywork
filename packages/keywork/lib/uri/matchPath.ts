@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ParsedPathParams, PathMatch, PathPattern, _Mutable } from './common.js'
+import { ParsedPathParams, PathMatch, PathPattern, _Mutable } from './common.ts'
 
 /**
  * Converts a given `PathPattern` or `string` into object form.

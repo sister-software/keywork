@@ -28,4 +28,4 @@
  *
  * @public
  */
-export const BundledFileName = '_worker.js'
+export const BundledFileName = '_worker.ts'

@@ -21,6 +21,6 @@
  * @module assets
  */
 
-export * from './CloudflarePagesAssetRouter.js'
-export * from './common.js'
-export * from './WorkerSitesAssetRouter.js'
+export * from './CloudflarePagesAssetRouter.ts'
+export * from './common.ts'
+export * from './WorkerSitesAssetRouter.ts'

@@ -21,6 +21,6 @@
  * @module URI
  */
 
-export * from './common.js'
-export * from './matchPath.js'
-export * from './parsePathname.js'
+export * from './common.ts'
+export * from './matchPath.ts'
+export * from './parsePathname.ts'

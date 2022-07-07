@@ -13,7 +13,7 @@
  */
 
 import { BuildOptions } from 'esbuild'
-import { BundledFileName } from '../common.js'
+import { BundledFileName } from '../common.ts'
 
 /**
  * ESBuild options for the Worker bundle.

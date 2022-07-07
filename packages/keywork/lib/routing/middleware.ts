@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { RequestWithCFProperties } from './request.js'
+import type { RequestWithCFProperties } from './request.ts'
 
 /**
  * Middleware implementation of `fetch`

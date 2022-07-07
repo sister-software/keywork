@@ -42,6 +42,7 @@
     "./polyfills/*": "./polyfills/*.js",
     "./react": "./react/index.js",
     "./react/common": "./react/common/index.js",
+    "./react/hooks": "./react/common/index.js",
     "./react/worker": "./react/worker/index.js",
     "./react/browser": "./react/browser/index.js",
     "./routing": "./routing/index.js",
@@ -63,7 +64,7 @@
     "classnames": "^2.3.1",
     "cookie": "^0.5.0",
     "deepmerge": "^4.2.2",
-    "http-status-codes": "^2.2.0",
+    "http-status": "^1.5.2",
     "lodash.isplainobject": "^4.0.6",
     "ulidx": "^0.3.0"
   },

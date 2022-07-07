@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { StatusCodes } from 'http-status-codes'
-import { KeyworkResourceError } from '../errors/index.js'
-import { arrayBufferToBase64, stringToArrayBuffer } from '../utilities/strings'
-import { ETaggable, _EMPTY_ETAG } from './common.js'
+import HTTPStatus from 'http-status'
+import { KeyworkResourceError } from 'keywork/errors'
+import { arrayBufferToBase64, stringToArrayBuffer } from 'keywork/utilities'
+import { ETaggable, _EMPTY_ETAG } from './common.ts'
 
 /**
  * @category Cache
@@ -53,7 +53,7 @@ export async function generateETag(entity: ETaggable, options?: EntityToETagOpti
   } else {
     throw new KeyworkResourceError(
       `The given entity is of unexpected type \`${typeof entity}\``,
-      StatusCodes.BAD_REQUEST
+      HTTPStatus.BAD_REQUEST
     )
   }
 

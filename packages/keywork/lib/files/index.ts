@@ -21,6 +21,6 @@
  * @module files
  */
 
-export * from './common.js'
-export * from './extensionToMimeType.js'
-export * from './files.js'
+export * from './common.ts'
+export * from './extensionToMimeType.ts'
+export * from './files.ts'

@@ -31,11 +31,11 @@
     "node": ">= 17.4"
   },
   "workspaces": [
-    "packages/*",
-    "site"
+    "packages/*"
   ],
   "scripts": {
     "build": "node --experimental-specifier-resolution=node ./build/build-packages.mjs",
+    "build:npm": "deno run -A scripts/build-npm.ts",
     "build:docs": "cd site && npm run build",
     "build:all": "npm run build && npm run build:docs",
     "prepare": "ts-patch install -s",
@@ -49,13 +49,12 @@
     "@microsoft/tsdoc-config": "^0.16.1",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
-    "esbuild": "^0.14.38",
-    "eslint": "^8.9.0",
+    "esbuild": "^0.14.48",
+    "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-header": "^3.1.1",
-    "eslint-plugin-import": "^2.26.0",
-    "eslint-plugin-react": "^7.29.4",
-    "eslint-plugin-react-hooks": "^4.5.0",
+    "eslint-plugin-react": "^7.30.1",
+    "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-tsdoc": "^0.2.16",
     "fast-glob": "^3.2.11",
     "fs-extra": "^10.1.0",

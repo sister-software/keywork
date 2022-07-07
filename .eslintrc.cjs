@@ -13,14 +13,16 @@
  */
 
 /* eslint-disable @typescript-eslint/no-var-requires */
+// @ts-ignore Node
 const path = require('path')
+// @ts-ignore Node
 const fs = require('fs')
 
+// @ts-ignore Node
 const headerPath = path.resolve(__dirname, 'build', 'header.js')
 const rawHeaderContent = fs.readFileSync(headerPath, 'utf8')
 const headerLines = rawHeaderContent.replace('/**', '*').replace('*/\n', '').split('\n')
 
-/** @type {import('eslint').ESLint.Options}*/
 const config = {
   root: true,
   ignorePatterns: ['./packages/*/dist/**/*', './node_modules/**/*'],
@@ -40,8 +42,6 @@ const config = {
     'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:import/recommended',
-    'plugin:import/typescript',
     'prettier',
   ],
   env: {
@@ -51,8 +51,6 @@ const config = {
   },
   rules: {
     'header/header': [2, 'block', headerLines, 2],
-    'import/no-unresolved': 'off',
-    'import/extensions': 1,
     'react/prop-types': 'off',
     'no-undef': 'off',
     'no-extra-semi': 'off',

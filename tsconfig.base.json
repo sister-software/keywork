@@ -5,12 +5,12 @@
     "lib": [
       "esnext"
     ],
-    "paths": {
-      "keywork": ["packages/keywork/index.ts"],
-      "keywork/*": ["packages/keywork/lib/*/index.ts"]
-    },
+    // "paths": {
+    //   "keywork": ["packages/keywork/index.ts"],
+    //   "keywork/*": ["packages/keywork/lib/*/index.ts"]
+    // },
     "types": [],
-    "jsx": "react-jsx",
+    "jsx": "react",
     "strict": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
@@ -24,13 +24,13 @@
     "composite": true,
     "checkJs": true,
     "allowJs": true,
-    "plugins": [
-      // Transform paths in output .js files
-      { "transform": "typescript-transform-paths" },
+    // "plugins": [
+    //   // Transform paths in output .js files
+    //   { "transform": "typescript-transform-paths" },
 
-      // Transform paths in output .d.ts files (Include this line if you output declarations files)
-      { "transform": "typescript-transform-paths", "afterDeclarations": true }
-    ]
+    //   // Transform paths in output .d.ts files (Include this line if you output declarations files)
+    //   { "transform": "typescript-transform-paths", "afterDeclarations": true }
+    // ]
   },
   "exclude": [
     "**/dist/**/*"

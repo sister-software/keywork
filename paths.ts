@@ -13,9 +13,8 @@
  */
 
 import * as path from 'path'
-import { fileURLToPath } from 'url'
 
-const __filename = fileURLToPath(import.meta.url)
+const __filename = path.fromFileUrl(import.meta.url)
 
 /**
  * The absolute path to the project root.
@@ -35,7 +34,7 @@ export const packagesDirectory = path.join(projectRoot, 'packages')
  * @param {string} extension
  * @returns {string}
  */
-export function changeExtension(filePath, extension) {
+export function changeExtension(filePath: string, extension: string) {
   const parsedPath = path.parse(filePath)
 
   return parsedPath.dir + path.sep + parsedPath.name + extension

@@ -22,6 +22,12 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+  },
+  "deno.enable": true,
+  "deno.unstable": true,
+
+  "deno.lint": true,
+  "deno.importMap": "./import_map.json",
+  "deno.config": "./deno.jsonc"
 }

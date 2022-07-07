@@ -20,5 +20,5 @@
  * @module caching
  */
 
-export * from './common.js'
-export * from './generateETag.js'
+export * from './common.ts'
+export * from './generateETag.ts'

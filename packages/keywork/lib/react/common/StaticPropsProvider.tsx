@@ -14,7 +14,7 @@
 
 import { createContextAndNamedHook } from 'keywork/react/hooks'
 import type { FC, ReactNode } from 'react'
-import { SSRPropsLike } from './constants.js'
+import { SSRPropsLike } from './constants.ts'
 
 const [StaticPropsContext, useStaticProps] = createContextAndNamedHook<SSRPropsLike>()
 export { useStaticProps }

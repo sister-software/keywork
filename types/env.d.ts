@@ -27,5 +27,7 @@ declare global {
     }
   }
 
+  export class IdentityTransformStream extends TransformStream {}
+
   // export const process: NodeJSExtensions.Process
 }

@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './Forms.js'
-export * from './Images.js'
-export * from './JavaScript.js'
-export * from './PlainText.js'
-export * from './XML.js'
+export * from './Forms.ts'
+export * from './Images.ts'
+export * from './JavaScript.ts'
+export * from './PlainText.ts'
+export * from './XML.ts'

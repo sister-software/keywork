@@ -21,4 +21,4 @@
  * @module react.hooks
  */
 
-export * from './createNamedContextHook.js'
+export * from './createNamedContextHook.ts'

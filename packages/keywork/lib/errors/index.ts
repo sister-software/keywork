@@ -19,5 +19,5 @@
  * @module errors
  */
 
-export * from './common.js'
-export * from './KeyworkResourceError.js'
+export * from './common.ts'
+export * from './KeyworkResourceError.ts'

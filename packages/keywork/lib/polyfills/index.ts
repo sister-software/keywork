@@ -43,4 +43,4 @@
  * @packageDocumentation
  * @module polyfills
  */
-export * from './ReadableStream.js'
+export * from './ReadableStream.ts'

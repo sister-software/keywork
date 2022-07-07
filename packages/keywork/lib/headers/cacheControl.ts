@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { DURATION_ONE_WEEK } from '../utilities/index.js'
+import { DURATION_ONE_WEEK } from 'keywork/utilities'
 
 /**
  * Response headers with Cache-Control.

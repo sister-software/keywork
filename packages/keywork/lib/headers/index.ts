@@ -21,7 +21,7 @@
  * @module headers
  */
 
-export * from './cacheControl.js'
-export * from './common.js'
-export * from './contentType.js'
-export * from './userAgent.js'
+export * from './cacheControl.ts'
+export * from './common.ts'
+export * from './contentType.ts'
+export * from './userAgent.ts'

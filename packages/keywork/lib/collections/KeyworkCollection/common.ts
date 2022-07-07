@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { DeserializationTypes } from '../common.js'
-import type { KeyworkDocumentReference } from '../KeyworkDocumentReference.js'
+import type { DeserializationTypes } from '../common.ts'
+import type { KeyworkDocumentReference } from '../KeyworkDocumentReference.ts'
 
 export interface FetchListOptions extends Omit<KVNamespaceListOptions, 'prefix'> {}
 

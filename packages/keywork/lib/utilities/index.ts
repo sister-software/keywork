@@ -31,11 +31,11 @@
  * @module utilities
  */
 
-export * from './datetime.js'
-export * from './disposable.js'
-export * from './json.js'
-export * from './logger.js'
-export * from './numbers.js'
-export * from './strings.js'
-export * from './timers.js'
-export * from './url.js'
+export * from './datetime.ts'
+export * from './disposable.ts'
+export * from './json.ts'
+export * from './logger.ts'
+export * from './numbers.ts'
+export * from './strings.ts'
+export * from './timers.ts'
+export * from './url.ts'

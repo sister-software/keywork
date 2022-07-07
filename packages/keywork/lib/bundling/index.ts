@@ -21,5 +21,5 @@
  * @module bundling
  */
 
-export * from './common.js'
-export * from './esbuild/index.js'
+export * from './common.ts'
+export * from './esbuild/index.ts'

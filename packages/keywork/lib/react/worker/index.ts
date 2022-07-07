@@ -22,7 +22,7 @@
  * @module react.worker
  */
 
-export * from './KeyworkHTMLDocument.js'
-export * from './KeyworkProvidersComponent.js'
-export * from './renderToStream.js'
-export * from './SSRPropsEmbed.js'
+export * from './KeyworkHTMLDocument.tsx'
+export * from './KeyworkProvidersComponent.tsx'
+export * from './renderToStream.tsx'
+export * from './SSRPropsEmbed.tsx'

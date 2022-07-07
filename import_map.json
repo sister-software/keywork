@@ -1,0 +1,48 @@
+{
+  "imports": {
+    "dnt": "https://deno.land/x/dnt@0.28.0/mod.ts",
+    "dnt/types": "https://deno.land/x/dnt@0.28.0/lib/types.ts",
+    "path": "https://deno.land/std@0.147.0/path/mod.ts",
+
+    "@cloudflare/workers-types": "https://cdn.skypack.dev/@cloudflare/workers-types@^3.11.0?dts",
+    "@cloudflare/kv-asset-handler": "https://cdn.skypack.dev/@cloudflare/kv-asset-handler@^0.2.0?dts",
+    "@cloudflare/kv-asset-handler/dist/types": "https://cdn.skypack.dev/@cloudflare/kv-asset-handler@^0.2.0/dist/types?dts",
+    "@miniflare/kv": "https://cdn.skypack.dev/@miniflare/kv@^2.5.1?dts",
+    "classnames": "https://cdn.skypack.dev/classnames@^2.3.1?dts",
+    "cookie": "https://cdn.skypack.dev/cookie@^0.5.0?dts",
+    "deepmerge": "https://cdn.skypack.dev/deepmerge@^4.2.2?dts",
+    "esbuild": "https://cdn.skypack.dev/esbuild@^0.14.48?dts",
+    "http-status": "https://cdn.skypack.dev/http-status@^1.5.2?dts",
+    "lodash.isplainobject": "https://cdn.skypack.dev/lodash.isplainobject@^4.0.6?dts",
+    "react": "https://cdn.skypack.dev/react@^18.2?dts",
+    "react-dom": "https://cdn.skypack.dev/react-dom@^18.2?dts",
+    "react-dom/client": "https://cdn.skypack.dev/react-dom@^18.2/client?dts",
+    "react-dom/server": "https://cdn.skypack.dev/react-dom@^18.2/server?dts",
+    "react-dom/server.browser": "https://cdn.skypack.dev/react-dom@^18.2/server.browser?dts",
+    "react/jsx-runtime": "https://cdn.skypack.dev/react/jsx-runtime?dts",
+    "ulidx": "https://cdn.skypack.dev/-/ulidx@v0.3.0-aFDr7MkMSLr7BkSlTZOY/dist=es2019,mode=imports/optimized/ulidx.js",
+
+    "/": "./",
+    "./": "./",
+
+    "keywork/assets": "./packages/keywork/lib/assets/index.ts",
+    "keywork/bindings": "./packages/keywork/lib/bindings/index.ts",
+    "keywork/bundling": "./packages/keywork/lib/bundling/index.ts",
+    "keywork/caching": "./packages/keywork/lib/caching/index.ts",
+    "keywork/collections": "./packages/keywork/lib/collections/index.ts",
+    "keywork/errors": "./packages/keywork/lib/errors/index.ts",
+    "keywork/files": "./packages/keywork/lib/files/index.ts",
+    "keywork/headers": "./packages/keywork/lib/headers/index.ts",
+    "keywork/ids": "./packages/keywork/lib/ids/index.ts",
+    "keywork/react": "./packages/keywork/lib/react/index.ts",
+    "keywork/react/common": "./packages/keywork/lib/react/common/index.ts",
+    "keywork/react/worker": "./packages/keywork/lib/react/worker/index.ts",
+    "keywork/react/browser": "./packages/keywork/lib/react/browser/index.ts",
+    "keywork/react/hooks": "./packages/keywork/lib/react/hooks/index.ts",
+    "keywork/routing": "./packages/keywork/lib/routing/index.ts",
+    "keywork/responses": "./packages/keywork/lib/responses/index.ts",
+    "keywork/sessions": "./packages/keywork/lib/sessions/index.ts",
+    "keywork/uri": "./packages/keywork/lib/uri/index.ts",
+    "keywork/utilities": "./packages/keywork/lib/utilities/index.ts"
+  }
+}

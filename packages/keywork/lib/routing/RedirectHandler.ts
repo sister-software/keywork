@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { StatusCodes } from 'http-status-codes'
-import { PrefixedLogger } from '../utilities/logger.js'
-import { RouteRequestHandler } from './RouteRequestHandler.js'
+import HTTPStatus from 'http-status'
+import { PrefixedLogger } from '../utilities/logger.ts'
+import { RouteRequestHandler } from './RouteRequestHandler.ts'
 
 /**
  * A route request handler for redirecting requests.
@@ -40,7 +40,7 @@ export function createRouteRedirect(
    * An optional status code.
    * @defaultValue `302` MOVED_TEMPORARILY
    */
-  statusCode: number = StatusCodes.MOVED_TEMPORARILY
+  statusCode: number = HTTPStatus.TEMPORARY_REDIRECT
 ): RouteRequestHandler {
   const logger = new PrefixedLogger('Redirect')
 

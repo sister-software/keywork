@@ -15,9 +15,9 @@
 import { createContextAndNamedHook } from 'keywork/react/hooks'
 import { PathMatch } from 'keywork/uri'
 import { FC, useMemo } from 'react'
-import { useKeyworkRouter } from '../common/RouteProvider.js'
-import { useStaticProps } from '../common/StaticPropsProvider.js'
-import { matchRoute, PatternToPageComponentMap } from './PatternToPageComponentMap.js'
+import { useKeyworkRouter } from '../common/RouteProvider.tsx'
+import { useStaticProps } from '../common/StaticPropsProvider.tsx'
+import { matchRoute, PatternToPageComponentMap } from './PatternToPageComponentMap.ts'
 export interface KeyworkBrowserRouterProps {
   patternToPageComponent: PatternToPageComponentMap<any>
 }

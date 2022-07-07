@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { StatusCodes } from 'http-status-codes'
-import { isETagMatch } from '../caching/common.js'
-import { CacheControlDirectives, createCacheControlHeader } from '../headers/cacheControl.js'
-import { NotModifiedResponse } from './NotModifiedResponse.js'
+import HTTPStatus from 'http-status'
+import { isETagMatch } from '../caching/common.ts'
+import { CacheControlDirectives, createCacheControlHeader } from '../headers/cacheControl.ts'
+import { NotModifiedResponse } from './NotModifiedResponse.ts'
 
 /**
  * A client-side cachable response.
@@ -53,7 +53,7 @@ export class CachableResponse extends Response {
     }
 
     super(body, {
-      status: StatusCodes.OK,
+      status: HTTPStatus.OK,
       headers,
     })
   }

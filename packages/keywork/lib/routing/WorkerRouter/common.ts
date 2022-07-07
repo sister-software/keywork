@@ -13,9 +13,9 @@
  */
 
 import { KeyworkHTMLDocumentComponent, KeyworkProvidersComponent } from 'keywork/react/worker'
-import { KeyworkSessionOptions } from '../../sessions/KeyworkSession.js'
-import { KeyworkFetcher } from '../fetcher.js'
-import type { WorkerRouter } from './WorkerRouter.js'
+import { KeyworkSessionOptions } from '../../sessions/KeyworkSession.ts'
+import { KeyworkFetcher } from '../fetcher.ts'
+import type { WorkerRouter } from './WorkerRouter.ts'
 
 /**
  * Middleware declaration in the convenient shape of `Map`'s constructor parameters.

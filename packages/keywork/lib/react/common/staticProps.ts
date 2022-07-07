@@ -13,7 +13,7 @@
  */
 
 import { IncomingRequestEvent } from 'keywork/routing'
-import { SSRPropsLike } from './constants.js'
+import { SSRPropsLike } from './constants.ts'
 
 /**
  * A method used to fetch static props for rendering React apps in your worker.

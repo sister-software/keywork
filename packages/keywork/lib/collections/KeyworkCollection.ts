@@ -12,19 +12,20 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import type { KVNamespace } from '@miniflare/kv'
 import { KeyworkResourceError } from 'keywork/errors'
 import { PathBuilder, resolvePathSegments } from 'keywork/uri'
-import type { DeserializationTypes } from './common.js'
-import type { CollectionDocumentReferencesResponse, FetchListOptions } from './KeyworkCollection/common.js'
+import type { DeserializationTypes } from './common.ts'
+import type { CollectionDocumentReferencesResponse, FetchListOptions } from './KeyworkCollection/common.ts'
 import {
   COLLECTION_INDEX_PREFIXES,
   COLLECTION_KEY,
   DOCUMENTS_KEY,
   INDEXES_DOCUMENT_PATH_PREFIX,
   INDEXES_ID_PREFIX,
-} from './KeyworkCollection/constants.js'
-import type { KeyworkDocumentMetadata } from './KeyworkDocumentMetadata.js'
-import { KeyworkDocumentReference } from './KeyworkDocumentReference.js'
+} from './KeyworkCollection/constants.ts'
+import type { KeyworkDocumentMetadata } from './KeyworkDocumentMetadata.ts'
+import { KeyworkDocumentReference } from './KeyworkDocumentReference.ts'
 
 export type { PathBuilder }
 
@@ -112,7 +113,7 @@ export class KeyworkCollection<
   /**
    * Fetches a paginated list of the immediate documents within this collection.
    */
-  public async fetchDocumentsListByID(options?: FetchListOptions) {
+  public fetchDocumentsListByID(options?: FetchListOptions) {
     return this.kvNamespace.list<KeyworkDocumentMetadata>({
       ...options,
       prefix: this.__indexByIDPath(),
@@ -132,7 +133,7 @@ export class KeyworkCollection<
    * Fetches a given document's metadata.
    * This is used to determine a document's deserialization ahead of its fetching.
    */
-  public async fetchDocumentMetadataByPath(relativeDocPath: string): Promise<null | KeyworkDocumentMetadata> {
+  public fetchDocumentMetadataByPath(relativeDocPath: string): Promise<null | KeyworkDocumentMetadata> {
     return this.kvNamespace.get(this.__indexByDocumentPath(relativeDocPath), { type: 'json' })
   }
 
@@ -225,7 +226,7 @@ export class KeyworkCollection<
     }
   }
 
-  public async query() {
+  public query() {
     throw new Error('Not implemented')
   }
 

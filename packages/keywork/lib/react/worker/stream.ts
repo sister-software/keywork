@@ -14,16 +14,36 @@
 
 import { KeyworkResourceError } from 'keywork/errors'
 import type { ReactNode } from 'react'
-import {
-  ReactDOMServerReadableStream,
-  renderToReadableStream as RenderToReadableStream,
-  RenderToReadableStreamOptions,
-} from 'react-dom/server'
-// @ts-expect-error Export not yet public
-// eslint-disable-next-line import/extensions
 import { renderToReadableStream as _renderToReadableStream } from 'react-dom/server.browser'
 
-const renderToReadableStream: typeof RenderToReadableStream = _renderToReadableStream
+/**
+ * @ignore
+ */
+export interface RenderToReadableStreamOptions {
+  identifierPrefix?: string
+  namespaceURI?: string
+  nonce?: string
+  bootstrapScriptContent?: string
+  bootstrapScripts?: string[]
+  bootstrapModules?: string[]
+  progressiveChunkSize?: number
+  signal?: AbortSignal
+  onError?: (error: unknown) => void
+}
+
+/**
+ * @ignore
+ */
+export interface ReactDOMServerReadableStream extends ReadableStream {
+  allReady: Promise<void>
+}
+
+type RenderToReadableStream = (
+  children: ReactNode,
+  options?: RenderToReadableStreamOptions
+) => Promise<ReactDOMServerReadableStream>
+
+const renderToReadableStream: RenderToReadableStream = _renderToReadableStream
 
 export interface ReactRenderStreamSuccessResult {
   stream: ReactDOMServerReadableStream

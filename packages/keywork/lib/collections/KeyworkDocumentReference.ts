@@ -12,21 +12,20 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import type { KVNamespace } from '@miniflare/kv'
 import deepmerge from 'deepmerge'
 import { convertJSONToETaggableString, generateETag } from 'keywork/caching'
 import { KeyworkResourceError } from 'keywork/errors'
 import { resolvePathSegments } from 'keywork/uri'
-import type { DeserializationTransformers, DeserializationTypes, PutOrPatchOptions } from './common.js'
-import type { KeyworkCollection } from './KeyworkCollection.js'
+import type { DeserializationTransformers, DeserializationTypes, PutOrPatchOptions } from './common.ts'
+import type { KeyworkCollection } from './KeyworkCollection.ts'
 import {
   generateDocumentMetadata,
   isETaggable,
   KeyworkDocumentMetadata,
   _parseValueTypeInfo,
-} from './KeyworkDocumentMetadata.js'
-import type { KeyworkDocumentSnapshot } from './KeyworkDocumentSnapshot.js'
-
-export type { KeyworkDocumentSnapshot }
+} from './KeyworkDocumentMetadata.ts'
+import type { KeyworkDocumentSnapshot } from './KeyworkDocumentSnapshot.ts'
 
 export interface KeyworkDocumentFetchOptions {
   /**

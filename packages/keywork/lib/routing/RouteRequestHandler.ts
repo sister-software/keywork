@@ -13,9 +13,9 @@
  */
 
 import { CompiledPath, PathMatch } from 'keywork/uri'
-import { KeyworkFetcher } from './fetcher.js'
-import { IncomingRequestEvent, IncomingRequestEventData } from './request.js'
-import { ResponseLike } from './WorkerRouter/body.js'
+import { KeyworkFetcher } from './fetcher.ts'
+import { IncomingRequestEvent, IncomingRequestEventData } from './request.ts'
+import { ResponseLike } from './WorkerRouter/body.ts'
 
 /**
  * A function or method that handles incoming requests and replies with a `Response`.

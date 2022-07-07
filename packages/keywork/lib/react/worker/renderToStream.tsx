@@ -15,10 +15,10 @@
 import { SSRPropsLike, StaticPropsProvider } from 'keywork/react/common'
 import { PrefixedLogger } from 'keywork/utilities'
 import React from 'react'
-import { KeyworkHTMLDocumentComponent } from './KeyworkHTMLDocument.js'
-import { KeyworkProvidersComponent } from './KeyworkProvidersComponent.js'
-import { _SSRPropsEmbed } from './SSRPropsEmbed.js'
-import { ReactRenderStreamResult, renderReactStream } from './stream.js'
+import { KeyworkHTMLDocumentComponent } from './KeyworkHTMLDocument.tsx'
+import { KeyworkProvidersComponent } from './KeyworkProvidersComponent.tsx'
+import { _SSRPropsEmbed } from './SSRPropsEmbed.tsx'
+import { ReactRenderStreamResult, renderReactStream } from './stream.ts'
 
 /**
  * Renders the given React content to an HTML stream.

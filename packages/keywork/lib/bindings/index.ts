@@ -21,5 +21,5 @@
  * @module bindings
  */
 
-export * from './environment.js'
-export * from './fetch.js'
+export * from './environment.ts'
+export * from './fetch.ts'

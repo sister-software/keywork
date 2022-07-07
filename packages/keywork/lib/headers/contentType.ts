@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { PlainText } from '../files/extensions/PlainText.js'
-import { extensionToMimeType, fileNameToExtension } from '../files/index.js'
+import { PlainText } from '../files/extensions/PlainText.ts'
+import { extensionToMimeType, fileNameToExtension } from '../files/index.ts'
 
 /**
  * Response headers with Content-Type.

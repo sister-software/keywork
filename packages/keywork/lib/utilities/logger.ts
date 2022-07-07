@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from '../errors/KeyworkResourceError.js'
-import { prettyJSON } from './json.js'
+import { KeyworkResourceError } from '../errors/KeyworkResourceError.ts'
+import { prettyJSON } from './json.ts'
 
 /**
  * An common shape of the `Console` interface.

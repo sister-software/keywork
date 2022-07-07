@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { CacheControlDirectives } from '../headers/cacheControl.js'
-import { fileExtensionToContentTypeHeader } from '../headers/contentType.js'
-import { CachableResponse } from './CachableResponse.js'
+import { CacheControlDirectives } from '../headers/cacheControl.ts'
+import { fileExtensionToContentTypeHeader } from '../headers/contentType.ts'
+import { CachableResponse } from './CachableResponse.ts'
 
 /**
  * A response sent to the client containing a JSON object.

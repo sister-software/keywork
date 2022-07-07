@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { IncomingRequestEvent, RequestWithCFProperties } from './request.js'
-import type { RouteRequestHandler } from './RouteRequestHandler.js'
-import { ResponseLike } from './WorkerRouter/body.js'
+import type { IncomingRequestEvent, RequestWithCFProperties } from './request.ts'
+import type { RouteRequestHandler } from './RouteRequestHandler.ts'
+import { ResponseLike } from './WorkerRouter/body.ts'
 
 /**
  * A function within the Worker that receives all incoming requests.

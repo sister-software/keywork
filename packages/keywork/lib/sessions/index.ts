@@ -20,4 +20,4 @@
  * @packageDocumentation
  * @module sessions
  */
-export * from './KeyworkSession.js'
+export * from './KeyworkSession.ts'

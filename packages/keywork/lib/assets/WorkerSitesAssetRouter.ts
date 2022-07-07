@@ -14,7 +14,8 @@
 
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
-import { getReasonPhrase, StatusCodes } from 'http-status-codes'
+import type { KVNamespace } from '@miniflare/kv'
+import HTTPStatus from 'http-status'
 import { KeyworkResourceError } from 'keywork/errors'
 import { ErrorResponse } from 'keywork/responses'
 import { RouteRequestHandler, WorkerRouter } from 'keywork/routing'
@@ -95,7 +96,7 @@ export class WorkerSitesAssetRouter extends WorkerRouter<WorkersSiteStaticConten
       )
     }
 
-    return new ErrorResponse(StatusCodes.BAD_REQUEST, getReasonPhrase(StatusCodes.BAD_REQUEST))
+    return new ErrorResponse(HTTPStatus.BAD_REQUEST)
   }
 }
 

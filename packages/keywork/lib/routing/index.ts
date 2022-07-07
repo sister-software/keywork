@@ -25,8 +25,8 @@
  * @module routing
  */
 
-export * from './RedirectHandler.js'
-export * from './request.js'
-export * from './RouteRequestHandler.js'
-export * from './ServiceBindingRouter.js'
-export * from './WorkerRouter/index.js'
+export * from './RedirectHandler.ts'
+export * from './request.ts'
+export * from './RouteRequestHandler.ts'
+export * from './ServiceBindingRouter.ts'
+export * from './WorkerRouter/index.ts'

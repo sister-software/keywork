@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KeyworkDocumentMetadata } from './KeyworkDocumentMetadata.js'
+import type { KeyworkDocumentMetadata } from './KeyworkDocumentMetadata.ts'
 
 export interface KeyworkDocumentSnapshotDoesNotExist {
   absoluteDocPath: string

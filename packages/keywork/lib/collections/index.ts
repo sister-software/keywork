@@ -25,10 +25,10 @@
  * @module collections
  */
 
-export * from './common.js'
-export * from './KeyworkCollection.js'
-export * from './KeyworkCollection/common.js'
-export * from './KeyworkDatabase.js'
-export * from './KeyworkDocumentMetadata.js'
-export * from './KeyworkDocumentReference.js'
-export * from './KeyworkDocumentSnapshot.js'
+export * from './common.ts'
+export * from './KeyworkCollection.ts'
+export * from './KeyworkCollection/common.ts'
+export * from './KeyworkDatabase.ts'
+export * from './KeyworkDocumentMetadata.ts'
+export * from './KeyworkDocumentReference.ts'
+export * from './KeyworkDocumentSnapshot.ts'

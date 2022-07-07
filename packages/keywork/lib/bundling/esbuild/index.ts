@@ -12,5 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './browser.js'
-export * from './worker.js'
+export * from './browser.ts'
+export * from './worker.ts'

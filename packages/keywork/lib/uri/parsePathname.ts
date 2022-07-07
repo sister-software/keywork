@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { StatusCodes } from 'http-status-codes'
+import HTTPStatus from 'http-status'
 import { KeyworkResourceError } from 'keywork/errors'
-import { isRequestLike, isURLLike, PathMatch, PathPattern } from './common.js'
-import { matchPath } from './matchPath.js'
+import { isRequestLike, isURLLike, PathMatch, PathPattern } from './common.ts'
+import { matchPath } from './matchPath.ts'
 
 /**
  * Performs pattern matching on a URL pathname and returns information about the match.
@@ -31,7 +31,7 @@ export function parsePathname<ExpectedParams extends {} | null>(
   urlOrRequest: Pick<Request, 'url'> | string | URL
 ): PathMatch<ExpectedParams> {
   if (!urlOrRequest) {
-    throw new KeyworkResourceError(`URL or Request is not defined.`, StatusCodes.INTERNAL_SERVER_ERROR)
+    throw new KeyworkResourceError(`URL or Request is not defined.`, HTTPStatus.INTERNAL_SERVER_ERROR)
   }
   let url: URL
 
@@ -44,7 +44,7 @@ export function parsePathname<ExpectedParams extends {} | null>(
   } else {
     throw new KeyworkResourceError(
       `Pathname could not be parsed from ${urlOrRequest}.`,
-      StatusCodes.INTERNAL_SERVER_ERROR
+      HTTPStatus.INTERNAL_SERVER_ERROR
     )
   }
   const possibleMatch = matchPath<ExpectedParams, string>(pattern, url.pathname)
@@ -52,7 +52,7 @@ export function parsePathname<ExpectedParams extends {} | null>(
   if (!possibleMatch)
     throw new KeyworkResourceError(
       `Path ${url.pathname} does not this route handler's expected pattern`,
-      StatusCodes.BAD_REQUEST
+      HTTPStatus.BAD_REQUEST
     )
 
   return possibleMatch

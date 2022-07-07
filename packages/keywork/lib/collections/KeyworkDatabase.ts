@@ -12,9 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { DeserializationTypes } from './common.js'
-import { KeyworkCollection } from './KeyworkCollection.js'
-import { KeyworkDocumentReference } from './KeyworkDocumentReference.js'
+import type { KVNamespace } from '@miniflare/kv'
+import { DeserializationTypes } from './common.ts'
+import { KeyworkCollection } from './KeyworkCollection.ts'
+import { KeyworkDocumentReference } from './KeyworkDocumentReference.ts'
+
 /**
  * Creates a database instance backed by a Cloudflare KV namespace.
  */
@@ -37,7 +39,7 @@ export class KeyworkDatabase {
   /**
    * Gets a `KeyworkCollection` instance that refers to a collection of documents.
    */
-  public async collection(collectionPath: string) {
+  public collection(collectionPath: string) {
     const collection = new KeyworkCollection(this.kvNamespace, collectionPath)
 
     return collection.initialize()

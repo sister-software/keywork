@@ -65,11 +65,11 @@ class MockReadableStreamDefaultController implements ReadableStreamDefaultContro
  * @category Worker Polyfills
  * @ignore
  */
-export class ReadableStream implements globalThis.ReadableStream {
+export class ReadableStream<R = any> implements globalThis.ReadableStream<R> {
   private _readable: globalThis.ReadableStream
   private _writable: WritableStream
 
-  constructor(underlyingSource?: UnderlyingSource, _queuingStrategy?: StreamQueuingStrategy) {
+  constructor(underlyingSource?: UnderlyingSource, _queuingStrategy?: { highWaterMark?: number; size?: undefined }) {
     const transformStream = new TransformerStreamBaseConstructor()
     this._readable = transformStream.readable
     this._writable = transformStream.writable
@@ -91,17 +91,26 @@ export class ReadableStream implements globalThis.ReadableStream {
     return this._readable.cancel(reason)
   }
 
-  getReader(options: ReadableStreamGetReaderOptions): ReadableStreamBYOBReader
-  getReader(): ReadableStreamDefaultReader
+  getReader(options: { mode: 'byob' }): ReadableStreamBYOBReader
+  getReader(options?: { mode?: undefined }): ReadableStreamDefaultReader<R>
   getReader(options?: unknown): ReadableStreamBYOBReader | ReadableStreamDefaultReader {
     return this._readable.getReader(options as any)
   }
-
-  pipeThrough(transform: ReadableStreamTransform, options?: PipeToOptions | undefined): globalThis.ReadableStream {
+  pipeThrough<T>(
+    {
+      writable,
+      readable,
+    }: {
+      writable: WritableStream<R>
+      readable: ReadableStream<T>
+    },
+    options?: PipeOptions
+  ): ReadableStream<T>
+  pipeThrough(transform: any, options?: PipeOptions | undefined): globalThis.ReadableStream {
     return this._readable.pipeThrough(transform, options)
   }
 
-  pipeTo(destination: WritableStream, options?: PipeToOptions | undefined): Promise<void> {
+  pipeTo(destination: WritableStream, options?: PipeOptions | undefined): Promise<void> {
     return this._readable.pipeTo(destination, options)
   }
 
@@ -109,11 +118,11 @@ export class ReadableStream implements globalThis.ReadableStream {
     return this._readable.tee()
   }
 
-  values(options?: ReadableStreamValuesOptions | undefined): AsyncIterableIterator<any> {
-    return this._readable.values(options)
+  values(options?: any): AsyncIterableIterator<any> {
+    return (this._readable as any).values(options)
   }
 
-  [Symbol.asyncIterator](_options?: ReadableStreamValuesOptions | undefined): AsyncIterableIterator<any> {
+  [Symbol.asyncIterator](_options?: any): AsyncIterableIterator<any> {
     throw new Error('Method not implemented.')
   }
 }

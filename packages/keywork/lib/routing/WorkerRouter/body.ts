@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { StatusCodes } from 'http-status-codes'
+import HTTPStatus from 'http-status'
 import { KeyworkResourceError } from 'keywork/errors'
 import { ErrorResponse, HTMLResponse, JSONResponse, JSXResponse } from 'keywork/responses'
 import { isValidElement } from 'react'
-import type { WorkerRouter } from './WorkerRouter.js'
+import type { WorkerRouter } from './WorkerRouter.ts'
 
 /**
  * Either a full `Response`, or a more primitive value to be processed.
@@ -36,12 +36,12 @@ export function convertToResponse(responseLike: ResponseLike, workerRouter: Work
   if (responseLike instanceof ReadableStream) {
     throw new KeyworkResourceError(
       `Keywork cannot infer the 'Content-Type' for \`ReadableStream\`. Instead, wrap this value in a \`Response\``,
-      StatusCodes.INTERNAL_SERVER_ERROR
+      HTTPStatus.INTERNAL_SERVER_ERROR
     )
   }
 
   if (!responseLike) {
-    return new Response(responseLike as any, { status: StatusCodes.NO_CONTENT })
+    return new Response(responseLike as any, { status: HTTPStatus.NO_CONTENT })
   }
 
   if (typeof responseLike === 'string') {
@@ -60,6 +60,6 @@ export function convertToResponse(responseLike: ResponseLike, workerRouter: Work
 
   throw new KeyworkResourceError(
     `Keywork could not infer the appropriate \`Response\` constructor for type ${typeof responseLike}. `,
-    StatusCodes.INTERNAL_SERVER_ERROR
+    HTTPStatus.INTERNAL_SERVER_ERROR
   )
 }

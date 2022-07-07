@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { getReasonPhrase, StatusCodes } from 'http-status-codes'
+import HTTPStatus from 'http-status'
 import { KeyworkResourceError } from 'keywork/errors'
 
 /**
@@ -28,7 +28,7 @@ export class ErrorResponse extends Response {
     /**
      * An optional HTTP response status code.
      */
-    status: number = StatusCodes.INTERNAL_SERVER_ERROR,
+    status: number = HTTPStatus.INTERNAL_SERVER_ERROR,
     /**
      * An explanation for the error. Uses the `status` code as a default value.
      */
@@ -43,11 +43,7 @@ export class ErrorResponse extends Response {
     headersInit?: HeadersInit
   ) {
     if (!statusText) {
-      try {
-        statusText = getReasonPhrase(status)
-      } catch (error) {
-        statusText = getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR)
-      }
+      statusText = (HTTPStatus[status] || HTTPStatus[HTTPStatus.INTERNAL_SERVER_ERROR]).toString()
     }
 
     super(body, {
@@ -89,7 +85,7 @@ export class ErrorResponse extends Response {
 
     return new ErrorResponse(
       resourceAccessError.status,
-      publicReason || getReasonPhrase(StatusCodes.INTERNAL_SERVER_ERROR),
+      publicReason || HTTPStatus[HTTPStatus.INTERNAL_SERVER_ERROR].toString(),
       undefined,
       headersInit
     )
