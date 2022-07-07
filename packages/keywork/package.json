@@ -1,7 +1,7 @@
 {
   "name": "keywork",
   "license": "AGPL-3.0",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "A batteries-included, _magic-free_, library for building web apps on Cloudflare Workers.",
   "keywords": [
     "cloudflare",
