@@ -1,3 +1,5 @@
 build/header.js
-packages/*/dist/**/*
+dist/**/*
+dist-worker/**/*
+dist-node/**/*
 node_modules/**/*

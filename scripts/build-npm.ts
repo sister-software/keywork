@@ -12,60 +12,63 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { build, emptyDir } from 'dnt'
-import { PackageJsonObject } from 'dnt/types'
-import * as path from 'path'
-import { packagesDirectory, projectPath } from '../paths.ts'
+import { build, emptyDir } from 'deno:dnt'
+import { PackageJsonObject } from 'deno:dnt/types'
+import * as path from 'deno:path'
 
-export async function getPackage(packageName: string) {
-  console.log(`Preparing package: ${packageName}`)
+import { projectPath } from '../paths.ts'
+import { ProjectFiles } from '../utilities/files.mjs'
 
-  const packageDir = path.join(packagesDirectory, packageName)
-  const outDir = path.join(packageDir, 'out')
-  const distDir = path.join(packageDir, 'dist')
+const distDir = projectPath(ProjectFiles.NodeDistDirectory)
+const packageJSONContents = await Deno.readTextFile(projectPath(ProjectFiles.PackageJSON))
+const packageJSON = JSON.parse(packageJSONContents) as PackageJsonObject
 
-  const packageJSONContents = await Deno.readTextFile(path.join(packageDir, 'package.json'))
-  const packageJSON = JSON.parse(packageJSONContents) as PackageJsonObject
-
-  return {
-    packageName,
-    packageDir,
-    outDir,
-    distDir,
-    packageJSON,
-  }
-}
-
-async function preparePackage(packageName: string) {
-  const { packageDir, distDir, packageJSON } = await getPackage(packageName)
-
-  console.log('>>>', packageJSON)
+async function preparePackage() {
   await emptyDir(distDir)
 
   await build({
     test: false,
     entryPoints: [
-      path.join(packageDir, 'lib', 'utilities', 'index.ts'),
-      path.join(packageDir, 'lib', 'routing', 'index.ts'),
+      //
+      projectPath('lib', 'utilities', 'index.ts'),
+      projectPath('lib', 'routing', 'index.ts'),
     ],
     outDir: distDir,
     packageManager: 'yarn',
     importMap: projectPath('import_map.json'),
+    mappings: {
+      [projectPath('lib', 'react', 'worker', 'stream', 'render.deno.ts')]: projectPath(
+        'lib',
+        'react',
+        'worker',
+        'stream',
+        'render.node.ts'
+      ),
+    },
     shims: {
-      // see JS docs for overview and more options
       deno: true,
+      undici: true,
       custom: [
         {
-          module: path.join(packageDir, 'lib', 'shims', 'request.ts'),
-          globalNames: ['Request', 'Response'],
+          module: 'node:stream/web',
+          globalNames: ['TransformStream', 'ReadableStream'],
         },
       ],
     },
-    package: packageJSON,
+    compilerOptions: {
+      target: 'ES2021',
+      lib: ['es2021', 'esnext', 'dom', 'dom.iterable'],
+    },
+    package: {
+      ...packageJSON,
+      devDependencies: {},
+    },
   })
 
-  Deno.copyFileSync('LICENSE', path.join(distDir, 'LICENSE'))
-  Deno.copyFileSync('README.md', path.join(distDir, 'README.md'))
+  // await formatFiles(path.join(distDir, 'esm'))
+
+  Deno.copyFileSync(ProjectFiles.License, path.join(distDir, ProjectFiles.License))
+  Deno.copyFileSync(ProjectFiles.Readme, path.join(distDir, ProjectFiles.Readme))
 }
 
-preparePackage('keywork')
+preparePackage()

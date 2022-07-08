@@ -12,13 +12,13 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import * as fs from 'fs/promises'
-import * as path from 'path'
+import * as fs from 'node:fs/promises'
+import * as path from 'node:path'
 import { titleCase } from 'title-case'
 import TypeDoc from 'typedoc'
 import { MarkdownTheme } from 'typedoc-plugin-markdown'
-import { checkFileExists, FileNames } from '../../build/utils/files.mjs'
-import { projectPath } from '../../paths.mjs'
+import { checkFileExists } from '../../build/utils/files.mjs'
+import { ProjectFiles } from '../../utilities/filenames.mjs'
 
 // @ts-check
 
@@ -121,8 +121,8 @@ ${templateOutput}`
    */
   _fixURLs(project, urlMappings) {
     for (const urlMapping of urlMappings) {
-      if (urlMapping.url === FileNames.Readme) {
-        urlMapping.url = path.join(typeDocModulesDirName, FileNames.ModuleIndex)
+      if (urlMapping.url === ProjectFiles.Readme) {
+        urlMapping.url = path.join(typeDocModulesDirName, ProjectFiles.ModuleIndex)
       }
 
       urlMapping.url = this.normalizeURLPathSegments(urlMapping.url)
@@ -189,7 +189,7 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
       if (!exists) continue
 
       await fs.writeFile(
-        path.join(categoryDir, FileNames.Category),
+        path.join(categoryDir, ProjectFiles.Category),
         JSON.stringify(
           {
             ...defaultCategory,
@@ -212,7 +212,7 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
   bootstrap(options) {
     super.bootstrap({
       ...options,
-      tsconfig: projectPath('tsconfig.json'),
+      // tsconfig: projectPath('tsconfig.json'),
       plugin: ['typedoc-plugin-markdown', ...(options.plugin || [])],
     })
 

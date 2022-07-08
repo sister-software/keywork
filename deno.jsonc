@@ -2,14 +2,17 @@
   "$schema": "https://cdn.deno.land/deno/versions/v1.23.3/raw/cli/schemas/config-file.v1.json",
   "compilerOptions": {
     "lib": [
-      "deno.worker"
+      "deno.window",
+      "dom",
+      "dom.iterable"
     ],
-    "jsx": "react-jsx",
-    "jsxImportSource": "react",
     "strict": true,
     "experimentalDecorators": true,
     "checkJs": false,
-    "allowJs": true
+    "allowJs": true,
+    "types": [
+      "./lib/types/react-dom/server.browser/server.browser.d.ts"
+    ]
   },
   "importMap": "./import_map.json",
   "lint": {
@@ -19,6 +22,14 @@
         "no-explicit-any",
         "no-extra-semi",
         "no-empty-interface"
+      ]
+    },
+    "files": {
+      "exclude": [
+        "node_modules",
+        "dist",
+        "dist-worker",
+        "dist-node"
       ]
     }
   },

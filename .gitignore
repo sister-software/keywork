@@ -3,6 +3,8 @@
 .mf
 .tmp
 dist
+dist-node
+dist-worker
 out
 tsconfig.tsbuildinfo
 

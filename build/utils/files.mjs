@@ -15,21 +15,6 @@
 import { constants } from 'node:fs'
 import * as fs from 'node:fs/promises'
 
-export const FileNames = {
-  /** Raw output from TypeScript. */
-  OutDirectory: 'out',
-  /** Prepared output for distribution. */
-  DistDirectory: 'dist',
-  /** Source content. */
-  LibDirectory: 'lib',
-  PackageJSON: 'package.json',
-  Readme: 'README.md',
-  Index: 'index.md',
-  Category: '_category_.json',
-  CNAME: 'CNAME',
-  ModuleIndex: 'modules.md',
-}
-
 /**
  * @param {string} filePath
  * @returns {Promise<T>}

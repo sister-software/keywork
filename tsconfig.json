@@ -1,6 +1,9 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./packages/keywork" }
-  ]
+  "compilerOptions": {
+    "baseUrl": ".",
+    "jsx": "react",
+    "types": [
+      "./lib/types/react-dom/server.browser/server.browser.d.ts"
+    ]
+  }
 }

@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import * as path from 'path'
+import * as path from 'deno:path'
 
 const __filename = path.fromFileUrl(import.meta.url)
 
@@ -26,7 +26,6 @@ export const projectRoot = path.dirname(__filename)
  * @type {(...paths: string[]) => string}
  */
 export const projectPath = path.join.bind(null, projectRoot)
-export const packagesDirectory = path.join(projectRoot, 'packages')
 
 /**
  *
