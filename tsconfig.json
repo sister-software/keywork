@@ -3,7 +3,8 @@
     "baseUrl": ".",
     "jsx": "react",
     "types": [
-      "./lib/types/react-dom/server.browser/server.browser.d.ts"
+      "./lib/types/react-dom/server.browser/server.browser.d.ts",
+      "./lib/types/env.d.ts"
     ]
   }
 }

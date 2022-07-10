@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KVNamespace } from '@miniflare/kv'
+import type { KVNamespace } from 'keywork/kv'
 import type { DurableObjectNamespace } from './durable-objects.ts'
 import type { WorkerEnvFetchBinding } from './fetch.ts'
 

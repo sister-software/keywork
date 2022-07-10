@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { hexToDec } from '../utilities/index.ts'
+import { hexToDec } from '../utilities/mod.ts'
 
 /**
  * A basic implementation of Twitter's original Snowflake ID system.
@@ -45,8 +45,9 @@ export class SnowflakeID {
 
         // make system wait till time is been shifted by one millisecond
         // eslint-disable-next-line no-empty
-        // deno-lint-ignore no-empty
-        while (Date.now() <= time) {}
+        while (Date.now() <= time) {
+          //
+        }
       }
     } else {
       this.seq = 0

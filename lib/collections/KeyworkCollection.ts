@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KVNamespace } from '@miniflare/kv'
 import { KeyworkResourceError } from 'keywork/errors'
+import type { KVNamespace } from 'keywork/kv'
 import { PathBuilder, resolvePathSegments } from 'keywork/uri'
 import type { DeserializationTypes } from './common.ts'
 import type { CollectionDocumentReferencesResponse, FetchListOptions } from './KeyworkCollection/common.ts'

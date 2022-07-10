@@ -20,53 +20,17 @@ import { CachableResponse } from 'keywork/responses'
  *
  * @remarks
  * `HTMLResponse` automatically handles several types of HTML response bodies.
- * For further details on each HTML body type, see the constructors below.
  *
  * @see {JSXResponse}
  * @category HTTP Response
  * @public
  */
 export class HTMLResponse extends CachableResponse {
-  /**
-   * An HTML response that uses a string containing HTML.
-   */
-  constructor(
-    /**
-     * A full stringified HTML document.
-     */
-    htmlContent: string,
-    /** An optional request to check for etag headers. */
-    request?: Request,
-    /** An optional etag for the given `json` parameter. */
-    etag?: string,
-    /** Options to generate a cache control header. */
-    cacheControlOptions?: CacheControlDirectives,
-    /** Headers to add to the response. */
-    headersInit?: HeadersInit
-  )
-  /**
-   * An HTML response with a stream containing HTML.
-   */
-  constructor(
-    /**
-     * A `ReadableStream` containing the HTML document.
-     */
-    htmlContent: ReadableStream,
-    /** An optional request to check for etag headers. */
-    request?: Request,
-    /** An optional etag for the given `json` parameter. */
-    etag?: string,
-    /** Options to generate a cache control header. */
-    cacheControlOptions?: CacheControlDirectives,
-    /** Headers to add to the response. */
-    headersInit?: HeadersInit
-  )
-
   constructor(
     /**
      * A string containing a full HTML document, or a readable stream.
      */
-    htmlLike: string | ReadableStream,
+    htmlLike: BodyInit,
     /** An optional request to check for etag headers. */
     request?: Request,
     /** An optional etag for the given `json` parameter. */

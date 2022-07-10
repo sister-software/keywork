@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from 'deno:http/http_status'
+import { Status } from 'https://deno.land/std@0.147.0/http/http_status.ts'
 import { ErrorJSONBody } from './common.ts'
 
 /**

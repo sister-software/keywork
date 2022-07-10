@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status, STATUS_TEXT } from 'deno:http/http_status'
+import { Status, STATUS_TEXT } from 'deno/http/http_status'
 
 /**
  * Given that a request's etag header matches an server entity or resource,

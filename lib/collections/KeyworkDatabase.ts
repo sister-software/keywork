@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KVNamespace } from '@miniflare/kv'
+import type { KVNamespace } from 'keywork/kv'
 import { DeserializationTypes } from './common.ts'
 import { KeyworkCollection } from './KeyworkCollection.ts'
 import { KeyworkDocumentReference } from './KeyworkDocumentReference.ts'

@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'cookie'
-import { ulid } from 'keywork/ids'
+import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'npm/cookie'
+import { ulid } from '../ids/mod.ts'
 
 /**
  * The default session cookie key.

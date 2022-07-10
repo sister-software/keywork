@@ -13,9 +13,10 @@
  */
 
 import { fileExtensionToContentTypeHeader } from 'keywork/headers'
-import { KeyworkHTMLDocumentComponent, KeyworkProvidersComponent, renderToStream } from 'keywork/react/worker'
+import { ReactRendererOptions, renderToStream } from 'keywork/react/common'
+import { renderReactStream } from 'keywork/react/worker'
 import { CachableResponse } from 'keywork/responses'
-import React from 'react'
+import React from 'npm/react'
 
 /**
  * A React JSX response that returns a full HTML document.
@@ -30,17 +31,6 @@ import React from 'react'
  * @public
  */
 export class JSXResponse extends CachableResponse {
-  /**
-   * A HTML Document React component which wraps the entire application.
-   * Use this if you need to replace the default HTML Document.
-   */
-  DocumentComponent?: KeyworkHTMLDocumentComponent
-  /**
-   * A React component which wraps the SSR routes.
-   * Use this if you need to inject a provider into the SSR pipeline.
-   */
-  Providers?: KeyworkProvidersComponent
-
   constructor(
     /**
      * JSX elements containing only the current page's relevant content.
@@ -49,19 +39,7 @@ export class JSXResponse extends CachableResponse {
      * @see {GetStaticProps}
      */
     jsx: React.ReactElement,
-    /**
-     * A HTML Document React component which wraps the entire application.
-     * Use this if you need to replace the default HTML Document.
-     * @category React
-     */
-    DocumentComponent: KeyworkHTMLDocumentComponent,
-    /**
-     * A React component which wraps the SSR routes.
-     * Use this if you need to inject a provider into the SSR pipeline.
-     * @category React
-     */
-    Providers: KeyworkProvidersComponent,
-
+    reactRenderOptions?: ReactRendererOptions,
     /** Headers to add to the response. */
     headersInit?: HeadersInit
   ) {
@@ -74,6 +52,6 @@ export class JSXResponse extends CachableResponse {
       ...headersInit,
     })
 
-    renderToStream(passThroughStream, jsx, DocumentComponent, Providers)
+    renderToStream(renderReactStream, passThroughStream, jsx, reactRenderOptions)
   }
 }

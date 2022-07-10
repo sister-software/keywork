@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { BuildOptions } from 'esbuild'
+import { BuildOptions } from 'npm/esbuild'
 import { BundledFileName } from '../common.ts'
 
 /**

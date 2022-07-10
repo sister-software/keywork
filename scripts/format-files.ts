@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import getFiles from 'deno:getfiles'
+import getFiles from 'deno/getfiles'
 // @ts-expect-error Bad Default export
 import prettierTS from 'prettier/parser-typescript'
 
@@ -42,8 +42,6 @@ export async function formatFiles(filesDir: string): Promise<void> {
       )
     })
   )
-
-  console.log(files)
 }
 
 formatFiles(Deno.args[0])

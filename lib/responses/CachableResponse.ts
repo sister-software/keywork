@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from 'deno:http/http_status'
+import { Status } from 'deno/http/http_status'
 import { isETagMatch } from '../caching/common.ts'
 import { CacheControlDirectives, createCacheControlHeader } from '../headers/cacheControl.ts'
 import { NotModifiedResponse } from './NotModifiedResponse.ts'

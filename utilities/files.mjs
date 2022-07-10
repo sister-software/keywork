@@ -16,13 +16,12 @@
 export const ProjectFiles = {
   /** Raw output from TypeScript. */
   OutDirectory: 'out',
-  /** Prepared output for Worker distribution. */
-  WorkerDistDirectory: 'dist-worker',
-  /** Prepared output for Node distribution. */
-  NodeDistDirectory: 'dist-node',
+  /** Prepared distribution. */
+  DistDirectory: 'dist',
   /** Source content. */
   LibDirectory: 'lib',
   PackageJSON: 'package.json',
+  ImportMap: 'import_map.json',
   Readme: 'README.md',
   License: 'README.md',
   Index: 'index.md',

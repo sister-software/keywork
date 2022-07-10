@@ -12,38 +12,50 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { build, emptyDir } from 'deno:dnt'
-import { PackageJsonObject } from 'deno:dnt/types'
-import * as path from 'deno:path'
+import { build, emptyDir } from 'deno/dnt'
+import * as path from 'deno/path'
 
-import { projectPath } from '../paths.ts'
+import { changeExtension, projectPath } from '../paths.ts'
 import { ProjectFiles } from '../utilities/files.mjs'
+import {
+  createRuntimeMappings,
+  extractEntrypoints,
+  KeyworkRuntime,
+  NPMPackageJSON,
+  readImportMap,
+} from '../utilities/imports.ts'
 
-const distDir = projectPath(ProjectFiles.NodeDistDirectory)
 const packageJSONContents = await Deno.readTextFile(projectPath(ProjectFiles.PackageJSON))
-const packageJSON = JSON.parse(packageJSONContents) as PackageJsonObject
+const packageJSON = JSON.parse(packageJSONContents) as NPMPackageJSON
 
-async function preparePackage() {
+async function preparePackage(runtime: KeyworkRuntime) {
+  const distDir = projectPath(ProjectFiles.DistDirectory, runtime)
+  const importMap = await readImportMap(runtime)
+  const entryPoints = extractEntrypoints(runtime, importMap)
+
+  // Fix for runtime-specific imports.
+  const importMapDistPath = projectPath(changeExtension(ProjectFiles.ImportMap, `.${runtime}.json`))
+  await Deno.writeTextFile(importMapDistPath, JSON.stringify(importMap, null, 2))
+
   await emptyDir(distDir)
 
   await build({
     test: false,
-    entryPoints: [
-      //
-      projectPath('lib', 'utilities', 'index.ts'),
-      projectPath('lib', 'routing', 'index.ts'),
-    ],
+    entryPoints,
     outDir: distDir,
     packageManager: 'yarn',
-    importMap: projectPath('import_map.json'),
+    importMap: importMapDistPath,
     mappings: {
-      [projectPath('lib', 'react', 'worker', 'stream', 'render.deno.ts')]: projectPath(
-        'lib',
-        'react',
-        'worker',
-        'stream',
-        'render.node.ts'
+      ...createRuntimeMappings(
+        runtime,
+        projectPath('lib', 'react', 'worker', 'mod.ts'),
+        projectPath('lib', 'runtime', 'worker', 'mod.ts')
       ),
+      [projectPath('lib', 'kv', 'worker', 'mod.ts')]: '@miniflare/kv',
+      'https://cdn.skypack.dev/ulidx?dts': {
+        name: 'ulidx',
+        version: '^0.3.0',
+      },
     },
     shims: {
       deno: true,
@@ -61,14 +73,15 @@ async function preparePackage() {
     },
     package: {
       ...packageJSON,
-      devDependencies: {},
+      devDependencies: {
+        '@miniflare/kv': '^2.5.1',
+      },
     },
   })
 
-  // await formatFiles(path.join(distDir, 'esm'))
-
   Deno.copyFileSync(ProjectFiles.License, path.join(distDir, ProjectFiles.License))
   Deno.copyFileSync(ProjectFiles.Readme, path.join(distDir, ProjectFiles.Readme))
+  Deno.copyFileSync('.eslintignore', path.join(distDir, '.eslintignore'))
 }
 
-preparePackage()
+preparePackage('node')

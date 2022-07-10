@@ -16,18 +16,13 @@
 export {}
 
 declare global {
-  namespace NodeJSExtensions {
-    export interface ProcessEnv {
-      NODE_ENV?: string
-      BUILD_ID?: string
-    }
-
-    export interface Process {
-      env: ProcessEnv
-    }
-  }
-
-  export class IdentityTransformStream extends TransformStream {}
-
-  // export const process: NodeJSExtensions.Process
+  // namespace NodeJSExtensions {
+  //   export interface ProcessEnv {
+  //     NODE_ENV?: string
+  //     BUILD_ID?: string
+  //   }
+  //   export interface Process {
+  //     env: ProcessEnv
+  //   }
+  // }
 }

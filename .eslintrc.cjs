@@ -49,7 +49,7 @@ const config = {
     worker: true,
   },
   rules: {
-    'header/header': [2, 'block', headerLines, 2],
+    'header/header': [2, 'block', headerLines, 1],
     'react/prop-types': 'off',
     'no-undef': 'off',
     'no-extra-semi': 'off',

@@ -13,8 +13,8 @@
  */
 
 import { ETaggable } from 'keywork/caching'
-import isPlainObject from 'lodash.isplainobject'
-import { ulid } from 'ulidx'
+import isPlainObject from 'npm/lodash.isplainobject'
+import { ulid } from 'npm/ulidx'
 import type { DeserializationTransformers, PutOrPatchOptions } from './common.ts'
 
 export interface CreateKeyworkDocumentMetadataOptions {

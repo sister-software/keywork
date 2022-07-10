@@ -15,7 +15,25 @@
 import type { DeserializationTypes } from '../common.ts'
 import type { KeyworkDocumentReference } from '../KeyworkDocumentReference.ts'
 
+export interface KVNamespaceListOptions {
+  limit?: number
+  prefix?: string | null
+  cursor?: string
+}
+
 export interface FetchListOptions extends Omit<KVNamespaceListOptions, 'prefix'> {}
+
+export interface KVNamespaceListKey<Metadata> {
+  name: string
+  expiration?: number
+  metadata?: Metadata
+}
+
+export interface KVNamespaceListResult<Metadata> {
+  keys: KVNamespaceListKey<Metadata>[]
+  list_complete: boolean
+  cursor?: string
+}
 
 export interface CollectionDocumentReferencesResponse<ExpectedType extends DeserializationTypes | {}>
   extends KVNamespaceListResult<unknown> {

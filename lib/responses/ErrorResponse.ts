@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status, STATUS_TEXT } from 'deno:http/http_status'
+import { Status, STATUS_TEXT } from 'https://deno.land/std@0.147.0/http/http_status.ts'
 import { KeyworkResourceError } from 'keywork/errors'
 
 /**

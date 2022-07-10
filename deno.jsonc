@@ -2,7 +2,7 @@
   "$schema": "https://cdn.deno.land/deno/versions/v1.23.3/raw/cli/schemas/config-file.v1.json",
   "compilerOptions": {
     "lib": [
-      "deno.window",
+      "deno.ns",
       "dom",
       "dom.iterable"
     ],
@@ -11,7 +11,8 @@
     "checkJs": false,
     "allowJs": true,
     "types": [
-      "./lib/types/react-dom/server.browser/server.browser.d.ts"
+      "./lib/types/react-dom/server.browser/server.browser.d.ts",
+      "./lib/types/env.d.ts"
     ]
   },
   "importMap": "./import_map.json",

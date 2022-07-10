@@ -22,4 +22,4 @@
  */
 
 export * from './common.ts'
-export * from './esbuild/index.ts'
+export * from './esbuild/mod.ts'

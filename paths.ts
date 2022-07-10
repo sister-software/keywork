@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import * as path from 'deno:path'
+import * as path from 'deno/path'
 
 const __filename = path.fromFileUrl(import.meta.url)
 

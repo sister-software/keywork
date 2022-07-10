@@ -13,7 +13,7 @@
  */
 
 declare module 'react-dom/server.browser' {
-  import { ReactNode } from 'react'
+  import { ReactNode } from 'npm/react'
 
   export interface RenderToReadableStreamOptions {
     identifierPrefix?: string

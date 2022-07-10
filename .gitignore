@@ -3,8 +3,6 @@
 .mf
 .tmp
 dist
-dist-node
-dist-worker
 out
 tsconfig.tsbuildinfo
 
@@ -19,6 +17,8 @@ node_modules
 api-extractor/temp
 .docusaurus
 .cache-loader
+import_map.node.json
+import_map.worker.json
 
 # Misc
 .DS_Store
