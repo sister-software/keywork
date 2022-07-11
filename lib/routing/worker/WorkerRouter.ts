@@ -15,6 +15,7 @@
 import { Status } from 'deno/http/http_status'
 import { KeyworkResourceError } from 'keywork/errors'
 import { KeyworkHeaders, mergeHeaders } from 'keywork/headers'
+import { $Request, $RequestInit } from 'keywork/platform'
 import { ReactRendererOptions } from 'keywork/react/common'
 import { renderReactStream } from 'keywork/react/worker'
 import { ErrorResponse } from 'keywork/responses'
@@ -560,8 +561,8 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
 
       /** A clone of the initial request, with a new URL to match the remaining pathname parameters.  */
       const request = input
-        ? new Request(input, requestInit)
-        : new Request(url.toString(), event.request as RequestInit)
+        ? new $Request(input, requestInit)
+        : new $Request(url.toString(), event.request as $RequestInit)
 
       const currentEvent: IncomingRequestEvent<BoundAliases, any, any> = {
         ...event,

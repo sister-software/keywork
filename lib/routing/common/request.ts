@@ -12,69 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { $Request } from 'keywork/platform'
 import type { KeyworkSession } from 'keywork/sessions'
-import { PathMatch } from 'keywork/uri'
+import type { PathMatch } from 'keywork/uri'
 import type { MiddlewareFetch } from './middleware.ts'
-
-/** @ignore */
-export interface IncomingRequestCfProperties {
-  asn: number
-  botManagement?: IncomingRequestCfPropertiesBotManagement
-  city?: string
-  clientTcpRtt: number
-  clientTrustScore?: number
-  colo: string
-  continent?: string
-  country: string
-  httpProtocol: string
-  latitude?: string
-  longitude?: string
-  metroCode?: string
-  postalCode?: string
-  region?: string
-  regionCode?: string
-  requestPriority: string
-  timezone?: string
-  tlsVersion: string
-  tlsCipher: string
-  tlsClientAuth: IncomingRequestCfPropertiesTLSClientAuth
-}
-
-/** @ignore */
-export interface IncomingRequestCfPropertiesBotManagement {
-  score: number
-  staticResource: boolean
-  verifiedBot: boolean
-}
-
-/** @ignore */
-export interface IncomingRequestCfPropertiesTLSClientAuth {
-  certIssuerDNLegacy: string
-  certIssuerDN: string
-  certPresented: '0' | '1'
-  certSubjectDNLegacy: string
-  certSubjectDN: string
-  certNotBefore: string
-  certNotAfter: string
-  certSerial: string
-  certFingerprintSHA1: string
-  certVerified: string
-}
-
-/**
- * The incoming request received by the Worker.
- *
- * @remarks
- * Comments via Cloudflare:
- * >In addition to the properties on the standard Request object,
- * >the cf object contains extra information about the request provided by Cloudflare's edge.
- *
- * @category Request
- * @public
- */
-export interface RequestWithCFProperties extends Request {
-  cf?: IncomingRequestCfProperties
-}
 
 /**
  * Additional data associated with the `IncomingRequestEvent`.
@@ -120,7 +61,7 @@ export interface IncomingRequestEvent<
    * the current parsed route handler of `WorkerRouter`.
    * @see {IncomingRequestEvent#originalURL}
    */
-  request: RequestWithCFProperties
+  request: $Request
 
   /**
    * The original URL associated with the `IncomingRequestEvent`.

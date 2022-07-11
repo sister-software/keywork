@@ -16,7 +16,7 @@
 
 import clsx from 'clsx'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ComponentProps, ComponentType } from 'npm/react'
+import { ComponentProps, ComponentType } from 'react'
 import styles from './styles.module.css'
 
 type FeatureItem = {

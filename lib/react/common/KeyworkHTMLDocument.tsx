@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import classNames from 'classnames'
 import { KeyworkHTMLDocumentAppRoot, KeyworkHTMLDocumentStyleRoot } from 'keywork/react/common'
 import { KeyworkQueryParamKeys } from 'keywork/utilities'
-import classNames from 'npm/classnames'
-import React, { FC, HtmlHTMLAttributes, ReactFragment, ReactNode } from 'npm/react'
+import React, { FC, HtmlHTMLAttributes, ReactFragment, ReactNode } from 'react'
 
 export interface KeyworkHTMLDocumentProps {
   moduleManifest?: string[]

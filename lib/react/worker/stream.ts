@@ -15,7 +15,7 @@
 import { KeyworkResourceError } from 'keywork/errors'
 
 import { IReactStreamRenderer } from 'keywork/react/common'
-import { renderToReadableStream } from 'npm/react-dom/server.browser'
+import { renderToReadableStream } from 'react-dom/server.browser'
 
 export const renderReactStream: IReactStreamRenderer = async (children, options) => {
   const controller = new AbortController()

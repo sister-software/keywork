@@ -35,7 +35,7 @@
   "scripts": {
     "build": "node --experimental-specifier-resolution=node ./build/build-packages.mjs",
     "build:npm": "deno run -A scripts/build-npm.ts",
-    "postbuild:npm": "deno run -A scripts/format-files.ts ./dist-node/esm",
+    "postbuild:npm": "deno run -A scripts/format-files.ts ./dist/lib",
     "build:docs": "cd site && npm run build",
     "build:all": "npm run build && npm run build:docs",
     "prepublishOnly": "npm run build:all",
@@ -47,7 +47,6 @@
     "react-dom": ">=18.2"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^3.11.0",
     "@types/cookie": "^0.5.1",
     "@types/lodash.isplainobject": "^4.0.7",
     "@types/react-dom": "^18.0.5",

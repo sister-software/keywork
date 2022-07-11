@@ -13,7 +13,7 @@
  */
 
 import { createContextAndNamedHook } from 'keywork/react/hooks'
-import React, { FC, ReactNode, useMemo } from 'npm/react'
+import React, { FC, ReactNode, useMemo } from 'react'
 
 export interface KeyworkRouterProvider {
   location: URL

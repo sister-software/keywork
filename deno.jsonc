@@ -12,6 +12,7 @@
     "allowJs": true,
     "types": [
       "./lib/types/react-dom/server.browser/server.browser.d.ts",
+      "./lib/types/stream.d.ts",
       "./lib/types/env.d.ts"
     ]
   },

@@ -1,10 +1,25 @@
 {
   "compilerOptions": {
+    "outDir": "dist/lib",
+    "allowJs": true,
+    "alwaysStrict": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": false,
+    "noImplicitThis": true,
+    "noStrictGenericChecks": false,
+    "noUncheckedIndexedAccess": false,
+    "declaration": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importsNotUsedAsValues": "remove",
     "baseUrl": ".",
     "jsx": "react",
-    "types": [
-      "./lib/types/react-dom/server.browser/server.browser.d.ts",
-      "./lib/types/env.d.ts"
-    ]
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "lib": ["es2021", "esnext", "dom", "dom.iterable"],
+    "sourceMap": true,
+    "declarationMap": true
   }
 }

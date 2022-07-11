@@ -1,3 +1,5 @@
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck Polyfill
 /* eslint-disable header/header */
 /**
  * @file This file is part of the Keywork project.
@@ -73,7 +75,7 @@ export class ReadableStream<R = any> implements globalThis.ReadableStream<R> {
   private _readable: globalThis.ReadableStream
   private _writable: WritableStream
 
-  constructor(underlyingSource?: UnderlyingSource, _queuingStrategy?: { highWaterMark?: number; size?: undefined }) {
+  constructor(underlyingSource?: any, _queuingStrategy?: { highWaterMark?: number; size?: undefined }) {
     const transformStream = new TransformerStreamBaseConstructor()
     this._readable = transformStream.readable
     this._writable = transformStream.writable
@@ -95,9 +97,7 @@ export class ReadableStream<R = any> implements globalThis.ReadableStream<R> {
     return this._readable.cancel(reason)
   }
 
-  getReader(options: { mode: 'byob' }): ReadableStreamBYOBReader
-  getReader(options?: { mode?: undefined }): ReadableStreamDefaultReader<R>
-  getReader(options?: unknown): ReadableStreamBYOBReader | ReadableStreamDefaultReader {
+  getReader(options?: unknown): any {
     return this._readable.getReader(options as any)
   }
   pipeThrough<T>(
@@ -108,13 +108,13 @@ export class ReadableStream<R = any> implements globalThis.ReadableStream<R> {
       writable: WritableStream<R>
       readable: ReadableStream<T>
     },
-    options?: PipeOptions
+    options?: any
   ): ReadableStream<T>
-  pipeThrough(transform: any, options?: PipeOptions | undefined): globalThis.ReadableStream {
+  pipeThrough(transform: any, options?: any | undefined): globalThis.ReadableStream {
     return this._readable.pipeThrough(transform, options)
   }
 
-  pipeTo(destination: WritableStream, options?: PipeOptions | undefined): Promise<void> {
+  pipeTo(destination: WritableStream, options?: any | undefined): Promise<void> {
     return this._readable.pipeTo(destination, options)
   }
 

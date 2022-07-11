@@ -12,8 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { $Request } from 'keywork/platform'
 import { ResponseLike } from './body.ts'
-import type { IncomingRequestEvent, RequestWithCFProperties } from './request.ts'
+import type { IncomingRequestEvent } from './request.ts'
+
 import type { RouteRequestHandler } from './RouteRequestHandler.ts'
 
 /**
@@ -45,7 +47,7 @@ import type { RouteRequestHandler } from './RouteRequestHandler.ts'
  * @category Request
  */
 export type WorkerRequestHandler<BoundAliases extends {} | null = null> = (
-  request: RequestWithCFProperties,
+  request: $Request,
   env: BoundAliases,
   /**
    * The Worker context object.

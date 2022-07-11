@@ -12,6 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { $Request, $RequestInit } from 'keywork/platform'
+
 /**
  * Middleware implementation of `fetch`
  *
@@ -23,9 +25,9 @@ export type MiddlewareFetch = (
   /**
    * An optional override of the `Request` provided in the route handler's `IncomingRequestContext`
    */
-  requestOrUrl?: Request | string,
+  requestOrUrl?: $Request | string,
   /**
    * An optional override of the `Request` provided in the route handler's `IncomingRequestContext`
    */
-  requestInit?: RequestInit
+  requestInit?: $RequestInit
 ) => (Response | null) | Promise<Response | null>

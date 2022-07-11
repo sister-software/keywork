@@ -14,8 +14,6 @@
 
 import { EntryPoint } from 'deno/dnt'
 import { SpecifierMappings } from 'deno/dnt/transform'
-import { projectPath } from '../paths.ts'
-import { ProjectFiles } from './files.mjs'
 
 export interface NPMPackageJSON {
   name: string
@@ -59,8 +57,8 @@ export interface ImportMap {
  * Extract package.json entrypoints from a given import map.
  * @internal
  */
-export function extractEntrypoints(runtime: KeyworkRuntime, importMap: ImportMap): Array<string | EntryPoint> {
-  const entryPoints: Array<string | EntryPoint> = []
+export function extractEntrypoints(runtime: KeyworkRuntime, importMap: ImportMap): EntryPoint[] {
+  const entryPoints: EntryPoint[] = []
   const compatibleRuntime = compatibleRuntimes[runtime]
 
   for (const [specifier, remappedSpecifier] of Object.entries(importMap.imports)) {
@@ -76,11 +74,12 @@ export function extractEntrypoints(runtime: KeyworkRuntime, importMap: ImportMap
 
     if (specifierIsIncompatible) continue
 
-    const remappedSpecifierWithRuntime = remappedSpecifier.replaceAll(RUNTIME_PLACEHOLDER, runtime)
+    // const remappedSpecifierWithRuntime = remappedSpecifier.replaceAll(RUNTIME_PLACEHOLDER, runtime)
 
     entryPoints.push({
       name: specifier,
-      path: remappedSpecifierWithRuntime,
+      // path: changeExtension(remappedSpecifier, '.js'),
+      path: remappedSpecifier,
     })
   }
 
@@ -100,24 +99,4 @@ export function createRuntimeMappings(runtime: KeyworkRuntime, ...filePaths: str
   }
 
   return mappings
-}
-
-/**
- * @ignore
- */
-export async function readImportMap(runtime: KeyworkRuntime): Promise<ImportMap> {
-  const importMapContents = await Deno.readTextFile(projectPath(ProjectFiles.ImportMap))
-  const rawImportMap = JSON.parse(importMapContents) as ImportMap
-  const importMap: ImportMap = {
-    imports: {},
-  }
-
-  for (const [specifier, remappedSpecifier] of Object.entries(rawImportMap.imports)) {
-    importMap.imports[specifier.replaceAll(RUNTIME_PLACEHOLDER, runtime)] = remappedSpecifier.replaceAll(
-      RUNTIME_PLACEHOLDER,
-      runtime
-    )
-  }
-
-  return importMap
 }

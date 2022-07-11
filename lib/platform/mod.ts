@@ -12,21 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/** Common project file names. */
-export const ProjectFiles = {
-  /** Raw output from TypeScript. */
-  OutDirectory: 'out',
-  /** Prepared distribution. */
-  DistDirectory: 'dist',
-  TSConfig: 'tsconfig.json',
-  /** Source content. */
-  LibDirectory: 'lib',
-  PackageJSON: 'package.json',
-  ImportMap: 'import_map.json',
-  Readme: 'README.md',
-  License: 'README.md',
-  Index: 'index.md',
-  Category: '_category_.json',
-  CNAME: 'CNAME',
-  ModuleIndex: 'modules.md',
-}
+export * from './request.ts'
+export * from './stream.ts'

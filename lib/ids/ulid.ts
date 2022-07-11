@@ -13,4 +13,4 @@
  */
 
 // TODO: Using ULIDX for now. Let's see how this fairs...
-export * from 'npm/ulidx'
+export * from 'ulidx'

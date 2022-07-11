@@ -13,7 +13,7 @@
  */
 
 import { IReactStreamRenderer, ReactDOMServerReadableStream } from 'keywork/react/common'
-import { renderToNodeStream } from 'npm/react-dom/server'
+import { renderToNodeStream } from 'react-dom/server'
 
 export const renderReactStream: IReactStreamRenderer = (children) => {
   try {

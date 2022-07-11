@@ -12,7 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'npm/cookie'
+import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'cookie'
+import type { $Request } from 'keywork/platform'
 import { ulid } from '../ids/mod.ts'
 
 /**
@@ -72,7 +73,7 @@ export class KeyworkSession {
 
   constructor(
     /** The incoming request */
-    request: Request,
+    request: $Request,
     options?: KeyworkSessionOptions
   )
   constructor(
@@ -84,7 +85,7 @@ export class KeyworkSession {
   )
   constructor(
     /** The incoming request */
-    requestOrSessionID: Request | string,
+    requestOrSessionID: $Request | string,
     options?: KeyworkSessionOptions
   ) {
     let sessionID: string

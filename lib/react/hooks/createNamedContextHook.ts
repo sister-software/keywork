@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { createContext, useContext } from 'npm/react'
+import { createContext, useContext } from 'react'
 
 /**
  * A convenience wrapper around `React.createContext` that creates a context and hook for the child components within a Provider's context.

@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import deepmerge from 'deepmerge'
 import { convertJSONToETaggableString, generateETag } from 'keywork/caching'
 import { KeyworkResourceError } from 'keywork/errors'
 import type { KVNamespace } from 'keywork/kv'
 import { resolvePathSegments } from 'keywork/uri'
-import deepmerge from 'npm/deepmerge'
 import type { DeserializationTransformers, DeserializationTypes, PutOrPatchOptions } from './common.ts'
 import type { KeyworkCollection } from './KeyworkCollection.ts'
 import {
@@ -154,7 +154,7 @@ export class KeyworkDocumentReference<
       })
     }
 
-    await this.kvNamespace.put(this.absoluteDocPath, preparedValue, { ...putOptions, metadata })
+    await this.kvNamespace.put(this.absoluteDocPath, preparedValue as any, { ...putOptions, metadata })
 
     if (this.parentCollection) {
       this.parentCollection.addEntryToIndexes<any>(nextValue, metadata)
@@ -208,7 +208,7 @@ export class KeyworkDocumentReference<
       etag: isETaggable(preparedValue, deserializeAs) ? await generateETag(preparedValue) : null,
     })
 
-    await this.kvNamespace.put(this.absoluteDocPath, preparedValue, { ...options, metadata })
+    await this.kvNamespace.put(this.absoluteDocPath, preparedValue as any, { ...options, metadata })
 
     if (this.parentCollection) {
       this.parentCollection.addEntryToIndexes<any>(nextValue, metadata)

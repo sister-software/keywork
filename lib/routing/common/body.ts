@@ -16,7 +16,7 @@ import { Status } from 'deno/http/http_status'
 import { KeyworkResourceError } from 'keywork/errors'
 import type { ReactRendererOptions } from 'keywork/react/common'
 import { ErrorResponse, HTMLResponse, JSONResponse, JSXResponse } from 'keywork/responses'
-import { isValidElement } from 'npm/react'
+import { isValidElement } from 'react'
 
 /**
  * Either a full `Response`, or a more primitive value to be processed.

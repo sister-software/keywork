@@ -20,7 +20,7 @@ import {
   StaticPropsProvider,
 } from 'keywork/react/common'
 import { PrefixedLogger } from 'keywork/utilities'
-import React from 'npm/react'
+import React from 'react'
 import { KeyworkHTMLDocument } from './KeyworkHTMLDocument.tsx'
 import { KeyworkProviders } from './KeyworkProvidersComponent.tsx'
 import { _SSRPropsEmbed } from './SSRPropsEmbed.tsx'
@@ -36,7 +36,7 @@ export async function renderToStream<StaticProps extends SSRPropsLike | null = n
   pageElement: React.ReactElement<StaticProps>,
   reactRenderOptions?: ReactRendererOptions
 ): Promise<void> {
-  const logger = new PrefixedLogger('npm/react Stream Renderer')
+  const logger = new PrefixedLogger('react Stream Renderer')
 
   const DocumentComponent = reactRenderOptions?.DocumentComponent || KeyworkHTMLDocument
   const Providers = reactRenderOptions?.Providers || KeyworkProviders
