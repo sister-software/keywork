@@ -18,7 +18,8 @@ import { titleCase } from 'title-case'
 import TypeDoc from 'typedoc'
 import { MarkdownTheme } from 'typedoc-plugin-markdown'
 import { checkFileExists } from '../../build/utils/files.mjs'
-import { ProjectFiles } from '../../utilities/filenames.mjs'
+import { projectPath } from '../../paths-legacy.mjs'
+import { ProjectFiles } from '../../scripts/utilities/files.mjs'
 
 // @ts-check
 
@@ -212,7 +213,7 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
   bootstrap(options) {
     super.bootstrap({
       ...options,
-      // tsconfig: projectPath('tsconfig.json'),
+      tsconfig: projectPath('dist', 'tsconfig.json'),
       plugin: ['typedoc-plugin-markdown', ...(options.plugin || [])],
     })
 

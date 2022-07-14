@@ -70,7 +70,6 @@
     "keywork/react/node": "./react/node/index.ts",
     "keywork/react/worker": "./react/worker/index.ts",
     "keywork/react/hooks": "./react/hooks/index.ts",
-    "keywork/react": "./react/index.ts",
     "keywork/routing/common": "./routing/common/index.ts",
     "keywork/routing/worker/cloudflare": "./routing/worker/cloudflare/index.ts",
     "keywork/routing/worker": "./routing/worker/index.ts",

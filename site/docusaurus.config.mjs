@@ -53,7 +53,7 @@ const config = {
     [
       'classic',
       /** @type {import('@docusaurus/preset-classic').Options} */
-      ({
+      {
         docs: false,
         blog: false,
         theme: {
@@ -70,7 +70,7 @@ const config = {
             require.resolve('./src/css/cursor.css'),
           ],
         },
-      }),
+      },
     ],
   ],
   plugins: [
@@ -93,11 +93,11 @@ const config = {
         validate: validationUtils.normalizePluginOptions,
         options:
           /** @type {import('@docusaurus/plugin-content-docs').PluginOptions} */
-          ({
+          {
             id: 'docs',
             path: 'docs',
             routeBasePath: '/docs',
-          }),
+          },
       }),
     ],
 
@@ -107,11 +107,11 @@ const config = {
         validate: validationUtils.normalizePluginOptions,
         options:
           /** @type {import('@docusaurus/plugin-content-docs').PluginOptions} */
-          ({
+          {
             id: 'licensing',
             path: 'licensing',
             routeBasePath: '/licensing',
-          }),
+          },
       }),
     ],
 
@@ -128,7 +128,7 @@ const config = {
 
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    ({
+    {
       colorMode: {
         defaultMode: 'light',
         disableSwitch: true,
@@ -216,7 +216,7 @@ const config = {
         theme: lightCodeTheme,
         darkTheme: lightCodeTheme,
       },
-    }),
+    },
 }
 
 export default config

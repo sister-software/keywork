@@ -16,7 +16,7 @@ import Link from '@docusaurus/Link'
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext'
 import Layout from '@theme/Layout'
 import clsx from 'clsx'
-
+import React from 'react'
 import styles from './index.module.css'
 
 function HomepageHeader() {
@@ -42,7 +42,7 @@ export default function Home(): JSX.Element {
   return (
     <Layout
       title={`Hello from ${siteConfig.title}`}
-      description="A batteries-included, magic-free, library for building web apps on Cloudflare Workers."
+      description="A batteries-included, magic-free, library for building web apps on Cloudflare Workers, Deno, and Node.JS"
     >
       <HomepageHeader />
 

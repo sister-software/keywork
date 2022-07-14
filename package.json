@@ -60,7 +60,9 @@
     "undici": {"optional": true}
   },
   "exports": {
-    "./package.json": "./package.json"
+    "./package.json": {
+      "import": "./package.json"
+    }
   },
   "devDependencies": {
     "@types/cookie": "^0.5.1",

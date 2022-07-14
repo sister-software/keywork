@@ -15,60 +15,22 @@
 import FastGlob from 'fast-glob'
 import fs from 'fs/promises'
 import path from 'path'
-import { changeExtension, packagesDirectory, projectPath } from '../../paths.mjs'
-import { FileNames, readJSON } from './files.mjs'
-const tsconfig = await readJSON(projectPath('tsconfig.json'))
+import { changeExtension, projectPath } from '../../paths-legacy.mjs'
+import { ProjectFiles } from '../../scripts/utilities/files.mjs'
 
-/** @type string[] Package names */
-export const packagesList = tsconfig.references.map((reference) => {
-  return path.basename(reference.path)
-})
+const outDir = projectPath('dist')
 
-export const scope = '@keywork'
-
-/** @typedef {import('../../packages/keywork/package.json') T_npm_packageJSON } */
-
-/**
- * Gets a list of dependency names from the passed package
- * @param {T_npm_packageJSON} pkg
- * @param {boolean} [includeDev]
- * @returns {Set<string>} packageDependencies
- */
-export function getPackageDependencies(pkg, includeDev) {
-  return new Set([
-    ...(pkg.dependencies ? Object.keys(pkg.dependencies) : []),
-    ...(includeDev && pkg.devDependencies ? Object.keys(pkg.devDependencies) : []),
-    ...(pkg.peerDependencies ? Object.keys(pkg.peerDependencies) : []),
-    ...(pkg.optionalDependencies ? Object.keys(pkg.optionalDependencies) : []),
-  ])
-}
-
-/**
- * Gets the contents of the package.json file in <packagePath>
- * @param {string} packagePath
- *
- * @returns {Promise<(T_npm_packageJSON>}
- */
-export async function readPackageJSON(packagePath) {
-  return JSON.parse(await fs.readFile(path.join(packagePath, 'package.json'), 'utf8'))
-}
-
-/**
- * @param {string} packagePath
- */
-export async function readPackageEntryPoints(packagePath) {
-  const packageJSON = await readPackageJSON(packagePath)
+export async function readPackageEntryPoints() {
+  const packageJSON = JSON.parse(await fs.readFile(path.join(outDir, 'package.json'), 'utf8'))
   const absoluteEntryPoints = new Set()
 
   if (typeof packageJSON.exports === 'string') {
     absoluteEntryPoints.add(packageJSON.exports)
   } else if (typeof packageJSON.exports === 'object') {
     for (const relativeExportPath of Object.values(packageJSON.exports)) {
-      if (relativeExportPath.endsWith('.json')) continue
-      const absolutePath = path.resolve(packagePath, FileNames.OutDir, relativeExportPath)
-      const entries = await FastGlob(absolutePath)
-
-      entries.forEach((entry) => absoluteEntryPoints.add(entry))
+      if (relativeExportPath.import.endsWith('.json')) continue
+      const absolutePath = path.resolve(outDir, relativeExportPath.import)
+      absoluteEntryPoints.add(absolutePath)
     }
   } else if (packageJSON.main) {
     absoluteEntryPoints.add(packageJSON.main)
@@ -77,24 +39,22 @@ export async function readPackageEntryPoints(packagePath) {
   return Array.from(absoluteEntryPoints)
 }
 
-export function readAllPackageEntryPoints() {
+export async function readAllPackageEntryPoints() {
+  const entryPoints = await readPackageEntryPoints()
+  const sourceMapPaths = entryPoints.map((entryPoint) => {
+    return changeExtension(entryPoint, '.js.map')
+  })
+
   return Promise.all(
-    packagesList.map(async (packageName) => {
-      const packagePath = path.join(packagesDirectory, packageName)
-      const entryPoints = await readPackageEntryPoints(packagePath)
-      const sourceMapPaths = entryPoints.map((entryPoint) => {
-        return changeExtension(entryPoint, '.js.map')
-      })
+    sourceMapPaths.map(async (sourceMapPath) => {
+      const content = await fs.readFile(sourceMapPath, 'utf8')
+      const sourceMap = JSON.parse(content)
+      const [relativePath] = sourceMap.sources
 
-      return Promise.all(
-        sourceMapPaths.map(async (sourceMapPath) => {
-          const content = await fs.readFile(sourceMapPath, 'utf8')
-          const sourceMap = JSON.parse(content)
-          const [relativePath] = sourceMap.sources
-
-          return path.resolve(sourceMapPath, relativePath)
-        })
-      )
+      const partialPath = path.resolve(path.dirname(sourceMapPath), relativePath)
+      // return partialPath
+      return changeExtension(partialPath, '.d.ts')
+      // return partialPath.replace(outDir, projectPath())
     })
-  ).then(($) => $.flat())
+  )
 }

@@ -80,10 +80,10 @@ export async function typeDocPlugin(context, opts) {
     validate: validationUtils.normalizePluginOptions,
     options:
       /** @type {import('@docusaurus/plugin-content-docs').PluginOptions} */
-      ({
+      {
         path: 'api', // Path to data on filesystem, relative to site dir.
         routeBasePath: '/api', // URL Route.
-      }),
+      },
   })
 
   const pluginInstance = await docsPlugin.default(context, docsOptions)

@@ -7,8 +7,7 @@
       "stream/web": ["./node_modules/@types/node/stream/web.d.ts"],
       "http": ["./node_modules/@types/node/stream/http.d.ts"]
     },
-    "rootDir": ".",
-    "outDir": "dist"
+    "rootDir": "."
   },
   "include": [
     "**/*"

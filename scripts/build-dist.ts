@@ -230,6 +230,14 @@ await runNpmCommand({
 })
 
 build(transformOutput)
-// checkTypes()
+
+// Fix for doc parsing...
+const tsConfigContents = JSON.parse(Deno.readTextFileSync(tsConfigSrcPath))
+Object.assign(tsConfigContents, {
+  extends: undefined,
+  include: ['./**/*'],
+})
+
+Deno.writeTextFileSync(tsConfigDestPath, JSON.stringify(tsConfigContents, null, 2))
 
 await formatFiles(outDir, Object.keys(packageExports))

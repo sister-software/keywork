@@ -24,7 +24,7 @@ especially so if you're unfamiliar with the quirks of platform.
 Let's start with a small example to get a feel for how Keywork fits in with your current experience.
 
 We're going to create a single Worker that sends the browser a "hello world" response.
-By the end of this example, you'll know how to use the [`WorkerRouter`](/api/classes/routing.WorkerRouter)
+By the end of this example, you'll know how to use the [`WorkerRouter`](/api/classes/routing-worker.WorkerRouter)
 class to handling incoming requests from the browser.
 
 :::info
@@ -53,7 +53,7 @@ Examples are always written with type annotations, but they can be omitted if yo
 
 ## Defining a router with an incoming request handler
 
-Building an app with Keywork starts creating a [`WorkerRouter`](/api/classes/routing.WorkerRouter):
+Building an app with Keywork starts creating a [`WorkerRouter`](/api/classes/routing-worker.WorkerRouter):
 
 ```ts title=_worker.ts showLineNumbers
 import { WorkerRouter } from 'keywork/routing'
@@ -103,7 +103,7 @@ app.get('/articles/:articleID', ...)
 
 ### `IncomingRequestEvent`
 
-Inside our `RouteRequestHandler` callback, we have an [`event`](/api/interfaces/routing.IncomingRequestEvent)
+Inside our `RouteRequestHandler` callback, we have an [`event`](/api/interfaces/routing-common.IncomingRequestEvent)
 object that contains information about the request.
 And in this example, we use `event.request.url` to parse the URL from whence the request originated.
 

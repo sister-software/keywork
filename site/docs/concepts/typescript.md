@@ -24,7 +24,7 @@ yarn add --dev @cloudflare/workers-types
 
 ### Using environment bindings with TypeScript
 
-It's recommended that you create an ambient type file for any [environment bindings]() your Worker uses.
+It's recommended that you create an ambient type file for any [environment bindings](https://developers.cloudflare.com/workers/platform/bindings/) your Worker uses.
 
 ```ts title=types/bindings.d.ts
 export {}

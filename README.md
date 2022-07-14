@@ -1,4 +1,4 @@
-**Keywork** is a batteries-included, library for building web apps on Cloudflare Workers.
+**Keywork** is a batteries-included, library for building web apps on Cloudflare Workers, Deno, and Node.JS
 
 ![npm (scoped)](https://img.shields.io/npm/v/keywork)
 ![npm](https://img.shields.io/npm/dm/keywork)
@@ -6,6 +6,7 @@
 Keywork may be right for you if...
 
 - You're building your web app almost entirely within the Cloudflare Workers platform
+- You want to build on V8 Isolates without vendor lock-in
 - You find yourself writing a lot of "glue-code" to wrangle your growing set of Workers
 - Your site is hosted on a single Worker and you'd like to split its logic into smaller and more manageable bundles
 - Your routing logic is outgrowing Cloudflare Pages
