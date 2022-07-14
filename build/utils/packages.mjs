@@ -65,7 +65,7 @@ export async function readPackageEntryPoints(packagePath) {
   } else if (typeof packageJSON.exports === 'object') {
     for (const relativeExportPath of Object.values(packageJSON.exports)) {
       if (relativeExportPath.endsWith('.json')) continue
-      const absolutePath = path.resolve(packagePath, FileNames.DistDirectory, relativeExportPath)
+      const absolutePath = path.resolve(packagePath, FileNames.OutDir, relativeExportPath)
       const entries = await FastGlob(absolutePath)
 
       entries.forEach((entry) => absoluteEntryPoints.add(entry))

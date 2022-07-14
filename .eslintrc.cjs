@@ -30,7 +30,7 @@ const config = {
   plugins: ['@typescript-eslint', 'eslint-plugin-tsdoc', 'header'],
   settings: {
     react: {
-      version: 'detect',
+      version: '18.2.0',
     },
     'import/parsers': {
       '@typescript-eslint/parser': ['.ts', '.mts', '.tsx'],
@@ -39,6 +39,7 @@ const config = {
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
+    'plugin:react/jsx-runtime',
     'plugin:react-hooks/recommended',
     'plugin:@typescript-eslint/recommended',
     'prettier',
@@ -49,6 +50,33 @@ const config = {
     worker: true,
   },
   rules: {
+    'no-restricted-globals': [
+      2,
+      {
+        name: 'Request',
+        message: "Use `import {Request} from 'keywork/platform/http'`",
+      },
+      {
+        name: 'Headers',
+        message: "Use `import {Headers} from 'keywork/platform/http'`",
+      },
+      {
+        name: 'Response',
+        message: "Use `import {Response} from 'keywork/platform/http'`",
+      },
+      {
+        name: 'TransformStream',
+        message: "Use `import {TransformStream} from 'keywork/platform/stream'`",
+      },
+      {
+        name: 'ReadableStream',
+        message: "Use `import {ReadableStream} from 'keywork/platform/stream'`",
+      },
+      {
+        name: 'WritableStream',
+        message: "Use `import {WritableStream} from 'keywork/platform/stream'`",
+      },
+    ],
     'header/header': [2, 'block', headerLines, 1],
     'react/prop-types': 'off',
     'no-undef': 'off',

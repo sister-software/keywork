@@ -1,25 +1,17 @@
 {
+  "extends": "./tsconfig.base.json",
   "compilerOptions": {
-    "outDir": "dist/lib",
-    "allowJs": true,
-    "alwaysStrict": true,
-    "strict": true,
-    "noImplicitAny": true,
-    "noImplicitReturns": false,
-    "noImplicitThis": true,
-    "noStrictGenericChecks": false,
-    "noUncheckedIndexedAccess": false,
-    "declaration": true,
-    "isolatedModules": true,
-    "experimentalDecorators": true,
-    "importsNotUsedAsValues": "remove",
-    "baseUrl": ".",
-    "jsx": "react",
-    "target": "esnext",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "lib": ["es2021", "esnext", "dom", "dom.iterable"],
-    "sourceMap": true,
-    "declarationMap": true
-  }
+    "skipLibCheck": true,
+    "paths": {
+      "react-dom/server.browser": ["./types/react-dom/server.browser/index.d.ts"],
+      "stream/web": ["./node_modules/@types/node/stream/web.d.ts"],
+      "http": ["./node_modules/@types/node/stream/http.d.ts"]
+    },
+    "rootDir": ".",
+    "outDir": "dist"
+  },
+  "include": [
+    "**/*"
+  ],
+  "exclude": []
 }

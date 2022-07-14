@@ -1,0 +1,32 @@
+
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "alwaysStrict": true,
+    "strict": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": false,
+    "noImplicitThis": true,
+    "noStrictGenericChecks": false,
+    "noUncheckedIndexedAccess": false,
+    "declaration": true,
+    "isolatedModules": true,
+    "experimentalDecorators": true,
+    "importsNotUsedAsValues": "remove",
+    "baseUrl": ".",
+    "jsx": "react-jsx",
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "NodeNext",
+    "lib": [
+      "es2021",
+      "esnext",
+      "dom",
+      "dom.iterable"
+    ],
+    "sourceMap": true,
+    "declarationMap": true,
+  },
+  "composite": true
+}

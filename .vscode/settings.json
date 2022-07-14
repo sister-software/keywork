@@ -25,7 +25,7 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "deno.enable": true,
-  "deno.unstable": true,
+  "deno.unstable": false,
 
   "deno.lint": true,
   "deno.config": "./deno.jsonc"

@@ -1,19 +1,22 @@
 {
   "$schema": "https://cdn.deno.land/deno/versions/v1.23.3/raw/cli/schemas/config-file.v1.json",
   "compilerOptions": {
+
     "lib": [
       "deno.ns",
       "dom",
       "dom.iterable"
     ],
+    "jsx": "react-jsx",
+    "jsxImportSource": "react",
     "strict": true,
     "experimentalDecorators": true,
     "checkJs": false,
     "allowJs": true,
     "types": [
-      "./lib/types/react-dom/server.browser/server.browser.d.ts",
-      "./lib/types/stream.d.ts",
-      "./lib/types/env.d.ts"
+      "./types/react-dom/server.browser/index.d.ts",
+      "./types/env.d.ts",
+      "./node_modules/@types/node/stream/web.d.ts"
     ]
   },
   "importMap": "./import_map.json",
