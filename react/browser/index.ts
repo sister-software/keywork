@@ -22,7 +22,6 @@
  * @module react.browser
  */
 
-export * from 'keywork/react/common'
 export * from './KeyworkApp.tsx'
 export * from './KeyworkPatternToPageComponent.tsx'
 export * from './PatternToPageComponentMap.ts'

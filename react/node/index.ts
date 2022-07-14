@@ -21,5 +21,4 @@
  * @module react.worker
  */
 
-export * from 'keywork/react/common'
 export * from './stream.ts'

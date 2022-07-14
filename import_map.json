@@ -80,6 +80,6 @@
     "keywork/uri": "./uri/index.ts",
     "keywork/utilities": "./utilities/index.ts",
     "keywork/polyfills/platform": "./polyfills/platform/index.ts",
-    "keywork/polyfills/worker": "./polyfills/worker/ReadableStream.ts"
+    "keywork/polyfills/worker/ReadableStream": "./polyfills/worker/ReadableStream/index.ts"
   }
 }

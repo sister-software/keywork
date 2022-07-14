@@ -20,8 +20,6 @@
  * @ignore
  */
 
-/// <reference lib="deno.window" />
-
 declare class IdentityTransformStream extends TransformStream {}
 
 /**

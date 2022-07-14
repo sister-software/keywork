@@ -1,7 +1,7 @@
 {
   "name": "keywork",
   "private": true,
-  "version": "3.1.0",
+  "version": "3.1.3",
   "license": "AGPL-3.0",
   "author": "Teffen Ellis <teffen@nirri.us>",
   "description": "A batteries-included, magic-free, library for building web apps in V8 Isolates.",
@@ -52,9 +52,11 @@
   "peerDependencies": {
     "react": ">=18.2",
     "react-dom": ">=18.2",
-    "undici": ">=5.7"
+    "undici": ">=5.7",
+    "esbuild": "^0.14"
   },
   "peerDependenciesMeta": {
+    "esbuild": {"optional": true},
     "react": {"optional": true},
     "react-dom": {"optional": true},
     "undici": {"optional": true}

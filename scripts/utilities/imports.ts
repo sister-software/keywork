@@ -27,7 +27,11 @@ export interface ImportMap {
 }
 
 interface PackageExports {
-  [namedExport: string]: { import: string; types: string }
+  [namedExport: string]: {
+    import: string
+    require: string
+    types: string
+  }
 }
 
 export interface NPMPackageJSON {
@@ -78,9 +82,14 @@ export function extractEntrypoints(packageName: string, importMap: ImportMap) {
     })
 
     const namedExport = './' + path.relative(packageName, specifier)
+    const _import = changeExtension(remappedSpecifier, '.js')
+    const _types = changeExtension(remappedSpecifier, '.d.ts')
+
     packageExports[namedExport] = {
-      import: changeExtension(remappedSpecifier, '.js'),
-      types: changeExtension(remappedSpecifier, '.d.ts'),
+      import: _import,
+      // TODO: require is only partially supported for platform polyfills.
+      require: _import,
+      types: _types,
     }
   }
 

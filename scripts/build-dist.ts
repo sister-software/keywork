@@ -110,10 +110,12 @@ async function createTransformer() {
 function generatePackageJSON(transformOutput: TransformOutput) {
   logger.log('Generating package.json...')
 
-  const packageJsonObj = getPackageJson({
+  const transformedPackageJSON = getPackageJson({
     package: {
       ...packageJSON,
+      // Ensures order of outputted JSON.
       dependencies: {},
+      devDependencies: packageJSON.devDependencies,
       workspaces: undefined,
       private: undefined,
       exports: {
@@ -121,7 +123,6 @@ function generatePackageJSON(transformOutput: TransformOutput) {
         ...packageExports,
       },
     },
-
     transformOutput,
     entryPoints: [],
     testEnabled: false,
@@ -130,10 +131,17 @@ function generatePackageJSON(transformOutput: TransformOutput) {
     includeDeclarations: true,
     includeTsLib: false,
     shims: shimOptions,
-  })
+  }) as unknown as NPMPackageJSON
+
+  // Remove duplicate peer deps from  dependencies...
+  for (const packageName of Object.keys(transformedPackageJSON.peerDependencies)) {
+    if (packageName in transformedPackageJSON.dependencies) {
+      transformedPackageJSON.dependencies[packageName] = undefined as any
+    }
+  }
 
   logger.log('Writing package.json...')
-  writeFile(path.join(outDir, 'package.json'), JSON.stringify(packageJsonObj, undefined, 2))
+  writeFile(path.join(outDir, 'package.json'), JSON.stringify(transformedPackageJSON, undefined, 2))
 }
 
 //#endregion

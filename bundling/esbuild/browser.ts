@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { BuildOptions } from 'esbuild'
+import type { BuildOptions } from 'esbuild'
 
 /**
  * ESBuild options for the browser bundle.
