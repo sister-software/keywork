@@ -87,7 +87,7 @@ async function createTransformer() {
     testShims,
     shims,
     mappings: {
-      'https://cdn.skypack.dev/ulidx?dts': {
+      'https://esm.sh/ulidx': {
         name: 'ulidx',
         version: '^0.3.0',
       },
