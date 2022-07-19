@@ -1,0 +1,51 @@
+name: Build Packages
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Cache yarn dependencies
+        uses: c-hive/gha-yarn-cache@v1
+
+      - name: Use Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 17.4
+      - run: yarn install --frozen-lockfile
+
+      - name: Setup Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Build application
+        run: |
+          yarn build
+        env:
+          NODE_ENV: production
+          GA_MEASUREMENT_API_KEY: ${{ secrets.GA_MEASUREMENT_API_KEY }}
+          GA_PROPERTY_ID: ${{ secrets.GA_PROPERTY_ID }}
+          REVUE_API_KEY: ${{ secrets.REVUE_API_KEY }}
+
+      - name: Archive build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: dist-full
+          path: |
+            dist
+          retention-days: 5

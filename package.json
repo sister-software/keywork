@@ -1,5 +1,5 @@
 {
-  "name": "@keywork/monorepo",
+    "name": "@keywork/monorepo",
   "private": true,
   "version": "0.0.1",
   "license": "AGPL-3.0",
@@ -18,7 +18,7 @@
     "build": "deno run -A scripts/build-dist.ts",
     "build:docs": "cd site && npm run build",
     "build:all": "npm run build && npm run build:docs",
-    "test": "deno test",
+    "test": "deno test lib",
     "test:node": "jest"
   },
   "dependencies": {
