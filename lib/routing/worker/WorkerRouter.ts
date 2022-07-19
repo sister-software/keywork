@@ -538,7 +538,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     const matches = this.match(event.request.method as HTTPMethod, event.pathname)
 
     if (!matches || !matches.length) {
-      return new ErrorResponse(Status.NotImplemented)
+      return new ErrorResponse(Status.NotFound)
     }
 
     let routeIndex = 0

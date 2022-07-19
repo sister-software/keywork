@@ -54,7 +54,7 @@ export type IReactStreamRenderer = (
 ) => Promise<ReactRenderStreamResult>
 
 export interface ReactRendererOptions {
-  streamRenderer: IReactStreamRenderer
+  streamRenderer?: IReactStreamRenderer
   /**
    * A HTML Document React component which wraps the entire application.
    * Use this if you need to replace the default HTML Document.
