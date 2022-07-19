@@ -38,5 +38,4 @@ declare module 'react-dom/server.browser' {
   ) => Promise<ReactDOMServerReadableStream>
 
   export const renderToReadableStream: RenderToReadableStream
-  // export { RenderToReadableStreamOptions, ReactDOMServerReadableStream, RenderToReadableStream, renderToReadableStream }
 }

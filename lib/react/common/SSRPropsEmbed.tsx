@@ -13,7 +13,7 @@
  */
 
 import { globalScopeSSRElementID, globalScopeSSRKey, SSRPropsLike } from 'keywork/react/common'
-import type { FC } from 'react'
+import React, { FC } from 'react'
 
 export interface SSRProviderProps<StaticProps extends NonNullable<SSRPropsLike>> {
   staticProps: StaticProps

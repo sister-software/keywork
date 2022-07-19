@@ -24,9 +24,12 @@
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
-  "deno.enable": true,
+  "deno.enablePaths": [
+    "./lib",
+    "./scripts",
+    "./paths.ts",
+  ],
   "deno.unstable": false,
-
   "deno.lint": true,
   "deno.config": "./deno.jsonc"
 }

@@ -505,10 +505,21 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
 
   /**
    * Finds the matching routes for a given pathname.
+   * @public
    */
-  protected _findMatchingRoutes(routes: ParsedRoute<any>[], pathname: string): RouteMatch<any>[] {
+  public match(method: HTTPMethod, pathname: string): null | RouteMatch<any>[] {
+    // With our event context constructed, we can check for any defined methods...
+    // If a method exists and routes are defined, it acts like middleware.
+    const routerMethod = methodVerbToRouterMethod.get(method)
+    const routes = routerMethod ? this._getParsedRoutesForMethod(routerMethod) : null
+
+    if (!routerMethod || !routes || !routes.length) {
+      return null
+    }
+
     // Given the current URL, attempt to find a matching route handler...
     const matches: RouteMatch<any>[] = []
+
     for (const route of routes) {
       const match = matchPathPrecompiled(route.compiledPath, pathname)
       if (!match) continue
@@ -525,14 +536,11 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   protected delegateFetchEvent = async (event: IncomingRequestEvent<BoundAliases, any, any>): Promise<Response> => {
     // With our event context constructed, we can check for any defined methods...
     // If a method exists and routes are defined, it acts like middleware.
-    const routerMethod = methodVerbToRouterMethod.get(event.request.method as HTTPMethod)
-    const routes = routerMethod ? this._getParsedRoutesForMethod(routerMethod) : null
+    const matches = this.match(event.request.method as HTTPMethod, event.pathname)
 
-    if (!routerMethod || !routes || !routes.length) {
+    if (!matches || !matches.length) {
       return new ErrorResponse(Status.NotImplemented)
     }
-
-    const matches = this._findMatchingRoutes(routes, event.pathname)
 
     let routeIndex = 0
 

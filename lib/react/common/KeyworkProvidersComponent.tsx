@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { FC, ReactNode } from 'react'
+import React, { FC, ReactNode } from 'react'
 
 export interface ProviderWrapperProps {
   children: ReactNode

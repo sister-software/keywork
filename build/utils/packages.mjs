@@ -12,11 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import FastGlob from 'fast-glob'
 import fs from 'fs/promises'
 import path from 'path'
 import { changeExtension, projectPath } from '../../paths-legacy.mjs'
-import { ProjectFiles } from '../../scripts/utilities/files.mjs'
 
 const outDir = projectPath('dist')
 

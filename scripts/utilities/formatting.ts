@@ -13,13 +13,14 @@
  */
 
 import getFiles from 'deno/getfiles'
+import * as path from 'deno/path'
 // @ts-expect-error Bad Default export
 import prettierTS from 'prettier/parser-typescript'
 
 import prettier from 'prettier'
 import { projectPath } from '../../paths.ts'
 
-export async function formatFiles(filesDir: string, include: string[]): Promise<void> {
+export async function formatFiles(filesDir: string): Promise<void> {
   console.log(`Formatting build...`)
 
   const prettierConfig = JSON.parse(Deno.readTextFileSync(projectPath('.prettierrc')))
@@ -28,7 +29,7 @@ export async function formatFiles(filesDir: string, include: string[]): Promise<
 
   const files = getFiles({
     root: filesDir,
-    include,
+    exclude: [path.join(filesDir, 'node_modules')],
   })
 
   await Promise.all(

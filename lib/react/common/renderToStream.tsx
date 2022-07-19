@@ -20,7 +20,7 @@ import {
   StaticPropsProvider,
 } from 'keywork/react/common'
 import { PrefixedLogger } from 'keywork/utilities'
-import type { ReactElement } from 'react'
+import React, { ReactElement } from 'react'
 import { KeyworkHTMLDocument } from './KeyworkHTMLDocument.tsx'
 import { KeyworkProviders } from './KeyworkProvidersComponent.tsx'
 import { _SSRPropsEmbed } from './SSRPropsEmbed.tsx'

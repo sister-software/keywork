@@ -14,7 +14,7 @@
 
 import { KeyworkResourceError } from 'keywork/errors'
 import { Disposable, PrefixedLogger } from 'keywork/utilities'
-import type { ReactNode } from 'react'
+import React, { ReactNode } from 'react'
 
 import {
   GlobalScopeWithKeyworkSSRProps,

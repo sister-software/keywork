@@ -13,8 +13,8 @@
  */
 
 import { EntryPoint } from 'deno/dnt'
-import * as path from 'deno/path'
 import { SpecifierMappings } from 'deno/dnt/transform'
+import * as path from 'deno/path'
 import { changeExtension } from '../../paths.ts'
 
 /**
@@ -82,8 +82,9 @@ export function extractEntrypoints(packageName: string, importMap: ImportMap) {
     })
 
     const namedExport = './' + path.relative(packageName, specifier)
-    const _import = changeExtension(remappedSpecifier, '.js')
-    const _types = changeExtension(remappedSpecifier, '.d.ts')
+    const relativeSpecifier = remappedSpecifier.replace('./lib/', './')
+    const _import = changeExtension(relativeSpecifier, '.js')
+    const _types = changeExtension(relativeSpecifier, '.d.ts')
 
     packageExports[namedExport] = {
       import: _import,

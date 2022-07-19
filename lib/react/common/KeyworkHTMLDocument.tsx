@@ -15,7 +15,7 @@
 import classNames from 'classnames'
 import { KeyworkHTMLDocumentAppRoot, KeyworkHTMLDocumentStyleRoot } from 'keywork/react/common'
 import { KeyworkQueryParamKeys } from 'keywork/utilities'
-import type { FC, HtmlHTMLAttributes, ReactFragment, ReactNode } from 'react'
+import React, { FC, HtmlHTMLAttributes, ReactFragment, ReactNode } from 'react'
 
 export interface KeyworkHTMLDocumentProps {
   moduleManifest?: string[]

@@ -27,8 +27,8 @@ import { projectPath } from '../paths.ts'
 import { ProjectFiles } from './utilities/files.mjs'
 
 import { PrefixedLogger } from 'keywork/utilities'
-import { extractEntrypoints, ImportMap, NPMPackageJSON } from './utilities/imports.ts'
 import { formatFiles } from './utilities/formatting.ts'
+import { extractEntrypoints, ImportMap, NPMPackageJSON } from './utilities/imports.ts'
 const logger = new PrefixedLogger('Build')
 
 const createdDirectories = new Set<string>()
@@ -43,18 +43,16 @@ function writeFile(filePath: string, fileText: string) {
   Deno.writeTextFileSync(filePath, fileText)
 }
 
-const packageJSONContents = await Deno.readTextFile(projectPath(ProjectFiles.PackageJSON))
+const packageJSONContents = await Deno.readTextFile(projectPath('lib', ProjectFiles.PackageJSON))
 const packageJSON = JSON.parse(packageJSONContents) as NPMPackageJSON
 const outDir = projectPath(ProjectFiles.OutDirectory)
 
-const tsConfigSrcPath = projectPath(ProjectFiles.TSConfig)
-const tsConfigDestPath = path.join(outDir, ProjectFiles.TSConfig)
+const tsConfigSrcPath = projectPath('lib', ProjectFiles.TSConfig)
 
 const importMapPath = projectPath(ProjectFiles.ImportMap)
 const importMap = JSON.parse(Deno.readTextFileSync(importMapPath)) as ImportMap
 
 const { entryPoints, packageExports } = extractEntrypoints(packageJSON.name, importMap)
-const packageExportNames = Object.keys(packageExports)
 
 const shimOptions: ShimOptions = {
   deno: {
@@ -64,8 +62,7 @@ const shimOptions: ShimOptions = {
 
 function copyStaticFiles() {
   const files = new Map<string, string>([
-    [tsConfigSrcPath, tsConfigDestPath],
-    [projectPath('types'), path.join(outDir, 'types')],
+    [projectPath('lib', 'types'), path.join(outDir, 'types')],
     [ProjectFiles.License, path.join(outDir, ProjectFiles.License)],
     [ProjectFiles.Readme, path.join(outDir, ProjectFiles.Readme)],
     ['.eslintignore', path.join(outDir, '.eslintignore')],
@@ -113,11 +110,6 @@ function generatePackageJSON(transformOutput: TransformOutput) {
   const transformedPackageJSON = getPackageJson({
     package: {
       ...packageJSON,
-      // Ensures order of outputted JSON.
-      dependencies: {},
-      devDependencies: packageJSON.devDependencies,
-      workspaces: undefined,
-      private: undefined,
       exports: {
         ...packageJSON.exports,
         ...packageExports,
@@ -147,9 +139,14 @@ function generatePackageJSON(transformOutput: TransformOutput) {
 //#endregion
 
 function build(transformOutput: TransformOutput) {
+  logger.log('Building project...')
   const project = createProjectSync({
     tsConfigFilePath: tsConfigSrcPath,
     skipAddingFilesFromTsConfig: true,
+  })
+
+  project.compilerOptions.set({
+    outDir,
   })
 
   const sourceFiles = [...transformOutput.main.files, ...transformOutput.test.files]
@@ -202,7 +199,7 @@ function _checkTypes() {
 
   Deno.chdir(outDir)
   const project = createProjectSync({
-    tsConfigFilePath: tsConfigDestPath,
+    tsConfigFilePath: tsConfigSrcPath,
   })
 
   project.compilerOptions.set({
@@ -220,11 +217,7 @@ function _checkTypes() {
   Deno.chdir(originalDir)
 }
 
-await Promise.all(
-  packageExportNames.map((exportName) => {
-    return emptyDir(path.join(outDir, exportName))
-  })
-)
+await emptyDir(outDir)
 await copyStaticFiles()
 const transformOutput = await createTransformer()
 
@@ -234,18 +227,18 @@ logger.log('Installing dependencies...')
 await runNpmCommand({
   bin: 'yarn',
   args: ['install'],
-  cwd: outDir,
+  cwd: projectPath(),
 })
 
 build(transformOutput)
 
 // Fix for doc parsing...
-const tsConfigContents = JSON.parse(Deno.readTextFileSync(tsConfigSrcPath))
-Object.assign(tsConfigContents, {
-  extends: undefined,
-  include: ['./**/*'],
-})
+// const tsConfigContents = JSON.parse(Deno.readTextFileSync(tsConfigSrcPath))
+// Object.assign(tsConfigContents, {
+//   extends: undefined,
+//   include: ['./**/*'],
+// })
 
-Deno.writeTextFileSync(tsConfigDestPath, JSON.stringify(tsConfigContents, null, 2))
+// Deno.writeTextFileSync(tsConfigDestPath, JSON.stringify(tsConfigContents, null, 2))
 
-await formatFiles(outDir, Object.keys(packageExports))
+await formatFiles(outDir)

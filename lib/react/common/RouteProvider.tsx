@@ -13,20 +13,27 @@
  */
 
 import { createContextAndNamedHook } from 'keywork/react/hooks'
-import type { FC, ReactNode } from 'react'
-import { SSRPropsLike } from './constants.ts'
+import React, { FC, ReactNode, useMemo } from 'react'
 
-const [StaticPropsContext, useStaticProps] = createContextAndNamedHook<SSRPropsLike>()
-export { useStaticProps }
+export interface KeyworkRouterProvider {
+  location: URL
+}
 
-export interface StaticPropsProvider<StaticProps extends NonNullable<SSRPropsLike>> {
-  staticProps: StaticProps
+const [RouteContext, useKeyworkRouter] = createContextAndNamedHook<KeyworkRouterProvider>(undefined, 'RouteContext')
+export { useKeyworkRouter }
+
+export interface KeyworkRouterProps {
+  initialLocation: URL
   children: ReactNode
 }
 
-export type StaticPropsProviderComponent<StaticProps extends NonNullable<SSRPropsLike> = NonNullable<SSRPropsLike>> =
-  FC<StaticPropsProvider<StaticProps>>
+export const RouteProvider: FC<KeyworkRouterProps> = ({ initialLocation, children }) => {
+  const value = useMemo<KeyworkRouterProvider>(
+    () => ({
+      location: initialLocation,
+    }),
+    [initialLocation]
+  )
 
-export const StaticPropsProvider: StaticPropsProviderComponent = ({ staticProps, children }) => {
-  return <StaticPropsContext.Provider value={staticProps}>{children}</StaticPropsContext.Provider>
+  return <RouteContext.Provider value={value}>{children}</RouteContext.Provider>
 }
