@@ -13,7 +13,7 @@
  */
 
 import { Request } from 'keywork/platform/http'
-import { ResponseLike } from './body.ts'
+import { ResponseLike } from 'keywork/responses'
 import type { IncomingRequestEvent } from './request.ts'
 import type { Response } from 'keywork/platform/http'
 import type { RouteRequestHandler } from './RouteRequestHandler.ts'

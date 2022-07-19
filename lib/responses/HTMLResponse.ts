@@ -13,7 +13,7 @@
  */
 
 import { CacheControlDirectives, fileExtensionToContentTypeHeader } from 'keywork/headers'
-import { CachableResponse } from 'keywork/responses'
+import { CachableResponse } from './CachableResponse.ts'
 import { Request } from 'keywork/platform/http'
 
 /**

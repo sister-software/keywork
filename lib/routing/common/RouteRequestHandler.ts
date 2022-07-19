@@ -13,7 +13,7 @@
  */
 
 import { CompiledPath, PathMatch } from 'keywork/uri'
-import { ResponseLike } from './body.ts'
+import { ResponseLike } from 'keywork/responses'
 import { KeyworkFetcher } from './fetcher.ts'
 import { IncomingRequestEvent, IncomingRequestEventData } from './request.ts'
 

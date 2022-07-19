@@ -16,7 +16,7 @@ import { fileExtensionToContentTypeHeader } from 'keywork/headers'
 import { TransformStream } from 'keywork/platform/stream'
 import { ReactRendererOptions, renderToStream } from 'keywork/react/common'
 import { renderReactStream } from 'keywork/react/worker'
-import { CachableResponse } from 'keywork/responses'
+import { CachableResponse } from './CachableResponse.ts'
 import type * as React from 'react'
 
 /**

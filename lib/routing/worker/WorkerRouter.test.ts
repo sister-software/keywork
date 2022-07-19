@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { assertEquals, assertExists, assertObjectMatch } from 'deno/testing/asserts'
+import { assertEquals, assertExists, assertObjectMatch, assert } from 'deno/testing/asserts'
 import { WorkerRouter } from 'keywork/routing/worker'
 import { Request } from 'keywork/platform/http'
 
@@ -46,12 +46,13 @@ Deno.test('Router receives requests', async () => {
 
   assertExists(app.match('GET', '/'), 'Root route exists')
   assertEquals(app.match('POST', '/'), null, 'Root route only exists on GET')
-  assertExists(app.match('POST', '/hello.json'), 'Root route only exists on GET')
-  assertExists(app.match('GET', '/hello.json'), 'JSON route exists')
 
-  const rootRequest = await app.fetch(new Request('/'))
+  assertExists(app.match('GET', '/hello.json'), 'JSON route exists')
+  assertEquals(app.match('POST', '/hello.json'), null, 'JSON route only exists on GET')
+
+  const rootRequest = await app.fetch(new Request('http://localhost/'))
   assertEquals(await rootRequest.text(), `Hello from /`)
 
-  const JSONRequest = await app.fetch(new Request('/hello.json'))
+  const JSONRequest = await app.fetch(new Request('http://localhost/hello.json'))
   assertObjectMatch(await JSONRequest.json(), jsonBody)
 })

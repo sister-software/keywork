@@ -24,7 +24,6 @@
  * @module routing.common
  */
 
-export * from './body.ts'
 export * from './fetcher.ts'
 export * from './http.ts'
 export * from './middleware.ts'

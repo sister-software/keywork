@@ -62,6 +62,7 @@ export async function polyfillWithModule<ModuleExports extends {}>(
     // First, check if the export already exists in the global scope...
     if (exportName in globalScope) {
       moduleExports[exportName] = (globalScope as any)[exportName]
+      continue
     }
 
     const externalFallbackModule = await fetchCachedModule<ModuleExports>(fallbackModuleID)

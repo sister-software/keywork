@@ -15,7 +15,10 @@
 import { Status } from 'deno/http/http_status'
 import { KeyworkResourceError } from 'keywork/errors'
 import type { ReactRendererOptions } from 'keywork/react/common'
-import { ErrorResponse, HTMLResponse, JSONResponse, JSXResponse } from 'keywork/responses'
+import { ErrorResponse } from './ErrorResponse.ts'
+import { HTMLResponse } from './HTMLResponse.ts'
+import { JSONResponse } from './JSONResponse.ts'
+import { JSXResponse } from './JSXResponse.ts'
 import { isValidElement } from 'react'
 import { Response } from 'keywork/platform/http'
 import { ReadableStream } from 'keywork/platform/stream'
@@ -50,6 +53,8 @@ export function convertToResponse(responseLike: ResponseLike, reactRenderOptions
     if (responseLike.startsWith('<!DOCTYPE')) {
       return new HTMLResponse(responseLike)
     }
+
+    return new Response(responseLike)
   }
 
   if (isValidElement(responseLike)) {

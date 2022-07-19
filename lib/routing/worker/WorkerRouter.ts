@@ -18,9 +18,8 @@ import { KeyworkHeaders, mergeHeaders } from 'keywork/headers'
 import { Request, Headers, Response } from 'keywork/platform/http'
 import { ReactRendererOptions } from 'keywork/react/common'
 import { renderReactStream } from 'keywork/react/worker'
-import { ErrorResponse } from 'keywork/responses'
+import { convertToResponse, ErrorResponse } from 'keywork/responses'
 import {
-  convertToResponse,
   HTTPMethod,
   IncomingRequestEvent,
   IncomingRequestEventData,
