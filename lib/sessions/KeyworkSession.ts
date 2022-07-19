@@ -13,7 +13,6 @@
  */
 
 import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'cookie'
-import type { Request, Headers } from 'keywork/platform/http'
 import { ulid } from 'keywork/ids'
 
 /**
@@ -73,7 +72,7 @@ export class KeyworkSession {
 
   constructor(
     /** The incoming request */
-    request: Request,
+    request: globalThis.Request,
     options?: KeyworkSessionOptions
   )
   constructor(
@@ -85,7 +84,7 @@ export class KeyworkSession {
   )
   constructor(
     /** The incoming request */
-    requestOrSessionID: Request | string,
+    requestOrSessionID: globalThis.Request | string,
     options?: KeyworkSessionOptions
   ) {
     let sessionID: string
@@ -111,7 +110,7 @@ export class KeyworkSession {
   /**
    * @ignore
    */
-  public _assignSessionHeaders(headers: Headers) {
+  public _assignSessionHeaders(headers: globalThis.Headers) {
     headers.set('Set-Cookie', serializeCookies(this.cookieKey, this.sessionID, this.serializeOptions))
   }
 }

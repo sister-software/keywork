@@ -5,8 +5,6 @@
  * @see {@link https://github.com/cloudflare/workers-types}
  */
 
-import { ReadableStream } from 'keywork/platform/stream'
-
 /**
  * Workers KV is a global, low-latency, key-value data store. It supports exceptionally high read volumes with low-latency,
  * making it possible to build highly dynamic APIs and websites which respond as quickly as a cached static file would.
@@ -17,11 +15,11 @@ export interface KVNamespace<K extends string = string> {
   get(key: K, type: 'text'): Promise<string | null>
   get<ExpectedValue = unknown>(key: K, type: 'json'): Promise<ExpectedValue | null>
   get(key: K, type: 'arrayBuffer'): Promise<ArrayBuffer | null>
-  get(key: K, type: 'stream'): Promise<ReadableStream | null>
+  get(key: K, type: 'stream'): Promise<globalThis.ReadableStream | null>
   get(key: K, options: KVNamespaceGetOptions<'text'>): Promise<string | null>
   get<ExpectedValue = unknown>(key: string, options: KVNamespaceGetOptions<'json'>): Promise<ExpectedValue | null>
   get(key: K, options: KVNamespaceGetOptions<'arrayBuffer'>): Promise<ArrayBuffer | null>
-  get(key: K, options: KVNamespaceGetOptions<'stream'>): Promise<ReadableStream | null>
+  get(key: K, options: KVNamespaceGetOptions<'stream'>): Promise<globalThis.ReadableStream | null>
   list<Metadata = unknown>(options?: KVNamespaceListOptions): Promise<KVNamespaceListResult<Metadata>>
   /**
    * Creates a new key-value pair, or updates the value for a particular key.
@@ -33,7 +31,7 @@ export interface KVNamespace<K extends string = string> {
    */
   put(
     key: K,
-    value: string | ArrayBuffer | ArrayBufferView | ReadableStream,
+    value: string | ArrayBuffer | ArrayBufferView | globalThis.ReadableStream,
     options?: KVNamespacePutOptions
   ): Promise<void>
   getWithMetadata<Metadata = unknown>(
@@ -52,7 +50,7 @@ export interface KVNamespace<K extends string = string> {
   getWithMetadata<Metadata = unknown>(
     key: K,
     type: 'stream'
-  ): Promise<KVNamespaceGetWithMetadataResult<ReadableStream, Metadata>>
+  ): Promise<KVNamespaceGetWithMetadataResult<globalThis.ReadableStream, Metadata>>
   getWithMetadata<Metadata = unknown>(
     key: K,
     options: KVNamespaceGetOptions<'text'>
@@ -68,7 +66,7 @@ export interface KVNamespace<K extends string = string> {
   getWithMetadata<Metadata = unknown>(
     key: K,
     options: KVNamespaceGetOptions<'stream'>
-  ): Promise<KVNamespaceGetWithMetadataResult<ReadableStream, Metadata>>
+  ): Promise<KVNamespaceGetWithMetadataResult<globalThis.ReadableStream, Metadata>>
   delete(name: string): Promise<void>
 }
 

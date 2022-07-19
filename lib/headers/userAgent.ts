@@ -12,15 +12,13 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { Request } from 'keywork/platform/http'
-
 /**
  * A somewhat simple user-agent parser.
  *
  * @category HTTP Headers
  * @public
  */
-export function getBrowserIdentifier(request: Request): string {
+export function getBrowserIdentifier(request: globalThis.Request): string {
   const userAgent = (request.headers.get('user-agent') || '').toLowerCase()
 
   if (userAgent.includes('chrome')) {

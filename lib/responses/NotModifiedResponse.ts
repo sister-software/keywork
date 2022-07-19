@@ -13,7 +13,7 @@
  */
 
 import { Status, STATUS_TEXT } from 'deno/http/http_status'
-import { Response } from 'keywork/platform/http'
+import HTTP from 'keywork/platform/http'
 
 /**
  * Given that a request's etag header matches an server entity or resource,
@@ -22,7 +22,7 @@ import { Response } from 'keywork/platform/http'
  * @category HTTP Response
  * @category Cache
  */
-export class NotModifiedResponse extends Response {
+export class NotModifiedResponse extends HTTP.Response {
   constructor(etag: string) {
     super(undefined, {
       status: Status.NotModified,

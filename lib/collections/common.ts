@@ -12,8 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { ReadableStream } from 'keywork/platform/stream'
-
 export interface PutOrPatchOptions {
   expiration?: number
   expirationTtl?: number
@@ -21,4 +19,4 @@ export interface PutOrPatchOptions {
 
 export type DeserializationTransformers = 'text' | 'json' | 'arrayBuffer' | 'stream'
 
-export type DeserializationTypes = string | ArrayBuffer | typeof ReadableStream
+export type DeserializationTypes = string | ArrayBuffer | typeof globalThis.ReadableStream

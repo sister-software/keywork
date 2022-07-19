@@ -48,7 +48,7 @@
     "react-dom/server": "https://esm.sh/react-dom@18.2.0/server",
     "react-dom/server.browser": "https://esm.sh/react-dom@18.2.0/server.browser",
     "react/jsx-runtime": "https://esm.sh/react/jsx-runtime",
-    "ulidx": "https://esm.sh/ulidx",
+    "ulidx": "https://esm.sh/ulidx@0.3.0",
 
     "keywork/assets/cloudflare/pages": "./lib/assets/cloudflare/pages/index.ts",
     "keywork/assets/cloudflare/sites": "./lib/assets/cloudflare/sites/index.ts",

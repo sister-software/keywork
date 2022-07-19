@@ -12,20 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Request } from 'keywork/platform/http'
 import type { KeyworkSession } from 'keywork/sessions'
 import type { PathMatch } from 'keywork/uri'
 import type { MiddlewareFetch } from './middleware.ts'
-
-/**
- * Extends the lifetime of the route handler even after a `Response` is sent to a client.
- */
-export type WaitUntilCallback = (
-  /**
-   * The given promise argument will inform the Workers runtime to stay alive until the task completes.
-   */
-  nonBlockingTask: Promise<any>
-) => void
+import HTTP from 'keywork/platform/http'
+import { CloudflareWorkerEventContext, WaitUntilCallback } from 'keywork/routing/worker/cloudflare'
+import { RouteMatch } from './RouteRequestHandler.ts'
 
 /**
  * Additional data associated with the `IncomingRequestEvent`.
@@ -35,6 +27,11 @@ export type WaitUntilCallback = (
  */
 // deno-lint-ignore no-empty-interface
 export interface IncomingRequestEventData extends Record<string, unknown> {}
+
+/**
+ * @ignore
+ */
+export const IncomingRequestEventObjectName = 'Keywork.IncomingRequestEvent'
 
 /**
  * An event object containing contextual data for a single and specific incoming HTTP request.
@@ -62,7 +59,8 @@ export interface IncomingRequestEvent<
   BoundAliases extends {} | null = null,
   ExpectedParams extends {} | null = null,
   Data extends Record<string, unknown> = Record<string, unknown>
-> extends PathMatch<ExpectedParams> {
+> extends CloudflareWorkerEventContext<BoundAliases>,
+    PathMatch<ExpectedParams> {
   /**
    * The incoming request received by the Worker.
    *
@@ -71,7 +69,7 @@ export interface IncomingRequestEvent<
    * the current parsed route handler of `WorkerRouter`.
    * @see {IncomingRequestEvent#originalURL}
    */
-  request: Request
+  request: globalThis.Request
 
   /**
    * The original URL associated with the `IncomingRequestEvent`.
@@ -84,21 +82,42 @@ export interface IncomingRequestEvent<
   session: KeyworkSession | null
 
   /**
-   * Extends the lifetime of the route handler even after a `Response` is sent to a client.
-   */
-  readonly waitUntil: WaitUntilCallback
-  /**
    * When invoked, will execute a route handler defined after the current.
    *
    * @remarks
    * This is similar to Express.js Middleware.
    * Providing a request argument will override the path param parsing within `WorkerRouter`.
    */
-  next: MiddlewareFetch
-  readonly env: BoundAliases
+  next: MiddlewareFetch<BoundAliases>
 
   /**
    * Optional extra data to be passed to a route handler.
    */
   data: Data
+}
+
+/**
+ * Checks if the given object is an instance of `IncomingRequestEvent`
+ * @param eventLike An object that's possibly a `IncomingRequestEvent`
+ * @category Type Cast
+ */
+export function isIncomingRequestEvent(eventLike: unknown): eventLike is IncomingRequestEvent {
+  return Boolean(eventLike && typeof eventLike === 'object' && IncomingRequestEventObjectName in eventLike)
+}
+
+export interface NormalizedRequestArgs<BoundAliases extends {} | null = null> {
+  request: globalThis.Request
+  originalURL: URL
+  env: BoundAliases
+  waitUntil: WaitUntilCallback
+  matchedRoutes: RouteMatch<any>[]
+}
+
+/**
+ * Checks if the given object is an instance of `Request`
+ * @param requestish An object that's possibly a `Request`
+ * @category Type Cast
+ */
+export function isInstanceOfRequest(requestish: unknown): requestish is globalThis.Request {
+  return Boolean(requestish instanceof globalThis.Request || requestish instanceof HTTP.Request)
 }

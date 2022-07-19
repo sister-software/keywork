@@ -4,8 +4,6 @@
  * @see {@link https://github.com/cloudflare/miniflare}
  */
 
-import type { Response, Request } from 'keywork/platform/http'
-
 /** @ignore */
 declare const kFetch: unique symbol
 /** @ignore */
@@ -19,7 +17,7 @@ export declare interface NewUniqueIdOptions {
 }
 /** @ignore */
 export interface DurableObject {
-  fetch(request: Request): Promise<Response>
+  fetch(request: globalThis.Request): Promise<globalThis.Response>
 }
 
 /** @ignore */
@@ -85,7 +83,7 @@ export declare class DurableObjectState {
   constructor(id: DurableObjectId, storage: any)
   waitUntil(_promise: Promise<void>): void
   blockConcurrencyWhile<T>(closure: () => Promise<T>): Promise<T>
-  [kFetch](request: Request): Promise<Response>
+  [kFetch](request: globalThis.Request): Promise<globalThis.Response>
 }
 
 /** @ignore */
@@ -94,5 +92,5 @@ export declare class DurableObjectStub {
   readonly id: DurableObjectId
   constructor(factory: DurableObjectFactory, id: DurableObjectId, ctx?: any)
   get name(): string | undefined
-  fetch(input: RequestInfo, init?: RequestInit): Promise<Response>
+  fetch(input: RequestInfo, init?: RequestInit): Promise<globalThis.Response>
 }

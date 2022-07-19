@@ -12,8 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/* eslint-disable no-restricted-globals */
-
 import { Status } from 'deno/http/http_status'
 import { KeyworkResourceError } from 'keywork/errors'
 import type { ReactRendererOptions } from 'keywork/react/common'
@@ -22,32 +20,40 @@ import { HTMLResponse } from './HTMLResponse.ts'
 import { JSONResponse } from './JSONResponse.ts'
 import { JSXResponse } from './JSXResponse.ts'
 import { isValidElement } from 'react'
-import { Response as PlatformResponse } from 'keywork/platform/http'
-import { ReadableStream as PlatformReadableStream } from 'keywork/platform/stream'
+import HTTP from 'keywork/platform/http'
+import Stream from 'keywork/platform/stream'
 
-const ResponseConstructor = typeof Response !== 'undefined' ? Response : PlatformResponse
-const ReadableStreamConstructor = typeof ReadableStream !== 'undefined' ? ReadableStream : PlatformReadableStream
 /**
  * Either a full `Response`, or a more primitive value to be processed.
  * @public
  */
-export type ResponseLike = Response | React.ReactElement | {} | null | undefined | Error | string
+export type ResponseLike = globalThis.Response | React.ReactElement | {} | null | undefined | Error | string
+
+/**
+ * Checks if the given object is an instance of `Response`
+ * @param responsish An object that's possibly a `Response`
+ * @category Type Cast
+ */
+export function isInstanceOfResponse(responsish: unknown): responsish is globalThis.Response {
+  return Boolean(responsish instanceof globalThis.Response || responsish instanceof HTTP.Response)
+}
 
 /**
  * Infers the appropriate Response constructor for the given `ResponseLike` body.
  * @throws {KeyworkResourceError}
  * @public
  */
-export function convertToResponse(responseLike: ResponseLike, reactRenderOptions?: ReactRendererOptions): Response {
-  // The response may originate outside of our control,
-  // making both instanceof checks necessary.
-  if (responseLike instanceof ResponseConstructor || responseLike instanceof PlatformResponse) {
+export function convertToResponse(
+  responseLike: ResponseLike,
+  reactRenderOptions?: ReactRendererOptions
+): globalThis.Response {
+  if (isInstanceOfResponse(responseLike)) {
     return responseLike
   }
 
   if (responseLike instanceof Error) return ErrorResponse.fromUnknownError(responseLike)
 
-  if (responseLike instanceof ReadableStreamConstructor || responseLike instanceof PlatformReadableStream) {
+  if (responseLike instanceof Stream.ReadableStream) {
     throw new KeyworkResourceError(
       `Keywork cannot infer the 'Content-Type' for \`ReadableStream\`. Instead, wrap this value in a \`Response\``,
       Status.InternalServerError
@@ -55,7 +61,7 @@ export function convertToResponse(responseLike: ResponseLike, reactRenderOptions
   }
 
   if (!responseLike) {
-    return new ResponseConstructor(responseLike as any, { status: Status.NoContent })
+    return new HTTP.Response(responseLike as any, { status: Status.NoContent })
   }
 
   if (typeof responseLike === 'string') {
@@ -63,7 +69,7 @@ export function convertToResponse(responseLike: ResponseLike, reactRenderOptions
       return new HTMLResponse(responseLike)
     }
 
-    return new ResponseConstructor(responseLike)
+    return new HTTP.Response(responseLike)
   }
 
   if (isValidElement(responseLike)) {

@@ -22,3 +22,4 @@
  */
 
 export * from './ServiceBindingRouter.ts'
+export * from './request.ts'

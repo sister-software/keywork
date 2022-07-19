@@ -12,51 +12,19 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Request } from 'keywork/platform/http'
-import { ResponseLike } from 'keywork/responses'
-import type { IncomingRequestEvent } from './request.ts'
-import type { Response } from 'keywork/platform/http'
+import type { CloudflareWorkerRequestHandler } from '../worker/cloudflare/index.ts'
 import type { RouteRequestHandler } from './RouteRequestHandler.ts'
 
-/**
- * A function within the Worker that receives all incoming requests.
- *
- * @remarks
- * Generally, this interface is exclusive to {@link WorkerRouter#fetch}
- * and passed to your subclass' route handlers.
- *
- * This is nearly identical to `ExportedHandlerFetchHandler`
- * defined in the `@cloudflare/workers-types` package.
- * However, the `WorkerRequestHandler` type includes Keywork-specific helpers.
- *
- * :::note
- * This interface should not be used with Cloudflare Pages unless you've disabled function routing
- * with [advanced mode](https://developers.cloudflare.com/pages/platform/functions/#advanced-mode)
- * :::
- *
- * :::note
- * `WorkerRequestHandler` shouldn't be confused with [`PagesFunction`](https://github.com/cloudflare/workers-types/blob/master/manual-ts/pages.d.ts)
- *
- * Cloudflare **Pages** instead uses named exports e.g. `export const onRequest = ...`
- * :::
- *
- * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
- *
- * @see {ExportedHandlerFetchHandler} A near-identical type defined by Cloudflare.
- *
- * @category Request
- */
-export type WorkerRequestHandler<BoundAliases extends {} | null = null> = (
-  request: Request,
-  env?: BoundAliases,
-  /**
-   * The Worker context object.
-   *
-   * @remarks
-   * `passThroughOnException` is not available as it does not apply to Cloudflare Pages
-   */
-  incomingRequestEventInit?: IncomingRequestEvent<BoundAliases, any, any>
-) => Promise<Response> | Response
+export type KeyworkFetchCallback<BoundAliases extends {} | null = null> = {
+  (...args: Parameters<RouteRequestHandler<BoundAliases, any, any>>):
+    | globalThis.Response
+    | null
+    | Promise<globalThis.Response | null>
+  (...args: Parameters<CloudflareWorkerRequestHandler<BoundAliases>>):
+    | globalThis.Response
+    | null
+    | Promise<globalThis.Response | null>
+}
 
 /**
  * An interface that accepts both a r
@@ -70,10 +38,7 @@ export interface KeyworkFetcher<BoundAliases extends {} | null = null> {
    */
   displayName?: string
 
-  fetch: {
-    (...args: Parameters<RouteRequestHandler<BoundAliases, any, any>>): ResponseLike | Promise<ResponseLike>
-    (...args: Parameters<WorkerRequestHandler<BoundAliases>>): ResponseLike | Promise<ResponseLike>
-  }
+  fetch: KeyworkFetchCallback<BoundAliases>
 }
 
 /**

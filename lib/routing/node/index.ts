@@ -26,7 +26,7 @@
 export * from 'keywork/routing/common'
 export * from 'keywork/routing/worker'
 import { WorkerRouter } from 'keywork/routing'
-import { Request } from 'keywork/platform/http'
+import HTTP from 'keywork/platform/http'
 
 import { IncomingMessage, ServerResponse } from 'http'
 
@@ -63,7 +63,7 @@ export async function respondWithRouter(
   nodeRequest: IncomingMessage,
   nodeResponse: ServerResponse
 ): Promise<void> {
-  const request = new Request(nodeRequest.url || 'http://0.0.0.0', nodeRequest as unknown as RequestInit)
+  const request = new HTTP.Request(nodeRequest.url || 'http://0.0.0.0', nodeRequest as unknown as RequestInit)
   const response = await router.fetch(request)
 
   nodeResponse.statusCode = response.status

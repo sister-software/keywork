@@ -16,7 +16,7 @@ import { Status } from 'deno/http/http_status'
 import { isETagMatch } from '../caching/common.ts'
 import { CacheControlDirectives, createCacheControlHeader } from '../headers/cacheControl.ts'
 import { NotModifiedResponse } from './NotModifiedResponse.ts'
-import { Response, Request, Headers } from 'keywork/platform/http'
+import HTTP from 'keywork/platform/http'
 
 /**
  * A client-side cachable response.
@@ -27,12 +27,13 @@ import { Response, Request, Headers } from 'keywork/platform/http'
  * @category HTTP Response
  * @category Cache
  */
-export class CachableResponse extends Response {
+export class CachableResponse extends HTTP.Response {
   constructor(
     /** A body sent with the response. */
     body: BodyInit | null,
     /** A request to check for etag headers. */
-    request?: Request,
+    // eslint-disable-next-line no-restricted-globals
+    request?: globalThis.Request,
     /** An etag for the given `body` parameter. */
     etag?: string | null,
     /** Options to generate a cache control header. */
@@ -44,7 +45,7 @@ export class CachableResponse extends Response {
       return new NotModifiedResponse(etag)
     }
 
-    const headers = new Headers({
+    const headers = new HTTP.Headers({
       ...headersInit,
       ...createCacheControlHeader(cacheControlOptions),
     })

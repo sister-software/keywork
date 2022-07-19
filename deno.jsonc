@@ -24,7 +24,8 @@
         "ban-types",
         "no-explicit-any",
         "no-extra-semi",
-        "no-empty-interface"
+        "no-empty-interface",
+        "require-await"
       ]
     },
     "files": {

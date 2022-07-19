@@ -14,14 +14,8 @@
 
 import { polyfillWithModule } from 'keywork/polyfills/platform'
 
-interface HTTPModuleExports {
-  Request: typeof globalThis.Request
-  Headers: typeof globalThis.Headers
-  Response: typeof globalThis.Response
-}
+export type HTTPExports = Pick<typeof globalThis, 'Request' | 'Headers' | 'Response'>
 
-const moduleExports = await polyfillWithModule<HTTPModuleExports>('undici', ['Request', 'Headers', 'Response'])
+const HTTP = await polyfillWithModule<HTTPExports>('undici', ['Request', 'Headers', 'Response'])
 
-export class Request extends moduleExports.Request {}
-export class Headers extends moduleExports.Headers {}
-export class Response extends moduleExports.Response {}
+export default HTTP

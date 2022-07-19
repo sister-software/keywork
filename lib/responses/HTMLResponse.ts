@@ -14,7 +14,6 @@
 
 import { CacheControlDirectives, fileExtensionToContentTypeHeader } from 'keywork/headers'
 import { CachableResponse } from './CachableResponse.ts'
-import { Request } from 'keywork/platform/http'
 
 /**
  * A response that returns a full HTML document.
@@ -33,7 +32,7 @@ export class HTMLResponse extends CachableResponse {
      */
     htmlLike: BodyInit,
     /** An optional request to check for etag headers. */
-    request?: Request,
+    request?: globalThis.Request,
     /** An optional etag for the given `json` parameter. */
     etag?: string,
     /** Options to generate a cache control header. */

@@ -14,7 +14,7 @@
 
 import { RouteRequestHandler } from 'keywork/routing/common'
 import { PrefixedLogger } from 'keywork/utilities'
-import { Response } from 'keywork/platform/http'
+import HTTP from 'keywork/platform/http'
 
 export type ResponseRedirectStatus = 301 | 302 | 303 | 307 | 308
 /**
@@ -48,7 +48,7 @@ export function createRouteRedirect(
   const routeRequestHandler: RouteRequestHandler = ({ request }) => {
     logger.info(`Redirecting from ${request.url} to ${destinationURL.toString()}`)
 
-    return Response.redirect(destinationURL.toString(), statusCode)
+    return HTTP.Response.redirect(destinationURL.toString(), statusCode)
   }
 
   return routeRequestHandler

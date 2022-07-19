@@ -60,15 +60,35 @@ export type RouteMethodDeclaration<
 /**
  * @ignore
  */
-export interface ParsedRoute<BoundAliases extends {} | null = null> {
+export interface ParsedRouteBase {
   compiledPath: CompiledPath
+  displayName?: string
+}
+
+/**
+ * @ignore
+ */
+export interface ParsedRouteFromRouteHandler<BoundAliases extends {} | null = null> extends ParsedRouteBase {
+  kind: 'routeHandler'
+  fetch: RouteRequestHandler<BoundAliases, any, any, globalThis.Response>
+}
+
+/**
+ * @ignore
+ */
+export interface ParsedRouteFromFetcher<BoundAliases extends {} | null = null> extends ParsedRouteBase {
+  kind: 'fetcher'
   fetcher: KeyworkFetcher<BoundAliases>
 }
+
+export type ParsedRoute<BoundAliases extends {} | null = null> =
+  | ParsedRouteFromRouteHandler<BoundAliases>
+  | ParsedRouteFromFetcher<BoundAliases>
 
 /**
  * @ignore
  */
 export interface RouteMatch<ExpectedParams extends {} | null = null> {
   match: PathMatch<ExpectedParams>
-  fetcher: KeyworkFetcher<any>
+  parsedRoute: ParsedRoute<any>
 }

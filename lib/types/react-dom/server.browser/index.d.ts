@@ -13,7 +13,6 @@
  */
 
 declare module 'react-dom/server.browser' {
-  import type { ReadableStream } from 'keywork/platform/stream'
   import { ReactNode } from 'react'
 
   export interface RenderToReadableStreamOptions {
@@ -28,7 +27,7 @@ declare module 'react-dom/server.browser' {
     onError?: (error: unknown) => void
   }
 
-  export interface ReactDOMServerReadableStream extends ReadableStream {
+  export class ReactDOMServerReadableStream extends globalThis.ReadableStream {
     allReady: Promise<void>
   }
 

@@ -15,7 +15,7 @@
 import type { KeyworkResourceError } from 'keywork/errors'
 import type { KeyworkHTMLDocumentComponent } from './KeyworkHTMLDocument.tsx'
 import type { KeyworkProvidersComponent } from './KeyworkProvidersComponent.tsx'
-import type { ReadableStream } from 'keywork/platform/stream'
+import { ReactDOMServerReadableStream } from 'react-dom/server.browser'
 
 export interface RenderToReadableStreamOptions {
   identifierPrefix?: string
@@ -27,10 +27,6 @@ export interface RenderToReadableStreamOptions {
   progressiveChunkSize?: number
   signal?: AbortSignal
   onError?: (error: unknown) => void
-}
-
-export interface ReactDOMServerReadableStream extends ReadableStream {
-  allReady: Promise<void>
 }
 
 export interface ReactRenderStreamSuccessResult {

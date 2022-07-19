@@ -16,7 +16,6 @@ import { ETaggable } from 'keywork/caching'
 import isPlainObject from 'lodash.isplainobject'
 import { ulid } from 'ulidx'
 import type { DeserializationTransformers, PutOrPatchOptions } from './common.ts'
-import { ReadableStream } from 'keywork/platform/stream'
 
 export interface CreateKeyworkDocumentMetadataOptions {
   /** A POSIX-style, absolute path to a document. */
@@ -98,7 +97,7 @@ export function _parseValueTypeInfo(value: unknown): DeserializationTransformers
       return 'json'
     }
 
-    if (typeof ReadableStream !== 'undefined' && value instanceof ReadableStream) return 'stream'
+    if (typeof globalThis.ReadableStream !== 'undefined' && value instanceof globalThis.ReadableStream) return 'stream'
     if (typeof ArrayBuffer !== 'undefined' && value instanceof ArrayBuffer) return 'arrayBuffer'
   }
 

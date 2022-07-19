@@ -12,7 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { Request, Response } from 'keywork/platform/http'
+import { WaitUntilCallback } from '../worker/cloudflare/request.ts'
+import { RouteMatch } from './RouteRequestHandler.ts'
 
 /**
  * Middleware implementation of `fetch`
@@ -21,13 +22,16 @@ import type { Request, Response } from 'keywork/platform/http'
  *
  * @category Request
  */
-export type MiddlewareFetch = (
+export type MiddlewareFetch<BoundAliases extends {} | null = null> = (
   /**
    * An optional override of the `Request` provided in the route handler's `IncomingRequestContext`
    */
-  requestOrUrl?: Request | string,
+  requestOrUrl?: globalThis.Request | string,
   /**
    * An optional override of the `Request` provided in the route handler's `IncomingRequestContext`
    */
-  requestInit?: RequestInit
-) => (Response | null) | Promise<Response | null>
+  requestInit?: RequestInit,
+  matchedRoutes?: RouteMatch<any>[],
+  env?: BoundAliases,
+  waitUntil?: WaitUntilCallback
+) => (globalThis.Response | null) | Promise<globalThis.Response | null>

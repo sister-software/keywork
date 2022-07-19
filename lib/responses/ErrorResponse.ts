@@ -14,7 +14,7 @@
 
 import { Status, STATUS_TEXT } from 'deno/http/http_status'
 import { KeyworkResourceError } from 'keywork/errors'
-import { Response } from 'keywork/platform/http'
+import HTTP from 'keywork/platform/http'
 
 /**
  * An error response sent to a client when a request is invalid in some way.
@@ -24,7 +24,7 @@ import { Response } from 'keywork/platform/http'
  * @category HTTP Response
  * @category Error
  */
-export class ErrorResponse extends Response {
+export class ErrorResponse extends HTTP.Response {
   constructor(
     /**
      * An optional HTTP response status code.
@@ -86,7 +86,7 @@ export class ErrorResponse extends Response {
 
     return new ErrorResponse(
       resourceAccessError.status,
-      publicReason || STATUS_TEXT[Status.InternalServerError],
+      publicReason || STATUS_TEXT[resourceAccessError.status] || STATUS_TEXT[Status.InternalServerError],
       undefined,
       headersInit
     )

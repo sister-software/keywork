@@ -86,12 +86,6 @@ async function createTransformer() {
     entryPoints: entryPoints.map((e) => e.path),
     testShims,
     shims,
-    mappings: {
-      'https://esm.sh/ulidx': {
-        name: 'ulidx',
-        version: '^0.3.0',
-      },
-    },
     target: 'Latest',
     importMap: importMapPath,
   })

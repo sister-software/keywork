@@ -13,7 +13,7 @@
  */
 
 import { fileExtensionToContentTypeHeader } from 'keywork/headers'
-import { TransformStream } from 'keywork/platform/stream'
+import Stream from 'keywork/platform/stream'
 import { ReactRendererOptions, renderToStream } from 'keywork/react/common'
 import { renderReactStream } from 'keywork/react/worker'
 import { CachableResponse } from './CachableResponse.ts'
@@ -46,7 +46,7 @@ export class JSXResponse extends CachableResponse {
   ) {
     // React's stream renderer is async, but constructors must be synchronous.
     // Let's get a stream ready for immediate use.
-    const passThroughStream = new TransformStream()
+    const passThroughStream = new Stream.TransformStream()
 
     super(passThroughStream.readable, undefined, undefined, undefined, {
       ...fileExtensionToContentTypeHeader('html'),

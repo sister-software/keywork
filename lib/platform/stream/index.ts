@@ -14,18 +14,12 @@
 
 import { polyfillWithModule } from 'keywork/polyfills/platform'
 
-interface RequestModuleExports {
-  TransformStream: typeof globalThis.TransformStream
-  ReadableStream: typeof globalThis.ReadableStream
-  WritableStream: typeof globalThis.WritableStream
-}
+export type StreamExports = Pick<typeof globalThis, 'TransformStream' | 'ReadableStream' | 'WritableStream'>
 
-const moduleExports = await polyfillWithModule<RequestModuleExports>('node:stream/web', [
+const Stream = await polyfillWithModule<StreamExports>('node:stream/web', [
   'TransformStream',
   'ReadableStream',
   'WritableStream',
 ])
 
-export class TransformStream extends moduleExports.TransformStream {}
-export class ReadableStream extends moduleExports.ReadableStream {}
-export class WritableStream extends moduleExports.WritableStream {}
+export default Stream

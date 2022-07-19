@@ -14,7 +14,7 @@
 
 import { assertEquals, assertExists, assertObjectMatch } from 'deno/testing/asserts'
 import { WorkerRouter } from 'keywork/routing/worker'
-import { Request } from 'keywork/platform/http'
+import HTTP from 'keywork/platform/http'
 
 interface HelloResponseBody extends Record<PropertyKey, unknown> {
   url: string
@@ -44,15 +44,19 @@ Deno.test('Router receives requests', async () => {
     return jsonBody
   })
 
-  assertExists(app.match('GET', '/'), 'Root route exists')
-  assertEquals(app.match('POST', '/'), null, 'Root route only exists on GET')
+  const routesViaGET = app.readMethodRoutes('get')
+  assertEquals(routesViaGET.length, 2, 'Multiple routes have been defined for GET')
+  assertEquals(app.match(routesViaGET, '/').length, 1, 'Root route exists')
+  assertExists(app.match(routesViaGET, '/hello.json'), 'JSON route exists')
 
-  assertExists(app.match('GET', '/hello.json'), 'JSON route exists')
-  assertEquals(app.match('POST', '/hello.json'), null, 'JSON route only exists on GET')
+  const routesViaPOST = app.readMethodRoutes('post')
+  assertEquals(routesViaPOST.length, 0, 'No routes have been defined for POST')
+  assertEquals(app.match(routesViaPOST, '/').length, 0, 'Root route only exists on GET')
+  assertEquals(app.match(routesViaPOST, '/hello.json').length, 0, 'JSON route only exists on GET')
 
-  const rootRequest = await app.fetch(new Request('http://localhost/'))
+  const rootRequest = await app.fetch(new HTTP.Request('http://localhost/'))
   assertEquals(await rootRequest.text(), `Hello from /`)
 
-  const JSONRequest = await app.fetch(new Request('http://localhost/hello.json'))
+  const JSONRequest = await app.fetch(new HTTP.Request('http://localhost/hello.json'))
   assertObjectMatch(await JSONRequest.json(), jsonBody)
 })

@@ -24,7 +24,6 @@ import React, { ReactElement } from 'react'
 import { KeyworkHTMLDocument } from './KeyworkHTMLDocument.tsx'
 import { KeyworkProviders } from './KeyworkProvidersComponent.tsx'
 import { _SSRPropsEmbed } from './SSRPropsEmbed.tsx'
-import type { TransformStream } from 'keywork/platform/stream'
 
 /**
  * Renders the given React content to an HTML stream.
@@ -32,6 +31,7 @@ import type { TransformStream } from 'keywork/platform/stream'
  */
 export async function renderToStream<StaticProps extends SSRPropsLike | null = null>(
   streamRenderer: IReactStreamRenderer,
+  // eslint-disable-next-line no-restricted-globals
   passThroughStream: TransformStream,
   /** The React component to render for this specific page. */
   pageElement: ReactElement<StaticProps>,

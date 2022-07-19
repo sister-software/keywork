@@ -12,8 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { Request } from 'keywork/platform/http'
-
 /**
  * Wraps `JSON.stringify` to ensure that JSON pretty printing doesn't influence ETag generation.
  * @category Cache
@@ -42,7 +40,7 @@ export const _EMPTY_ETAG = '"0-2jmj7l5rSw0yVb/vlWAYkK/YBwk"'
  * @category Cache
  * @category Type Cast
  */
-export function isETagMatch(request: Request, etag: string | null | undefined): etag is string {
+export function isETagMatch(request: globalThis.Request, etag: string | null | undefined): etag is string {
   const headerContent = request.headers.get('If-None-Match')
 
   return etag === headerContent || `W/${etag}` === headerContent

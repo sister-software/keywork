@@ -12,8 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { Headers } from 'keywork/platform/http'
-
 /**
  * @ignore
  */
@@ -28,7 +26,7 @@ export const KeyworkHeaders = {
  * This mutates the `destination` headers.
  *
  */
-export function mergeHeaders(destination: Headers, ...sources: Headers[]): void {
+export function mergeHeaders(destination: globalThis.Headers, ...sources: globalThis.Headers[]): void {
   for (const source of sources) {
     for (const [name, value] of source.entries()) {
       destination.set(name, value)

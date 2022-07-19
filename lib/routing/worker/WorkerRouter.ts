@@ -15,11 +15,12 @@
 import { Status } from 'deno/http/http_status'
 import { KeyworkResourceError } from 'keywork/errors'
 import { KeyworkHeaders, mergeHeaders } from 'keywork/headers'
-import { Request, Headers, Response } from 'keywork/platform/http'
+import HTTP from 'keywork/platform/http'
 import { ReactRendererOptions } from 'keywork/react/common'
 import { renderReactStream } from 'keywork/react/worker'
 import { convertToResponse, ErrorResponse } from 'keywork/responses'
 import {
+  NormalizedRequestArgs,
   HTTPMethod,
   IncomingRequestEvent,
   IncomingRequestEventData,
@@ -32,12 +33,13 @@ import {
   RouteRequestHandler,
   RouterMethod,
   routerMethodToHTTPMethod,
-  WaitUntilCallback,
-  WorkerRequestHandler,
+  isInstanceOfRequest,
+  MiddlewareFetch,
 } from 'keywork/routing/common'
 import { KeyworkSession, KeyworkSessionOptions } from 'keywork/sessions'
 import { compilePath, matchPathPrecompiled, normalizePathPattern, PathPattern } from 'keywork/uri'
 import { Disposable, findSubstringStartOffset, PrefixedLogger } from 'keywork/utilities'
+import { CloudflareWorkerRequestHandler, WaitUntilCallback } from 'keywork/routing/worker/cloudflare'
 import { isMiddlewareDeclarationOption, WorkerRouterOptions } from './common.ts'
 
 /**
@@ -45,7 +47,11 @@ import { isMiddlewareDeclarationOption, WorkerRouterOptions } from './common.ts'
  * @see {WorkerRouter.assertIsInstanceOf}
  * @ignore
  */
-export const $ClassID = 'Keywork.WorkerRouter'
+export const kObjectName = 'Keywork.WorkerRouter'
+/**
+ * @ignore
+ */
+export const kInstance = 'Keywork.WorkerRouter.instance'
 
 /**
  * Routes incoming HTTP requests from the user's browser to your app's route endpoints.
@@ -79,7 +85,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * Given a normalized HTTP method verb, create a method handler.
    * This is mostly for internal use.
    */
-  protected _addHTTPMethodHandler<Path extends string>(
+  public appendMethodRoutes<Path extends string>(
     normalizedVerb: RouterMethod,
     pathPatternLike: PathPattern<Path> | Path | RegExp,
     ...fetchersLike: Array<KeyworkFetcher<BoundAliases> | RouteRequestHandler<BoundAliases, any, any>>
@@ -87,35 +93,55 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     const parsedHandlersCollection = this.routesByVerb.get(normalizedVerb)!
     const pathPattern = normalizePathPattern(pathPatternLike)
 
+    /**
+     * Incoming request arguments may not always be normalized,
+     * but using a `KeyworkFetcher` wrapper ensures that we can always handle both shapes.
+     */
     const parsedHandlers = fetchersLike.map((fetcherLike): ParsedRoute<BoundAliases> => {
-      /**
-       * Incoming request arguments may not always be normalized,
-       * but using a `KeyworkFetcher` wrapper ensures that we can always handle both shapes.
-       */
-      let fetcher: KeyworkFetcher<BoundAliases>
+      const compiledPath = compilePath(pathPattern)
 
       if (isKeyworkFetcher<BoundAliases>(fetcherLike)) {
         // Likely a `WorkerRouter` or `KeyworkFetcher`...
-        fetcher = fetcherLike
-      } else {
-        // Likely a `RouteRequestHandler`...
-        fetcher = {
-          displayName: `[${this.displayName}][${pathPattern.path}]`,
-          fetch: (...args: unknown[]) => {
-            const eventContext = this.createIncomingRequestEventFromArgs(...args)
-
-            return fetcherLike(eventContext)
-          },
+        return {
+          kind: 'fetcher',
+          compiledPath,
+          fetcher: fetcherLike,
+          displayName: fetcherLike.displayName,
         }
       }
 
+      // Likely a `RouteRequestHandler`...
+      const fetch: RouteRequestHandler<BoundAliases, any, any, globalThis.Response> = async (event) => {
+        const responseLike = await fetcherLike(event)
+        const response = convertToResponse(responseLike, this.reactOptions)
+
+        mergeHeaders(response.headers, this._createDefaultHeaders(event))
+
+        return response
+      }
+
       return {
-        compiledPath: compilePath(pathPattern),
-        fetcher,
+        kind: 'routeHandler',
+        displayName: `[${this.displayName}][${pathPattern.path}]`,
+        compiledPath,
+        fetch,
       }
     })
 
     parsedHandlersCollection.push(...parsedHandlers)
+  }
+
+  /**
+   * Returns a collection of route handlers for the given HTTP method.
+   *
+   * @internal
+   */
+  public readMethodRoutes(normalizedMethodVerb: RouterMethod): ParsedRoute<BoundAliases>[] {
+    const verbs: readonly RouterMethod[] = ['all', normalizedMethodVerb]
+
+    const handlers = verbs.flatMap((verb) => this.routesByVerb.get(verb)!)
+
+    return handlers
   }
 
   //#region Route declaration methods
@@ -137,7 +163,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   public get<ExpectedParams extends {} | null = null, Data extends IncomingRequestEventData = IncomingRequestEventData>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
-    return this._addHTTPMethodHandler('get', ...args)
+    return this.appendMethodRoutes('get', ...args)
   }
 
   /**
@@ -157,7 +183,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     ExpectedParams extends {} | null = null,
     Data extends IncomingRequestEventData = IncomingRequestEventData
   >(...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>): void {
-    return this._addHTTPMethodHandler('post', ...args)
+    return this.appendMethodRoutes('post', ...args)
   }
 
   /**
@@ -175,7 +201,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   public put<ExpectedParams extends {} | null = null, Data extends IncomingRequestEventData = IncomingRequestEventData>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
-    return this._addHTTPMethodHandler('put', ...args)
+    return this.appendMethodRoutes('put', ...args)
   }
 
   /**
@@ -190,7 +216,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     ExpectedParams extends {} | null = null,
     Data extends IncomingRequestEventData = IncomingRequestEventData
   >(...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>): void {
-    return this._addHTTPMethodHandler('patch', ...args)
+    return this.appendMethodRoutes('patch', ...args)
   }
 
   /**
@@ -208,7 +234,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     ExpectedParams extends {} | null = null,
     Data extends IncomingRequestEventData = IncomingRequestEventData
   >(...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>): void {
-    return this._addHTTPMethodHandler('delete', ...args)
+    return this.appendMethodRoutes('delete', ...args)
   }
 
   /**
@@ -229,7 +255,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     ExpectedParams extends {} | null = null,
     Data extends IncomingRequestEventData = IncomingRequestEventData
   >(...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>): void {
-    return this._addHTTPMethodHandler('head', ...args)
+    return this.appendMethodRoutes('head', ...args)
   }
 
   /**
@@ -249,7 +275,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     ExpectedParams extends {} | null = null,
     Data extends IncomingRequestEventData = IncomingRequestEventData
   >(...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>): void {
-    return this._addHTTPMethodHandler('options', ...args)
+    return this.appendMethodRoutes('options', ...args)
   }
 
   /**
@@ -265,7 +291,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   public all<ExpectedParams extends {} | null = null, Data extends IncomingRequestEventData = IncomingRequestEventData>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
-    return this._addHTTPMethodHandler('all', ...args)
+    return this.appendMethodRoutes('all', ...args)
   }
 
   //#endregion
@@ -335,7 +361,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       fetcher = args[0] as KeyworkFetcher<any>
     }
 
-    this._addHTTPMethodHandler('all', mountPathPattern, fetcher)
+    this.appendMethodRoutes('all', mountPathPattern, fetcher)
   }
 
   //#endregion
@@ -384,11 +410,15 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
 
       this.logger.log('METHOD:', httpMethod)
 
-      for (const { compiledPath, fetcher } of parsedRoutes) {
-        this.logger.log(fetcher.displayName || '', compiledPath.pattern.path, compiledPath.matcher)
+      for (const parsedRoute of parsedRoutes) {
+        this.logger.log(
+          parsedRoute.displayName || '',
+          parsedRoute.compiledPath.pattern.path,
+          parsedRoute.compiledPath.matcher
+        )
 
-        if (WorkerRouter.assertIsInstanceOf(fetcher)) {
-          fetcher.$prettyPrintRoutes()
+        if (parsedRoute.kind === 'fetcher' && WorkerRouter.assertIsInstanceOf(parsedRoute.fetcher)) {
+          parsedRoute.fetcher.$prettyPrintRoutes()
         }
       }
     }
@@ -425,23 +455,27 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
 
   /**
    * Normalizes the given arguments into an `IncomingRequestEvent`
+   *
+   * @throws KeyworkResourceError Invalid methods
    */
-  protected createIncomingRequestEventFromArgs(...args: unknown[]): IncomingRequestEvent<BoundAliases, any, any> {
-    if (args.length === 1 && !(args[0] instanceof Request)) {
-      // Arguments have already been normalized into a RouteRequestHandler shape.
-      // eslint-disable-next-line @typescript-eslint/no-extra-semi
-      return (args as Parameters<RouteRequestHandler<BoundAliases, any>>)[0]
+  protected normalizeFetchArgs: {
+    (...args: Parameters<RouteRequestHandler<BoundAliases, any, any>>): NormalizedRequestArgs<BoundAliases>
+    (...args: Parameters<CloudflareWorkerRequestHandler<BoundAliases>>): NormalizedRequestArgs<BoundAliases>
+  } = (...args: unknown[]): NormalizedRequestArgs<BoundAliases> => {
+    if (args.length === 1 && !isInstanceOfRequest(args[0])) {
+      // Arguments have already been normalized.
+      return args[0] as NormalizedRequestArgs<BoundAliases>
     }
 
     // Arguments are coming directly from an unprocessed incoming request.
-    const [request, env, incomingRequestEventInit] = args as Parameters<WorkerRequestHandler<BoundAliases>>
+    const [request, env, context] = args as Parameters<CloudflareWorkerRequestHandler<BoundAliases>>
 
     if (!request) {
       this.logger.warn(
         'This method should receive 1 argument: `IncomingRequestEvent`...',
         '...Or, 3 arguments: [request, env, executionContext]'
       )
-      this.logger.warn(`\`createIncomingRequestEventFromArgs\` received ${args.length} argument(s).`)
+      this.logger.warn(`\`normalizeFetchArgs\` received ${args.length} argument(s).`)
       this.logger.warn(args)
 
       throw new KeyworkResourceError(
@@ -450,25 +484,43 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       )
     }
 
-    // Update the URL params...
-    const requestURL = new URL(request.url)
-    const session = this.session.enabled ? new KeyworkSession(request, this.session.options) : null
+    const normalizedMethodVerb = methodVerbToRouterMethod.get(request.method as HTTPMethod)
 
-    const event: IncomingRequestEvent<BoundAliases, any, any> = {
-      request,
-      originalURL: request.url,
-      env: env || (null as any),
-      waitUntil: incomingRequestEventInit?.waitUntil || noopWaitUntil,
-      session,
-      data: {},
-      params: {},
-      pathname: requestURL.pathname,
-      pathnameBase: '/',
-      pattern: null as any,
-      next: null as any, // Defined in fetch delegation.
+    if (!normalizedMethodVerb) {
+      throw new KeyworkResourceError(`Method \`${request.method}\` is not implemented`, Status.NotImplemented)
     }
 
-    return event
+    const routes = this.readMethodRoutes(normalizedMethodVerb)
+    const originalURL = new URL(request.url)
+
+    // Given the current URL, attempt to find a matching route handler...
+    const matchedRoutes = this.match(routes, originalURL.pathname)
+    const normalizedArgs: NormalizedRequestArgs<BoundAliases> = {
+      request,
+      originalURL,
+      env: env || (null as any),
+      waitUntil: context?.waitUntil || noopWaitUntil,
+      matchedRoutes,
+    }
+
+    return normalizedArgs
+  }
+
+  /**
+   * Finds the matching routes for a given pathname.
+   * @public
+   */
+  public match(parsedRoutes: ParsedRoute<any>[], pathname: string): RouteMatch<any>[] {
+    const matchedRoutes: RouteMatch<any>[] = []
+
+    for (const parsedRoute of parsedRoutes) {
+      const match = matchPathPrecompiled(parsedRoute.compiledPath, pathname)
+      if (!match) continue
+
+      matchedRoutes.push({ match, parsedRoute })
+    }
+
+    return matchedRoutes
   }
 
   /**
@@ -482,152 +534,112 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @public
    */
   fetch: {
-    (...args: Parameters<RouteRequestHandler<BoundAliases, any, any>>): Promise<Response>
-    (...args: Parameters<WorkerRequestHandler<BoundAliases>>): Promise<Response>
-  } = (...args: unknown[]): Promise<Response> => {
+    (...args: Parameters<RouteRequestHandler<BoundAliases, any, any>>):
+      | globalThis.Response
+      | Promise<globalThis.Response>
+    (...args: Parameters<CloudflareWorkerRequestHandler<BoundAliases>>):
+      | globalThis.Response
+      | Promise<globalThis.Response>
+  } = async (...args: any[]): Promise<globalThis.Response> => {
+    let argsByName: NormalizedRequestArgs<BoundAliases>
+
     try {
       // eslint-disable-next-line prefer-spread
-      const event = this.createIncomingRequestEventFromArgs.apply(this, args)
-      return this.delegateFetchEvent(event)
+      argsByName = this.normalizeFetchArgs.apply(this, args as any)
     } catch (error) {
       this.logger.error(error)
 
-      const response = ErrorResponse.fromUnknownError(
+      return ErrorResponse.fromUnknownError(
         error,
         'A server error occurred while parsing the request. See logs for additional information.',
         this._createDefaultHeaders(null)
       )
+    }
 
-      return Promise.resolve(response)
+    const { request, matchedRoutes, env, waitUntil } = argsByName
+    try {
+      const response = await this.delegateAsMiddleware(request.url, request, matchedRoutes, env, waitUntil)
+
+      if (!response) {
+        return this._createHTTPError(Status.NotFound, `No route matches \`${argsByName.originalURL.pathname}\``)
+      }
+      return response
+    } catch (error) {
+      this.logger.error(error)
+
+      return ErrorResponse.fromUnknownError(
+        error,
+        'A server error occurred while parsing the request. See logs for additional information.',
+        this._createDefaultHeaders(null)
+      )
     }
   }
 
-  /**
-   * Finds the matching routes for a given pathname.
-   * @public
-   */
-  public match(method: HTTPMethod, pathname: string): null | RouteMatch<any>[] {
-    // With our event context constructed, we can check for any defined methods...
-    // If a method exists and routes are defined, it acts like middleware.
-    const routerMethod = methodVerbToRouterMethod.get(method)
-    const routes = routerMethod ? this._getParsedRoutesForMethod(routerMethod) : null
-
-    if (!routerMethod || !routes || !routes.length) {
+  public delegateAsMiddleware: MiddlewareFetch<BoundAliases> = async (
+    input,
+    requestInit,
+    matchedRoutes,
+    env,
+    waitUntil = noopWaitUntil
+  ) => {
+    if (!input || !matchedRoutes || !matchedRoutes.length) {
       return null
     }
+    for (const { match, parsedRoute } of matchedRoutes) {
+      /** A clone of the initial request, with a new URL to match the remaining pathname parameters.  */
+      const request = new HTTP.Request(input, requestInit)
+      const requestURL = new URL(request.url)
+      const session = this.session.enabled ? new KeyworkSession(request, this.session.options) : null
 
-    // Given the current URL, attempt to find a matching route handler...
-    const matches: RouteMatch<any>[] = []
-
-    for (const route of routes) {
-      const match = matchPathPrecompiled(route.compiledPath, pathname)
-      if (!match) continue
-
-      matches.push({ match, fetcher: route.fetcher })
-    }
-
-    return matches
-  }
-
-  /**
-   * @ignore
-   */
-  protected delegateFetchEvent = async (event: IncomingRequestEvent<BoundAliases, any, any>): Promise<Response> => {
-    // With our event context constructed, we can check for any defined methods...
-    // If a method exists and routes are defined, it acts like middleware.
-    const matches = this.match(event.request.method as HTTPMethod, event.pathname)
-
-    if (!matches || !matches.length) {
-      return new ErrorResponse(Status.NotFound)
-    }
-
-    let routeIndex = 0
-
-    event.next = async (input, requestInit) => {
-      const matchedRoute = matches[routeIndex]
-
-      if (!matchedRoute) {
-        return null
-      }
-
-      const url = new URL(event.request.url)
-      const { match, fetcher } = matchedRoute
-
+      // Update the URL params...
       if (!match.pattern.end) {
         // The current pattern only matches the beginning of the pathname.
         // So, we remove the matched portion which allows any nested routes to
         // behave as if the pathname did not include any unforseen prefixes.
-        const pathNameOffset = findSubstringStartOffset(url.pathname, match.pathnameBase)
+        const pathNameOffset = findSubstringStartOffset(requestURL.pathname, match.pathnameBase)
         if (pathNameOffset) {
           // Add '/' to allow omitting of trailing-slash.
-          match.pathname = url.pathname.substring(pathNameOffset) || '/'
+          match.pathname = requestURL.pathname.substring(pathNameOffset) || '/'
           match.pathnameBase = '/'
 
-          url.pathname = match.pathname
+          requestURL.pathname = match.pathname
         }
       }
 
-      /** A clone of the initial request, with a new URL to match the remaining pathname parameters.  */
-      const request = input
-        ? new Request(input, requestInit)
-        : new Request(url.toString(), event.request as RequestInit)
+      const next: MiddlewareFetch<BoundAliases> = (
+        input = request.url,
+        requestInit = request,
+        _matchedRoutes = matchedRoutes.slice(1),
+        _env = env,
+        _waitUntil = waitUntil
+      ) => {
+        return this.delegateAsMiddleware(input, requestInit, _matchedRoutes, _env, _waitUntil)
+      }
 
-      const currentEvent: IncomingRequestEvent<BoundAliases, any, any> = {
-        ...event,
-        ...match,
+      const event: IncomingRequestEvent<BoundAliases, any, any> = {
+        env: env!,
+        waitUntil,
+        session,
         request,
-        next: (...args) => {
-          routeIndex++
-          return event.next(...args)
-        },
+        originalURL: request.url,
+        ...match,
+        data: {},
+        next,
       }
 
-      const responseLike = await fetcher.fetch(currentEvent)
-      const response = convertToResponse(responseLike, this.reactOptions)
-      mergeHeaders(response.headers, this._createDefaultHeaders(currentEvent))
-
-      return response
-    }
-
-    /** The response that will be sent to the client. */
-    let finalResponse: Response | null = null
-    /**
-     * The current response may be `null`, indicating that this router has no matching handler,
-     * and a 404 is an appropriate fallback.
-     * However, if we're in a nested router, a `null` value indicates that the parent router
-     * should continue as if `next` was called to a sibling router.
-     */
-
-    while (!finalResponse) {
-      let currentResponse: Response | null = null
-
-      try {
-        // Attempt to match and handle the request...
-        currentResponse = await event.next()
-        routeIndex++
-      } catch (error) {
-        this.logger.error(error)
-        this.logger.debug(event)
-
-        currentResponse = ErrorResponse.fromUnknownError(error, 'A server error occurred. Please try again later.')
-      }
-
-      if (!currentResponse || currentResponse.status === Status.NotFound) {
-        if (matches[routeIndex]) {
-          // There's another sibling route ahead.
-          continue
-        }
-
-        // There aren't any remaining route handlers at this layer.
-        finalResponse =
-          currentResponse || this._createHTTPError(Status.NotFound, `No route matches \`${event.pathname}\``)
+      let response: globalThis.Response | null
+      if (parsedRoute.kind === 'routeHandler') {
+        response = await parsedRoute.fetch(event)
       } else {
-        // We're good.
-        finalResponse = currentResponse
+        response = await parsedRoute.fetcher.fetch(event)
+      }
+
+      if (!response) {
+        return next(request.url, request, matchedRoutes)
       }
     }
 
-    return finalResponse
+    return null
   }
 
   /**
@@ -635,8 +647,8 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    *
    * @ignore
    */
-  protected _createDefaultHeaders(event: IncomingRequestEvent<BoundAliases, any, any> | null): Headers {
-    const headers = new Headers()
+  protected _createDefaultHeaders(event: IncomingRequestEvent<BoundAliases, any, any> | null): globalThis.Headers {
+    const headers = new HTTP.Headers()
 
     if (this.includeDebugHeaders) {
       for (const [key, value] of Object.entries(KeyworkHeaders)) {
@@ -655,24 +667,11 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * Creates an either a default `ErrorResponse`, or if defined, a fallback route matching the HTTP status code.
    * @beta
    */
-  private _createHTTPError(status: number, publicReason?: string): Response {
+  private _createHTTPError(status: number, publicReason?: string): globalThis.Response {
     const response = new ErrorResponse(status, publicReason)
     mergeHeaders(response.headers, this._createDefaultHeaders(null))
 
     return response
-  }
-
-  /**
-   * Returns a collection of route handlers for the given HTTP method.
-   *
-   * @internal
-   */
-  protected _getParsedRoutesForMethod(normalizedMethodVerb: RouterMethod): ParsedRoute<BoundAliases>[] {
-    const verbs: readonly RouterMethod[] = ['all', normalizedMethodVerb]
-
-    const handlers = verbs.flatMap((verb) => this.routesByVerb.get(verb)!)
-
-    return handlers
   }
 
   //#endregion
@@ -680,14 +679,14 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   //#region Internal
 
   /** @ignore */
-  readonly [$ClassID] = true as boolean
+  readonly [kInstance] = true as boolean
   /** @ignore */
-  static readonly [$ClassID] = true as boolean
+  static readonly [kObjectName] = true as boolean
 
   static assertIsInstanceOf<BoundAliases extends {} | null = null>(
     routerLike: KeyworkFetcher<BoundAliases> | WorkerRouter<BoundAliases>
   ): routerLike is WorkerRouter<BoundAliases> {
-    return Boolean(routerLike instanceof WorkerRouter || $ClassID in routerLike)
+    return Boolean(routerLike instanceof WorkerRouter || kInstance in routerLike)
   }
 
   //#endregion

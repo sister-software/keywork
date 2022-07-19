@@ -53,27 +53,27 @@ const config = {
       2,
       {
         name: 'Request',
-        message: "Use `import {Request} from 'keywork/platform/http'`",
+        message: "Use `import HTTP from 'keywork/platform/http'`",
       },
       {
         name: 'Headers',
-        message: "Use `import {Headers} from 'keywork/platform/http'`",
+        message: "Use `import HTTP from 'keywork/platform/http'`",
       },
       {
         name: 'Response',
-        message: "Use `import {Response} from 'keywork/platform/http'`",
+        message: "Use `import HTTP from 'keywork/platform/http'`",
       },
       {
         name: 'TransformStream',
-        message: "Use `import {TransformStream} from 'keywork/platform/stream'`",
+        message: "Use `import Stream from 'keywork/platform/stream'`",
       },
       {
         name: 'ReadableStream',
-        message: "Use `import {ReadableStream} from 'keywork/platform/stream'`",
+        message: "Use `import Stream from 'keywork/platform/stream'`",
       },
       {
         name: 'WritableStream',
-        message: "Use `import {WritableStream} from 'keywork/platform/stream'`",
+        message: "Use `import Stream from 'keywork/platform/stream'`",
       },
     ],
     'header/header': [2, 'block', headerLines, 1],
