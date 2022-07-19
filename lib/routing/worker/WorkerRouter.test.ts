@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { assertEquals, assertExists, assertObjectMatch, assert } from 'deno/testing/asserts'
+import { assertEquals, assertExists, assertObjectMatch } from 'deno/testing/asserts'
 import { WorkerRouter } from 'keywork/routing/worker'
 import { Request } from 'keywork/platform/http'
 
