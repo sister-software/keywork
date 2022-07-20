@@ -15,7 +15,6 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-// eslint-disable-next-line import/extensions
 import docsPlugin from '@docusaurus/plugin-content-docs'
 import { createRequire } from 'module'
 import { readAllPackageEntryPoints } from '../build/utils/packages.mjs'

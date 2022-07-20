@@ -1,6 +1,6 @@
 ---
 title: Overview
-sidebar_position: 0
+sidebar_position: -1
 sidebar_label: Getting Started
 ---
 
@@ -34,7 +34,7 @@ the native design patterns of the Worker platform.
 And thanks to modular and type-safe API, Keywork provides opinionated and structured
 guidence as your web app grows, without locking you into a specific pattern.
 
-_[Routing API](/api/modules/routing)_
+_[Routing API](/api/modules/router)_
 
 ### React just works
 

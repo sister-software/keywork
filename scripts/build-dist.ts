@@ -63,6 +63,7 @@ const shimOptions: ShimOptions = {
 function copyStaticFiles() {
   const files = new Map<string, string>([
     [projectPath('lib', 'types'), path.join(outDir, 'types')],
+    [projectPath('lib', ProjectFiles.TSConfig), path.join(outDir, ProjectFiles.TSConfig)],
     [ProjectFiles.License, path.join(outDir, ProjectFiles.License)],
     [ProjectFiles.Readme, path.join(outDir, ProjectFiles.Readme)],
     ['.eslintignore', path.join(outDir, '.eslintignore')],
@@ -225,14 +226,5 @@ await runNpmCommand({
 })
 
 build(transformOutput)
-
-// Fix for doc parsing...
-// const tsConfigContents = JSON.parse(Deno.readTextFileSync(tsConfigSrcPath))
-// Object.assign(tsConfigContents, {
-//   extends: undefined,
-//   include: ['./**/*'],
-// })
-
-// Deno.writeTextFileSync(tsConfigDestPath, JSON.stringify(tsConfigContents, null, 2))
 
 await formatFiles(outDir)

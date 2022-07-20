@@ -1,7 +1,7 @@
 ---
 id: acknowledgements
 title: Acknowledgements
-sidebar_position: 90
+sidebar_position: 99
 sidebar_label: Acknowledgements
 ---
 

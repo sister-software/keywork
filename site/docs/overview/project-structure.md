@@ -1,7 +1,7 @@
 ---
 id: project-structure
 title: Structuring your Project
-sidebar_position: 0
+sidebar_position: 1
 sidebar_label: Structuring your Project
 ---
 
