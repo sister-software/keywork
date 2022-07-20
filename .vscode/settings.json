@@ -5,12 +5,29 @@
   "search.exclude": {
     "yarn.lock": true,
     "dist": true,
+    "cov": true,
     "docs": true,
     "api-extractor": true,
-    "site/docs": true,
     "site/etc": true,
     "site/temp": true,
     "site/docusaurus.config.js": true
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/Thumbs.db": true,
+    "**/cov": true,
+    "yarn.lock": true,
+    ".yarnrc": true,
+    ".eslintignore": true,
+    ".eslintrc.cjs": true,
+    "LICENSE.md": true,
+    ".editorconfig": true,
+    ".node-version": true,
+    ".prettierrc": true,
+    ".prettierignore": true,
+    "tsdoc.json": true,
+    "typedoc.json": true,
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
