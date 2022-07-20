@@ -73,7 +73,6 @@
     "keywork/request": "./lib/request/index.ts",
     "keywork/request/cloudflare": "./lib/request/cloudflare/index.ts",
     "keywork/response": "./lib/response/index.ts",
-    "keywork/router/common": "./lib/router/common/index.ts",
     "keywork/router/middleware": "./lib/router/middleware/index.ts",
     "keywork/router/route": "./lib/router/route/index.ts",
     "keywork/router/worker/cloudflare": "./lib/router/worker/cloudflare/index.ts",
