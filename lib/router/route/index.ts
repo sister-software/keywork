@@ -12,14 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * ### `keywork/routing/cloudflare`
- *
- * Routing utilities exclusive to Cloudflare Workers
- *
- * @packageDocumentation
- * @module routing.worker.cloudflare
- */
-
-export * from './ServiceBindingRouter.ts'
-export * from './request.ts'
+export * from './RouteRequestHandler.ts'
+export * from './parsed.ts'

@@ -1,4 +1,4 @@
-name: Build Packages
+name: CI
 
 on:
   push:
@@ -33,14 +33,19 @@ jobs:
       - name: Run tests
         run: yarn test
 
+      - name: Generate lcov
+        run: yarn test:coverage > cov.lcov
+
+      - name: Upload coverage
+        uses: codecov/codecov-action@v2
+        with:
+          files: cov.lcov
+
       - name: Build application
         run: |
           yarn build
         env:
           NODE_ENV: production
-          GA_MEASUREMENT_API_KEY: ${{ secrets.GA_MEASUREMENT_API_KEY }}
-          GA_PROPERTY_ID: ${{ secrets.GA_PROPERTY_ID }}
-          REVUE_API_KEY: ${{ secrets.REVUE_API_KEY }}
 
       - name: Archive build artifacts
         uses: actions/upload-artifact@v3

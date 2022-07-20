@@ -12,6 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+export * from './methods.ts'
+
 import { polyfillWithModule } from 'keywork/polyfills/platform'
 
 export type HTTPExports = Pick<typeof globalThis, 'Request' | 'Headers' | 'Response'>

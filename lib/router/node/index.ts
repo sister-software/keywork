@@ -15,17 +15,15 @@
  */
 
 /**
- * ### `keywork/routing/node`
+ * ### `keywork/router/node`
  *
  * Everything you need to handle incoming requests in a Worker environment.
  *
  * @packageDocumentation
- * @module routing.node
+ * @module router.node
  */
 
-export * from 'keywork/routing/common'
-export * from 'keywork/routing/worker'
-import { WorkerRouter } from 'keywork/routing'
+import { WorkerRouter } from 'keywork/router'
 import HTTP from 'keywork/platform/http'
 
 import { IncomingMessage, ServerResponse } from 'http'
@@ -47,8 +45,8 @@ export type ProcessChunkCallback = (chunkResult: ReadableStreamDefaultReadResult
  *
  * ```ts
  * import * as http from 'node:http'
- * import { WorkerRouter } from 'keywork/routing'
- * import { respondWithRouter } from 'keywork/routing/node'
+ * import { WorkerRouter } from 'keywork/router'
+ * import { respondWithRouter } from 'keywork/router/node'
  *
  * const router = new WorkerRouter()
  * http.createServer((req, res) => {
@@ -94,8 +92,8 @@ export async function respondWithRouter(
  *
  * ```ts
  * import * as http from 'node:http'
- * import { WorkerRouter } from 'keywork/routing'
- * import { createServerHandler } from 'keywork/routing/node'
+ * import { WorkerRouter } from 'keywork/router'
+ * import { createServerHandler } from 'keywork/router/node'
  *
  * const router = new WorkerRouter()
  * http.createServer(createServerHandler(router))

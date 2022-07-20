@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { RouteRequestHandler } from 'keywork/routing/common'
+import { RouteRequestHandler } from 'keywork/router/route'
 import { PrefixedLogger } from 'keywork/utilities'
 import HTTP from 'keywork/platform/http'
 

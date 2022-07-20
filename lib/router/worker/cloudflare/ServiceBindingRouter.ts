@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { WorkerEnvFetchBinding } from 'keywork/bindings'
-import { ErrorResponse } from 'keywork/responses'
-import { RouteRequestHandler } from 'keywork/routing/common'
-import { WorkerRouter, WorkerRouterOptions } from 'keywork/routing/worker'
+import type { WorkerEnvFetchBinding } from 'keywork/bindings'
+import { ErrorResponse } from 'keywork/response'
+import type { RouteRequestHandler } from 'keywork/router/route'
+import { WorkerRouter, WorkerRouterOptions } from 'keywork/router/worker'
 
 // TODO This may do better as a RouteRequestHandler
 

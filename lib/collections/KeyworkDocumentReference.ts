@@ -17,7 +17,11 @@ import { convertJSONToETaggableString, generateETag } from 'keywork/caching'
 import { KeyworkResourceError } from 'keywork/errors'
 import type { KVNamespace } from 'keywork/kv'
 import { resolvePathSegments } from 'keywork/uri'
-import type { DeserializationTransformers, DeserializationTypes, PutOrPatchOptions } from './common.ts'
+import type {
+  DeserializationTransformers,
+  DeserializationTypes,
+  PutOrPatchOptions,
+} from './KeyworkCollection/common.ts'
 import type { KeyworkCollection } from './KeyworkCollection.ts'
 import {
   generateDocumentMetadata,
@@ -174,7 +178,7 @@ export class KeyworkDocumentReference<
     nextValue: Partial<E>,
     options?: PutOrPatchOptions,
     snapshot?: KeyworkDocumentSnapshot<E>,
-    deepMergeOptions?: deepmerge.Options
+    deepMergeOptions?: any
   ) {
     const deserializeAs = _parseValueTypeInfo(nextValue)
 

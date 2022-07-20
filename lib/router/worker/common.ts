@@ -12,10 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ReactRendererOptions } from 'keywork/react/common'
-import { KeyworkFetcher } from 'keywork/routing/common'
-import { KeyworkSessionOptions } from 'keywork/sessions'
-import type { WorkerRouter } from './WorkerRouter.ts'
+import type { ReactRendererOptions } from 'keywork/react/common'
+import type { KeyworkFetcher } from 'keywork/router/middleware'
+import type { KeyworkSessionOptions } from 'keywork/session'
 
 /**
  * Middleware declaration in the convenient shape of `Map`'s constructor parameters.
@@ -25,7 +24,7 @@ import type { WorkerRouter } from './WorkerRouter.ts'
  */
 export type MiddlewareDeclaration<PathPatternPrefix extends string = string> = readonly [
   PathPatternPrefix,
-  WorkerRouter<any> | KeyworkFetcher<any>
+  KeyworkFetcher<any>
 ]
 
 /**
@@ -58,7 +57,7 @@ export interface WorkerRouterOptions {
 }
 
 /** @ignore */
-export type MiddlewareDeclarationLike = WorkerRouter<any> | MiddlewareDeclaration
+export type MiddlewareDeclarationLike = KeyworkFetcher<any> | MiddlewareDeclaration
 
 /**
  * Utility function for parsing middleware options.

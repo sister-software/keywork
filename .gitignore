@@ -19,6 +19,8 @@ api-extractor/temp
 .cache-loader
 import_map.node.json
 import_map.worker.json
+cov.lcov
+cov/
 
 # Misc
 .DS_Store

@@ -13,19 +13,14 @@
  */
 
 /**
- * ### `keywork/routing`
+ * ### `keywork/router/worker`
  *
  * Everything you need to handle incoming requests in a Worker environment.
  *
- * - Server-side rendering from your worker, made even faster with streamed responses.
- * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
- *
  * @packageDocumentation
- * @module routing.common
+ * @module router.worker
  */
 
-export * from './fetcher.ts'
-export * from './http.ts'
-export * from './middleware.ts'
-export * from './request.ts'
-export * from './RouteRequestHandler.ts'
+export * from './common.ts'
+export * from './RedirectHandler.ts'
+export * from './WorkerRouter.ts'

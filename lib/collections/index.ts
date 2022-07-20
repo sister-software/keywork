@@ -25,7 +25,6 @@
  * @module collections
  */
 
-export * from './common.ts'
 export * from './KeyworkCollection.ts'
 export * from './KeyworkCollection/common.ts'
 export * from './KeyworkDatabase.ts'

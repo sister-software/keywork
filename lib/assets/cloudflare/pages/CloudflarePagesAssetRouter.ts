@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ServiceBindingRouter } from 'keywork/routing/worker/cloudflare'
+import { ServiceBindingRouter } from 'keywork/router/worker/cloudflare'
 
 /**
  * An asset environment binding available within Cloudflare Pages.

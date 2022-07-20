@@ -36,8 +36,6 @@ export class JSXResponse extends CachableResponse {
     /**
      * JSX elements containing only the current page's relevant content.
      * `JSXResponse` will automatically stream content to the browser.
-     *
-     * @see {GetStaticProps}
      */
     jsx: React.ReactElement,
     reactRenderOptions?: ReactRendererOptions,

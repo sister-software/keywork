@@ -13,7 +13,7 @@
  */
 
 import type { KVNamespace } from 'keywork/kv'
-import { DeserializationTypes } from './common.ts'
+import { DeserializationTypes } from './KeyworkCollection/common.ts'
 import { KeyworkCollection } from './KeyworkCollection.ts'
 import { KeyworkDocumentReference } from './KeyworkDocumentReference.ts'
 

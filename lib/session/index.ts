@@ -13,15 +13,11 @@
  */
 
 /**
- * ### `keywork/routing/worker`
+ * ### `keywork/session`
  *
- * Everything you need to handle incoming requests in a Worker environment.
+ * Session management to aid in authenticating users.
  *
  * @packageDocumentation
- * @module routing.worker
+ * @module sessions
  */
-
-export * from 'keywork/routing/common'
-export * from './common.ts'
-export * from './RedirectHandler.ts'
-export * from './WorkerRouter.ts'
+export * from './KeyworkSession.ts'

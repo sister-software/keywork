@@ -13,11 +13,12 @@
  */
 
 /**
- * ### `keywork/sessions` (beta)
+ * ### `keywork/router/cloudflare`
  *
- * Session management to aid in authenticating users.
+ * Routing utilities exclusive to Cloudflare Workers
  *
  * @packageDocumentation
- * @module sessions
+ * @module router.worker.cloudflare
  */
-export * from './KeyworkSession.ts'
+
+export * from './ServiceBindingRouter.ts'

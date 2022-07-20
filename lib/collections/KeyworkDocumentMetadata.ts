@@ -15,7 +15,7 @@
 import { ETaggable } from 'keywork/caching'
 import isPlainObject from 'lodash.isplainobject'
 import { ulid } from 'ulidx'
-import type { DeserializationTransformers, PutOrPatchOptions } from './common.ts'
+import type { DeserializationTransformers, PutOrPatchOptions } from './KeyworkCollection/common.ts'
 
 export interface CreateKeyworkDocumentMetadataOptions {
   /** A POSIX-style, absolute path to a document. */

@@ -12,12 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KeyworkSession } from 'keywork/sessions'
+import type { KeyworkSession } from 'keywork/session'
 import type { PathMatch } from 'keywork/uri'
-import type { MiddlewareFetch } from './middleware.ts'
 import HTTP from 'keywork/platform/http'
-import { CloudflareWorkerEventContext, WaitUntilCallback } from 'keywork/routing/worker/cloudflare'
-import { RouteMatch } from './RouteRequestHandler.ts'
+import { WaitUntilCallback } from './cloudflare/index.ts'
 
 /**
  * Additional data associated with the `IncomingRequestEvent`.
@@ -59,8 +57,7 @@ export interface IncomingRequestEvent<
   BoundAliases extends {} | null = null,
   ExpectedParams extends {} | null = null,
   Data extends Record<string, unknown> = Record<string, unknown>
-> extends CloudflareWorkerEventContext<BoundAliases>,
-    PathMatch<ExpectedParams> {
+> extends PathMatch<ExpectedParams> {
   /**
    * The incoming request received by the Worker.
    *
@@ -82,13 +79,14 @@ export interface IncomingRequestEvent<
   session: KeyworkSession | null
 
   /**
-   * When invoked, will execute a route handler defined after the current.
-   *
-   * @remarks
-   * This is similar to Express.js Middleware.
-   * Providing a request argument will override the path param parsing within `WorkerRouter`.
+   * Extends the lifetime of the route handler even after a `Response` is sent to a client.
    */
-  next: MiddlewareFetch<BoundAliases>
+  readonly waitUntil: WaitUntilCallback
+
+  /**
+   * The bound environment aliases, usually defined in your wrangler.toml file.
+   */
+  readonly env: BoundAliases
 
   /**
    * Optional extra data to be passed to a route handler.
@@ -103,14 +101,6 @@ export interface IncomingRequestEvent<
  */
 export function isIncomingRequestEvent(eventLike: unknown): eventLike is IncomingRequestEvent {
   return Boolean(eventLike && typeof eventLike === 'object' && IncomingRequestEventObjectName in eventLike)
-}
-
-export interface NormalizedRequestArgs<BoundAliases extends {} | null = null> {
-  request: globalThis.Request
-  originalURL: URL
-  env: BoundAliases
-  waitUntil: WaitUntilCallback
-  matchedRoutes: RouteMatch<any>[]
 }
 
 /**

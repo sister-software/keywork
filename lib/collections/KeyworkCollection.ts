@@ -15,8 +15,11 @@
 import { KeyworkResourceError } from 'keywork/errors'
 import type { KVNamespace } from 'keywork/kv'
 import { PathBuilder, resolvePathSegments } from 'keywork/uri'
-import type { DeserializationTypes } from './common.ts'
-import type { CollectionDocumentReferencesResponse, FetchListOptions } from './KeyworkCollection/common.ts'
+import type {
+  DeserializationTypes,
+  CollectionDocumentReferencesResponse,
+  FetchListOptions,
+} from './KeyworkCollection/common.ts'
 import {
   COLLECTION_INDEX_PREFIXES,
   COLLECTION_KEY,

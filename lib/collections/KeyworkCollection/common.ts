@@ -12,8 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { DeserializationTypes } from '../common.ts'
 import type { KeyworkDocumentReference } from '../KeyworkDocumentReference.ts'
+
+export interface PutOrPatchOptions {
+  expiration?: number
+  expirationTtl?: number
+}
+
+export type DeserializationTransformers = 'text' | 'json' | 'arrayBuffer' | 'stream'
+
+export type DeserializationTypes = string | ArrayBuffer | typeof globalThis.ReadableStream
 
 export interface KVNamespaceListOptions {
   limit?: number

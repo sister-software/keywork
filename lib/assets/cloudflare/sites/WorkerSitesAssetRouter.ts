@@ -17,8 +17,8 @@ import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
 import { Status } from 'deno/http/http_status'
 import { KeyworkResourceError } from 'keywork/errors'
 import type { KVNamespace } from 'keywork/kv'
-import { ErrorResponse } from 'keywork/responses'
-import { RouteRequestHandler, WorkerRouter } from 'keywork/routing/worker'
+import { ErrorResponse } from 'keywork/response'
+import { RouteRequestHandler, WorkerRouter } from 'keywork/router/worker'
 
 /**
  * An asset environment binding available within Cloudflare Pages.

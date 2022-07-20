@@ -18,7 +18,8 @@
     "build": "deno run -A scripts/build-dist.ts",
     "build:docs": "cd site && npm run build",
     "build:all": "npm run build && npm run build:docs",
-    "test": "deno test lib",
+    "test": "deno test --coverage=./cov lib",
+    "test:coverage": "deno coverage --lcov ./cov",
     "test:node": "jest"
   },
   "dependencies": {

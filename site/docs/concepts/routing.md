@@ -56,7 +56,7 @@ Examples are always written with type annotations, but they can be omitted if yo
 Building an app with Keywork starts creating a [`WorkerRouter`](/api/classes/routing-worker.WorkerRouter):
 
 ```ts title=_worker.ts showLineNumbers
-import { WorkerRouter } from 'keywork/routing'
+import { WorkerRouter } from 'keywork/router'
 
 // Create a router to receive all incoming requests...
 const app = new WorkerRouter()
@@ -68,7 +68,7 @@ Much like Express.js, we can define route handlers by invoking methods on `app` 
 In our small example, we only need to define a single route handler:
 
 ```ts title=_worker.ts showLineNumbers
-import { WorkerRouter } from 'keywork/routing'
+import { WorkerRouter } from 'keywork/router'
 
 // Create a router to receive all incoming requests...
 const app = new WorkerRouter()
@@ -110,7 +110,7 @@ And in this example, we use `event.request.url` to parse the URL from whence the
 ## Exporting the router
 
 ```ts title=_worker.ts showLineNumbers
-import { WorkerRouter } from 'keywork/routing'
+import { WorkerRouter } from 'keywork/router'
 
 // Create a router to receive all incoming requests...
 const app = new WorkerRouter()
@@ -147,7 +147,7 @@ And since we've already demostrated how to send plaintext,
 Let's illustrate this feature by adding a JSON endpoint to our router:
 
 ```ts title=_worker.ts showLineNumbers
-import { WorkerRouter } from 'keywork/routing'
+import { WorkerRouter } from 'keywork/router'
 
 const app = new WorkerRouter()
 

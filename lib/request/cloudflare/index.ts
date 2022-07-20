@@ -13,6 +13,15 @@
  */
 
 /**
+ * ### `keywork/request/cloudflare`
+ *
+ * Request utilities exclusive to Cloudflare Workers
+ *
+ * @packageDocumentation
+ * @module request.cloudflare
+ */
+
+/**
  * Extends the lifetime of the route handler even after a `Response` is sent to a client.
  */
 export type WaitUntilCallback = (
@@ -22,12 +31,16 @@ export type WaitUntilCallback = (
   nonBlockingTask: Promise<any>
 ) => void
 
-export interface CloudflareWorkerEventContext<BoundAliases extends {} | null = null> {
+export interface CloudflareWorkerEventContext {
   /**
    * Extends the lifetime of the route handler even after a `Response` is sent to a client.
    */
   readonly waitUntil: WaitUntilCallback
-  readonly env: BoundAliases
+}
+
+/** @internal */
+export const eventContextStub: CloudflareWorkerEventContext = {
+  waitUntil: () => Promise.resolve(),
 }
 
 /**
@@ -67,5 +80,5 @@ export type CloudflareWorkerRequestHandler<BoundAliases extends {} | null = null
    * @remarks
    * `passThroughOnException` is not available as it does not apply to Cloudflare Pages
    */
-  context?: CloudflareWorkerEventContext<BoundAliases>
+  context?: CloudflareWorkerEventContext
 ) => Promise<globalThis.Response> | globalThis.Response

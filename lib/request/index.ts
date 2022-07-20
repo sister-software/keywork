@@ -12,11 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export interface PutOrPatchOptions {
-  expiration?: number
-  expirationTtl?: number
-}
+/**
+ * ### `keywork/router`
+ *
+ * Everything you need to handle incoming requests in a Worker environment.
+ *
+ * - Server-side rendering from your worker, made even faster with streamed responses.
+ * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
+ *
+ * @packageDocumentation
+ * @module router.common
+ */
 
-export type DeserializationTransformers = 'text' | 'json' | 'arrayBuffer' | 'stream'
-
-export type DeserializationTypes = string | ArrayBuffer | typeof globalThis.ReadableStream
+export * from './events.ts'
