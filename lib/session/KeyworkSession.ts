@@ -14,6 +14,7 @@
 
 import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'cookie'
 import { ulid } from 'keywork/ids'
+import { CookieHeaders } from 'keywork/headers'
 
 /**
  * The default session cookie key.
@@ -94,7 +95,7 @@ export class KeyworkSession {
     if (typeof requestOrSessionID === 'string') {
       sessionID = requestOrSessionID
     } else {
-      const cookies = parseCookies(requestOrSessionID.headers.get('Cookie') || '')
+      const cookies = parseCookies(requestOrSessionID.headers.get(CookieHeaders.Read) || '')
       sessionID = cookies[this.cookieKey]
     }
 
@@ -111,6 +112,6 @@ export class KeyworkSession {
    * @ignore
    */
   public _assignSessionHeaders(headers: globalThis.Headers) {
-    headers.set('Set-Cookie', serializeCookies(this.cookieKey, this.sessionID, this.serializeOptions))
+    headers.set(CookieHeaders.Set, serializeCookies(this.cookieKey, this.sessionID, this.serializeOptions))
   }
 }

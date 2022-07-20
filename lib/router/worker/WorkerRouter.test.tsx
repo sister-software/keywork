@@ -13,7 +13,7 @@
  */
 
 import { Status } from 'deno/http/http_status'
-import { assertEquals, assertExists, assertObjectMatch, assert, assertStringIncludes } from 'deno/testing/asserts'
+import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } from 'deno/testing/asserts'
 import { WorkerRouter } from 'keywork/router/worker'
 import HTTP from 'keywork/platform/http'
 import { JSONResponse } from 'keywork/response'

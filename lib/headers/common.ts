@@ -20,6 +20,14 @@ export const KeyworkHeaders = {
 }
 
 /**
+ * @internal
+ */
+export const CookieHeaders = {
+  Set: 'Set-Cookie',
+  Read: 'Cookie',
+} as const
+
+/**
  * Merges the given source headers into the destination.
  *
  * @remarks
