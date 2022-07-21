@@ -12,6 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { KeyworkResourceError, Status } from 'keywork/errors'
+
 /**
  * ### `keywork/request/cloudflare`
  *
@@ -21,26 +23,66 @@
  * @module request.cloudflare
  */
 
-/**
- * Extends the lifetime of the route handler even after a `Response` is sent to a client.
- */
-export type WaitUntilCallback = (
-  /**
-   * The given promise argument will inform the Workers runtime to stay alive until the task completes.
-   */
-  nonBlockingTask: Promise<any>
-) => void
+const kWaitUntil = Symbol('kWaitUntil')
 
-export interface CloudflareWorkerEventContext {
+/**
+ * An approximate implementation of Cloudflare's Fetch event.
+ *
+ * @see {@link https://miniflare.dev/core/fetch Miniflare's Fetch Documentation}
+ * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event Cloudflare's API Reference}
+ * @internal
+ */
+export class CloudflareFetchEvent extends Event {
+  readonly [kWaitUntil]: Promise<unknown>[] = []
+
+  constructor(protected readonly request: globalThis.Request) {
+    super('fetch')
+  }
+
+  /**
+   * @deprecated Not supported within Keywork.
+   */
+  public respondWith(_response: never): void {
+    throw new KeyworkResourceError(
+      `CloudflareFetchEvent#respondWith is not supported within Keywork`,
+      Status.NotImplemented
+    )
+  }
+
+  /**
+   * @deprecated Not supported within Keywork.
+   */
+  public passThroughOnException(): void {
+    throw new KeyworkResourceError(
+      `CloudflareFetchEvent#passThroughOnException is not supported within Keywork`,
+      Status.NotImplemented
+    )
+  }
+
   /**
    * Extends the lifetime of the route handler even after a `Response` is sent to a client.
    */
-  readonly waitUntil: WaitUntilCallback
-}
 
-/** @internal */
-export const eventContextStub: CloudflareWorkerEventContext = {
-  waitUntil: () => Promise.resolve(),
+  public waitUntil(
+    this: CloudflareFetchEvent,
+    /**
+     * The given promise argument will inform the Workers runtime to stay alive until the task completes.
+     */
+    nonBlockingTask: Promise<any>
+  ): void {
+    if (!(this instanceof CloudflareFetchEvent)) {
+      throw new KeyworkResourceError(
+        '`waitUntil` must be invoked as a member of `CloudflareFetchEvent`',
+        Status.InternalServerError
+      )
+    }
+
+    this[kWaitUntil].push(Promise.resolve(nonBlockingTask))
+  }
+
+  public async flushTasks(this: CloudflareFetchEvent): Promise<void> {
+    await Promise.all(this[kWaitUntil])
+  }
 }
 
 /**
@@ -80,5 +122,5 @@ export type CloudflareWorkerRequestHandler<BoundAliases extends {} | null = null
    * @remarks
    * `passThroughOnException` is not available as it does not apply to Cloudflare Pages
    */
-  context?: CloudflareWorkerEventContext
+  runtimeFetchEvent?: CloudflareFetchEvent
 ) => Promise<globalThis.Response> | globalThis.Response

@@ -13,13 +13,41 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { IReactStreamRenderer, ReactDOMServerReadableStream } from 'keywork/react/common'
-import { renderToNodeStream } from 'react-dom/server'
+import { IReactStreamRenderer } from 'keywork/react/common'
+import { renderToPipeableStream, ReactDOMServerReadableStream, PipeableStream } from 'react-dom/server'
+
+/**
+ * @ignore
+ */
+export class PipeableStreamWrapper implements ReactDOMServerReadableStream {
+  allReady = Promise.resolve()
+  locked = false
+
+  constructor(public stream: PipeableStream) {}
+  cancel(_reason?: any): Promise<void> {
+    return Promise.resolve(this.stream.abort())
+  }
+  getReader(): ReadableStreamDefaultReader<any> {
+    throw new Error('Method not implemented.')
+  }
+  pipeThrough<T>(
+    _transform: ReadableWritablePair<T, any>,
+    _options?: StreamPipeOptions | undefined
+  ): globalThis.ReadableStream<T> {
+    throw new Error('Method not implemented.')
+  }
+  pipeTo(destination: globalThis.WritableStream<any>, _options?: StreamPipeOptions | undefined): Promise<void> {
+    this.stream.pipe(destination)
+    return Promise.resolve()
+  }
+  tee(): [globalThis.ReadableStream<any>, globalThis.ReadableStream<any>] {
+    throw new Error('Method not implemented.')
+  }
+}
 
 export const renderReactStream: IReactStreamRenderer = (children) => {
   try {
-    const stream = renderToNodeStream(children) as unknown as ReactDOMServerReadableStream
-    stream.allReady = Promise.resolve()
+    const stream = new PipeableStreamWrapper(renderToPipeableStream(children))
 
     return Promise.resolve({
       stream,

@@ -83,6 +83,25 @@ Deno.test('Router parses URL parameters', async () => {
   assertEquals(body, { firstName: 'jessie', lastName: 'james' }, 'Params are parsed')
 })
 
+Deno.test('Router renders JSX', async () => {
+  const app = new WorkerRouter({
+    displayName: 'JSX Tester Router',
+  })
+
+  // Declaring a route that returns a React element...
+  app.get('/', () => {
+    return (
+      <div>
+        <h1>JSX Test</h1>
+      </div>
+    )
+  })
+
+  const response = await app.fetch(new HTTP.Request('http://localhost/'))
+  assertEquals(response.status, Status.OK)
+  assertStringIncludes(await response.text(), `<div><h1>JSX Test</h1></div>`, 'Body includes rendered JSX')
+})
+
 Deno.test('Router supports middleware', async () => {
   const HelloWorldRouter = new WorkerRouter({
     displayName: 'Hello World Router',
@@ -113,7 +132,15 @@ Deno.test('Router supports middleware', async () => {
     ],
   })
 
-  const rootResponse = await app.fetch(new HTTP.Request('http://localhost/'))
-  assertEquals(rootResponse.status, Status.OK)
-  assertStringIncludes(await rootResponse.text(), `<h1>Hello there!</h1>`, 'Body includes default content')
+  const simpleResponse = await app.fetch(new HTTP.Request('http://localhost/'))
+  assertEquals(simpleResponse.status, Status.OK)
+  assertStringIncludes(await simpleResponse.text(), `<h1>Hello there!</h1>`, 'Body includes default content')
+
+  const greeting = `Hello at ${new Date().toJSON()}`
+  const url = new URL('http://localhost')
+  url.searchParams.set('greeting', greeting)
+  const responseWithQuery = await app.fetch(new HTTP.Request(url))
+
+  assertEquals(responseWithQuery.status, Status.OK)
+  assertStringIncludes(await responseWithQuery.text(), `<h1>${greeting}</h1>`, 'Body includes query params')
 })

@@ -12,8 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from 'deno/http/http_status'
+import { Status, STATUS_TEXT } from 'deno/http/http_status'
 import { ErrorJSONBody } from './common.ts'
+export { Status, STATUS_TEXT }
 
 /**
  * Used in place of the reference-sensitive `instanceof`

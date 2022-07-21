@@ -27,6 +27,8 @@ import { WorkerRouter } from 'keywork/router'
 import HTTP from 'keywork/platform/http'
 
 import { IncomingMessage, ServerResponse } from 'http'
+import { CloudflareFetchEvent } from 'keywork/request/cloudflare'
+import { readGlobalScope } from '../../polyfills/platform/index.ts'
 
 // const { IncomingMessage, ServerResponse } = await import('node:' + 'http')
 
@@ -56,13 +58,15 @@ export type ProcessChunkCallback = (chunkResult: ReadableStreamDefaultReadResult
  * @see {createServerHandler}
  * @beta Node support is currently experimental and may change in the near future.
  */
-export async function respondWithRouter(
-  router: WorkerRouter,
+export async function respondWithRouter<BoundAliases extends {} | null = null>(
+  router: WorkerRouter<BoundAliases>,
   nodeRequest: IncomingMessage,
   nodeResponse: ServerResponse
 ): Promise<void> {
   const request = new HTTP.Request(nodeRequest.url || 'http://0.0.0.0', nodeRequest as unknown as RequestInit)
-  const response = await router.fetch(request)
+  const runtimeFetchEvent = new CloudflareFetchEvent(request)
+
+  const response = await router.fetch(request, readNodeEnv<BoundAliases>(), runtimeFetchEvent)
 
   nodeResponse.statusCode = response.status
   nodeResponse.statusMessage = response.statusText
@@ -83,6 +87,8 @@ export async function respondWithRouter(
 
     await reader.read().then(processChunk)
   }
+
+  await runtimeFetchEvent.flushTasks()
 }
 
 /**
@@ -102,6 +108,14 @@ export async function respondWithRouter(
  * @see {respondWithRouter}
  * @beta Node support is currently experimental and may change in the near future.
  */
-export function createServerHandler(router: WorkerRouter): ServerHandler {
-  return (req, res) => respondWithRouter(router, req, res)
+export function createServerHandler<BoundAliases extends {} | null = null>(
+  router: WorkerRouter<BoundAliases>
+): ServerHandler {
+  return (req, res) => respondWithRouter<BoundAliases>(router, req, res)
+}
+
+function readNodeEnv<BoundAliases extends {} | null = null>(): BoundAliases {
+  const globalScope = readGlobalScope()
+
+  return (globalScope as any).process?.env || null
 }

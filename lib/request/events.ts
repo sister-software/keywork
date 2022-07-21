@@ -15,7 +15,7 @@
 import type { KeyworkSession } from 'keywork/session'
 import type { PathMatch } from 'keywork/uri'
 import HTTP from 'keywork/platform/http'
-import { WaitUntilCallback } from './cloudflare/index.ts'
+import { CloudflareFetchEvent } from './cloudflare/index.ts'
 
 /**
  * Additional data associated with the `IncomingRequestEvent`.
@@ -81,7 +81,7 @@ export interface IncomingRequestEvent<
   /**
    * Extends the lifetime of the route handler even after a `Response` is sent to a client.
    */
-  readonly waitUntil: WaitUntilCallback
+  readonly runtimeFetchEvent: CloudflareFetchEvent
 
   /**
    * The bound environment aliases, usually defined in your wrangler.toml file.

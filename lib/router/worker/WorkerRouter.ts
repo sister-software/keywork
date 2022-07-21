@@ -30,7 +30,7 @@ import type { ParsedRoute, RouteMatch, RouteRequestHandler } from 'keywork/route
 import { KeyworkSession, KeyworkSessionOptions } from 'keywork/session'
 import { compilePath, matchPathPrecompiled, normalizePathPattern, PathPattern } from 'keywork/uri'
 import { Disposable, findSubstringStartOffset, PrefixedLogger } from 'keywork/utilities'
-import { eventContextStub } from 'keywork/request/cloudflare'
+import { CloudflareFetchEvent } from 'keywork/request/cloudflare'
 import { isMiddlewareDeclarationOption, WorkerRouterOptions } from './common.ts'
 
 /**
@@ -124,6 +124,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       // Likely a `RouteRequestHandler`...
       const fetch: RouteRequestHandler<BoundAliases, any, any, globalThis.Response> = async (event, next) => {
         const responseLike = await fetcherLike(event, next)
+
         const response = convertToResponse(responseLike, this.reactOptions)
 
         mergeHeaders(response.headers, this._createDefaultHeaders(event))
@@ -494,7 +495,13 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    *
    * @public
    */
-  fetch: MiddlewareFetch<BoundAliases> = async (request, env, eventContext = eventContextStub, next, matchedRoutes) => {
+  fetch: MiddlewareFetch<BoundAliases> = async (
+    request,
+    env,
+    runtimeFetchEvent = new CloudflareFetchEvent(request),
+    next,
+    matchedRoutes
+  ): Promise<globalThis.Response> => {
     const normalizedMethodVerb = methodVerbToRouterMethod.get(request.method as HTTPMethod)
 
     if (!normalizedMethodVerb) {
@@ -508,6 +515,10 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     if (!matchedRoutes) {
       // Given the current URL, attempt to find a matching route handler...
       matchedRoutes = this.match<BoundAliases>(routes, requestURL.pathname)
+    }
+
+    if (!matchedRoutes.length) {
+      return null as any
     }
 
     const [{ match, parsedRoute }, ...fallbackRoutes] = matchedRoutes
@@ -530,19 +541,19 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     next =
       next ||
       ((
-        _request,
+        _request = request,
         _env = env,
-        _eventContext = eventContext,
-        _next = this.terminateMiddleware,
+        _runtimeFetchEvent = runtimeFetchEvent,
+        _next = this.fetch as any,
         _matchedRoutes = fallbackRoutes
       ) => {
-        return _next(request, _env, _eventContext, this.terminateMiddleware)
+        return _next(request, _env, _runtimeFetchEvent, this.terminateMiddleware, _matchedRoutes)
       })
 
     const session = this.session.enabled ? new KeyworkSession(request, this.session.options) : null
     const event: IncomingRequestEvent<BoundAliases, any, any> = {
       env: env!,
-      waitUntil: eventContext.waitUntil,
+      runtimeFetchEvent,
       session,
       request,
       originalURL,
@@ -557,9 +568,9 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     )
     try {
       if (parsedRoute.kind === 'routeHandler') {
-        response = await parsedRoute.fetch(event, next as MiddlewareFetch)
+        response = await parsedRoute.fetch(event, next as any)
       } else {
-        response = await parsedRoute.fetcher.fetch(request, env, eventContext, next)
+        response = await parsedRoute.fetcher.fetch(request, env, runtimeFetchEvent, next)
       }
     } catch (error) {
       this.logger.error(error)
@@ -570,7 +581,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       )
     }
 
-    return response || next(request, env, eventContext, this.terminateMiddleware) || this.terminateMiddleware()
+    return response || (await next()) || this._createHTTPError(Status.NotFound)
   }
 
   /**
@@ -606,7 +617,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   }
 
   protected terminateMiddleware = () => {
-    return this._createHTTPError(Status.NotFound)
+    return Promise.resolve(this._createHTTPError(Status.Teapot))
   };
 
   //#endregion

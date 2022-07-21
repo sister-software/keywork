@@ -18,11 +18,12 @@ import { KeyworkResourceError } from 'keywork/errors'
 /**
  * @internal
  */
-export function getGlobalScope(): typeof globalThis {
+export function readGlobalScope(this: any): typeof globalThis {
   if (typeof globalThis !== 'undefined') return globalThis
   if (typeof window !== 'undefined') return window
   if (typeof self !== 'undefined') return self
   if (typeof global !== 'undefined') return global
+  if (typeof this !== 'undefined') return this
 
   throw new KeyworkResourceError('Could not identify global scope', Status.FailedDependency)
 }
@@ -49,13 +50,13 @@ async function fetchCachedModule<ModuleExports extends {}>(moduleID: string | UR
  *
  * @internal
  * @param fallbackModuleID e.g. 'node:stream', 'undici'
- * @param moduleExports Object containing classes by their constructor names.
+ * @param exportNames Object containing classes by their constructor names.
  */
 export async function polyfillWithModule<ModuleExports extends {}>(
   fallbackModuleID: string | URL,
   exportNames: (keyof ModuleExports)[]
 ): Promise<ModuleExports> {
-  const globalScope = getGlobalScope()
+  const globalScope = readGlobalScope()
   const moduleExports = {} as ModuleExports
 
   for (const exportName of exportNames) {
@@ -67,9 +68,9 @@ export async function polyfillWithModule<ModuleExports extends {}>(
 
     const externalFallbackModule = await fetchCachedModule<ModuleExports>(fallbackModuleID)
 
-    const thing = externalFallbackModule![exportName]
+    const fallbackModuleExports = externalFallbackModule![exportName]
 
-    if (!thing) {
+    if (!fallbackModuleExports) {
       throw new KeyworkResourceError(
         `\`${String(exportName)}\` is neither the runtime's global scope,
       nor is it in the fallback module ${fallbackModuleID}. This app likely needs a polyfill.`,
@@ -77,7 +78,7 @@ export async function polyfillWithModule<ModuleExports extends {}>(
       )
     }
 
-    moduleExports[exportName] = thing!
+    moduleExports[exportName] = fallbackModuleExports!
   }
 
   return moduleExports
