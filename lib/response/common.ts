@@ -14,11 +14,10 @@
 
 import { Status } from 'deno/http/http_status'
 import { KeyworkResourceError } from 'keywork/errors'
-import type { ReactRendererOptions } from 'keywork/react/common'
+import { ReactRendererOptions, renderJSXToStream } from 'keywork/react/common'
 import { ErrorResponse } from './ErrorResponse.ts'
 import { HTMLResponse } from './HTMLResponse.ts'
 import { JSONResponse } from './JSONResponse.ts'
-import { JSXResponse } from './JSXResponse.ts'
 import { isValidElement } from 'react'
 import HTTP from 'keywork/platform/http'
 import Stream from 'keywork/platform/stream'
@@ -43,10 +42,10 @@ export function isInstanceOfResponse(responsish: unknown): responsish is globalT
  * @throws {KeyworkResourceError}
  * @public
  */
-export function convertToResponse(
+export async function castToResponse(
   responseLike: ResponseLike,
   reactRenderOptions?: ReactRendererOptions
-): globalThis.Response {
+): Promise<globalThis.Response> {
   if (isInstanceOfResponse(responseLike)) {
     return responseLike
   }
@@ -73,7 +72,8 @@ export function convertToResponse(
   }
 
   if (isValidElement(responseLike)) {
-    return new JSXResponse(responseLike, reactRenderOptions)
+    const stream = await renderJSXToStream(responseLike, reactRenderOptions)
+    return new HTMLResponse(stream)
   }
 
   if (typeof responseLike === 'object') {

@@ -22,9 +22,8 @@
  */
 
 export * from './CachableResponse.ts'
-export * from './convert.ts'
+export * from './common.ts'
 export * from './ErrorResponse.ts'
 export * from './HTMLResponse.ts'
 export * from './JSONResponse.ts'
-export * from './JSXResponse.ts'
 export * from './NotModifiedResponse.ts'

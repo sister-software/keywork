@@ -23,7 +23,7 @@ import HTTP, {
 } from 'keywork/platform/http'
 import { ReactRendererOptions } from 'keywork/react/common'
 import { renderReactStream } from 'keywork/react/worker'
-import { convertToResponse, ErrorResponse } from 'keywork/response'
+import { castToResponse, ErrorResponse } from 'keywork/response'
 import type { IncomingRequestEvent, IncomingRequestEventData } from 'keywork/request'
 import { isKeyworkFetcher, KeyworkFetcher, MiddlewareFetch } from 'keywork/router/middleware'
 import type { ParsedRoute, RouteMatch, RouteRequestHandler } from 'keywork/router/route'
@@ -124,8 +124,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       // Likely a `RouteRequestHandler`...
       const fetch: RouteRequestHandler<BoundAliases, any, any, globalThis.Response> = async (event, next) => {
         const responseLike = await fetcherLike(event, next)
-
-        const response = convertToResponse(responseLike, this.reactOptions)
+        const response = await castToResponse(responseLike, this.reactOptions)
 
         mergeHeaders(response.headers, this._createDefaultHeaders(event))
 

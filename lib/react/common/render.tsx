@@ -12,33 +12,27 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import {
-  IReactStreamRenderer,
-  ReactRendererOptions,
-  ReactRenderStreamResult,
-  SSRPropsLike,
-  StaticPropsProvider,
-} from 'keywork/react/common'
+import { ReactRendererOptions, ReactRenderStreamResult, SSRPropsLike, StaticPropsProvider } from 'keywork/react/common'
 import { PrefixedLogger } from 'keywork/utilities'
 import React, { ReactElement } from 'react'
+import { ReactDOMServerReadableStream } from 'react-dom/server.browser'
 import { KeyworkHTMLDocument } from './KeyworkHTMLDocument.tsx'
 import { KeyworkProviders } from './KeyworkProvidersComponent.tsx'
 import { _SSRPropsEmbed } from './SSRPropsEmbed.tsx'
-
+import { KeyworkResourceError } from 'keywork/errors'
+import { renderReactStream } from '../worker/stream.ts'
 /**
  * Renders the given React content to an HTML stream.
  * @ignore
  */
-export async function renderToStream<StaticProps extends SSRPropsLike | null = null>(
-  streamRenderer: IReactStreamRenderer,
-  // eslint-disable-next-line no-restricted-globals
-  passThroughStream: TransformStream,
+export async function renderJSXToStream<StaticProps extends SSRPropsLike | null = null>(
   /** The React component to render for this specific page. */
   pageElement: ReactElement<StaticProps>,
   reactRenderOptions?: ReactRendererOptions
-): Promise<void> {
+): Promise<ReactDOMServerReadableStream> {
   const logger = new PrefixedLogger('react Stream Renderer')
 
+  const streamRenderer = reactRenderOptions?.streamRenderer || renderReactStream
   const DocumentComponent = reactRenderOptions?.DocumentComponent || KeyworkHTMLDocument
   const Providers = reactRenderOptions?.Providers || KeyworkProviders
 
@@ -61,17 +55,17 @@ export async function renderToStream<StaticProps extends SSRPropsLike | null = n
     result = await streamRenderer(appDocument)
   } catch (error) {
     logger.error(error)
-    return passThroughStream.readable.cancel(
+    throw new KeyworkResourceError(
       'An runtime error occurred while rendering React. See server logs for additional information.'
     )
   }
 
   if (result.error) {
     logger.error(result.error)
-    return passThroughStream.readable.cancel(
+    throw new KeyworkResourceError(
       'A stream error occurred while rendering React. See server logs for additional information.'
     )
   }
 
-  return result.stream.pipeTo(passThroughStream.writable)
+  return result.stream
 }
