@@ -14,8 +14,7 @@
 
 import type { KeyworkSession } from 'keywork/session'
 import type { PathMatch } from 'keywork/uri'
-import HTTP from 'keywork/platform/http'
-import { CloudflareFetchEvent } from './cloudflare/index.ts'
+import { KeyworkResourceError, Status } from 'keywork/errors'
 
 /**
  * Additional data associated with the `IncomingRequestEvent`.
@@ -23,13 +22,28 @@ import { CloudflareFetchEvent } from './cloudflare/index.ts'
  * @category Request
  * @public
  */
-// deno-lint-ignore no-empty-interface
-export interface IncomingRequestEventData extends Record<string, unknown> {}
+export interface IncomingRequestEventData extends Record<string, unknown> {
+  /**
+   * The original URL associated with the `IncomingRequestEvent`.
+   */
+  session?: KeyworkSession
+}
 
 /**
  * @ignore
  */
 export const IncomingRequestEventObjectName = 'Keywork.IncomingRequestEvent'
+
+/**
+ * ### `keywork/request/cloudflare`
+ *
+ * Request utilities exclusive to Cloudflare Workers
+ *
+ * @packageDocumentation
+ * @module request.cloudflare
+ */
+
+const kWaitUntil = Symbol('kWaitUntil')
 
 /**
  * An event object containing contextual data for a single and specific incoming HTTP request.
@@ -52,62 +66,101 @@ export const IncomingRequestEventObjectName = 'Keywork.IncomingRequestEvent'
  * @category Request
  *
  * @public
+ * An approximate implementation of Cloudflare's Fetch event,
+ *
+ * @see {@link https://miniflare.dev/core/fetch Miniflare's Fetch Documentation}
+ * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event Cloudflare's API Reference}
+ *
  */
-export interface IncomingRequestEvent<
-  BoundAliases extends {} | null = null,
-  ExpectedParams extends {} | null = null,
-  Data extends Record<string, unknown> = Record<string, unknown>
-> extends PathMatch<ExpectedParams> {
-  /**
-   * The incoming request received by the Worker.
-   *
-   * @remarks
-   * Both the request's `url` property and the parent `IncomingRequestEvent` will reflect
-   * the current parsed route handler of `WorkerRouter`.
-   * @see {IncomingRequestEvent#originalURL}
-   */
-  request: globalThis.Request
-
+export class IncomingRequestEvent<BoundAliases = {}, ExpectedParams = {}, Data extends {} = {}> extends Event {
+  readonly [kWaitUntil]: Promise<unknown>[] = []
   /**
    * The original URL associated with the `IncomingRequestEvent`.
    */
-  originalURL: string
+  public originalURL: string
 
-  /**
-   * The original URL associated with the `IncomingRequestEvent`.
-   */
-  session: KeyworkSession | null
+  constructor(
+    /**
+     * The incoming request received by the Worker.
+     *
+     * @remarks
+     * Both the request's `url` property and the parent `IncomingRequestEvent` will reflect
+     * the current parsed route handler of `WorkerRouter`.
+     * @see {IncomingRequestEvent#originalURL}
+     */
+    public request: globalThis.Request,
+
+    /**
+     * The bound environment aliases, usually defined in your wrangler.toml file.
+     */
+    readonly env: BoundAliases = {} as BoundAliases,
+
+    /**
+     * Optional extra data to be passed to a route handler.
+     */
+    public data: Data = {} as Data,
+    /**
+     * The names and values of dynamic parameters in the URL.
+     * Parameters are parsed using the incoming request's URL and the route's pattern.
+     */
+    public params: ExpectedParams = {} as ExpectedParams,
+    public match?: PathMatch<ExpectedParams>
+  ) {
+    super('fetch')
+    this.originalURL = request.url
+  }
 
   /**
    * Extends the lifetime of the route handler even after a `Response` is sent to a client.
    */
-  readonly runtimeFetchEvent: CloudflareFetchEvent
+
+  public waitUntil(
+    this: IncomingRequestEvent<any>,
+    /**
+     * The given promise argument will inform the Workers runtime to stay alive until the task completes.
+     */
+    nonBlockingTask: Promise<any>
+  ): void {
+    if (!(this instanceof IncomingRequestEvent)) {
+      throw new KeyworkResourceError(
+        '`waitUntil` must be invoked as a member of `CloudflareFetchEvent`',
+        Status.InternalServerError
+      )
+    }
+
+    this[kWaitUntil].push(Promise.resolve(nonBlockingTask))
+  }
+
+  public async flushTasks(this: IncomingRequestEvent<any>): Promise<void> {
+    await Promise.all(this[kWaitUntil])
+  }
 
   /**
-   * The bound environment aliases, usually defined in your wrangler.toml file.
+   * @deprecated Not supported within Keywork.
    */
-  readonly env: BoundAliases
+  public respondWith(_response: never): void {
+    throw new KeyworkResourceError(
+      `CloudflareFetchEvent#respondWith is not supported within Keywork`,
+      Status.NotImplemented
+    )
+  }
 
   /**
-   * Optional extra data to be passed to a route handler.
+   * @deprecated Not supported within Keywork.
    */
-  data: Data
-}
+  public passThroughOnException(): void {
+    throw new KeyworkResourceError(
+      `CloudflareFetchEvent#passThroughOnException is not supported within Keywork`,
+      Status.NotImplemented
+    )
+  }
 
-/**
- * Checks if the given object is an instance of `IncomingRequestEvent`
- * @param eventLike An object that's possibly a `IncomingRequestEvent`
- * @category Type Cast
- */
-export function isIncomingRequestEvent(eventLike: unknown): eventLike is IncomingRequestEvent {
-  return Boolean(eventLike && typeof eventLike === 'object' && IncomingRequestEventObjectName in eventLike)
-}
-
-/**
- * Checks if the given object is an instance of `Request`
- * @param requestish An object that's possibly a `Request`
- * @category Type Cast
- */
-export function isInstanceOfRequest(requestish: unknown): requestish is globalThis.Request {
-  return Boolean(requestish instanceof globalThis.Request || requestish instanceof HTTP.Request)
+  /**
+   * Checks if the given object is an instance of `IncomingRequestEvent`
+   * @param eventLike An object that's possibly a `IncomingRequestEvent`
+   * @category Type Cast
+   */
+  public assertIsInstanceOf(eventLike: unknown): eventLike is IncomingRequestEvent {
+    return Boolean(eventLike && typeof eventLike === 'object' && IncomingRequestEventObjectName in eventLike)
+  }
 }

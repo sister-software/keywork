@@ -27,7 +27,7 @@ export interface ParsedRouteBase {
 /**
  * @ignore
  */
-export interface ParsedRouteFromRouteHandler<BoundAliases extends {} | null = null> extends ParsedRouteBase {
+export interface ParsedRouteFromRouteHandler<BoundAliases = {}> extends ParsedRouteBase {
   kind: 'routeHandler'
   fetch: RouteRequestHandler<BoundAliases, any, any, globalThis.Response>
 }
@@ -35,19 +35,19 @@ export interface ParsedRouteFromRouteHandler<BoundAliases extends {} | null = nu
 /**
  * @ignore
  */
-export interface ParsedRouteFromFetcher<BoundAliases extends {} | null = null> extends ParsedRouteBase {
+export interface ParsedRouteFromFetcher<BoundAliases = {}> extends ParsedRouteBase {
   kind: 'fetcher'
   fetcher: KeyworkFetcher<BoundAliases>
 }
 
-export type ParsedRoute<BoundAliases extends {} | null = null> =
+export type ParsedRoute<BoundAliases = {}> =
   | ParsedRouteFromRouteHandler<BoundAliases>
   | ParsedRouteFromFetcher<BoundAliases>
 
 /**
  * @ignore
  */
-export interface RouteMatch<BoundAliases extends {} | null = null, ExpectedParams extends {} | null = null> {
+export interface RouteMatch<BoundAliases = {}, ExpectedParams = {}> {
   match: PathMatch<ExpectedParams>
   parsedRoute: ParsedRoute<BoundAliases>
 }

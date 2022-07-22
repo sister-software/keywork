@@ -12,8 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from 'deno/http/http_status'
-import { KeyworkResourceError } from 'keywork/errors'
+import { KeyworkResourceError, Status } from 'keywork/errors'
 import { PathMatch, PathPattern } from './common.ts'
 import { isRequestLike, isURLLike, RequestLike } from './typeCasting.ts'
 import { matchPath } from './matchPath.ts'

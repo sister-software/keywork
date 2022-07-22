@@ -13,8 +13,8 @@
  */
 /* eslint-disable no-restricted-globals */
 
-import { RouteMatch } from '../route/parsed.ts'
-import type { CloudflareFetchEvent } from 'keywork/request/cloudflare'
+import type { RouteMatch } from '../route/parsed.ts'
+import type { IncomingRequestEvent } from 'keywork/request'
 
 /**
  * A function within the Worker that receives all incoming requests.
@@ -39,10 +39,10 @@ import type { CloudflareFetchEvent } from 'keywork/request/cloudflare'
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  * @category Request
  */
-export type MiddlewareFetch<BoundAliases extends {} | null = null> = (
+export type MiddlewareFetch<BoundAliases = {}> = (
   request: globalThis.Request,
   env?: BoundAliases,
-  runtimeFetchEvent?: CloudflareFetchEvent,
+  event?: IncomingRequestEvent,
   /**
    * When invoked, will execute a route handler defined after the current.
    *
@@ -50,7 +50,7 @@ export type MiddlewareFetch<BoundAliases extends {} | null = null> = (
    * This is similar to Express.js Middleware.
    * Providing a request argument will override the path param parsing within `WorkerRouter`.
    */
-  next?: (...args: Partial<Parameters<MiddlewareFetch<BoundAliases>>>) => Promise<null | Response>,
+  next?: (...args: Partial<Parameters<MiddlewareFetch<BoundAliases>>>) => null | Response | Promise<null | Response>,
   matchedRoutes?: RouteMatch<any>[]
 ) => Promise<Response>
 
@@ -58,7 +58,7 @@ export type MiddlewareFetch<BoundAliases extends {} | null = null> = (
  * @see {WorkerEnvFetchBinding}
  * @see {WorkerRouter#fetch}
  */
-export interface KeyworkFetcher<BoundAliases extends {} | null = null> {
+export interface KeyworkFetcher<BoundAliases = {}> {
   /**
    * A display name used for debugging and log messages.
    * @category Debug
@@ -77,8 +77,6 @@ export interface KeyworkFetcher<BoundAliases extends {} | null = null> {
  * @internal
  * @ignore
  */
-export function isKeyworkFetcher<BoundAliases extends {} | null = null>(
-  fetcherLike: unknown
-): fetcherLike is KeyworkFetcher<BoundAliases> {
+export function isKeyworkFetcher<BoundAliases = {}>(fetcherLike: unknown): fetcherLike is KeyworkFetcher<BoundAliases> {
   return Boolean(fetcherLike && typeof fetcherLike === 'object' && 'fetch' in fetcherLike)
 }

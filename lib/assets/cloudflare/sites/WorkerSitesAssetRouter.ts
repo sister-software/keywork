@@ -14,11 +14,11 @@
 
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
-import { Status } from 'deno/http/http_status'
-import { KeyworkResourceError } from 'keywork/errors'
+import { KeyworkResourceError, Status } from 'keywork/errors'
 import type { KVNamespace } from 'keywork/kv'
 import { ErrorResponse } from 'keywork/response'
-import { RouteRequestHandler, WorkerRouter } from 'keywork/router/worker'
+import { RouteRequestHandler } from 'keywork/router/route'
+import { WorkerRouter } from 'keywork/router/worker'
 
 /**
  * An asset environment binding available within Cloudflare Pages.
@@ -92,18 +92,12 @@ export class WorkerSitesAssetRouter extends WorkerRouter<WorkersSiteStaticConten
 
     this.get('*', this.onRequestGet)
   }
-  public onRequestGet: RouteRequestHandler<WorkersSiteStaticContentBinding> = ({ env, request, waitUntil }) => {
-    if (env.__STATIC_CONTENT) {
-      return getAssetFromKV(
-        {
-          request,
-          waitUntil,
-        },
-        {
-          ASSET_NAMESPACE: env.__STATIC_CONTENT,
-          ASSET_MANIFEST: this.assetManifest,
-        }
-      )
+  public onRequestGet: RouteRequestHandler<WorkersSiteStaticContentBinding> = (event) => {
+    if (event.env.__STATIC_CONTENT) {
+      return getAssetFromKV(event, {
+        ASSET_NAMESPACE: event.env.__STATIC_CONTENT,
+        ASSET_MANIFEST: this.assetManifest,
+      })
     }
 
     return new ErrorResponse(Status.BadRequest)

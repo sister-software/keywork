@@ -29,9 +29,10 @@ export const $ClassID = 'Keywork.KeyworkResourceError'
  * This pairs well with the `http-status` NPM package.
  *
  * @example
- * Check if a user has permission to do some action.
  *
- * ```typescript
+ * ```ts
+ * import { KeyworkResourceError, StatusCodes } from 'keywork/errors'
+ *
  * if (isLoggedIn(someUser))
  *   throw new KeyworkResourceError("You must be logged in to do that", StatusCodes.UNAUTHORIZED)
  * }
@@ -43,8 +44,68 @@ export const $ClassID = 'Keywork.KeyworkResourceError'
  * @category Error
  */
 export class KeyworkResourceError extends Error {
-  constructor(public statusText: string, public status: Status = Status.InternalServerError) {
+  /**
+   * The reason for the error.
+   */
+  public statusText: string
+  /**
+   * The HTTP Status Code associated with the error.
+   */
+  public status: Status
+
+  /**
+   * Parameters in the format of an HTTP status error.
+   */
+  constructor(
+    /**
+     * The reason for the error.
+     * @defaultValue STATUS_TEXT[Status.InternalServerError]
+     * @see {STATUS_TEXT} Re-exported from `deno/http/http_status`
+     */
+    statusText?: string,
+    /**
+     * The HTTP Status Code associated with the error.
+     * @defaultValue Status.InternalServerError
+     * @see {Status} Re-exported from `deno/http/http_status`
+     */
+    status?: Status
+  )
+  /**
+   * @deprecated TypeScript has inferred that `errorLike` is already an instance of `KeyworkResourceError`
+   */
+  constructor(errorLike: KeyworkResourceError)
+  /**
+   * Converting an unknown error object into a well-formed `KeyworkResourceError`
+   */
+  constructor(
+    /** Any kind of unknown error, usually from a try/catch block. */
+    errorLike: unknown,
+    /**
+     * The HTTP Status Code associated with the error.
+     * @defaultValue Status.InternalServerError
+     * @see {Status} Re-exported from `deno/http/http_status`
+     */
+    status?: Status
+  )
+  constructor(...args: any[]) {
+    let statusText = STATUS_TEXT[Status.InternalServerError]
+    let status = Status.InternalServerError
+
+    if (KeyworkResourceError.assertIsInstanceOf(args[0])) {
+      statusText = args[0].statusText
+      status = args[0].status
+    } else if (args[0] instanceof Error) {
+      if ('message' in args[0] && args[0].message) {
+        statusText = args[0].message
+      }
+    } else {
+      statusText = args[0] || STATUS_TEXT[Status.InternalServerError]
+      status = args[1] || Status.InternalServerError
+    }
+
     super(statusText)
+    this.statusText = statusText
+    this.status = status
   }
 
   get message() {
@@ -58,26 +119,6 @@ export class KeyworkResourceError extends Error {
     }
   }
 
-  /**
-   * Attempts to convert an unknown error object into a well-formed `KeyworkResourceError`
-   */
-  static fromUnknownError(
-    /** Any kind of unknown error, usually from a try/catch block. */
-    _error: any
-  ): KeyworkResourceError {
-    if (_error instanceof KeyworkResourceError) {
-      return _error
-    }
-
-    const code = Status.InternalServerError
-    let message = 'An unknown application error occured'
-
-    if (_error instanceof Error || 'message' in _error) {
-      message = _error.message
-    }
-
-    return new KeyworkResourceError(message, code)
-  }
   //#region Internal
 
   /** @ignore */
@@ -86,7 +127,9 @@ export class KeyworkResourceError extends Error {
   static readonly [$ClassID] = true as boolean
 
   static assertIsInstanceOf(errorLike: Error): errorLike is KeyworkResourceError {
-    return Boolean(errorLike instanceof KeyworkResourceError || $ClassID in errorLike)
+    return Boolean(
+      errorLike instanceof KeyworkResourceError || (typeof errorLike === 'object' && $ClassID in errorLike)
+    )
   }
 
   static assertIsConstructorOf(ErrorCtor: unknown): ErrorCtor is typeof KeyworkResourceError {

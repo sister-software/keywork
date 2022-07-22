@@ -12,8 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from 'deno/http/http_status'
-import { KeyworkResourceError } from 'keywork/errors'
+import { KeyworkResourceError, Status } from 'keywork/errors'
 import { KeyworkHeaders, mergeHeaders } from 'keywork/headers'
 import HTTP, {
   HTTPMethod,
@@ -24,13 +23,11 @@ import HTTP, {
 import { ReactRendererOptions } from 'keywork/react/common'
 import { renderReactStream } from 'keywork/react/worker'
 import { castToResponse, ErrorResponse } from 'keywork/response'
-import type { IncomingRequestEvent, IncomingRequestEventData } from 'keywork/request'
+import { IncomingRequestEvent, IncomingRequestEventData } from 'keywork/request'
 import { isKeyworkFetcher, KeyworkFetcher, MiddlewareFetch } from 'keywork/router/middleware'
 import type { ParsedRoute, RouteMatch, RouteRequestHandler } from 'keywork/router/route'
-import { KeyworkSession, KeyworkSessionOptions } from 'keywork/session'
 import { compilePath, matchPathPrecompiled, normalizePathPattern, PathPattern } from 'keywork/uri'
 import { Disposable, findSubstringStartOffset, PrefixedLogger } from 'keywork/utilities'
-import { CloudflareFetchEvent } from 'keywork/request/cloudflare'
 import { isMiddlewareDeclarationOption, WorkerRouterOptions } from './common.ts'
 import { RouteDebugEntrypoint, WorkerRouterDebugEndpoints } from 'keywork/router/debug'
 
@@ -49,8 +46,8 @@ export const kInstance = 'Keywork.WorkerRouter.instance'
  * @ignore
  */
 export type RouteMethodDeclaration<
-  BoundAliases extends {} | null = null,
-  ExpectedParams extends {} | null = null,
+  BoundAliases = {},
+  ExpectedParams = {},
   Data extends IncomingRequestEventData = IncomingRequestEventData
 > = (
   /**
@@ -73,7 +70,7 @@ export type RouteMethodDeclaration<
  *
  * @category Router
  */
-export class WorkerRouter<BoundAliases extends {} | null = null> implements KeyworkFetcher<BoundAliases>, Disposable {
+export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAliases>, Disposable {
   /**
    * This router's known routes, categorized by their normalized HTTP method verbs into arrays of route handlers.
    *
@@ -126,10 +123,10 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       const fetch: RouteRequestHandler<BoundAliases, any, any, globalThis.Response> = async (event, next) => {
         const responseLike = await fetcherLike(event, next)
         const response = await castToResponse(responseLike, this.reactOptions)
+        const mutableResponse = response.clone()
+        mergeHeaders(mutableResponse.headers, this.createHeaders())
 
-        mergeHeaders(response.headers, this._createDefaultHeaders(event))
-
-        return response
+        return mutableResponse
       }
 
       return {
@@ -172,7 +169,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @category HTTP Method Handler
    * @public
    */
-  public get<ExpectedParams extends {} | null = null, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+  public get<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
     return this.appendMethodRoutes('get', ...args)
@@ -191,10 +188,9 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @category HTTP Method Handler
    * @public
    */
-  public post<
-    ExpectedParams extends {} | null = null,
-    Data extends IncomingRequestEventData = IncomingRequestEventData
-  >(...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>): void {
+  public post<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+    ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
+  ): void {
     return this.appendMethodRoutes('post', ...args)
   }
 
@@ -210,7 +206,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @category HTTP Method Handler
    * @public
    */
-  public put<ExpectedParams extends {} | null = null, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+  public put<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
     return this.appendMethodRoutes('put', ...args)
@@ -224,10 +220,9 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @category HTTP Method Handler
    * @public
    */
-  public patch<
-    ExpectedParams extends {} | null = null,
-    Data extends IncomingRequestEventData = IncomingRequestEventData
-  >(...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>): void {
+  public patch<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+    ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
+  ): void {
     return this.appendMethodRoutes('patch', ...args)
   }
 
@@ -242,10 +237,9 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @category HTTP Method Handler
    * @public
    */
-  public delete<
-    ExpectedParams extends {} | null = null,
-    Data extends IncomingRequestEventData = IncomingRequestEventData
-  >(...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>): void {
+  public delete<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+    ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
+  ): void {
     return this.appendMethodRoutes('delete', ...args)
   }
 
@@ -263,10 +257,9 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @category HTTP Method Handler
    * @public
    */
-  public head<
-    ExpectedParams extends {} | null = null,
-    Data extends IncomingRequestEventData = IncomingRequestEventData
-  >(...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>): void {
+  public head<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+    ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
+  ): void {
     return this.appendMethodRoutes('head', ...args)
   }
 
@@ -283,10 +276,9 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @category HTTP Method Handler
    * @public
    */
-  public options<
-    ExpectedParams extends {} | null = null,
-    Data extends IncomingRequestEventData = IncomingRequestEventData
-  >(...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>): void {
+  public options<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+    ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
+  ): void {
     return this.appendMethodRoutes('options', ...args)
   }
 
@@ -300,7 +292,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @category HTTP Method Handler
    * @public
    */
-  public all<ExpectedParams extends {} | null = null, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+  public all<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
     return this.appendMethodRoutes('all', ...args)
@@ -458,20 +450,6 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @category options
    */
   readonly includeDebugHeaders: boolean
-
-  /**
-   * @ignore
-   * @category options
-   */
-  readonly session:
-    | {
-        enabled: true
-        options: KeyworkSessionOptions
-      }
-    | {
-        enabled: false
-      }
-
   readonly reactOptions: ReactRendererOptions
 
   //#endregion
@@ -482,7 +460,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * Finds the matching routes for a given pathname.
    * @public
    */
-  public match<BoundAliases extends {} | null = null>(
+  public match<BoundAliases = {}>(
     parsedRoutes: ParsedRoute<BoundAliases>[],
     pathname: string
   ): RouteMatch<BoundAliases, any>[] {
@@ -511,7 +489,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   fetch: MiddlewareFetch<BoundAliases> = async (
     request,
     env,
-    runtimeFetchEvent = new CloudflareFetchEvent(request),
+    event = new IncomingRequestEvent<any>(request, env!, {}),
     next,
     matchedRoutes
   ): Promise<globalThis.Response> => {
@@ -522,7 +500,6 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     }
 
     const routes = this.readMethodRoutes(normalizedMethodVerb)
-    const originalURL = request.url
     const requestURL = new URL(request.url)
 
     if (!matchedRoutes) {
@@ -551,28 +528,21 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       }
     }
 
+    event.request = new globalThis.Request(requestURL, request)
+    event.match = match as any
+    event.params = match.params
+
     next =
       next ||
       ((
-        _request = request,
+        _request = event.request,
         _env = env,
-        _runtimeFetchEvent = runtimeFetchEvent,
+        _event = event,
         _next = this.fetch as any,
         _matchedRoutes = fallbackRoutes
       ) => {
-        return _next(request, _env, _runtimeFetchEvent, this.terminateMiddleware, _matchedRoutes)
+        return _next(request, _env, _event, this.terminateMiddleware, _matchedRoutes)
       })
-
-    const session = this.session.enabled ? new KeyworkSession(request, this.session.options) : null
-    const event: IncomingRequestEvent<BoundAliases, any, any> = {
-      env: env!,
-      runtimeFetchEvent,
-      session,
-      request,
-      originalURL,
-      ...match,
-      data: {},
-    }
 
     let response: globalThis.Response | null
     this.logger.debug(
@@ -583,18 +553,19 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       if (parsedRoute.kind === 'routeHandler') {
         response = await parsedRoute.fetch(event, next as any)
       } else {
-        response = await parsedRoute.fetcher.fetch(request, env, runtimeFetchEvent, next)
+        response = await parsedRoute.fetcher.fetch(event.request, env, event, next)
       }
     } catch (error) {
       this.logger.error(error)
-      return ErrorResponse.fromUnknownError(
+
+      return new ErrorResponse(
         error,
         'A server error occurred while delegating the request. See logs for additional information.',
-        this._createDefaultHeaders(null)
+        this.createHeaders()
       )
     }
 
-    return response || (await next()) || this._createHTTPError(Status.NotFound)
+    return response || (await next()) || new ErrorResponse(Status.NotFound, undefined, this.createHeaders())
   }
 
   /**
@@ -602,7 +573,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    *
    * @ignore
    */
-  protected _createDefaultHeaders(event: IncomingRequestEvent<BoundAliases, any, any> | null): globalThis.Headers {
+  protected createHeaders(): globalThis.Headers {
     const headers = new HTTP.Headers()
 
     if (this.includeDebugHeaders) {
@@ -611,26 +582,11 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
       }
     }
 
-    if (event?.session) {
-      event.session._assignSessionHeaders(headers)
-    }
-
     return headers
   }
 
-  /**
-   * Creates an either a default `ErrorResponse`, or if defined, a fallback route matching the HTTP status code.
-   * @beta
-   */
-  private _createHTTPError(status: number, publicReason?: string): globalThis.Response {
-    const response = new ErrorResponse(status, publicReason)
-    mergeHeaders(response.headers, this._createDefaultHeaders(null))
-
-    return response
-  }
-
   protected terminateMiddleware = () => {
-    return Promise.resolve(this._createHTTPError(Status.Teapot))
+    return new ErrorResponse(Status.NotFound, undefined, this.createHeaders())
   };
 
   //#endregion
@@ -642,7 +598,7 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
   /** @ignore */
   static readonly [kObjectName] = true as boolean
 
-  static assertIsInstanceOf<BoundAliases extends {} | null = null>(
+  static assertIsInstanceOf<BoundAliases = {}>(
     routerLike: KeyworkFetcher<BoundAliases> | WorkerRouter<BoundAliases>
   ): routerLike is WorkerRouter<BoundAliases> {
     return Boolean(routerLike instanceof WorkerRouter || kInstance in routerLike)
@@ -656,15 +612,6 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     this.displayName = options?.displayName || 'Keywork Router'
     this.logger = new PrefixedLogger(this.displayName)
     this.includeDebugHeaders = options?.includeDebugHeaders || true
-
-    if (options?.session) {
-      this.session = {
-        enabled: true,
-        options: typeof options.session === 'boolean' ? {} : options.session,
-      }
-    } else {
-      this.session = { enabled: false }
-    }
 
     this.reactOptions = {
       streamRenderer: renderReactStream,

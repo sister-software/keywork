@@ -24,4 +24,5 @@
  * @module router.common
  */
 
+export * from './common.ts'
 export * from './events.ts'

@@ -42,7 +42,7 @@ export interface PathPattern<Path extends string | RegExp = string> {
  * @category URL Parsing
  * @category Route
  */
-export interface PathMatch<ExpectedParams extends {} | null = null> {
+export interface PathMatch<ExpectedParams = {}> {
   /**
    * The names and values of dynamic parameters in the URL.
    * Parameters are parsed using the incoming request's URL and the route's pattern.

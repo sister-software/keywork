@@ -12,24 +12,52 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status, STATUS_TEXT } from 'deno/http/http_status'
-import { KeyworkResourceError } from 'keywork/errors'
+import { KeyworkResourceError, Status, STATUS_TEXT } from 'keywork/errors'
 import HTTP from 'keywork/platform/http'
 
 /**
- * An error response sent to a client when a request is invalid in some way.
- * @remarks If an error object is available and publically visible,
- * consider {@link ErrorResponse.fromUnknownError}
+ * An error response sent to a client when a request is deemed to be invalid in some way.
  *
  * @category HTTP Response
  * @category Error
  */
 export class ErrorResponse extends HTTP.Response {
+  /**
+   * Given an error-like object, attempt to respond with a `KeyworkResourceError`.
+   *
+   * @example
+   *
+   * ```ts
+   * try {
+   *   result = await fetchFoobarResource()
+   * } catch (error) {
+   *   // Log the error internally...
+   *   logger.error(error)
+   *
+   *   // And then respond with a public reason...
+   *   return new ErrorResponse(error, 'An error occured while fetching foobar.')
+   * }
+   * ```
+   */
+  constructor(
+    /** Any kind of unknown error, usually from a try/catch block. */
+    errorLike: unknown,
+    /** A publically visible reason the error occurred, sent back to the client. */
+    publicReason?: string,
+    /**
+     *  Headers to include with the response.
+     */
+    headersInit?: HeadersInit
+  )
+  /**
+   * Given an invalid request that goes against your application logic,
+   * construct a custom error response.
+   */
   constructor(
     /**
      * An optional HTTP response status code.
      */
-    status: Status = Status.InternalServerError,
+    status?: Status,
     /**
      * An explanation for the error. Uses the `status` code as a default value.
      */
@@ -42,9 +70,28 @@ export class ErrorResponse extends HTTP.Response {
      *  Headers to include with the response.
      */
     headersInit?: HeadersInit
-  ) {
-    if (!statusText) {
-      statusText = STATUS_TEXT[status] || STATUS_TEXT[Status.InternalServerError]
+  )
+  constructor(...args: any[]) {
+    let status: Status
+    let statusText: string
+    let body: BodyInit | null
+    let headersInit: HeadersInit
+
+    if (args[0] instanceof Error) {
+      const resourceAccessError = KeyworkResourceError.assertIsInstanceOf(args[0])
+        ? args[0]
+        : new KeyworkResourceError(args[0])
+
+      status = resourceAccessError.status
+      statusText = args[1]
+      body = null
+      headersInit = args[2]
+    } else {
+      status = args[0] || Status.InternalServerError
+      // The final fallback ensures that an unknown `status` number still produces a `statusText`.
+      statusText = args[1] || STATUS_TEXT[status] || STATUS_TEXT[Status.InternalServerError]
+      body = args[2]
+      headersInit = args[3]
     }
 
     super(body, {
@@ -52,43 +99,5 @@ export class ErrorResponse extends HTTP.Response {
       statusText,
       headers: headersInit,
     })
-  }
-
-  /**
-   * Given an error-like object, attempt respond with a `KeyworkResourceError`.
-   *
-   * @example
-   * Handling a error from an incoming request.
-   *
-   * ```ts
-   * try {
-   *   result = await fetchFoobarResource()
-   * } catch (error) {
-   *   // Log the error internally...
-   *   console.error(error)
-   *
-   *   // Respond with a public reason...
-   *   return ErrorResponse.fromUnknownError(error, 'An error occured while fetching foobar.')
-   * }
-   * ```
-   */
-  static fromUnknownError(
-    /** Any kind of unknown error, usually from a try/catch block. */
-    _error: any,
-    /** A publically visible reason the error occurred, sent back to the client. */
-    publicReason?: string,
-    /**
-     *  Headers to include with the response.
-     */
-    headersInit?: HeadersInit
-  ) {
-    const resourceAccessError = KeyworkResourceError.fromUnknownError(_error)
-
-    return new ErrorResponse(
-      resourceAccessError.status,
-      publicReason || STATUS_TEXT[resourceAccessError.status] || STATUS_TEXT[Status.InternalServerError],
-      undefined,
-      headersInit
-    )
   }
 }

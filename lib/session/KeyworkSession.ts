@@ -12,6 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { WorkerRouter } from 'keywork/router/worker'
+import type { RouteRequestHandler } from 'keywork/router/route'
+
 import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'cookie'
 import { ulid } from 'keywork/ids'
 import { CookieHeaders } from 'keywork/headers'
@@ -33,7 +36,7 @@ export const DEFAULT_COOKIE_SERIALIZE_OPTIONS: CookieSerializeOptions = {
   maxAge: 60 * 60 * 24 * 90,
 } as const
 
-export interface KeyworkSessionOptions {
+export interface SessionMiddlewareOptions {
   /**
    * The key used to read from the cookie header.
    * @defaultValue {@link DEFAULT_SESSION_COOKIE_KEY}
@@ -53,65 +56,61 @@ export interface KeyworkSessionOptions {
  * @category Session Management
  *
  */
-export class KeyworkSession {
+export interface KeyworkSession {
   /**
    * The user's current session ID, derived from the `Request` cookie header.
    */
-  public readonly sessionID: string
+  sessionID: string
+
   /**
    * `true` if this session has just been created.
    * `false` if the `Request` included a session cookie.
    */
-  public readonly isNewSession: boolean
+  isNewSession: boolean
+}
 
+export class SessionMiddleware extends WorkerRouter {
   /**
    * The key used to read from the cookie header.
    */
   public readonly cookieKey: string
 
-  public serializeOptions: CookieSerializeOptions
+  public readonly serializeOptions: CookieSerializeOptions
 
-  constructor(
-    /** The incoming request */
-    request: globalThis.Request,
-    options?: KeyworkSessionOptions
-  )
-  constructor(
-    /**
-     * The user's current session ID
-     */
-    sessionID: string,
-    options?: KeyworkSessionOptions
-  )
-  constructor(
-    /** The incoming request */
-    requestOrSessionID: globalThis.Request | string,
-    options?: KeyworkSessionOptions
-  ) {
-    let sessionID: string
-    this.cookieKey = options?.cookieKey || DEFAULT_SESSION_COOKIE_KEY
-    this.serializeOptions = options?.serializeOptions || DEFAULT_COOKIE_SERIALIZE_OPTIONS
+  constructor(sessionOptions: SessionMiddlewareOptions = {}) {
+    super({
+      displayName: 'Keywork Session Middleware',
+    })
 
-    if (typeof requestOrSessionID === 'string') {
-      sessionID = requestOrSessionID
-    } else {
-      const cookies = parseCookies(requestOrSessionID.headers.get(CookieHeaders.Read) || '')
-      sessionID = cookies[this.cookieKey]
-    }
+    this.cookieKey = sessionOptions?.cookieKey || DEFAULT_SESSION_COOKIE_KEY
+    this.serializeOptions = sessionOptions?.serializeOptions || DEFAULT_COOKIE_SERIALIZE_OPTIONS
 
-    if (sessionID) {
-      this.sessionID = sessionID
-      this.isNewSession = false
-    } else {
-      this.sessionID = ulid()
-      this.isNewSession = true
-    }
+    this.all('*', this.applySession)
   }
 
-  /**
-   * @ignore
-   */
-  public _assignSessionHeaders(headers: globalThis.Headers) {
-    headers.set(CookieHeaders.Set, serializeCookies(this.cookieKey, this.sessionID, this.serializeOptions))
+  protected applySession: RouteRequestHandler = async (event, next) => {
+    const cookies = parseCookies(event.request.headers.get(CookieHeaders.Read) || '')
+    const sessionID = cookies[this.cookieKey]
+
+    const session: KeyworkSession = sessionID
+      ? {
+          sessionID,
+          isNewSession: true,
+        }
+      : {
+          sessionID: ulid(),
+          isNewSession: false,
+        }
+
+    event.data.session = session
+
+    const response = await next(event.request, event.env, event)
+    const responseWithSession = response.clone()
+    responseWithSession.headers.set(
+      CookieHeaders.Set,
+      serializeCookies(this.cookieKey, sessionID, this.serializeOptions)
+    )
+
+    return responseWithSession
   }
 }

@@ -14,7 +14,6 @@
 
 import type { ReactRendererOptions } from 'keywork/react/common'
 import type { KeyworkFetcher } from 'keywork/router/middleware'
-import type { KeyworkSessionOptions } from 'keywork/session'
 import { WorkerRouterDebugOptions } from 'keywork/router/debug'
 
 /**
@@ -50,10 +49,6 @@ export interface WorkerRouterOptions {
    */
   includeDebugHeaders?: boolean
 
-  /**
-   * Session configuration.
-   */
-  session?: KeyworkSessionOptions | boolean
   react?: ReactRendererOptions
   debug?: WorkerRouterDebugOptions
 }

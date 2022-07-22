@@ -19,13 +19,14 @@ import { renderToReadableStream } from 'react-dom/server.browser'
 
 export const renderReactStream: IReactStreamRenderer = async (children, options) => {
   const controller = new AbortController()
+
   let error: null | KeyworkResourceError = null
 
   const stream = await renderToReadableStream(children, {
     ...options,
     signal: controller.signal,
     onError(_error: any) {
-      error = KeyworkResourceError.fromUnknownError(_error)
+      error = new KeyworkResourceError(_error)
       console.error(error)
     },
   })

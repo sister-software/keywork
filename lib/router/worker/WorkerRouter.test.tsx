@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from 'deno/http/http_status'
+import { Status } from 'keywork/errors'
 import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } from 'deno/testing/asserts'
 import { WorkerRouter } from 'keywork/router/worker'
 import HTTP from 'keywork/platform/http'
@@ -143,4 +143,10 @@ Deno.test('Router supports middleware', async () => {
 
   assertEquals(responseWithQuery.status, Status.OK)
   assertStringIncludes(await responseWithQuery.text(), `<h1>${greeting}</h1>`, 'Body includes query params')
+
+  app.use('/hello', HelloWorldRouter)
+
+  const nestedRequest = await app.fetch(new HTTP.Request('http://localhost/hello/example-json'))
+  assertEquals(nestedRequest.status, Status.OK, 'Nested request routes correctly')
+  assertEquals(await nestedRequest.json(), { hello: 'world' }, 'Nested body includes content')
 })

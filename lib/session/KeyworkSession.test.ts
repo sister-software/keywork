@@ -12,31 +12,33 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { assert } from 'deno/testing/asserts'
-import HTTP from 'keywork/platform/http'
+import { assertEquals, assert } from 'deno/testing/asserts'
+import { WorkerRouter } from 'keywork/router/worker'
+import { SessionMiddleware } from 'keywork/session'
 import { CookieHeaders } from 'keywork/headers'
+import HTTP from 'keywork/platform/http'
+import { parse as parseCookies } from 'cookie'
 
-import { KeyworkSession } from 'keywork/session'
+Deno.test('Session Middleware', async () => {
+  const sessionMiddleware = new SessionMiddleware()
+  const app = new WorkerRouter({
+    displayName: 'Session Tester',
+    middleware: [sessionMiddleware],
+  })
 
-Deno.test('Session lifecycle', async () => {
-  const headers = new HTTP.Headers()
-  assert(!headers.has(CookieHeaders.Set), 'Headers are initially empty')
+  app.get('/', (event) => {
+    const url = new URL(event.request.url)
 
-  const initialSession = new KeyworkSession(new HTTP.Request('http://localhost'))
+    return `Hello from ${url.pathname}`
+  })
 
-  assert(initialSession.isNewSession, 'Session is new without cookie')
+  const rootResponse = await app.fetch(new HTTP.Request('http://localhost/'))
+  assertEquals(await rootResponse.text(), `Hello from /`, 'Response has body')
 
-  initialSession._assignSessionHeaders(headers)
+  const cookieDough = rootResponse.headers.get(CookieHeaders.Set)
 
-  assert(headers.has(CookieHeaders.Set), 'Cookie header has been set')
+  assert(cookieDough, 'Request has cookie')
+  const cookies = parseCookies(cookieDough)
 
-  const persistedSession = new KeyworkSession(
-    new HTTP.Request('http://localhost', {
-      headers: {
-        [CookieHeaders.Read]: headers.get(CookieHeaders.Set)!,
-      },
-    })
-  )
-
-  assert(!persistedSession.isNewSession, 'Session has persisted from cookie')
+  assert(cookies[sessionMiddleware.cookieKey], 'Cookies have session ID')
 })

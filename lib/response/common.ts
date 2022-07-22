@@ -12,8 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from 'deno/http/http_status'
-import { KeyworkResourceError } from 'keywork/errors'
+import { KeyworkResourceError, Status } from 'keywork/errors'
 import { ReactRendererOptions, renderJSXToStream } from 'keywork/react/common'
 import { ErrorResponse } from './ErrorResponse.ts'
 import { HTMLResponse } from './HTMLResponse.ts'
@@ -50,7 +49,7 @@ export async function castToResponse(
     return responseLike
   }
 
-  if (responseLike instanceof Error) return ErrorResponse.fromUnknownError(responseLike)
+  if (responseLike instanceof Error) return new ErrorResponse(responseLike)
 
   if (responseLike instanceof Stream.ReadableStream) {
     throw new KeyworkResourceError(

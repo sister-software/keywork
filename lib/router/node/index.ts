@@ -27,8 +27,8 @@ import { WorkerRouter } from 'keywork/router'
 import HTTP from 'keywork/platform/http'
 
 import { IncomingMessage, ServerResponse } from 'http'
-import { CloudflareFetchEvent } from 'keywork/request/cloudflare'
-import { readGlobalScope } from '../../polyfills/platform/index.ts'
+import { IncomingRequestEvent } from 'keywork/request'
+import { readGlobalScope } from 'keywork/polyfills/platform'
 
 // const { IncomingMessage, ServerResponse } = await import('node:' + 'http')
 
@@ -58,15 +58,16 @@ export type ProcessChunkCallback = (chunkResult: ReadableStreamDefaultReadResult
  * @see {createServerHandler}
  * @beta Node support is currently experimental and may change in the near future.
  */
-export async function respondWithRouter<BoundAliases extends {} | null = null>(
+export async function respondWithRouter<BoundAliases = {}>(
   router: WorkerRouter<BoundAliases>,
   nodeRequest: IncomingMessage,
   nodeResponse: ServerResponse
 ): Promise<void> {
   const request = new HTTP.Request(nodeRequest.url || 'http://0.0.0.0', nodeRequest as unknown as RequestInit)
-  const runtimeFetchEvent = new CloudflareFetchEvent(request)
+  const env = readNodeEnv<BoundAliases>()
+  const event = new IncomingRequestEvent(request, env)
 
-  const response = await router.fetch(request, readNodeEnv<BoundAliases>(), runtimeFetchEvent)
+  const response = await router.fetch(request, env, event)
 
   nodeResponse.statusCode = response.status
   nodeResponse.statusMessage = response.statusText
@@ -88,7 +89,7 @@ export async function respondWithRouter<BoundAliases extends {} | null = null>(
     await reader.read().then(processChunk)
   }
 
-  await runtimeFetchEvent.flushTasks()
+  await event.flushTasks()
 }
 
 /**
@@ -108,13 +109,11 @@ export async function respondWithRouter<BoundAliases extends {} | null = null>(
  * @see {respondWithRouter}
  * @beta Node support is currently experimental and may change in the near future.
  */
-export function createServerHandler<BoundAliases extends {} | null = null>(
-  router: WorkerRouter<BoundAliases>
-): ServerHandler {
+export function createServerHandler<BoundAliases = {}>(router: WorkerRouter<BoundAliases>): ServerHandler {
   return (req, res) => respondWithRouter<BoundAliases>(router, req, res)
 }
 
-function readNodeEnv<BoundAliases extends {} | null = null>(): BoundAliases {
+function readNodeEnv<BoundAliases = {}>(): BoundAliases {
   const globalScope = readGlobalScope()
 
   return (globalScope as any).process?.env || null

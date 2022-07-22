@@ -11,22 +11,14 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-import { Status, STATUS_TEXT } from 'keywork/errors'
+
 import HTTP from 'keywork/platform/http'
 
 /**
- * Given that a request's etag header matches an server entity or resource,
- * a `NotModifiedResponse` should be sent to the requestor as an indication that the client's cache is still applicable.
- *
- * @category HTTP Response
- * @category Cache
+ * Checks if the given object is an instance of `Request`
+ * @param requestish An object that's possibly a `Request`
+ * @category Type Cast
  */
-export class NotModifiedResponse extends HTTP.Response {
-  constructor(etag: string) {
-    super(undefined, {
-      status: Status.NotModified,
-      statusText: STATUS_TEXT[Status.NotModified],
-      headers: { ETag: etag },
-    })
-  }
+export function isInstanceOfRequest(requestish: unknown): requestish is globalThis.Request {
+  return Boolean(requestish instanceof globalThis.Request || requestish instanceof HTTP.Request)
 }

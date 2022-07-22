@@ -30,8 +30,8 @@ import type { MiddlewareFetch } from 'keywork/router/middleware'
  * @category Request Handler
  */
 export type RouteRequestHandler<
-  BoundAliases extends {} | null = null,
-  ExpectedParams extends {} | null = null,
+  BoundAliases = {},
+  ExpectedParams = {},
   Data extends Record<string, unknown> = Record<string, unknown>,
   ExpectedReturn extends ResponseLike = ResponseLike
 > = (
