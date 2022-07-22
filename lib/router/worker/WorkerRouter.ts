@@ -32,6 +32,7 @@ import { compilePath, matchPathPrecompiled, normalizePathPattern, PathPattern } 
 import { Disposable, findSubstringStartOffset, PrefixedLogger } from 'keywork/utilities'
 import { CloudflareFetchEvent } from 'keywork/request/cloudflare'
 import { isMiddlewareDeclarationOption, WorkerRouterOptions } from './common.ts'
+import { RouteDebugEntrypoint, WorkerRouterDebugEndpoints } from 'keywork/router/debug'
 
 /**
  * Used in place of the reference-sensitive `instanceof`
@@ -397,14 +398,31 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @category Debug
    * @public
    */
-  public $getRoutesByHTTPMethod() {
+  public $getRoutesByHTTPMethod(): RouteDebugEntrypoint[] {
     return Array.from(this.routesByVerb.entries(), ([routerMethod, parsedRoutes]) => {
       const httpMethod = routerMethodToHTTPMethod.get(routerMethod)!
 
-      return {
+      const entry: RouteDebugEntrypoint = {
         httpMethod,
-        parsedRoutes,
+        displayName: this.displayName || '',
+        kind: 'router',
+        entries: parsedRoutes.map(({ compiledPath, ...parsedRoute }) => {
+          const entries =
+            parsedRoute.kind === 'fetcher' && WorkerRouter.assertIsInstanceOf(parsedRoute.fetcher)
+              ? parsedRoute.fetcher.$getRoutesByHTTPMethod()
+              : []
+
+          return {
+            httpMethod,
+            displayName: parsedRoute.displayName || compiledPath.pattern.path || '',
+            kind: parsedRoute.kind,
+            compiledPath,
+            entries,
+          }
+        }),
       }
+
+      return entry
     })
   }
 
@@ -413,26 +431,22 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
    * @category Debug
    * @public
    */
-  public $prettyPrintRoutes(): void {
-    const routesByHttpMethod = this.$getRoutesByHTTPMethod()
-
-    for (const { httpMethod, parsedRoutes } of routesByHttpMethod) {
-      if (!parsedRoutes.length) continue
+  public $prettyPrintRoutes(routesByHttpMethod = this.$getRoutesByHTTPMethod()): void {
+    for (const { httpMethod, entries } of routesByHttpMethod) {
+      if (!entries.length) continue
 
       this.logger.log('METHOD:', httpMethod)
 
-      for (const parsedRoute of parsedRoutes) {
-        this.logger.log(
-          parsedRoute.displayName || '',
-          parsedRoute.compiledPath.pattern.path,
-          parsedRoute.compiledPath.matcher
-        )
+      for (const route of entries) {
+        this.logger.log(route.displayName || '', route.compiledPath?.pattern.path, route.compiledPath?.matcher)
 
-        if (parsedRoute.kind === 'fetcher' && WorkerRouter.assertIsInstanceOf(parsedRoute.fetcher)) {
-          parsedRoute.fetcher.$prettyPrintRoutes()
-        }
+        this.$prettyPrintRoutes(route.entries)
       }
     }
+  }
+
+  protected $routesEndpoint: RouteRequestHandler<BoundAliases> = () => {
+    return this.$getRoutesByHTTPMethod()
   }
 
   //#endregion
@@ -655,6 +669,23 @@ export class WorkerRouter<BoundAliases extends {} | null = null> implements Keyw
     this.reactOptions = {
       streamRenderer: renderReactStream,
       ...options?.react,
+    }
+
+    if (options?.debug) {
+      if (options.debug.endpoints) {
+        const endpoints: WorkerRouterDebugEndpoints =
+          typeof options.debug.endpoints === 'boolean'
+            ? {
+                routes: true,
+              }
+            : options.debug.endpoints
+        // TODO: flesh out
+        // this.use(new WorkerRouterDebugMiddleware(options?.debug))
+
+        if (endpoints.routes) {
+          this.get('/keywork/routes', this.$routesEndpoint)
+        }
+      }
     }
 
     if (options?.middleware) {

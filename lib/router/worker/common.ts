@@ -15,6 +15,7 @@
 import type { ReactRendererOptions } from 'keywork/react/common'
 import type { KeyworkFetcher } from 'keywork/router/middleware'
 import type { KeyworkSessionOptions } from 'keywork/session'
+import { WorkerRouterDebugOptions } from 'keywork/router/debug'
 
 /**
  * Middleware declaration in the convenient shape of `Map`'s constructor parameters.
@@ -54,6 +55,7 @@ export interface WorkerRouterOptions {
    */
   session?: KeyworkSessionOptions | boolean
   react?: ReactRendererOptions
+  debug?: WorkerRouterDebugOptions
 }
 
 /** @ignore */
