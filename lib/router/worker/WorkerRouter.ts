@@ -13,16 +13,11 @@
  */
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
-import { KeyworkHeaders, mergeHeaders } from 'keywork/headers'
-import HTTP, {
-  HTTPMethod,
-  methodVerbToRouterMethod,
-  RouterMethod,
-  routerMethodToHTTPMethod,
-} from 'keywork/platform/http'
+import { KeyworkHeaders } from 'keywork/headers'
+import { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from 'keywork/platform/http'
 import { ReactRendererOptions } from 'keywork/react/common'
 import { renderReactStream } from 'keywork/react/worker'
-import { castToResponse, ErrorResponse } from 'keywork/response'
+import { castToResponse, cloneAsMutableResponse, ErrorResponse } from 'keywork/response'
 import { IncomingRequestEvent, IncomingRequestEventData } from 'keywork/request'
 import { isKeyworkFetcher, KeyworkFetcher, MiddlewareFetch } from 'keywork/router/middleware'
 import type { ParsedRoute, RouteMatch, RouteRequestHandler } from 'keywork/router/route'
@@ -124,10 +119,8 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
       const fetch: RouteRequestHandler<BoundAliases, any, any, globalThis.Response> = async (event, next) => {
         const responseLike = await fetcherLike(event, next)
         const response = await castToResponse(responseLike, this.reactOptions)
-        const mutableResponse = response.clone()
-        mergeHeaders(mutableResponse.headers, this.createHeaders())
 
-        return mutableResponse
+        return this.applyHeaders(cloneAsMutableResponse(response))
       }
 
       return {
@@ -555,49 +548,51 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
         return _next(request, _env, _event, this.terminateMiddleware, _matchedRoutes)
       })
 
-    let response: globalThis.Response | null
+    let possibleResponse: globalThis.Response | null
     this.logger.debug(
       `Delegating \`${requestURL.pathname}\` to ${parsedRoute.kind}`,
       parsedRoute.displayName || parsedRoute.compiledPath
     )
     try {
       if (parsedRoute.kind === 'routeHandler') {
-        response = await parsedRoute.fetch(event, next as any)
+        possibleResponse = await parsedRoute.fetch(event, next as any)
       } else {
-        response = await parsedRoute.fetcher.fetch(event.request, env, event, next)
+        possibleResponse = await parsedRoute.fetcher.fetch(event.request, env, event, next)
       }
     } catch (error) {
       this.logger.error(error)
 
-      return new ErrorResponse(
-        error,
-        'A server error occurred while delegating the request. See logs for additional information.',
-        this.createHeaders()
+      return this.applyHeaders(
+        new ErrorResponse(
+          error,
+          'A server error occurred while delegating the request. See logs for additional information.'
+        )
       )
     }
 
-    return response || (await next()) || new ErrorResponse(Status.NotFound, undefined, this.createHeaders())
+    const response =
+      possibleResponse || (await next()) || this.applyHeaders(new ErrorResponse(Status.NotFound, undefined))
+
+    return cloneAsMutableResponse(response)
   }
 
   /**
-   * Creates the default headers for a given Keywork request.
+   * Applies the default headers for a given Keywork request.
    *
    * @ignore
    */
-  protected createHeaders(): globalThis.Headers {
-    const headers = new HTTP.Headers()
-
+  protected applyHeaders(response: globalThis.Response): globalThis.Response {
     if (this.includeDebugHeaders) {
       for (const [key, value] of Object.entries(KeyworkHeaders)) {
-        headers.set(key, value)
+        response.headers.set(key, value)
       }
     }
 
-    return headers
+    return response
   }
 
   protected terminateMiddleware = () => {
-    return new ErrorResponse(Status.NotFound, undefined, this.createHeaders())
+    return this.applyHeaders(new ErrorResponse(Status.NotFound, undefined))
   };
 
   //#endregion
@@ -622,27 +617,27 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
   constructor(options?: WorkerRouterOptions) {
     this.displayName = options?.displayName || 'Keywork Router'
     this.logger = new PrefixedLogger(this.displayName)
-    this.includeDebugHeaders = options?.includeDebugHeaders || true
 
     this.reactOptions = {
       streamRenderer: renderReactStream,
       ...options?.react,
     }
 
-    if (options?.debug) {
-      if (options.debug.endpoints) {
-        const endpoints: WorkerRouterDebugEndpoints =
-          typeof options.debug.endpoints === 'boolean'
-            ? {
-                routes: true,
-              }
-            : options.debug.endpoints
-        // TODO: flesh out
-        // this.use(new WorkerRouterDebugMiddleware(options?.debug))
+    this.includeDebugHeaders =
+      typeof options?.debug?.includeHeaders !== 'undefined' ? options.debug.includeHeaders : true
 
-        if (endpoints.routes) {
-          this.get('/keywork/routes', this.$routesEndpoint)
-        }
+    if (options?.debug?.endpoints) {
+      const endpoints: WorkerRouterDebugEndpoints =
+        typeof options.debug.endpoints === 'boolean'
+          ? {
+              routes: true,
+            }
+          : options.debug.endpoints
+      // TODO: flesh out
+      // this.use(new WorkerRouterDebugMiddleware(options?.debug))
+
+      if (endpoints.routes) {
+        this.get('/keywork/routes', this.$routesEndpoint)
       }
     }
 

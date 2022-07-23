@@ -29,6 +29,12 @@ export interface WorkerRouterDebugEndpoints {
 
 export interface WorkerRouterDebugOptions {
   /**
+   * Whether debugging headers should be included.
+   * @defaultValue `true`
+   */
+  includeHeaders?: boolean
+
+  /**
    * Debug endpoints to enable.
    * @defaultValue true
    */

@@ -84,3 +84,19 @@ export async function castToResponse(
     Status.InternalServerError
   )
 }
+
+/**
+ * @see {@link https://fetch.spec.whatwg.org/#null-body-status WHATWG Spec}
+ */
+const NULL_BODY_STATUSES = new Set([101, 204, 205, 304])
+
+/**
+ * Clones a given `Response` as a mutable instance.
+ */
+export function cloneAsMutableResponse(response: globalThis.Response) {
+  return new globalThis.Response(
+    //
+    NULL_BODY_STATUSES.has(response.status) ? null : response.body,
+    response
+  )
+}

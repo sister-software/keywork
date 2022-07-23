@@ -18,6 +18,7 @@ import { WorkerRouter } from 'keywork/router/worker'
 import HTTP from 'keywork/platform/http'
 import { JSONResponse } from 'keywork/response'
 import React from 'react'
+import { KeyworkHeaders } from 'keywork/headers'
 
 interface HelloResponseBody extends Record<PropertyKey, unknown> {
   url: string
@@ -58,7 +59,13 @@ Deno.test('Router receives requests', async () => {
   assertEquals(app.match(routesViaPOST, '/hello.json').length, 0, 'JSON route only exists on GET')
 
   const rootResponse = await app.fetch(new HTTP.Request('http://localhost/'))
-  assertEquals(await rootResponse.text(), `Hello from /`)
+  assertEquals(await rootResponse.text(), `Hello from /`, 'Text body matches')
+
+  assertEquals(
+    rootResponse.headers.get('X-Powered-By'),
+    KeyworkHeaders['X-Powered-By'],
+    '"Powered by" header is present'
+  )
 
   const JSONResponse = await app.fetch(new HTTP.Request('http://localhost/hello.json'))
   assertObjectMatch(await JSONResponse.json(), jsonBody)

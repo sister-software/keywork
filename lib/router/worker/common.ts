@@ -43,12 +43,6 @@ export interface WorkerRouterOptions {
    */
   middleware?: Array<MiddlewareDeclarationLike>
 
-  /**
-   * Whether debugging headers should be included.
-   * @defaultValue `true`
-   */
-  includeDebugHeaders?: boolean
-
   react?: ReactRendererOptions
   debug?: WorkerRouterDebugOptions
 }
