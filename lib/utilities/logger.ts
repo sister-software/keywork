@@ -46,6 +46,23 @@ const _logTypes = new Map<keyof GlobalConsoleLike, string>([
 ])
 
 /**
+ * @internal
+ */
+export enum LogLevel {
+  Trace,
+  Debug,
+  Info,
+  Warning,
+  Error,
+  Critical,
+  Off,
+}
+
+/**
+ * @internal
+ */
+export const DEFAULT_LOG_LEVEL: LogLevel = LogLevel.Info
+/**
  * A isomorphic logger available in both the browser and worker environments.
  *
  * @example
