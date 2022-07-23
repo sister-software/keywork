@@ -497,7 +497,7 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
     let event: IncomingRequestEvent<any>
 
     if (isCloudflareWorkerExecutionContext(eventLike)) {
-      event = IncomingRequestEvent.fromCloudflareWorker(eventLike, env)
+      event = IncomingRequestEvent.fromCloudflareWorker(eventLike, request, env)
     } else if (IncomingRequestEvent.assertIsInstanceOf(eventLike)) {
       event = eventLike
     } else {

@@ -126,9 +126,10 @@ export class IncomingRequestEvent<
 
   public static fromCloudflareWorker<BoundAliases = {}, ExpectedParams = {}, Data extends {} = {}>(
     executionContext: ExecutionContext,
+    request: globalThis.Request,
     env: BoundAliases = {} as BoundAliases
   ) {
-    const event = new IncomingRequestEvent<BoundAliases, ExpectedParams, Data>(executionContext.request, env)
+    const event = new IncomingRequestEvent<BoundAliases, ExpectedParams, Data>(request, env)
     event.waitUntil = executionContext.waitUntil
 
     return event

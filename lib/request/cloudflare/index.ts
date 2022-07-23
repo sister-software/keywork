@@ -20,8 +20,6 @@ import { ExtendableEvent } from '../common.ts'
  * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event/ Cloudflare Documentation}
  */
 export interface ExecutionContext extends ExtendableEvent {
-  request: globalThis.Request
-
   /**
    * Intercepts the request and allows the Worker to send a custom response.
    *
