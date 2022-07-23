@@ -14,7 +14,8 @@
 
 import type { KeyworkSession } from 'keywork/session'
 import type { PathMatch } from 'keywork/uri'
-import { KeyworkResourceError, Status } from 'keywork/errors'
+import { ExecutionContext } from 'keywork/request/cloudflare'
+import { ExtendableEvent } from './common.ts'
 
 /**
  * Additional data associated with the `IncomingRequestEvent`.
@@ -43,8 +44,6 @@ export const IncomingRequestEventObjectName = 'Keywork.IncomingRequestEvent'
  * @module request.cloudflare
  */
 
-const kWaitUntil = Symbol('kWaitUntil')
-
 /**
  * An event object containing contextual data for a single and specific incoming HTTP request.
  *
@@ -72,8 +71,11 @@ const kWaitUntil = Symbol('kWaitUntil')
  * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event Cloudflare's API Reference}
  *
  */
-export class IncomingRequestEvent<BoundAliases = {}, ExpectedParams = {}, Data extends {} = {}> extends Event {
-  readonly [kWaitUntil]: Promise<unknown>[] = []
+export class IncomingRequestEvent<
+  BoundAliases = {},
+  ExpectedParams = {},
+  Data extends {} = {}
+> extends ExtendableEvent {
   /**
    * The original URL associated with the `IncomingRequestEvent`.
    */
@@ -111,56 +113,24 @@ export class IncomingRequestEvent<BoundAliases = {}, ExpectedParams = {}, Data e
   }
 
   /**
-   * Extends the lifetime of the route handler even after a `Response` is sent to a client.
-   */
-
-  public waitUntil(
-    this: IncomingRequestEvent<any>,
-    /**
-     * The given promise argument will inform the Workers runtime to stay alive until the task completes.
-     */
-    nonBlockingTask: Promise<any>
-  ): void {
-    if (!(this instanceof IncomingRequestEvent)) {
-      throw new KeyworkResourceError(
-        '`waitUntil` must be invoked as a member of `CloudflareFetchEvent`',
-        Status.InternalServerError
-      )
-    }
-
-    this[kWaitUntil].push(Promise.resolve(nonBlockingTask))
-  }
-
-  public async flushTasks(this: IncomingRequestEvent<any>): Promise<void> {
-    await Promise.all(this[kWaitUntil])
-  }
-
-  /**
-   * @deprecated Not supported within Keywork.
-   */
-  public respondWith(_response: never): void {
-    throw new KeyworkResourceError(
-      `CloudflareFetchEvent#respondWith is not supported within Keywork`,
-      Status.NotImplemented
-    )
-  }
-
-  /**
-   * @deprecated Not supported within Keywork.
-   */
-  public passThroughOnException(): void {
-    throw new KeyworkResourceError(
-      `CloudflareFetchEvent#passThroughOnException is not supported within Keywork`,
-      Status.NotImplemented
-    )
-  }
-
-  /**
    * Checks if the given object is an instance of `IncomingRequestEvent`
    * @param eventLike An object that's possibly a `IncomingRequestEvent`
    * @category Type Cast
    */
-  public assertIsInstanceOf(eventLike: unknown): eventLike is IncomingRequestEvent {
-    return Boolean(eventLike && typeof eventLike === 'object' && IncomingRequestEventObjectName in eventLike)
+  public static assertIsInstanceOf(eventLike: unknown): eventLike is IncomingRequestEvent {
+    return Boolean(
+      eventLike instanceof IncomingRequestEvent ||
+        (eventLike && typeof eventLike === 'object' && IncomingRequestEventObjectName in eventLike)
+    )
+  }
+
+  public static fromCloudflareWorker<BoundAliases = {}, ExpectedParams = {}, Data extends {} = {}>(
+    executionContext: ExecutionContext,
+    env: BoundAliases = {} as BoundAliases
+  ) {
+    const event = new IncomingRequestEvent<BoundAliases, ExpectedParams, Data>(executionContext.request, env)
+    event.waitUntil = executionContext.waitUntil
+
+    return event
   }
 }

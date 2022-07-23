@@ -13,8 +13,7 @@
  */
 /* eslint-disable no-restricted-globals */
 
-import type { RouteMatch } from '../route/parsed.ts'
-import type { IncomingRequestEvent } from 'keywork/request'
+import type { RouteMatch } from 'keywork/router/route'
 
 /**
  * A function within the Worker that receives all incoming requests.
@@ -42,7 +41,14 @@ import type { IncomingRequestEvent } from 'keywork/request'
 export type MiddlewareFetch<BoundAliases = {}> = (
   request: globalThis.Request,
   env?: BoundAliases,
-  event?: IncomingRequestEvent,
+  /**
+   * An event-like object from the runtime.
+   * Usually either `IncomingRequestEvent` or `ExecutionContext`
+   *
+   * @see {IncomingRequestEvent}
+   * @see {ExecutionContext}
+   */
+  eventLike?: unknown,
   /**
    * When invoked, will execute a route handler defined after the current.
    *
@@ -55,6 +61,22 @@ export type MiddlewareFetch<BoundAliases = {}> = (
 ) => Promise<Response>
 
 /**
+ * @remarks
+ * ### Cloudflare Usage
+ * Events are handled by defining and exporting an object with
+ * method handlers that correspond to event names:
+ *
+ * ```ts
+ * export default {
+ *  fetch(request, env, context) {
+ *    return new Response('Hello')
+ *  },
+ *}
+ * ```
+ *
+ * In this setup, all incoming requests are classified as `'fetch'` events.
+ * The fetch handler receives the Request and replies with a Response.
+ *
  * @see {WorkerEnvFetchBinding}
  * @see {WorkerRouter#fetch}
  */

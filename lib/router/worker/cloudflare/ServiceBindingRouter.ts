@@ -14,6 +14,7 @@
 
 import type { WorkerEnvFetchBinding } from 'keywork/bindings'
 import { ErrorResponse } from 'keywork/response'
+import { Status } from 'keywork/errors'
 import type { RouteRequestHandler } from 'keywork/router/route'
 import { WorkerRouter, WorkerRouterOptions } from 'keywork/router/worker'
 
@@ -47,10 +48,13 @@ export class ServiceBindingRouter<BindingAlias extends string> extends WorkerRou
 
   private onRequest: RouteRequestHandler<Record<BindingAlias, WorkerEnvFetchBinding>> = ({ env, request }) => {
     if (!env || typeof env !== 'object') {
-      const publicError = `\`env\` is not present.`
+      const publicError = `\`env\` is not present`
       console.warn(publicError)
 
-      return new ErrorResponse(500, `${publicError}. This may indicate an unsupported server environment.`)
+      return new ErrorResponse(
+        Status.NotImplemented,
+        `${publicError}. This may indicate an unsupported server environment.`
+      )
     }
 
     /** The binding associated with the alias defined at router construction. */
@@ -59,16 +63,16 @@ export class ServiceBindingRouter<BindingAlias extends string> extends WorkerRou
     if (!proxiedBinding) {
       const publicError = `Binding \`${proxiedBinding}\` is not present in \`env\``
 
-      console.warn(publicError)
+      this.logger.warn(publicError)
       /** All currently known binding aliases */
       const bindingAliases = Object.keys(env)
 
-      console.warn(
+      this.logger.warn(
         `Your wrangler.toml may not be configured correctly. There are ${bindingAliases.length} binding(s) in env:`
       )
       bindingAliases.forEach((bindingAlias) => console.warn(bindingAlias))
 
-      return new ErrorResponse(500, `${publicError}. See server logs for more info.`)
+      return new ErrorResponse(Status.NotImplemented, `${publicError}. See server logs for more info.`)
     }
 
     return proxiedBinding.fetch(request)

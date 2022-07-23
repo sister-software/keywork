@@ -30,6 +30,7 @@ import { compilePath, matchPathPrecompiled, normalizePathPattern, PathPattern } 
 import { Disposable, findSubstringStartOffset, PrefixedLogger } from 'keywork/utilities'
 import { isMiddlewareDeclarationOption, WorkerRouterOptions } from './common.ts'
 import { RouteDebugEntrypoint, WorkerRouterDebugEndpoints } from 'keywork/router/debug'
+import { isCloudflareWorkerExecutionContext } from 'keywork/request/cloudflare'
 
 /**
  * Used in place of the reference-sensitive `instanceof`
@@ -489,10 +490,20 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
   fetch: MiddlewareFetch<BoundAliases> = async (
     request,
     env,
-    event = new IncomingRequestEvent<any>(request, env!, {}),
+    eventLike,
     next,
     matchedRoutes
   ): Promise<globalThis.Response> => {
+    let event: IncomingRequestEvent<any>
+
+    if (isCloudflareWorkerExecutionContext(eventLike)) {
+      event = IncomingRequestEvent.fromCloudflareWorker(eventLike, env)
+    } else if (IncomingRequestEvent.assertIsInstanceOf(eventLike)) {
+      event = eventLike
+    } else {
+      event = new IncomingRequestEvent(request, env)
+    }
+
     const normalizedMethodVerb = methodVerbToRouterMethod.get(request.method as HTTPMethod)
 
     if (!normalizedMethodVerb) {

@@ -57,7 +57,7 @@ export const renderReactStream: IReactStreamRenderer = (children) => {
   } catch (error) {
     return Promise.resolve({
       stream: null as unknown as ReactDOMServerReadableStream,
-      error: KeyworkResourceError.fromUnknownError(error),
+      error: new KeyworkResourceError(error),
       controller: null as unknown as AbortController,
     })
   }
