@@ -19,9 +19,13 @@ const path = require('path')
 const fs = require('fs')
 
 // @ts-ignore Node
-const headerPath = path.resolve(__dirname, 'build', 'header.js')
+const headerPath = path.resolve(__dirname, 'common', 'header.js')
 const rawHeaderContent = fs.readFileSync(headerPath, 'utf8')
-const headerLines = rawHeaderContent.replace('/**', '*').replace('*/\n', '').split('\n')
+const headerLines = rawHeaderContent
+  //
+  .replace('/**', '*')
+  .replace('*/\n', '')
+  .split('\n')
 
 const config = {
   root: true,
@@ -76,7 +80,7 @@ const config = {
         message: "Use `import Stream from 'keywork/platform/stream'`",
       },
     ],
-    'header/header': [2, 'block', headerLines, 1],
+    'header/header': [2, 'block', headerLines, 0],
     'react/prop-types': 'off',
     'no-undef': 'off',
     'no-extra-semi': 'off',

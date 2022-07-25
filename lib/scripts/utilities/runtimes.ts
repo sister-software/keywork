@@ -12,36 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { EntryPoint } from 'deno/dnt'
 import { SpecifierMappings } from 'deno/dnt/transform'
-import * as path from 'deno/path'
-import { changeExtension } from '../../paths.ts'
-
-/**
- * @internal
- */
-export interface ImportMap {
-  imports: {
-    [specifier: string]: string
-  }
-}
-
-interface PackageExports {
-  [namedExport: string]: {
-    import: string
-    require: string
-    types: string
-  }
-}
-
-export interface NPMPackageJSON {
-  name: string
-  version: string
-  dependencies: Record<string, string>
-  peerDependencies: Record<string, string>
-  devDependencies: Record<string, string>
-  exports: PackageExports
-}
 
 export type KeyworkRuntime = 'common' | 'worker' | 'browser' | 'node' | 'cloudflare' | 'deno'
 export const KeyworkRuntimes = new Set<KeyworkRuntime>([
@@ -63,39 +34,6 @@ export const compatibleRuntimes: Record<KeyworkRuntime, KeyworkRuntime[]> = {
 }
 
 export const RUNTIME_PLACEHOLDER = '{{RUNTIME}}'
-/**
- * Extract package.json entrypoints from a given import map.
- * @internal
- */
-export function extractEntrypoints(packageName: string, importMap: ImportMap) {
-  const entryPoints: EntryPoint[] = []
-  const packageExports: PackageExports = {}
-
-  for (const [specifier, remappedSpecifier] of Object.entries(importMap.imports)) {
-    const pathSegments = specifier.split('/')
-
-    if (pathSegments[0] !== packageName) continue
-
-    entryPoints.push({
-      name: specifier,
-      path: remappedSpecifier,
-    })
-
-    const namedExport = './' + path.relative(packageName, specifier)
-    const relativeSpecifier = remappedSpecifier.replace('./lib/', './')
-    const _import = changeExtension(relativeSpecifier, '.js')
-    const _types = changeExtension(relativeSpecifier, '.d.ts')
-
-    packageExports[namedExport] = {
-      import: _import,
-      // TODO: require is only partially supported for platform polyfills.
-      require: _import,
-      types: _types,
-    }
-  }
-
-  return { entryPoints, packageExports }
-}
 
 /**
  * @internal

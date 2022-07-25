@@ -62,7 +62,10 @@ export type RouteMethodDeclaration<
  * Routes incoming HTTP requests from the user's browser to your app's route endpoints.
  *
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
- * @typeParam Data Optional extra data to be passed to a route handler.
+ *
+ * {@link https://keywork.app/docs/concepts/routing Keywork Documentation}
+ *
+ * {@link https://keywork.app/api/classes/routing-worker.WorkerRouter Keywork API}
  *
  * @category Router
  */
@@ -120,7 +123,7 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
         const responseLike = await fetcherLike(event, next)
         const response = await castToResponse(responseLike, this.reactOptions)
 
-        return this.applyHeaders(cloneAsMutableResponse(response))
+        return this.applyHeaders(response)
       }
 
       return {
@@ -579,16 +582,19 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
   /**
    * Applies the default headers for a given Keywork request.
    *
+   * @returns Mutable instance of the given response
    * @ignore
    */
   protected applyHeaders(response: globalThis.Response): globalThis.Response {
+    const mutableResponse = cloneAsMutableResponse(response)
+
     if (this.includeDebugHeaders) {
       for (const [key, value] of Object.entries(KeyworkHeaders)) {
-        response.headers.set(key, value)
+        mutableResponse.headers.set(key, value)
       }
     }
 
-    return response
+    return mutableResponse
   }
 
   protected terminateMiddleware = () => {

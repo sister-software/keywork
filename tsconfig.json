@@ -1,0 +1,18 @@
+{
+  "extends": "./tsconfig.base.json",
+  "include": [
+    "**/*"
+  ],
+  "compilerOptions": {
+    "lib": [
+      "esnext"
+    ],
+    "paths": {
+      "@keywork/monorepo/common/*": ["./common/*/index.ts"]
+    }
+  },
+  "ts-node": {
+    "esm": true,
+  },
+  "exclude": []
+}

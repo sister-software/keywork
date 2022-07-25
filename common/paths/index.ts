@@ -12,5 +12,17 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './common.mjs'
-export * from './extract.mjs'
+import * as path from 'path'
+import { fileURLToPath } from 'url'
+
+const __filename = fileURLToPath(import.meta.url)
+
+/**
+ * The absolute path to the project root.
+ */
+export const projectRoot = path.resolve(path.dirname(__filename), '..', '..')
+
+/**
+ * A path builder to the absolute project root.
+ */
+export const projectPath = path.join.bind(null, projectRoot)

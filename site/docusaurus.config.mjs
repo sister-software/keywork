@@ -17,10 +17,7 @@
 
 import docsPlugin from '@docusaurus/plugin-content-docs'
 import { createRequire } from 'module'
-import { readAllPackageEntryPoints } from '../build/utils/packages.mjs'
-import { typeDocPlugin } from './typedoc/index.mjs'
 
-const allPackageEntryPoints = await readAllPackageEntryPoints()
 const require = createRequire(import.meta.url)
 const lightCodeTheme = require('prism-react-renderer/themes/okaidia')
 const validationUtils = require('@docusaurus/utils-validation')
@@ -74,19 +71,6 @@ const config = {
   ],
   plugins: [
     [
-      typeDocPlugin,
-      {
-        typeDocOptions: {
-          entryPoints: allPackageEntryPoints,
-          githubPages: false,
-          excludeInternal: true,
-          hideGenerator: true,
-          hideBreadcrumbs: true,
-          hideInPageTOC: true,
-        },
-      },
-    ],
-    [
       docsPlugin.default,
       docsPlugin.validateOptions({
         validate: validationUtils.normalizePluginOptions,
@@ -99,7 +83,19 @@ const config = {
           },
       }),
     ],
-
+    [
+      docsPlugin.default,
+      docsPlugin.validateOptions({
+        validate: validationUtils.normalizePluginOptions,
+        options:
+          /** @type {import('@docusaurus/plugin-content-docs').PluginOptions} */
+          {
+            id: 'api',
+            path: 'api',
+            routeBasePath: '/api',
+          },
+      }),
+    ],
     [
       docsPlugin.default,
       docsPlugin.validateOptions({
@@ -189,10 +185,6 @@ const config = {
                 label: 'Stack Overflow',
                 href: 'https://stackoverflow.com/questions/tagged/keywork',
               },
-              // {
-              //   label: 'Discord',
-              //   href: 'https://discordapp.com/invite/docusaurus',
-              // },
               {
                 label: 'Twitter',
                 href: 'https://twitter.com/nirrius',

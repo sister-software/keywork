@@ -18,7 +18,8 @@
  * Session management to aid in authenticating users.
  *
  * @packageDocumentation
- * @module sessions
+ * @module session
  */
 
+export * from './common.ts'
 export * from './KeyworkSession.ts'

@@ -12,19 +12,23 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/** Common project file names. */
-export const ProjectFiles = {
-  /** Prepared TS output for distribution. */
-  OutDirectory: 'dist',
-  TSConfig: 'tsconfig.json',
-  /** Source content. */
-  LibDirectory: 'lib',
-  PackageJSON: 'package.json',
-  ImportMap: 'import_map.json',
-  Readme: 'README.md',
-  License: 'LICENSE.md',
-  Index: 'index.md',
-  Category: '_category_.json',
-  CNAME: 'CNAME',
-  ModuleIndex: 'modules.md',
+import * as fs from 'fs/promises'
+import * as path from 'path'
+
+export function changeExtension(filePath: string, extension: string) {
+  const parsedPath = path.parse(filePath)
+
+  return parsedPath.dir + path.sep + parsedPath.name + extension
+}
+
+/**
+ * @returns whether the file exists.
+ */
+export async function checkFileExists(filePath: string): Promise<boolean> {
+  try {
+    await fs.stat(filePath)
+    return true
+  } catch {
+    return false
+  }
 }

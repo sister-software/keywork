@@ -28,6 +28,7 @@
     ".prettierignore": true,
     "tsdoc.json": true,
     "typedoc.json": true,
+    "docs": true,
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -43,8 +44,7 @@
   },
   "deno.enablePaths": [
     "./lib",
-    "./scripts",
-    "./paths.ts",
+    "./deno",
   ],
   "deno.unstable": false,
   "deno.lint": true,

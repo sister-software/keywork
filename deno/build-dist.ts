@@ -21,14 +21,15 @@ import { ShimOptions, shimOptionsToTransformShims } from 'deno/dnt/shims'
 import { transform, TransformOutput } from 'deno/dnt/transform'
 import { runNpmCommand } from 'deno/dnt/utils'
 
-import { copy } from 'deno/fs'
-import * as path from 'deno/path'
-import { projectPath } from '../paths.ts'
-import { ProjectFiles } from './utilities/files.mjs'
-
+import { copy } from 'deno/fs/copy'
 import { PrefixedLogger } from 'keywork/utilities'
-import { formatFiles } from './utilities/formatting.ts'
-import { extractEntrypoints, ImportMap, NPMPackageJSON } from './utilities/imports.ts'
+import * as path from 'path'
+import { writeBuildManifest, extractEntrypoints, ImportMap, NPMPackageJSON } from '@keywork/monorepo/common/imports'
+import { projectPath } from '../common/paths/index.ts'
+import * as ProjectFiles from '../common/project/index.ts'
+
+const outDir = ProjectFiles.OutDirectory
+const filePaths: string[] = []
 const logger = new PrefixedLogger('Build')
 
 const createdDirectories = new Set<string>()
@@ -45,7 +46,6 @@ function writeFile(filePath: string, fileText: string) {
 
 const packageJSONContents = await Deno.readTextFile(projectPath('lib', ProjectFiles.PackageJSON))
 const packageJSON = JSON.parse(packageJSONContents) as NPMPackageJSON
-const outDir = projectPath(ProjectFiles.OutDirectory)
 
 const tsConfigSrcPath = projectPath('lib', ProjectFiles.TSConfig)
 
@@ -153,20 +153,15 @@ function build(transformOutput: TransformOutput) {
     project.createSourceFile(outputFilePath, outputFile.fileText)
   }
 
-  logger.log(`Sanitizing source files...`)
-  for (const sourceFile of project.getSourceFiles()) {
-    // Remove any source files TypeScript may have automatically included from current node_modules.
-    if (!sourceFile.fileName.startsWith(outDir)) {
-      project.removeSourceFile(sourceFile)
-    }
-  }
-
   const program = project.createProgram()
-
   logger.log('Emitting project files...')
   const emitResult = program.emit(
     undefined,
     (filePath, data, writeByteOrderMark) => {
+      if (filePath.endsWith('.d.ts')) {
+        filePaths.push(filePath)
+      }
+
       if (writeByteOrderMark) {
         data = '\uFEFF' + data
       }
@@ -226,5 +221,5 @@ await runNpmCommand({
 })
 
 build(transformOutput)
-
-await formatFiles(outDir)
+logger.info('Emitting build manifest...')
+await writeBuildManifest(filePaths)

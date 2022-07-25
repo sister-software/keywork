@@ -12,14 +12,14 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import * as fs from 'node:fs/promises'
-import * as path from 'node:path'
+import * as fs from 'fs/promises'
+import * as path from 'path'
 import { titleCase } from 'title-case'
 import TypeDoc from 'typedoc'
 import { MarkdownTheme } from 'typedoc-plugin-markdown'
-import { checkFileExists } from '../../build/utils/files.mjs'
-import { projectPath } from '../../paths-legacy.mjs'
-import { ProjectFiles } from '../../scripts/utilities/files.mjs'
+import { checkFileExists } from '../common/files/index.js'
+import { projectPath } from '../common/paths/index.js'
+import * as ProjectFiles from '../common/project/index.js'
 
 // @ts-check
 
@@ -35,19 +35,14 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
   // Somewhat brittle but this handles anchor links.
   static _markdownExtensionPattern = /\.md/
 
-  get readme() {
-    return 'none'
-  }
-  set readme(value) {
-    return
-  }
+  // get readme() {
+  //   return 'none'
+  // }
+  // set readme(value) {
+  //   return
+  // }
 
-  /**
-   *
-   * @param {TypeDoc.DeclarationReflection} model
-   *
-   */
-  _modelToFrontMatter(model) {
+  _modelToFrontMatter(model: TypeDoc.ContainerReflection) {
     const kindString = model.kindString || 'Index'
     const title = `${kindString}: ${model.name}`
     const sidebarLabel = titleCase(model.name).replaceAll('-', ' ')
@@ -57,13 +52,16 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
   }
 
   /**
-   *
-   * @param {TypeDoc.RenderTemplate<TypeDoc.DeclarationReflection>} template
-   * @param {TypeDoc.PageEvent<TypeDoc.DeclarationReflection>} pageEvent
    * @returns Template output with front matter
    */
-  _renderWithFrontMatter(template, pageEvent) {
+  _renderWithFrontMatter<T extends TypeDoc.ContainerReflection>(
+    template: (pageEvent: TypeDoc.PageEvent<T>) => string,
+    pageEvent: TypeDoc.PageEvent<T>
+  ) {
     const templateOutput = template(pageEvent)
+
+    if (!templateOutput.trim()) return templateOutput
+
     const { title, sidebarLabel, className } = this._modelToFrontMatter(pageEvent.model)
 
     const output = `---
@@ -80,34 +78,30 @@ ${templateOutput}`
   getIndexTemplate() {
     const indexTemplate = super.getIndexTemplate()
 
-    return (pageEvent) => {
-      return this._renderWithFrontMatter(indexTemplate, pageEvent)
+    return (pageEvent: TypeDoc.PageEvent<TypeDoc.ContainerReflection>) => {
+      return this._renderWithFrontMatter(indexTemplate, pageEvent) + 'INDEX TEMPLATE'
     }
   }
 
   getReflectionTemplate() {
     const reflectionTemplate = super.getReflectionTemplate()
 
-    return (pageEvent) => {
+    return (pageEvent: TypeDoc.PageEvent<TypeDoc.ContainerReflection>) => {
+      if (pageEvent.model.kind === TypeDoc.ReflectionKind.Module) {
+        pageEvent.model.kind = TypeDoc.ReflectionKind.Module
+        pageEvent.model.kindString = 'Module'
+      }
+      console.log([pageEvent.model.name, pageEvent.model.kind, pageEvent.model.kindString])
+
       return this._renderWithFrontMatter(reflectionTemplate, pageEvent)
     }
   }
 
-  /**
-   *
-   * @param {string} urlPath
-   * @returns {string}
-   */
-  normalizeURLPathSegments(urlPath) {
+  normalizeURLPathSegments(urlPath: string): string {
     return urlPath.replaceAll('_', '-')
   }
 
-  /**
-   *
-   * @param {string} urlPath
-   * @returns {string}
-   */
-  normalizeURLPath(urlPath) {
+  normalizeURLPath(urlPath: string): string {
     return (
       urlPath
         //
@@ -116,15 +110,11 @@ ${templateOutput}`
     )
   }
 
-  /**
-   *
-   * @param {TypeDoc.UrlMapping[]} urlMappings
-   */
-  _fixURLs(project, urlMappings) {
+  _fixURLs(_project: TypeDoc.ProjectReflection, urlMappings: TypeDoc.UrlMapping[]) {
     for (const urlMapping of urlMappings) {
-      if (urlMapping.url === ProjectFiles.Readme) {
-        urlMapping.url = path.join(typeDocModulesDirName, ProjectFiles.ModuleIndex)
-      }
+      // if (urlMapping.url === ProjectFiles.Readme) {
+      //   urlMapping.url = path.join(typeDocModulesDirName, ProjectFiles.ModuleIndex)
+      // }
 
       urlMapping.url = this.normalizeURLPathSegments(urlMapping.url)
 
@@ -142,11 +132,7 @@ ${templateOutput}`
     return urlMappings
   }
 
-  /**
-   *
-   * @param {TypeDoc.ProjectReflection} project
-   */
-  getUrls(project) {
+  getUrls(project: TypeDoc.ProjectReflection) {
     const urlMappings = this._fixURLs(project, super.getUrls(project))
 
     return urlMappings
@@ -157,30 +143,25 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
   constructor() {
     super()
     this.options.addReader(new TypeDoc.TSConfigReader())
-    // this.options.addReader(new TypeDoc.TypeDocReader())
   }
 
   categories = [
-    {
-      dirName: 'modules',
-      config: {
-        collapsible: false,
-        collapsed: false,
-        label: 'API Overview',
-      },
-    },
+    // {
+    //   dirName: 'modules',
+    //   config: {
+    //     collapsible: false,
+    //     collapsed: false,
+    //     label: 'API Overview',
+    //   },
+    // },
     { dirName: 'classes', config: { label: 'Classes' } },
     { dirName: 'interfaces', config: { label: 'Interfaces' } },
     { dirName: 'enums', config: { label: 'Enums' } },
   ]
 
-  /**
-   *
-   * @param {TypeDoc.ProjectReflection} project
-   * @param {string} out
-   */
-  async generateDocs(project, out) {
+  async generateDocs(project: TypeDoc.ProjectReflection, out: string) {
     await super.generateDocs(project, out)
+    await fs.rm(path.join(out, 'modules'), { force: true, recursive: true })
 
     // Add a category configuration to the API root.
     for (const [index, category] of Object.entries(this.categories)) {
@@ -189,6 +170,7 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
 
       if (!exists) continue
 
+      await fs.mkdir(categoryDir, { recursive: true })
       await fs.writeFile(
         path.join(categoryDir, ProjectFiles.Category),
         JSON.stringify(
@@ -199,7 +181,8 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
           },
           null,
           2
-        )
+        ),
+        'utf8'
       )
     }
   }
@@ -208,20 +191,21 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
    * Initialize TypeDoc with the given options object.
    * Patches the Markdown theme to better align with Docusaurus's expected output.
    *
-   * @param {Partial<TypeDoc.TypeDocOptions>} [options]  The desired options to set.
    */
-  bootstrap(options) {
+  bootstrap(options: Partial<TypeDoc.TypeDocOptions>) {
     super.bootstrap({
       ...options,
       tsconfig: projectPath('dist', 'tsconfig.json'),
       plugin: ['typedoc-plugin-markdown', ...(options.plugin || [])],
     })
 
-    if (!this.renderer.themes.has('markdown')) {
+    const renderer = this.renderer as any
+
+    if (!renderer.themes.has('markdown')) {
       throw new Error('Markdown theme not present')
     }
 
-    this.renderer.themes.set('markdown', DocusaurusMarkdownTheme)
+    renderer.themes.set('markdown', DocusaurusMarkdownTheme)
 
     Object.defineProperty(this.renderer, 'cname', {
       get() {

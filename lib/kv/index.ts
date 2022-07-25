@@ -3,6 +3,10 @@
 /**
  * @file This file is part of the workers-types project.
  * @see {@link https://github.com/cloudflare/workers-types}
+ * @packageDocumentation
+ * @module KV
+ * @ignore
+
  */
 
 /**

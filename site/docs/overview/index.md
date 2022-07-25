@@ -6,8 +6,13 @@ sidebar_label: Getting Started
 
 **Keywork** is a batteries-included, library for building web apps on Cloudflare Workers, Deno, and Node.JS
 
-![npm (scoped)](https://img.shields.io/npm/v/keywork)
 ![npm](https://img.shields.io/npm/dm/keywork)
+![GitHub commit activity](https://img.shields.io/github/commit-activity/m/nirrius/keywork)
+![Discord](https://img.shields.io/discord/595317990191398933?color=blue&label=Chat&logo=discord&logoColor=white)
+
+![npm (scoped)](https://img.shields.io/npm/v/keywork)
+[![deno module](https://shield.deno.dev/x/keywork)](https://deno.land/x/keywork)
+[![codecov](https://codecov.io/gh/nirrius/keywork/branch/main/graph/badge.svg?token=1SDGYMB2YN)](https://codecov.io/gh/nirrius/keywork)
 
 Keywork may be right for you if...
 

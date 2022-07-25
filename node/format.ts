@@ -12,39 +12,32 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import getFiles from 'deno/getfiles'
-import * as path from 'deno/path'
-// @ts-expect-error Bad Default export
-import prettierTS from 'prettier/parser-typescript'
+import fs from 'fs/promises'
+import * as path from 'path'
 
+import FastGlob from 'fast-glob'
 import prettier from 'prettier'
-import { projectPath } from '../../paths.ts'
+import { projectPath } from '@keywork/monorepo/common/paths'
+import { OutDirectory } from '@keywork/monorepo/common/project'
 
 export async function formatFiles(filesDir: string): Promise<void> {
   console.log(`Formatting build...`)
 
-  const prettierConfig = JSON.parse(Deno.readTextFileSync(projectPath('.prettierrc')))
+  const prettierConfig = JSON.parse(await fs.readFile(projectPath('.prettierrc'), 'utf8'))
 
   if (!prettierConfig) throw Error('Prettier config not found')
 
-  const files = getFiles({
-    root: filesDir,
-    exclude: [path.join(filesDir, 'node_modules')],
+  const filePaths = await FastGlob(path.join(filesDir, '**', '*.{js,mjs}'), {
+    ignore: [path.join(filesDir, 'node_modules')],
   })
 
   await Promise.all(
-    files.map(async (file) => {
-      if (!file.ext.endsWith('js')) return
+    filePaths.map(async (filePath) => {
+      const fileContents = await fs.readFile(filePath, 'utf8')
 
-      const fileContents = await Deno.readTextFile(file.realPath)
-
-      return Deno.writeTextFile(
-        file.realPath,
-        prettier.format(fileContents, {
-          ...prettierConfig,
-          plugins: [prettierTS],
-        })
-      )
+      return fs.writeFile(filePath, prettier.format(fileContents, prettierConfig), 'utf8')
     })
   )
 }
+
+await formatFiles(OutDirectory)

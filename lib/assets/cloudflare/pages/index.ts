@@ -1,4 +1,16 @@
 /**
+ * @module Keywork.Assets.Cloudflare.Pages
+ * @packageDocumentation
+ * Static asset utilities for Cloudflare Pages.
+ *
+ * ```ts
+ * import { CloudflarePagesAssetRouter } from 'keywork/assets/cloudflare/pages'
+ * ```
+ */
+
+/* eslint-disable header/header */
+
+/**
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -9,16 +21,7 @@
  * Buying such a license is mandatory as soon as you develop commercial activities
  * involving the Keywork software without disclosing the source code of your own applications.
  *
- * @see LICENSE.md in the project root for further licensing information.
- */
-
-/**
- * ### `keywork/assets/cloudflare/pages`
- *
- * Static asset utilities for Worker Sites.
- *
- * @packageDocumentation
- * @module assets.cloudflare.pages
+ * @see LICENSE.md in the project root for further licensing information. *
  */
 
 export * from './CloudflarePagesAssetRouter.ts'

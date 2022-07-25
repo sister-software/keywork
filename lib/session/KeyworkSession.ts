@@ -14,41 +14,10 @@
 
 import { WorkerRouter } from 'keywork/router/worker'
 import type { RouteRequestHandler } from 'keywork/router/route'
-
 import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'cookie'
 import { ulid } from 'keywork/ids'
 import { CookieHeaders } from 'keywork/headers'
-
-/**
- * The default session cookie key.
- * @internal
- */
-export const DEFAULT_SESSION_COOKIE_KEY = '_keyworkSessionID'
-
-/**
- * The default cookie serialization options.
- * @internal
- */
-export const DEFAULT_COOKIE_SERIALIZE_OPTIONS: CookieSerializeOptions = {
-  sameSite: 'strict',
-  secure: true,
-  httpOnly: true,
-  maxAge: 60 * 60 * 24 * 90,
-} as const
-
-export interface SessionMiddlewareOptions {
-  /**
-   * The key used to read from the cookie header.
-   * @defaultValue {@link DEFAULT_SESSION_COOKIE_KEY}
-   */
-  cookieKey?: string
-
-  /**
-   * @defaultValue {@link DEFAULT_COOKIE_SERIALIZE_OPTIONS}
-   */
-
-  serializeOptions?: CookieSerializeOptions
-}
+import { DEFAULT_SESSION_COOKIE_KEY, DEFAULT_COOKIE_SERIALIZE_OPTIONS, SessionMiddlewareOptions } from './common.ts'
 
 /**
  * A simple session manager to aid in authenticating users.
