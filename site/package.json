@@ -23,7 +23,7 @@
     "@docusaurus/core": "2.0.0-rc.1",
     "@docusaurus/preset-classic": "2.0.0-rc.1",
     "@mdx-js/react": "^1.6.22",
-    "@typeform/embed-react": "^1.16.0",
+    "@typeform/embed-react": "^1.18.0",
     "clsx": "^1.2.1",
     "prism-react-renderer": "^1.3.5",
     "react": "^17.0.2",
