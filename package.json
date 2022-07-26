@@ -34,7 +34,7 @@
   },
   "dependencies": {
     "@types/prettier": "^2.6.3",
-    "@typescript-eslint/eslint-plugin": "^5.10.2",
+    "@typescript-eslint/eslint-plugin": "^5.31.0",
     "@typescript-eslint/parser": "^5.10.2",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
