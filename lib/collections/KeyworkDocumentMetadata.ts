@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ETaggable } from 'keywork/caching'
+import { ETaggable } from 'keywork/http/headers/caching'
 import isPlainObject from 'lodash.isplainobject'
 import { ulid } from 'ulidx'
 import type { DeserializationTransformers, PutOrPatchOptions } from './KeyworkCollection/common.ts'
@@ -33,7 +33,7 @@ export interface CreateKeyworkDocumentMetadataOptions {
   /**
    * An optional ETag of the value associated with this document.
    *
-   * @see `generateETag` via `keywork/caching`
+   * @see {generateETag}
    */
   etag?: string | null
 }
@@ -57,7 +57,7 @@ export interface KeyworkDocumentMetadata extends PutOrPatchOptions {
   /**
    * An optional ETag of the value associated with this document.
    *
-   * @see `generateETag` via `keywork/caching`
+   * @see {generateETag}
    */
   etag: string | null
 }

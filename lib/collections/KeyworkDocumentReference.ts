@@ -13,7 +13,7 @@
  */
 
 import deepmerge from 'deepmerge'
-import { convertJSONToETaggableString, generateETag } from 'keywork/caching'
+import { convertJSONToETaggableString, generateETag } from 'keywork/http/headers/caching'
 import { KeyworkResourceError } from 'keywork/errors'
 import type { KVNamespace } from 'keywork/kv'
 import { resolvePathSegments } from 'keywork/uri'

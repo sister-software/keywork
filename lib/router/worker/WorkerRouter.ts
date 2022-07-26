@@ -13,19 +13,19 @@
  */
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
-import { KeyworkHeaders } from 'keywork/headers'
-import { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from 'keywork/platform/http'
-import { ReactRendererOptions } from 'keywork/react/common'
+import { KeyworkHeaders } from 'keywork/http/headers'
+import { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from 'keywork/http'
+import { ReactRendererOptions } from 'keywork/react/isomorphic'
 import { renderReactStream } from 'keywork/react/worker'
-import { castToResponse, cloneAsMutableResponse, ErrorResponse } from 'keywork/response'
-import { IncomingRequestEvent, IncomingRequestEventData } from 'keywork/request'
+import { castToResponse, cloneAsMutableResponse, ErrorResponse } from 'keywork/http/response'
+import { IncomingRequestEvent, IncomingRequestEventData } from 'keywork/http/request'
 import { isKeyworkFetcher, KeyworkFetcher, MiddlewareFetch } from 'keywork/router/middleware'
 import type { ParsedRoute, RouteMatch, RouteRequestHandler } from 'keywork/router/route'
 import { compilePath, matchPathPrecompiled, normalizePathPattern, PathPattern } from 'keywork/uri'
 import { Disposable, findSubstringStartOffset, PrefixedLogger } from 'keywork/utilities'
 import { isMiddlewareDeclarationOption, WorkerRouterOptions } from './common.ts'
 import { RouteDebugEntrypoint, WorkerRouterDebugEndpoints } from 'keywork/router/debug'
-import { isCloudflareWorkerExecutionContext } from 'keywork/request/cloudflare'
+import { isCloudflareWorkerExecutionContext } from 'keywork/http/request/cloudflare'
 
 /**
  * Used in place of the reference-sensitive `instanceof`
@@ -61,13 +61,12 @@ export type RouteMethodDeclaration<
 /**
  * Routes incoming HTTP requests from the user's browser to your app's route endpoints.
  *
- * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
- *
  * {@link https://keywork.app/docs/concepts/routing Keywork Documentation}
  *
  * {@link https://keywork.app/api/classes/routing-worker.WorkerRouter Keywork API}
  *
  * @category Router
+ * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  */
 export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAliases>, Disposable {
   /**

@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { WorkerEnvFetchBinding } from 'keywork/bindings'
-import { ErrorResponse } from 'keywork/response'
+import type { WorkerEnvFetchBinding } from 'keywork/bindings/worker'
+import { ErrorResponse } from 'keywork/http/response'
 import { Status } from 'keywork/errors'
 import type { RouteRequestHandler } from 'keywork/router/route'
 import { WorkerRouter, WorkerRouterOptions } from 'keywork/router/worker'

@@ -1,16 +1,4 @@
 /**
- * @module Keywork.Assets.Cloudflare.Sites
- * @packageDocumentation
- * Static asset utilities for Worker Sites.
- *
- * ```ts
- * import { WorkerSitesAssetRouter } from 'keywork/assets/cloudflare/sites'
- * ```
- */
-
-/* eslint-disable header/header */
-
-/**
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.

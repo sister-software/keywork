@@ -13,7 +13,6 @@
  */
 
 // @ts-check
-// Note: type annotations allow type checking and IDEs autocompletion
 
 import docsPlugin from '@docusaurus/plugin-content-docs'
 import { createRequire } from 'module'
@@ -87,13 +86,16 @@ const config = {
       docsPlugin.default,
       docsPlugin.validateOptions({
         validate: validationUtils.normalizePluginOptions,
-        options:
-          /** @type {import('@docusaurus/plugin-content-docs').PluginOptions} */
-          {
-            id: 'api',
-            path: 'api',
-            routeBasePath: '/api',
+        options: {
+          id: 'api',
+          path: 'api',
+          routeBasePath: '/api',
+          editUrl: (params) => {
+            const url = new URL(`https://github.com/nirrius/keywork/edit/main/lib/${params.docPath}`)
+
+            return url.toString()
           },
+        },
       }),
     ],
     [

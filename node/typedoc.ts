@@ -21,34 +21,91 @@ import { checkFileExists } from '../common/files/index.js'
 import { projectPath } from '../common/paths/index.js'
 import * as ProjectFiles from '../common/project/index.js'
 
-// @ts-check
-
 const defaultCategory = {
   collapsible: true,
   collapsed: true,
 }
 
-// This seems to be hardcoded.
-const typeDocModulesDirName = 'modules'
+// // This seems to be hardcoded.
+// const typeDocModulesDirName = 'modules'
+
+export interface MarkdownThemeOptions {
+  /**
+   * Do not render page title.
+   * @defaultValue false
+   */
+  hidePageTitle: boolean
+
+  /**
+   * Do not render breadcrumbs in template.
+   * @defaultValue false
+   */
+  hideBreadcrumbs: boolean
+
+  /**
+   * Specifies the base path that all links to be served from. If omitted all urls will be relative.
+   */
+  publicPath: string
+
+  /**
+   * Use HTML named anchors as fragment identifiers for engines that do not automatically assign header ids. Should be set for Bitbucket Server docs.
+   * @defaultValue false
+   */
+  namedAnchors: boolean
+
+  /**
+   * Output all reflections into seperate output files.
+   * @defaultValue false
+   */
+  allReflectionsHaveOwnDocument: boolean
+
+  /**
+   * Separator used to format filenames.
+   * @defaultValue '.'
+   */
+  filenameSeparator: string
+
+  /**
+   * The file name of the entry document.
+   * @defaultValue 'README.md'
+   */
+  entryDocument: string
+
+  /**
+   * Do not render in-page table of contents items.
+   * @defaultValue false
+   */
+  hideInPageTOC: boolean
+
+  /** Customise the index page title. */
+  indexTitle: string
+
+  /**
+   * Do not add special symbols for class members.
+   * @defaultValue false
+   */
+  hideMembersSymbol: boolean
+
+  /**
+   * Preserve anchor casing when generating links.
+   * @defaultValue false
+   */
+  preserveAnchorCasing: boolean
+}
 
 class DocusaurusMarkdownTheme extends MarkdownTheme {
   // Somewhat brittle but this handles anchor links.
   static _markdownExtensionPattern = /\.md/
 
-  // get readme() {
-  //   return 'none'
-  // }
-  // set readme(value) {
-  //   return
-  // }
-
   _modelToFrontMatter(model: TypeDoc.ContainerReflection) {
+    const isModule = model.kind === TypeDoc.ReflectionKind.Module
+    const position = isModule ? 999 : undefined
     const kindString = model.kindString || 'Index'
     const title = `${kindString}: ${model.name}`
-    const sidebarLabel = titleCase(model.name).replaceAll('-', ' ')
+    const sidebarLabel = isModule ? 'Module API' : titleCase(model.name).replaceAll('-', ' ')
     const className = `doc-kind-${kindString.toLowerCase()}`
 
-    return { title, sidebarLabel, className }
+    return { title, sidebarLabel, className, position }
   }
 
   /**
@@ -62,24 +119,28 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
 
     if (!templateOutput.trim()) return templateOutput
 
-    const { title, sidebarLabel, className } = this._modelToFrontMatter(pageEvent.model)
+    const { title, sidebarLabel, className, position } = this._modelToFrontMatter(pageEvent.model)
 
-    const output = `---
-title: "${title}"
-sidebar_label: "${sidebarLabel}"
-sidebar_class_name: "${className}"
----
+    const output = [
+      '---',
+      `title: "${title}"`,
+      `sidebar_label: "${sidebarLabel}"`,
+      `sidebar_class_name: "${className}"`,
+      typeof position === 'undefined' ? 'stub_position: 0' : `position: ${position}`,
+      '---',
+      '\n',
+      '\n',
+      templateOutput,
+    ]
 
-${templateOutput}`
-
-    return output
+    return output.join('\n')
   }
 
   getIndexTemplate() {
     const indexTemplate = super.getIndexTemplate()
 
     return (pageEvent: TypeDoc.PageEvent<TypeDoc.ContainerReflection>) => {
-      return this._renderWithFrontMatter(indexTemplate, pageEvent) + 'INDEX TEMPLATE'
+      return this._renderWithFrontMatter(indexTemplate, pageEvent)
     }
   }
 
@@ -90,8 +151,8 @@ ${templateOutput}`
       if (pageEvent.model.kind === TypeDoc.ReflectionKind.Module) {
         pageEvent.model.kind = TypeDoc.ReflectionKind.Module
         pageEvent.model.kindString = 'Module'
+        return reflectionTemplate(pageEvent)
       }
-      console.log([pageEvent.model.name, pageEvent.model.kind, pageEvent.model.kindString])
 
       return this._renderWithFrontMatter(reflectionTemplate, pageEvent)
     }
@@ -146,14 +207,6 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
   }
 
   categories = [
-    // {
-    //   dirName: 'modules',
-    //   config: {
-    //     collapsible: false,
-    //     collapsed: false,
-    //     label: 'API Overview',
-    //   },
-    // },
     { dirName: 'classes', config: { label: 'Classes' } },
     { dirName: 'interfaces', config: { label: 'Interfaces' } },
     { dirName: 'enums', config: { label: 'Enums' } },
@@ -176,7 +229,7 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
         JSON.stringify(
           {
             ...defaultCategory,
-            position: parseInt(index, 10),
+            position: 99 + parseInt(index, 10),
             ...category.config,
           },
           null,
@@ -192,7 +245,7 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
    * Patches the Markdown theme to better align with Docusaurus's expected output.
    *
    */
-  bootstrap(options: Partial<TypeDoc.TypeDocOptions>) {
+  bootstrap(options: Partial<TypeDoc.TypeDocOptions & MarkdownThemeOptions>) {
     super.bootstrap({
       ...options,
       tsconfig: projectPath('dist', 'tsconfig.json'),

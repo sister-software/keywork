@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { HTTPMethod } from 'keywork/platform/http'
+import { HTTPMethod } from 'keywork/http'
 import { CompiledPath } from 'keywork/uri'
 
 /**

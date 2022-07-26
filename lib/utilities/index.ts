@@ -12,25 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * ### `keywork/utilities`
- *
- * Common core utilities for building web apps.
- *
- * - HTTP responses for content like JSON, HTML, and much more!
- * - Type-safe request handlers that make API endpoints easy.
- * - Cache headers, cache responses, and even ETag generation for your own content.
- * - Simplified error handling for your server-side Worker logic.
- * - URL helpers, path builders.
- * - ULID and Snowflake ID generation.
- * - Isomorpic runtime error handling for both the browser, and your Worker.
- * - Logging that helps you better trace down errors as your app grows.
- * - All the typical "junk drawer" stuff you usually have to implement when building a web app.
- *
- * @packageDocumentation
- * @module utilities
- */
-
 export * from './datetime.ts'
 export * from './disposable.ts'
 export * from './json.ts'

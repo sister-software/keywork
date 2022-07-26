@@ -15,8 +15,8 @@
 import { assertEquals, assert } from 'deno/testing/asserts'
 import { WorkerRouter } from 'keywork/router/worker'
 import { SessionMiddleware } from 'keywork/session'
-import { CookieHeaders } from 'keywork/headers'
-import HTTP from 'keywork/platform/http'
+import { CookieHeaders } from 'keywork/http/headers'
+import HTTP from 'keywork/http'
 import { parse as parseCookies } from 'cookie'
 
 Deno.test('Session Middleware', async () => {
@@ -35,7 +35,7 @@ Deno.test('Session Middleware', async () => {
   const rootResponse = await app.fetch(new HTTP.Request('http://localhost/'))
   assertEquals(await rootResponse.text(), `Hello from /`, 'Response has body')
 
-  const cookieDough = rootResponse.headers.get(CookieHeaders.Set)
+  const cookieDough = rootResponse.headers.get<CookieHeaders>('Set-Cookie')
 
   assert(cookieDough, 'Request has cookie')
   const cookies = parseCookies(cookieDough)

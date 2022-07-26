@@ -20,7 +20,11 @@
   background-color: var(--nirrius-yellow-dark);
 }
 
-.menu__list .menu__list.menu__list-item--collapsed {
+.menu__list-item--collapsed .menu__list {
+  display: none !important;
+}
+
+.menu__list {
   height: auto !important;
 }
 

@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { ResponseLike } from 'keywork/response'
-import type { IncomingRequestEvent } from 'keywork/request'
+import type { ResponseLike } from 'keywork/http/response'
+import type { IncomingRequestEvent } from 'keywork/http/request'
 import type { MiddlewareFetch } from 'keywork/router/middleware'
 
 /**

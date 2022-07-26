@@ -1,11 +1,4 @@
 /**
- * @packageDocumentation
- * @module router
- * @ignore
- */
-/* eslint-disable header/header */
-
-/**
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.

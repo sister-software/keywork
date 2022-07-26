@@ -10,9 +10,13 @@
   margin-right: 0.5rem;
 }
 
-.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible .menu__link {
+.menu__list-item-collapsible {
+  border-radius: 0;
+}
+
+.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible {
   background: var(--nirrius-teal-base) !important;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem 0 0.5rem 1rem;
   justify-content: center;
 }
 

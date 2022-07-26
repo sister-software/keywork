@@ -1,5 +1,5 @@
 ---
-title: "Moduleooo: assets.cloudflare.sites"
+title: "Module: assets.cloudflare.sites"
 sidebar_label: "Sites"
 sidebar_class_name: "doc-kind-module"
 ---

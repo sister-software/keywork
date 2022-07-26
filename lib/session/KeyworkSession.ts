@@ -16,7 +16,7 @@ import { WorkerRouter } from 'keywork/router/worker'
 import type { RouteRequestHandler } from 'keywork/router/route'
 import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'cookie'
 import { ulid } from 'keywork/ids'
-import { CookieHeaders } from 'keywork/headers'
+import type { CookieHeaders } from 'keywork/http/headers'
 import { DEFAULT_SESSION_COOKIE_KEY, DEFAULT_COOKIE_SERIALIZE_OPTIONS, SessionMiddlewareOptions } from './common.ts'
 
 /**
@@ -58,7 +58,7 @@ export class SessionMiddleware extends WorkerRouter {
   }
 
   protected applySession: RouteRequestHandler = async (event, next) => {
-    const cookies = parseCookies(event.request.headers.get(CookieHeaders.Read) || '')
+    const cookies = parseCookies(event.request.headers.get<CookieHeaders>('Cookie') || '')
     const sessionID = cookies[this.cookieKey]
 
     const session: KeyworkSession = sessionID
@@ -75,8 +75,8 @@ export class SessionMiddleware extends WorkerRouter {
 
     const response = await next(event.request, event.env, event)
     const responseWithSession = response.clone()
-    responseWithSession.headers.set(
-      CookieHeaders.Set,
+    responseWithSession.headers.set<CookieHeaders>(
+      'Set-Cookie',
       serializeCookies(this.cookieKey, sessionID, this.serializeOptions)
     )
 

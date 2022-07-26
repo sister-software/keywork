@@ -15,10 +15,10 @@
 import { Status } from 'keywork/errors'
 import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } from 'deno/testing/asserts'
 import { WorkerRouter } from 'keywork/router/worker'
-import HTTP from 'keywork/platform/http'
-import { JSONResponse } from 'keywork/response'
+import HTTP from 'keywork/http'
+import { JSONResponse } from 'keywork/http/response'
 import React from 'react'
-import { KeyworkHeaders } from 'keywork/headers'
+import { KeyworkHeaders } from 'keywork/http/headers'
 
 interface HelloResponseBody extends Record<PropertyKey, unknown> {
   url: string

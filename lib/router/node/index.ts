@@ -1,5 +1,3 @@
-/* eslint-disable header/header */
-// @ts-no-check
 /**
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
@@ -24,11 +22,11 @@
  */
 
 import { WorkerRouter } from 'keywork/router'
-import HTTP from 'keywork/platform/http'
+import HTTP from 'keywork/http'
 
 import { IncomingMessage, ServerResponse } from 'http'
-import { IncomingRequestEvent } from 'keywork/request'
-import { readGlobalScope } from 'keywork/polyfills/platform'
+import { IncomingRequestEvent } from 'keywork/http/request'
+import { readGlobalScope } from 'keywork/polyfills'
 
 // const { IncomingMessage, ServerResponse } = await import('node:' + 'http')
 

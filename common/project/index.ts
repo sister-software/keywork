@@ -24,10 +24,11 @@ export const TSConfig = 'tsconfig.json'
 /** Source content. */
 export const LibDirectory = projectPath('lib')
 export const PackageJSON = 'package.json'
+export const NodeModules = 'node_modules'
 export const ImportMap = 'import_map.json'
 export const Readme = 'README.md'
 export const License = 'LICENSE.md'
-export const Index = 'index.md'
+export const MarkdownIndex = 'index.md'
 export const Category = '_category_.json'
 export const CNAME = 'CNAME'
 export const ModuleIndex = 'modules.md'

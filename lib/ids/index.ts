@@ -12,14 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * ### `keywork/ids`
- *
- * Utilities for generating IDs.
- *
- * @packageDocumentation
- * @module IDs
- */
-
 export * from './SnowflakeID.ts'
 export * from './ulid.ts'

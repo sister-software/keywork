@@ -14,7 +14,7 @@
 
 import { RouteRequestHandler } from 'keywork/router/route'
 import { PrefixedLogger } from 'keywork/utilities'
-import HTTP from 'keywork/platform/http'
+import HTTP from 'keywork/http'
 
 export type ResponseRedirectStatus = 301 | 302 | 303 | 307 | 308
 /**

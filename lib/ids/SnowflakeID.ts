@@ -17,7 +17,7 @@ import { hexToDec } from 'keywork/utilities'
 /**
  * A basic implementation of Twitter's original Snowflake ID system.
  *
- * @category Sessions
+ * @category IDs
  */
 export class SnowflakeID {
   private seq: number

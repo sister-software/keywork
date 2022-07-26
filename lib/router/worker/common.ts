@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { ReactRendererOptions } from 'keywork/react/common'
+import type { ReactRendererOptions } from 'keywork/react/isomorphic'
 import type { KeyworkFetcher } from 'keywork/router/middleware'
 import { WorkerRouterDebugOptions } from 'keywork/router/debug'
 

@@ -13,7 +13,7 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { IReactStreamRenderer } from 'keywork/react/common'
+import { IReactStreamRenderer } from 'keywork/react/isomorphic'
 import { renderToPipeableStream, ReactDOMServerReadableStream, PipeableStream } from 'react-dom/server'
 
 /**

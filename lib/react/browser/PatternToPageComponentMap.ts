@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { SSRPropsLike } from 'keywork/react/common'
+import { SSRPropsLike } from 'keywork/react/isomorphic'
 import { matchPath } from 'keywork/uri'
 
 /**

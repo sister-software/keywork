@@ -13,7 +13,7 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { globalScopeSSRKey, GlobalScopeWithKeyworkSSRProps, SSRPropsLike } from 'keywork/react/common'
+import { globalScopeSSRKey, GlobalScopeWithKeyworkSSRProps, SSRPropsLike } from 'keywork/react/isomorphic'
 
 export function globalScopeHasSSRProps<SSRProps extends SSRPropsLike>(
   globalScope: unknown

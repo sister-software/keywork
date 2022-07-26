@@ -14,6 +14,7 @@
     "types": [
       "./lib/types/react-dom/server.browser/index.d.ts",
       "./lib/types/env.d.ts",
+      "./lib/types/http.d.ts",
       "./lib/node_modules/@types/node/stream/web.d.ts"
     ]
   },
@@ -22,6 +23,7 @@
     "rules": {
       "exclude": [
         "ban-types",
+        "no-unused-vars",
         "no-explicit-any",
         "no-extra-semi",
         "no-empty-interface",

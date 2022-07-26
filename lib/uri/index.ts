@@ -12,15 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * ### `keywork/uri`
- *
- * Utilities for parsing paths and URLs.
- *
- * @packageDocumentation
- * @module URI
- */
-
 export * from './common.ts'
 export * from './typeCasting.ts'
 export * from './matchPath.ts'

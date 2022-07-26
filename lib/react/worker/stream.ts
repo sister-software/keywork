@@ -14,7 +14,7 @@
 
 import { KeyworkResourceError } from 'keywork/errors'
 
-import { IReactStreamRenderer } from 'keywork/react/common'
+import { IReactStreamRenderer } from 'keywork/react/isomorphic'
 import { renderToReadableStream } from 'react-dom/server.browser'
 
 export const renderReactStream: IReactStreamRenderer = async (children, options) => {

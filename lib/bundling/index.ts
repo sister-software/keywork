@@ -12,14 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * ### `keywork/bundling`
- *
- * Utilities for building Keywork apps with bundlers such as ESBuild and Webpack.
- *
- * @packageDocumentation
- * @module bundling
- */
-
 export * from './common.ts'
 export * from './esbuild/index.ts'

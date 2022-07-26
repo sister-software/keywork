@@ -24,7 +24,13 @@ import { runNpmCommand } from 'deno/dnt/utils'
 import { copy } from 'deno/fs/copy'
 import { PrefixedLogger } from 'keywork/utilities'
 import * as path from 'path'
-import { writeBuildManifest, extractEntrypoints, ImportMap, NPMPackageJSON } from '@keywork/monorepo/common/imports'
+import {
+  writeBuildManifest,
+  extractEntrypoints,
+  ImportMap,
+  NPMPackageJSON,
+  readNPMPackageJSON,
+} from '@keywork/monorepo/common/imports'
 import { projectPath } from '../common/paths/index.ts'
 import * as ProjectFiles from '../common/project/index.ts'
 
@@ -44,9 +50,7 @@ function writeFile(filePath: string, fileText: string) {
   Deno.writeTextFileSync(filePath, fileText)
 }
 
-const packageJSONContents = await Deno.readTextFile(projectPath('lib', ProjectFiles.PackageJSON))
-const packageJSON = JSON.parse(packageJSONContents) as NPMPackageJSON
-
+const packageJSON = await readNPMPackageJSON(projectPath('lib', ProjectFiles.PackageJSON))
 const tsConfigSrcPath = projectPath('lib', ProjectFiles.TSConfig)
 
 const importMapPath = projectPath(ProjectFiles.ImportMap)

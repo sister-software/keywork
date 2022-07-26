@@ -15,7 +15,7 @@
 import * as fs from 'fs/promises'
 import * as path from 'path'
 import { changeExtension } from '@keywork/monorepo/common/files'
-import { OutBuildManifest, OutDirectory, PackageJSON } from '@keywork/monorepo/common/project'
+import { OutBuildManifest, OutDirectory } from '@keywork/monorepo/common/project'
 
 /**
  * @internal
@@ -41,12 +41,13 @@ export interface ImportMap {
   }
 }
 
-interface PackageExports {
-  [namedExport: string]: {
-    import: string
-    require: string
-    types: string
-  }
+export interface NPMExportEntry {
+  import: string
+  require: string
+  types: string
+}
+export interface PackageExports {
+  [namedExport: string]: NPMExportEntry
 }
 
 export interface NPMPackageJSON {
@@ -144,7 +145,7 @@ export async function writeBuildManifest(filePaths: string[]) {
   return fs.writeFile(OutBuildManifest, JSON.stringify(buildManifest, null, 2), 'utf8')
 }
 
-export async function readBuildManifest(): Promise<NPMPackageJSON> {
-  const packageJSONContents = await fs.readFile(path.join(OutDirectory, PackageJSON), 'utf8')
+export async function readNPMPackageJSON(filePath: string): Promise<NPMPackageJSON> {
+  const packageJSONContents = await fs.readFile(filePath, 'utf8')
   return JSON.parse(packageJSONContents)
 }

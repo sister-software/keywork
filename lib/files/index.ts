@@ -13,7 +13,7 @@
  */
 
 /**
- * ### `keywork/headers`
+ * ### `keywork/http/headers`
  *
  * Utilities for working with files.
  *

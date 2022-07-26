@@ -22,7 +22,7 @@ import {
   RouteProvider,
   SSRPropsLike,
   StaticPropsProvider,
-} from 'keywork/react/common'
+} from 'keywork/react/isomorphic'
 import { hydrateRoot, HydrationOptions, Root } from 'react-dom/client'
 import { getSSRPropsFromScope, globalScopeHasSSRProps } from './staticProps.ts'
 

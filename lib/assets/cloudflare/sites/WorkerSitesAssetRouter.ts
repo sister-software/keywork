@@ -16,7 +16,7 @@ import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
 import { KeyworkResourceError, Status } from 'keywork/errors'
 import type { KVNamespace } from 'keywork/kv'
-import { ErrorResponse } from 'keywork/response'
+import { ErrorResponse } from 'keywork/http/response'
 import { RouteRequestHandler } from 'keywork/router/route'
 import { WorkerRouter } from 'keywork/router/worker'
 
