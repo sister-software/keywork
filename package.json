@@ -33,7 +33,7 @@
     "@types/node": "*"
   },
   "dependencies": {
-    "@types/prettier": "^2.6.3",
+    "@types/prettier": "^2.6.4",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
     "eslint": "^8.19.0",
