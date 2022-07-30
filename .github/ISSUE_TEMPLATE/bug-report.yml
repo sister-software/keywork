@@ -1,0 +1,58 @@
+name: Bug report
+description: File a bug report
+title: "[Bug]: "
+labels: ["bug", "triage"]
+body:
+  - type: checkboxes
+    attributes:
+      label: Is there an existing issue for this?
+      description: Please search to see if an issue already exists for the bug you encountered.
+      options:
+        - label: I have searched the existing issues
+          required: true
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Steps to Reproduce
+      description: |
+        Please include the following with each issue:
+
+        - Version of Keywork
+        - The runtime you're using (Cloudflare Workers, Deno, Node, Browser)
+        - Reproducible steps (1... 2... 3...) that cause the issue
+        - What you expected to see, versus what you actually saw
+        - Images, animations, or a link to a video showing the issue occurring
+        - A code snippet that demonstrates the issue or a link to a code repository the developers can easily pull down to recreate the issue locally
+          - **Note:** Because the developers need to copy and paste the code snippet, including a code snippet as a media file (i.e. .gif) is not sufficient.
+        - Errors from either your server, or from the browser's Dev Tools Console (open from the menu: Help > Toggle Developer Tools)
+      value: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Expected
+      description: What should happen?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Actual
+      description: What actually happens?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Screenshot/Video
+      description: Please include a screenshot, gif or screen recording of your issue.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Notes
+      description: Please include any addition notes that will help us resolve this issue.
+    validations:
+      required: false
