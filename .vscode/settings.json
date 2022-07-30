@@ -6,7 +6,6 @@
     "yarn.lock": true,
     "dist": true,
     "cov": true,
-    "docs": true,
     "api-extractor": true,
     "site/etc": true,
     "site/temp": true,
@@ -28,7 +27,6 @@
     ".prettierignore": true,
     "tsdoc.json": true,
     "typedoc.json": true,
-    "docs": true,
   },
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -43,10 +41,9 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
   },
   "deno.enablePaths": [
-    "./lib",
-    "./deno",
+    "./modules",
   ],
   "deno.unstable": false,
   "deno.lint": true,
-  "deno.config": "./deno.jsonc"
+  "deno.config": "./modules/deno.jsonc"
 }

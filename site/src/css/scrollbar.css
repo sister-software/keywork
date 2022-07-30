@@ -11,7 +11,7 @@
 
 .thin-scrollbar::-webkit-scrollbar-thumb {
   background-image: url('/img/dotted.png');
-  background-color: teal-light;
+  background-color: var(--nirrius-teal-light);
   background-size: 2px;
   background-repeat: repeat;
   outline: 2px solid gray-base;
@@ -20,7 +20,7 @@
 
 .thin-scrollbar::-webkit-scrollbar-corner {
   background-image: url('/img/dotted.png');
-  background-color: teal-light;
+  background-color: var(--nirrius-teal-light);
   background-size: 2px;
   background-repeat: repeat;
   border-radius: 0;

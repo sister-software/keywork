@@ -83,7 +83,7 @@ export function extractEntrypoints(packageName: string, importMap: ImportMap) {
     entryPoints.push(entryPoint)
 
     const namedExport = './' + path.relative(packageName, specifier)
-    const relativeSpecifier = remappedSpecifier.replace('./lib/', './')
+    const relativeSpecifier = remappedSpecifier.replace('./modules/', './')
     const _import = changeExtension(relativeSpecifier, '.js')
     const _types = changeExtension(relativeSpecifier, '.d.ts')
 

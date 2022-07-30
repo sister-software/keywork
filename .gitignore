@@ -11,7 +11,7 @@ node_modules
 
 # Production
 /site/build
-/site/api
+/docs/modules
 
 # Generated files
 api-extractor/temp
@@ -21,6 +21,8 @@ import_map.node.json
 import_map.worker.json
 cov.lcov
 cov/
+modules/cov/
+modules/cov.lcov
 
 # Misc
 .DS_Store

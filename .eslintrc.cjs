@@ -27,6 +27,7 @@ const headerLines = rawHeaderContent
   .replace('*/\n', '')
   .split('\n')
 
+/** @type {import('eslint').ESLint.ConfigData} */
 const config = {
   root: true,
   ignorePatterns: ['./packages/*/dist/**/*', './node_modules/**/*'],
@@ -80,7 +81,7 @@ const config = {
         message: "Use `import Stream from 'keywork/platform/stream'`",
       },
     ],
-    'header/header': [2, 'block', headerLines, 0],
+    'header/header': [2, 'block', headerLines, 1],
     'react/prop-types': 'off',
     'no-undef': 'off',
     'no-extra-semi': 'off',

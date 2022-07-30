@@ -1,0 +1,8 @@
+
+.docPage_---node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-styles-module {
+  position: relative;
+  width: 100%;
+  max-width: var(--docs-max-page-width);
+  min-height: 100%;
+  margin: 0 auto;
+}

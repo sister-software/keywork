@@ -12,14 +12,82 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-// @ts-check
-
-import docsPlugin from '@docusaurus/plugin-content-docs'
 import { createRequire } from 'module'
 
 const require = createRequire(import.meta.url)
 const lightCodeTheme = require('prism-react-renderer/themes/okaidia')
-const validationUtils = require('@docusaurus/utils-validation')
+
+/** @type {import('@docusaurus/preset-classic').Options} */
+const presetOptions = {
+  docs: {
+    path: '../docs',
+    sidebarPath: './sidebars.cjs',
+    routeBasePath: '/docs',
+    editUrl: (params) => {
+      // TODO: fix for modules vs content
+      const url = new URL(`https://github.com/nirrius/keywork/edit/main/${params.docPath}`)
+
+      return url.toString()
+    },
+    showLastUpdateTime: true,
+  },
+  blog: false,
+  theme: {
+    customCss: [
+      //
+      require.resolve('./src/css/custom.css'),
+      require.resolve('./src/css/fonts.css'),
+      require.resolve('./src/css/backgrounds.css'),
+      require.resolve('./src/css/scanline.css'),
+      require.resolve('./src/css/navigation.css'),
+      require.resolve('./src/css/scrollbar.css'),
+      require.resolve('./src/css/sidebar.css'),
+      require.resolve('./src/css/menu.css'),
+      require.resolve('./src/css/docs.css'),
+      require.resolve('./src/css/cursor.css'),
+    ],
+  },
+}
+
+/** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+const themeConfig = {
+  algolia: {
+    // The application ID provided by Algolia
+    appId: '__APP_ID__',
+
+    // Public API key: it is safe to commit it
+    apiKey: '_API_KEY_',
+
+    indexName: '_INDEX_NAME',
+
+    // Optional: see doc section below
+    contextualSearch: true,
+
+    // Optional: path for search page that enabled by default (`false` to disable it)
+    searchPagePath: 'search',
+  },
+
+  colorMode: {
+    defaultMode: 'light',
+    disableSwitch: true,
+    respectPrefersColorScheme: false,
+  },
+  navbar: {
+    title: 'Keywork',
+    logo: {
+      alt: 'Keywork Logo',
+      src: 'img/logo.svg',
+    },
+  },
+  footer: {
+    style: 'dark',
+    copyright: `Copyright © ${new Date().getFullYear()} Nirrius, LLC.`,
+  },
+  prism: {
+    theme: lightCodeTheme,
+    darkTheme: lightCodeTheme,
+  },
+}
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -44,172 +112,9 @@ const config = {
     locales: ['en'],
   },
 
-  presets: [
-    [
-      'classic',
-      /** @type {import('@docusaurus/preset-classic').Options} */
-      {
-        docs: false,
-        blog: false,
-        theme: {
-          customCss: [
-            //
-            require.resolve('./src/css/custom.css'),
-            require.resolve('./src/css/fonts.css'),
-            require.resolve('./src/css/backgrounds.css'),
-            require.resolve('./src/css/scanline.css'),
-            require.resolve('./src/css/navigation.css'),
-            require.resolve('./src/css/scrollbar.css'),
-            require.resolve('./src/css/sidebar.css'),
-            require.resolve('./src/css/menu.css'),
-            require.resolve('./src/css/cursor.css'),
-          ],
-        },
-      },
-    ],
-  ],
-  plugins: [
-    [
-      docsPlugin.default,
-      docsPlugin.validateOptions({
-        validate: validationUtils.normalizePluginOptions,
-        options:
-          /** @type {import('@docusaurus/plugin-content-docs').PluginOptions} */
-          {
-            id: 'docs',
-            path: 'docs',
-            routeBasePath: '/docs',
-          },
-      }),
-    ],
-    [
-      docsPlugin.default,
-      docsPlugin.validateOptions({
-        validate: validationUtils.normalizePluginOptions,
-        options: {
-          id: 'api',
-          path: 'api',
-          routeBasePath: '/api',
-          editUrl: (params) => {
-            const url = new URL(`https://github.com/nirrius/keywork/edit/main/lib/${params.docPath}`)
+  presets: [['classic', presetOptions]],
 
-            return url.toString()
-          },
-        },
-      }),
-    ],
-    [
-      docsPlugin.default,
-      docsPlugin.validateOptions({
-        validate: validationUtils.normalizePluginOptions,
-        options:
-          /** @type {import('@docusaurus/plugin-content-docs').PluginOptions} */
-          {
-            id: 'licensing',
-            path: 'licensing',
-            routeBasePath: '/licensing',
-          },
-      }),
-    ],
-
-    // [
-    //   '@docusaurus/plugin-content-docs',
-    //   /** @type {import('@docusaurus/plugin-content-docs').PluginOptions} */
-    //   ({
-    //     id: 'docs-modules',
-    //     path: 'api',
-    //     routeBasePath: '/api',
-    //   }),
-    // ],
-  ],
-
-  themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
-    {
-      colorMode: {
-        defaultMode: 'light',
-        disableSwitch: true,
-        respectPrefersColorScheme: false,
-      },
-      navbar: {
-        title: 'Keywork',
-        logo: {
-          alt: 'Keywork Logo',
-          src: 'img/logo.svg',
-        },
-        items: [
-          {
-            to: 'docs/overview/',
-            activeBasePath: 'docs',
-            label: 'Documentation',
-            position: 'left',
-          },
-          {
-            to: 'api/modules/',
-            activeBasePath: 'api',
-            label: 'API Reference',
-            position: 'left',
-          },
-          {
-            to: 'licensing/overview/',
-            activeBasePath: 'licensing',
-            label: 'Licensing',
-            position: 'left',
-          },
-
-          {
-            href: 'https://github.com/nirrius/keywork', // 'api' is the 'out' directory
-            label: 'Github',
-            position: 'right',
-          },
-        ],
-      },
-      footer: {
-        style: 'dark',
-        links: [
-          {
-            title: 'External Resources',
-            items: [
-              {
-                label: 'Official Cloudflare Workers Docs',
-                href: 'https://workers.cloudflare.com/',
-              },
-              {
-                label: "Cloudflare's Developer Discord",
-                href: 'https://discord.gg/cloudflaredev',
-              },
-            ],
-          },
-          {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/keywork',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/nirrius',
-              },
-            ],
-          },
-          {
-            title: 'More',
-            items: [
-              {
-                label: 'GitHub',
-                href: 'https://github.com/nirrius/keywork',
-              },
-            ],
-          },
-        ],
-        copyright: `Copyright © ${new Date().getFullYear()} Nirrius, LLC.`,
-      },
-      prism: {
-        theme: lightCodeTheme,
-        darkTheme: lightCodeTheme,
-      },
-    },
+  themeConfig,
 }
 
 export default config

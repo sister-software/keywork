@@ -28,7 +28,27 @@
   --nirrius-blue-darkest: #005580;
 
   --nirrius-shadow: rgb(0 0 0 / 10%);
-  --ifm-navbar-height: 3rem;
+  --ifm-font-size-base: 16px;
+  /* --doc-sidebar-width: 400px !important; */
+  --docs-content-gap: var(--sixty-four-px-rem);
+  --docs-sidebar-width: 18.25rem;
+  --docs-body-sidebar-width: var(--docs-sidebar-width);
+  --docs-page-side-padding: 1rem;
+  --docs-max-page-width: 1440px;
+  --docs-page-width: var(--docs-max-page-width);
+  --docs-sidebars-combined-width: calc(var(--docs-sidebar-width) + var(--docs-body-sidebar-width));
+  --docs-body-width: calc(var(--docs-page-width) - var(--docs-sidebars-combined-width));
+  --docs-logo-lockup-gap: 0.4rem;
+  --docs-logo-lockup-gap-small: 0.2rem;
+
+  --docsearch-searchbox-background: var(--ifm-color-primary) !important;
+  --docsearch-searchbox-focus-background: var(--ifm-color-primary-dark) !important;
+  --docsearch-muted-color: var(--ifm-color-emphasis-700) !important;
+  /* --sidebar-background-color: var(--nirrius-blue-lightest); */
+  --sidebar-background-color: hsl(0deg 99% 92%);
+  --ifm-navbar-height: .25rem;
+  --ifm-navbar-background-color: transparent;
+  --ifm-navbar-shadow: transparent;
   --ifm-global-shadow-lw: -2px 3px 0 var(--nirrius-shadow);
   --ifm-global-shadow-md: -2px 3px 0 var(--nirrius-shadow);
   --ifm-global-border-width: 6px;
@@ -64,15 +84,20 @@
   font-family: var(--ifm-font-family-monospace);
 }
 
-.breadcrumbs__link {
+.breadcrumbs__link,
+.pagination-nav__link {
   background-color: var(--nirrius-green-light);
   border: 1px solid var(--nirrius-green-dark);
   box-shadow: -2px 3px 0 var(--nirrius-shadow);
   padding: 0.5em 0.75em;
 }
 
-.breadcrumbs__item--active .breadcrumbs__link {
+a.breadcrumbs__link {
   text-decoration: underline;
+}
+
+.breadcrumbs__item--active .breadcrumbs__link {
+  background-color: var(--nirrius-blue-base);
   color: inherit;
 }
 
@@ -105,4 +130,11 @@ table thead tr {
 
 :where(.button--primary):not(.button--outline):hover {
   --ifm-button-border-color: var(--ifm-color-emphasis-400);
+}
+
+
+@media (min-width: 997px) {
+  .docMainContainer_---node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Main-styles-module {
+    margin-top: var(--ifm-navbar-height);
+  }
 }

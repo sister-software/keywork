@@ -19,15 +19,14 @@ import * as path from 'path'
 export const OutDirectory = projectPath('dist')
 export const BuildManifest = 'build-manifest.json'
 export const OutBuildManifest = path.join(OutDirectory, BuildManifest)
-export const APIDocDirectory = projectPath('site', 'api')
+export const DocsDirectory = projectPath('docs')
+export const DocsModulesDirectory = projectPath('docs', 'modules')
 export const TSConfig = 'tsconfig.json'
 /** Source content. */
-export const LibDirectory = projectPath('lib')
+export const ModulesDirectory = projectPath('modules')
+export const ImportMap = path.join(ModulesDirectory, 'import_map.json')
 export const PackageJSON = 'package.json'
 export const NodeModules = 'node_modules'
-export const ImportMap = 'import_map.json'
-export const Readme = 'README.md'
-export const License = 'LICENSE.md'
 export const MarkdownIndex = 'index.md'
 export const Category = '_category_.json'
 export const CNAME = 'CNAME'

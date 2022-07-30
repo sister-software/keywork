@@ -1,8 +1,29 @@
-.pagination-nav__link {
+.navbar__brand {
+  font-size: 1.75rem;
+}
+
+.navbar {
+  justify-content: center;
+  place-items: center;
+  align-self: center;
+  width: 100%;
+  max-width: var(--docs-max-page-width);
+  display: none;
+}
+
+.navbar--fixed-top {
+  position: fixed;
+}
+
+.navbar .navbar__brand {
+  display: none;
+}
+
+/* .pagination-nav__link {
   background-color: var(--nirrius-green-light);
   box-shadow: -6px 9px 0 var(--nirrius-shadow);
   border: 1px solid var(--nirrius-green-dark);
-}
+} */
 
 .pagination-nav__link:hover .pagination-nav__label {
   text-decoration: underline;
@@ -10,4 +31,29 @@
 
 .docsWrapper_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-styles-module {
   padding-bottom: 1rem;
+}
+
+.DocSearch-Button {
+  transition: none !important;
+  border-radius: var(--ifm-button-border-radius) !important;
+  border: 3px solid var(--ifm-button-border-color) !important;
+  font-family: var(--ifm-font-family-base);
+  --ifm-button-border-color: var(--ifm-color-emphasis-300);
+}
+
+.DocSearch-Button-Placeholder {
+  color: var(--ifm-color-emphasis-100) !important;
+}
+
+.DocSearch-Button .DocSearch-Search-Icon {
+  color: var(--nirrius-teal-light) !important;
+}
+
+
+@media (min-width: 767px) {
+  .theme-doc-breadcrumbs {
+    position: sticky;
+    top: 1rem;
+    z-index: 99;
+  }
 }

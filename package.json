@@ -1,38 +1,34 @@
 {
   "name": "@keywork/monorepo",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.0",
   "license": "AGPL-3.0",
   "author": "Teffen Ellis <teffen@nirri.us>",
-  "packageManager": "yarn@1.22.0",
+  "packageManager": "yarn@3.2.2",
   "type": "module",
   "engines": {
     "node": ">= 17.4"
   },
   "workspaces": [
-    "./lib",
-    "./scripts",
+    "./modules",
+    "./dist",
     "./site"
   ],
   "scripts": {
-    "lint": "eslint ./dist",
-    "build": "deno run -A deno/build-dist.ts",
-    "postbuild": "ts-node ./node/format.ts",
-    "build:docs:api": "ts-node ./node/build-api-docs.ts",
-    "build:docs": "cd site && npm run build",
-    "build:all": "npm run build && npm run build:docs",
-    "test": "deno test --coverage=./cov lib",
-    "test:coverage": "deno coverage --lcov ./cov",
-    "test:node": "jest"
+    "lint": "eslint ./modules",
+    "build": "yarn workspace @keywork/modules run build",
+    "postbuild": "ts-node ./scripts/format.ts",
+    "docs:generate": "ts-node ./scripts/generate-api-docs.ts",
+    "docs:dev": "yarn workspace @keywork/site run dev",
+    "docs:build": "yarn workspace @keywork/site run build",
+    "test": "yarn workspace @keywork/modules run test"
   },
   "exports": {
     "./common/*": "./common/*/index.js",
     "./node/*": "./node/*/index.js"
   },
-  "peerDependencies": {
-    "@types/node": "*"
-  },
   "dependencies": {
+    "@types/node": "^18.6.2",
     "@types/prettier": "^2.6.3",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
     "@typescript-eslint/parser": "^5.10.2",
@@ -46,10 +42,10 @@
     "prettier": "^2.7.1",
     "prettier-plugin-organize-imports": "^3.0.0",
     "title-case": "^3.0.3",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.0.0",
     "typedoc": "^0.23.9",
     "typedoc-plugin-markdown": "^3.13.4",
-    "typescript": "^4.7.4",
-    "ts-node": "^10.9.1",
-    "tsconfig-paths": "^4.0.0"
+    "typescript": "^4.7.4"
   }
 }

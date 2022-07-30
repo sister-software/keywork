@@ -31,10 +31,10 @@ jobs:
           deno-version: v1.x
 
       - name: Run tests
-        run: yarn test
+        run: yarn workspace @keywork/modules run test
 
       - name: Generate lcov
-        run: yarn test:coverage > cov.lcov
+        run: yarn workspace @keywork/modules run test:coverage > cov.lcov
 
       - name: Upload coverage
         uses: codecov/codecov-action@v2
