@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from '../errors/KeyworkResourceError.ts'
+import { KeyworkResourceError } from 'keywork/errors'
 import { prettyJSON } from './json.ts'
 
 /**
@@ -117,7 +117,7 @@ export class PrefixedLogger {
 
   public error = (error: unknown) => {
     const message = error ? `${error as any}` : 'Unknown Error'
-    const statusCode = error instanceof KeyworkResourceError ? error.status : 500
+    const statusCode = error instanceof Error && KeyworkResourceError.assertIsInstanceOf(error) ? error.status : 500
     const stack = error instanceof Error ? error.stack : undefined
 
     this._error(statusCode, message, stack)

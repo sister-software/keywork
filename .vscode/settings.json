@@ -4,6 +4,7 @@
   "typescript.preferences.importModuleSpecifier": "shortest",
   "search.exclude": {
     "yarn.lock": true,
+    ".yarn": true,
     "dist": true,
     "cov": true,
     "api-extractor": true,
@@ -13,6 +14,7 @@
   },
   "files.exclude": {
     "**/.git": true,
+    ".yarn": true,
     "**/.DS_Store": true,
     "**/Thumbs.db": true,
     "**/cov": true,

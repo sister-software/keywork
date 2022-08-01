@@ -13,7 +13,6 @@
     "isolates",
     "react"
   ],
-  "packageManager": "yarn@3.2.2",
   "type": "module",
   "sideEffects": false,
   "engines": {
