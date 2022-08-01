@@ -113,6 +113,7 @@ function generatePackageJSON(transformOutput: TransformOutput) {
       name: packageName,
       exports: packageExports,
       scripts: undefined,
+      installConfig: undefined,
     }),
     transformOutput,
     entryPoints: [],
@@ -133,6 +134,8 @@ function generatePackageJSON(transformOutput: TransformOutput) {
 
   logger.log('Writing package.json...')
   writeFile(path.join(outDir, 'package.json'), JSON.stringify(transformedPackageJSON, undefined, 2))
+  // Lockfile ensures that Yarn doesn't co-mingle the workspace node_modules.
+  writeFile(path.join(outDir, 'yarn.lock'), '')
 }
 
 //#endregion
@@ -216,12 +219,11 @@ await copyStaticFiles()
 const transformOutput = await createTransformer()
 
 generatePackageJSON(transformOutput)
-
 logger.log('Installing dependencies...')
 await runNpmCommand({
   bin: 'yarn',
   args: ['install'],
-  cwd: projectPath(),
+  cwd: outDir,
 })
 
 build(transformOutput)
