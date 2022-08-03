@@ -27,7 +27,7 @@ export async function formatFiles(filesDir: string): Promise<void> {
 
   if (!prettierConfig) throw Error('Prettier config not found')
 
-  const filePaths = await FastGlob(path.join(filesDir, '**', '*.{js,mjs}'), {
+  const filePaths = await FastGlob(path.join(filesDir, '**', '*.{js,mjs,ts}'), {
     ignore: [path.join(filesDir, 'node_modules')],
   })
 
@@ -35,7 +35,14 @@ export async function formatFiles(filesDir: string): Promise<void> {
     filePaths.map(async (filePath) => {
       const fileContents = await fs.readFile(filePath, 'utf8')
 
-      return fs.writeFile(filePath, prettier.format(fileContents, prettierConfig), 'utf8')
+      return fs.writeFile(
+        filePath,
+        prettier.format(fileContents, {
+          ...prettierConfig,
+          parser: 'typescript',
+        }),
+        'utf8'
+      )
     })
   )
 }
