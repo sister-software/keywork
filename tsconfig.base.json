@@ -12,7 +12,6 @@
     "noUncheckedIndexedAccess": false,
     "declaration": true,
     "isolatedModules": true,
-    "experimentalDecorators": true,
     "importsNotUsedAsValues": "remove",
     "baseUrl": ".",
     "jsx": "react",
