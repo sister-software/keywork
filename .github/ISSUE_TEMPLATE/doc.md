@@ -2,8 +2,7 @@
 name: Documentation improvement
 about: Suggest a documentation improvement
 title: "[Docs]: "
-labels: "docs"
-assignees: "@TeffenEllis"
+labels: "documentation"
 ---
 
 ## What is your suggestion?
