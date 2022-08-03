@@ -192,9 +192,19 @@
     clip-path: none !important;
   }
 
+  .docSidebarContainer_---node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Sidebar-styles-module {
+    width: unset !important;
+    min-width: var(--doc-sidebar-width);
+    flex: 0 0 auto;
+
+  }
+
   .sidebar_---node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
     border-right: 5px solid var(--nirrius-red-base);
     padding-left: 0.5rem;
+    width: unset !important;
+    min-width: var(--doc-sidebar-width);
+    flex: 0 0 auto;
   }
   .sidebar_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
     border: none !important;
