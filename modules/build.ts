@@ -24,13 +24,7 @@ import { runNpmCommand } from 'deno/dnt/utils'
 import { copy } from 'deno/fs/copy'
 import { PrefixedLogger } from 'keywork/utilities'
 import * as path from 'path'
-import {
-  writeBuildManifest,
-  extractEntrypoints,
-  ImportMap,
-  NPMPackageJSON,
-  readNPMPackageJSON,
-} from '@keywork/monorepo/common/imports'
+import { extractEntrypoints, ImportMap, NPMPackageJSON, readNPMPackageJSON } from '@keywork/monorepo/common/imports'
 import { projectPath } from '@keywork/monorepo/common/paths'
 import * as ProjectFiles from '@keywork/monorepo/common/project'
 import deepmerge from 'deepmerge'
@@ -227,5 +221,3 @@ await runNpmCommand({
 })
 
 build(transformOutput)
-logger.info('Emitting build manifest...')
-await writeBuildManifest(filePaths)

@@ -5,8 +5,9 @@ sidebar_position: 1
 sidebar_label: Hello World
 ---
 
-Building a web app on Cloudflare Workers can be intimidating,
-especially so if you're unfamiliar with the quirks of platform.
+Building your web app on in a Workers environment can be intimidating,
+especially so if you're unfamiliar with the quirks and limitations of V8.
+
 Let's start with a small example to get a feel for how Keywork fits in with your current experience.
 
 We're going to create a single Worker that sends the browser a "hello world" response.

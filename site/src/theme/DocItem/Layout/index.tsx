@@ -15,7 +15,6 @@
 import { useWindowSize } from '@docusaurus/theme-common'
 // @ts-expect-error internal
 import { useDoc } from '@docusaurus/theme-common/internal'
-import DocBreadcrumbs from '@theme/DocBreadcrumbs'
 import DocItemContent from '@theme/DocItem/Content'
 import DocItemFooter from '@theme/DocItem/Footer'
 import DocItemPaginator from '@theme/DocItem/Paginator'
@@ -51,7 +50,6 @@ export default function DocItemLayout({ children }) {
         <DocVersionBanner />
         <div className={styles.docItemContainer}>
           <article>
-            <DocBreadcrumbs />
             <DocVersionBadge />
             {docTOC.mobile}
             <DocItemContent>
@@ -59,8 +57,8 @@ export default function DocItemLayout({ children }) {
             </DocItemContent>
           </article>
           <DocItemPaginator />
-          gep
           <DocItemFooter />
+          {/* <DocBreadcrumbs /> */}
         </div>
       </div>
       {docTOC.desktop && <div className="col col--3">{docTOC.desktop}</div>}

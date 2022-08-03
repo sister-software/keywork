@@ -12,12 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * ### `keywork/errors`
- *
- * @packageDocumentation
- * @module errors
- */
-
 export * from './common.ts'
 export * from './KeyworkResourceError.ts'

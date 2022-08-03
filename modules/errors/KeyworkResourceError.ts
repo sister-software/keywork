@@ -26,7 +26,6 @@ export const $ClassID = 'Keywork.KeyworkResourceError'
 
 /**
  * An error class that feels fits nicely into an incoming HTTP request handler.
- * This pairs well with the `http-status` NPM package.
  *
  * @example
  *

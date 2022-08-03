@@ -22,7 +22,7 @@ export default function ContentWrapper(props) {
       <div className="background-container" />
       <div className="menu_---node_modules-@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-Content-styles-module">
         <ul className="theme-doc-sidebar-menu menu__list">
-          <li className="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item">
+          <li className="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item navbar-container">
             <NavbarLogo />
           </li>
         </ul>

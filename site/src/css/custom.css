@@ -29,9 +29,8 @@
 
   --nirrius-shadow: rgb(0 0 0 / 10%);
   --ifm-font-size-base: 16px;
-  /* --doc-sidebar-width: 400px !important; */
   --docs-content-gap: var(--sixty-four-px-rem);
-  --docs-sidebar-width: 18.25rem;
+  --docs-sidebar-width: 20rem;
   --docs-body-sidebar-width: var(--docs-sidebar-width);
   --docs-page-side-padding: 1rem;
   --docs-max-page-width: 1440px;
@@ -46,8 +45,8 @@
   --docsearch-muted-color: var(--ifm-color-emphasis-700) !important;
   /* --sidebar-background-color: var(--nirrius-blue-lightest); */
   --sidebar-background-color: hsl(0deg 99% 92%);
-  --ifm-navbar-height: .25rem;
-  --ifm-navbar-background-color: transparent;
+  /* --ifm-navbar-height: .25rem; */
+  /* --ifm-navbar-background-color: transparent; */
   --ifm-navbar-shadow: transparent;
   --ifm-global-shadow-lw: -2px 3px 0 var(--nirrius-shadow);
   --ifm-global-shadow-md: -2px 3px 0 var(--nirrius-shadow);
@@ -68,6 +67,7 @@
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 90%;
 
+  --ifm-global-spacing: 1.5rem;
   --ifm-global-radius: 0;
   --ifm-breadcrumb-border-radius: 0;
   --ifm-breadcrumb-item-background-active: var(--nirrius-green-light);

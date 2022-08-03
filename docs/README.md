@@ -1,10 +1,4 @@
----
-title: Keywork
-id: readme
-slug: /
-sidebar_title: Overview
-sidebar_position: -1
----
+# What is Keywork?
 
 **Keywork** is a batteries-included, library for building web apps on Cloudflare Workers, Deno, and Node.JS
 
@@ -15,7 +9,7 @@ sidebar_position: -1
 [![deno module](https://shield.deno.dev/x/keywork)](https://deno.land/x/keywork)
 [![codecov](https://codecov.io/gh/nirrius/keywork/branch/main/graph/badge.svg?token=1SDGYMB2YN)](https://codecov.io/gh/nirrius/keywork)
 
-Keywork may be right for you if...
+## Keywork may be right for you if...
 
 - You're building your web app almost entirely within the Cloudflare Workers platform
 - You want to build on V8 Isolates without vendor lock-in
@@ -40,7 +34,7 @@ the native design patterns of the Worker platform.
 And thanks to modular and type-safe API, Keywork provides opinionated and structured
 guidence as your web app grows, without locking you into a specific pattern.
 
-_[Routing API](/modules/router)_
+_[Routing API](https://keywork.app/modules/router)_
 
 ### React just works
 
@@ -56,9 +50,9 @@ Keywork handles client-side hydration, and fits into your existing architecture 
 And with rendering made even faster with built-in support for streamed responses,
 your app is delivered and interactive in seconds.
 
-_[React Browser API](/modules/react-browser)_
+_[React Browser API](https://keywork.app/modules/react-browser)_
 
-_[React Worker API](/modules/react-worker)_
+_[React Worker API](https://keywork.app/modules/react-worker)_
 
 ### Code bundling without the guesswork
 
@@ -67,7 +61,7 @@ and allows you to focus on the task at hand — building great web apps.
 And with [readymade templates](https://github.com/nirrius/keywork-starter-kit) available,
 you can skip the boilerplate and start coding in seconds.
 
-_[Bundling API](/modules/bundling)_
+_[Bundling API](https://keywork.app/modules/bundling)_
 
 ### Core utilities for building web apps
 
@@ -83,7 +77,7 @@ including...
 - ETag generation for cachable content such as HTML, JSON, and much more.
 - Static asset utilities with support for Cloudflare Pages and Worker Sites.
 
-[**All that and much, much more!**](/modules/)
+[**All that and much, much more!**](https://keywork.app/modules/)
 
 
 ## Keywork Starter Kit
@@ -101,7 +95,7 @@ The starter kit lets Keywork can be used to build a web app on Cloudflare Pages 
 
 ## Want to help?
 
-See [Contributing](/docs/CONTRIBUTING.md) for details ›
+See [Contributing](https://keywork.app/contributing) for details ›
 
 ## Licensing
 

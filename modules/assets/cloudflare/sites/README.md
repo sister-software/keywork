@@ -1,6 +1,6 @@
 ---
 title: "Module: assets.cloudflare.sites"
-sidebar_label: "Sites"
+sidebar_label: "Worker Sites"
 sidebar_class_name: "doc-kind-module"
 ---
 

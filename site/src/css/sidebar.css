@@ -20,6 +20,7 @@
   z-index: -1;
 }
 
+
 .theme-doc-toc-desktop {
   background-color: var(--nirrius-yellow-light);
   border: 4px solid var(--ifm-color-emphasis-600);
@@ -35,19 +36,98 @@
   border-radius: 0;
 }
 
-/* .theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible { */
-.theme-doc-sidebar-item-category-level-1 {
-  background: var(--nirrius-red-light) !important;
-  padding: 0.5rem 0 0.5rem 1rem;
-  justify-content: center;
+.menu__list .menu__list {
+  margin-top: 0;
 }
+
+.theme-doc-sidebar-container {
+  --ifm-menu-border-color: var(--nirrius-green-dark);
+  --ifm-menu-color-background: var(--nirrius-green-light);
+  --ifm-menu-color-background-active: var(--nirrius-green-light);
+  --ifm-menu-color-background-hover: var(--nirrius-blue-lightest);
+  --ifm-menu-border-color: var(--nirrius-red-dark);
+  --nirrius-shadow: var(--nirrius-red-base);
+}
+
+
+.menu__link,
+.menu__link + .menu__caret {
+  background: var(--ifm-menu-color-background);
+  border: 1px solid var(--ifm-menu-border-color);
+  z-index: 1;
+  /* background-color: var(--nirrius-yellow-light);
+  border: 4px solid var(--ifm-color-emphasis-600);
+
+  /* box-shadow: -2px 3px 0 var(--nirrius-shadow); */
+  padding: 0.5em 0.75em;
+
+}
+
+.menu__list-item-collapsible,
+.menu__link {
+  z-index: 1;
+  isolation: isolate;
+  position: relative;
+  display: flex !important;
+  box-shadow: -6px 9px 0 var(--nirrius-shadow) !important;
+}
+
+.menu__link.menu__link--active {
+  text-decoration: underline;
+}
+
+.menu__link.menu__link--active,
+.menu__link.menu__link--active + .clean-btn.menu__caret {
+  --ifm-menu-color-background: var(--nirrius-teal-dark);
+  --ifm-menu-color-background-hover: var(--nirrius-teal-base) !important;
+  background: var(--ifm-menu-color-background) !important;
+  color: var(--ifm-color-content-inverse);
+  text-decoration: underline;
+  z-index: 3;
+}
+
+.menu__link.menu__link--active + .clean-btn.menu__caret:hover {
+  background-color: var(--nirrius-teal-base) !important;
+}
+
+
+.theme-doc-sidebar-item-category {
+  margin-top: 0.5rem !important;
+}
+
+.theme-doc-sidebar-item-category,
+.menu__list-item {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-doc-sidebar-item-category-level-1:not(:first-child) {
+  margin-top: 1.5rem !important;
+}
+
+.theme-doc-sidebar-item-category-level-3,
+  .theme-doc-sidebar-item-link-level-3 {
+  filter: hue-rotate(50deg);
+}
+
+.theme-doc-sidebar-item-category-level-4,
+.theme-doc-sidebar-item-link-level-4 {
+  filter: hue-rotate(220deg);
+}
+
+
+/* .theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link,
+.theme-doc-sidebar-item-category-level-1 > .menu__list {
+  --ifm-menu-link-padding-horizontal: 0;
+} */
 
 .menu__link--active:not([href]) {
   color: unset;
 }
-.menu__link:not([href]):hover,
-.menu__list-item-collapsible {
-  background-color: unset !important;
+
+.menu__link:not([href]):hover {
+  text-decoration: none !important;
+  /* background-color: unset !important; */
 }
 
 .link-with-icon .menu__link {
@@ -60,7 +140,7 @@
   display: none;
 }
 
-.link-with-icon .menu__link::before {
+.link-with-icon::before {
   content: "";
   display: flex;
   height: 24px;
@@ -68,7 +148,7 @@
   background-repeat: no-repeat;
 }
 
-.icon-github .menu__link::before {
+.icon-github::before {
   background-image: url("/img/github-icon.svg");
 }
 
@@ -80,8 +160,15 @@
 .theme-doc-sidebar-item-link-level-1 > .menu__link,
 .theme-doc-sidebar-item-category-level-1 > .menu__link,
 .theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link {
-  font-size: 1.25rem;
+  font-size: 1.5rem;
 }
+
+.theme-doc-sidebar-item-link-level-2 > .menu__link,
+.theme-doc-sidebar-item-category-level-2 > .menu__link,
+  .theme-doc-sidebar-item-category-level-2 > .menu__list-item-collapsible > .menu__link {
+    font-size: 1.25rem;
+}
+
 
 .theme-doc-sidebar-item-category-level-1:not(:first-child) {
   margin-top: 1rem;
@@ -105,6 +192,10 @@
     clip-path: none !important;
   }
 
+  .sidebar_---node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
+    border-right: 5px solid var(--nirrius-red-base);
+    padding-left: 0.5rem;
+  }
   .sidebar_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
     border: none !important;
     top: var(--nirrius-sidebar-offset) !important;
@@ -121,3 +212,9 @@
   max-height: 80vh;
   overflow: auto;
 } */
+
+.theme-doc-sidebar-item-link.doc-kind-interface,
+.theme-doc-sidebar-item-link.doc-kind-enum,
+.theme-doc-sidebar-item-link.doc-kind-class {
+  font-family: var(--ifm-font-family-monospace);
+}

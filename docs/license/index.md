@@ -1,5 +1,6 @@
 ---
 title: Licensing Overview
+sidebar_title: Overview
 sidebar_position: 0
 ---
 

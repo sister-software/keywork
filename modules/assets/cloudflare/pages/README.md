@@ -1,6 +1,6 @@
 ---
 title: "Module: assets.cloudflare.pages"
-sidebar_label: "Sites"
+sidebar_label: "Pages"
 sidebar_class_name: "doc-kind-module"
 ---
 

@@ -4,5 +4,5 @@
   width: 100%;
   max-width: var(--docs-max-page-width);
   min-height: 100%;
-  margin: 0 auto;
+  /* margin: 0 auto; */
 }

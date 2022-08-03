@@ -12,6 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+/**
+ * @internal
+ */
 export interface FileExtensionMime {
   readonly extension: string
   readonly mimeType: string

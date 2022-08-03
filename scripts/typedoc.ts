@@ -13,8 +13,8 @@
  */
 
 import * as fs from 'fs/promises'
+import { readFileSync } from 'fs'
 import * as path from 'path'
-import { titleCase } from 'title-case'
 import TypeDoc from 'typedoc'
 import { MarkdownTheme } from 'typedoc-plugin-markdown'
 import { checkFileExists } from '../common/files/index.js'
@@ -99,6 +99,9 @@ const defaultCategory: CategoryConfig = {
   collapsed: true,
 }
 
+const READ_PREFIX = '/nirrius/keywork/blob/main/modules'
+const EDIT_PREFIX = '/nirrius/keywork/edit/main/modules'
+
 class DocusaurusMarkdownTheme extends MarkdownTheme {
   // Somewhat brittle but this handles anchor links.
   static _markdownExtensionPattern = /\.md/
@@ -108,7 +111,7 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
     const position = isModule ? 999 : undefined
     const kindString = model.kindString || 'Index'
     const title = `${kindString}: ${model.name}`
-    const sidebarLabel = isModule ? 'Module API' : titleCase(model.name).replaceAll('-', ' ')
+    const sidebarLabel = isModule ? 'API Usage…' : model.originalName
     const className = `doc-kind-${kindString.toLowerCase()}`
 
     return { title, sidebarLabel, className, position }
@@ -132,12 +135,41 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
       `title: "${title}"`,
       `sidebar_label: "${sidebarLabel}"`,
       `sidebar_class_name: "${className}"`,
-      typeof position === 'undefined' ? 'stub_position: 0' : `position: ${position}`,
-      '---',
-      '\n',
-      '\n',
-      templateOutput,
     ]
+
+    if (typeof position !== 'undefined') {
+      output.push(`position: ${position}`)
+    }
+
+    if (pageEvent.model.sources?.[0]) {
+      const [source] = pageEvent.model.sources
+
+      // Omit Deno deps
+      if (!source.fileName.startsWith('deps')) {
+        const sourceMapPath = source.fullFileName + '.map'
+        const sourceMap = JSON.parse(readFileSync(sourceMapPath, 'utf8'))
+        const [baseSourceFileName] = sourceMap.sources
+        const sourcePath = path.join(
+          path.dirname(source.fullFileName).substring(ProjectFiles.OutDirectory.length),
+          baseSourceFileName
+        )
+
+        const sourceURL = 'https://github.com' + path.posix.join(READ_PREFIX, sourcePath)
+        const customEditURL = 'https://github.com' + path.posix.join(EDIT_PREFIX, sourcePath)
+
+        if (!source.url) {
+          source.url = sourceURL
+        }
+
+        // console.log(source)
+        // console.log(sourceMapPath)
+        // console.log(customEditURL)
+        output.push(`source_url: ${sourceURL}`)
+        output.push(`custom_edit_url: ${customEditURL}`)
+      }
+    }
+
+    output.push('---', '\n', '\n', templateOutput)
 
     return output.join('\n')
   }
@@ -157,7 +189,6 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
       if (pageEvent.model.kind === TypeDoc.ReflectionKind.Module) {
         pageEvent.model.kind = TypeDoc.ReflectionKind.Module
         pageEvent.model.kindString = 'Module'
-        return reflectionTemplate(pageEvent)
       }
 
       return this._renderWithFrontMatter(reflectionTemplate, pageEvent)

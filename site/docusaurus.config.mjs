@@ -19,12 +19,12 @@ const lightCodeTheme = require('prism-react-renderer/themes/okaidia')
 
 /** @type {import('@docusaurus/preset-classic').Options} */
 const presetOptions = {
+  pages: false,
   docs: {
     path: '../docs',
     sidebarPath: './sidebars.cjs',
-    routeBasePath: '/docs',
+    routeBasePath: '/',
     editUrl: (params) => {
-      // TODO: fix for modules vs content
       const url = new URL(`https://github.com/nirrius/keywork/edit/main/${params.docPath}`)
 
       return url.toString()
@@ -78,11 +78,94 @@ const themeConfig = {
       alt: 'Keywork Logo',
       src: 'img/logo.svg',
     },
+    items: [
+      {
+        to: '/',
+        activeBaseRegex: '^/$',
+        label: 'What is Keywork?',
+        position: 'left',
+      },
+      {
+        to: 'examples/',
+        activeBasePath: 'examples',
+        label: 'Examples',
+        position: 'left',
+      },
+      {
+        to: 'modules/',
+        activeBasePath: 'modules',
+        label: 'Modules',
+        position: 'left',
+      },
+
+      {
+        to: 'contributing/',
+        activeBasePath: 'contributing',
+        label: 'Community',
+        position: 'left',
+      },
+
+      {
+        to: 'license/',
+        activeBasePath: 'license',
+        label: 'Licensing',
+        position: 'left',
+      },
+
+      {
+        href: 'https://github.com/nirrius/keywork',
+        position: 'right',
+        className: 'link-with-icon icon-github',
+
+        'aria-label': 'GitHub repository',
+      },
+    ],
   },
-  footer: {
-    style: 'dark',
-    copyright: `Copyright © ${new Date().getFullYear()} Nirrius, LLC.`,
-  },
+  // footer: {
+  //   style: 'dark',
+  //   links: [
+  //     {
+  //       title: 'External Resources',
+  //       items: [
+  //         {
+  //           label: 'Official Cloudflare Workers Docs',
+  //           href: 'https://workers.cloudflare.com/',
+  //         },
+  //         {
+  //           label: "Cloudflare's Developer Discord",
+  //           href: 'https://discord.gg/cloudflaredev',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       title: 'Community',
+  //       items: [
+  //         {
+  //           label: 'Stack Overflow',
+  //           href: 'https://stackoverflow.com/questions/tagged/keywork',
+  //         },
+  //         // {
+  //         //   label: 'Discord',
+  //         //   href: 'https://discordapp.com/invite/docusaurus',
+  //         // },
+  //         {
+  //           label: 'Twitter',
+  //           href: 'https://twitter.com/nirrius',
+  //         },
+  //       ],
+  //     },
+  //     {
+  //       title: 'More',
+  //       items: [
+  //         {
+  //           label: 'GitHub',
+  //           href: 'https://github.com/nirrius/keywork',
+  //         },
+  //       ],
+  //     },
+  //   ],
+  //   copyright: `Copyright © ${new Date().getFullYear()} Nirrius, LLC.`,
+  // },
   prism: {
     theme: lightCodeTheme,
     darkTheme: lightCodeTheme,

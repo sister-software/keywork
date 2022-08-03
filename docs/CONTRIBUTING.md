@@ -1,12 +1,13 @@
 ---
 title: Contributing to Keywork
-sidebar_label: Contributing
-id: CONTRIBUTING.md
-slug: /CONTRIBUTING.md
+sidebar_label: Community
+id: contributing
 ---
 
 
-There are many ways in which you can contribute, beyond writing code.
+Keywork is made possible through the countless contributions of the open-source community.
+There are many ways in which you can contribute to the project.
+
 The goal of this document is to provide a high-level overview of how you can get involved.
 
 ## Providing Feedback

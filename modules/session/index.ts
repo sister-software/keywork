@@ -12,14 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * ### `keywork/session`
- *
- * Session management to aid in authenticating users.
- *
- * @packageDocumentation
- * @module session
- */
-
 export * from './common.ts'
 export * from './KeyworkSession.ts'

@@ -35,7 +35,7 @@ export function mergeHeaders(destination: globalThis.Headers, ...sources: global
 }
 
 export interface CookieHeaders {
-  /** Contains stored [HTTP cookies](/en-US/docs/Web/HTTP/Cookies) previously sent by the server with the {{HTTPHeader("Set-Cookie")}} header. */
+  /** Contains stored HTTP cookies previously sent by the server with the "Set-Cookie" header. */
   Cookie: string
   /** Send cookies from the server to the user-agent. */
   'Set-Cookie': string
@@ -52,7 +52,10 @@ export interface AuthenticationHeaders {
   'Proxy-Authorization': string
 }
 
-// The [UA client hints](/en-US/docs/Web/HTTP/Client_hints#user-agent_client_hints) are request headers that provide information about the user agent and the platform/architecture on which it is running:
+/**
+ * The [UA client hints](https://developer.mozilla.org/en-US/docs/Web/HTTP/Client_hints#user-agent_client_hints)
+ * are request headers that provide information about the user agent and the platform/architecture on which it is running
+ */
 
 export interface UserAgentClientHintHeaders {
   /**
@@ -96,11 +99,19 @@ export interface UserAgentClientHintHeaders {
 
 // Network client hints allow a server to choose what information is sent based on the user choice and network bandwidth and latency.
 export interface NetworkClientHintHeaders {
-  /** Approximate bandwidth of the client's connection to the server, in Mbps. This is part of the [Network Information API](/en-US/docs/Web/API/Network_Information_API). */
+  /**
+   * Approximate bandwidth of the client's connection to the server, in Mbps.
+   * This is part of the Network Information API]
+   */
   Downlink: string
-  /** The {{Glossary("effective connection type")}} ("network profile") that best matches the connection's latency and bandwidth. This is part of the [Network Information API](/en-US/docs/Web/API/Network_Information_API). */
+  /**
+   * The "network profile" that best matches the connection's latency and bandwidth.
+   */
   ECT: string
-  /** Application layer round trip time (RTT) in milliseconds, which includes the server processing time. This is part of the [Network Information API](/en-US/docs/Web/API/Network_Information_API). */
+  /**
+   * Application layer round trip time (RTT) in milliseconds,
+   *  which includes the server processing time.
+   */
   RTT: string
   /**
    * @beta
@@ -110,69 +121,133 @@ export interface NetworkClientHintHeaders {
 }
 
 export interface Conditionals {
-  /** The last modification date of the resource, used to compare several versions of the same resource. It is less accurate than {{HTTPHeader("ETag")}}, but easier to calculate in some environments. Conditional requests using {{HTTPHeader("If-Modified-Since")}} and {{HTTPHeader("If-Unmodified-Since")}} use this value to change the behavior of the request. */
+  /**
+   * The last modification date of the resource, used to compare several versions of the same resource.
+   * It is less accurate than `"ETag"`, but easier to calculate in some environments.
+   * Conditional requests using `"If-Modified-Since"` and `"If-Unmodified-Since"`
+   * use this value to change the behavior of the request.
+   */
   'Last-Modified': string
-  /** A unique string identifying the version of the resource. Conditional requests using {{HTTPHeader("If-Match")}} and {{HTTPHeader("If-None-Match")}} use this value to change the behavior of the request. */
+  /**
+   * A unique string identifying the version of the resource.
+   * Conditional requests using `"If-Match"` and `"If-None-Match"` use this value to change the behavior of the request.
+   */
   ETag: string
-  /** Makes the request conditional, and applies the method only if the stored resource matches one of the given ETags. */
+  /**
+   * Makes the request conditional, and applies the method only if the stored resource matches one of the given ETags.
+   */
   'If-Match': string
-  /** Makes the request conditional, and applies the method only if the stored resource _doesn't_ match any of the given ETags. This is used to update caches (for safe requests), or to prevent uploading a new resource when one already exists. */
+  /**
+   * Makes the request conditional, and applies the method only if the stored resource _doesn't_ match any of the given ETags. This is used to update caches (for safe requests), or to prevent uploading a new resource when one already exists.
+   */
   'If-None-Match': string
-  /** Makes the request conditional, and expects the resource to be transmitted only if it has been modified after the given date. This is used to transmit data only when the cache is out of date. */
+  /**
+   * Makes the request conditional, and expects the resource to be transmitted
+   * only if it has been modified after the given date.
+   * This is used to transmit data only when the cache is out of date.
+   */
   'If-Modified-Since': string
-  /** Makes the request conditional, and expects the resource to be transmitted only if it has not been modified after the given date. This ensures the coherence of a new fragment of a specific range with previous ones, or to implement an optimistic concurrency control system when modifying existing documents. */
+  /**
+   * Makes the request conditional, and expects the resource to be transmitted only if it has not been modified after the given date.
+   * This ensures the coherence of a new fragment of a specific range with previous ones,
+   * or to implement an optimistic concurrency control system when modifying existing documents.
+   */
   'If-Unmodified-Since': string
-  /** Determines how to match request headers to decide whether a cached response can be used rather than requesting a fresh one from the origin server. */
+  /**
+   * Determines how to match request headers to decide whether a cached response
+   * can be used rather than requesting a fresh one from the origin server.
+   */
   Vary: string
 }
 
 export interface ConnectionManagement {
-  /** Controls whether the network connection stays open after the current transaction finishes. */
+  /**
+   * Controls whether the network connection stays open after the current transaction finishes.
+   */
   Connection: string
-  /** Controls how long a persistent connection should stay open. */
+  /**
+   * Controls how long a persistent connection should stay open.
+   */
   'Keep-Alive': string
 }
 
-// [Content negotiation](/en-US/docs/Web/HTTP/Content_negotiation) headers.
+/**
+ * [Content negotiation](https://developer.mozilla.org/en-US/docs/Web/HTTP/Content_negotiation) headers.
+ */
 export interface ContentNegotiation {
-  /** Informs the server about the {{Glossary("MIME_type", "types")}} of data that can be sent back. */
+  /**
+   * Informs the server about the MIME Types of data that can be sent back.
+   */
   Accept: string
-  /** The encoding algorithm, usually a [compression algorithm](/en-US/docs/Web/HTTP/Compression), that can be used on the resource sent back. */
+  /**
+   * The encoding algorithm that can be used on the resource sent back.
+   */
   'Accept-Encoding': string
-  /** Informs the server about the human language the server is expected to send back. This is a hint and is not necessarily under the full control of the user: the server should always pay attention not to override an explicit user choice (like selecting a language from a dropdown). */
+  /**
+   * Informs the server about the human language the server is expected to send back.
+   * This is a hint and is not necessarily under the full control of the user
+   * The server should always pay attention not to override an explicit user choice
+   * (like selecting a language from a dropdown).
+   */
   'Accept-Language': string
 }
 
 export interface CORSHeaders {
-  /** Indicates whether the response can be shared. */
+  /**
+   * Indicates whether the response can be shared.
+   */
   'Access-Control-Allow-Origin': string
-  /** Indicates whether the response to the request can be exposed when the credentials flag is true. */
+  /**
+   * Indicates whether the response to the request can be exposed when the credentials flag is true.
+   */
   'Access-Control-Allow-Credentials': string
-  /** Used in response to a {{Glossary("Preflight_request", "preflight request")}} to indicate which HTTP headers can be used when making the actual request. */
+  /**
+   * Used in response to a preflight request to indicate which HTTP headers can be used when making the actual request.
+   */
   'Access-Control-Allow-Headers': string
-  /** Specifies the methods allowed when accessing the resource in response to a preflight request. */
+  /**
+   * Specifies the methods allowed when accessing the resource in response to a preflight request.
+   */
   'Access-Control-Allow-Methods': string
-  /** Indicates which headers can be exposed as part of the response by listing their names. */
+  /**
+   * Indicates which headers can be exposed as part of the response by listing their names.
+   */
   'Access-Control-Expose-Headers': string
-  /** Indicates how long the results of a preflight request can be cached. */
+  /**
+   * Indicates how long the results of a preflight request can be cached.
+   */
   'Access-Control-Max-Age': string
-  /** Used when issuing a preflight request to let the server know which HTTP headers will be used when the actual request is made. */
+  /**
+   * Used when issuing a preflight request to let the server know which HTTP headers will be used when the actual request is made.
+   */
   'Access-Control-Request-Headers': string
-  /** Used when issuing a preflight request to let the server know which [HTTP method](/en-US/docs/Web/HTTP/Methods) will be used when the actual request is made. */
+  /**
+   * Used when issuing a preflight request to let the server know which HTTP method will be used when the actual request is made.
+   */
   'Access-Control-Request-Method': string
-  /** Indicates where a fetch originates from. */
+  /**
+   * Indicates where a fetch originates from.
+   */
   Origin: string
-  /** Specifies origins that are allowed to see values of attributes retrieved via features of the [Resource Timing API](/en-US/docs/Web/API/Resource_Timing_API), which would otherwise be reported as zero due to cross-origin restrictions. */
+  /**
+   * Specifies origins that are allowed to see values of attributes retrieved via features of the
+   * Resource Timing API,
+   * which would otherwise be reported as zero due to cross-origin restrictions.
+   */
   'Timing-Allow-Origin': string
 }
 
 export interface DownloadsHeaders {
-  /** Indicates if the resource transmitted should be displayed inline (default behavior without the header), or if it should be handled like a download and the browser should present a "Save As" dialog. */
+  /**
+   * Indicates if the resource transmitted should be displayed inline (default behavior without the header), or if it should be handled like a download and the browser should present a "Save As" dialog.
+   */
   'Content-Disposition': string
 }
 
 export interface MessageBodyInformationHeaders {
-  /** The size of the resource, in decimal number of bytes. */
+  /**
+   * The size of the resource, in decimal number of bytes.
+   */
   'Content-Length': string
   /** Indicates the media type of the resource. */
   'Content-Type': string
@@ -209,9 +284,14 @@ export interface RequestContextHeaders {
   Host: string
   /** The address of the previous web page from which a link to the currently requested page was followed. */
   Referer: string
-  /** Governs which referrer information sent in the {{HTTPHeader("Referer")}} header should be included with requests made. */
+  /** Governs which referrer information sent in the `"Referer"` header should be included with requests made. */
   'Referrer-Policy': string
-  /** Contains a characteristic string that allows the network protocol peers to identify the application type, operating system, software vendor or software version of the requesting software user agent. See also the [Firefox user agent string reference](/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox). */
+  /**
+   * Contains a characteristic string that allows the network protocol peers to identify the application type,
+   * operating system, software vendor or software version of the requesting software user agent.
+   *
+   * See also the [Firefox user agent string reference](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent/Firefox).
+   */
   'User-Agent': string
 }
 
@@ -242,7 +322,7 @@ export interface SecurityHeaders {
   'Cross-Origin-Resource-Policy': string
   /** Controls resources the user agent is allowed to load for a given page. */
   'Content-Security-Policy': string
-  /** Allows web developers to experiment with policies by monitoring, but not enforcing, their effects. These violation reports consist of {{Glossary("JSON")}} documents sent via an HTTP `POST` request to the specified URI. */
+  /** Allows web developers to experiment with policies by monitoring, but not enforcing, their effects. These violation reports consist of JSON documents sent via an HTTP `POST` request to the specified URI. */
   'Content-Security-Policy-Report-Only': string
   /** Allows sites to opt in to reporting and/or enforcement of Certificate Transparency requirements, which prevents the use of misissued certificates for that site from going unnoticed. When a site enables the Expect-CT header, they are requesting that Chrome check that any certificate for that site appears in public CT logs. */
   'Expect-CT': string
@@ -255,11 +335,15 @@ export interface SecurityHeaders {
   'Origin-Isolation': string
   /** Force communication using HTTPS instead of HTTP. */
   'Strict-Transport-Security': string
-  /** Sends a signal to the server expressing the client's preference for an encrypted and authenticated response, and that it can successfully handle the {{CSP("upgrade-insecure-requests")}} directive. */
+  /** Sends a signal to the server expressing the client's preference for an encrypted and authenticated response, and that it can successfully handle the `"upgrade-insecure-requests"` directive. */
   'Upgrade-Insecure-Requests': string
 }
 
-// {{Glossary("Fetch metadata request header", "Fetch metadata request headers")}} provides information about the context from which the request originated. This allows a server to make decisions about whether a request should be allowed based on where the request came from and how the resource will be used.
+/**
+ * Provides information about the context from which the request originated.
+ * This allows a server to make decisions about whether a request should be allowed
+ * based on where the request came from and how the resource will be used.
+ */
 export interface FetchMetadataRequestHeaders {
   /** It is a request header that indicates the relationship between a request initiator's origin and its target's origin. It is a Structured Header whose value is a token with possible values `cross-site`, `same-origin`, `same-site`, and `none`. */
   'Sec-Fetch-Site': string
@@ -271,7 +355,7 @@ export interface FetchMetadataRequestHeaders {
   'Sec-Fetch-Dest': string
   /** A request header sent in preemptive request to`fetch()` a resource during service worker boot. */
   'Service-Worker-Navigation-Preload': string
-  // The value, which is set with {{domxref("NavigationPreloadManager.setHeaderValue()")}}, can be used to inform a server that a different resource should be returned than in a normal `fetch()` operation.
+  // The value, which is set with `NavigationPreloadManager.setHeaderValue()`, can be used to inform a server that a different resource should be returned than in a normal `fetch()` operation.
 }
 
 export interface TransferCodingHeaders {
