@@ -2339,7 +2339,7 @@ __metadata:
     title-case: ^3.0.3
     ts-node: ^10.9.1
     tsconfig-paths: ^4.0.0
-    typedoc: ^0.23.9
+    typedoc: ^0.23.10
     typedoc-plugin-markdown: ^3.13.4
     typescript: ^4.7.4
   languageName: unknown
@@ -7820,7 +7820,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"marked@npm:^4.0.16":
+"marked@npm:^4.0.18":
   version: 4.0.18
   resolution: "marked@npm:4.0.18"
   bin:
@@ -11230,19 +11230,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typedoc@npm:^0.23.9":
-  version: 0.23.9
-  resolution: "typedoc@npm:0.23.9"
+"typedoc@npm:^0.23.10":
+  version: 0.23.10
+  resolution: "typedoc@npm:0.23.10"
   dependencies:
     lunr: ^2.3.9
-    marked: ^4.0.16
+    marked: ^4.0.18
     minimatch: ^5.1.0
     shiki: ^0.10.1
   peerDependencies:
     typescript: 4.6.x || 4.7.x
   bin:
     typedoc: bin/typedoc
-  checksum: 3b1eac3c4acfe7390f23ff35bea3cd694762b465c53605b159cf4abbb8e50b22f835d52a7f20c71b9219c79b6ab093346d671ebba67b922782f8658375a65347
+  checksum: 58dd8bc12856801c4f315812d03f209f706435e5f56edceeb3e01e456c7d058a127f3dee1674529d62b64dcc04847d8be5e4ce06921b9c5388b901dd976b92bf
   languageName: node
   linkType: hard
 
