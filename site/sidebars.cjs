@@ -61,7 +61,7 @@ const sidebars = {
 
     {
       type: 'link',
-      label: 'Support',
+      label: 'Help & Support',
       href: '/support',
     },
   ],

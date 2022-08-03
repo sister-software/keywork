@@ -1,6 +1,5 @@
 ---
-title: Support
-sidebar_label: Support
+title: Help & Support
 id: support
 slug: support
 ---
