@@ -21,6 +21,7 @@ export function readGlobalScope(this: any): typeof globalThis {
   if (typeof globalThis !== 'undefined') return globalThis
   if (typeof window !== 'undefined') return window
   if (typeof self !== 'undefined') return self
+  // @ts-ignore global
   if (typeof global !== 'undefined') return global
   if (typeof this !== 'undefined') return this
 

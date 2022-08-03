@@ -1,7 +1,8 @@
 ---
-title: Serving Static Assets
-sidebar_label: Overview
+title: Overview
+sidebar_label: Module Overview
 sidebar_position: 0
+pagination_label: 'Module: Assets'
 ---
 
 Keywork provides static asset helpers as `WorkerRouter` Middleware.

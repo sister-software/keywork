@@ -1,8 +1,9 @@
 ---
 title: Utilities
+sidebar_label: Module Overview
+sidebar_position: 0
+pagination_label: 'Module: Utilities'
 ---
-
-### `keywork/utilities`
 
 Common core utilities for building web apps.
 

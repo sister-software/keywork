@@ -1,3 +1,10 @@
+---
+title: 'Polyfill: ReadableStream'
+sidebar_label: Module Overview
+sidebar_position: 0
+pagination_label: 'Module: Polyfills.Worker.ReadableStream'
+---
+
 `ReadableStream` Polyfill for building Keywork apps on Cloudflare Pages.
 
 ### Usage with ESBuild
@@ -11,10 +18,10 @@ esbuild.build({
   format: 'esm',
   entryPoints,
   keepNames: true,
-  inject: [ require.resolve('keywork/polyfills/ReadableStream') ]
+  inject: [require.resolve('keywork/polyfills/ReadableStream')],
 })
 ```
 
-:::note
+:::tip
 Make sure to set `keepNames` to preserve the polyfill's class names during minification.
 :::

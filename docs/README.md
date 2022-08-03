@@ -31,7 +31,7 @@ Keywork has everything you need to handle incoming requests in a Cloudflare Work
 Application routing remains _magic-free_, and uses an Express.js inspired API that doesn't stray far from
 the native design patterns of the Worker platform.
 
-And thanks to modular and type-safe API, Keywork provides opinionated and structured
+And thanks to modular and type-safe API, Keywork provides an opinionated and structured
 guidence as your web app grows, without locking you into a specific pattern.
 
 _[Routing API](https://keywork.app/modules/router)_
@@ -79,11 +79,9 @@ including...
 
 [**All that and much, much more!**](https://keywork.app/modules/)
 
-
 ## Keywork Starter Kit
 
 The starter kit lets Keywork can be used to build a web app on Cloudflare Pages with your own routing.
-
 
 - ✅ ESBuild
 - ✅ React
@@ -91,7 +89,6 @@ The starter kit lets Keywork can be used to build a web app on Cloudflare Pages 
 - ✅ TypeScript
 
 **[More details about the starter kit ›](https://github.com/nirrius/keywork-starter-kit)**
-
 
 ## Want to help?
 

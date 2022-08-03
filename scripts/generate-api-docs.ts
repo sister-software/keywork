@@ -34,6 +34,11 @@ function createFileMap(filePaths: string[]): Map<string, string> {
 }
 
 async function copyModuleDocs() {
+  await fs.copyFile(
+    path.join(ProjectFiles.ModulesDirectory, 'README.md'),
+    path.join(ProjectFiles.DocsAPIDirectory, 'README.md')
+  )
+
   const ignore = [path.join('**', ProjectFiles.NodeModules)]
   const categoryToDest = await FastGlob(path.join(ProjectFiles.ModulesDirectory, '*', '**', ProjectFiles.Category), {
     ignore,
@@ -61,8 +66,8 @@ const moduleCategoryConfigs: CategoryConfig[] = []
 async function typeDocPlugin(namedExport: string, mapping: NPMExportEntry) {
   const filePath = mapping.import
 
-  const entryPoint = path.join(ProjectFiles.OutDirectory, filePath)
-  const outPath = path.join(ProjectFiles.DocsAPIDirectory, path.dirname(filePath))
+  const entryPoint = path.join(ProjectFiles.OutDirectory, filePath.replaceAll('.js', '.d.ts'))
+  const outPath = path.join(ProjectFiles.DocsAPIDirectory, path.dirname(filePath), 'api')
   await fs.mkdir(outPath, { recursive: true })
 
   const possibleCategoryPath = path.join(ProjectFiles.ModulesDirectory, path.dirname(filePath), ProjectFiles.Category)
@@ -85,10 +90,11 @@ async function typeDocPlugin(namedExport: string, mapping: NPMExportEntry) {
     excludeExternals: true,
     hideGenerator: true,
     cleanOutputDir: false,
-    entryDocument: 'api.md',
+    entryDocument: 'index.md',
     readme: 'none',
     hideBreadcrumbs: true,
     hideInPageTOC: true,
+    allReflectionsHaveOwnDocument: true,
   })
 
   const project = app.convert()!

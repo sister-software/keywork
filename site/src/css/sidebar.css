@@ -20,8 +20,7 @@
   z-index: -1;
 }
 
-
-.theme-doc-toc-desktop {
+.theme-doc-toc-desktop:not(:empty) {
   background-color: var(--nirrius-yellow-light);
   border: 4px solid var(--ifm-color-emphasis-600);
   box-shadow: -6px 9px 0 var(--nirrius-shadow) !important;
@@ -224,6 +223,8 @@
 } */
 
 .theme-doc-sidebar-item-link.doc-kind-interface,
+.theme-doc-sidebar-item-link.doc-kind-function,
+.theme-doc-sidebar-item-link.doc-kind-type,
 .theme-doc-sidebar-item-link.doc-kind-enum,
 .theme-doc-sidebar-item-link.doc-kind-class {
   font-family: var(--ifm-font-family-monospace);

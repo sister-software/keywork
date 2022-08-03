@@ -1,19 +1,21 @@
 ---
-title: Collections
+title: Overview
+sidebar_label: Module Overview
+sidebar_position: 0
+pagination_label: 'Module: KV.Collections'
 ---
 
-> The missing piece that unlocks the full power of storing and querying data from your Worker.
+## Module Overview
 
-![npm (scoped)](https://img.shields.io/npm/v/@keywork/collections)
-![npm](https://img.shields.io/npm/dm/@keywork/collections)
+The missing piece that unlocks the full power of storing and querying data from your Worker.
+Keywork Collections are a NoSQL, _eventually-consistent_ ODM for Cloudflare's [Worker KV](https://developers.cloudflare.com/workers/runtime-apis/kv/).
+With an API reminiscent of Firebase and MongoDB, Keywork Collections are perfect for migrating your existing backend to Cloudflare's network.
 
-- A NoSQL _eventually-consistent_ ODM for Cloudflare's [Worker KV](https://developers.cloudflare.com/workers/runtime-apis/kv/).
-- An API reminiscent of Firebase and MongoDB, perfect for migrating your existing backend to Cloudflare's network.
-- Extends Worker KV's API without abstracting away important details
+The `KeyworkCollection` class extends the Worker KV API without abstracting away important details.
 
 ## Using Keywork collections from within a Cloudflare Worker.
 
-```toml title=wrangler.toml
+```toml title="wrangler.toml"
 compatibility_date = "2022-02-13"
 name = "example-app"
 route = "https://example.com/api/users/*"

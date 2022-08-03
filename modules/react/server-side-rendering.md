@@ -1,17 +1,9 @@
 ---
-id: react
-title: Keywork & React
-sidebar_position: 3
-sidebar_label: Usage With React
+id: server-side-rendering
+title: React SSR in a Worker runtime
+sidebar_position: 2
+sidebar_label: Server Side Rendering
 ---
-
-While optional, Keywork uses React as its primary HTML templating engine.
-
-If you haven't already, make sure to add the React peer dependencies:
-
-```shell title=Run in the root of your Cloudflare Worker project.
-$ yarn add react react-dom
-```
 
 ## How Keywork uses React to render HTML
 

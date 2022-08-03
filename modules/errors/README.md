@@ -1,21 +1,26 @@
 ---
-title: Errors
+title: Overview
+sidebar_label: Module Overview
+sidebar_position: 0
+pagination_label: 'Module: Errors'
 ---
 
-Error utilities that fit nicely into an incoming HTTP request handler.
+## Module Overview
+
+Keywork includes error utilities that pair nicely with HTTP request handlers.
 
 ```ts
 import { KeyworkResourceError, StatusCodes } from 'keywork/errors'
 
 if (isLoggedIn(someUser)) {
-  throw new KeyworkResourceError("You must be logged in to do that", StatusCodes.UNAUTHORIZED)
+  throw new KeyworkResourceError('You must be logged in to do that', StatusCodes.UNAUTHORIZED)
 }
 
 if (someUser.role !== 'admin') {
-  throw new KeyworkResourceError("Only an admin can access that", StatusCodes.FORBIDDEN)
+  throw new KeyworkResourceError('Only an admin can access that', StatusCodes.FORBIDDEN)
 }
 ```
 
 ## Related Entries
 
-- [`ErrorResponse`](/docs/modules/http/response/classes/ErrorResponse)
+- [`ErrorResponse`](/modules/http/response/api/classes/ErrorResponse)

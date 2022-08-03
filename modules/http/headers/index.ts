@@ -12,7 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './cacheControl.ts'
 export * from './common.ts'
 export * from './contentType.ts'
 export * from './userAgent.ts'

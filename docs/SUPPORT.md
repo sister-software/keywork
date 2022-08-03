@@ -1,7 +1,7 @@
 ---
 title: Help & Support
-id: support
-slug: support
+id: help
+slug: help
 ---
 
 import { PopupButton } from '@typeform/embed-react'

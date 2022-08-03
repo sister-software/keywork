@@ -1,5 +1,5 @@
 {
-  "label": "Static Assets",
+  "label": "Serving Static Assets",
   "position": 2,
-  "collapsible": false
+  "collapsible": true
 }

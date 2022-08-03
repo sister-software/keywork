@@ -1,7 +1,11 @@
 /* eslint-disable no-restricted-globals */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-nocheck Polyfill
 /* eslint-disable header/header */
+/**
+ * @packageDocumentation
+ * @module polyfills.ReadableStream
+ * @ignore
+ */
+
 /**
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
@@ -15,15 +19,15 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  *
- * @packageDocumentation
- * @module polyfills.ReadableStream
- * @ignore
  */
 
+/**
+ * @internal
+ */
 declare class IdentityTransformStream extends TransformStream {}
 
 /**
- * @ignore
+ * @internal
  */
 const TransformerStreamBaseConstructor =
   typeof IdentityTransformStream !== 'undefined' ? IdentityTransformStream : TransformStream
@@ -34,8 +38,6 @@ const TransformerStreamBaseConstructor =
  * Default controllers are for streams that are not byte streams.
  *
  * @category Worker Polyfills
- * @private
- * @ignore
  */
 class MockReadableStreamDefaultController implements ReadableStreamDefaultController {
   constructor(private writer: WritableStreamDefaultWriter) {}
@@ -97,6 +99,7 @@ export class ReadableStream<R = any> implements globalThis.ReadableStream<R> {
   }
 
   getReader(options?: unknown): any {
+    // @ts-ignore polyfill
     return this._readable.getReader(options as any)
   }
   pipeThrough<T>(

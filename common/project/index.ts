@@ -21,7 +21,6 @@ export const BuildManifest = 'build-manifest.json'
 export const OutBuildManifest = path.join(OutDirectory, BuildManifest)
 export const DocsDirectory = projectPath('docs')
 export const DocsAPIDirectory = projectPath('docs', 'modules')
-export const DocsModulesDirectory = projectPath('docs', 'modules')
 export const TSConfig = 'tsconfig.json'
 /** Source content. */
 export const ModulesDirectory = projectPath('modules')

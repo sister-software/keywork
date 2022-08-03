@@ -1,6 +1,11 @@
 ---
-title: Bindings
+title: Overview
+sidebar_label: Module Overview
+sidebar_position: 0
+pagination_label: 'Module: Bindings.Worker'
 ---
+
+## Module Overview
 
 Bindings allow your Worker to interact with resources provided by your app's runtime.
 

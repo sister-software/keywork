@@ -107,14 +107,49 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
   static _markdownExtensionPattern = /\.md/
 
   _modelToFrontMatter(model: TypeDoc.ContainerReflection) {
+    const frontMatter = new Map<string, string>()
     const isModule = model.kind === TypeDoc.ReflectionKind.Module
-    const position = isModule ? 999 : undefined
     const kindString = model.kindString || 'Index'
-    const title = `${kindString}: ${model.name}`
-    const sidebarLabel = isModule ? 'API Usage…' : model.originalName
-    const className = `doc-kind-${kindString.toLowerCase()}`
 
-    return { title, sidebarLabel, className, position }
+    if (isModule) {
+      frontMatter.set('position', '999')
+    }
+
+    frontMatter.set('id', isModule ? 'index' : model.getAlias())
+    frontMatter.set('title', JSON.stringify(isModule ? `${kindString}: ${model.name}` : model.name))
+    frontMatter.set('sidebar_label', JSON.stringify(model.originalName))
+    frontMatter.set('sidebar_class_name', `doc-kind-${kindString.toLowerCase()}`)
+
+    if (model.sources?.[0]) {
+      const [source] = model.sources
+
+      // Omit Deno deps
+      if (!source.fileName.startsWith('deps')) {
+        const sourceMapPath = source.fullFileName + '.map'
+        const sourceMap = JSON.parse(readFileSync(sourceMapPath, 'utf8'))
+        const [baseSourceFileName] = sourceMap.sources
+        const sourcePath = path.join(
+          path.dirname(source.fullFileName).substring(ProjectFiles.OutDirectory.length),
+          baseSourceFileName
+        )
+
+        // Cast to URL to ensure paths are encoded correctly.
+        const sourceURL = new URL(path.posix.join(READ_PREFIX, sourcePath), 'https://github.com')
+        const customEditURL = new URL(path.posix.join(EDIT_PREFIX, sourcePath), 'https://github.com')
+
+        if (!source.url) {
+          source.url = sourceURL.toString()
+        }
+
+        // console.log(source)
+        // console.log(sourceMapPath)
+        // console.log(customEditURL)
+        frontMatter.set('source_url', sourceURL.toString())
+        frontMatter.set('custom_edit_url', customEditURL.toString())
+      }
+    }
+
+    return frontMatter
   }
 
   /**
@@ -128,48 +163,16 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
 
     if (!templateOutput.trim()) return templateOutput
 
-    const { title, sidebarLabel, className, position } = this._modelToFrontMatter(pageEvent.model)
+    const frontMatter = this._modelToFrontMatter(pageEvent.model)
 
-    const output = [
+    const output: string[] = [
       '---',
-      `title: "${title}"`,
-      `sidebar_label: "${sidebarLabel}"`,
-      `sidebar_class_name: "${className}"`,
+      ...Array.from(frontMatter.entries(), (pair) => pair.join(': ')),
+      '---',
+      '\n',
+      '\n',
+      templateOutput,
     ]
-
-    if (typeof position !== 'undefined') {
-      output.push(`position: ${position}`)
-    }
-
-    if (pageEvent.model.sources?.[0]) {
-      const [source] = pageEvent.model.sources
-
-      // Omit Deno deps
-      if (!source.fileName.startsWith('deps')) {
-        const sourceMapPath = source.fullFileName + '.map'
-        const sourceMap = JSON.parse(readFileSync(sourceMapPath, 'utf8'))
-        const [baseSourceFileName] = sourceMap.sources
-        const sourcePath = path.join(
-          path.dirname(source.fullFileName).substring(ProjectFiles.OutDirectory.length),
-          baseSourceFileName
-        )
-
-        const sourceURL = 'https://github.com' + path.posix.join(READ_PREFIX, sourcePath)
-        const customEditURL = 'https://github.com' + path.posix.join(EDIT_PREFIX, sourcePath)
-
-        if (!source.url) {
-          source.url = sourceURL
-        }
-
-        // console.log(source)
-        // console.log(sourceMapPath)
-        // console.log(customEditURL)
-        output.push(`source_url: ${sourceURL}`)
-        output.push(`custom_edit_url: ${customEditURL}`)
-      }
-    }
-
-    output.push('---', '\n', '\n', templateOutput)
 
     return output.join('\n')
   }
@@ -179,6 +182,14 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
 
     return (pageEvent: TypeDoc.PageEvent<TypeDoc.ContainerReflection>) => {
       return this._renderWithFrontMatter(indexTemplate, pageEvent)
+    }
+  }
+
+  getReflectionMemberTemplate() {
+    const reflectionMemberTemplate = super.getReflectionMemberTemplate()
+
+    return (pageEvent: TypeDoc.PageEvent<TypeDoc.ContainerReflection>) => {
+      return this._renderWithFrontMatter(reflectionMemberTemplate, pageEvent)
     }
   }
 
@@ -226,11 +237,11 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
     return urlMappings
   }
 
-  getUrls(project: TypeDoc.ProjectReflection) {
-    const urlMappings = this._fixURLs(project, super.getUrls(project))
+  // getUrls(project: TypeDoc.ProjectReflection) {
+  //   const urlMappings = this._fixURLs(project, super.getUrls(project))
 
-    return urlMappings
-  }
+  //   return urlMappings
+  // }
 }
 
 export class DocusaurusTypeDoc extends TypeDoc.Application {
@@ -240,7 +251,11 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
   }
 
   categories = [
+    { dirName: '', config: { label: 'API…' } },
     { dirName: 'classes', config: { label: 'Classes' } },
+    { dirName: 'types', config: { label: 'Types' } },
+    { dirName: 'variables', config: { label: 'Variables' } },
+    { dirName: 'functions', config: { label: 'Functions' } },
     { dirName: 'interfaces', config: { label: 'Interfaces' } },
     { dirName: 'enums', config: { label: 'Enums' } },
   ]
@@ -250,7 +265,7 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
     await fs.rm(path.join(out, 'modules'), { force: true, recursive: true })
 
     // Add a category configuration to the API root.
-    for (const [index, category] of Object.entries(this.categories)) {
+    for (const category of Object.values(this.categories)) {
       const categoryDir = path.join(out, category.dirName)
       const exists = await checkFileExists(categoryDir)
 
@@ -262,7 +277,7 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
         JSON.stringify(
           {
             ...defaultCategory,
-            position: 99 + parseInt(index, 10),
+            position: 1,
             ...category.config,
           },
           null,

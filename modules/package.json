@@ -4,6 +4,9 @@
   "license": "AGPL-3.0",
   "author": "Teffen Ellis <teffen@nirri.us>",
   "description": "A batteries-included, magic-free, library for building web apps in V8 Isolates.",
+  "bugs": {
+    "url": "https://keywork.app/help"
+  },
   "keywords": [
     "cloudflare",
     "workers",

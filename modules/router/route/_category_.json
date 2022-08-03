@@ -1,5 +1,4 @@
 {
   "label": "Route",
-  "collapsible": false,
-  "position": 3
+  "collapsible": true
 }

@@ -61,9 +61,9 @@ export type RouteMethodDeclaration<
 /**
  * Routes incoming HTTP requests from the user's browser to your app's route endpoints.
  *
- * {@link https://keywork.app/docs/concepts/routing Keywork Documentation}
+ * {@link https://keywork.app/modules/routing Keywork Documentation}
  *
- * {@link https://keywork.app/api/classes/routing-worker.WorkerRouter Keywork API}
+ * {@link modules/router/worker/api/classes/WorkerRouter Keywork API}
  *
  * @category Router
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.

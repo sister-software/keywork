@@ -1,7 +1,8 @@
 ---
 title: Routing
-sidebar_label: Overview
+sidebar_label: Module Overview
 sidebar_position: 0
+pagination_label: 'Module: Routing'
 ---
 
 Designed with familiarity in mind, the server-side routing API is inspired by
@@ -23,7 +24,7 @@ especially so if you're unfamiliar with the quirks of platform.
 Let's start with a small example to get a feel for how Keywork fits in with your current experience.
 
 We're going to create a single Worker that sends the browser a "hello world" response.
-By the end of this example, you'll know how to use the [`WorkerRouter`](/modules/classes/router-worker.WorkerRouter)
+By the end of this example, you'll know how to use the [`WorkerRouter`](/modules/router/api/classes/WorkerRouter)
 class to handling incoming requests from the browser.
 
 :::info
@@ -52,7 +53,7 @@ Examples are always written with type annotations, but they can be omitted if yo
 
 ## Defining a router with an incoming request handler
 
-Building an app with Keywork starts by creating a [`WorkerRouter`](/modules/classes/router-worker.WorkerRouter):
+Building an app with Keywork starts by creating a [`WorkerRouter`](/modules/router/api/classes/WorkerRouter):
 
 ```ts title=_worker.ts showLineNumbers
 import { WorkerRouter } from 'keywork/router'
