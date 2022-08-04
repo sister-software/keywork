@@ -14,12 +14,15 @@ subject to the following open source licenses.
 
 ### MDN Web Docs
 
-[About MDN](/en-US/docs/MDN/About) by [Mozilla Contributors](/en-US/docs/MDN/About/contributors.txt) is licensed under [CC-BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5/).
+Keywork includes documentation and examples from [MDN](https://developer.mozilla.org//en-US/docs/MDN/About)
+by [Mozilla Contributors](https://developer.mozilla.org//en-US/docs/MDN/About/contributors.txt),
+and is licensed under [CC-BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5/).
 
 ### Miniflare
 
-[Miniflare](https://miniflare.dev/) is a simulator for developing and testing Cloudflare Workers.
+Keywork uses [Miniflare](https://miniflare.dev/), a simulator for developing and testing Cloudflare Workers.
 It's written in TypeScript, and runs your code in a sandbox implementing Workers' runtime APIs.
+Miniflare is licensed under [MIT](https://github.com/cloudflare/miniflare/blob/master/LICENSE)
 
 ## A special thanks to...
 

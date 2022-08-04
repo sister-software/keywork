@@ -212,7 +212,7 @@ const sidebars = {
       collapsible: false,
       link: {
         type: 'doc',
-        id: 'modules/index',
+        id: 'modules/README',
       },
       items: [
         {

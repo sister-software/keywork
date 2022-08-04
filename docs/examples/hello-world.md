@@ -98,7 +98,7 @@ app.get('/', (event) => {
 export default app
 ```
 
-Inside our `RouteRequestHandler` callback, we have an [`event`](/modules/interfaces/request.IncomingRequestEvent)
+Inside our `RouteRequestHandler` callback, we have an [`event`](/modules/http/request/api/classes/IncomingRequestEvent)
 object that contains information about the request.
 And in this example, we use `event.request.url` to parse the URL from whence the request originated.
 
