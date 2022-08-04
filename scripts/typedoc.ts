@@ -14,6 +14,7 @@
 
 import * as fs from 'fs/promises'
 import { readFileSync } from 'fs'
+import { execSync } from 'child_process'
 import * as path from 'path'
 import TypeDoc from 'typedoc'
 import { MarkdownTheme } from 'typedoc-plugin-markdown'
@@ -94,6 +95,11 @@ export interface MarkdownThemeOptions {
   preserveAnchorCasing: boolean
 }
 
+interface FileChange {
+  author: string
+  date: string
+}
+
 const defaultCategory: CategoryConfig = {
   collapsible: true,
   collapsed: true,
@@ -132,6 +138,14 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
           path.dirname(source.fullFileName).substring(ProjectFiles.OutDirectory.length),
           baseSourceFileName
         )
+        const localSourcePath = path.join(ProjectFiles.ModulesDirectory, sourcePath)
+
+        const gitStdOut = execSync(
+          `git --no-pager log -1 --pretty='format:{"author":"%an", "date":"%ci"}%n' -- ${localSourcePath}`
+        ).toString()
+        const fileChange: FileChange = JSON.parse(gitStdOut)
+
+        frontMatter.set('last_update', `\n  date: ${fileChange.date}\n  author: ${fileChange.author}`)
 
         // Cast to URL to ensure paths are encoded correctly.
         const sourceURL = new URL(path.posix.join(READ_PREFIX, sourcePath), 'https://github.com')
