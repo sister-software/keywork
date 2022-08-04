@@ -36,13 +36,24 @@ declare global {
 }
 ```
 
-### Deno
+### Deno Deploy
 
-:::warning
 Deno support is experimental and in active development.
-While your project configuration may have to changing with API updates,
-Keywork should generally behave as if you're using Cloudflare Workers.
-:::
+
+Keywork can be used directly via [Deno Land](https://deno.land/x/keywork):
+
+```tsx title="worker"
+import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
+import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
+
+const app = new KeyworkRouter()
+
+app.get('/', () => <h1>Hello from Keywork! 👋</h1>)
+
+serve((request) => app.fetch(request))
+```
+
+### Import Maps
 
 [Import Maps](https://deno.land/manual/node/import_maps#using-import-maps)
 are recommended to avoid long import URLs:
@@ -50,9 +61,12 @@ are recommended to avoid long import URLs:
 ```jsonc title=importmap.json
 {
   "imports": {
-    "keywork/router": "https://cdn.skypack.dev/keywork@3.0.0/routing?dts",
-    "keywork/utilities": "https://cdn.skypack.dev/keywork@3.0.0/utilities?dts"
+    "keywork/router": "https://deno.land/x/keywork/modules/router/mod.ts",
+    "keywork/router": "https://deno.land/x/keywork/modules/utilities/mod.ts"
     // etc
   }
 }
 ```
+
+:::warning
+:::

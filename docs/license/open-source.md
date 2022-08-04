@@ -24,27 +24,26 @@ If our work has helped you, please consider donating to Keywork's developer fund
 
 ### Permissions
 
-* The Keywork source-code may be modified.
-* Keywork and it's source-code may be distributed.
-* Keywork may be used and modified in private.
-* This license provides an express grant of patent rights from contributors.
+- The Keywork source-code may be modified.
+- Keywork and it's source-code may be distributed.
+- Keywork may be used and modified in private.
+- This license provides an express grant of patent rights from contributors.
 
 ### Conditions
 
-* Source code must be made available when the licensed material is distributed.
-* A copy of the license and copyright notice must be included with the licensed material.
-* Users who interact with the licensed material via network are given the right to receive a copy of the source code.
-* Modifications must be released under the same license when distributing the licensed material. In some cases a similar or related license may be used.
-* Changes made to the licensed material must be documented.
+- Source code must be made available when the licensed material is distributed.
+- A copy of the license and copyright notice must be included with the licensed material.
+- Users who interact with the licensed material via network are given the right to receive a copy of the source code.
+- Modifications must be released under the same license when distributing the licensed material. In some cases a similar or related license may be used.
+- Changes made to the licensed material must be documented.
 
 ### Limitations
 
-* This license does not provide any warranty.
-* This license includes a limitation of liability.
+- This license does not provide any warranty.
+- This license includes a limitation of liability.
 
 ## Commercial Usage
 
-A ‘commercial use’ license is mandatory as soon as you develop commercial activities involving the Keywork software without disclosing the source code of your own applications.
+A "[**commercial use license**](/license/commercial)" is mandatory as soon as you develop commercial activities involving the Keywork software without disclosing the source code of your own applications.
 
 <PopupButton id="rTHsvoxn" className="button button--primary">Contact us about commercial use</PopupButton>
-

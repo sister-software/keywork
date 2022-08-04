@@ -5,7 +5,7 @@ sidebar_position: 3
 sidebar_label: Parsing URL Params
 ---
 
-```tsx title=worker/routers/users.ts
+```tsx title="worker/routers/users.ts" showLineNumbers
 export const usersRouter = new KeyworkRouter({
   displayName: 'Users Router',
   DocumentComponent: AppHTMLDocument,

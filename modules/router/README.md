@@ -8,89 +8,54 @@ pagination_label: 'Module: Routing'
 Designed with familiarity in mind, the server-side routing API is inspired by
 Express.js, React Router, and the native Cloudflare Workers platform.
 
+```ts title="worker.ts"
+import { KeyworkRouter } from 'keywork/router'
+
+const app = new KeyworkRouter()
+
+app.get('/', () => 'Hello there! 👋')
+
+export default app
+```
+
 ## Creating a RESTful API
 
-Much like Express.js, The Keywork Router defines each route handler by
+Much like Express.js, `KeyworkRouter` defines each route handler by
 invoking methods that correspond with HTTP methods.
 
 ```ts
-GET    => app.get([path pattern], [RouteRequestHandler])
-POST   => app.post([path pattern], [RouteRequestHandler])
-DELETE => app.delete([path pattern], [RouteRequestHandler])
-```
-
-Building a web app on Cloudflare Workers can be intimidating,
-especially so if you're unfamiliar with the quirks of platform.
-Let's start with a small example to get a feel for how Keywork fits in with your current experience.
-
-We're going to create a single Worker that sends the browser a "hello world" response.
-By the end of this example, you'll know how to use the [`KeyworkRouter`](/modules/router/api/classes/KeyworkRouter)
-class to handling incoming requests from the browser.
-
-:::info
-If you're already familiar with Cloudflare Workers, this might seem like a bit of review.
-And if you'd just like to skip to the final result, checkout the [example repo](https://github.com/nirrius/keywork-starter-kit).
-
-:::
-
-## Handling incoming requests
-
-The core focus of Keywork is the routing of incoming HTTP requests from the user's browser
-to your app's router endpoints.
-
-1. Define a router with an incoming request handler
-2. Export the router as the default entrypoint of your worker bundle
-3. A user sends incoming request from the browser, e.g. `http://localhost:8788/`
-4. The Cloudflare Worker runtime receives the request
-5. Keywork parses the request into an `IncomingRequestEvent` and sends the data to your route handler callback
-6. Your incoming request handler returns "Hello world"
-
-:::info
-Heads up! While optional, Keywork is a TypeScript-first library.
-Examples are always written with type annotations, but they can be omitted if you'd like.
-
-:::
-
-## Defining a router with an incoming request handler
-
-Building an app with Keywork starts by creating a [`KeyworkRouter`](/modules/router/api/classes/KeyworkRouter):
-
-```ts title=_worker.ts showLineNumbers
 import { KeyworkRouter } from 'keywork/router'
 
-// Create a router to receive all incoming requests...
-const app = new KeyworkRouter()
-```
-
-## Using the Keywork Router to respond to each HTTP method
-
-Much like Express.js, we can define route handlers by invoking methods on `app` that correspond with HTTP methods.
-In our small example, we only need to define a single route handler:
-
-```ts title=_worker.ts showLineNumbers
-import { KeyworkRouter } from 'keywork/router'
-
-// Create a router to receive all incoming requests...
 const app = new KeyworkRouter()
 
-// highlight-start
-// e.g. GET http://example.com/
-app.get('/', (event) => {
-  // Parse the incoming request URL...
-  const url = new URL(event.request.url)
+// GET http://localhost:8788
+app.get('/', () => 'Hello there! 👋')
 
-  return `Hello from ${url.pathname}`
-})
-// highlight-end
+// GET http://localhost:8788/greet/jessie
+app.get('/greet/:firstName', ({ params }) => `Hello there! ${event.params.firstName}`)
+
+// GET http://localhost:8788/datetime
+app.get('/datetime', () => `The current datetime is: ${new Date().toLocaleTimeString()}`)
+
+// POST http://localhost:8788/users
+app.get('/users', () => `The current datetime is: ${new Date().toLocaleTimeString()}`)
 ```
 
-We call `app.get` to define route a `RouteRequestHandler`
-callback that executes when an incoming request is received at the root of our app.
+An instance of `KeyworkRouter` can handle the following HTTP methods:
+
+| HTTP Method | Usage                                                |
+| ----------- | ---------------------------------------------------- |
+| `'GET'`     | `app.get([path pattern], [RouteRequestHandler])`     |
+| `'POST'`    | `app.post([path pattern], [RouteRequestHandler])`    |
+| `'PATCH'`   | `app.patch([path pattern], [RouteRequestHandler])`   |
+| `'DELETE'`  | `app.delete([path pattern], [RouteRequestHandler])`  |
+| `'HEAD'`    | `app.head([path pattern], [RouteRequestHandler])`    |
+| `'OPTIONS'` | `app.options([path pattern], [RouteRequestHandler])` |
+| `'*'`       | `app.all([path pattern], [RouteRequestHandler])`     |
 
 ### Path Parameters
 
-While our example path pattern is simple,
-routes can also have path parameters such as...
+Routes can have "[path-to-regexp](https://www.npmjs.com/package/path-to-regexp) style" path patterns:
 
 ```ts
 app.get('/users/', ...)
@@ -101,88 +66,11 @@ app.get('/users/:userID/friends/', ...)
 app.get('/articles/:articleID', ...)
 ```
 
+Path patterns can even use regular expressions if your routing requires more fine-grain control.
+
 ### `IncomingRequestEvent`
 
-Inside our `RouteRequestHandler` callback, we have an [`event`](/modules/http/request/api/classes/IncomingRequestEvent)
-object that contains information about the request.
-And in this example, we use `event.request.url` to parse the URL from whence the request originated.
-
-## Exporting the router
-
-```ts title=_worker.ts showLineNumbers
-import { KeyworkRouter } from 'keywork/router'
-
-// Create a router to receive all incoming requests...
-const app = new KeyworkRouter()
-
-// e.g. GET http://example.com/
-app.get('/', (event) => {
-  // Parse the incoming request URL...
-  const url = new URL(event.request.url)
-
-  return `Hello from ${url.pathname}`
-})
-
-// highlight-start
-// Finally, export our router so that Cloudflare Workers can send our app requests...
-export default app
-// highlight-end
-```
-
-Notice that we use `export default` on `app`?
-This instructs Cloudflare's Worker runtime to direct all incoming requests to our handler.
-Remember, while you may import other modules, a bundler tool like ESBuild or Webpack
-will always create a single file with the one instance of `export default`.
-
-:::info
-If you're building an app with multiple pages and API endpoints.
-Splitting your app into multiple routers in their own files can keep your app managable.
-
-:::
-
-## Responding with type-safe JSON
-
-Keywork gives us the optional type-safety of TypeScript.
-And since we've already demostrated how to send plaintext,
-Let's illustrate this feature by adding a JSON endpoint to our router:
-
-```ts title=_worker.ts showLineNumbers
-import { KeyworkRouter } from 'keywork/router'
-
-const app = new KeyworkRouter()
-
-app.get('/', (event) => {
-  const url = new URL(event.request.url)
-
-  return `Hello from ${url.pathname}`
-})
-
-// Define a TypeScript interface to enforce the shape
-interface HelloResponseBody {
-  url: string
-  date: string
-  message: string
-}
-
-app.get('/hello.json', (event) => {
-  const url = new URL(event.request.url)
-
-  const body: HelloResponseBody = {
-    url: url.toString(),
-    date: new Date().toJSON(),
-    message: 'Keywork rocks!',
-  }
-
-  return body
-})
-
-export default app
-```
-
-If you're familiar with Worker Sites, or Cloudflare Pages, you may have noticed that
-`KeyworkRouter` reduces much of the low-level boilerplate.
-The Keywork API attempts to bridge the gap between existing web development patterns,
-and the native Worker API.
+When defining a route's `RouteRequestHandler` callback, you have access to an [`IncomingRequestEvent`](/modules/http/request/api/classes/IncomingRequestEvent) that contains information about the request.
 
 ## Additional Perks
 
@@ -198,15 +86,15 @@ of your `RouteHandler`, allowing you to skip the ceremony of constructing
 However, this behavior can be avoided by explicitly providing a `Response` object,
 or a class that extends from `Response` such as...
 
-- `CachableResponse`
-- `HTMLResponse`
-- `JSONResponse`
-- `ErrorResponse`
+- [`CachableResponse`](/modules/http/response/api/classes/CachableResponse)
+- [`HTMLResponse`](/modules/http/response/api/classes/HTMLResponse)
+- [`JSONResponse`](/modules/http/response/api/classes/JSONResponse)
+- [`ErrorResponse`](/modules/http/response/api/classes/ErrorResponse)
 
 ### Errors
 
 Errors in your code are caught before they crash the runtime.
-See `KeyworkResourceError` for further details.
+See [`KeyworkResourceError`](/modules/errors/api/classes/KeyworkResourceError) for further details.
 
 ### Sessions
 
@@ -215,4 +103,5 @@ See `KeyworkSession` for further details.
 
 ## Further reading
 
+- [Sessions](/modules/session/)
 - [RESTful API patterns](https://www.restapitutorial.com/lessons/httpmethods.html)

@@ -1,17 +1,17 @@
 ---
-title: Licensing Overview
-sidebar_title: Overview
+sidebar_title: Licensing Overview
+title: Overview
 sidebar_position: 0
 ---
 
 import { PopupButton } from '@typeform/embed-react'
 
-# Licensing
+# Licensing Overview
 
 Whether your business runs on Cloudflare Workers, or Deno Deploy,
 building web apps is made faster and easier with **Keywork.**
 
-A **commercial license** grants you full ownership and control over your products,
+A [**commercial license**](/license/commercial) grants you full ownership and control over your products,
 and saves you from having to conform to our open-source requirements and restrictions.
 
 When you purchase a commercial license, you'll also have direct contact with the engineers who built Keywork.

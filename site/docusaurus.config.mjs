@@ -51,21 +51,21 @@ const presetOptions = {
 
 /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
 const themeConfig = {
-  algolia: {
-    // The application ID provided by Algolia
-    appId: '__APP_ID__',
+  // algolia: {
+  //   // The application ID provided by Algolia
+  //   appId: '__APP_ID__',
 
-    // Public API key: it is safe to commit it
-    apiKey: '_API_KEY_',
+  //   // Public API key: it is safe to commit it
+  //   apiKey: '_API_KEY_',
 
-    indexName: '_INDEX_NAME',
+  //   indexName: '_INDEX_NAME',
 
-    // Optional: see doc section below
-    contextualSearch: true,
+  //   // Optional: see doc section below
+  //   contextualSearch: true,
 
-    // Optional: path for search page that enabled by default (`false` to disable it)
-    searchPagePath: 'search',
-  },
+  //   // Optional: path for search page that enabled by default (`false` to disable it)
+  //   searchPagePath: 'search',
+  // },
 
   colorMode: {
     defaultMode: 'light',
@@ -73,6 +73,7 @@ const themeConfig = {
     respectPrefersColorScheme: false,
   },
   navbar: {
+    // hideOnScroll: true,
     title: 'Keywork',
     logo: {
       alt: 'Keywork Logo',
@@ -169,6 +170,7 @@ const themeConfig = {
   prism: {
     theme: lightCodeTheme,
     darkTheme: lightCodeTheme,
+    additionalLanguages: ['toml'],
   },
 }
 
