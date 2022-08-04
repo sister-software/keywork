@@ -1,47 +1,47 @@
-.navbar__brand {
-  font-size: 2rem;
-  margin: 0 0.75rem;
-  gap: 1rem;
-  display: grid;
-  grid-template-columns: 1.5rem 1fr 1.5rem;
-}
-
-.navbar__logo {
-  height: auto;
-  display: flex;
-  margin: 0;
-}
-
-.navbar__logo img {
-  width: 1.5rem;
-}
-
-.navbar-container {
-  display: flex;
-  justify-content: center;
-}
-
-.navbar {
-  padding-left: var(--doc-sidebar-width);
-  justify-content: center;
-  place-items: center;
-  align-self: center;
-  width: 100%;
-  max-width: var(--docs-max-page-width);
-}
-
 @media (min-width: 750px) {
+  .navbar__brand {
+    font-size: 2rem;
+    margin: 0 0.75rem;
+    gap: 1rem;
+    display: grid;
+    grid-template-columns: 1.5rem 1fr 1.5rem;
+  }
+
+  .navbar__logo {
+    height: auto;
+    display: flex;
+    margin: 0;
+  }
+
+  .navbar__logo img {
+    width: 1.5rem;
+  }
+
+  .navbar-container {
+    display: flex;
+    justify-content: center;
+  }
+
+  .navbar {
+    padding-left: var(--doc-sidebar-width);
+    justify-content: center;
+    place-items: center;
+    align-self: center;
+    width: 100%;
+    max-width: var(--docs-max-page-width);
+  }
+
   .navbar {
     --ifm-navbar-background-color: transparent;
+  }
+
+  .navbar .navbar__brand {
+    display: none;
   }
 }
 
 .navbar--fixed-top {
   position: fixed;
-}
-
-.navbar .navbar__brand {
-  display: none;
 }
 
 .pagination-nav__link {
