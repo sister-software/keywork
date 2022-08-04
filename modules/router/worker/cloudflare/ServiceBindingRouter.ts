@@ -16,7 +16,7 @@ import type { WorkerEnvFetchBinding } from 'keywork/bindings/worker'
 import { ErrorResponse } from 'keywork/http/response'
 import { Status } from 'keywork/errors'
 import type { RouteRequestHandler } from 'keywork/router/route'
-import { WorkerRouter, WorkerRouterOptions } from 'keywork/router/worker'
+import { KeyworkRouter, KeyworkRouterOptions } from 'keywork/router/worker'
 
 // TODO This may do better as a RouteRequestHandler
 
@@ -28,7 +28,7 @@ import { WorkerRouter, WorkerRouterOptions } from 'keywork/router/worker'
  * @category Router
  * @public
  */
-export class ServiceBindingRouter<BindingAlias extends string> extends WorkerRouter<
+export class ServiceBindingRouter<BindingAlias extends string> extends KeyworkRouter<
   Record<BindingAlias, WorkerEnvFetchBinding>
 > {
   constructor(
@@ -36,7 +36,7 @@ export class ServiceBindingRouter<BindingAlias extends string> extends WorkerRou
      * The named alias of your binding. This is usually defined in your wrangler.toml file.
      */
     public bindingAlias: BindingAlias,
-    options?: WorkerRouterOptions
+    options?: KeyworkRouterOptions
   ) {
     super({
       displayName: `Service Binding [${bindingAlias}]`,

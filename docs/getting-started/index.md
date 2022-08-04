@@ -22,39 +22,38 @@ The kit includes support for React, TypeScript, and ESBuild.
 Keywork is often added to an existing web app when a developer wants to migrate
 their deployment to a V8 Isolate runtime, such as Cloudflare Workers or Deno.
 
-
 <Tabs groupId="node-install">
   <TabItem value="yarn" label="Yarn">
 
-  Let's start by adding Keywork to your project via [Yarn](https://yarnpkg.com/):
+Let's start by adding Keywork to your project via [Yarn](https://yarnpkg.com/):
 
-  ```shell title="Run in the root of your project."
-  $ yarn add keywork
-  ```
+```shell title="Run in the root of your project."
+$ yarn add keywork
+```
 
   </TabItem>
 
   <TabItem value="npm" label="NPM">
 
-  Let's start by adding Keywork to your project via NPM:
+Let's start by adding Keywork to your project via NPM:
 
-  ```shell title="Run in the root of your project."
-  $ npm install keywork
-  ```
+```shell title="Run in the root of your project."
+$ npm install keywork
+```
 
   </TabItem>
 
   <TabItem value="deno" label="Deno">
 
-  Deno support is experimental, but should behave similar to Cloudflare Workers:
+Deno support is experimental, but should behave similar to Cloudflare Workers:
 
-  ```ts title="./your-project/server/mod.tsx"
-  import { WorkerRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
-  import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
+```ts title="./your-project/server/mod.tsx"
+import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
+import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
 
-  const app = new WorkerRouter()
-  serve((request) => app.fetch(request));
-  ```
+const app = new KeyworkRouter()
+serve((request) => app.fetch(request))
+```
 
   </TabItem>
 </Tabs>

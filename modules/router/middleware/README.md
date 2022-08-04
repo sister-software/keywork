@@ -4,7 +4,7 @@ title: Middleware
 sidebar_label: Middleware
 ---
 
-_Middleware_ are instances of `WorkerRouter`, each with single responsibility
+_Middleware_ are instances of `KeyworkRouter`, each with single responsibility
 e.g. (users, blog posts, payments, authentication, etc.)
 
 ```ts
@@ -12,10 +12,10 @@ import { UsersRouter } from '@local/worker/routers/UsersRouter'
 import { BlogRouter } from '@local/worker/routers/BlogRouter'
 import { AuthenticationRouter } from '@local/worker/routers/AuthenticationRouter'
 import { CloudflarePagesAssetRouter } from 'keywork/assets'
-import { WorkerRouter } from 'keywork/routing'
+import { KeyworkRouter } from 'keywork/router'
 
 // Create a router to receive all incoming requests...
-const app = new WorkerRouter({
+const app = new KeyworkRouter({
   // Here we combine our routers...
   // highlight-start
   middleware: [
@@ -41,7 +41,7 @@ Middleware routers can perform any task that of single router:
 ### Fetchers and environment bindings
 
 Middleware can also be thought of as any object that implements the `KeyworkFetcher` interface.
-Under the hood, `WorkerRouter` _is_ a `KeyworkFetcher`, and is the most common usage
+Under the hood, `KeyworkRouter` _is_ a `KeyworkFetcher`, and is the most common usage
 of middleware.
 
 Environment bindings _almost_ satisfy the `KeyworkFetcher` interface,

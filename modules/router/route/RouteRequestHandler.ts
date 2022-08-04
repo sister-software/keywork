@@ -20,7 +20,7 @@ import type { MiddlewareFetch } from 'keywork/router/middleware'
  * A function or method that handles incoming requests and replies with a `Response`.
  *
  * @remarks
- * Generally, this is interface is assigned to a WorkerRouter method, such as `onRequestGet`
+ * Generally, this is interface is assigned to a KeyworkRouter method, such as `onRequestGet`
  * The `IncomingRequestEvent` argument is provided by the router's `fetch` method.
  *
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.

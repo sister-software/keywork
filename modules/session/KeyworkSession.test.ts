@@ -13,7 +13,7 @@
  */
 
 import { assertEquals, assert } from 'deno/testing/asserts'
-import { WorkerRouter } from 'keywork/router/worker'
+import { KeyworkRouter } from 'keywork/router/worker'
 import { SessionMiddleware } from 'keywork/session'
 import { CookieHeaders } from 'keywork/http/headers'
 import HTTP from 'keywork/http'
@@ -21,7 +21,7 @@ import { parse as parseCookies } from 'cookie'
 
 Deno.test('Session Middleware', async () => {
   const sessionMiddleware = new SessionMiddleware()
-  const app = new WorkerRouter({
+  const app = new KeyworkRouter({
     displayName: 'Session Tester',
     middleware: [sessionMiddleware],
   })

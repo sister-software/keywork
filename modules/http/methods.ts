@@ -19,14 +19,14 @@
 export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE' | 'HEAD' | 'OPTIONS' | '*'
 
 /**
- * HTTP method normalized for the `WorkerRouter` methods.
+ * HTTP method normalized for the `KeyworkRouter` methods.
  * @ignore
  */
 
 /**
  * Normalized HTTP methods in a JavaScript friendly format.
  *
- * @see {WorkerRouter}
+ * @see {KeyworkRouter}
  */
 export type RouterMethod = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options' | 'all'
 

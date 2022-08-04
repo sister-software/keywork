@@ -23,20 +23,20 @@ import { isKeyworkFetcher, KeyworkFetcher, MiddlewareFetch } from 'keywork/route
 import type { ParsedRoute, RouteMatch, RouteRequestHandler } from 'keywork/router/route'
 import { compilePath, matchPathPrecompiled, normalizePathPattern, PathPattern } from 'keywork/uri'
 import { Disposable, findSubstringStartOffset, PrefixedLogger } from 'keywork/utilities'
-import { isMiddlewareDeclarationOption, WorkerRouterOptions } from './common.ts'
-import { RouteDebugEntrypoint, WorkerRouterDebugEndpoints } from 'keywork/router/debug'
+import { isMiddlewareDeclarationOption, KeyworkRouterOptions } from './common.ts'
+import { RouteDebugEntrypoint, KeyworkRouterDebugEndpoints } from 'keywork/router/debug'
 import { isCloudflareWorkerExecutionContext } from 'keywork/http/request/cloudflare'
 
 /**
  * Used in place of the reference-sensitive `instanceof`
- * @see {WorkerRouter.assertIsInstanceOf}
+ * @see {KeyworkRouter.assertIsInstanceOf}
  * @ignore
  */
-export const kObjectName = 'Keywork.WorkerRouter'
+export const kObjectName = 'Keywork.KeyworkRouter'
 /**
  * @ignore
  */
-export const kInstance = 'Keywork.WorkerRouter.instance'
+export const kInstance = 'Keywork.KeyworkRouter.instance'
 
 /**
  * @ignore
@@ -63,12 +63,12 @@ export type RouteMethodDeclaration<
  *
  * {@link https://keywork.app/modules/routing Keywork Documentation}
  *
- * {@link modules/router/worker/api/classes/WorkerRouter Keywork API}
+ * {@link modules/router/worker/api/classes/KeyworkRouter Keywork API}
  *
  * @category Router
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  */
-export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAliases>, Disposable {
+export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAliases>, Disposable {
   /**
    * This router's known routes, categorized by their normalized HTTP method verbs into arrays of route handlers.
    *
@@ -108,7 +108,7 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
       const compiledPath = compilePath(pathPattern)
 
       if (isKeyworkFetcher<BoundAliases>(fetcherLike)) {
-        // Likely a `WorkerRouter` or `KeyworkFetcher`...
+        // Likely a `KeyworkRouter` or `KeyworkFetcher`...
         return {
           kind: 'fetcher',
           compiledPath,
@@ -283,7 +283,7 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
    *
    * @remarks
    * This will always be a **higher priority** than an explicitly defined method handler.
-   * If you're creating a router as middleware, `WorkerRouter#all` can be especially useful for intercepting incoming requests.
+   * If you're creating a router as middleware, `KeyworkRouter#all` can be especially useful for intercepting incoming requests.
    *
    * @category HTTP Method Handler
    * @public
@@ -305,7 +305,7 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
    * Route handlers are matched in the order of their declaration:
    *
    * ```ts
-   * const app = new WorkerRouter()
+   * const app = new KeyworkRouter()
    *
    * app.get('/foo', ({request}) => {
    *   return new Response('This handler got here first!')
@@ -320,7 +320,7 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
    * Call `use` before defining your route handlers:
    *
    * ```ts
-   * const authenticationRouter = new WorkerRouter()
+   * const authenticationRouter = new KeyworkRouter()
    *
    * authenticationRouter.all('*', ({request, next}) => {
    *   if (!hasAuthCookie(request)) {
@@ -331,7 +331,7 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
    *   return next()
    * })
    *
-   * const app = new WorkerRouter()
+   * const app = new KeyworkRouter()
    *
    * app.use('/', authenticationRouter)
    *
@@ -382,7 +382,7 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
   /**
    * Collates the known routes by HTTP method verb.
    *
-   * @see {WorkerRouter#$prettyPrintRoutes}
+   * @see {KeyworkRouter#$prettyPrintRoutes}
    * @category Debug
    * @public
    */
@@ -396,7 +396,7 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
         kind: 'router',
         entries: parsedRoutes.map(({ compiledPath, ...parsedRoute }) => {
           const entries =
-            parsedRoute.kind === 'fetcher' && WorkerRouter.assertIsInstanceOf(parsedRoute.fetcher)
+            parsedRoute.kind === 'fetcher' && KeyworkRouter.assertIsInstanceOf(parsedRoute.fetcher)
               ? parsedRoute.fetcher.$getRoutesByHTTPMethod()
               : []
 
@@ -476,8 +476,8 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
    * The Worker's primary incoming fetch handler.
    *
    * @remarks
-   * This delegates to a method-specific handler you define, such as `WorkerRouter#get`.
-   * Generally, `WorkerRouter#fetch` should not be used within your app.
+   * This delegates to a method-specific handler you define, such as `KeyworkRouter#get`.
+   * Generally, `KeyworkRouter#fetch` should not be used within your app.
    * This is instead automatically called by the Worker runtime when an incoming request is received.
    *
    * @public
@@ -610,16 +610,16 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
   static readonly [kObjectName] = true as boolean
 
   static assertIsInstanceOf<BoundAliases = {}>(
-    routerLike: KeyworkFetcher<BoundAliases> | WorkerRouter<BoundAliases>
-  ): routerLike is WorkerRouter<BoundAliases> {
-    return Boolean(routerLike instanceof WorkerRouter || kInstance in routerLike)
+    routerLike: KeyworkFetcher<BoundAliases> | KeyworkRouter<BoundAliases>
+  ): routerLike is KeyworkRouter<BoundAliases> {
+    return Boolean(routerLike instanceof KeyworkRouter || kInstance in routerLike)
   }
 
   //#endregion
 
   //#region Lifecyle
 
-  constructor(options?: WorkerRouterOptions) {
+  constructor(options?: KeyworkRouterOptions) {
     this.displayName = options?.displayName || 'Keywork Router'
     this.logger = new PrefixedLogger(this.displayName)
 
@@ -632,14 +632,14 @@ export class WorkerRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAlia
       typeof options?.debug?.includeHeaders !== 'undefined' ? options.debug.includeHeaders : true
 
     if (options?.debug?.endpoints) {
-      const endpoints: WorkerRouterDebugEndpoints =
+      const endpoints: KeyworkRouterDebugEndpoints =
         typeof options.debug.endpoints === 'boolean'
           ? {
               routes: true,
             }
           : options.debug.endpoints
       // TODO: flesh out
-      // this.use(new WorkerRouterDebugMiddleware(options?.debug))
+      // this.use(new KeyworkRouterDebugMiddleware(options?.debug))
 
       if (endpoints.routes) {
         this.get('/keywork/routes', this.$routesEndpoint)

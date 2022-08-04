@@ -14,7 +14,7 @@
 
 import type { ReactRendererOptions } from 'keywork/react/isomorphic'
 import type { KeyworkFetcher } from 'keywork/router/middleware'
-import { WorkerRouterDebugOptions } from 'keywork/router/debug'
+import { KeyworkRouterDebugOptions } from 'keywork/router/debug'
 
 /**
  * Middleware declaration in the convenient shape of `Map`'s constructor parameters.
@@ -31,7 +31,7 @@ export type MiddlewareDeclaration<PathPatternPrefix extends string = string> = r
  * Options to configure the Worker Router.
  * @category Options
  */
-export interface WorkerRouterOptions {
+export interface KeyworkRouterOptions {
   /**
    * A display name used for debugging and log messages.
    * @defaultValue `'Keywork Router'`
@@ -39,12 +39,12 @@ export interface WorkerRouterOptions {
   displayName?: string
   /**
    * Middleware to apply to the router during construction.
-   * Middleware can also be applied via `WorkerRouter#use`.
+   * Middleware can also be applied via `KeyworkRouter#use`.
    */
   middleware?: Array<MiddlewareDeclarationLike>
 
   react?: ReactRendererOptions
-  debug?: WorkerRouterDebugOptions
+  debug?: KeyworkRouterDebugOptions
 }
 
 /** @ignore */

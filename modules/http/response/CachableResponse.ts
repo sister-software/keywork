@@ -14,7 +14,7 @@
 
 import { Status } from 'keywork/errors'
 import { isETagMatch } from 'keywork/http/headers/caching'
-import { CacheControlDirectives, createCacheControlHeader } from 'keywork/http/headers'
+import { CacheControlDirectives, createCacheControlHeader } from 'keywork/http/headers/caching'
 import { NotModifiedResponse } from './NotModifiedResponse.ts'
 import HTTP from 'keywork/http'
 

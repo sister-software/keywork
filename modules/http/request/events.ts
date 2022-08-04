@@ -48,15 +48,15 @@ export const IncomingRequestEventObjectName = 'Keywork.IncomingRequestEvent'
  * An event object containing contextual data for a single and specific incoming HTTP request.
  *
  * @remarks
- * Generally, this interface is exclusive to {@link WorkerRouter#fetch}
+ * Generally, this interface is exclusive to {@link KeyworkRouter#fetch}
  * and automatically passed to your subclass's route handlers.
  *
  * This is similar to `EventContext` defined in the `@cloudflare/workers-types` package.
- * However, the `IncomingRequestEvent` type includes additional information from `WorkerRouter`.
+ * However, the `IncomingRequestEvent` type includes additional information from `KeyworkRouter`.
  *
  * ### Caveats
  *
- * - The `request.url` property will be updated by route handler of `WorkerRouter`.
+ * - The `request.url` property will be updated by route handler of `KeyworkRouter`.
  *
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  * @typeParam ExpectedParams URL parameters parsed from the incoming request's URL and the route's pattern.
@@ -87,7 +87,7 @@ export class IncomingRequestEvent<
      *
      * @remarks
      * Both the request's `url` property and the parent `IncomingRequestEvent` will reflect
-     * the current parsed route handler of `WorkerRouter`.
+     * the current parsed route handler of `KeyworkRouter`.
      * @see {IncomingRequestEvent#originalURL}
      */
     public request: globalThis.Request,

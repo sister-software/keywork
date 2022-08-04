@@ -10,9 +10,9 @@ Keywork includes optional middleware to manage and authenticate your users.
 
 ```ts
 import { SessionMiddleware } from 'keywork/session'
-import { WorkerRouter } from 'keywork/router'
+import { KeyworkRouter } from 'keywork/router'
 
-const app = new WorkerRouter({
+const app = new KeyworkRouter({
   displayName: 'Session Tester',
   middleware: [new SessionMiddleware()],
 })

@@ -19,7 +19,7 @@ import { CompiledPath } from 'keywork/uri'
  * Public endpoints to aid in debugging your app.
  * Available at `/keywork/*`
  */
-export interface WorkerRouterDebugEndpoints {
+export interface KeyworkRouterDebugEndpoints {
   /**
    * `/keywork/routes`
    * JSON endpoint to display routes.
@@ -27,7 +27,7 @@ export interface WorkerRouterDebugEndpoints {
   routes: boolean
 }
 
-export interface WorkerRouterDebugOptions {
+export interface KeyworkRouterDebugOptions {
   /**
    * Whether debugging headers should be included.
    * @defaultValue `true`
@@ -38,7 +38,7 @@ export interface WorkerRouterDebugOptions {
    * Debug endpoints to enable.
    * @defaultValue true
    */
-  endpoints?: WorkerRouterDebugEndpoints | boolean
+  endpoints?: KeyworkRouterDebugEndpoints | boolean
 }
 
 export interface RouteDebugEntrypoint {

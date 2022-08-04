@@ -36,14 +36,14 @@ export const Page: React.FC<PageProps> = (props) => {
 }
 ```
 
-...And how the component is then rendered by `WorkerRouter`:
+...And how the component is then rendered by `KeyworkRouter`:
 
 ```tsx title=worker/worker.tsx showLineNumbers
 import React from 'react'
 import { Page, PageProps } from '@local/shared/components/Page'
-import { WorkerRouter } from 'keywork/routing'
+import { KeyworkRouter } from 'keywork/router'
 
-export const router = new WorkerRouter()
+export const router = new KeyworkRouter()
 
 // highlight-start
 router.get('/', () => {

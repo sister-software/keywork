@@ -14,7 +14,7 @@
 
 import { Status } from 'keywork/errors'
 import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } from 'deno/testing/asserts'
-import { WorkerRouter } from 'keywork/router/worker'
+import { KeyworkRouter } from 'keywork/router/worker'
 import HTTP from 'keywork/http'
 import { JSONResponse } from 'keywork/http/response'
 import React from 'react'
@@ -27,7 +27,7 @@ interface HelloResponseBody extends Record<PropertyKey, unknown> {
 }
 
 Deno.test('Router receives requests', async () => {
-  const app = new WorkerRouter()
+  const app = new KeyworkRouter()
 
   app.get('/', (event) => {
     const url = new URL(event.request.url)
@@ -72,7 +72,7 @@ Deno.test('Router receives requests', async () => {
 })
 
 Deno.test('Router parses URL parameters', async () => {
-  const app = new WorkerRouter()
+  const app = new KeyworkRouter()
 
   // Declaring a route with URL params...
   interface ExampleParams {
@@ -91,7 +91,7 @@ Deno.test('Router parses URL parameters', async () => {
 })
 
 Deno.test('Router renders JSX', async () => {
-  const app = new WorkerRouter({
+  const app = new KeyworkRouter({
     displayName: 'JSX Tester Router',
   })
 
@@ -110,7 +110,7 @@ Deno.test('Router renders JSX', async () => {
 })
 
 Deno.test('Router supports middleware', async () => {
-  const HelloWorldRouter = new WorkerRouter({
+  const HelloWorldRouter = new KeyworkRouter({
     displayName: 'Hello World Router',
   })
 
@@ -131,7 +131,7 @@ Deno.test('Router supports middleware', async () => {
   })
 
   // Create a router to receive all incoming requests...
-  const app = new WorkerRouter({
+  const app = new KeyworkRouter({
     displayName: 'Middleware Tester App',
     middleware: [
       // The example routes...

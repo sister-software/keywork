@@ -6,7 +6,7 @@ sidebar_label: Parsing URL Params
 ---
 
 ```tsx title=worker/routers/users.ts
-export const usersRouter = new WorkerRouter({
+export const usersRouter = new KeyworkRouter({
   displayName: 'Users Router',
   DocumentComponent: AppHTMLDocument,
   session: true,

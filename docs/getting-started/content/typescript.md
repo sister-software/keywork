@@ -50,7 +50,7 @@ are recommended to avoid long import URLs:
 ```jsonc title=importmap.json
 {
   "imports": {
-    "keywork/routing": "https://cdn.skypack.dev/keywork@3.0.0/routing?dts",
+    "keywork/router": "https://cdn.skypack.dev/keywork@3.0.0/routing?dts",
     "keywork/utilities": "https://cdn.skypack.dev/keywork@3.0.0/utilities?dts"
     // etc
   }

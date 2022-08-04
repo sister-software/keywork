@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { WorkerRouter } from 'keywork/router/worker'
+import { KeyworkRouter } from 'keywork/router/worker'
 import type { RouteRequestHandler } from 'keywork/router/route'
 import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'cookie'
 import { ulid } from 'keywork/ids'
@@ -38,7 +38,7 @@ export interface KeyworkSession {
   isNewSession: boolean
 }
 
-export class SessionMiddleware extends WorkerRouter {
+export class SessionMiddleware extends KeyworkRouter {
   /**
    * The key used to read from the cookie header.
    */

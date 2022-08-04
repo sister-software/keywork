@@ -11,7 +11,7 @@ especially so if you're unfamiliar with the quirks and limitations of V8.
 Let's start with a small example to get a feel for how Keywork fits in with your current experience.
 
 We're going to create a single Worker that sends the browser a "hello world" response.
-By the end of this example, you'll know how to use the [`WorkerRouter`](/modules/router/api/classes/WorkerRouter)
+By the end of this example, you'll know how to use the [`KeyworkRouter`](/modules/router/api/classes/KeyworkRouter)
 class to handling incoming requests from the browser.
 
 :::info
@@ -40,14 +40,14 @@ Examples are always written with type annotations, but they can be omitted if yo
 
 ### Define a router with an incoming request handler
 
-Building an app with Keywork starts creating a [`WorkerRouter`](/modules/router/api/classes/WorkerRouter)
+Building an app with Keywork starts creating a [`KeyworkRouter`](/modules/router/api/classes/KeyworkRouter)
 class:
 
 ```ts title=_worker.ts
-import { WorkerRouter } from 'keywork/routing'
+import { KeyworkRouter } from 'keywork/router'
 
 // Create a router to receive all incoming requests...
-const app = new WorkerRouter()
+const app = new KeyworkRouter()
 
 //...
 ```
@@ -58,10 +58,10 @@ Much like Express.js, we can define route handlers by invoking methods on `app` 
 In our small example, we only need to define a single route handler:
 
 ```ts title=_worker.ts
-import { WorkerRouter } from 'keywork/routing'
+import { KeyworkRouter } from 'keywork/router'
 
 // Create a router to receive all incoming requests...
-const app = new WorkerRouter()
+const app = new KeyworkRouter()
 
 // e.g. GET http://example.com/
 app.get('/', (event) => {
@@ -81,10 +81,10 @@ While our example path pattern is simple, routes can also define advanced
 ### Exporting the router
 
 ```ts title=_worker.ts
-import { WorkerRouter } from 'keywork/routing'
+import { KeyworkRouter } from 'keywork/router'
 
 // Create a router to receive all incoming requests...
-const app = new WorkerRouter()
+const app = new KeyworkRouter()
 
 // e.g. GET http://example.com/
 app.get('/', (event) => {
@@ -105,10 +105,10 @@ And in this example, we use `event.request.url` to parse the URL from whence the
 ### Exporting the router
 
 ```ts title=_worker.ts
-import { WorkerRouter } from 'keywork/routing'
+import { KeyworkRouter } from 'keywork/router'
 
 // Create a router to receive all incoming requests...
-const app = new WorkerRouter()
+const app = new KeyworkRouter()
 
 // e.g. GET http://example.com/
 app.get('/', (event) => {
@@ -140,9 +140,9 @@ And since we've already demostrated how to send plaintext,
 Let's illustrate this feature by adding a JSON endpoint to our router:
 
 ```ts title=_worker.ts
-import { WorkerRouter } from 'keywork/routing'
+import { KeyworkRouter } from 'keywork/router'
 
-const app = new WorkerRouter()
+const app = new KeyworkRouter()
 
 app.get('/', (event) => {
   const url = new URL(event.request.url)
@@ -173,6 +173,6 @@ export default app
 ```
 
 If you're familiar with Worker Sites, or Cloudflare Pages, you may have noticed that
-`WorkerRouter` reduces much of the low-level boilerplate.
+`KeyworkRouter` reduces much of the low-level boilerplate.
 The Keywork API attempts to bridge the gap between existing web development patterns,
 and the native Worker API.

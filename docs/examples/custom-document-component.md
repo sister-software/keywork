@@ -6,7 +6,7 @@ sidebar_label: Custom Document Component
 ---
 
 If you have a custom `<html>` document component, or want to inject your own providers
-in the render lifecyle, you can pass your component to the `WorkerRouter`:
+in the render lifecyle, you can pass your component to the `KeyworkRouter`:
 
 ```tsx title=worker/components/AppHTMLDocument.tsx showLineNumbers
 import { KeyworkHTMLDocumentAppRoot } from 'keywork/react'
@@ -35,9 +35,9 @@ export const AppHTMLDocument: React.FC<AppHTMLDocumentProps> = ({ children }) =>
 ```tsx title=worker/routers/app.tsx showLineNumbers
 // highlight-next-line
 import { AppHTMLDocument } from '@local/worker/components/Document'
-import { WorkerRouter } from 'keywork/routing'
+import { KeyworkRouter } from 'keywork/router'
 
-export const app = new WorkerRouter({
+export const app = new KeyworkRouter({
   displayName: 'My App',
   // highlight-next-line
   DocumentComponent: AppHTMLDocument,
@@ -51,7 +51,7 @@ all.get('/', async ({ request }) => {
 ## Example: Using React with URL params
 
 ```tsx title=worker/routers/users.ts
-export const usersRouter = new WorkerRouter({
+export const usersRouter = new KeyworkRouter({
   displayName: 'Users Router',
   DocumentComponent: AppHTMLDocument,
   session: true,

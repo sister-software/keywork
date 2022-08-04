@@ -19,7 +19,7 @@ import type { RouteMatch } from 'keywork/router/route'
  * A function within the Worker that receives all incoming requests.
  *
  * @remarks
- * Generally, this interface is exclusive to {@link WorkerRouter#fetch},
+ * Generally, this interface is exclusive to {@link KeyworkRouter#fetch},
  * or any object that implements the {@link KeyworkFetcher} interface
  *
  * This is nearly identical to `ExportedHandlerFetchHandler`
@@ -54,7 +54,7 @@ export type MiddlewareFetch<BoundAliases = {}> = (
    *
    * @remarks
    * This is similar to Express.js Middleware.
-   * Providing a request argument will override the path param parsing within `WorkerRouter`.
+   * Providing a request argument will override the path param parsing within `KeyworkRouter`.
    */
   next?: (...args: Partial<Parameters<MiddlewareFetch<BoundAliases>>>) => null | Response | Promise<null | Response>,
   matchedRoutes?: RouteMatch<any>[]
@@ -78,7 +78,7 @@ export type MiddlewareFetch<BoundAliases = {}> = (
  * The fetch handler receives the Request and replies with a Response.
  *
  * @see {WorkerEnvFetchBinding}
- * @see {WorkerRouter#fetch}
+ * @see {KeyworkRouter#fetch}
  */
 export interface KeyworkFetcher<BoundAliases = {}> {
   /**

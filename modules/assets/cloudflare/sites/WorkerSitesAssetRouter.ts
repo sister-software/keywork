@@ -15,10 +15,10 @@
 import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
 import { KeyworkResourceError, Status } from 'keywork/errors'
-import type { KVNamespace } from 'keywork/kv'
+import type { KVNamespace } from 'keywork/kv/cloudflare'
 import { ErrorResponse } from 'keywork/http/response'
 import { RouteRequestHandler } from 'keywork/router/route'
-import { WorkerRouter } from 'keywork/router/worker'
+import { KeyworkRouter } from 'keywork/router/worker'
 
 /**
  * An asset environment binding available within Cloudflare Pages.
@@ -69,7 +69,7 @@ export interface WorkersSiteStaticContentBinding {
  * @category Asset Router
  * @see {CloudflarePagesAssetRouter}
  */
-export class WorkerSitesAssetRouter extends WorkerRouter<WorkersSiteStaticContentBinding> {
+export class WorkerSitesAssetRouter extends KeyworkRouter<WorkersSiteStaticContentBinding> {
   /**
    * Injected via:
    *

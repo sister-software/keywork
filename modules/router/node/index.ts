@@ -21,7 +21,7 @@
  * @module router.node
  */
 
-import { WorkerRouter } from 'keywork/router'
+import { KeyworkRouter } from 'keywork/router'
 import HTTP from 'keywork/http'
 
 import { IncomingMessage, ServerResponse } from 'http'
@@ -39,16 +39,16 @@ export type ServerHandler = (req: IncomingMessage, res: ServerResponse) => void
 export type ProcessChunkCallback = (chunkResult: ReadableStreamDefaultReadResult<Uint8Array>) => Promise<void>
 
 /**
- * Given a `WorkerRouter`, responds to an incoming request from a Node server.
+ * Given a `KeyworkRouter`, responds to an incoming request from a Node server.
  *
  * @example
  *
  * ```ts
  * import * as http from 'node:http'
- * import { WorkerRouter } from 'keywork/router'
+ * import { KeyworkRouter } from 'keywork/router'
  * import { respondWithRouter } from 'keywork/router/node'
  *
- * const router = new WorkerRouter()
+ * const router = new KeyworkRouter()
  * http.createServer((req, res) => {
  *   respondWithRouter(router, req, res)
  * })
@@ -57,7 +57,7 @@ export type ProcessChunkCallback = (chunkResult: ReadableStreamDefaultReadResult
  * @beta Node support is currently experimental and may change in the near future.
  */
 export async function respondWithRouter<BoundAliases = {}>(
-  router: WorkerRouter<BoundAliases>,
+  router: KeyworkRouter<BoundAliases>,
   nodeRequest: IncomingMessage,
   nodeResponse: ServerResponse
 ): Promise<void> {
@@ -91,23 +91,23 @@ export async function respondWithRouter<BoundAliases = {}>(
 }
 
 /**
- * Given a `WorkerRouter`, creates a Node-compatible server handler.
+ * Given a `KeyworkRouter`, creates a Node-compatible server handler.
  *
  * @example
  *
  * ```ts
  * import * as http from 'node:http'
- * import { WorkerRouter } from 'keywork/router'
+ * import { KeyworkRouter } from 'keywork/router'
  * import { createServerHandler } from 'keywork/router/node'
  *
- * const router = new WorkerRouter()
+ * const router = new KeyworkRouter()
  * http.createServer(createServerHandler(router))
  * ```
  *
  * @see {respondWithRouter}
  * @beta Node support is currently experimental and may change in the near future.
  */
-export function createServerHandler<BoundAliases = {}>(router: WorkerRouter<BoundAliases>): ServerHandler {
+export function createServerHandler<BoundAliases = {}>(router: KeyworkRouter<BoundAliases>): ServerHandler {
   return (req, res) => respondWithRouter<BoundAliases>(router, req, res)
 }
 
