@@ -196,8 +196,33 @@ const config = {
   },
 
   presets: [['classic', presetOptions]],
-
   themeConfig,
+  plugins: [
+    [
+      '@docusaurus/plugin-pwa',
+      {
+        debug: true,
+        offlineModeActivationStrategies: ['appInstalled', 'standalone', 'queryString'],
+        pwaHead: [
+          {
+            tagName: 'link',
+            rel: 'icon',
+            href: '/img/android-chrome-512x512.png',
+          },
+          {
+            tagName: 'link',
+            rel: 'manifest',
+            href: '/site.webmanifest',
+          },
+          {
+            tagName: 'meta',
+            name: 'theme-color',
+            content: '#eaffff',
+          },
+        ],
+      },
+    ],
+  ],
 }
 
 export default config
