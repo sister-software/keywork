@@ -35,7 +35,7 @@
     "@types/prettier": "^2.6.3",
     "@types/semver": "^7.3.10",
     "@typescript-eslint/eslint-plugin": "^5.10.2",
-    "@typescript-eslint/parser": "^5.10.2",
+    "@typescript-eslint/parser": "^5.32.0",
     "command-exists": "^1.2.9",
     "eslint": "^8.19.0",
     "eslint-config-prettier": "^8.5.0",
