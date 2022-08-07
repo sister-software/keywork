@@ -13,7 +13,6 @@
  */
 
 import type { KeyworkSession } from 'keywork/session'
-import type { PathMatch } from 'keywork/uri'
 import { ExecutionContext } from 'keywork/http/request/cloudflare'
 import { ExtendableEvent } from './common.ts'
 
@@ -113,7 +112,7 @@ export class IncomingRequestEvent<
      * Parameters are parsed using the incoming request's URL and the route's pattern.
      */
     public params: ExpectedParams = {} as ExpectedParams,
-    public match?: PathMatch<ExpectedParams>
+    public match?: URLPatternResult
   ) {
     super('fetch')
     this.originalURL = request.url

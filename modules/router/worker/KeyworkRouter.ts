@@ -14,15 +14,15 @@
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
 import { KeyworkHeaders } from 'keywork/http/headers'
-import { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from 'keywork/http'
+import HTTP, { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from 'keywork/http'
 import { ReactRendererOptions } from 'keywork/react/isomorphic'
 import { renderReactStream } from 'keywork/react/worker'
 import { castToResponse, cloneAsMutableResponse, ErrorResponse } from 'keywork/http/response'
 import { IncomingRequestEvent, IncomingRequestEventData } from 'keywork/http/request'
 import { isKeyworkFetcher, KeyworkFetcher, MiddlewareFetch } from 'keywork/router/middleware'
 import type { ParsedRoute, RouteMatch, RouteRequestHandler } from 'keywork/router/route'
-import { compilePath, matchPathPrecompiled, normalizePathPattern, PathPattern } from 'keywork/uri'
-import { Disposable, findSubstringStartOffset, PrefixedLogger } from 'keywork/utilities'
+import { normalizeURLPattern, normalizeURLPatternInput, URLPatternLike } from 'keywork/uri'
+import { Disposable, PrefixedLogger } from 'keywork/utilities'
 import { isMiddlewareDeclarationOption, KeyworkRouterOptions } from './common.ts'
 import { RouteDebugEntrypoint, KeyworkRouterDebugEndpoints } from 'keywork/router/debug'
 import { isCloudflareWorkerExecutionContext } from 'keywork/http/request/cloudflare'
@@ -47,11 +47,11 @@ export type RouteMethodDeclaration<
   Data extends IncomingRequestEventData = IncomingRequestEventData
 > = (
   /**
-   * A `path-to-regexp` style pattern.
-   *
-   * @see {@link https://www.npmjs.com/package/path-to-regexp NPM Package}
+   * Either an instance of `URLPattern`,
+   * or a string representing the `pathname` portion of a `URLPattern`
+   * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern URLPattern Constructor via MDN}
    */
-  paramPattern: string | RegExp,
+  urlPattern: URLPatternLike,
   /**
    * One or more callback functions to handle an incoming request.
    */
@@ -92,26 +92,24 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    * Given a normalized HTTP method verb, create a method handler.
    * This is mostly for internal use.
    */
-  public appendMethodRoutes<Path extends string>(
+  public appendMethodRoutes(
     normalizedVerb: RouterMethod,
-    pathPatternLike: PathPattern<Path> | Path | RegExp,
+    urlPatternLike: URLPatternLike,
     ...fetchersLike: Array<KeyworkFetcher<BoundAliases> | RouteRequestHandler<BoundAliases, any, any>>
   ): void {
     const parsedHandlersCollection = this.routesByVerb.get(normalizedVerb)!
-    const pathPattern = normalizePathPattern(pathPatternLike)
+    const urlPattern = normalizeURLPattern(urlPatternLike)
 
     /**
      * Incoming request arguments may not always be normalized,
      * but using a `KeyworkFetcher` wrapper ensures that we can always handle both shapes.
      */
     const parsedHandlers = fetchersLike.map((fetcherLike): ParsedRoute<BoundAliases> => {
-      const compiledPath = compilePath(pathPattern)
-
       if (isKeyworkFetcher<BoundAliases>(fetcherLike)) {
         // Likely a `KeyworkRouter` or `KeyworkFetcher`...
         return {
           kind: 'fetcher',
-          compiledPath,
+          urlPattern,
           fetcher: fetcherLike,
           displayName: fetcherLike.displayName,
         }
@@ -127,8 +125,8 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
 
       return {
         kind: 'routeHandler',
-        displayName: `[${this.displayName}][${pathPattern.path}]`,
-        compiledPath,
+        displayName: `[${this.displayName}][${urlPattern.pathname}]`,
+        urlPattern,
         fetch,
       }
     })
@@ -343,25 +341,27 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    * @public
    */
   public use(fetcher: KeyworkFetcher<any>): void
-  public use(mountPathPattern: PathPattern | string, fetcher: KeyworkFetcher<any>): void
+  public use(mountURLPattern: URLPatternLike | string, fetcher: KeyworkFetcher<any>): void
   public use(...args: unknown[]): void {
-    let mountPathPattern: PathPattern
+    let mountURLPattern: URLPatternLike
     let fetcher: KeyworkFetcher<any>
 
     if (args.length > 1) {
       // Path pattern was provided...
-      mountPathPattern = normalizePathPattern(args[0] as PathPattern | string, {
-        end: false,
+      mountURLPattern = normalizeURLPattern(args[0] as URLPatternLike, {
+        appendWildcard: true,
       })
 
       fetcher = args[1] as KeyworkFetcher<any>
     } else {
       // Path pattern defaults to root...
-      mountPathPattern = { path: '*', caseSensitive: false, end: true }
+      mountURLPattern = normalizeURLPattern('*', {
+        appendWildcard: false,
+      })
       fetcher = args[0] as KeyworkFetcher<any>
     }
 
-    this.appendMethodRoutes('all', mountPathPattern, fetcher)
+    this.appendMethodRoutes('all', mountURLPattern, fetcher)
   }
 
   //#endregion
@@ -394,7 +394,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
         httpMethod,
         displayName: this.displayName || '',
         kind: 'router',
-        entries: parsedRoutes.map(({ compiledPath, ...parsedRoute }) => {
+        entries: parsedRoutes.map(({ urlPattern, ...parsedRoute }) => {
           const entries =
             parsedRoute.kind === 'fetcher' && KeyworkRouter.assertIsInstanceOf(parsedRoute.fetcher)
               ? parsedRoute.fetcher.$getRoutesByHTTPMethod()
@@ -402,9 +402,9 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
 
           return {
             httpMethod,
-            displayName: parsedRoute.displayName || compiledPath.pattern.path || '',
+            displayName: parsedRoute.displayName || urlPattern.pathname,
             kind: parsedRoute.kind,
-            compiledPath,
+            urlPattern,
             entries,
           }
         }),
@@ -426,7 +426,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
       this.logger.log('METHOD:', httpMethod)
 
       for (const route of entries) {
-        this.logger.log(route.displayName || '', route.compiledPath?.pattern.path, route.compiledPath?.matcher)
+        this.logger.log(route.displayName || '', route.urlPattern?.pathname)
 
         this.$prettyPrintRoutes(route.entries)
       }
@@ -458,12 +458,13 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    */
   public match<BoundAliases = {}>(
     parsedRoutes: ParsedRoute<BoundAliases>[],
-    pathname: string
-  ): RouteMatch<BoundAliases, any>[] {
-    const matchedRoutes: RouteMatch<BoundAliases, any>[] = []
+    matchingAgainst: URLPatternInput
+  ): RouteMatch<BoundAliases>[] {
+    const matchInput = normalizeURLPatternInput(matchingAgainst)
+    const matchedRoutes: RouteMatch<BoundAliases>[] = []
 
     for (const parsedRoute of parsedRoutes) {
-      const match = matchPathPrecompiled<any>(parsedRoute.compiledPath, pathname)
+      const match = parsedRoute.urlPattern.exec(matchInput)
       if (!match) continue
 
       matchedRoutes.push({ match, parsedRoute })
@@ -510,7 +511,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
 
     if (!matchedRoutes) {
       // Given the current URL, attempt to find a matching route handler...
-      matchedRoutes = this.match<BoundAliases>(routes, requestURL.pathname)
+      matchedRoutes = this.match<BoundAliases>(routes, requestURL)
     }
 
     if (!matchedRoutes.length) {
@@ -520,23 +521,29 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
     const [{ match, parsedRoute }, ...fallbackRoutes] = matchedRoutes
 
     // Update the URL params...
-    if (!match.pattern.end) {
+
+    if (match.pathname.groups[0]) {
       // The current pattern only matches the beginning of the pathname.
       // So, we remove the matched portion which allows any nested routes to
       // behave as if the pathname did not include any unforseen prefixes.
-      const pathNameOffset = findSubstringStartOffset(requestURL.pathname, match.pathnameBase)
-      if (pathNameOffset) {
-        // Add '/' to allow omitting of trailing-slash.
-        match.pathname = requestURL.pathname.substring(pathNameOffset) || '/'
-        match.pathnameBase = '/'
+      requestURL.pathname = match.pathname.groups[0]
 
-        requestURL.pathname = match.pathname
-      }
+      event.request = new HTTP.Request(requestURL, request)
     }
 
-    event.request = new globalThis.Request(requestURL, request)
-    event.match = match as any
-    event.params = match.params
+    event.match = match
+    event.params = match.pathname.groups
+
+    // if (!parsedRoute.urlPattern.pathname.endsWith('*')) {
+    //   const pathNameOffset = findSubstringStartOffset(requestURL.pathname, match.pathnameBase)
+    //   if (pathNameOffset) {
+    //     // Add '/' to allow omitting of trailing-slash.
+    //     match.pathname = requestURL.pathname.substring(pathNameOffset) || '/'
+    //     match.pathnameBase = '/'
+
+    //     requestURL.pathname = match.pathname
+    //   }
+    // }
 
     next =
       next ||
@@ -553,7 +560,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
     let possibleResponse: globalThis.Response | null
     this.logger.debug(
       `Delegating \`${requestURL.pathname}\` to ${parsedRoute.kind}`,
-      parsedRoute.displayName || parsedRoute.compiledPath
+      parsedRoute.displayName || parsedRoute.urlPattern.pathname
     )
     try {
       if (parsedRoute.kind === 'routeHandler') {

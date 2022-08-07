@@ -35,6 +35,7 @@ Deno.test('Session Middleware', async () => {
   const rootResponse = await app.fetch(new HTTP.Request('http://localhost/'))
   assertEquals(await rootResponse.text(), `Hello from /`, 'Response has body')
 
+  // @ts-ignore Type annotation
   const cookieDough = rootResponse.headers.get<CookieHeaders>('Set-Cookie')
 
   assert(cookieDough, 'Request has cookie')

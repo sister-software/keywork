@@ -39,6 +39,7 @@ export function isInstanceOfResponse(responsish: unknown): responsish is globalT
 /**
  * Infers the appropriate Response constructor for the given `ResponseLike` body.
  * @throws {KeyworkResourceError}
+ * @category Type Cast
  * @public
  */
 export async function castToResponse(

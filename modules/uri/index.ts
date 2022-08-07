@@ -12,7 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './common.ts'
+export * from './patterns.ts'
 export * from './typeCasting.ts'
-export * from './matchPath.ts'
-export * from './parsePathname.ts'

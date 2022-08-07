@@ -12,7 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { CompiledPath, PathMatch } from 'keywork/uri'
 import type { KeyworkFetcher } from 'keywork/router/middleware'
 import type { RouteRequestHandler } from './RouteRequestHandler.ts'
 
@@ -20,7 +19,7 @@ import type { RouteRequestHandler } from './RouteRequestHandler.ts'
  * @ignore
  */
 export interface ParsedRouteBase {
-  compiledPath: CompiledPath
+  urlPattern: URLPattern
   displayName?: string
 }
 
@@ -47,7 +46,7 @@ export type ParsedRoute<BoundAliases = {}> =
 /**
  * @ignore
  */
-export interface RouteMatch<BoundAliases = {}, ExpectedParams = {}> {
-  match: PathMatch<ExpectedParams>
+export interface RouteMatch<BoundAliases = {}> {
+  match: URLPatternResult
   parsedRoute: ParsedRoute<BoundAliases>
 }

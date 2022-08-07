@@ -13,7 +13,6 @@
  */
 
 import { HTTPMethod } from 'keywork/http'
-import { CompiledPath } from 'keywork/uri'
 
 /**
  * Public endpoints to aid in debugging your app.
@@ -45,6 +44,6 @@ export interface RouteDebugEntrypoint {
   displayName: string
   kind: string
   httpMethod?: HTTPMethod
-  compiledPath?: CompiledPath
+  urlPattern?: URLPattern
   entries: RouteDebugEntrypoint[]
 }
