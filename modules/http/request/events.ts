@@ -93,7 +93,14 @@ export class IncomingRequestEvent<
     public request: globalThis.Request,
 
     /**
-     * The bound environment aliases, usually defined in your wrangler.toml file.
+     * The bound environment aliases.
+     *
+     * #### Cloudflare Workers
+     * These are usually defined in your wrangler.toml file.
+     *
+     * #### Node.js
+     * This is similar to `process.env`.
+     *
      */
     readonly env: BoundAliases = {} as BoundAliases,
 

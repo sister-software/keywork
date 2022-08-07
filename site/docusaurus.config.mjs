@@ -20,6 +20,7 @@ const lightCodeTheme = require('prism-react-renderer/themes/okaidia')
 /** @type {import('@docusaurus/preset-classic').Options} */
 const presetOptions = {
   pages: false,
+
   docs: {
     path: '../docs',
     sidebarPath: './sidebars.cjs',
@@ -177,14 +178,13 @@ const themeConfig = {
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'Keywork',
-  tagline: 'A batteries-included, magic-free, library for building web apps on Cloudflare Workers.',
+  tagline: 'A batteries-included library for building serverless web apps on Cloudflare Workers, Deno, and Node.JS',
   url: 'https://keywork.app',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
-  // GitHub pages deployment config.
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'nirrius', // Usually your GitHub org/user name.
   projectName: 'keywork', // Usually your repo name.

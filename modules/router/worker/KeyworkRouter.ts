@@ -63,7 +63,7 @@ export type RouteMethodDeclaration<
  *
  * {@link https://keywork.app/modules/routing Keywork Documentation}
  *
- * {@link modules/router/worker/api/classes/KeyworkRouter Keywork API}
+ * {@link https://keywork.app/modules/router/api/classes/KeyworkRouter Keywork API}
  *
  * @category Router
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.

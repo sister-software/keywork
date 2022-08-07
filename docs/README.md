@@ -29,7 +29,7 @@ and even scale at more affordable prices than virtual machines and containers.
 **_However_**, building a web app with V8 Isolates can come with several drawbacks,
 and may lock your code into a single platform.
 
-**Keywork makes V8 Isolates easier to use.**
+**Keywork is an open-source library that makes V8 Isolates easier to use.**
 
 ## Serverless web apps without vendor lock-in
 
@@ -43,7 +43,7 @@ and supports Cloudflare Workers, Deno Deploy, and Node.JS**
 
 ## Routing
 
-Keywork has everything you need to handle incoming requests in a Cloudflare Worker environment.
+Keywork has everything you need to handle incoming requests in a V8 runtime environment.
 Application routing remains _magic-free_, and uses an Express.js inspired API that doesn't stray far from
 the native design patterns of the Worker platform.
 
@@ -59,25 +59,59 @@ app.get<GreetParams>('/greet/:firstName', ({ params }) => {
 
 Keywork is the next step when your routing logic outgrows [Cloudflare Pages](https://developers.cloudflare.com/pages/platform/functions/#functions-routing).
 And thanks to modular and type-safe API, Keywork provides an opinionated and structured
-guidence as your web app grows, without locking you into a specific design-pattern.
+guidence as your codebase expands, without locking you into a specific design-pattern.
 
-_[Routing API ›](../modules/router)_
+<a href="../modules/router/" target="_blank"><strong><em>Try the Router Module</em> ›</strong></a>
 
 ### React just works
 
-At long last, Keywork takes React beyond the basics of static site generation, and into full dynamic pages.
+At long last, Keywork takes rendering React on V8 beyond static site generation, and into full dynamic pages.
 
-Keywork makes server-side rendering as simple as _an API with a UI_:
+Server-side rendering is made as simple as pairing JSX with your type-safe API:
 
-- Define your routes
-- Fetch your static props
-- Render a React component
+```tsx title="Create your API routes..."
+interface User {
+  displayName: string
+  email: string
+}
+
+const usersAPI = new KeyworkRouter()
+
+usersAPI.get('/', () => {
+  const users: User[] = [
+    { displayName: 'Coheed', email: 'coheed.k@example.com' },
+    { displayName: 'Cambria', email: 'claudio.k@example.com' },
+    { displayName: 'Ambellina', email: 'ambellina@example.com' },
+    { displayName: 'Sirus', email: 'sirus.amory@example.com' },
+  ]
+
+  return users
+})
+```
+
+```tsx title="Fetch your static props and return JSX!"
+const app = new KeyworkRouter({
+  middleware: [['/api/users', usersAPI]],
+})
+
+app.get('/users', async () => {
+  const response = await this.fetch('/api/users')
+  const users: User[] = await response.json()
+
+  return (
+    <ul>
+      {users.map((user, i) => (
+        <li key={i}>{user.displayName}</li>
+      ))}
+    </ul>
+  )
+})
+```
 
 Keywork handles client-side hydration, and fits into your existing architecture without ceremony.
-And with rendering made even faster with built-in support for streamed responses,
-your app is delivered and interactive in seconds.
+And with built-in support for streamed responses, your app is delivered and interactive in seconds.
 
-_[React Module API ›](../modules/react/)_
+<a href="../modules/react/" target="_blank"><strong><em>Try the React Module</em> ›</strong></a>
 
 ### Isomorphic error handling, made easier.
 
@@ -102,14 +136,17 @@ app.post('/login', async ({ request }) => {
 })
 ```
 
+<a href="../modules/errors" target="_blank"><strong><em>Try the Error Module</em> ›</strong></a>
+
 ## Code bundling without the guesswork
 
-Using Keywork means spending less of your precious time configuring ESBuild,
-and allows you to focus on the task at hand — building great web apps.
+Using Keywork means that you'll spend less of your precious time configuring ESBuild,
+and more on the real task at hand — building great web apps.
+
 And with [readymade templates](https://github.com/nirrius/keywork-starter-kit) available,
 you can skip the boilerplate and start coding in seconds.
 
-_[Bundling API ›](../modules/bundling)_
+<a href="../modules/bundling/" target="_blank"><strong><em>Try the Bundling Module</em> ›</strong></a>
 
 ### Tools to manage your growing codebase
 
@@ -117,35 +154,38 @@ Cloudflare Workers are limited to [just 1 megabyte](https://developers.cloudflar
 
 **Keywork allows your web app to be split into smaller and more manageable Worker deployments**
 
-You'd like to use Workers KV as a NoSQL database like MongoDB or Firebase
-
 ## Core utilities for building web apps
 
 If you find yourself writing a lot of "glue-code",
 Keywork also includes the typical "kitchen drawer" stuff you usually have to implement when building a web app,
 including...
 
-- Logging that helps you better trace down errors as your app grows.
-- Cache headers, cache responses, and even ETag generation for your own content.
-- Session management to aid in authenticating users.
+- Logging that helps you better trace down errors as your app grows
+- Cache headers, cache responses, and even ETag generation for your own content
+- Session management to aid in authenticating users
+- Tools that let you use Cloudflare KV as a NoSQL database like MongoDB or Firebase
 - Static asset utilities with support for Cloudflare Pages and Worker Sites.
 
-[**All that and much, much more!**](../modules/)
+**All that and much, much more!**
+<a href="../modules/" target="_blank"><strong><em>View the Keywork's modules</em> ›</strong></a>
 
 ## Keywork Starter Kit
 
-The starter kit lets Keywork can be used to build a web app on Cloudflare Pages with your own routing.
+The starter kit lets Keywork can be used to build a web app on [Cloudflare Pages](https://pages.cloudflare.com) with your own routing.
 
-- ✅ ESBuild
-- ✅ React
-- ✅ Cloudflare Pages
-- ✅ TypeScript
+- 🌐 React
+- 🏗️ ESBuild
+- ⚡ Cloudflare Pages
+- 💪 Written in TypeScript
 
-**[More details about the starter kit ›](https://github.com/nirrius/keywork-starter-kit)**
+<a href="https://github.com/nirrius/keywork-starter-kit" target="_blank"><strong><em>More details about the starter kit ›</em> ›</strong></a>
 
 ## Want to help?
 
-See [Contributing](https://keywork.app/contributing) for details ›
+Keywork is made possible through the countless contributions of the open-source community.
+There are many ways in which you can contribute to the project.
+
+<a href="https://keywork.app/contributing" target="_blank"><strong><em>See our contributing guide</em> ›</strong></a>
 
 ## Licensing
 

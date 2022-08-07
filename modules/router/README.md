@@ -1,9 +1,12 @@
 ---
-title: Routing
 sidebar_label: Module Overview
 sidebar_position: 0
 pagination_label: 'Module: Routing'
 ---
+
+# Keywork Router
+
+## Overview
 
 Designed with familiarity in mind, the server-side routing API is inspired by
 Express.js, React Router, and the native Cloudflare Workers platform.
@@ -20,28 +23,8 @@ export default app
 
 ## Creating a RESTful API
 
-Much like Express.js, `KeyworkRouter` defines each route handler by
-invoking methods that correspond with HTTP methods.
-
-```ts
-import { KeyworkRouter } from 'keywork/router'
-
-const app = new KeyworkRouter()
-
-// GET http://localhost:8788
-app.get('/', () => 'Hello there! 👋')
-
-// GET http://localhost:8788/greet/jessie
-app.get('/greet/:firstName', ({ params }) => `Hello there! ${event.params.firstName}`)
-
-// GET http://localhost:8788/datetime
-app.get('/datetime', () => `The current datetime is: ${new Date().toLocaleTimeString()}`)
-
-// POST http://localhost:8788/users
-app.get('/users', () => `The current datetime is: ${new Date().toLocaleTimeString()}`)
-```
-
-An instance of `KeyworkRouter` can handle the following HTTP methods:
+Instances of `KeyworkRouter` define each route handler by
+invoking methods that correspond with HTTP method of the same name:
 
 | HTTP Method | Usage                                                |
 | ----------- | ---------------------------------------------------- |
@@ -53,9 +36,41 @@ An instance of `KeyworkRouter` can handle the following HTTP methods:
 | `'OPTIONS'` | `app.options([path pattern], [RouteRequestHandler])` |
 | `'*'`       | `app.all([path pattern], [RouteRequestHandler])`     |
 
+### `GET` (`app.get([path pattern], [...RouteRequestHandler])`)
+
+```ts title="GET http://localhost:8788"
+app.get('/', () => 'Hello there! 👋')
+// Hello there! 👋
+```
+
+```ts title="GET http://localhost:8788/greet/jessie"
+app.get('/greet/:firstName', ({ params }) => `Hello there, ${params.firstName}!`)
+// Hello there, Jessie!
+```
+
+```ts title="GET http://localhost:8788/datetime"
+app.get('/datetime', () => `The current datetime is: ${new Date().toLocaleTimeString()}`)
+// The current datetime is: 11:35:00 AM
+```
+
+### `POST` (`app.post([path pattern], [...RouteRequestHandler])`)
+
+```ts title="POST http://localhost:8788/users"
+interface NewUserPayload {
+  displayName: string
+  email: string
+}
+
+app.post('/users', async ({ request }) => {
+  const user: NewUserPayload = await request.json()
+
+  //...
+})
+```
+
 ### Path Parameters
 
-Routes can have "[path-to-regexp](https://www.npmjs.com/package/path-to-regexp) style" path patterns:
+Routes can have "[path-to-regexp style](https://www.npmjs.com/package/path-to-regexp)" path patterns:
 
 ```ts
 app.get('/users/', ...)
@@ -70,7 +85,94 @@ Path patterns can even use regular expressions if your routing requires more fin
 
 ### `IncomingRequestEvent`
 
-When defining a route's `RouteRequestHandler` callback, you have access to an [`IncomingRequestEvent`](/modules/http/request/api/classes/IncomingRequestEvent) that contains information about the request.
+When creating a [`RouteRequestHandler`](/modules/router/route/api/types/RouteRequestHandler) callback,
+you have access to an [`IncomingRequestEvent`](/modules/http/request/api/classes/IncomingRequestEvent):
+
+```ts title="GET http://localhost:8788"
+// highlight-next-line
+app.get('', (event) => {
+  const {
+    // highlight-start
+    request,
+    params
+    env,
+    data,
+    originalURL
+    // highlight-end
+  } = event
+
+  return 'Hello there! 👋'
+})
+```
+
+#### `IncomingRequestEvent.request`
+
+The [incoming request](https://developer.mozilla.org/en-US/docs/Web/API/Request) received by the V8 runtime.
+
+#### `IncomingRequestEvent<ExpectedParams>.params`
+
+Parameters parsed from the incoming request's URL and the route's pattern.
+
+This can be made type-safe by providing a generic type when defining the route:
+
+```ts title="GET http://localhost:8788/users/cambria"
+// highlight-start
+interface UserProps {
+  userID: string
+}
+// highlight-end
+
+app.get<UserProps>('/users/:userID', (event) => {
+  const { userID } = event.params
+})
+```
+
+#### `IncomingRequestEvent.env`
+
+The bound environment aliases.
+[Bound environment aliases](https://developers.cloudflare.com/workers/platform/environment-variables/)
+are mostly limited to Cloudflare Workers, and are usually defined in your `wrangler.toml` file.
+
+##### Node.js
+
+This is similar to `process.env`.
+
+#### `IncomingRequestEvent.data`
+
+Optional extra data to be passed to a route handler, usually from [middleware](/modules/router/middleware/).
+
+#### `IncomingRequestEvent.originalURL`
+
+The original request URL, unmodified by Keywork's middleware logic.
+
+## Middleware
+
+Similar to Express.js's concept of Middleware, route handlers have access to a
+`next` function to pass a request off to the next route handler matching the URL pattern.
+
+`next` can also be called after checking for some criteria, such as if the user has authenticated:
+
+```ts title="Check if a user is allowed to view a page"
+const authenticationRouter = new KeyworkRouter()
+
+authenticationRouter.all('*',
+(event, next) => {
+  if (!isAuthenticated(event.request)) {
+     throw new KeyworkResourceError("You need to be logged in to view that!", Status.Forbidden)
+  }
+
+  return next()
+})
+
+app.use(authenticationRouter)
+app.get('/profile/settings', () => {...})
+```
+
+### Overrides
+
+Providing a `request` argument will override the path param parsing within `KeyworkRouter`.
+This can be useful if your middleware needs to modify or omit some request information before reaching
+the next route handler.
 
 ## Additional Perks
 
@@ -79,7 +181,7 @@ over the low-level APIs of the Workers platform.
 
 ### Automatic Response Parsing
 
-Keywork will automatically infer the appropriate `Response` for the return type
+Keywork will automatically infer the appropriate [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) for the return type
 of your `RouteHandler`, allowing you to skip the ceremony of constructing
 `Response` with the appropriate headers
 
@@ -101,7 +203,12 @@ See [`KeyworkResourceError`](/modules/errors/api/classes/KeyworkResourceError) f
 Support for cookie-based sessions is automatically handled.
 See `KeyworkSession` for further details.
 
-## Further reading
+## Related Entries
 
 - [Sessions](/modules/session/)
+- [Middleware](/modules/middleware)
+
+## Further reading
+
+-
 - [RESTful API patterns](https://www.restapitutorial.com/lessons/httpmethods.html)
