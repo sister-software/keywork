@@ -71,6 +71,10 @@
   box-shadow: -6px 9px 0 var(--nirrius-shadow) !important;
 }
 
+.menu__link {
+  gap: .5rem;
+}
+
 .menu__link.menu__link--active {
   text-decoration: underline;
 }

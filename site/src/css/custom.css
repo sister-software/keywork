@@ -48,7 +48,7 @@
   /* --ifm-navbar-height: .25rem; */
   /* --ifm-navbar-background-color: transparent; */
   --ifm-navbar-shadow: transparent;
-  --ifm-global-shadow-lw: -2px 3px 0 var(--nirrius-shadow);
+  --ifm-global-shadow-lw: -10px 15px 0 var(--nirrius-shadow);
   --ifm-global-shadow-md: -2px 3px 0 var(--nirrius-shadow);
   --ifm-global-border-width: 6px;
   --ifm-toc-border-color: transparent;
@@ -137,4 +137,9 @@ table thead tr {
   .docMainContainer_---node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Main-styles-module {
     margin-top: var(--ifm-navbar-height);
   }
+}
+
+
+.codeBlockContainer_---node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Container-styles-module {
+  border: 3px solid var(--nirrius-blue-darkest);
 }
