@@ -70,7 +70,7 @@ app.post('/users', async ({ request }) => {
 
 ### Path Parameters
 
-Routes can have "[path-to-regexp style](https://www.npmjs.com/package/path-to-regexp)" path patterns:
+Routes are defined with a [`path-to-regexp` style](https://www.npmjs.com/package/path-to-regexp) path patterns.
 
 ```ts
 app.get('/users/', ...)
@@ -81,7 +81,7 @@ app.get('/users/:userID/friends/', ...)
 app.get('/articles/:articleID', ...)
 ```
 
-Path patterns can even use regular expressions if your routing requires more fine-grain control.
+Path matching is implemented via the JavaScript native [URLPattern](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern)
 
 ### `IncomingRequestEvent`
 
@@ -210,5 +210,5 @@ See `KeyworkSession` for further details.
 
 ## Further reading
 
--
+- [URLPattern via MDN](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern)
 - [RESTful API patterns](https://www.restapitutorial.com/lessons/httpmethods.html)

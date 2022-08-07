@@ -20,6 +20,10 @@
 export type URLPatternLike = URLPattern | string
 
 interface NormalizeURLPatternOptions {
+  /**
+   * Append a wildcard matcher to the `pathname` pattern.
+   * This is applicable if the pattern is used to mount middleware.
+   */
   appendWildcard: boolean
 }
 
