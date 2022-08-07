@@ -18,8 +18,6 @@ import { Status } from 'keywork/errors'
 import type { RouteRequestHandler } from 'keywork/router/route'
 import { KeyworkRouter, KeyworkRouterOptions } from 'keywork/router/worker'
 
-// TODO This may do better as a RouteRequestHandler
-
 /**
  * A router that proxies requests directly to an environment binding, such as a service binding.
  *
@@ -46,8 +44,8 @@ export class ServiceBindingRouter<BindingAlias extends string> extends KeyworkRo
     this.all('*', this.onRequest)
   }
 
-  private onRequest: RouteRequestHandler<Record<BindingAlias, WorkerEnvFetchBinding>> = ({ env, request }) => {
-    if (!env || typeof env !== 'object') {
+  private onRequest: RouteRequestHandler<Record<BindingAlias, WorkerEnvFetchBinding>> = ({ bindings, request }) => {
+    if (!bindings || typeof bindings !== 'object') {
       const publicError = `\`env\` is not present`
       console.warn(publicError)
 
@@ -58,14 +56,14 @@ export class ServiceBindingRouter<BindingAlias extends string> extends KeyworkRo
     }
 
     /** The binding associated with the alias defined at router construction. */
-    const proxiedBinding = env[this.bindingAlias]
+    const proxiedBinding = bindings[this.bindingAlias]
 
     if (!proxiedBinding) {
       const publicError = `Binding \`${proxiedBinding}\` is not present in \`env\``
 
       this.logger.warn(publicError)
       /** All currently known binding aliases */
-      const bindingAliases = Object.keys(env)
+      const bindingAliases = Object.keys(bindings)
 
       this.logger.warn(
         `Your wrangler.toml may not be configured correctly. There are ${bindingAliases.length} binding(s) in env:`

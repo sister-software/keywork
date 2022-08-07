@@ -101,7 +101,7 @@ export class IncomingRequestEvent<
      * This is similar to `process.env`.
      *
      */
-    readonly env: BoundAliases = {} as BoundAliases,
+    public readonly bindings: BoundAliases = {} as BoundAliases,
 
     /**
      * Optional extra data to be passed to a route handler.
@@ -116,6 +116,13 @@ export class IncomingRequestEvent<
   ) {
     super('fetch')
     this.originalURL = request.url
+  }
+
+  /**
+   * Alias for `bindings`
+   */
+  get env() {
+    return this.bindings
   }
 
   /**
