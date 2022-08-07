@@ -108,6 +108,14 @@ const defaultCategory: CategoryConfig = {
 const READ_PREFIX = '/nirrius/keywork/blob/main/modules'
 const EDIT_PREFIX = '/nirrius/keywork/edit/main/modules'
 
+const isContentPresent = (value: string): boolean => {
+  if (!value) return false
+
+  const lineCount = (value.match(/\n/g) || '').length + 1
+  // Empty entries only have the title and newline
+  return lineCount > 2
+}
+
 class DocusaurusMarkdownTheme extends MarkdownTheme {
   // Somewhat brittle but this handles anchor links.
   static _markdownExtensionPattern = /\.md/
@@ -173,11 +181,11 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
     template: (pageEvent: TypeDoc.PageEvent<T>) => string,
     pageEvent: TypeDoc.PageEvent<T>
   ) {
-    const templateOutput = template(pageEvent)
-
-    if (!templateOutput.trim()) return templateOutput
-
+    const templateOutput = template(pageEvent).trim()
     const frontMatter = this._modelToFrontMatter(pageEvent.model)
+    if (!isContentPresent(templateOutput)) {
+      frontMatter.set('draft', 'true')
+    }
 
     const output: string[] = [
       '---',
