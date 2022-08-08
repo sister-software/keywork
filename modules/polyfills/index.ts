@@ -19,7 +19,9 @@ import { KeyworkResourceError, Status } from 'keywork/errors'
  */
 export function readGlobalScope(this: any): typeof globalThis {
   if (typeof globalThis !== 'undefined') return globalThis
+  // @ts-ignore global
   if (typeof window !== 'undefined') return window
+  // @ts-ignore global
   if (typeof self !== 'undefined') return self
   // @ts-ignore global
   if (typeof global !== 'undefined') return global

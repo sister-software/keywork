@@ -13,8 +13,8 @@
  */
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
-import { arrayBufferToBase64, stringToArrayBuffer } from 'keywork/utilities'
-import { DURATION_ONE_WEEK } from 'keywork/utilities'
+import { arrayBufferToBase64, stringToArrayBuffer } from 'keywork/strings'
+import { DURATION_ONE_WEEK } from 'keywork/datetime'
 // Included for @link comment below
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { CachableResponse } from 'keywork/http/response'

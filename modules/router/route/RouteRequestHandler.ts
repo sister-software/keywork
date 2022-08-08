@@ -13,7 +13,7 @@
  */
 
 import type { ResponseLike } from 'keywork/http/response'
-import type { IncomingRequestEvent } from 'keywork/http/request'
+import type { IsomorphicFetchEvent } from 'keywork/events'
 import type { MiddlewareFetch } from 'keywork/router/middleware'
 
 /**
@@ -29,12 +29,13 @@ import type { MiddlewareFetch } from 'keywork/router/middleware'
  *
  * @category Request Handler
  */
-export type RouteRequestHandler<
+export interface RouteRequestHandler<
   BoundAliases = {},
   ExpectedParams = {},
-  Data extends Record<string, unknown> = Record<string, unknown>,
+  Data extends {} = Record<string, unknown>,
   ExpectedReturn extends ResponseLike = ResponseLike
-> = (
-  event: IncomingRequestEvent<BoundAliases, ExpectedParams, Data>,
-  next: MiddlewareFetch<BoundAliases>
-) => Promise<ExpectedReturn> | ExpectedReturn
+> {
+  (event: IsomorphicFetchEvent<BoundAliases, ExpectedParams, Data>, next: MiddlewareFetch<BoundAliases>):
+    | Promise<ExpectedReturn>
+    | ExpectedReturn
+}

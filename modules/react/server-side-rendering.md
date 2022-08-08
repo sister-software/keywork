@@ -123,7 +123,7 @@ With our props available, all that's left to do is hydrate the app:
 ```tsx title=/browser/src/main.tsx showLineNumbers
 import { Page } from '@local/shared/components/Page'
 import { KeyworkApp } from 'keywork/react/browser'
-import { waitUntilDOMReady } from 'keywork/utilities'
+import { waitUntilDOMReady } from 'keywork/timers/browser'
 import React from 'react'
 
 waitUntilDOMReady().then(() => {

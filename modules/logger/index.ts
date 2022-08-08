@@ -13,7 +13,7 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { prettyJSON } from './json.ts'
+import { prettyJSON } from 'keywork/json'
 
 /**
  * An common shape of the `Console` interface.
@@ -67,7 +67,7 @@ export const DEFAULT_LOG_LEVEL: LogLevel = LogLevel.Info
  *
  * @example
  * ```ts
- * const logger = new PrefixedLogger('Todo API')
+ * const logger = new Logger('Todo API')
  * logger.info('Fetching todo', todoID)
  * logger.error('Unexpected error')
  * ```
@@ -76,7 +76,7 @@ export const DEFAULT_LOG_LEVEL: LogLevel = LogLevel.Info
  * @category Error
  * @public
  */
-export class PrefixedLogger {
+export class Logger {
   protected logPrefix: string
   public _log: GlobalConsoleLike['log']
   protected _error: GlobalConsoleLike['error']

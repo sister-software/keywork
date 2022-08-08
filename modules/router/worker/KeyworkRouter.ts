@@ -13,19 +13,19 @@
  */
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
+import { isExtendableEvent, IsomorphicFetchEvent } from 'keywork/events'
 import { KeyworkHeaders } from 'keywork/http/headers'
 import HTTP, { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from 'keywork/http'
 import { ReactRendererOptions } from 'keywork/react/isomorphic'
 import { renderReactStream } from 'keywork/react/worker'
 import { castToResponse, cloneAsMutableResponse, ErrorResponse } from 'keywork/http/response'
-import { IncomingRequestEvent, IncomingRequestEventData } from 'keywork/http/request'
 import { isKeyworkFetcher, KeyworkFetcher, MiddlewareFetch } from 'keywork/router/middleware'
 import type { ParsedRoute, RouteMatch, RouteRequestHandler } from 'keywork/router/route'
 import { normalizeURLPattern, normalizeURLPatternInput, URLPatternLike } from 'keywork/uri'
-import { Disposable, PrefixedLogger } from 'keywork/utilities'
+import { Disposable } from 'keywork/disposable'
+import { Logger } from 'keywork/logger'
 import { isMiddlewareDeclarationOption, KeyworkRouterOptions } from './common.ts'
 import { RouteDebugEntrypoint, KeyworkRouterDebugEndpoints } from 'keywork/router/debug'
-import { isCloudflareWorkerExecutionContext } from 'keywork/http/request/cloudflare'
 
 /**
  * Used in place of the reference-sensitive `instanceof`
@@ -41,11 +41,7 @@ export const kInstance = 'Keywork.KeyworkRouter.instance'
 /**
  * @ignore
  */
-export type RouteMethodDeclaration<
-  BoundAliases = {},
-  ExpectedParams = {},
-  Data extends IncomingRequestEventData = IncomingRequestEventData
-> = (
+export type RouteMethodDeclaration<BoundAliases = {}, ExpectedParams = {}, Data = {}> = (
   /**
    * Either an instance of `URLPattern`,
    * or a string representing the `pathname` portion of a `URLPattern`
@@ -163,7 +159,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    * @category HTTP Method Handler
    * @public
    */
-  public get<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+  public get<ExpectedParams = {}, Data = {}>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
     return this.appendMethodRoutes('get', ...args)
@@ -182,7 +178,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    * @category HTTP Method Handler
    * @public
    */
-  public post<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+  public post<ExpectedParams = {}, Data = {}>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
     return this.appendMethodRoutes('post', ...args)
@@ -200,7 +196,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    * @category HTTP Method Handler
    * @public
    */
-  public put<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+  public put<ExpectedParams = {}, Data = {}>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
     return this.appendMethodRoutes('put', ...args)
@@ -214,7 +210,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    * @category HTTP Method Handler
    * @public
    */
-  public patch<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+  public patch<ExpectedParams = {}, Data = {}>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
     return this.appendMethodRoutes('patch', ...args)
@@ -231,7 +227,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    * @category HTTP Method Handler
    * @public
    */
-  public delete<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+  public delete<ExpectedParams = {}, Data = {}>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
     return this.appendMethodRoutes('delete', ...args)
@@ -251,7 +247,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    * @category HTTP Method Handler
    * @public
    */
-  public head<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+  public head<ExpectedParams = {}, Data = {}>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
     return this.appendMethodRoutes('head', ...args)
@@ -270,7 +266,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    * @category HTTP Method Handler
    * @public
    */
-  public options<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+  public options<ExpectedParams = {}, Data = {}>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
     return this.appendMethodRoutes('options', ...args)
@@ -286,7 +282,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    * @category HTTP Method Handler
    * @public
    */
-  public all<ExpectedParams = {}, Data extends IncomingRequestEventData = IncomingRequestEventData>(
+  public all<ExpectedParams = {}, Data = {}>(
     ...args: Parameters<RouteMethodDeclaration<BoundAliases, ExpectedParams, Data>>
   ): void {
     return this.appendMethodRoutes('all', ...args)
@@ -377,7 +373,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
   /**
    * A server-side logger.
    */
-  public readonly logger: PrefixedLogger
+  public readonly logger: Logger
 
   /**
    * Collates the known routes by HTTP method verb.
@@ -490,24 +486,16 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
     next,
     matchedRoutes
   ): Promise<globalThis.Response> => {
-    let event: IncomingRequestEvent<any>
-
-    if (isCloudflareWorkerExecutionContext(eventLike)) {
-      event = IncomingRequestEvent.fromCloudflareWorker(eventLike, request, env)
-    } else if (IncomingRequestEvent.assertIsInstanceOf(eventLike)) {
-      event = eventLike
-    } else {
-      event = new IncomingRequestEvent(request, env)
-    }
-
     const normalizedMethodVerb = methodVerbToRouterMethod.get(request.method as HTTPMethod)
 
     if (!normalizedMethodVerb) {
       throw new KeyworkResourceError(`Method \`${request.method}\` is not implemented`, Status.NotImplemented)
     }
 
-    const routes = this.readMethodRoutes(normalizedMethodVerb)
     const requestURL = new URL(request.url)
+    const originalURL = requestURL.toString()
+
+    const routes = this.readMethodRoutes(normalizedMethodVerb)
 
     if (!matchedRoutes) {
       // Given the current URL, attempt to find a matching route handler...
@@ -519,31 +507,24 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
     }
 
     const [{ match, parsedRoute }, ...fallbackRoutes] = matchedRoutes
+    const normalizedURL = new URL(requestURL)
+    const pathnameGroups = match.pathname.groups['0']
 
+    if (pathnameGroups) {
+      normalizedURL.pathname = pathnameGroups
+    }
     // Update the URL params...
 
-    if (match.pathname.groups[0]) {
+    const event = new IsomorphicFetchEvent({
+      ...(isExtendableEvent(eventLike) ? eventLike : {}),
       // The current pattern only matches the beginning of the pathname.
       // So, we remove the matched portion which allows any nested routes to
       // behave as if the pathname did not include any unforseen prefixes.
-      requestURL.pathname = match.pathname.groups[0]
-
-      event.request = new HTTP.Request(requestURL, request)
-    }
-
-    event.match = match
-    event.params = match.pathname.groups
-
-    // if (!parsedRoute.urlPattern.pathname.endsWith('*')) {
-    //   const pathNameOffset = findSubstringStartOffset(requestURL.pathname, match.pathnameBase)
-    //   if (pathNameOffset) {
-    //     // Add '/' to allow omitting of trailing-slash.
-    //     match.pathname = requestURL.pathname.substring(pathNameOffset) || '/'
-    //     match.pathnameBase = '/'
-
-    //     requestURL.pathname = match.pathname
-    //   }
-    // }
+      request: new HTTP.Request(normalizedURL, request),
+      originalURL,
+      env,
+      match,
+    })
 
     next =
       next ||
@@ -628,7 +609,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
 
   constructor(options?: KeyworkRouterOptions) {
     this.displayName = options?.displayName || 'Keywork Router'
-    this.logger = new PrefixedLogger(this.displayName)
+    this.logger = new Logger(this.displayName)
 
     this.reactOptions = {
       streamRenderer: renderReactStream,

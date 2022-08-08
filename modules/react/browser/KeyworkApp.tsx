@@ -13,7 +13,8 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { Disposable, PrefixedLogger } from 'keywork/utilities'
+import { Disposable } from 'keywork/disposable'
+import { Logger } from 'keywork/logger'
 import React, { ReactNode } from 'react'
 
 import {
@@ -38,7 +39,7 @@ export type HydrationCallback<StaticProps extends SSRPropsLike | null = null> = 
  * A class representing a Keywork App's lifecycle.
  */
 export class KeyworkApp implements Disposable {
-  private logger = new PrefixedLogger('KeyworkApp')
+  private logger = new Logger('KeyworkApp')
   private root?: Root
 
   /**

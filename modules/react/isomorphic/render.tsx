@@ -18,7 +18,7 @@ import {
   SSRPropsLike,
   StaticPropsProvider,
 } from 'keywork/react/isomorphic'
-import { PrefixedLogger } from 'keywork/utilities'
+import { Logger } from 'keywork/logger'
 import React, { ReactElement } from 'react'
 import { ReactDOMServerReadableStream } from 'react-dom/server.browser'
 import { KeyworkHTMLDocument } from './KeyworkHTMLDocument.tsx'
@@ -35,7 +35,7 @@ export async function renderJSXToStream<StaticProps extends SSRPropsLike | null 
   pageElement: ReactElement<StaticProps>,
   reactRenderOptions?: ReactRendererOptions
 ): Promise<ReactDOMServerReadableStream> {
-  const logger = new PrefixedLogger('react Stream Renderer')
+  const logger = new Logger('react Stream Renderer')
 
   const streamRenderer = reactRenderOptions?.streamRenderer || renderReactStream
   const DocumentComponent = reactRenderOptions?.DocumentComponent || KeyworkHTMLDocument

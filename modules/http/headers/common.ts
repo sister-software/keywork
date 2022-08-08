@@ -28,9 +28,9 @@ export const KeyworkHeaders = {
  */
 export function mergeHeaders(destination: globalThis.Headers, ...sources: globalThis.Headers[]): void {
   for (const source of sources) {
-    for (const [name, value] of source.entries()) {
-      destination.set(name, value)
-    }
+    source.forEach((value, key) => {
+      destination.set(key, value)
+    })
   }
 }
 

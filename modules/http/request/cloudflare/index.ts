@@ -12,40 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ExtendableEvent } from '../common.ts'
-
-/**
- * A Cloudflare-specific implementation of Service Worker Fetch Event
- *
- * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event/ Cloudflare Documentation}
- */
-export interface ExecutionContext extends ExtendableEvent {
-  /**
-   * Intercepts the request and allows the Worker to send a custom response.
-   *
-   * @deprecated The respondWith method is only applicable to the Service Worker format.
-   *
-   * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event/#respondwith Cloudflare Documentation}
-   */
-  respondWith(_response: globalThis.Response): void
-
-  /**
-   * Prevents a runtime error response when the Worker script throws an unhandled exception.
-   *
-   * @deprecated This generally not applicable to Cloudflare Pages or Worker Sites
-   *
-   * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event/#passthroughonexception Cloudflare Documentation}
-   */
-  passThroughOnException(): void
-}
-
-/**
- * @internal
- */
-export function isCloudflareWorkerExecutionContext(eventLike: unknown): eventLike is ExecutionContext {
-  return Boolean(eventLike && typeof eventLike === 'object' && 'waitUntil' in eventLike)
-}
-
 /** @ignore */
 export interface IncomingRequestCfProperties {
   asn: number

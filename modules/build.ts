@@ -22,7 +22,7 @@ import { transform, TransformOutput } from 'deno/dnt/transform'
 import { runNpmCommand } from 'deno/dnt/utils'
 
 import { copy } from 'deno/fs/copy'
-import { PrefixedLogger } from 'keywork/utilities'
+import { Logger } from 'keywork/logger'
 import * as path from 'path'
 import { extractEntrypoints, ImportMap, NPMPackageJSON, readNPMPackageJSON } from '@keywork/monorepo/common/imports'
 import { projectPath } from '@keywork/monorepo/common/paths'
@@ -31,7 +31,7 @@ import deepmerge from 'deepmerge'
 
 const outDir = ProjectFiles.OutDirectory
 const filePaths: string[] = []
-const logger = new PrefixedLogger('Build')
+const logger = new Logger('Build')
 
 const createdDirectories = new Set<string>()
 function writeFile(filePath: string, fileText: string) {

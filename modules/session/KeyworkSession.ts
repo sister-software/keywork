@@ -58,6 +58,7 @@ export class SessionMiddleware extends KeyworkRouter {
   }
 
   protected applySession: RouteRequestHandler = async (event, next) => {
+    // @ts-ignore Generic Type
     const cookies = parseCookies(event.request.headers.get<CookieHeaders>('Cookie') || '')
     const sessionID = cookies[this.cookieKey]
 
@@ -75,6 +76,8 @@ export class SessionMiddleware extends KeyworkRouter {
 
     const response = await next(event.request, event.env, event)
     const responseWithSession = response.clone()
+
+    // @ts-ignore Generic Type
     responseWithSession.headers.set<CookieHeaders>(
       'Set-Cookie',
       serializeCookies(this.cookieKey, sessionID, this.serializeOptions)
@@ -82,4 +85,17 @@ export class SessionMiddleware extends KeyworkRouter {
 
     return responseWithSession
   }
+}
+
+/**
+ * Additional data associated with the `IncomingRequestEvent`.
+ *
+ * @category Request
+ * @public
+ */
+export interface IncomingRequestEventData extends Record<string, unknown> {
+  /**
+   * The original URL associated with the `IncomingRequestEvent`.
+   */
+  session?: KeyworkSession
 }

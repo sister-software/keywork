@@ -13,8 +13,11 @@
  */
 
 import classNames from 'classnames'
-import { KeyworkHTMLDocumentAppRoot, KeyworkHTMLDocumentStyleRoot } from 'keywork/react/isomorphic'
-import { KeyworkQueryParamKeys } from 'keywork/utilities'
+import {
+  KeyworkHTMLDocumentAppRoot,
+  KeyworkHTMLDocumentStyleRoot,
+  KeyworkQueryParamKeys,
+} from 'keywork/react/isomorphic'
 import React, { FC, HtmlHTMLAttributes, ReactFragment, ReactNode } from 'react'
 
 export interface KeyworkHTMLDocumentProps {
