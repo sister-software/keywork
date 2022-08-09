@@ -94,7 +94,6 @@
     "keywork/router/route": "./router/route/index.ts",
     "keywork/router/worker/cloudflare": "./router/worker/cloudflare/index.ts",
     "keywork/router/worker": "./router/worker/index.ts",
-    "keywork/router/events": "./router/events/index.ts",
     "keywork/router/node": "./router/node/index.ts",
     "keywork/router": "./router/index.ts",
     "keywork/session": "./session/index.ts",

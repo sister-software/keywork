@@ -2545,6 +2545,7 @@ __metadata:
     react: ">=18.2"
     react-dom: ">=18.2"
     undici: ">=5.7"
+    urlpattern-polyfill: ^5.0.5
   peerDependenciesMeta:
     esbuild:
       optional: true
@@ -2553,6 +2554,8 @@ __metadata:
     react-dom:
       optional: true
     undici:
+      optional: true
+    urlpattern-polyfill:
       optional: true
   languageName: unknown
   linkType: soft

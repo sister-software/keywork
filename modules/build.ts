@@ -145,6 +145,8 @@ function build(transformOutput: TransformOutput) {
     outDir,
   })
 
+  project.addSourceFilesByPathsSync(path.join(ProjectFiles.ModulesDirectory, 'types', '**', '*.d.ts'))
+
   const sourceFiles = [...transformOutput.main.files, ...transformOutput.test.files]
   logger.log(`Adding ${sourceFiles.length} source files...`)
 

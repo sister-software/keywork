@@ -12,5 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './patterns.ts'
-export * from './typeCasting.ts'
+export * from './URLPattern.ts'
+export * from './paths.ts'

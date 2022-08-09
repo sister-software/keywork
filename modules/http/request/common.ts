@@ -22,3 +22,19 @@ import HTTP from 'keywork/http'
 export function isInstanceOfRequest(requestish: unknown): requestish is globalThis.Request {
   return Boolean(requestish instanceof globalThis.Request || requestish instanceof HTTP.Request)
 }
+
+/**
+ * An object that has a `url` property.
+ *
+ * @category Type Cast
+ */
+export type RequestLike = { url: string }
+
+/**
+ * Checks if the given object is shaped like a `Request`
+ * @param requestish An object that's possibly a `Request`
+ * @category Type Cast
+ */
+export function isRequestLike(requestish: unknown): requestish is RequestLike {
+  return Boolean(requestish && typeof requestish === 'object' && (requestish as any).url)
+}

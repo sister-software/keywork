@@ -30,7 +30,8 @@
     "esbuild": "^0.14",
     "react": ">=18.2",
     "react-dom": ">=18.2",
-    "undici": ">=5.7"
+    "undici": ">=5.7",
+    "urlpattern-polyfill": "^5.0.5"
   },
   "peerDependenciesMeta": {
     "esbuild": {
@@ -43,6 +44,9 @@
       "optional": true
     },
     "undici": {
+      "optional": true
+    },
+    "urlpattern-polyfill": {
       "optional": true
     }
   },

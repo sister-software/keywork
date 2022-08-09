@@ -21,7 +21,7 @@ import type { MiddlewareFetch } from 'keywork/router/middleware'
  *
  * @remarks
  * Generally, this is interface is assigned to a KeyworkRouter method, such as `onRequestGet`
- * The `IncomingRequestEvent` argument is provided by the router's `fetch` method.
+ * The `IsomorphicFetchEvent` argument is provided by the router's `fetch` method.
  *
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  * @typeParam ExpectedParams Optional string union of route path parameters. Only supported in Cloudflare Pages.

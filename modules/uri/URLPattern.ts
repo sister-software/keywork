@@ -12,6 +12,18 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { polyfillWithModule } from 'keywork/polyfills'
+
+type URLPatternModule = {
+  URLPattern: typeof URLPattern
+}
+
+const { URLPattern: PolyfillableURLPattern } = await polyfillWithModule<URLPatternModule>('urlpattern-polyfill', [
+  'URLPattern',
+])
+
+export { PolyfillableURLPattern as URLPattern }
+
 /**
  * Either an instance of `URLPattern`,
  * or a string representing the `pathname` portion of a `URLPattern`
@@ -32,7 +44,7 @@ interface NormalizeURLPatternOptions {
  *
  * @category Type Cast
  */
-export function normalizeURLPattern(patternLike: URLPatternLike, options?: NormalizeURLPatternOptions): URLPattern {
+export function normalizeURLPattern(patternLike: URLPatternLike, options?: NormalizeURLPatternOptions) {
   const input: URLPatternInput =
     typeof patternLike === 'string'
       ? {
@@ -55,7 +67,7 @@ export function normalizeURLPattern(patternLike: URLPatternLike, options?: Norma
 }
 
 /**
- * Converts a given `URLPatternInput` to `URLPatternInit`
+ * Converts a given `URLPatternInput` to `URLPatternI nit`
  *
  * @category Type Cast
  */

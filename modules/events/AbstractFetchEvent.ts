@@ -15,21 +15,21 @@
 import { IsomorphicExtendableEvent } from './IsomorphicExtendableEvent.ts'
 import { KeyworkResourceError, Status } from 'keywork/errors'
 
-export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> extends EventInit {
+export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> {
   /**
    * The incoming request received by the Worker.
    *
    * @remarks
-   * Both the request's `url` property and the parent `IncomingRequestEvent` will reflect
+   * Both the request's `url` property and the parent `IsomorphicFetchEvent` will reflect
    * the current parsed route handler of `KeyworkRouter`.
    * @see {IsomorphicFetchEvent#originalURL}
    */
   request: globalThis.Request
 
   /**
-   * The original URL associated with the `IncomingRequestEvent`.
+   * The original URL associated with the `IsomorphicFetchEvent`.
    */
-  originalURL: string
+  originalURL?: string
 
   env?: BoundAliases
   data?: Data
@@ -49,21 +49,21 @@ export abstract class AbstractFetchEvent extends IsomorphicExtendableEvent imple
    * The incoming request received by the Worker.
    *
    * @remarks
-   * Both the request's `url` property and the parent `IncomingRequestEvent` will reflect
+   * Both the request's `url` property and the parent `IsomorphicFetchEvent` will reflect
    * the current parsed route handler of `KeyworkRouter`.
    * @see {IsomorphicFetchEvent#originalURL}
    */
   public request: globalThis.Request
 
   /**
-   * The original URL associated with the `IncomingRequestEvent`.
+   * The original URL associated with the `IsomorphicFetchEvent`.
    */
   public originalURL: string
 
-  constructor(eventType = 'fetch', { request, ...eventInit }: IsomorphicFetchEventInit) {
-    super(eventType, eventInit)
+  constructor(eventType = 'fetch', { request, originalURL }: IsomorphicFetchEventInit) {
+    super(eventType)
     this.request = request
-    this.originalURL = request.url
+    this.originalURL = originalURL || request.url
   }
 
   /**

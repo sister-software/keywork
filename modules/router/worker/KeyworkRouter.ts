@@ -151,7 +151,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    * @remarks
    * The HTTP GET method requests a representation of the specified resource.
    * Requests using GET should only be used to request data.
-   * The `params` object in the `IncomingRequestEvent` contains matched URL patterns
+   * The `params` object in the `IsomorphicFetchEvent` contains matched URL patterns
    * which can be used to pass routing data from a client.
    *
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/GET Documentation on MDN}

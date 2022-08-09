@@ -28,7 +28,7 @@ to your app's router endpoints.
 3. Export the router as the default entrypoint of your worker bundle
 4. A user sends incoming request from the browser, e.g. `http://localhost:8788/`
 5. The Worker runtime receives the request
-6. Keywork parses the request into an `IncomingRequestEvent` and sends the data to your route handler callback
+6. Keywork parses the request into an `IsomorphicFetchEvent` and sends the data to your route handler callback
 7. Your incoming request handler returns "Hello world"
 
 :::info
@@ -92,11 +92,11 @@ and the native Worker API.
 
 ## Advanced Usage
 
-### Using the `IncomingRequestEvent` object
+### Using the `IsomorphicFetchEvent` object
 
-When defining a route's `RouteRequestHandler` callback, you have access to an [`IncomingRequestEvent`](/modules/http/request/api/classes/IncomingRequestEvent) that contains information about the request.
+When defining a route's `RouteRequestHandler` callback, you have access to an [`IsomorphicFetchEvent`](/modules/events/api/classes/IsomorphicFetchEvent) that contains information about the request.
 
-In this example, let's use `IncomingRequestEvent` to return information about where the request originated:
+In this example, let's use `IsomorphicFetchEvent` to return information about where the request originated:
 
 ```ts title="worker.ts" showLineNumbers
 import { KeyworkRouter } from 'keywork/router'

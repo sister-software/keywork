@@ -25,7 +25,7 @@ import { KeyworkRouter } from 'keywork/router'
 import HTTP from 'keywork/http'
 
 import { IncomingMessage, ServerResponse } from 'http'
-import { IncomingRequestEvent } from 'keywork/http/request'
+import { IsomorphicFetchEvent } from 'keywork/events'
 import { readGlobalScope } from 'keywork/polyfills'
 
 // const { IncomingMessage, ServerResponse } = await import('node:' + 'http')
@@ -63,7 +63,7 @@ export async function respondWithRouter<BoundAliases = {}>(
 ): Promise<void> {
   const request = new HTTP.Request(nodeRequest.url || 'http://0.0.0.0', nodeRequest as unknown as RequestInit)
   const env = readNodeEnv<BoundAliases>()
-  const event = new IncomingRequestEvent(request, env)
+  const event = new IsomorphicFetchEvent({ request, env })
 
   const response = await router.fetch(request, env, event)
 

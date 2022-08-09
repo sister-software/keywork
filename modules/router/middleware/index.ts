@@ -43,9 +43,9 @@ export type MiddlewareFetch<BoundAliases = {}> = (
   env?: BoundAliases,
   /**
    * An event-like object from the runtime.
-   * Usually either `IncomingRequestEvent` or `ExecutionContext`
+   * Usually either `IsomorphicFetchEvent` or `ExecutionContext`
    *
-   * @see {IncomingRequestEvent}
+   * @see {IsomorphicFetchEvent}
    * @see {ExecutionContext}
    */
   eventLike?: unknown,

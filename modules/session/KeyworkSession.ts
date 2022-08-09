@@ -88,14 +88,14 @@ export class SessionMiddleware extends KeyworkRouter {
 }
 
 /**
- * Additional data associated with the `IncomingRequestEvent`.
+ * Additional data associated with the `IsomorphicFetchEvent`.
  *
  * @category Request
  * @public
  */
-export interface IncomingRequestEventData extends Record<string, unknown> {
+export interface IsomorphicFetchEventData extends Record<string, unknown> {
   /**
-   * The original URL associated with the `IncomingRequestEvent`.
+   * The original URL associated with the `IsomorphicFetchEvent`.
    */
   session?: KeyworkSession
 }

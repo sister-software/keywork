@@ -83,10 +83,17 @@ app.get('/articles/:articleID', ...)
 
 Path matching is implemented via the JavaScript native [URLPattern](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern)
 
-### `IncomingRequestEvent`
+:::warning
+You may need a polyfill if your app uses on a runtime that hasn't yet added [`URLPattern`](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern) class.
+
+[**_Learn more from the URI Module_ ›**](/modules/uri)
+
+:::
+
+### `IsomorphicFetchEvent`
 
 When creating a [`RouteRequestHandler`](/modules/router/route/api/types/RouteRequestHandler) callback,
-you have access to an [`IncomingRequestEvent`](/modules/http/request/api/classes/IncomingRequestEvent):
+you have access to an [`IsomorphicFetchEvent`](/modules/events/api/classes/IsomorphicFetchEvent):
 
 ```ts title="GET http://localhost:8788"
 // highlight-next-line
@@ -105,11 +112,11 @@ app.get('', (event) => {
 })
 ```
 
-#### `IncomingRequestEvent.request`
+#### `IsomorphicFetchEvent.request`
 
 The [incoming request](https://developer.mozilla.org/en-US/docs/Web/API/Request) received by the V8 runtime.
 
-#### `IncomingRequestEvent<ExpectedParams>.params`
+#### `IsomorphicFetchEvent<ExpectedParams>.params`
 
 Parameters parsed from the incoming request's URL and the route's pattern.
 
@@ -127,7 +134,7 @@ app.get<UserProps>('/users/:userID', (event) => {
 })
 ```
 
-#### `IncomingRequestEvent.env`
+#### `IsomorphicFetchEvent.env`
 
 The bound environment aliases.
 [Bound environment aliases](https://developers.cloudflare.com/workers/platform/environment-variables/)
@@ -137,11 +144,11 @@ are mostly limited to Cloudflare Workers, and are usually defined in your `wrang
 
 This is similar to `process.env`.
 
-#### `IncomingRequestEvent.data`
+#### `IsomorphicFetchEvent.data`
 
 Optional extra data to be passed to a route handler, usually from [middleware](/modules/router/middleware/).
 
-#### `IncomingRequestEvent.originalURL`
+#### `IsomorphicFetchEvent.originalURL`
 
 The original request URL, unmodified by Keywork's middleware logic.
 
@@ -205,8 +212,9 @@ See `KeyworkSession` for further details.
 
 ## Related Entries
 
-- [Sessions](/modules/session/)
-- [Middleware](/modules/middleware)
+- [URI Module](/modules/uri)
+- [Session Module](/modules/session/)
+- [Middleware Module](/modules/middleware)
 
 ## Further reading
 

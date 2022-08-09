@@ -17,7 +17,7 @@ import { AbstractFetchEvent, IsomorphicFetchEventInit } from './AbstractFetchEve
 /**
  * @ignore
  */
-export const IncomingRequestEventObjectName = 'Keywork.IncomingRequestEvent'
+export const IsomorphicFetchEventObjectName = 'Keywork.IsomorphicFetchEvent'
 
 /**
  * An event object containing contextual data for a single and specific incoming HTTP request.
@@ -27,7 +27,7 @@ export const IncomingRequestEventObjectName = 'Keywork.IncomingRequestEvent'
  * and automatically passed to your subclass's route handlers.
  *
  * This is similar to `EventContext` defined in the `@cloudflare/workers-types` package.
- * However, the `IncomingRequestEvent` type includes additional information from `KeyworkRouter`.
+ * However, the `IsomorphicFetchEvent` type includes additional information from `KeyworkRouter`.
  *
  * ### Caveats
  *
@@ -88,14 +88,14 @@ export class IsomorphicFetchEvent<
   }
 
   /**
-   * Checks if the given object is an instance of `IncomingRequestEvent`
-   * @param eventLike An object that's possibly a `IncomingRequestEvent`
+   * Checks if the given object is an instance of `IsomorphicFetchEvent`
+   * @param eventLike An object that's possibly a `IsomorphicFetchEvent`
    * @category Type Cast
    */
   public static assertIsInstanceOf(eventLike: unknown): eventLike is IsomorphicFetchEvent {
     return Boolean(
       eventLike instanceof IsomorphicFetchEvent ||
-        (eventLike && typeof eventLike === 'object' && IncomingRequestEventObjectName in eventLike)
+        (eventLike && typeof eventLike === 'object' && IsomorphicFetchEventObjectName in eventLike)
     )
   }
 }

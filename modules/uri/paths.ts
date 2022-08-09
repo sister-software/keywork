@@ -12,11 +12,19 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export {}
+/**
+ * @category Path Parsing
+ */
+export type PathBuilder = (...collectionPath: Array<string | undefined>) => string
 
-declare global {
-  interface Headers {
-    get<T = any>(name: keyof T): string | null
-    set<T = any>(name: keyof T, value: T[keyof T]): void
-  }
+/**
+ * Resolves a POSIX-like path into slash delineated segments.
+ *
+ * @category Path Parsing
+ */
+export const resolvePathSegments: PathBuilder = (...pathSegments) => {
+  return pathSegments
+    .filter((piece) => !!piece)
+    .join('/')
+    .replaceAll('//', '/')
 }

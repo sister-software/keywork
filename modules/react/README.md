@@ -10,11 +10,48 @@ pagination_next: 'modules/react/server-side-rendering'
 
 While optional, Keywork uses React as its primary HTML templating engine.
 
+### Peer Dependencies
+
 If you haven't already, make sure to add the React peer dependencies:
+
+<Tabs groupId="node-install">
+  <TabItem value="yarn" label="Yarn">
 
 ```shell title="Run in the root of your project."
 $ yarn add react react-dom
 ```
+
+  </TabItem>
+
+  <TabItem value="npm" label="NPM">
+
+```shell title="Run in the root of your project."
+$ npm install --save react react-dom
+```
+
+  </TabItem>
+
+  <TabItem value="deno" label="Deno">
+
+[Import Maps](https://deno.land/manual/node/import_maps#using-import-maps)
+are recommended to avoid long import URLs:
+
+```ts title="./your-project/import_map.json"
+
+{
+  "imports": {
+    "react": "https://esm.sh/react@18.2.0",
+    "react-dom": "https://esm.sh/react-dom@18.2.0",
+    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
+    "react-dom/server": "https://esm.sh/react-dom@18.2.0/server",
+    "react-dom/server.browser": "https://esm.sh/react-dom@18.2.0/server.browser",
+    "react/jsx-runtime": "https://esm.sh/react/jsx-runtime",
+  }
+}
+```
+
+  </TabItem>
+</Tabs>
 
 ## Usage
 
