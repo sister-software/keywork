@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-declare module 'react-dom/server.browser' {
-  import { ReactNode } from 'react'
+declare module 'https://esm.sh/react-dom@18.2.0/server.browser' {
+  import { ReactNode } from 'https://esm.sh/react@18.2.0'
 
   export interface RenderToReadableStreamOptions {
     identifierPrefix?: string

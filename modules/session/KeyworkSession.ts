@@ -14,7 +14,11 @@
 
 import { KeyworkRouter } from 'keywork/router/worker'
 import type { RouteRequestHandler } from 'keywork/router/route'
-import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'cookie'
+import {
+  CookieSerializeOptions,
+  parse as parseCookies,
+  serialize as serializeCookies,
+} from 'https://esm.sh/cookie@0.5.0'
 import { ulid } from 'keywork/ids'
 import type { CookieHeaders } from 'keywork/http/headers'
 import { DEFAULT_SESSION_COOKIE_KEY, DEFAULT_COOKIE_SERIALIZE_OPTIONS, SessionMiddlewareOptions } from './common.ts'

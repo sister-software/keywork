@@ -17,7 +17,7 @@ import { ReactRendererOptions, renderJSXToStream } from 'keywork/react/isomorphi
 import { ErrorResponse } from './ErrorResponse.ts'
 import { HTMLResponse } from './HTMLResponse.ts'
 import { JSONResponse } from './JSONResponse.ts'
-import { isValidElement } from 'react'
+import { isValidElement } from 'https://esm.sh/react@18.2.0'
 import HTTP from 'keywork/http'
 import Stream from 'keywork/stream'
 

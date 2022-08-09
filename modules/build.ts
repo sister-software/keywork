@@ -27,7 +27,7 @@ import * as path from 'path'
 import { extractEntrypoints, ImportMap, NPMPackageJSON, readNPMPackageJSON } from '@keywork/monorepo/common/imports'
 import { projectPath } from '@keywork/monorepo/common/paths'
 import * as ProjectFiles from '@keywork/monorepo/common/project'
-import deepmerge from 'deepmerge'
+import deepmerge from 'https://esm.sh/deepmerge@4.2.2'
 
 const outDir = ProjectFiles.OutDirectory
 const filePaths: string[] = []

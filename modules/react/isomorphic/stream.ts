@@ -15,7 +15,7 @@
 import type { KeyworkResourceError } from 'keywork/errors'
 import type { KeyworkHTMLDocumentComponent } from './KeyworkHTMLDocument.tsx'
 import type { KeyworkProvidersComponent } from './KeyworkProvidersComponent.tsx'
-import { ReactDOMServerReadableStream } from 'react-dom/server.browser'
+import { ReactDOMServerReadableStream } from 'https://esm.sh/react-dom@18.2.0/server.browser'
 
 export interface RenderToReadableStreamOptions {
   identifierPrefix?: string

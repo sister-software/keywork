@@ -17,7 +17,7 @@ import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } f
 import { KeyworkRouter } from 'keywork/router/worker'
 import HTTP from 'keywork/http'
 import { JSONResponse } from 'keywork/http/response'
-import React from 'react'
+import React from 'https://esm.sh/react@18.2.0'
 import { KeyworkHeaders } from 'keywork/http/headers'
 
 interface HelloResponseBody extends Record<PropertyKey, unknown> {

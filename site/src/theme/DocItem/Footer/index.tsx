@@ -20,7 +20,7 @@ import IconExternal from '@theme/Icon/ExternalLink'
 import LastUpdated from '@theme/LastUpdated'
 import TagsListInline from '@theme/TagsListInline'
 import clsx from 'clsx'
-import React from 'react'
+import React from 'https://esm.sh/react@18.2.0'
 import styles from './styles.module.css'
 
 function TagsRow(props) {

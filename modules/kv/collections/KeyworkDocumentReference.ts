@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import deepmerge from 'deepmerge'
+import deepmerge from 'https://esm.sh/deepmerge@4.2.2'
 import { convertJSONToETaggableString, generateETag } from 'keywork/http/headers/caching'
 import { KeyworkResourceError } from 'keywork/errors'
 import type { KVNamespace } from 'keywork/kv/cloudflare'

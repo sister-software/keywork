@@ -15,7 +15,7 @@
 import { KeyworkResourceError } from 'keywork/errors'
 import { Disposable } from 'keywork/disposable'
 import { Logger } from 'keywork/logger'
-import React, { ReactNode } from 'react'
+import React, { ReactNode } from 'https://esm.sh/react@18.2.0'
 
 import {
   GlobalScopeWithKeyworkSSRProps,
@@ -24,7 +24,7 @@ import {
   SSRPropsLike,
   StaticPropsProvider,
 } from 'keywork/react/isomorphic'
-import { hydrateRoot, HydrationOptions, Root } from 'react-dom/client'
+import { hydrateRoot, HydrationOptions, Root } from 'https://esm.sh/react-dom@18.2.0/client'
 import { getSSRPropsFromScope, globalScopeHasSSRProps } from './staticProps.ts'
 
 export interface HydrateKeyworkAppOptions {

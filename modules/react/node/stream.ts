@@ -14,7 +14,11 @@
 
 import { KeyworkResourceError } from 'keywork/errors'
 import { IReactStreamRenderer } from 'keywork/react/isomorphic'
-import { renderToPipeableStream, ReactDOMServerReadableStream, PipeableStream } from 'react-dom/server'
+import {
+  renderToPipeableStream,
+  ReactDOMServerReadableStream,
+  PipeableStream,
+} from 'https://esm.sh/react-dom@18.2.0/server'
 
 /**
  * @ignore

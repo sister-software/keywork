@@ -12,5 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-// TODO: Using ULIDX for now. Let's see how this fairs...
-export * from 'ulidx'
+// Using ULIDX for now. Let's see how this fairs...
+export * from 'https://esm.sh/ulidx@0.3.0'

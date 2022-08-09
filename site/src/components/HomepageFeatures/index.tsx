@@ -16,9 +16,8 @@
 
 import clsx from 'clsx'
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ComponentProps, ComponentType } from 'react'
+import React, { ComponentProps, ComponentType } from 'https://esm.sh/react@18.2.0'
 import styles from './styles.module.css'
-import React from 'react'
 
 type FeatureItem = {
   title: string

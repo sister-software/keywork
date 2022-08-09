@@ -13,15 +13,14 @@
  */
 
 import { createContextAndNamedHook } from 'keywork/react/hooks'
-import { PathMatch } from 'keywork/uri'
-import React, { FC, useMemo } from 'react'
+import React, { FC, useMemo } from 'https://esm.sh/react@18.2.0'
 import { useKeyworkRouter, useStaticProps } from 'keywork/react/isomorphic'
 import { matchRoute, PatternToPageComponentMap } from './PatternToPageComponentMap.ts'
 export interface KeyworkBrowserRouterProps {
   patternToPageComponent: PatternToPageComponentMap<any>
 }
 
-const [KeyworkRouteMatchContext, useMatch] = createContextAndNamedHook<PathMatch<{} | null> | null>(
+const [KeyworkRouteMatchContext, useMatch] = createContextAndNamedHook<URLPatternResult | null>(
   undefined,
   'KeyworkRouteMatchContext'
 )

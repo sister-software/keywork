@@ -52,12 +52,242 @@
   },
   "exports": {
     "./package.json": {
-      "import": "./package.json"
+      "import": "./package.json",
+      "require": "./package.json"
+    },
+    "./assets/cloudflare/pages": {
+      "types": "./assets/cloudflare/pages/mod.d.ts",
+      "import": "./assets/cloudflare/pages/mod.js",
+      "require": "./assets/cloudflare/pages/mod.js"
+    },
+    "./assets/cloudflare/sites": {
+      "types": "./assets/cloudflare/sites/mod.d.ts",
+      "import": "./assets/cloudflare/sites/mod.js",
+      "require": "./assets/cloudflare/sites/mod.js"
+    },
+    "./bindings/worker": {
+      "types": "./bindings/worker/mod.d.ts",
+      "import": "./bindings/worker/mod.js",
+      "require": "./bindings/worker/mod.js"
+    },
+    "./bindings/worker/cloudflare": {
+      "types": "./bindings/worker/cloudflare/mod.d.ts",
+      "import": "./bindings/worker/cloudflare/mod.js",
+      "require": "./bindings/worker/cloudflare/mod.js"
+    },
+    "./bundling": {
+      "types": "./bundling/mod.d.ts",
+      "import": "./bundling/mod.js",
+      "require": "./bundling/mod.js"
+    },
+    "./bundling/esbuild": {
+      "types": "./bundling/esbuild/mod.d.ts",
+      "import": "./bundling/esbuild/mod.js",
+      "require": "./bundling/esbuild/mod.js"
+    },
+    "./errors": {
+      "types": "./errors/mod.d.ts",
+      "import": "./errors/mod.js",
+      "require": "./errors/mod.js"
+    },
+    "./events": {
+      "types": "./events/mod.d.ts",
+      "import": "./events/mod.js",
+      "require": "./events/mod.js"
+    },
+    "./logger": {
+      "types": "./logger/mod.d.ts",
+      "import": "./logger/mod.js",
+      "require": "./logger/mod.js"
+    },
+    "./math": {
+      "types": "./math/mod.d.ts",
+      "import": "./math/mod.js",
+      "require": "./math/mod.js"
+    },
+    "./strings": {
+      "types": "./strings/mod.d.ts",
+      "import": "./strings/mod.js",
+      "require": "./strings/mod.js"
+    },
+    "./datetime": {
+      "types": "./datetime/mod.d.ts",
+      "import": "./datetime/mod.js",
+      "require": "./datetime/mod.js"
+    },
+    "./disposable": {
+      "types": "./disposable/mod.d.ts",
+      "import": "./disposable/mod.js",
+      "require": "./disposable/mod.js"
+    },
+    "./json": {
+      "types": "./json/mod.d.ts",
+      "import": "./json/mod.js",
+      "require": "./json/mod.js"
+    },
+    "./timers/browser": {
+      "types": "./timers/browser/mod.d.ts",
+      "import": "./timers/browser/mod.js",
+      "require": "./timers/browser/mod.js"
+    },
+    "./files": {
+      "types": "./files/mod.d.ts",
+      "import": "./files/mod.js",
+      "require": "./files/mod.js"
+    },
+    "./ids": {
+      "types": "./ids/mod.d.ts",
+      "import": "./ids/mod.js",
+      "require": "./ids/mod.js"
+    },
+    "./kv/cloudflare": {
+      "types": "./kv/cloudflare/mod.d.ts",
+      "import": "./kv/cloudflare/mod.js",
+      "require": "./kv/cloudflare/mod.js"
+    },
+    "./kv/collections": {
+      "types": "./kv/collections/mod.d.ts",
+      "import": "./kv/collections/mod.js",
+      "require": "./kv/collections/mod.js"
+    },
+    "./http": {
+      "types": "./http/mod.d.ts",
+      "import": "./http/mod.js",
+      "require": "./http/mod.js"
+    },
+    "./http/headers": {
+      "types": "./http/headers/mod.d.ts",
+      "import": "./http/headers/mod.js",
+      "require": "./http/headers/mod.js"
+    },
+    "./http/headers/caching": {
+      "types": "./http/headers/caching/mod.d.ts",
+      "import": "./http/headers/caching/mod.js",
+      "require": "./http/headers/caching/mod.js"
+    },
+    "./http/headers/csp/directives": {
+      "types": "./http/headers/csp/directives/mod.d.ts",
+      "import": "./http/headers/csp/directives/mod.js",
+      "require": "./http/headers/csp/directives/mod.js"
+    },
+    "./http/headers/csp/policies": {
+      "types": "./http/headers/csp/policies/mod.d.ts",
+      "import": "./http/headers/csp/policies/mod.js",
+      "require": "./http/headers/csp/policies/mod.js"
+    },
+    "./http/headers/content-encoding": {
+      "types": "./http/headers/content-encoding/mod.d.ts",
+      "import": "./http/headers/content-encoding/mod.js",
+      "require": "./http/headers/content-encoding/mod.js"
+    },
+    "./http/request": {
+      "types": "./http/request/mod.d.ts",
+      "import": "./http/request/mod.js",
+      "require": "./http/request/mod.js"
+    },
+    "./http/request/cloudflare": {
+      "types": "./http/request/cloudflare/mod.d.ts",
+      "import": "./http/request/cloudflare/mod.js",
+      "require": "./http/request/cloudflare/mod.js"
+    },
+    "./http/response": {
+      "types": "./http/response/mod.d.ts",
+      "import": "./http/response/mod.js",
+      "require": "./http/response/mod.js"
+    },
+    "./stream": {
+      "types": "./stream/mod.d.ts",
+      "import": "./stream/mod.js",
+      "require": "./stream/mod.js"
+    },
+    "./react/isomorphic": {
+      "types": "./react/isomorphic/mod.d.ts",
+      "import": "./react/isomorphic/mod.js",
+      "require": "./react/isomorphic/mod.js"
+    },
+    "./react/browser": {
+      "types": "./react/browser/mod.d.ts",
+      "import": "./react/browser/mod.js",
+      "require": "./react/browser/mod.js"
+    },
+    "./react/node": {
+      "types": "./react/node/mod.d.ts",
+      "import": "./react/node/mod.js",
+      "require": "./react/node/mod.js"
+    },
+    "./react/worker": {
+      "types": "./react/worker/mod.d.ts",
+      "import": "./react/worker/mod.js",
+      "require": "./react/worker/mod.js"
+    },
+    "./react/hooks": {
+      "types": "./react/hooks/mod.d.ts",
+      "import": "./react/hooks/mod.js",
+      "require": "./react/hooks/mod.js"
+    },
+    "./router/debug": {
+      "types": "./router/debug/mod.d.ts",
+      "import": "./router/debug/mod.js",
+      "require": "./router/debug/mod.js"
+    },
+    "./router/middleware": {
+      "types": "./router/middleware/mod.d.ts",
+      "import": "./router/middleware/mod.js",
+      "require": "./router/middleware/mod.js"
+    },
+    "./router/route": {
+      "types": "./router/route/mod.d.ts",
+      "import": "./router/route/mod.js",
+      "require": "./router/route/mod.js"
+    },
+    "./router/worker/cloudflare": {
+      "types": "./router/worker/cloudflare/mod.d.ts",
+      "import": "./router/worker/cloudflare/mod.js",
+      "require": "./router/worker/cloudflare/mod.js"
+    },
+    "./router/worker": {
+      "types": "./router/worker/mod.d.ts",
+      "import": "./router/worker/mod.js",
+      "require": "./router/worker/mod.js"
+    },
+    "./router/node": {
+      "types": "./router/node/mod.d.ts",
+      "import": "./router/node/mod.js",
+      "require": "./router/node/mod.js"
+    },
+    "./router": {
+      "types": "./router/mod.d.ts",
+      "import": "./router/mod.js",
+      "require": "./router/mod.js"
+    },
+    "./session": {
+      "types": "./session/mod.d.ts",
+      "import": "./session/mod.js",
+      "require": "./session/mod.js"
+    },
+    "./uri": {
+      "types": "./uri/mod.d.ts",
+      "import": "./uri/mod.js",
+      "require": "./uri/mod.js"
+    },
+    "./polyfills": {
+      "types": "./polyfills/mod.d.ts",
+      "import": "./polyfills/mod.js",
+      "require": "./polyfills/mod.js"
+    },
+    "./polyfills/worker/ReadableStream": {
+      "types": "./polyfills/worker/ReadableStream/mod.d.ts",
+      "import": "./polyfills/worker/ReadableStream/mod.js",
+      "require": "./polyfills/worker/ReadableStream/mod.js"
     }
   },
   "dependencies": {
-    "react": ">=18.2",
-    "react-dom": ">=18.2"
+    "@cloudflare/kv-asset-handler": "0.2.0",
+    "classnames": "2.3.1",
+    "cookie": "0.5.0",
+    "deepmerge": "4.2.2",
+    "lodash.isplainobject": "4.0.6",
+    "ulidx": "0.3.0"
   },
   "devDependencies": {
     "@types/cookie": "^0.5.1",

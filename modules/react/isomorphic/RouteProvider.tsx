@@ -13,7 +13,7 @@
  */
 
 import { createContextAndNamedHook } from 'keywork/react/hooks'
-import React, { FC, ReactNode, useMemo } from 'react'
+import React, { FC, ReactNode, useMemo } from 'https://esm.sh/react@18.2.0'
 
 export interface KeyworkRouterProvider {
   location: URL

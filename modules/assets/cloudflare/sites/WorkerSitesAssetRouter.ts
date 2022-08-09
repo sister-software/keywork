@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
-import type { AssetManifestType } from '@cloudflare/kv-asset-handler/dist/types'
+import { getAssetFromKV } from 'https://esm.sh/@cloudflare/kv-asset-handler@0.2.0'
+import type { AssetManifestType } from 'https://esm.sh/@cloudflare/kv-asset-handler@0.2.0/dist/types'
 import { KeyworkResourceError, Status } from 'keywork/errors'
 import type { KVNamespace } from 'keywork/kv/cloudflare'
 import { ErrorResponse } from 'keywork/http/response'

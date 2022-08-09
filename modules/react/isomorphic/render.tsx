@@ -19,8 +19,8 @@ import {
   StaticPropsProvider,
 } from 'keywork/react/isomorphic'
 import { Logger } from 'keywork/logger'
-import React, { ReactElement } from 'react'
-import { ReactDOMServerReadableStream } from 'react-dom/server.browser'
+import React, { ReactElement } from 'https://esm.sh/react@18.2.0'
+import { ReactDOMServerReadableStream } from 'https://esm.sh/react-dom@18.2.0/server.browser'
 import { KeyworkHTMLDocument } from './KeyworkHTMLDocument.tsx'
 import { KeyworkProviders } from './KeyworkProvidersComponent.tsx'
 import { _SSRPropsEmbed } from './SSRPropsEmbed.tsx'

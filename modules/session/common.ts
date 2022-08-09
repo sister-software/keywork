@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { CookieSerializeOptions } from 'cookie'
+import { CookieSerializeOptions } from 'https://esm.sh/cookie@0.5.0'
 
 /**
  * The default session cookie key.

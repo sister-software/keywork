@@ -13,7 +13,7 @@
  */
 
 import { globalScopeSSRElementID, globalScopeSSRKey, SSRPropsLike } from 'keywork/react/isomorphic'
-import React, { FC } from 'react'
+import React, { FC } from 'https://esm.sh/react@18.2.0'
 
 export interface SSRProviderProps<StaticProps extends NonNullable<SSRPropsLike>> {
   staticProps: StaticProps

@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { BuildOptions } from 'esbuild'
+import type { BuildOptions } from 'https://esm.sh/esbuild@0.14.48'
 import { BundledFileName } from '../common.ts'
 
 /**

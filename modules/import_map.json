@@ -39,22 +39,6 @@
     "node:stream/web": "./node_modules/@types/node/stream/web.d.ts",
     "node:crypto": "https://deno.land/std@0.149.0/node/crypto.ts",
 
-    "@cloudflare/kv-asset-handler": "https://esm.sh/@cloudflare/kv-asset-handler@0.2.0",
-    "@cloudflare/kv-asset-handler/dist/types": "https://esm.sh/@cloudflare/kv-asset-handler@0.2.0/dist/types",
-
-    "classnames": "https://esm.sh/classnames@2.3.1",
-    "cookie": "https://esm.sh/cookie@0.5.0",
-    "deepmerge": "https://esm.sh/deepmerge@4.2.2",
-    "esbuild": "https://esm.sh/esbuild@0.14.48",
-    "lodash.isplainobject": "https://esm.sh/lodash.isplainobject@4.0.6",
-    "react": "https://esm.sh/react@18.2.0",
-    "react-dom": "https://esm.sh/react-dom@18.2.0",
-    "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-    "react-dom/server": "https://esm.sh/react-dom@18.2.0/server",
-    "react-dom/server.browser": "https://esm.sh/react-dom@18.2.0/server.browser",
-    "react/jsx-runtime": "https://esm.sh/react/jsx-runtime",
-    "ulidx": "https://esm.sh/ulidx@0.3.0",
-
     "keywork/assets/cloudflare/pages": "./assets/cloudflare/pages/index.ts",
     "keywork/assets/cloudflare/sites": "./assets/cloudflare/sites/index.ts",
     "keywork/bindings/worker": "./bindings/worker/index.ts",
