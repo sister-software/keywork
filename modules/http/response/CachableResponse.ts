@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from 'keywork/errors'
-import { isETagMatch } from 'keywork/http/headers/caching'
-import { CacheControlDirectives, createCacheControlHeader } from 'keywork/http/headers/caching'
+import { Status } from '../../errors/mod.ts'
+import { isETagMatch } from '../../http/headers/caching/mod.ts'
+import { CacheControlDirectives, createCacheControlHeader } from '../../http/headers/caching/mod.ts'
 import { NotModifiedResponse } from './NotModifiedResponse.ts'
-import HTTP from 'keywork/http'
+import HTTP from '../../http/mod.ts'
 
 /**
  * A client-side cachable response.

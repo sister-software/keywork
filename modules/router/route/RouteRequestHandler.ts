@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { ResponseLike } from 'keywork/http/response'
-import type { IsomorphicFetchEvent } from 'keywork/events'
-import type { MiddlewareFetch } from 'keywork/router/middleware'
+import type { ResponseLike } from '../../http/response/mod.ts'
+import type { IsomorphicFetchEvent } from '../../events/mod.ts'
+import type { MiddlewareFetch } from '../middleware/mod.ts'
 
 /**
  * A function or method that handles incoming requests and replies with a `Response`.

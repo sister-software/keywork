@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork/errors'
-import { Disposable } from 'keywork/disposable'
-import { Logger } from 'keywork/logger'
+import { KeyworkResourceError } from '../../errors/mod.ts'
+import { Disposable } from '../../disposable/mod.ts'
+import { Logger } from '../../logger/mod.ts'
 import React, { ReactNode } from 'https://esm.sh/react@18.2.0'
 
 import {
@@ -23,7 +23,7 @@ import {
   RouteProvider,
   SSRPropsLike,
   StaticPropsProvider,
-} from 'keywork/react/isomorphic'
+} from '../isomorphic/mod.ts'
 import { hydrateRoot, HydrationOptions, Root } from 'https://esm.sh/react-dom@18.2.0/client'
 import { getSSRPropsFromScope, globalScopeHasSSRProps } from './staticProps.ts'
 

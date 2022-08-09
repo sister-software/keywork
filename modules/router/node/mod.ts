@@ -21,12 +21,12 @@
  * @module router.node
  */
 
-import { KeyworkRouter } from 'keywork/router'
-import HTTP from 'keywork/http'
+import { KeyworkRouter } from '../worker/mod.ts'
+import HTTP from '../../http/mod.ts'
 
 import { IncomingMessage, ServerResponse } from 'http'
-import { IsomorphicFetchEvent } from 'keywork/events'
-import { readGlobalScope } from 'keywork/polyfills'
+import { IsomorphicFetchEvent } from '../../events/mod.ts'
+import { readGlobalScope } from '../../polyfills/mod.ts'
 
 // const { IncomingMessage, ServerResponse } = await import('node:' + 'http')
 

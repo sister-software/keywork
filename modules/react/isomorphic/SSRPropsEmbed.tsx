@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { globalScopeSSRElementID, globalScopeSSRKey, SSRPropsLike } from 'keywork/react/isomorphic'
 import React, { FC } from 'https://esm.sh/react@18.2.0'
+import { SSRPropsLike, globalScopeSSRElementID, globalScopeSSRKey } from './constants.ts'
 
 export interface SSRProviderProps<StaticProps extends NonNullable<SSRPropsLike>> {
   staticProps: StaticProps

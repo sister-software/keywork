@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, Status } from 'keywork/errors'
+import { KeyworkResourceError, Status } from '../errors/mod.ts'
 
 /**
  * @internal

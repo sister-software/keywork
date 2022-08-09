@@ -13,7 +13,7 @@
  */
 /* eslint-disable no-restricted-globals */
 
-import type { RouteMatch } from 'keywork/router/route'
+import type { RouteMatch } from '../route/mod.ts'
 
 /**
  * A function within the Worker that receives all incoming requests.

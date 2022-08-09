@@ -11,8 +11,8 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-import { Status, STATUS_TEXT } from 'keywork/errors'
-import HTTP from 'keywork/http'
+import { Status, STATUS_TEXT } from '../../errors/mod.ts'
+import HTTP from '../../http/mod.ts'
 
 /**
  * Given that a request's etag header matches an server entity or resource,

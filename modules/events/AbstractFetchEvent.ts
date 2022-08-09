@@ -13,7 +13,7 @@
  */
 
 import { IsomorphicExtendableEvent } from './IsomorphicExtendableEvent.ts'
-import { KeyworkResourceError, Status } from 'keywork/errors'
+import { KeyworkResourceError, Status } from '../errors/mod.ts'
 
 export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> {
   /**

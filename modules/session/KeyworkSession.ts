@@ -12,15 +12,15 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkRouter } from 'keywork/router/worker'
-import type { RouteRequestHandler } from 'keywork/router/route'
+import { KeyworkRouter } from '../router/worker/mod.ts'
+import type { RouteRequestHandler } from '../router/route/mod.ts'
 import {
   CookieSerializeOptions,
   parse as parseCookies,
   serialize as serializeCookies,
 } from 'https://esm.sh/cookie@0.5.0'
-import { ulid } from 'keywork/ids'
-import type { CookieHeaders } from 'keywork/http/headers'
+import { ulid } from '../ids/mod.ts'
+import type { CookieHeaders } from '../http/headers/mod.ts'
 import { DEFAULT_SESSION_COOKIE_KEY, DEFAULT_COOKIE_SERIALIZE_OPTIONS, SessionMiddlewareOptions } from './common.ts'
 
 /**

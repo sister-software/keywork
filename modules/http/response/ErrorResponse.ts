@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, Status, STATUS_TEXT } from 'keywork/errors'
-import HTTP from 'keywork/http'
+import { KeyworkResourceError, Status, STATUS_TEXT } from '../../errors/mod.ts'
+import HTTP from '../mod.ts'
 
 /**
  * An error response sent to a client when a request is deemed to be invalid in some way.

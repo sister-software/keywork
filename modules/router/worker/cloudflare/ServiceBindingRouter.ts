@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { WorkerEnvFetchBinding } from 'keywork/bindings/worker'
-import { ErrorResponse } from 'keywork/http/response'
-import { Status } from 'keywork/errors'
-import type { RouteRequestHandler } from 'keywork/router/route'
-import { KeyworkRouter, KeyworkRouterOptions } from 'keywork/router/worker'
+import type { WorkerEnvFetchBinding } from '../../../bindings/worker/mod.ts'
+import { ErrorResponse } from '../../../http/response/mod.ts'
+import { Status } from '../../../errors/mod.ts'
+import type { RouteRequestHandler } from '../../route/mod.ts'
+import { KeyworkRouter, KeyworkRouterOptions } from '../mod.ts'
 
 /**
  * A router that proxies requests directly to an environment binding, such as a service binding.
@@ -44,8 +44,8 @@ export class ServiceBindingRouter<BindingAlias extends string> extends KeyworkRo
     this.all('*', this.onRequest)
   }
 
-  private onRequest: RouteRequestHandler<Record<BindingAlias, WorkerEnvFetchBinding>> = ({ bindings, request }) => {
-    if (!bindings || typeof bindings !== 'object') {
+  private onRequest: RouteRequestHandler<Record<BindingAlias, WorkerEnvFetchBinding>> = ({ env, request }) => {
+    if (!env || typeof env !== 'object') {
       const publicError = `\`env\` is not present`
       console.warn(publicError)
 
@@ -56,14 +56,14 @@ export class ServiceBindingRouter<BindingAlias extends string> extends KeyworkRo
     }
 
     /** The binding associated with the alias defined at router construction. */
-    const proxiedBinding = bindings[this.bindingAlias]
+    const proxiedBinding = env[this.bindingAlias]
 
     if (!proxiedBinding) {
       const publicError = `Binding \`${proxiedBinding}\` is not present in \`env\``
 
       this.logger.warn(publicError)
       /** All currently known binding aliases */
-      const bindingAliases = Object.keys(bindings)
+      const bindingAliases = Object.keys(env)
 
       this.logger.warn(
         `Your wrangler.toml may not be configured correctly. There are ${bindingAliases.length} binding(s) in env:`

@@ -12,12 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, Status } from 'keywork/errors'
-import { arrayBufferToBase64, stringToArrayBuffer } from 'keywork/strings'
-import { DURATION_ONE_WEEK } from 'keywork/datetime'
+import { KeyworkResourceError, Status } from '../../../errors/mod.ts'
+import { arrayBufferToBase64, stringToArrayBuffer } from '../../../strings/mod.ts'
+import { DURATION_ONE_WEEK } from '../../../datetime/mod.ts'
 // Included for @link comment below
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { CachableResponse } from 'keywork/http/response'
+import type { CachableResponse } from '../../../http/response/mod.ts'
 
 export interface CachingHeaders {
   /** The time, in seconds, that the object has been in a proxy cache. */

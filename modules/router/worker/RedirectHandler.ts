@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { RouteRequestHandler } from 'keywork/router/route'
-import { Logger } from 'keywork/logger'
-import HTTP from 'keywork/http'
+import { RouteRequestHandler } from '../../router/route/mod.ts'
+import { Logger } from '../../logger/mod.ts'
+import HTTP from '../../http/mod.ts'
 
 export type ResponseRedirectStatus = 301 | 302 | 303 | 307 | 308
 /**

@@ -12,5 +12,14 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './common.ts'
-export * from './esbuild/index.ts'
+import { polyfillWithModule } from '../polyfills/mod.ts'
+
+export type StreamExports = Pick<typeof globalThis, 'TransformStream' | 'ReadableStream' | 'WritableStream'>
+
+const Stream = await polyfillWithModule<StreamExports>('node:stream/web', [
+  'TransformStream',
+  'ReadableStream',
+  'WritableStream',
+])
+
+export default Stream

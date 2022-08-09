@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { HTTPMethod } from 'keywork/http'
+import { HTTPMethod } from '../../http/mod.ts'
 
 /**
  * Public endpoints to aid in debugging your app.

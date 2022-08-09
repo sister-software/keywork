@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork/errors'
-import { globalScopeSSRKey, GlobalScopeWithKeyworkSSRProps, SSRPropsLike } from 'keywork/react/isomorphic'
+import { KeyworkResourceError } from '../../errors/mod.ts'
+import { globalScopeSSRKey, GlobalScopeWithKeyworkSSRProps, SSRPropsLike } from '../isomorphic/mod.ts'
 
 export function globalScopeHasSSRProps<SSRProps extends SSRPropsLike>(
   globalScope: unknown

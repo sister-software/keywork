@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KVNamespace } from 'keywork/kv/cloudflare'
+import type { KVNamespace } from '../cloudflare/mod.ts'
 import { DeserializationTypes } from './KeyworkCollection/common.ts'
 import { KeyworkCollection } from './KeyworkCollection.ts'
 import { KeyworkDocumentReference } from './KeyworkDocumentReference.ts'

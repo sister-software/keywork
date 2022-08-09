@@ -13,12 +13,9 @@
  */
 
 import classNames from 'https://esm.sh/classnames@2.3.1'
-import {
-  KeyworkHTMLDocumentAppRoot,
-  KeyworkHTMLDocumentStyleRoot,
-  KeyworkQueryParamKeys,
-} from 'keywork/react/isomorphic'
 import React, { FC, HtmlHTMLAttributes, ReactFragment, ReactNode } from 'https://esm.sh/react@18.2.0'
+import { KeyworkHTMLDocumentAppRoot, KeyworkHTMLDocumentStyleRoot } from './constants.ts'
+import { KeyworkQueryParamKeys } from './uri.ts'
 
 export interface KeyworkHTMLDocumentProps {
   moduleManifest?: string[]

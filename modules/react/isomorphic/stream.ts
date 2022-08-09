@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KeyworkResourceError } from 'keywork/errors'
+import type { KeyworkResourceError } from '../../errors/mod.ts'
 import type { KeyworkHTMLDocumentComponent } from './KeyworkHTMLDocument.tsx'
 import type { KeyworkProvidersComponent } from './KeyworkProvidersComponent.tsx'
 import { ReactDOMServerReadableStream } from 'https://esm.sh/react-dom@18.2.0/server.browser'

@@ -12,20 +12,20 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, Status } from 'keywork/errors'
-import { isExtendableEvent, IsomorphicFetchEvent } from 'keywork/events'
-import { KeyworkHeaders } from 'keywork/http/headers'
-import HTTP, { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from 'keywork/http'
-import { ReactRendererOptions } from 'keywork/react/isomorphic'
-import { renderReactStream } from 'keywork/react/worker'
-import { castToResponse, cloneAsMutableResponse, ErrorResponse } from 'keywork/http/response'
-import { isKeyworkFetcher, KeyworkFetcher, MiddlewareFetch } from 'keywork/router/middleware'
-import type { ParsedRoute, RouteMatch, RouteRequestHandler } from 'keywork/router/route'
-import { normalizeURLPattern, normalizeURLPatternInput, URLPatternLike } from 'keywork/uri'
-import { Disposable } from 'keywork/disposable'
-import { Logger } from 'keywork/logger'
+import { KeyworkResourceError, Status } from '../../errors/mod.ts'
+import { isExtendableEvent, IsomorphicFetchEvent } from '../../events/mod.ts'
+import { KeyworkHeaders } from '../../http/headers/mod.ts'
+import HTTP, { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from '../../http/mod.ts'
+import { ReactRendererOptions } from '../../react/isomorphic/mod.ts'
+import { renderReactStream } from '../../react/worker/mod.ts'
+import { castToResponse, cloneAsMutableResponse, ErrorResponse } from '../../http/response/mod.ts'
+import { isKeyworkFetcher, KeyworkFetcher, MiddlewareFetch } from '../middleware/mod.ts'
+import type { ParsedRoute, RouteMatch, RouteRequestHandler } from '../route/mod.ts'
+import { normalizeURLPattern, normalizeURLPatternInput, URLPatternLike } from '../../uri/mod.ts'
+import { Disposable } from '../../disposable/mod.ts'
+import { Logger } from '../../logger/mod.ts'
 import { isMiddlewareDeclarationOption, KeyworkRouterOptions } from './common.ts'
-import { RouteDebugEntrypoint, KeyworkRouterDebugEndpoints } from 'keywork/router/debug'
+import { RouteDebugEntrypoint, KeyworkRouterDebugEndpoints } from '../debug/mod.ts'
 
 /**
  * Used in place of the reference-sensitive `instanceof`

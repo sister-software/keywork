@@ -12,12 +12,4 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './methods.ts'
-
-import { polyfillWithModule } from 'keywork/polyfills'
-
-export type HTTPExports = Pick<typeof globalThis, 'Request' | 'Headers' | 'Response'>
-
-const HTTP = await polyfillWithModule<HTTPExports>('undici', ['Request', 'Headers', 'Response'])
-
-export default HTTP
+export * from './worker/mod.ts'

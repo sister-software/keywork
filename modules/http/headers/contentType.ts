@@ -13,7 +13,7 @@
  */
 
 import { PlainText } from '../../files/extensions/PlainText.ts'
-import { extensionToMimeType, fileNameToExtension } from 'keywork/files'
+import { extensionToMimeType, fileNameToExtension } from '../../files/mod.ts'
 
 /**
  * Response headers with Content-Type.

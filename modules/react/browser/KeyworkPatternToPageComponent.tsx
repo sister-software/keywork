@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { createContextAndNamedHook } from 'keywork/react/hooks'
+import { createContextAndNamedHook } from '../hooks/mod.ts'
 import React, { FC, useMemo } from 'https://esm.sh/react@18.2.0'
-import { useKeyworkRouter, useStaticProps } from 'keywork/react/isomorphic'
+import { useKeyworkRouter, useStaticProps } from '../isomorphic/mod.ts'
 import { matchRoute, PatternToPageComponentMap } from './PatternToPageComponentMap.ts'
 export interface KeyworkBrowserRouterProps {
   patternToPageComponent: PatternToPageComponentMap<any>
@@ -26,6 +26,9 @@ const [KeyworkRouteMatchContext, useMatch] = createContextAndNamedHook<URLPatter
 )
 export { useMatch }
 
+/**
+ * @beta
+ */
 export const KeyworkPatternToPageComponent: FC<KeyworkBrowserRouterProps> = ({ patternToPageComponent }) => {
   const staticProps = useStaticProps<any>()
   const { location } = useKeyworkRouter()
@@ -36,7 +39,7 @@ export const KeyworkPatternToPageComponent: FC<KeyworkBrowserRouterProps> = ({ p
 
   const Component = useMemo(() => {
     if (!possibleMatch) return FallbackComponent
-    const _Component = patternToPageComponent.get(possibleMatch.pattern.path)
+    const _Component = patternToPageComponent.get(possibleMatch.pathname.groups['0'])
 
     return _Component || FallbackComponent
   }, [patternToPageComponent, possibleMatch])

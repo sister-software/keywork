@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork/errors'
+import { KeyworkResourceError } from '../../errors/mod.ts'
 
-import { IReactStreamRenderer } from 'keywork/react/isomorphic'
+import { IReactStreamRenderer } from '../isomorphic/mod.ts'
 import { renderToReadableStream } from 'https://esm.sh/react-dom@18.2.0/server.browser'
 
 export const renderReactStream: IReactStreamRenderer = async (children, options) => {

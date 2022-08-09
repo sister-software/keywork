@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KeyworkFetcher } from 'keywork/router/middleware'
+import type { KeyworkFetcher } from '../middleware/mod.ts'
 import type { RouteRequestHandler } from './RouteRequestHandler.ts'
 
 /**

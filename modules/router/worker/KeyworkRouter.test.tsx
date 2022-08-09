@@ -12,13 +12,13 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from 'keywork/errors'
+import { Status } from '../../errors/mod.ts'
 import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } from 'deno/testing/asserts'
-import { KeyworkRouter } from 'keywork/router/worker'
-import HTTP from 'keywork/http'
-import { JSONResponse } from 'keywork/http/response'
+import { KeyworkRouter } from './mod.ts'
+import HTTP from '../../http/mod.ts'
+import { JSONResponse } from '../../http/response/mod.ts'
 import React from 'https://esm.sh/react@18.2.0'
-import { KeyworkHeaders } from 'keywork/http/headers'
+import { KeyworkHeaders } from '../../http/headers/mod.ts'
 
 interface HelloResponseBody extends Record<PropertyKey, unknown> {
   url: string

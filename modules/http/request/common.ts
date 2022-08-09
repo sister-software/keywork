@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import HTTP from 'keywork/http'
+import HTTP from '../../http/mod.ts'
 
 /**
  * Checks if the given object is an instance of `Request`

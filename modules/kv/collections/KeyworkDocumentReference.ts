@@ -13,10 +13,10 @@
  */
 
 import deepmerge from 'https://esm.sh/deepmerge@4.2.2'
-import { convertJSONToETaggableString, generateETag } from 'keywork/http/headers/caching'
-import { KeyworkResourceError } from 'keywork/errors'
-import type { KVNamespace } from 'keywork/kv/cloudflare'
-import { resolvePathSegments } from 'keywork/uri'
+import { convertJSONToETaggableString, generateETag } from '../../http/headers/caching/mod.ts'
+import { KeyworkResourceError } from '../../errors/mod.ts'
+import type { KVNamespace } from '../../kv/cloudflare/mod.ts'
+import { resolvePathSegments } from '../../uri/mod.ts'
 import type {
   DeserializationTransformers,
   DeserializationTypes,

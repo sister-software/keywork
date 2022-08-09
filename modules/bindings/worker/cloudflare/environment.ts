@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KVNamespace } from 'keywork/kv/cloudflare'
+import type { KVNamespace } from '../../../kv/cloudflare/mod.ts'
 import type { DurableObjectNamespace } from './durable-objects.ts'
-import type { WorkerEnvFetchBinding } from 'keywork/bindings/worker'
+import type { WorkerEnvFetchBinding } from '../../../bindings/worker/mod.ts'
 
 /**
  * Either:

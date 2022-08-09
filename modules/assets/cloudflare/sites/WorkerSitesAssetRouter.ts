@@ -14,11 +14,11 @@
 
 import { getAssetFromKV } from 'https://esm.sh/@cloudflare/kv-asset-handler@0.2.0'
 import type { AssetManifestType } from 'https://esm.sh/@cloudflare/kv-asset-handler@0.2.0/dist/types'
-import { KeyworkResourceError, Status } from 'keywork/errors'
-import type { KVNamespace } from 'keywork/kv/cloudflare'
-import { ErrorResponse } from 'keywork/http/response'
-import { RouteRequestHandler } from 'keywork/router/route'
-import { KeyworkRouter } from 'keywork/router/worker'
+import { KeyworkResourceError, Status } from '../../../errors/mod.ts'
+import type { KVNamespace } from '../../../kv/cloudflare/mod.ts'
+import { ErrorResponse } from '../../../http/response/mod.ts'
+import { RouteRequestHandler } from '../../../router/route/mod.ts'
+import { KeyworkRouter } from '../../../router/worker/mod.ts'
 
 /**
  * An asset environment binding available within Cloudflare Pages.

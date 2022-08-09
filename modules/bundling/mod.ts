@@ -12,4 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './worker/index.ts'
+export * from './common.ts'
+export * from './esbuild/mod.ts'

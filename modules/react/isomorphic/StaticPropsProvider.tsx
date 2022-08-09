@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { createContextAndNamedHook } from 'keywork/react/hooks'
+import { createContextAndNamedHook } from '../hooks/mod.ts'
 import React, { FC, ReactNode } from 'https://esm.sh/react@18.2.0'
 import { SSRPropsLike } from './constants.ts'
 

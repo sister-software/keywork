@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork/errors'
-import type { KVNamespace } from 'keywork/kv/cloudflare'
-import { PathBuilder, resolvePathSegments } from 'keywork/uri'
+import { KeyworkResourceError } from '../../errors/mod.ts'
+import type { KVNamespace } from '../cloudflare/mod.ts'
+import { PathBuilder, resolvePathSegments } from '../../uri/mod.ts'
 import type {
   DeserializationTypes,
   CollectionDocumentReferencesResponse,

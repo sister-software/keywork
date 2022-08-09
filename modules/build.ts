@@ -22,9 +22,9 @@ import { transform, TransformOutput } from 'deno/dnt/transform'
 import { runNpmCommand } from 'deno/dnt/utils'
 
 import { copy } from 'deno/fs/copy'
-import { Logger } from 'keywork/logger'
+import { Logger } from './logger/mod.ts'
 import * as path from 'path'
-import { extractEntrypoints, ImportMap, NPMPackageJSON, readNPMPackageJSON } from '@keywork/monorepo/common/imports'
+import { NPMPackageJSON, readNPMPackageJSON } from '@keywork/monorepo/common/imports'
 import { projectPath } from '@keywork/monorepo/common/paths'
 import * as ProjectFiles from '@keywork/monorepo/common/project'
 import deepmerge from 'https://esm.sh/deepmerge@4.2.2'
@@ -50,9 +50,6 @@ const packageJSON = await readNPMPackageJSON(path.join(ProjectFiles.ModulesDirec
 const tsConfigSrcPath = path.join(ProjectFiles.ModulesDirectory, ProjectFiles.TSConfig)
 
 const importMapPath = ProjectFiles.ImportMap
-const importMap = JSON.parse(Deno.readTextFileSync(importMapPath)) as ImportMap
-
-const { entryPoints, packageExports } = extractEntrypoints(packageName, importMap)
 
 const shimOptions: ShimOptions = {
   deno: {
@@ -84,7 +81,11 @@ async function createTransformer() {
   const { shims, testShims } = shimOptionsToTransformShims(shimOptions)
 
   const transformOutput = await transform({
-    entryPoints: entryPoints.map((e) => e.path),
+    entryPoints: Object.values(packageJSON.exports)
+      .filter((e) => e.import.endsWith('.js'))
+      .map((e) => {
+        return e.import.replaceAll('.js', '.ts')
+      }),
     testShims,
     shims,
     target: 'Latest',
@@ -105,7 +106,6 @@ function generatePackageJSON(transformOutput: TransformOutput) {
   const transformedPackageJSON = getPackageJson({
     package: deepmerge(packageJSON, {
       name: packageName,
-      exports: packageExports,
       scripts: undefined,
       installConfig: undefined,
     }),

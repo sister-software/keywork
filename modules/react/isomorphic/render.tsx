@@ -12,20 +12,18 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import {
-  ReactRendererOptions,
-  ReactRenderStreamResult,
-  SSRPropsLike,
-  StaticPropsProvider,
-} from 'keywork/react/isomorphic'
-import { Logger } from 'keywork/logger'
+import { Logger } from '../../logger/mod.ts'
 import React, { ReactElement } from 'https://esm.sh/react@18.2.0'
 import { ReactDOMServerReadableStream } from 'https://esm.sh/react-dom@18.2.0/server.browser'
 import { KeyworkHTMLDocument } from './KeyworkHTMLDocument.tsx'
 import { KeyworkProviders } from './KeyworkProvidersComponent.tsx'
 import { _SSRPropsEmbed } from './SSRPropsEmbed.tsx'
-import { KeyworkResourceError } from 'keywork/errors'
+import { KeyworkResourceError } from '../../errors/mod.ts'
 import { renderReactStream } from '../worker/stream.ts'
+import { SSRPropsLike } from './constants.ts'
+import { StaticPropsProvider } from './StaticPropsProvider.tsx'
+import { ReactRendererOptions, ReactRenderStreamResult } from './stream.ts'
+
 /**
  * Renders the given React content to an HTML stream.
  * @ignore

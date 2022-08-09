@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { resolvePathSegments } from 'keywork/uri'
+import { resolvePathSegments } from '../../../uri/mod.ts'
 
 /** Key to a collection's documents. */
 export const COLLECTION_KEY = '__COLLECTION'

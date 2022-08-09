@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork/errors'
-import { IReactStreamRenderer } from 'keywork/react/isomorphic'
+import { KeyworkResourceError } from '../../errors/mod.ts'
+import { IReactStreamRenderer } from '../isomorphic/mod.ts'
 import {
   renderToPipeableStream,
   ReactDOMServerReadableStream,

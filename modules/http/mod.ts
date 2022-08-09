@@ -12,14 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { polyfillWithModule } from 'keywork/polyfills'
+export * from './methods.ts'
 
-export type StreamExports = Pick<typeof globalThis, 'TransformStream' | 'ReadableStream' | 'WritableStream'>
+import { polyfillWithModule } from '../polyfills/mod.ts'
 
-const Stream = await polyfillWithModule<StreamExports>('node:stream/web', [
-  'TransformStream',
-  'ReadableStream',
-  'WritableStream',
-])
+export type HTTPExports = Pick<typeof globalThis, 'Request' | 'Headers' | 'Response'>
 
-export default Stream
+const HTTP = await polyfillWithModule<HTTPExports>('undici', ['Request', 'Headers', 'Response'])
+
+export default HTTP

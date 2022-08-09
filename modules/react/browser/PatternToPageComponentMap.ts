@@ -12,9 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { SSRPropsLike } from 'keywork/react/isomorphic'
-import { matchPath } from 'keywork/uri'
-
+import { SSRPropsLike } from '../isomorphic/mod.ts'
+import { normalizeURLPattern, normalizeURLPatternInput } from '../../uri/mod.ts'
 /**
  * A **client-side** mapping of path patterns to their respective page components.
  * This is useful if your app bundles all React route handlers into a single Worker.
@@ -41,9 +40,13 @@ export class PatternToPageComponentMap<StaticProps extends SSRPropsLike> extends
   React.ComponentType<StaticProps>
 > {}
 
+/**
+ * @beta
+ */
 export function matchRoute(patternToPageComponent: PatternToPageComponentMap<any>, location: URL) {
   for (const pattern of patternToPageComponent.keys()) {
-    const possibleMatch = matchPath(pattern, location.pathname)
+    const urlPattern = normalizeURLPattern(pattern)
+    const possibleMatch = urlPattern.exec(normalizeURLPatternInput(location.pathname))
 
     if (possibleMatch) return possibleMatch
   }

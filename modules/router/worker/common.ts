@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { ReactRendererOptions } from 'keywork/react/isomorphic'
-import type { KeyworkFetcher } from 'keywork/router/middleware'
-import { KeyworkRouterDebugOptions } from 'keywork/router/debug'
+import type { ReactRendererOptions } from '../../react/isomorphic/mod.ts'
+import type { KeyworkFetcher } from '../middleware/mod.ts'
+import { KeyworkRouterDebugOptions } from '../debug/mod.ts'
 
 /**
  * Middleware declaration in the convenient shape of `Map`'s constructor parameters.

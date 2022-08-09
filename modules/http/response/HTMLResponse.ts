@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { fileExtensionToContentTypeHeader } from 'keywork/http/headers'
-import { CacheControlDirectives } from 'keywork/http/headers/caching'
+import { fileExtensionToContentTypeHeader } from '../headers/mod.ts'
+import { CacheControlDirectives } from '../headers/caching/mod.ts'
 import { CachableResponse } from './CachableResponse.ts'
 
 /**

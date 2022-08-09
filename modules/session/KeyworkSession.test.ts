@@ -13,10 +13,10 @@
  */
 
 import { assertEquals, assert } from 'deno/testing/asserts'
-import { KeyworkRouter } from 'keywork/router/worker'
-import { SessionMiddleware } from 'keywork/session'
-import { CookieHeaders } from 'keywork/http/headers'
-import HTTP from 'keywork/http'
+import { KeyworkRouter } from '../router/worker/mod.ts'
+import { SessionMiddleware } from './mod.ts'
+import { CookieHeaders } from '../http/headers/mod.ts'
+import HTTP from '../http/mod.ts'
 import { parse as parseCookies } from 'https://esm.sh/cookie@0.5.0'
 
 Deno.test('Session Middleware', async () => {
