@@ -19,7 +19,7 @@ import { ThemeClassNames } from '@docusaurus/theme-common'
 import { isActiveSidebarItem } from '@docusaurus/theme-common/internal'
 import IconExternalLink from '@theme/Icon/ExternalLink'
 import clsx from 'clsx'
-import React from 'https://esm.sh/react@18.2.0'
+import React from 'react'
 import styles from './styles.module.css'
 
 export default function DocSidebarItemLink({ item, onItemClick, activePath, level, index, ...props }) {

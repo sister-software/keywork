@@ -15,7 +15,7 @@
 import { ThemeClassNames } from '@docusaurus/theme-common'
 import Translate from '@docusaurus/Translate'
 import IconEdit from '@theme/Icon/Edit'
-import React from 'https://esm.sh/react@18.2.0'
+import React from 'react'
 
 export default function EditThisPage({ editUrl }) {
   return (

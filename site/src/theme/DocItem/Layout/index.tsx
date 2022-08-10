@@ -23,7 +23,7 @@ import DocItemTOCMobile from '@theme/DocItem/TOC/Mobile'
 import DocVersionBadge from '@theme/DocVersionBadge'
 import DocVersionBanner from '@theme/DocVersionBanner'
 import clsx from 'clsx'
-import React from 'https://esm.sh/react@18.2.0'
+import React from 'react'
 import styles from './styles.module.css'
 
 /**

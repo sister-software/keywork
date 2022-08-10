@@ -14,7 +14,7 @@
 
 import Content from '@theme-original/DocSidebar/Desktop/Content'
 import NavbarLogo from '@theme/Navbar/Logo'
-import React from 'https://esm.sh/react@18.2.0'
+import React from 'react'
 
 export default function ContentWrapper(props) {
   return (

@@ -13,7 +13,7 @@
  */
 
 import DocPage from '@theme-original/DocPage'
-import React from 'https://esm.sh/react@18.2.0'
+import React from 'react'
 
 export default function DocPageWrapper(props) {
   return (

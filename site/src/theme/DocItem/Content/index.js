@@ -17,7 +17,7 @@ import { useDoc } from '@docusaurus/theme-common/internal'
 import Heading from '@theme/Heading'
 import MDXContent from '@theme/MDXContent'
 import clsx from 'clsx'
-import React from 'https://esm.sh/react@18.2.0'
+import React from 'react'
 
 /**
  * Title can be declared inside md content or declared through
