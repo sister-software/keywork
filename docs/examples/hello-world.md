@@ -75,7 +75,7 @@ export default app
 ```
 
 We call `app.get` with a path pattern matching the root of our app,
-along with a [`RouteRequestHandler`](/modules/router/route/api/types/RouteRequestHandler)
+along with a [`RouteRequestHandler`](/modules/router/route/api/interfaces/RouteRequestHandler)
 callback that executes when our app receives a matching incoming request.
 
 #### Exporting the router

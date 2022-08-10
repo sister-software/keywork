@@ -92,7 +92,7 @@ You may need a polyfill if your app uses on a runtime that hasn't yet added [`UR
 
 ### `IsomorphicFetchEvent`
 
-When creating a [`RouteRequestHandler`](/modules/router/route/api/types/RouteRequestHandler) callback,
+When creating a [`RouteRequestHandler`](/modules/router/route/api/interfaces/RouteRequestHandler) callback,
 you have access to an [`IsomorphicFetchEvent`](/modules/events/api/classes/IsomorphicFetchEvent):
 
 ```ts title="GET http://localhost:8788"
@@ -214,7 +214,7 @@ See `KeyworkSession` for further details.
 
 - [URI Module](/modules/uri)
 - [Session Module](/modules/session)
-- [Middleware Module](/modules/middleware)
+- [Middleware Module](/modules/router/middleware)
 
 ## Further reading
 

@@ -5,6 +5,9 @@ sidebar_position: 0
 pagination_label: 'Module: URI'
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 ## URL Pattern API
 
 Keywork uses JavaScript's built-in [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern)

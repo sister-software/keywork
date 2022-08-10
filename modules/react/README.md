@@ -6,6 +6,9 @@ pagination_label: 'Module: React'
 pagination_next: 'modules/react/server-side-rendering'
 ---
 
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
+
 ## Module Overview
 
 While optional, Keywork uses React as its primary HTML templating engine.
