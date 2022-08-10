@@ -17,13 +17,13 @@
   "scripts": {
     "lint": "eslint ./modules",
     "build:check": "ts-node ./scripts/validate-runtime.ts",
-    "build:modules": "yarn workspace @keywork/modules run build",
+    "build:modules": "yarn workspace keywork run build",
     "build:format": "ts-node ./scripts/format.ts",
     "build": "yarn run build:check && yarn run build:modules && yarn run build:format",
     "docs:generate": "ts-node ./scripts/generate-api-docs.ts",
     "docs:dev": "yarn workspace @keywork/site run dev",
     "docs:build": "yarn workspace @keywork/site run build",
-    "test": "yarn workspace @keywork/modules run test"
+    "test": "yarn workspace keywork run test"
   },
   "exports": {
     "./common/*": "./common/*/index.js",

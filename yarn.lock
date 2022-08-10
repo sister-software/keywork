@@ -2537,42 +2537,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@keywork/modules@workspace:modules":
-  version: 0.0.0-use.local
-  resolution: "@keywork/modules@workspace:modules"
-  dependencies:
-    "@cloudflare/kv-asset-handler": 0.2.0
-    "@types/cookie": ^0.5.1
-    "@types/lodash.isplainobject": ^4.0.7
-    "@types/node": ^18.6.2
-    "@types/react": ^18.0.15
-    "@types/react-dom": ^18.0.6
-    classnames: 2.3.1
-    cookie: 0.5.0
-    deepmerge: 4.2.2
-    lodash.isplainobject: 4.0.6
-    typescript: ^4.7.4
-    ulidx: 0.3.0
-  peerDependencies:
-    esbuild: ^0.14
-    react: ">=18.2"
-    react-dom: ">=18.2"
-    undici: ">=5.7"
-    urlpattern-polyfill: ^5.0.5
-  peerDependenciesMeta:
-    esbuild:
-      optional: true
-    react:
-      optional: true
-    react-dom:
-      optional: true
-    undici:
-      optional: true
-    urlpattern-polyfill:
-      optional: true
-  languageName: unknown
-  linkType: soft
-
 "@keywork/monorepo@workspace:.":
   version: 0.0.0-use.local
   resolution: "@keywork/monorepo@workspace:."
@@ -8023,6 +7987,42 @@ __metadata:
   checksum: bb7e8f3acffdbafbc2dd5b63f377fe6ec4c0e2c44fc82720449ef8ab54f4a7ce3802671ed94c0f475ae0a8549703353a2124561fcf3317010c141b32ca1ce903
   languageName: node
   linkType: hard
+
+"keywork@workspace:modules":
+  version: 0.0.0-use.local
+  resolution: "keywork@workspace:modules"
+  dependencies:
+    "@cloudflare/kv-asset-handler": 0.2.0
+    "@types/cookie": ^0.5.1
+    "@types/lodash.isplainobject": ^4.0.7
+    "@types/node": ^18.6.2
+    "@types/react": ^18.0.15
+    "@types/react-dom": ^18.0.6
+    classnames: 2.3.1
+    cookie: 0.5.0
+    deepmerge: 4.2.2
+    lodash.isplainobject: 4.0.6
+    typescript: ^4.7.4
+    ulidx: 0.3.0
+  peerDependencies:
+    esbuild: ^0.14
+    react: ">=18.2"
+    react-dom: ">=18.2"
+    undici: ">=5.7"
+    urlpattern-polyfill: ^5.0.5
+  peerDependenciesMeta:
+    esbuild:
+      optional: true
+    react:
+      optional: true
+    react-dom:
+      optional: true
+    undici:
+      optional: true
+    urlpattern-polyfill:
+      optional: true
+  languageName: unknown
+  linkType: soft
 
 "kind-of@npm:^6.0.0, kind-of@npm:^6.0.2":
   version: 6.0.3

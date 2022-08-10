@@ -19,7 +19,6 @@ import { createProjectSync, ts } from 'deno/dnt/deps'
 import { getPackageJson } from 'deno/dnt/package_json'
 import { ShimOptions, shimOptionsToTransformShims } from 'deno/dnt/shims'
 import { transform, TransformOutput } from 'deno/dnt/transform'
-import { runNpmCommand } from 'deno/dnt/utils'
 
 import { copy } from 'deno/fs/copy'
 import { Logger } from './logger/mod.ts'
@@ -45,7 +44,6 @@ function writeFile(filePath: string, fileText: string) {
   Deno.writeTextFileSync(filePath, fileText)
 }
 
-const packageName = 'keywork'
 const packageJSON = await readNPMPackageJSON(path.join(ProjectFiles.ModulesDirectory, ProjectFiles.PackageJSON))
 const tsConfigSrcPath = path.join(ProjectFiles.ModulesDirectory, ProjectFiles.TSConfig)
 
@@ -105,7 +103,6 @@ function generatePackageJSON(transformOutput: TransformOutput) {
 
   const transformedPackageJSON = getPackageJson({
     package: deepmerge(packageJSON, {
-      name: packageName,
       scripts: undefined,
       installConfig: undefined,
     }),
@@ -119,7 +116,7 @@ function generatePackageJSON(transformOutput: TransformOutput) {
     shims: shimOptions,
   }) as unknown as NPMPackageJSON
 
-  // Remove duplicate peer deps from  dependencies...
+  // Remove duplicate peer deps from dependencies...
   for (const packageName of Object.keys(transformedPackageJSON.peerDependencies)) {
     if (packageName in transformedPackageJSON.dependencies) {
       transformedPackageJSON.dependencies[packageName] = undefined as any
@@ -215,11 +212,13 @@ await copyStaticFiles()
 const transformOutput = await createTransformer()
 
 generatePackageJSON(transformOutput)
-logger.log('Installing dependencies...')
-await runNpmCommand({
-  bin: 'yarn',
-  args: ['install'],
-  cwd: outDir,
-})
+
+// TODO: Likely not necessary after Yarn 3
+// logger.log('Installing dependencies...')
+// await runNpmCommand({
+//   bin: 'yarn',
+//   args: ['install'],
+//   cwd: outDir,
+// })
 
 build(transformOutput)
