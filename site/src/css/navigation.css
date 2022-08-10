@@ -17,6 +17,16 @@
     width: 1.5rem;
   }
 
+  .sidebarLogo_---node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
+    display: none !important;
+    opacity: 0;
+  }
+  .navbar__logo {
+    height: auto;
+    display: flex;
+    margin: 0;
+  }
+
   .navbar-container {
     display: flex;
     justify-content: center;
@@ -38,12 +48,20 @@
   .navbar .navbar__brand {
     display: none;
   }
+  .navbar__inner {
+    margin-left: 1rem;
+  }
 }
 
-.navbar--fixed-top {
+/* .navbar--fixed-top {
   position: fixed;
+} */
+
+.navbar__items {
+  gap: 1rem;
 }
 
+.navbar__item,
 .pagination-nav__link {
   background-color: var(--nirrius-green-light);
   box-shadow: -6px 9px 0 var(--nirrius-shadow);

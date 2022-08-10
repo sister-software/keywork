@@ -74,7 +74,7 @@ const themeConfig = {
     respectPrefersColorScheme: false,
   },
   navbar: {
-    // hideOnScroll: true,
+    hideOnScroll: true,
     title: 'Keywork',
     logo: {
       alt: 'Keywork Logo',
