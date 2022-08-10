@@ -62,7 +62,7 @@ are recommended to avoid long import URLs:
 {
   "imports": {
     "keywork/router": "https://deno.land/x/keywork/modules/router/mod.ts",
-    "keywork/router": "https://deno.land/x/keywork/modules/utilities/mod.ts"
+    "keywork/uri": "https://deno.land/x/keywork/modules/uri/mod.ts"
     // etc
   }
 }

@@ -213,7 +213,7 @@ See `KeyworkSession` for further details.
 ## Related Entries
 
 - [URI Module](/modules/uri)
-- [Session Module](/modules/session/)
+- [Session Module](/modules/session)
 - [Middleware Module](/modules/middleware)
 
 ## Further reading

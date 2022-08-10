@@ -28,6 +28,7 @@ const topLevelModules = [
   { dirName: 'modules/assets', label: 'Assets' },
   // { dirName: 'modules/bindings', label: 'Bindings' },
   { dirName: 'modules/errors', label: 'Errors' },
+  { dirName: 'modules/events', label: 'Events' },
   { dirName: 'modules/files', label: 'Files' },
   { dirName: 'modules/http', label: 'HTTP' },
   { dirName: 'modules/ids', label: 'IDs' },
@@ -35,8 +36,8 @@ const topLevelModules = [
   { dirName: 'modules/router', label: 'Router' },
   { dirName: 'modules/session', label: 'Session' },
   { dirName: 'modules/uri', label: 'URI' },
-  { dirName: 'modules/utilities', label: 'Utilities' },
   { dirName: 'modules/kv', label: 'Key/Value' },
+  { dirName: 'modules/timers', label: 'Timers' },
   { dirName: 'modules/bundling', label: 'Bundling' },
   { dirName: 'modules/polyfills/worker/ReadableStream', label: 'Polyfills' },
 ]
