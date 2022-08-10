@@ -36,8 +36,7 @@ $ npm install --save react react-dom
 [Import Maps](https://deno.land/manual/node/import_maps#using-import-maps)
 are recommended to avoid long import URLs:
 
-```ts title="./your-project/import_map.json"
-
+```json title="./your-project/import_map.json"
 {
   "imports": {
     "react": "https://esm.sh/react@18.2.0",
@@ -45,7 +44,7 @@ are recommended to avoid long import URLs:
     "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
     "react-dom/server": "https://esm.sh/react-dom@18.2.0/server",
     "react-dom/server.browser": "https://esm.sh/react-dom@18.2.0/server.browser",
-    "react/jsx-runtime": "https://esm.sh/react/jsx-runtime",
+    "react/jsx-runtime": "https://esm.sh/react/jsx-runtime"
   }
 }
 ```

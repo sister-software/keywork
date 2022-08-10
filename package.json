@@ -21,8 +21,8 @@
     "build:format": "ts-node ./scripts/format.ts",
     "build": "yarn run build:check && yarn run build:modules && yarn run build:format",
     "docs:generate": "ts-node ./scripts/generate-api-docs.ts",
-    "docs:dev": "yarn workspace @keywork/site run dev",
-    "docs:build": "yarn workspace @keywork/site run build",
+    "site:dev": "yarn workspace @keywork/site run dev",
+    "site:build": "yarn workspace @keywork/site run build",
     "test": "yarn workspace keywork run test"
   },
   "exports": {
