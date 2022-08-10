@@ -43,9 +43,9 @@ if (process.platform !== 'linux' && process.platform !== 'darwin') {
   warn(`Development of Keywork on (${process.platform}) is not officially supported`)
 }
 
-const denoInstalled = await commandExists('deno')
-
-if (!denoInstalled) {
+try {
+  await commandExists('deno')
+} catch (error) {
   exitWithErrorMessage("Deno doesn't appear to be installed", 'https://deno.land/#installation')
 }
 
