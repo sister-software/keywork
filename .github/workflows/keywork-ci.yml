@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: ["main"]
+    branches: ['main']
   pull_request:
-    branches: ["main"]
+    branches: ['main']
 
 permissions:
   contents: read
@@ -55,6 +55,7 @@ jobs:
           yarn build
         env:
           NODE_ENV: production
+          CI: true
 
       - name: Archive build artifacts
         uses: actions/upload-artifact@v3
