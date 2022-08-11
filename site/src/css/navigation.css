@@ -21,6 +21,7 @@
     display: none !important;
     opacity: 0;
   }
+
   .navbar__logo {
     height: auto;
     display: flex;
@@ -48,6 +49,7 @@
   .navbar .navbar__brand {
     display: none;
   }
+
   .navbar__inner {
     margin-left: 1rem;
   }
@@ -81,6 +83,7 @@
   border-radius: var(--ifm-button-border-radius) !important;
   border: 3px solid var(--ifm-button-border-color) !important;
   font-family: var(--ifm-font-family-base);
+
   --ifm-button-border-color: var(--ifm-color-emphasis-300);
 }
 

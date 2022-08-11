@@ -1,32 +1,27 @@
 :root {
-  --ifm-font-family-base: 'Go', -apple-system, BlinkMacSystemFont, sans-serif;
-  --ifm-font-family-monospace: 'Fira Code', Menlo, 'SF Mono', 'Andale Mono', 'Roboto Mono', Monaco, monospace;
+  --ifm-font-family-base: 'Go', -apple-system, blinkmacsystemfont, sans-serif;
+  --ifm-font-family-monospace: 'Fira Code', menlo, 'SF Mono', 'Andale Mono', 'Roboto Mono', monaco, monospace;
   --nirrius-sidebar-offset: 4rem;
   --nirrius-red-lightest: #fff6f6;
   --nirrius-red-light: #ffeaea;
-  --nirrius-red-base: #ffaaaa;
+  --nirrius-red-base: #faa;
   --nirrius-red-dark: #c36767;
-
   --nirrius-teal-light: #eaffff;
   --nirrius-teal-base: #9eeeee;
-  --nirrius-teal-dark: #8888cc;
-  --nirrius-teal-darkest: #55aaaa;
-
+  --nirrius-teal-dark: #88c;
+  --nirrius-teal-darkest: #5aa;
   --nirrius-yellow-light: #ffffea;
   --nirrius-yellow-base: #eeee9e;
   --nirrius-yellow-dark: #99994c;
-
   --nirrius-green-light: #eaffea;
-  --nirrius-green-base: #88cc88;
-  --nirrius-green-dark: #448844;
-
+  --nirrius-green-base: #8c8;
+  --nirrius-green-dark: #484;
   --nirrius-blue-lightest: #f4fbff;
   --nirrius-blue-light: #65b9e2;
-  --nirrius-blue-base: #00aaff;
-  --nirrius-blue-dark: #0088cc;
-  --nirrius-blue-darker: #006699;
+  --nirrius-blue-base: #0af;
+  --nirrius-blue-dark: #08c;
+  --nirrius-blue-darker: #069;
   --nirrius-blue-darkest: #005580;
-
   --nirrius-shadow: rgb(0 0 0 / 10%);
   --ifm-font-size-base: 16px;
   --docs-content-gap: var(--sixty-four-px-rem);
@@ -39,13 +34,15 @@
   --docs-body-width: calc(var(--docs-page-width) - var(--docs-sidebars-combined-width));
   --docs-logo-lockup-gap: 0.4rem;
   --docs-logo-lockup-gap-small: 0.2rem;
-
   --docsearch-searchbox-background: var(--ifm-color-primary) !important;
   --docsearch-searchbox-focus-background: var(--ifm-color-primary-dark) !important;
   --docsearch-muted-color: var(--ifm-color-emphasis-700) !important;
+
   /* --sidebar-background-color: var(--nirrius-blue-lightest); */
   --sidebar-background-color: hsl(0deg 99% 92%);
+
   /* --ifm-navbar-height: .25rem; */
+
   /* --ifm-navbar-background-color: transparent; */
   --ifm-navbar-shadow: transparent;
   --ifm-global-shadow-lw: -10px 15px 0 var(--nirrius-shadow);
@@ -66,12 +63,10 @@
   --ifm-color-primary-lighter: #359962;
   --ifm-color-primary-lightest: #3cad6e;
   --ifm-code-font-size: 90%;
-
   --ifm-global-spacing: 1.5rem;
   --ifm-global-radius: 0;
   --ifm-breadcrumb-border-radius: 0;
   --ifm-breadcrumb-item-background-active: var(--nirrius-green-light);
-  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.1);
   --ifm-menu-color: var(--ifm-color-emphasis-1000);
   --docusaurus-highlighted-code-line-bg: hsl(180deg 70% 78% / 15%);
 }
@@ -116,6 +111,7 @@ a.breadcrumbs__link {
   --ifm-hero-background-color: transparent;
   --ifm-hero-text-color: var(--ifm-color-content);
 }
+
 /* table */
 
 table thead tr {

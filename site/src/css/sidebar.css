@@ -1,11 +1,11 @@
 .docSidebarContainer_---node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Sidebar-styles-module {
   clip-path: unset !important;
-  -webkit-clip-path: unset !important;
 }
 
 .sidebar_---node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
   background-color: var(--sidebar-background-color);
-  --ifm-navbar-height: .5rem;
+
+  --ifm-navbar-height: 0.5rem;
 }
 
 .sidebar_---node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module::before {
@@ -40,10 +40,11 @@
 }
 
 .theme-doc-sidebar-container {
-  --ifm-menu-border-color: var(--nirrius-green-dark);
   --ifm-menu-color-background: var(--nirrius-green-light);
   --ifm-menu-color-background-active: var(--nirrius-green-light);
   --ifm-menu-color-background-hover: var(--nirrius-blue-lightest);
+
+  /* --ifm-menu-border-color: var(--nirrius-green-dark); */
   --ifm-menu-border-color: var(--nirrius-red-dark);
   --nirrius-shadow: var(--nirrius-red-base);
 }
@@ -54,6 +55,7 @@
   background: var(--ifm-menu-color-background);
   border: 1px solid var(--ifm-menu-border-color);
   z-index: 1;
+
   /* background-color: var(--nirrius-yellow-light);
   border: 4px solid var(--ifm-color-emphasis-600);
 
@@ -72,7 +74,7 @@
 }
 
 .menu__link {
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .menu__link.menu__link--active {
@@ -83,6 +85,7 @@
 .menu__link.menu__link--active + .clean-btn.menu__caret {
   --ifm-menu-color-background: var(--nirrius-teal-dark);
   --ifm-menu-color-background-hover: var(--nirrius-teal-base) !important;
+
   background: var(--ifm-menu-color-background) !important;
   color: var(--ifm-color-content-inverse);
   text-decoration: underline;
@@ -109,7 +112,7 @@
 }
 
 .theme-doc-sidebar-item-category-level-3,
-  .theme-doc-sidebar-item-link-level-3 {
+.theme-doc-sidebar-item-link-level-3 {
   filter: hue-rotate(50deg);
 }
 
@@ -130,12 +133,13 @@
 
 .menu__link:not([href]):hover {
   text-decoration: none !important;
+
   /* background-color: unset !important; */
 }
 
 .link-with-icon .menu__link {
   display: flex !important;
-  gap: .25rem;
+  gap: 0.25rem;
   align-items: center;
 }
 
@@ -168,8 +172,8 @@
 
 .theme-doc-sidebar-item-link-level-2 > .menu__link,
 .theme-doc-sidebar-item-category-level-2 > .menu__link,
-  .theme-doc-sidebar-item-category-level-2 > .menu__list-item-collapsible > .menu__link {
-    font-size: 1.25rem;
+.theme-doc-sidebar-item-category-level-2 > .menu__list-item-collapsible > .menu__link {
+  font-size: 1.25rem;
 }
 
 
@@ -188,6 +192,7 @@
   .menu_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-Content-styles-module {
     padding-top: 0;
   }
+
   .docSidebarContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Sidebar-styles-module {
     margin-top: calc(-1 * var(--ifm-navbar-height) + var(--nirrius-sidebar-offset)) !important;
     margin-left: calc(var(--nirrius-sidebar-offset) / 6);
@@ -209,6 +214,7 @@
     min-width: var(--doc-sidebar-width);
     flex: 0 0 auto;
   }
+
   .sidebar_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
     border: none !important;
     top: var(--nirrius-sidebar-offset) !important;

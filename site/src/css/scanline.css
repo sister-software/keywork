@@ -5,8 +5,8 @@
     180deg,
     transparent 0,
     transparent 1px,
-    hsla(0, 0%, 45%, 0.05) 0,
-    hsla(0, 0%, 45%, 0.05) 2px
+    hsl(0deg 0% 45% / 5%) 0,
+    hsl(0deg 0% 45% / 5%) 2px
   );
   display: block;
   z-index: 9999;

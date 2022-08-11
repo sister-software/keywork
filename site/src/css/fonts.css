@@ -1,44 +1,45 @@
 @font-face {
-  font-family: 'Go';
+  font-family: Go;
   font-style: normal;
   font-weight: normal;
   src: url('/fonts/go/Go-Regular.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Go';
+  font-family: Go;
   font-style: italic;
   font-weight: normal;
   src: url('/fonts/go/Go-Italic.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Go';
+  font-family: Go;
   font-style: normal;
   font-weight: bold;
   src: url('/fonts/go/Go-Bold.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Go';
+  font-family: Go;
   font-style: italic;
   font-weight: bold;
   src: url('/fonts/go/Go-Bold-Italic.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Go';
+  font-family: Go;
   font-style: normal;
   font-weight: medium;
   src: url('/fonts/go/Go-Medium.ttf') format('truetype');
 }
 
 @font-face {
-  font-family: 'Go';
+  font-family: Go;
   font-style: italic;
   font-weight: medium;
   src: url('/fonts/go/Go-Medium-Italic.ttf') format('truetype');
 }
+
 /*
 @font-face {
   font-family: 'Go Mono';
