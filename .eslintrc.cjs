@@ -81,7 +81,7 @@ const config = {
         message: "Use `import Stream from 'keywork/platform/stream'`",
       },
     ],
-    'header/header': [2, 'block', headerLines, 1],
+    'header/header': [1, 'block', headerLines, 1],
     'react/prop-types': 'off',
     'no-undef': 'off',
     'no-extra-semi': 'off',
