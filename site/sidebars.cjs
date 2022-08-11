@@ -246,7 +246,6 @@ const sidebars = {
         {
           type: 'link',
           href: 'https://github.com/nirrius/keywork',
-          // className: 'link-with-icon icon-github',
           label: 'GitHub',
         },
 

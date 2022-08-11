@@ -59,7 +59,8 @@ export default function DocItemFooter() {
   const { editUrl, lastUpdatedAt, formattedLastUpdatedAt, lastUpdatedBy, tags, frontMatter } = metadata
   const canDisplayTagsRow = tags.length > 0
   const canDisplayEditMetaRow = !!(editUrl || lastUpdatedAt || lastUpdatedBy)
-  const canDisplayFooter = canDisplayTagsRow || canDisplayEditMetaRow
+  const canDisplayFooter =
+    !frontMatter.hide_footer && metadata.id !== 'README' && (canDisplayTagsRow || canDisplayEditMetaRow)
 
   if (!canDisplayFooter) {
     return null

@@ -44,7 +44,6 @@ const presetOptions = {
       require.resolve('./src/css/scrollbar.css'),
       require.resolve('./src/css/sidebar.css'),
       require.resolve('./src/css/menu.css'),
-      require.resolve('./src/css/docs.css'),
       require.resolve('./src/css/cursor.css'),
     ],
   },
@@ -117,57 +116,76 @@ const themeConfig = {
       {
         href: 'https://github.com/nirrius/keywork',
         position: 'right',
+        label: 'Github',
         className: 'link-with-icon icon-github',
 
         'aria-label': 'GitHub repository',
       },
     ],
   },
-  // footer: {
-  //   style: 'dark',
-  //   links: [
-  //     {
-  //       title: 'External Resources',
-  //       items: [
-  //         {
-  //           label: 'Official Cloudflare Workers Docs',
-  //           href: 'https://workers.cloudflare.com/',
-  //         },
-  //         {
-  //           label: "Cloudflare's Developer Discord",
-  //           href: 'https://discord.gg/cloudflaredev',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       title: 'Community',
-  //       items: [
-  //         {
-  //           label: 'Stack Overflow',
-  //           href: 'https://stackoverflow.com/questions/tagged/keywork',
-  //         },
-  //         // {
-  //         //   label: 'Discord',
-  //         //   href: 'https://discordapp.com/invite/docusaurus',
-  //         // },
-  //         {
-  //           label: 'Twitter',
-  //           href: 'https://twitter.com/nirrius',
-  //         },
-  //       ],
-  //     },
-  //     {
-  //       title: 'More',
-  //       items: [
-  //         {
-  //           label: 'GitHub',
-  //           href: 'https://github.com/nirrius/keywork',
-  //         },
-  //       ],
-  //     },
-  //   ],
-  //   copyright: `Copyright © ${new Date().getFullYear()} Nirrius, LLC.`,
-  // },
+  footer: {
+    style: 'dark',
+    links: [
+      {
+        title: 'Resources',
+        items: [
+          {
+            label: 'Modules',
+            href: '/modules',
+          },
+          {
+            label: 'Examples',
+            href: '/examples',
+          },
+        ],
+      },
+      {
+        title: 'Community',
+        items: [
+          {
+            href: '/contributing',
+            label: 'Contributing',
+          },
+
+          {
+            href: 'https://github.com/nirrius/keywork',
+            label: 'GitHub',
+          },
+
+          {
+            href: 'https://github.com/nirrius/keywork/discussions',
+            label: 'Forums',
+          },
+
+          {
+            label: 'Help & Support',
+            href: '/help',
+          },
+        ],
+      },
+
+      {
+        title: 'License',
+        items: [
+          {
+            href: '/license/',
+            label: 'Overview',
+          },
+
+          {
+            href: '/license/open-source',
+            label: 'Open Source',
+          },
+
+          {
+            href: '/license/commercial',
+            label: 'Commercial Usage',
+          },
+        ],
+      },
+    ],
+    copyright: `Copyright © ${new Date().getFullYear()} Nirrius, LLC.`,
+  },
   prism: {
     theme: lightCodeTheme,
     darkTheme: lightCodeTheme,

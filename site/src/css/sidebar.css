@@ -1,23 +1,5 @@
-.docSidebarContainer_---node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Sidebar-styles-module {
+.theme-doc-sidebar-container {
   clip-path: unset !important;
-}
-
-.sidebar_---node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
-  background-color: var(--sidebar-background-color);
-
-  --ifm-navbar-height: 0.5rem;
-}
-
-.sidebar_---node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 100vmax;
-  background: var(--sidebar-background-color);
-  pointer-events: none;
-  z-index: -1;
 }
 
 .theme-doc-toc-desktop:not(:empty) {
@@ -25,7 +7,6 @@
   border: 4px solid var(--ifm-color-emphasis-600);
   box-shadow: -6px 9px 0 var(--nirrius-shadow) !important;
 }
-
 
 .theme-doc-sidebar-menu {
   margin-right: 0.5rem;
@@ -39,12 +20,12 @@
   margin-top: 0;
 }
 
+.navbar-sidebar,
+.theme-doc-sidebar-menu,
 .theme-doc-sidebar-container {
   --ifm-menu-color-background: var(--nirrius-green-light);
-  --ifm-menu-color-background-active: var(--nirrius-green-light);
+  --ifm-menu-color-background-active: var(--nirrius-red-lightest);
   --ifm-menu-color-background-hover: var(--nirrius-blue-lightest);
-
-  /* --ifm-menu-border-color: var(--nirrius-green-dark); */
   --ifm-menu-border-color: var(--nirrius-red-dark);
   --nirrius-shadow: var(--nirrius-red-base);
 }
@@ -52,7 +33,7 @@
 
 .menu__link,
 .menu__link + .menu__caret {
-  background: var(--ifm-menu-color-background);
+  background-color: var(--ifm-menu-color-background);
   border: 1px solid var(--ifm-menu-border-color);
   z-index: 1;
 
@@ -61,7 +42,11 @@
 
   /* box-shadow: -2px 3px 0 var(--nirrius-shadow); */
   padding: 0.5em 0.75em;
+  gap: 1rem;
+}
 
+.menu__link[class*="menuExternalLink"] {
+  gap: 0;
 }
 
 .menu__list-item-collapsible,
@@ -71,10 +56,6 @@
   position: relative;
   display: flex !important;
   box-shadow: -6px 9px 0 var(--nirrius-shadow) !important;
-}
-
-.menu__link {
-  gap: 0.5rem;
 }
 
 .menu__link.menu__link--active {
@@ -133,8 +114,6 @@
 
 .menu__link:not([href]):hover {
   text-decoration: none !important;
-
-  /* background-color: unset !important; */
 }
 
 .link-with-icon .menu__link {
@@ -143,15 +122,19 @@
   align-items: center;
 }
 
-.link-with-icon .iconExternalLink_---node_modules-\@docusaurus-theme-classic-lib-theme-Icon-ExternalLink-styles-module {
+.menu__link.link-with-icon {
+  gap: 0.5rem;
+}
+
+.link-with-icon > svg {
   display: none;
 }
 
 .link-with-icon::before {
   content: "";
-  display: flex;
-  height: 24px;
-  width: 24px;
+  display: inline-flex;
+  height: 1.5rem;
+  width: 1.5rem;
   background-repeat: no-repeat;
 }
 
@@ -189,37 +172,25 @@
 }
 
 @media (min-width: 997px) {
-  .menu_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-Content-styles-module {
-    padding-top: 0;
-  }
-
-  .docSidebarContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Sidebar-styles-module {
+  /* .docSidebarContainer_node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Sidebar-styles-module {
     margin-top: calc(-1 * var(--ifm-navbar-height) + var(--nirrius-sidebar-offset)) !important;
     margin-left: calc(var(--nirrius-sidebar-offset) / 6);
     border: none;
     clip-path: none !important;
-  }
+  } */
 
-  .docSidebarContainer_---node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Sidebar-styles-module {
-    width: unset !important;
-    min-width: var(--doc-sidebar-width);
-    flex: 0 0 auto;
 
-  }
-
-  .sidebar_---node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
-    border-right: 5px solid var(--nirrius-red-base);
-    padding-left: 0.5rem;
+  .theme-doc-sidebar-container {
     width: unset !important;
     min-width: var(--doc-sidebar-width);
     flex: 0 0 auto;
   }
 
-  .sidebar_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
+  /* .sidebar_node_modules-\@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-styles-module {
     border: none !important;
     top: var(--nirrius-sidebar-offset) !important;
     padding-top: calc(var(--ifm-navbar-height) - var(--nirrius-sidebar-offset)) !important;
-  }
+  } */
 }
 
 

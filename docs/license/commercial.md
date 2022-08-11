@@ -1,8 +1,9 @@
 ---
 title: Commercial Usage
-sidebar_label: Commercial
+sidebar_label: Commercial Usage
 sidebar_position: 1
 id: commercial
+hide_footer: true
 ---
 
 import { PopupButton } from '@typeform/embed-react'

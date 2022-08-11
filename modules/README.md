@@ -1,6 +1,6 @@
 ---
 title: 'Keywork Modules'
-sidebar_label: Module Overview
+sidebar_label: Modules Overview
 sidebar_position: 0
 pagination_label: 'Keywork Modules'
 ---

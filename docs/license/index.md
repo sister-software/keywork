@@ -2,6 +2,7 @@
 sidebar_title: Licensing Overview
 title: Overview
 sidebar_position: 0
+hide_footer: true
 ---
 
 import { PopupButton } from '@typeform/embed-react'

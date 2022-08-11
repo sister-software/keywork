@@ -1,0 +1,17 @@
+.docPage {
+  display: flex;
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+}
+
+.docsWrapper {
+  display: flex;
+}
+
+
+@media (min-width: 768px) {
+  .docPage {
+    max-width: var(--docs-max-page-width);
+  }
+}

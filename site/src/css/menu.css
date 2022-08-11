@@ -3,7 +3,7 @@
   white-space: nowrap;
   max-width: 100%;
   overflow: hidden;
-  display: block !important;
+  display: flex !important;
 }
 
 .menu__link,
@@ -61,9 +61,3 @@
   height: auto !important;
 }
 
-.menu__list,
-.menu__caret::before,
-.menu__link--sublist-caret::after,
-.button {
-  transition: none !important;
-}

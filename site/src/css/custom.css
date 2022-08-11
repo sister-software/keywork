@@ -37,13 +37,8 @@
   --docsearch-searchbox-background: var(--ifm-color-primary) !important;
   --docsearch-searchbox-focus-background: var(--ifm-color-primary-dark) !important;
   --docsearch-muted-color: var(--ifm-color-emphasis-700) !important;
-
-  /* --sidebar-background-color: var(--nirrius-blue-lightest); */
   --sidebar-background-color: hsl(0deg 99% 92%);
-
-  /* --ifm-navbar-height: .25rem; */
-
-  /* --ifm-navbar-background-color: transparent; */
+  --ifm-menu-color-background-active: var(--nirrius-yellow-light) !important;
   --ifm-navbar-shadow: transparent;
   --ifm-global-shadow-lw: -10px 15px 0 var(--nirrius-shadow);
   --ifm-global-shadow-md: -2px 3px 0 var(--nirrius-shadow);
@@ -69,6 +64,7 @@
   --ifm-breadcrumb-item-background-active: var(--nirrius-green-light);
   --ifm-menu-color: var(--ifm-color-emphasis-1000);
   --docusaurus-highlighted-code-line-bg: hsl(180deg 70% 78% / 15%);
+  --ifm-transition-fast: 50ms;
 }
 
 /*  header */
@@ -100,6 +96,12 @@ a.breadcrumbs__link {
   box-shadow: 0 9px var(--nirrius-shadow) inset;
 }
 
+@media (min-width: 769px) {
+  .footer {
+    display: none;
+  }
+}
+
 .footer--dark {
   --ifm-footer-background-color: var(--nirrius-teal-dark);
   --ifm-footer-title-color: var(--nirrius-red-lightest);
@@ -129,13 +131,10 @@ table thead tr {
 }
 
 
-@media (min-width: 997px) {
-  .docMainContainer_---node_modules-\@docusaurus-theme-classic-lib-theme-DocPage-Layout-Main-styles-module {
-    margin-top: var(--ifm-navbar-height);
-  }
+.prism-code {
+  border: 3px solid var(--nirrius-blue-darkest);
 }
 
-
-.codeBlockContainer_---node_modules-\@docusaurus-theme-classic-lib-theme-CodeBlock-Container-styles-module {
-  border: 3px solid var(--nirrius-blue-darkest);
+.docusaurus-mt-lg {
+  margin-top: 2rem !important;
 }

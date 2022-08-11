@@ -13,20 +13,12 @@
  */
 
 import Content from '@theme-original/DocSidebar/Desktop/Content'
-import NavbarLogo from '@theme/Navbar/Logo'
 import React from 'react'
 
 export default function ContentWrapper(props) {
   return (
     <>
       <div className="background-container" />
-      <div className="menu_---node_modules-@docusaurus-theme-classic-lib-theme-DocSidebar-Desktop-Content-styles-module">
-        <ul className="theme-doc-sidebar-menu menu__list">
-          <li className="theme-doc-sidebar-item-link theme-doc-sidebar-item-link-level-1 menu__list-item navbar-container">
-            <NavbarLogo />
-          </li>
-        </ul>
-      </div>
       <Content {...props} />
     </>
   )

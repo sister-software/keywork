@@ -1,8 +1,9 @@
 ---
-title: Open-source Usage
-sidebar_label: Open-source
+title: Open source Usage
+sidebar_label: Open Source Usage
 sidebar_position: 2
 id: open-source
+hide_footer: true
 ---
 
 import { PopupButton } from '@typeform/embed-react'
