@@ -16,6 +16,12 @@
     "isolates",
     "react"
   ],
+  "funding": [
+    {
+      "type" : "individual",
+      "url" : "https://keywork.app/contributing"
+    }
+  ],
   "type": "module",
   "sideEffects": false,
   "engines": {
