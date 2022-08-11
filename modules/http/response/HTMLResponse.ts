@@ -19,7 +19,6 @@ import { CachableResponse } from './CachableResponse.ts'
 /**
  * A response that returns a full HTML document.
  *
- * @remarks
  * `HTMLResponse` automatically handles several types of HTML response bodies.
  *
  * @see {JSXResponse}

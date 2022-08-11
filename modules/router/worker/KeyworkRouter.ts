@@ -148,7 +148,6 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
   /**
    * Defines a handler for incoming `GET` requests.
    *
-   * @remarks
    * The HTTP GET method requests a representation of the specified resource.
    * Requests using GET should only be used to request data.
    * The `params` object in the `IsomorphicFetchEvent` contains matched URL patterns
@@ -168,7 +167,6 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
   /**
    * Defines a handler for incoming `POST` requests.
    *
-   * @remarks
    * The HTTP POST method sends data to the server.
    * The type of the body of the request is indicated by the `Content-Type` header.
    *
@@ -187,7 +185,6 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
   /**
    * Defines a handler for incoming `PUT` requests.
    *
-   * @remarks
    * The HTTP PUT request method creates a new resource
    * or replaces a representation of the target resource with the request payload.
    *
@@ -219,7 +216,6 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
   /**
    * Defines a handler for incoming `DELETE` requests.
    *
-   * @remarks
    * The HTTP DELETE request method deletes the specified resource.
    *
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/DELETE Documentation on MDN}
@@ -236,7 +232,6 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
   /**
    * Defines a handler for incoming `HEAD` requests.
    *
-   * @remarks
    * The HTTP HEAD method requests the headers that would be returned
    * if the HEAD request's URL was instead requested with the HTTP GET method.
    * For example, if a URL might produce a large download,
@@ -256,7 +251,6 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
   /**
    * Defines a handler for incoming `OPTIONS` requests.
    *
-   * @remarks
    * The HTTP OPTIONS method requests permitted communication options for a given URL or server.
    * A client can specify a URL with this method, or an asterisk (*) to refer to the entire server.
    *
@@ -275,7 +269,6 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
   /**
    * Defines a handler for incoming all HTTP requests.
    *
-   * @remarks
    * This will always be a **higher priority** than an explicitly defined method handler.
    * If you're creating a router as middleware, `KeyworkRouter#all` can be especially useful for intercepting incoming requests.
    *
@@ -295,7 +288,6 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
   /**
    * Combines additional routers and their respective route handlers to this router.
    *
-   * @remarks
    * Route handlers are matched in the order of their declaration:
    *
    * ```ts
@@ -472,7 +464,6 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
   /**
    * The Worker's primary incoming fetch handler.
    *
-   * @remarks
    * This delegates to a method-specific handler you define, such as `KeyworkRouter#get`.
    * Generally, `KeyworkRouter#fetch` should not be used within your app.
    * This is instead automatically called by the Worker runtime when an incoming request is received.

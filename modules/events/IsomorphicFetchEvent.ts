@@ -22,7 +22,6 @@ export const IsomorphicFetchEventObjectName = 'Keywork.IsomorphicFetchEvent'
 /**
  * An event object containing contextual data for a single and specific incoming HTTP request.
  *
- * @remarks
  * Generally, this interface is exclusive to {@link KeyworkRouter#fetch}
  * and automatically passed to your subclass's route handlers.
  *

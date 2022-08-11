@@ -19,7 +19,6 @@ import type { MiddlewareFetch } from '../middleware/mod.ts'
 /**
  * A function or method that handles incoming requests and replies with a `Response`.
  *
- * @remarks
  * Generally, this is interface is assigned to a KeyworkRouter method, such as `onRequestGet`
  * The `IsomorphicFetchEvent` argument is provided by the router's `fetch` method.
  *

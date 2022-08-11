@@ -18,7 +18,6 @@ import type { RouteMatch } from '../route/mod.ts'
 /**
  * A function within the Worker that receives all incoming requests.
  *
- * @remarks
  * Generally, this interface is exclusive to {@link KeyworkRouter#fetch},
  * or any object that implements the {@link KeyworkFetcher} interface
  *
@@ -52,7 +51,6 @@ export type MiddlewareFetch<BoundAliases = {}> = (
   /**
    * When invoked, will execute a route handler defined after the current.
    *
-   * @remarks
    * This is similar to Express.js Middleware.
    * Providing a request argument will override the path param parsing within `KeyworkRouter`.
    */
@@ -61,7 +59,6 @@ export type MiddlewareFetch<BoundAliases = {}> = (
 ) => Promise<Response>
 
 /**
- * @remarks
  * ### Cloudflare Usage
  * Events are handled by defining and exporting an object with
  * method handlers that correspond to event names:

@@ -64,7 +64,6 @@ class MockReadableStreamDefaultController implements ReadableStreamDefaultContro
  * of a `ReadableStream` through the [`body`](https://developer.mozilla.org/en-US/docs/Web/API/Response/body) property
  * of a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) object.
  *
- * @remarks
  * This class implementation polyfills `ReadableStream` in the Cloudflare Pages environment.
  *
  * @public

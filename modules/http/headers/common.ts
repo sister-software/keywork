@@ -22,7 +22,6 @@ export const KeyworkHeaders = {
 /**
  * Merges the given source headers into the destination.
  *
- * @remarks
  * This mutates the `destination` headers.
  *
  */

@@ -17,7 +17,6 @@ import { ServiceBindingRouter } from '../../../router/worker/cloudflare/mod.ts'
 /**
  * An asset environment binding available within Cloudflare Pages.
  *
- * @remarks
  * This binding only exists in Cloudflare __Pages__.
  *
  * @see {WorkerSitesAssetRouter} For use with Cloudflare Pages
@@ -27,7 +26,6 @@ export const AssetBindingAlias = 'ASSETS'
 /**
  * Handles incoming requests for static assets uploaded to Cloudflare Pages.
  *
- * @remarks
  * This binding only exists in Cloudflare __Pages__.
  *
  * @see {WorkerSitesAssetRouter} If you're using Worker Sites

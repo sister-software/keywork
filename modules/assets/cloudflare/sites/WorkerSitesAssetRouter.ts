@@ -23,7 +23,6 @@ import { KeyworkRouter } from '../../../router/worker/mod.ts'
 /**
  * An asset environment binding available within Cloudflare Pages.
  *
- * @remarks
  * This binding only exists in Cloudflare __Pages__.
  *
  * @see {CloudflarePagesAssetRouter} For use with Cloudflare Pages
@@ -34,7 +33,6 @@ export const AssetBindingAlias = 'ASSETS'
  * An environment binding available within Worker Sites.
  * This is often used with the `@cloudflare/kv-asset-handler` package.
  *
- * @remarks
  * This binding only exists in Worker __Sites__.
  * Cloudflare __Pages__ instead uses `env.ASSETS`
  *

@@ -18,7 +18,6 @@ import { BundledFileName } from '../common.ts'
 /**
  * ESBuild options for the Worker bundle.
  *
- * @remarks
  * The Worker runtime on Cloudflare Pages may differ from a standard Worker deployment.
  *
  * If you're encountering runtime errors, consider adding the ReadableStream polyfill:

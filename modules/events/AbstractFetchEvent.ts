@@ -19,7 +19,6 @@ export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> {
   /**
    * The incoming request received by the Worker.
    *
-   * @remarks
    * Both the request's `url` property and the parent `IsomorphicFetchEvent` will reflect
    * the current parsed route handler of `KeyworkRouter`.
    * @see {IsomorphicFetchEvent#originalURL}
@@ -48,7 +47,6 @@ export abstract class AbstractFetchEvent extends IsomorphicExtendableEvent imple
   /**
    * The incoming request received by the Worker.
    *
-   * @remarks
    * Both the request's `url` property and the parent `IsomorphicFetchEvent` will reflect
    * the current parsed route handler of `KeyworkRouter`.
    * @see {IsomorphicFetchEvent#originalURL}

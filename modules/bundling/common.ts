@@ -15,7 +15,6 @@
 /**
  * A special file name that sets Cloudflare Pages to advanced mode.
  *
- * @remarks
  * When using a `_worker.js` file, Cloudflare Pages will be in "advanced mode".
  * Advanced mode disables the dyanmic aspects of the platform:
  *
