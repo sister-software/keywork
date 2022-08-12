@@ -1,9 +1,7 @@
-name: CI
+name: Site Deployment
 
 on:
   push:
-    branches: ['main']
-  pull_request:
     branches: ['main']
 
 permissions:
@@ -39,17 +37,6 @@ jobs:
           node-version: 17.4
       - run: yarn install --immutable --immutable-cache --check-cache
 
-      - name: Run tests
-        run: yarn workspace keywork run test
-
-      - name: Generate lcov
-        run: yarn workspace keywork run test:coverage > cov.lcov
-
-      - name: Upload coverage
-        uses: codecov/codecov-action@v2
-        with:
-          files: cov.lcov
-
       - name: Build Modules
         run: |
           yarn build
@@ -71,16 +58,17 @@ jobs:
           NODE_ENV: production
           CI: true
 
-      - name: Archive Keywork artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: keywork-dist
-          path: dist
-          retention-days: 5
-
       - name: Archive doc site artifacts
         uses: actions/upload-artifact@v3
         with:
           name: keywork-site
           path: site/build
           retention-days: 5
+
+      - name: Deploy Site
+        run: |
+          yarn site:deploy site/build
+        env:
+          NODE_ENV: production
+          CI: true
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

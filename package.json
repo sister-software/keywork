@@ -23,6 +23,7 @@
     "docs:generate": "ts-node ./scripts/generate-api-docs.ts",
     "site:dev": "yarn workspace @keywork/site run dev",
     "site:build": "yarn workspace @keywork/site run build",
+    "site:deploy": "wrangler pages publish",
     "test": "yarn workspace keywork run test"
   },
   "exports": {
