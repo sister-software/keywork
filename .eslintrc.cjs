@@ -19,7 +19,7 @@ const path = require('path')
 const fs = require('fs')
 
 // @ts-ignore Node
-const headerPath = path.resolve(__dirname, 'common', 'header.js')
+const headerPath = path.resolve(__dirname, 'common', 'header.cjs')
 const rawHeaderContent = fs.readFileSync(headerPath, 'utf8')
 const headerLines = rawHeaderContent
   //
