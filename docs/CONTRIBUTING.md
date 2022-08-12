@@ -76,25 +76,48 @@ and an understanding of TypeScript, Deno, and Node.
 ## Requirements
 
 - MacOS or \*nix
-- Node (>= 17.4)
-- Deno (>= 1.23)
-- Yarn (>= 3)
+- Node (>= 17.4), preferrably [via NVM](https://github.com/nvm-sh/nvm)
+- [Deno](https://deno.land/#installation) (>= 1.23)
+- [Yarn](https://yarnpkg.com/getting-started) (>= 3)
 
-### Commands
+After [forking Keywork](https://github.com/nirrius/keywork/fork) and cloning your repo,
+you can start development via Yarn.
 
-#### Install dependencies
+## Yarn Commands
 
-```shell
+### `install`
+
+#### (Installs Node dependencies)
+
+```shell title="Run in the root of your cloned repo."
 yarn install
 ```
 
-#### Run tests
+### `build:check`
+
+This command Checks your development environment and ensures you can build Keywork.
+
+```shell
+yarn build:check
+```
+
+### `build`
+
+This command builds all Keywork modules and formats the output.
+
+```shell
+yarn build
+```
+
+### `test`
+
+#### (Run tests)
 
 ```shell
 yarn test
 ```
 
-# Thank You! 💞
+## Thank You! 💞
 
 Your contributions to open source, large or small, make great projects like this possible.
 Thank you for taking the time to contribute.
