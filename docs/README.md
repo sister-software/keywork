@@ -167,7 +167,7 @@ including...
 - Static asset utilities with support for Cloudflare Pages and Worker Sites.
 
 **All that and much, much more!**
-<a href="../modules/" target="_blank"><strong><em>View the Keywork's modules</em> ›</strong></a>
+<a href="../modules/" target="_blank"><strong><em>View all Keywork modules</em> ›</strong></a>
 
 ## Keywork Starter Kit
 
@@ -178,7 +178,7 @@ The starter kit lets Keywork can be used to build a web app on [Cloudflare Pages
 - ⚡ Cloudflare Pages
 - 💪 Written in TypeScript
 
-<a href="https://github.com/nirrius/keywork-starter-kit" target="_blank"><strong><em>More details about the starter kit ›</em> ›</strong></a>
+<a href="https://github.com/nirrius/keywork-starter-kit" target="_blank"><strong><em>More details about the starter kit</em> ›</strong></a>
 
 ## Want to help?
 
