@@ -65,12 +65,15 @@
 }
 
 .DocSearch-Button {
-  /* transition: none !important; */
-  border-radius: var(--ifm-button-border-radius) !important;
-  border: 3px solid var(--ifm-button-border-color) !important;
-  font-family: var(--ifm-font-family-base);
+  --ifm-button-border-color: var(--nirrius-blue-dark);
+  --docsearch-searchbox-focus-background: var(--ifm-color-primary-dark) !important;
 
-  --ifm-button-border-color: var(--ifm-color-emphasis-300);
+  border-radius: var(--ifm-button-border-radius) !important;
+  border: 2px solid var(--ifm-button-border-color) !important;
+  font-family: var(--ifm-font-family-base);
+  box-shadow: -6px 9px 0 var(--nirrius-shadow) !important;
+
+
 }
 
 .DocSearch-Button-Placeholder {

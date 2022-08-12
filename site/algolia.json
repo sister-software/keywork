@@ -1,0 +1,69 @@
+{
+  "settings": {
+    "advancedSyntax": true,
+    "allowTyposOnNumericTokens": false,
+    "attributeCriteriaComputedByMinProximity": true,
+    "attributeForDistinct": "url",
+    "attributesForFaceting": [
+      "type",
+      "lang",
+      "language",
+      "version",
+      "docusaurus_tag"
+    ],
+    "attributesToHighlight": [
+      "hierarchy",
+      "content"
+    ],
+    "attributesToRetrieve": [
+      "hierarchy",
+      "content",
+      "anchor",
+      "url",
+      "url_without_anchor",
+      "type"
+    ],
+    "attributesToSnippet": [
+      "content:10"
+    ],
+    "camelCaseAttributes": [
+      "hierarchy",
+      "content"
+    ],
+    "customRanking": [
+      "desc(weight.pageRank)",
+      "desc(weight.level)",
+      "asc(weight.position)"
+    ],
+    "distinct": true,
+    "highlightPostTag": "</span>",
+    "highlightPreTag": "<span class=\"algolia-docsearch-suggestion--highlight\">",
+    "ignorePlurals": true,
+    "minProximity": 1,
+    "minWordSizefor1Typo": 3,
+    "minWordSizefor2Typos": 7,
+    "ranking": [
+      "words",
+      "filters",
+      "typo",
+      "attribute",
+      "proximity",
+      "exact",
+      "custom"
+    ],
+    "removeWordsIfNoResults": "allOptional",
+    "searchableAttributes": [
+      "unordered(hierarchy.lvl0)",
+      "unordered(hierarchy.lvl1)",
+      "unordered(hierarchy.lvl2)",
+      "unordered(hierarchy.lvl3)",
+      "unordered(hierarchy.lvl4)",
+      "unordered(hierarchy.lvl5)",
+      "unordered(hierarchy.lvl6)",
+      "content"
+    ],
+    "separatorsToIndex": "_"
+  },
+  "rules": [],
+  "synonyms": []
+}

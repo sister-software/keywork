@@ -35,7 +35,6 @@
   --docs-logo-lockup-gap: 0.4rem;
   --docs-logo-lockup-gap-small: 0.2rem;
   --docsearch-searchbox-background: var(--ifm-color-primary) !important;
-  --docsearch-searchbox-focus-background: var(--ifm-color-primary-dark) !important;
   --docsearch-muted-color: var(--ifm-color-emphasis-700) !important;
   --sidebar-background-color: hsl(0deg 99% 92%);
   --ifm-menu-color-background-active: var(--nirrius-yellow-light) !important;
