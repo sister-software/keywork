@@ -55,7 +55,7 @@ jobs:
 
       - name: Deploy Site
         run: |
-          yarn site:deploy site/build
+          yarn site:deploy --project-name keywork site/build
         env:
           NODE_ENV: production
           CI: true
