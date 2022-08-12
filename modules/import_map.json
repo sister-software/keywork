@@ -10,7 +10,6 @@
     "deno/dnt/utils": "https://deno.land/x/dnt@0.28.0/lib/utils.ts",
     "deno/dnt/package_json": "https://deno.land/x/dnt@0.28.0/lib/package_json.ts",
     "deno/testing/asserts": "https://deno.land/std@0.149.0/testing/asserts.ts",
-    "deno/http/http_status": "https://deno.land/std@0.149.0/http/http_status.ts",
     "deno/getfiles": "https://deno.land/x/getfiles@v1.0.0/mod.ts",
     "deno/fs/copy": "https://deno.land/std@0.148.0/fs/copy.ts",
     "path": "https://deno.land/std@0.148.0/path/mod.ts",

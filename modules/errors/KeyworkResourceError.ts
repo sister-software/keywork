@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status, STATUS_TEXT } from 'deno/http/http_status'
+import { Status, STATUS_TEXT } from 'https://deno.land/std@0.149.0/http/http_status.ts'
 import { ErrorJSONBody } from './common.ts'
 export { Status, STATUS_TEXT }
 
@@ -59,13 +59,13 @@ export class KeyworkResourceError extends Error {
     /**
      * The reason for the error.
      * @defaultValue STATUS_TEXT[Status.InternalServerError]
-     * @see {STATUS_TEXT} Re-exported from `deno/http/http_status`
+     * @see {STATUS_TEXT} Re-exported from `https://deno.land/std@0.149.0/http/http_status.ts`
      */
     statusText?: string,
     /**
      * The HTTP Status Code associated with the error.
      * @defaultValue Status.InternalServerError
-     * @see {Status} Re-exported from `deno/http/http_status`
+     * @see {Status} Re-exported from `https://deno.land/std@0.149.0/http/http_status.ts`
      */
     status?: Status
   )
@@ -82,7 +82,7 @@ export class KeyworkResourceError extends Error {
     /**
      * The HTTP Status Code associated with the error.
      * @defaultValue Status.InternalServerError
-     * @see {Status} Re-exported from `deno/http/http_status`
+     * @see {Status} Re-exported from `https://deno.land/std@0.149.0/http/http_status.ts`
      */
     status?: Status
   )
