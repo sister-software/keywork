@@ -213,6 +213,14 @@ const config = {
 
   presets: [['classic', presetOptions]],
   themeConfig,
+  scripts: [
+    {
+      src: '/scripts/main.mjs',
+      async: true,
+      defer: true,
+      type: 'module',
+    },
+  ],
   plugins: [
     [
       '@docusaurus/plugin-pwa',
