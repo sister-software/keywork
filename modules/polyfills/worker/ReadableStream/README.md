@@ -1,6 +1,7 @@
 ---
 title: 'Polyfill: ReadableStream'
 sidebar_label: Module Overview
+tags: ['module']
 sidebar_position: 0
 pagination_label: 'Module: Polyfills.Worker.ReadableStream'
 ---

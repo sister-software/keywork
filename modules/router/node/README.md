@@ -1,5 +1,6 @@
 ---
 title: Routing using Node
+tags: ['node', 'routing']
 ---
 
 The [`KeyworkRouter`](/modules/router/api/classes/KeyworkRouter) can be made

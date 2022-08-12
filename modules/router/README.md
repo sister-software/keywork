@@ -1,8 +1,18 @@
 ---
 sidebar_label: Module Overview
+tags: ['module', 'routing']
 sidebar_position: 0
 pagination_label: 'Module: Routing'
+keywords:
+  - Router
+  - Cloudflare Pages
+  - Cloudflare Workers
+  - Deno
+description: 'The Keywork routing API is inspired by Express.js, React Router, and the native Cloudflare Workers platform.'
 ---
+
+import Tabs from '@theme/Tabs'
+import TabItem from '@theme/TabItem'
 
 # Keywork Router
 
@@ -10,6 +20,9 @@ pagination_label: 'Module: Routing'
 
 Designed with familiarity in mind, the server-side routing API is inspired by
 Express.js, React Router, and the native Cloudflare Workers platform.
+
+<Tabs groupId="router">
+  <TabItem value="Cloudflare Workers">
 
 ```ts title="worker.ts"
 import { KeyworkRouter } from 'keywork/router'
@@ -20,6 +33,35 @@ app.get('/', () => 'Hello there! 👋')
 
 export default app
 ```
+
+  </TabItem>
+
+  <TabItem value="Deno">
+
+Deno support is experimental, but should behave similar to Cloudflare Workers:
+
+```ts title="./your-project/server/mod.tsx"
+import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
+import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
+
+const app = new KeyworkRouter()
+serve((request) => app.fetch(request))
+```
+
+  </TabItem>
+
+  <TabItem value="Browser">
+
+```ts title="worker.ts"
+import { KeyworkRouter } from 'https://esm.sh/keywork/router'
+
+const app = new KeyworkRouter()
+
+app.get('/', () => 'Hello there! 👋')
+```
+
+  </TabItem>
+</Tabs>
 
 ## Creating a RESTful API
 

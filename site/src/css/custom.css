@@ -70,9 +70,21 @@
 
 [id*='-function'],
 [id*='-variable'],
+[id*='-type'],
 [id*='-module'] {
   font-family: var(--ifm-font-family-monospace);
 }
+
+[href*="/interfaces/"],
+[href*="/classes/"],
+[href*="/functions/"],
+[href*="/variables/"],
+[href*="/types/"],
+[href*="/module/"] {
+  font-weight: 600;
+  font-family: var(--ifm-font-family-monospace);
+}
+
 
 .breadcrumbs__link,
 .pagination-nav__link {

@@ -2,6 +2,7 @@
 title: Session
 sidebar_position: 0
 sidebar_label: Module Overview
+tags: ['module']
 ---
 
 ## Module Overview
