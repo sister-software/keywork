@@ -13,6 +13,7 @@
  */
 
 import { ThemeClassNames } from '@docusaurus/theme-common'
+// @ts-expect-error internal
 import { useDoc } from '@docusaurus/theme-common/internal'
 import Heading from '@theme/Heading'
 import MDXContent from '@theme/MDXContent'
