@@ -12,12 +12,12 @@ app.get('/', () => <h1>Hello from Keywork! 👋</h1>)
 export default app
 ```
 
-![npm](https://img.shields.io/npm/dm/keywork)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/nirrius/keywork)
-![Discord](https://img.shields.io/discord/595317990191398933?color=blue&label=Chat&logo=discord&logoColor=white)
+![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/nirrius/keywork/CI/main)
+[![codecov](https://codecov.io/gh/nirrius/keywork/branch/main/graph/badge.svg?token=1SDGYMB2YN)](https://codecov.io/gh/nirrius/keywork)
+![npm](https://img.shields.io/npm/dm/keywork)
 ![npm (scoped)](https://img.shields.io/npm/v/keywork)
 [![deno module](https://shield.deno.dev/x/keywork)](https://deno.land/x/keywork)
-[![codecov](https://codecov.io/gh/nirrius/keywork/branch/main/graph/badge.svg?token=1SDGYMB2YN)](https://codecov.io/gh/nirrius/keywork)
 
 ## Why use Keywork?
 
@@ -61,7 +61,7 @@ Keywork is the next step when your routing logic outgrows [Cloudflare Pages](htt
 And thanks to modular and type-safe API, Keywork provides an opinionated and structured
 guidence as your codebase expands, without locking you into a specific design-pattern.
 
-<a href="../modules/router/" target="_blank"><strong><em>Try the Router Module</em> ›</strong></a>
+<a href="https://keywork.app/modules/router/" target="_blank"><strong><em>Try the Router Module</em> ›</strong></a>
 
 ### React just works
 
@@ -111,7 +111,7 @@ app.get('/users', async () => {
 Keywork handles client-side hydration, and fits into your existing architecture without ceremony.
 And with built-in support for streamed responses, your app is delivered and interactive in seconds.
 
-<a href="../modules/react/" target="_blank"><strong><em>Try the React Module</em> ›</strong></a>
+<a href="https://keywork.app/modules/react/" target="_blank"><strong><em>Try the React Module</em> ›</strong></a>
 
 ### Isomorphic error handling, made easier.
 
@@ -136,7 +136,7 @@ app.post('/login', async ({ request }) => {
 })
 ```
 
-<a href="../modules/errors" target="_blank"><strong><em>Try the Error Module</em> ›</strong></a>
+<a href="https://keywork.app/modules/errors" target="_blank"><strong><em>Try the Error Module</em> ›</strong></a>
 
 ## Code bundling without the guesswork
 
@@ -146,7 +146,7 @@ and more on the real task at hand — building great web apps.
 And with [readymade templates](https://github.com/nirrius/keywork-starter-kit) available,
 you can skip the boilerplate and start coding in seconds.
 
-<a href="../modules/bundling/" target="_blank"><strong><em>Try the Bundling Module</em> ›</strong></a>
+<a href="https://keywork.app/modules/bundling/" target="_blank"><strong><em>Try the Bundling Module</em> ›</strong></a>
 
 ### Tools to manage your growing codebase
 
@@ -167,7 +167,7 @@ including...
 - Static asset utilities with support for Cloudflare Pages and Worker Sites.
 
 **All that and much, much more!**
-<a href="../modules/" target="_blank"><strong><em>View all Keywork modules</em> ›</strong></a>
+<a href="https://keywork.app/modules/" target="_blank"><strong><em>View all Keywork modules</em> ›</strong></a>
 
 ## Keywork Starter Kit
 
@@ -193,5 +193,5 @@ Keywork is open-source software and distributed under the [AGPL-3.0 license](htt
 Under the AGPL, you can alter, duplicate redistribute, and incorporate our source code into your application for free,
 AS LONG AS you comply with the source code sharing requirements of AGPL.
 
-- [Open Source Usage](https://keywork.app/licensing/open-source/)
-- [Commercial Usage](https://keywork.app/licensing/commercial)
+- [Open Source Usage](https://keywork.app/license/open-source)
+- [Commercial Usage](https://keywork.app/license/commercial)
