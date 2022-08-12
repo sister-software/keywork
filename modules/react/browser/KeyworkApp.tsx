@@ -45,7 +45,7 @@ export class KeyworkApp implements Disposable {
   /**
    * Hydrates a server-side rendered React component.
    *
-   * @remarks This should only run in the browser.
+   * This should only run in the browser.
    * @param initialChildren This should be the current page's component, along with any needed providers.
    */
   // Note that this is defined as an instance member to allow `promise.then` chaining.

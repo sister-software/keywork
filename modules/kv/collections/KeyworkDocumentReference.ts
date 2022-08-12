@@ -76,7 +76,8 @@ export class KeyworkDocumentReference<
 
   /**
    * Attempts to fetch a `KeyworkDocumentSnapshot` associated with the `docPath`.
-   * @remarks If the `deserializeAs` option is not set,
+   *
+   * If the `deserializeAs` option is not set,
    * the type will attempt to be inferred from the parent collection's known metadata.
    */
   async fetchSnapshot(options?: KeyworkDocumentFetchOptions): Promise<KeyworkDocumentSnapshot<ExpectedType>> {
