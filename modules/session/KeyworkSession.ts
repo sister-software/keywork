@@ -13,7 +13,6 @@
  */
 
 import { KeyworkRouter } from '../router/worker/mod.ts'
-import type { RouteRequestHandler } from '../router/route/mod.ts'
 import {
   CookieSerializeOptions,
   parse as parseCookies,
@@ -22,6 +21,7 @@ import {
 import { ulid } from '../ids/mod.ts'
 import type { CookieHeaders } from '../http/headers/mod.ts'
 import { DEFAULT_SESSION_COOKIE_KEY, DEFAULT_COOKIE_SERIALIZE_OPTIONS, SessionMiddlewareOptions } from './common.ts'
+import type { RouteRequestHandler } from '../router/mod.ts'
 
 /**
  * A simple session manager to aid in authenticating users.

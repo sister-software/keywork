@@ -12,4 +12,17 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './functions/mod.ts'
+/**
+ * Promise wrapper around `requestAnimationFrame`
+ */
+export function requestAnimationFramePromise(): Promise<number> {
+  return new Promise<number>((resolve) => {
+    if (typeof requestAnimationFrame === 'undefined') {
+      return resolve(-1)
+    }
+
+    const frameNumber = requestAnimationFrame(() => {
+      resolve(frameNumber)
+    })
+  })
+}

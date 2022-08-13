@@ -21,6 +21,5 @@
  * @module router.worker
  */
 
-export * from './common.ts'
-export * from './RedirectHandler.ts'
-export * from './KeyworkRouter.ts'
+export * from './functions/mod.ts'
+export * from './classes/mod.ts'

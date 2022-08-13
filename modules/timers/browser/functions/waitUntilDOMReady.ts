@@ -12,4 +12,20 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './functions/mod.ts'
+/**
+ * Creates a promise that blocks until the DOM has loaded.
+ * @public
+ */
+export function waitUntilDOMReady(): Promise<void> {
+  return new Promise<void>((resolve, reject) => {
+    if (typeof document === 'undefined') {
+      return reject('`document` is not defined. Was this method called on the server?')
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', () => resolve())
+    } else {
+      resolve()
+    }
+  })
+}

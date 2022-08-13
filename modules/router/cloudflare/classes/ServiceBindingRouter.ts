@@ -15,8 +15,9 @@
 import type { WorkerEnvFetchBinding } from '../../../bindings/worker/mod.ts'
 import { ErrorResponse } from '../../../http/response/mod.ts'
 import { Status } from '../../../errors/mod.ts'
-import type { RouteRequestHandler } from '../../route/mod.ts'
-import { KeyworkRouter, KeyworkRouterOptions } from '../mod.ts'
+import { KeyworkRouter } from '../../worker/classes/KeyworkRouter.ts'
+import { KeyworkRouterOptions } from '../../interfaces/KeyworkRouterOptions.ts'
+import { RouteRequestHandler } from '../../interfaces/RouteRequestHandler.ts'
 
 /**
  * A router that proxies requests directly to an environment binding, such as a service binding.

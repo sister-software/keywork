@@ -231,25 +231,10 @@
       "import": "./react/hooks/mod.js",
       "require": "./react/hooks/mod.js"
     },
-    "./router/debug": {
-      "types": "./router/debug/mod.d.ts",
-      "import": "./router/debug/mod.js",
-      "require": "./router/debug/mod.js"
-    },
-    "./router/middleware": {
-      "types": "./router/middleware/mod.d.ts",
-      "import": "./router/middleware/mod.js",
-      "require": "./router/middleware/mod.js"
-    },
-    "./router/route": {
-      "types": "./router/route/mod.d.ts",
-      "import": "./router/route/mod.js",
-      "require": "./router/route/mod.js"
-    },
-    "./router/worker/cloudflare": {
-      "types": "./router/worker/cloudflare/mod.d.ts",
-      "import": "./router/worker/cloudflare/mod.js",
-      "require": "./router/worker/cloudflare/mod.js"
+    "./router/cloudflare": {
+      "types": "./router/cloudflare/mod.d.ts",
+      "import": "./router/cloudflare/mod.js",
+      "require": "./router/cloudflare/mod.js"
     },
     "./router/worker": {
       "types": "./router/worker/mod.d.ts",

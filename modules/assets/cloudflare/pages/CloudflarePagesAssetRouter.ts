@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ServiceBindingRouter } from '../../../router/worker/cloudflare/mod.ts'
+import { ServiceBindingRouter } from '../../../router/cloudflare/mod.ts'
 
 /**
  * An asset environment binding available within Cloudflare Pages.

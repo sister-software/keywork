@@ -12,4 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+export * from './interfaces/mod.ts'
+export * from './types/mod.ts'
+export * from './functions/mod.ts'
 export * from './worker/mod.ts'

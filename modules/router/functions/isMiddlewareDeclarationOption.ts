@@ -12,4 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './functions/mod.ts'
+import { MiddlewareDeclaration } from '../types/MiddlewareDeclaration.ts'
+import { MiddlewareDeclarationLike } from '../types/MiddlewareDeclarationLike.ts'
+
+/**
+ * Utility function for parsing middleware options.
+ * @ignore
+ * @category Type Cast
+ */
+export function isMiddlewareDeclarationOption(
+  optionValue: MiddlewareDeclarationLike
+): optionValue is MiddlewareDeclaration {
+  return Array.isArray(optionValue)
+}

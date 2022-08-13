@@ -12,20 +12,33 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, Status } from '../../errors/mod.ts'
-import { isExtendableEvent, IsomorphicFetchEvent } from '../../events/mod.ts'
-import { KeyworkHeaders } from '../../http/headers/mod.ts'
-import HTTP, { HTTPMethod, methodVerbToRouterMethod, RouterMethod, routerMethodToHTTPMethod } from '../../http/mod.ts'
-import { ReactRendererOptions } from '../../react/isomorphic/mod.ts'
-import { renderReactStream } from '../../react/worker/mod.ts'
-import { castToResponse, cloneAsMutableResponse, ErrorResponse } from '../../http/response/mod.ts'
-import { isKeyworkFetcher, KeyworkFetcher, MiddlewareFetch } from '../middleware/mod.ts'
-import type { ParsedRoute, RouteMatch, RouteRequestHandler } from '../route/mod.ts'
-import { normalizeURLPattern, normalizeURLPatternInput, URLPatternLike } from '../../uri/mod.ts'
-import { Disposable } from '../../disposable/mod.ts'
-import { Logger } from '../../logger/mod.ts'
-import { isMiddlewareDeclarationOption, KeyworkRouterOptions } from './common.ts'
-import { RouteDebugEntrypoint, KeyworkRouterDebugEndpoints } from '../debug/mod.ts'
+import { KeyworkResourceError, Status } from '../../../errors/mod.ts'
+import { isExtendableEvent, IsomorphicFetchEvent } from '../../../events/mod.ts'
+import { KeyworkHeaders } from '../../../http/headers/mod.ts'
+import HTTP, {
+  HTTPMethod,
+  methodVerbToRouterMethod,
+  RouterMethod,
+  routerMethodToHTTPMethod,
+} from '../../../http/mod.ts'
+import { ReactRendererOptions } from '../../../react/isomorphic/mod.ts'
+import { renderReactStream } from '../../../react/worker/mod.ts'
+import { castToResponse, cloneAsMutableResponse, ErrorResponse } from '../../../http/response/mod.ts'
+import { normalizeURLPattern, normalizeURLPatternInput, URLPatternLike } from '../../../uri/mod.ts'
+import { Disposable } from '../../../disposable/mod.ts'
+import { Logger } from '../../../logger/mod.ts'
+import {
+  KeyworkRouterDebugEndpoints,
+  KeyworkRouterOptions,
+  RouteDebugEntrypoint,
+} from '../../interfaces/KeyworkRouterOptions.ts'
+import { isMiddlewareDeclarationOption } from '../../functions/isMiddlewareDeclarationOption.ts'
+import { isKeyworkFetcher } from '../../functions/isKeyworkFetcher.ts'
+import { KeyworkFetcher } from '../../interfaces/KeyworkFetcher.ts'
+import { MiddlewareFetch } from '../../interfaces/MiddlewareFetch.ts'
+import { RouteMatch } from '../../interfaces/RouteMatch.ts'
+import { RouteRequestHandler } from '../../interfaces/RouteRequestHandler.ts'
+import { ParsedRoute } from '../../types/ParsedRoute.ts'
 
 /**
  * Used in place of the reference-sensitive `instanceof`

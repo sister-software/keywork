@@ -12,4 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './functions/mod.ts'
+import { ParsedRoute } from '../types/ParsedRoute.ts'
+
+/**
+ * @ignore
+ */
+export interface RouteMatch<BoundAliases = {}> {
+  match: URLPatternResult
+  parsedRoute: ParsedRoute<BoundAliases>
+}

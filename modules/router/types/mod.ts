@@ -12,4 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './functions/mod.ts'
+export * from './MiddlewareDeclaration.ts'
+export * from './MiddlewareDeclarationLike.ts'
+export * from './ParsedRoute.ts'

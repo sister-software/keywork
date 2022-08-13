@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KeyworkFetcher } from '../middleware/mod.ts'
-import type { RouteRequestHandler } from './RouteRequestHandler.ts'
+import { KeyworkFetcher } from '../interfaces/KeyworkFetcher.ts'
+import type { RouteRequestHandler } from '../interfaces/RouteRequestHandler.ts'
 
 /**
  * @ignore
@@ -42,11 +42,3 @@ export interface ParsedRouteFromFetcher<BoundAliases = {}> extends ParsedRouteBa
 export type ParsedRoute<BoundAliases = {}> =
   | ParsedRouteFromRouteHandler<BoundAliases>
   | ParsedRouteFromFetcher<BoundAliases>
-
-/**
- * @ignore
- */
-export interface RouteMatch<BoundAliases = {}> {
-  match: URLPatternResult
-  parsedRoute: ParsedRoute<BoundAliases>
-}

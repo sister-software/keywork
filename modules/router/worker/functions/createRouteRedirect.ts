@@ -12,10 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { RouteRequestHandler } from '../../router/route/mod.ts'
-import { Logger } from '../../logger/mod.ts'
-import HTTP from '../../http/mod.ts'
+import { Logger } from '../../../logger/mod.ts'
+import HTTP from '../../../http/mod.ts'
+import { RouteRequestHandler } from '../../interfaces/RouteRequestHandler.ts'
 
+/** @ignore */
 export type ResponseRedirectStatus = 301 | 302 | 303 | 307 | 308
 /**
  * A route request handler for redirecting requests.

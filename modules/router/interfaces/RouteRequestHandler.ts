@@ -14,7 +14,7 @@
 
 import type { ResponseLike } from '../../http/response/mod.ts'
 import type { IsomorphicFetchEvent } from '../../events/mod.ts'
-import type { MiddlewareFetch } from '../middleware/mod.ts'
+import { MiddlewareFetch } from './MiddlewareFetch.ts'
 
 /**
  * A function or method that handles incoming requests and replies with a `Response`.

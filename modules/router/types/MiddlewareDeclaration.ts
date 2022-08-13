@@ -12,4 +12,15 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './functions/mod.ts'
+import { KeyworkFetcher } from '../interfaces/KeyworkFetcher.ts'
+
+/**
+ * Middleware declaration in the convenient shape of `Map`'s constructor parameters.
+ *
+ * @category Options
+ * @typeParam PathPatternPrefix A path prefix defining where the middleware should be mounted. Combines with the given router's routes.
+ */
+export type MiddlewareDeclaration<PathPatternPrefix extends string = string> = readonly [
+  PathPatternPrefix,
+  KeyworkFetcher<any>
+]

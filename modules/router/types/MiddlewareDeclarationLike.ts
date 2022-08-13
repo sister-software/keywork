@@ -12,13 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * ### `keywork/router/cloudflare`
- *
- * Routing utilities exclusive to Cloudflare Workers
- *
- * @packageDocumentation
- * @module router.worker.cloudflare
- */
+import { KeyworkFetcher } from '../interfaces/KeyworkFetcher.ts'
+import { MiddlewareDeclaration } from './MiddlewareDeclaration.ts'
 
-export * from './ServiceBindingRouter.ts'
+/** @ignore */
+export type MiddlewareDeclarationLike = KeyworkFetcher<any> | MiddlewareDeclaration
