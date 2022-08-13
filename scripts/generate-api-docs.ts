@@ -35,8 +35,8 @@ function createFileMap(filePaths: string[]): Map<string, string> {
 
 async function copyModuleDocs() {
   await fs.copyFile(
-    path.join(ProjectFiles.ModulesDirectory, 'README.md'),
-    path.join(ProjectFiles.DocsAPIDirectory, 'README.md')
+    path.join(ProjectFiles.ModulesDirectory, 'README.mdx'),
+    path.join(ProjectFiles.DocsAPIDirectory, 'README.mdx')
   )
 
   const ignore = [path.join('**', ProjectFiles.NodeModules)]
