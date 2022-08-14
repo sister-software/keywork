@@ -70,7 +70,7 @@ export type RouteMethodDeclaration<BoundAliases = {}, ExpectedParams = {}, Data 
 /**
  * Routes incoming HTTP requests from the user's browser to your app's route endpoints.
  *
- * {@link https://keywork.app/modules/routing Keywork Documentation}
+ * {@link https://keywork.app/modules/router Keywork Documentation}
  *
  * {@link https://keywork.app/modules/router/api/classes/KeyworkRouter Keywork API}
  *
