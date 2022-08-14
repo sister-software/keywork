@@ -13,8 +13,9 @@
  */
 
 import { createRequire } from 'module'
-
 const require = createRequire(import.meta.url)
+
+import { relativeLinks } from './plugins/relativeLinks.mjs'
 const lightCodeTheme = require('prism-react-renderer/themes/okaidia')
 
 /** @type {import('@docusaurus/preset-classic').Options} */
@@ -31,6 +32,14 @@ const presetOptions = {
       return url.toString()
     },
     showLastUpdateTime: true,
+    rehypePlugins: [
+      [
+        relativeLinks,
+        {
+          domainRegex: /http[s]*:\/\/keywork\.app[/]?/,
+        },
+      ],
+    ],
   },
   blog: false,
   theme: {
