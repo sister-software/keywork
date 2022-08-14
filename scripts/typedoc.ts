@@ -138,7 +138,7 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
       const [source] = model.sources
 
       // Omit Deno deps
-      if (!source.fileName.startsWith('deps')) {
+      if (!source.fileName.includes('deps/deno')) {
         const sourceMapPath = source.fullFileName + '.map'
         const sourceMap = JSON.parse(readFileSync(sourceMapPath, 'utf8'))
         const [baseSourceFileName] = sourceMap.sources
@@ -147,13 +147,19 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
           baseSourceFileName
         )
         const localSourcePath = path.join(ProjectFiles.ModulesDirectory, sourcePath)
+        const command = `git --no-pager log -1 --pretty='format:{"author":"%an", "date":"%ci"}%n' -- ${localSourcePath}`
 
-        const gitStdOut = execSync(
-          `git --no-pager log -1 --pretty='format:{"author":"%an", "date":"%ci"}%n' -- ${localSourcePath}`
-        ).toString()
-        const fileChange: FileChange = JSON.parse(gitStdOut)
+        const gitStdOut = execSync(command).toString()
 
-        frontMatter.set('last_update', `\n  date: ${fileChange.date}\n  author: ${fileChange.author}`)
+        try {
+          const fileChange: FileChange = JSON.parse(gitStdOut)
+
+          frontMatter.set('last_update', `\n  date: ${fileChange.date}\n  author: ${fileChange.author}`)
+        } catch (error) {
+          console.warn(command)
+          console.warn(source.fileName)
+          console.error(error)
+        }
 
         // Cast to URL to ensure paths are encoded correctly.
         const sourceURL = new URL(path.posix.join(READ_PREFIX, sourcePath), 'https://github.com')
