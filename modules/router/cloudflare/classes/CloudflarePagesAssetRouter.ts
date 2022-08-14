@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ServiceBindingRouter } from '../../../router/cloudflare/mod.ts'
+import { ServiceBindingRouter } from './ServiceBindingRouter.ts'
 
 /**
  * An asset environment binding available within Cloudflare Pages.
@@ -21,7 +21,7 @@ import { ServiceBindingRouter } from '../../../router/cloudflare/mod.ts'
  *
  * @see {WorkerSitesAssetRouter} For use with Cloudflare Pages
  */
-export const AssetBindingAlias = 'ASSETS'
+export const CloudflarePagesBindingAlias = 'ASSETS'
 
 /**
  * Handles incoming requests for static assets uploaded to Cloudflare Pages.
@@ -31,9 +31,9 @@ export const AssetBindingAlias = 'ASSETS'
  * @see {WorkerSitesAssetRouter} If you're using Worker Sites
  * @category Asset Router
  */
-export class CloudflarePagesAssetRouter extends ServiceBindingRouter<typeof AssetBindingAlias> {
+export class CloudflarePagesAssetRouter extends ServiceBindingRouter<typeof CloudflarePagesBindingAlias> {
   constructor() {
-    super(AssetBindingAlias, {
+    super(CloudflarePagesBindingAlias, {
       displayName: 'Cloudflare Pages Assets',
     })
   }

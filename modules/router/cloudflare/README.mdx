@@ -1,9 +1,9 @@
 ---
 title: Overview
-sidebar_label: Module Overview
+sidebar_label: Cloudflare
 tags: ['module']
 sidebar_position: 0
-pagination_label: 'Module: Assets'
+pagination_label: 'Module: Router.Cloudflare'
 ---
 
 Keywork provides static asset helpers as `KeyworkRouter` Middleware.
@@ -19,7 +19,7 @@ Pages build settings. You'll need `CloudflarePagesAssetRouter`:
 import { YourAppRoutes } from '@local/worker/routers/your-app-routes'
 import { KeyworkRouter } from 'keywork/router'
 // highlight-next-line
-import { CloudflarePagesAssetRouter } from 'keywork/assets'
+import { CloudflarePagesAssetRouter } from 'keywork/router/cloudflare'
 
 // Create a router to receive all incoming requests...
 const app = new KeyworkRouter({
@@ -43,7 +43,7 @@ You'll instead need `WorkerSitesAssetRouter`
 import { YourAppRoutes } from '@local/worker/routers/your-app-routes'
 import { KeyworkRouter } from 'keywork/router'
 // highlight-next-line
-import { WorkerSitesAssetRouter } from 'keywork/assets'
+import { WorkerSitesAssetRouter } from 'keywork/router/cloudflare'
 // highlight-next-line
 import manifestJSON from '__STATIC_CONTENT_MANIFEST'
 

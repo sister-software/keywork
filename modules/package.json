@@ -61,16 +61,6 @@
       "import": "./package.json",
       "require": "./package.json"
     },
-    "./assets/cloudflare/pages": {
-      "types": "./assets/cloudflare/pages/mod.d.ts",
-      "import": "./assets/cloudflare/pages/mod.js",
-      "require": "./assets/cloudflare/pages/mod.js"
-    },
-    "./assets/cloudflare/sites": {
-      "types": "./assets/cloudflare/sites/mod.d.ts",
-      "import": "./assets/cloudflare/sites/mod.js",
-      "require": "./assets/cloudflare/sites/mod.js"
-    },
     "./bindings/worker": {
       "types": "./bindings/worker/mod.d.ts",
       "import": "./bindings/worker/mod.js",

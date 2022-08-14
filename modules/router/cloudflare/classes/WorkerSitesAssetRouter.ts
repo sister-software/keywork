@@ -17,8 +17,8 @@ import type { AssetManifestType } from 'https://esm.sh/@cloudflare/kv-asset-hand
 import { KeyworkResourceError, Status } from '../../../errors/mod.ts'
 import type { KVNamespace } from '../../../kv/cloudflare/mod.ts'
 import { ErrorResponse } from '../../../http/response/mod.ts'
-import { RouteRequestHandler } from '../../../router/interfaces/RouteRequestHandler.ts'
-import { KeyworkRouter } from '../../../router/worker/mod.ts'
+import { RouteRequestHandler } from '../../interfaces/RouteRequestHandler.ts'
+import { KeyworkRouter } from '../../worker/mod.ts'
 
 /**
  * An asset environment binding available within Cloudflare Pages.

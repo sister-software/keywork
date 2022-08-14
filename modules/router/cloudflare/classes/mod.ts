@@ -13,3 +13,5 @@
  */
 
 export * from './ServiceBindingRouter.ts'
+export * from './CloudflarePagesAssetRouter.ts'
+export * from './WorkerSitesAssetRouter.ts'
