@@ -47,7 +47,7 @@ function writeFile(filePath: string, fileText: string) {
 const packageJSON = await readNPMPackageJSON(path.join(ProjectFiles.ModulesDirectory, ProjectFiles.PackageJSON))
 const tsConfigSrcPath = path.join(ProjectFiles.ModulesDirectory, ProjectFiles.TSConfig)
 
-const importMapPath = ProjectFiles.ImportMap
+// const importMapPath = ProjectFiles.ImportMap
 
 const shimOptions: ShimOptions = {
   deno: {
@@ -87,7 +87,7 @@ async function createTransformer() {
     testShims,
     shims,
     target: 'Latest',
-    importMap: importMapPath,
+    // importMap: importMapPath,
   })
 
   // We remove the entrypoints since `getPackageJson`
