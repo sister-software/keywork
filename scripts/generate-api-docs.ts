@@ -104,7 +104,9 @@ async function typeDocPlugin(namedExport: string, mapping: NPMExportEntry) {
 }
 
 const packageJSON = await readNPMPackageJSON(path.join(ProjectFiles.OutDirectory, ProjectFiles.PackageJSON))
-const modules = Object.entries(packageJSON.exports).filter(([namedExport]) => !namedExport.endsWith('.json'))
+const modules = Object.entries(packageJSON.exports).filter(([namedExport]) => {
+  return namedExport !== '.' && !namedExport.endsWith('.json')
+})
 
 await fs.rm(ProjectFiles.DocsAPIDirectory, { recursive: true, force: true })
 await fs.mkdir(ProjectFiles.DocsAPIDirectory, { recursive: true })

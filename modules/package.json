@@ -68,16 +68,6 @@
       "import": "./mod.js",
       "require": "./mod.js"
     },
-    "./bindings/worker": {
-      "types": "./bindings/worker/mod.d.ts",
-      "import": "./bindings/worker/mod.js",
-      "require": "./bindings/worker/mod.js"
-    },
-    "./bindings/worker/cloudflare": {
-      "types": "./bindings/worker/cloudflare/mod.d.ts",
-      "import": "./bindings/worker/cloudflare/mod.js",
-      "require": "./bindings/worker/cloudflare/mod.js"
-    },
     "./bundling": {
       "types": "./bundling/mod.d.ts",
       "import": "./bundling/mod.js",

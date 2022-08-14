@@ -12,12 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { WorkerEnvFetchBinding } from '../../../bindings/worker/mod.ts'
 import { ErrorResponse } from '../../../http/response/mod.ts'
 import { Status } from '../../../errors/mod.ts'
 import { KeyworkRouter } from '../../worker/classes/KeyworkRouter.ts'
-import { KeyworkRouterOptions } from '../../interfaces/KeyworkRouterOptions.ts'
-import { RouteRequestHandler } from '../../interfaces/RouteRequestHandler.ts'
+import type { KeyworkRouterOptions } from '../../interfaces/KeyworkRouterOptions.ts'
+import type { RouteRequestHandler } from '../../interfaces/RouteRequestHandler.ts'
+import type { WorkerEnvFetchBinding } from '../interfaces/WorkerEnvFetchBinding.ts'
 
 /**
  * A router that proxies requests directly to an environment binding, such as a service binding.

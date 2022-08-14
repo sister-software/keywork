@@ -12,15 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KVNamespace } from '../../../kv/cloudflare/mod.ts'
-import type { DurableObjectNamespace } from './durable-objects.ts'
-import type { WorkerEnvFetchBinding } from '../../../bindings/worker/mod.ts'
-
 /**
- * Either:
- *
- * - `WorkerEnvFetchBinding` A `fetch` binding, usually an asset KV or external Worker.
- * - `KVNamespace` A KV binding.
- * - `DurableObjectNamespace` A Durable Object.
+ * An environment binding within a worker that has a `fetch` method.
+ * This usually is related to static assets uploaded to Cloudflare KV via Wrangler's Worker Sites.
  */
-export type EnvironmentBindingKinds = WorkerEnvFetchBinding | KVNamespace | DurableObjectNamespace
+export interface WorkerEnvFetchBinding {
+  fetch: typeof fetch
+}

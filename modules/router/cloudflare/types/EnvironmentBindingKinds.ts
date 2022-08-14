@@ -12,4 +12,15 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './environment.ts'
+import type { KVNamespace } from '../../../kv/cloudflare/mod.ts'
+import type { DurableObjectNamespace } from '../interfaces/durable-objects.ts'
+import type { WorkerEnvFetchBinding } from '../interfaces/WorkerEnvFetchBinding.ts'
+
+/**
+ * Either:
+ *
+ * - `WorkerEnvFetchBinding` A `fetch` binding, usually an asset KV or external Worker.
+ * - `KVNamespace` A KV binding.
+ * - `DurableObjectNamespace` A Durable Object.
+ */
+export type EnvironmentBindingKinds = WorkerEnvFetchBinding | KVNamespace | DurableObjectNamespace

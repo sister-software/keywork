@@ -25,8 +25,6 @@ const path = require('path')
 // )
 
 const topLevelModules = [
-  { dirName: 'modules/assets', label: 'Assets' },
-  // { dirName: 'modules/bindings', label: 'Bindings' },
   { dirName: 'modules/errors', label: 'Errors' },
   { dirName: 'modules/events', label: 'Events' },
   { dirName: 'modules/files', label: 'Files' },

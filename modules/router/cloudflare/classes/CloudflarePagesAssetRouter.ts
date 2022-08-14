@@ -13,6 +13,8 @@
  */
 
 import { ServiceBindingRouter } from './ServiceBindingRouter.ts'
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { WorkerSitesAssetRouter } from './WorkerSitesAssetRouter.ts'
 
 /**
  * An asset environment binding available within Cloudflare Pages.
@@ -20,6 +22,7 @@ import { ServiceBindingRouter } from './ServiceBindingRouter.ts'
  * This binding only exists in Cloudflare __Pages__.
  *
  * @see {WorkerSitesAssetRouter} For use with Cloudflare Pages
+ * @ignore
  */
 export const CloudflarePagesBindingAlias = 'ASSETS'
 

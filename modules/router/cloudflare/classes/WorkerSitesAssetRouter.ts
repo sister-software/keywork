@@ -19,13 +19,15 @@ import type { KVNamespace } from '../../../kv/cloudflare/mod.ts'
 import { ErrorResponse } from '../../../http/response/mod.ts'
 import { RouteRequestHandler } from '../../interfaces/RouteRequestHandler.ts'
 import { KeyworkRouter } from '../../worker/mod.ts'
-
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { CloudflarePagesAssetRouter } from './CloudflarePagesAssetRouter.ts'
 /**
  * An asset environment binding available within Cloudflare Pages.
  *
  * This binding only exists in Cloudflare __Pages__.
  *
  * @see {CloudflarePagesAssetRouter} For use with Cloudflare Pages
+ * @ignore
  */
 export const AssetBindingAlias = 'ASSETS'
 
