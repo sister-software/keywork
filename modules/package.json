@@ -56,10 +56,17 @@
       "optional": true
     }
   },
+  "main": "./mod.js",
+  "types": "./mod.d.ts",
   "exports": {
     "./package.json": {
       "import": "./package.json",
       "require": "./package.json"
+    },
+    ".": {
+      "types": "./mod.d.ts",
+      "import": "./mod.js",
+      "require": "./mod.js"
     },
     "./bindings/worker": {
       "types": "./bindings/worker/mod.d.ts",
