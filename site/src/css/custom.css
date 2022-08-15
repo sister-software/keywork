@@ -23,6 +23,13 @@
   --nirrius-blue-darker: #069;
   --nirrius-blue-darkest: #005580;
   --nirrius-shadow: rgb(0 0 0 / 10%);
+  --color-code-background: #272822;
+  --color-interface: rgb(102 217 239);
+  --color-function: var(--nirrius-teal-dark);
+  --color-type: rgb(230 219 116);
+  --color-enum: rgb(230 219 116);
+  --color-class: var(--nirrius-red-dark);
+  --color-module: var(--nirrius-red-dark);
   --ifm-font-size-base: 16px;
   --docs-content-gap: var(--sixty-four-px-rem);
   --docs-sidebar-width: 20rem;
@@ -76,15 +83,20 @@
 }
 
 [href*="/interfaces/"],
+[href*="/interfaces/"] > *,
 [href*="/classes/"],
+[href*="/classes/"] > *,
 [href*="/functions/"],
+[href*="/functions/"] > *,
 [href*="/variables/"],
+[href*="/variables/"] > *,
 [href*="/types/"],
-[href*="/module/"] {
+[href*="/types/"] > *,
+[href*="/module/"],
+[href*="/module/"] > * {
   font-weight: 600;
-  font-family: var(--ifm-font-family-monospace);
+  font-family: var(--ifm-font-family-monospace) !important;
 }
-
 
 .breadcrumbs__link,
 .pagination-nav__link {

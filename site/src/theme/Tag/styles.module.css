@@ -1,0 +1,118 @@
+:root {
+  --docusaurus-tag-list-border: var(--ifm-color-emphasis-300);
+  --docusaurus-tag-background-color: var(--nirrius-yellow-light);
+  --docusaurus-tag-color: var(--ifm-link-color);
+}
+
+.tag {
+  color: var(--docusaurus-tag-color) !important;
+  border: 1px solid var(--docusaurus-tag-list-border);
+  transition: border var(--ifm-transition-fast);
+  background-color: var(--docusaurus-tag-background-color);
+}
+
+.tag[data-label="module"] {
+  --docusaurus-tag-color: white;
+  --docusaurus-tag-background-color: var(--color-module);
+  --docusaurus-tag-list-border: var(--ifm-color-emphasis-800);
+}
+
+
+.tag[data-label="interface"] {
+  --docusaurus-tag-color: white;
+  --docusaurus-tag-list-border: var(--ifm-color-emphasis-800);
+  --docusaurus-tag-background-color: var(--color-interface);
+}
+
+.tag[data-label="function"] {
+  --docusaurus-tag-color: white;
+  --docusaurus-tag-list-border: var(--ifm-color-emphasis-800);
+  --docusaurus-tag-background-color: var(--color-function);
+}
+
+.tag[data-label="type"] {
+  --docusaurus-tag-color: white;
+  --docusaurus-tag-background-color: var(--color-type);
+}
+
+.tag[data-label="enum"],
+.tag[data-label="enumeration"] {
+  --docusaurus-tag-color: var(--ifm-color-emphasis-900);
+  --docusaurus-tag-list-border: var(--ifm-color-emphasis-800);
+  --docusaurus-tag-background-color: var(--color-enum);
+}
+
+.tag[data-label="class"] {
+  --docusaurus-tag-color: white;
+  --docusaurus-tag-background-color: var(--color-class);
+}
+
+
+.tag[data-label="interface"],
+.tag[data-label="module"],
+.tag[data-label="function"],
+.tag[data-label="type"],
+.tag[data-label="enum"],
+.tag[data-label="enumeration"],
+.tag[data-label="class"],
+.tag[data-label="variable"] {
+  font-family: var(--ifm-font-family-monospace);
+  font-weight: 500;
+}
+
+.tag:hover {
+  --docusaurus-tag-list-border: var(--ifm-link-color);
+
+  text-decoration: none;
+}
+
+.tagRegular {
+  border-radius: 2px;
+  padding: 0.3rem 0.5rem;
+  font-size: 90%;
+}
+
+.tagWithCount {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 0 0.5rem 0 1rem;
+  border-left: 0;
+}
+
+.tagWithCount::before,
+.tagWithCount::after {
+  background-color: var(--docusaurus-tag-background-color);
+  content: '';
+  position: absolute;
+  top: 50%;
+  border: 1px solid var(--docusaurus-tag-list-border);
+  transition: inherit;
+}
+
+.tagWithCount::before {
+  right: 100%;
+  transform: translate(50%, -50%) rotate(-45deg);
+  width: 1.18rem;
+  height: 1.18rem;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.tagWithCount::after {
+  left: 0;
+  transform: translateY(-50%);
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+}
+
+.tagWithCount span {
+  background: var(--ifm-color-secondary);
+  color: var(--ifm-color-black);
+  font-size: 0.7rem;
+  line-height: 1.2;
+  border-radius: var(--ifm-global-radius);
+  padding: 0.1rem 0.4rem;
+  margin-left: 0.3rem;
+}

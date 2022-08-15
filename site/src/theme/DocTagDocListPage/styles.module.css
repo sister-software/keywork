@@ -1,0 +1,14 @@
+
+.tagEntry {
+  padding: 0.5rem;
+  border: 1px solid var(--ifm-color-emphasis-400);
+  background-color: white;
+}
+
+.tagEntry:nth-child(odd) {
+  background-color: var(--nirrius-yellow-light);
+}
+
+.tagEntry p:last-child{
+  margin-bottom: 0;
+}

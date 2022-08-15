@@ -124,6 +124,7 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
     const frontMatter = new Map<string, string>()
     const isModule = model.kind === TypeDoc.ReflectionKind.Module
     const kindString = model.kindString || 'Index'
+    const tags: string[] = [kindString]
 
     if (isModule) {
       frontMatter.set('position', '999')
@@ -133,6 +134,10 @@ class DocusaurusMarkdownTheme extends MarkdownTheme {
     frontMatter.set('title', JSON.stringify(isModule ? `${kindString}: ${model.name}` : model.name))
     frontMatter.set('sidebar_label', JSON.stringify(model.originalName))
     frontMatter.set('sidebar_class_name', `doc-kind-${kindString.toLowerCase()}`)
+    frontMatter.set(
+      'tags',
+      tags.reduce((acc, tag) => `${acc}\n  - ${JSON.stringify(tag)}`, '')
+    )
 
     if (model.sources?.[0]) {
       const [source] = model.sources
