@@ -12,6 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import Head from '@docusaurus/Head'
 import { ThemeClassNames } from '@docusaurus/theme-common'
 // @ts-expect-error internal
 import { useDoc } from '@docusaurus/theme-common/internal'
@@ -38,10 +39,18 @@ function useSyntheticTitle() {
   }
   return metadata.title
 }
+
 export default function DocItemContent({ children }) {
   const syntheticTitle = useSyntheticTitle()
+  const { frontMatter } = useDoc()
+
   return (
     <div className={clsx(ThemeClassNames.docs.docMarkdown, 'markdown', 'thin-scrollbar')}>
+      {frontMatter.publicImportPath ? (
+        <Head>
+          <meta property="publicImportPath" content={frontMatter.publicImportPath} />
+        </Head>
+      ) : null}
       {syntheticTitle && (
         <header>
           <Heading as="h1" className="doc-title">
