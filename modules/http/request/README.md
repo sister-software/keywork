@@ -1,7 +1,7 @@
 ---
 title: Overview
 sidebar_label: Module Overview
-tags: ['module']
+tags: ['Module']
 sidebar_position: 0
 pagination_label: 'Module: HTTP.Request'
 ---
