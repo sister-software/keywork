@@ -166,6 +166,11 @@ function build(transformOutput: TransformOutput) {
         data = '\uFEFF' + data
       }
 
+      if (path.basename(filePath) === 'mod.d.ts') {
+        // Fixes issue where TypeScript cannot find subpath types.
+        writeFile(path.join(path.dirname(filePath), 'index.d.ts'), data)
+      }
+
       writeFile(filePath, data)
     },
     undefined,
