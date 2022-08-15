@@ -15,7 +15,7 @@
 import { emptyDir } from 'deno/dnt'
 import { outputDiagnostics } from 'deno/dnt/compiler'
 import * as compilerTransforms from 'deno/dnt/compiler_transforms'
-import { createProjectSync, ts } from 'deno/dnt/deps'
+import { createProjectSync } from 'deno/dnt/deps'
 import { getPackageJson } from 'deno/dnt/package_json'
 import { ShimOptions, shimOptionsToTransformShims } from 'deno/dnt/shims'
 import { transform, TransformOutput } from 'deno/dnt/transform'
@@ -27,6 +27,7 @@ import { NPMPackageJSON, readNPMPackageJSON } from '@keywork/monorepo/common/imp
 import { projectPath } from '@keywork/monorepo/common/paths'
 import * as ProjectFiles from '@keywork/monorepo/common/project'
 import deepmerge from 'https://esm.sh/deepmerge@4.2.2'
+import { DocusaurusTypeDoc } from './typedoc/mod.ts'
 
 const outDir = ProjectFiles.OutDirectory
 const filePaths: string[] = []
@@ -46,8 +47,6 @@ function writeFile(filePath: string, fileText: string) {
 
 const packageJSON = await readNPMPackageJSON(path.join(ProjectFiles.ModulesDirectory, ProjectFiles.PackageJSON))
 const tsConfigSrcPath = path.join(ProjectFiles.ModulesDirectory, ProjectFiles.TSConfig)
-
-// const importMapPath = ProjectFiles.ImportMap
 
 const shimOptions: ShimOptions = {
   deno: {
@@ -131,7 +130,7 @@ function generatePackageJSON(transformOutput: TransformOutput) {
 
 //#endregion
 
-function build(transformOutput: TransformOutput) {
+async function build(transformOutput: TransformOutput) {
   logger.log('Building project...')
   const project = createProjectSync({
     tsConfigFilePath: tsConfigSrcPath,
@@ -144,16 +143,15 @@ function build(transformOutput: TransformOutput) {
 
   project.addSourceFilesByPathsSync(path.join(ProjectFiles.ModulesDirectory, 'types', '**', '*.d.ts'))
 
-  const sourceFiles = [...transformOutput.main.files, ...transformOutput.test.files]
-  logger.log(`Adding ${sourceFiles.length} source files...`)
-
-  for (const outputFile of sourceFiles) {
-    const outputFilePath = path.join(outDir, outputFile.filePath)
-
-    project.createSourceFile(outputFilePath, outputFile.fileText)
+  const outputFiles = [...transformOutput.main.files, ...transformOutput.test.files]
+  logger.log(`Adding ${outputFiles.length} source files...`)
+  for (const outputFile of outputFiles) {
+    project.createSourceFile(outputFile.filePath, outputFile.fileText)
   }
 
   const program = project.createProgram()
+  const app = new DocusaurusTypeDoc(program, packageJSON.exports)
+
   logger.log('Emitting project files...')
   const emitResult = program.emit(
     undefined,
@@ -182,34 +180,35 @@ function build(transformOutput: TransformOutput) {
 
   if (emitResult.diagnostics.length > 0) {
     outputDiagnostics(emitResult.diagnostics)
+    return
   }
-}
 
-// TODO: This needs refining.
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function _checkTypes() {
-  logger.log('Checking Types...')
-
-  const originalDir = Deno.cwd()
-
-  Deno.chdir(outDir)
-  const project = createProjectSync({
-    tsConfigFilePath: tsConfigSrcPath,
+  app.bootstrap({
+    name: 'keywork',
+    theme: 'markdown',
+    basePath: ProjectFiles.ModulesDirectory,
+    tsconfig: tsConfigSrcPath,
+    githubPages: false,
+    excludeInternal: true,
+    excludeExternals: true,
+    hideGenerator: true,
+    cleanOutputDir: false,
+    entryDocument: 'Readme.mdx',
+    readme: 'none',
+    hideBreadcrumbs: true,
+    hideInPageTOC: true,
+    allReflectionsHaveOwnDocument: true,
   })
 
-  project.compilerOptions.set({
-    outDir,
-    typeRoots: [path.join(outDir, 'node_modules', '@types')],
-    noEmit: true,
-  })
+  const typeDocProject = app.convert()
 
-  const program = project.createProgram()
-  const diagnostics = ts.getPreEmitDiagnostics(program)
-
-  if (diagnostics.length > 0) {
-    outputDiagnostics(diagnostics)
+  if (!typeDocProject) {
+    return
   }
-  Deno.chdir(originalDir)
+
+  const docsOutPath = path.join(ProjectFiles.DocsAPIDirectory, 'api')
+
+  await app.generateDocs(typeDocProject, docsOutPath)
 }
 
 await emptyDir(outDir)
@@ -218,12 +217,4 @@ const transformOutput = await createTransformer()
 
 generatePackageJSON(transformOutput)
 
-// TODO: Likely not necessary after Yarn 3
-// logger.log('Installing dependencies...')
-// await runNpmCommand({
-//   bin: 'yarn',
-//   args: ['install'],
-//   cwd: outDir,
-// })
-
-build(transformOutput)
+await build(transformOutput)

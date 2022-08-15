@@ -41,7 +41,7 @@ export class PipeableStreamWrapper implements ReactDOMServerReadableStream {
     throw new Error('Method not implemented.')
   }
   pipeTo(destination: globalThis.WritableStream<any>, _options?: StreamPipeOptions | undefined): Promise<void> {
-    this.stream.pipe(destination)
+    this.stream.pipe(destination as any)
     return Promise.resolve()
   }
   tee(): [globalThis.ReadableStream<any>, globalThis.ReadableStream<any>] {

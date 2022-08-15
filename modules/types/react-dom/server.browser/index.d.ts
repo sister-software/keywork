@@ -38,3 +38,7 @@ declare module 'https://esm.sh/react-dom@18.2.0/server.browser' {
 
   export const renderToReadableStream: RenderToReadableStream
 }
+
+declare module 'react-dom/server.browser' {
+  export * from 'https://esm.sh/react-dom@18.2.0/server.browser'
+}

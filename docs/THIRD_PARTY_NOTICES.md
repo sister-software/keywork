@@ -18,6 +18,10 @@ Keywork includes documentation and examples from [MDN](https://developer.mozilla
 by [Mozilla Contributors](https://developer.mozilla.org//en-US/docs/MDN/About/contributors.txt),
 and is licensed under [CC-BY-SA 2.5](https://creativecommons.org/licenses/by-sa/2.5/).
 
+### TypeDoc
+
+Keywork uses [TypeDoc](https://typedoc.org) and the [TypeDoc Markdown Plugin](https://github.com/tgreyuk/typedoc-plugin-markdown) to generate documentation.
+
 ### Miniflare
 
 Keywork uses [Miniflare](https://miniflare.dev/), a simulator for developing and testing Cloudflare Workers.

@@ -28,7 +28,7 @@
     "node": ">= 17.4"
   },
   "scripts": {
-    "build": "deno run -A ./build.ts",
+    "build": "deno run --unstable -A ./build.ts",
     "test": "deno test --coverage=./cov .",
     "test:coverage": "deno coverage --lcov ./cov"
   },
@@ -273,6 +273,7 @@
     "@types/node": "^18.6.2",
     "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.6",
+    "handlebars":"^4.7.7",
     "typescript": "^4.7.4"
   },
   "installConfig": {
