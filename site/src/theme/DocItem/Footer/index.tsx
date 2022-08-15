@@ -21,6 +21,7 @@ import LastUpdated from '@theme/LastUpdated'
 import TagsListInline from '@theme/TagsListInline'
 import clsx from 'clsx'
 import React from 'react'
+import { DocIssueURL } from '../../../components/DocIssueURL'
 import styles from './styles.module.css'
 
 function TagsRow(props) {
@@ -30,27 +31,6 @@ function TagsRow(props) {
         <TagsListInline {...props} />
       </div>
     </div>
-  )
-}
-
-interface DocIssueURLProps {
-  source_url?: string
-}
-
-const DocIssueURL: React.FC<DocIssueURLProps> = ({ source_url }) => {
-  const url = new URL('https://github.com/nirrius/keywork/issues/new?labels=documentation&template=doc.md')
-  url.searchParams.set('title', `Doc: ${source_url || 'Needs improvement'}`)
-
-  return (
-    <a
-      href={url.toString()}
-      title="You're going to need to sign in to GitHub first (Opens in a new tab)"
-      target="_blank"
-      rel="noopener noreferrer"
-    >
-      Report an issue with this content
-      <IconExternal />
-    </a>
   )
 }
 
@@ -107,7 +87,7 @@ export default function DocItemFooter() {
             ) : null}
 
             <li>
-              <DocIssueURL source_url={frontMatter.source_url} />
+              <DocIssueURL source_url={frontMatter.source_url}>Report an issue with this content</DocIssueURL>
             </li>
           </ul>
 
