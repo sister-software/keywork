@@ -186,6 +186,7 @@ async function build(transformOutput: TransformOutput) {
   app.bootstrap({
     name: 'keywork',
     theme: 'markdown',
+    filenameSeparator: '/',
     basePath: ProjectFiles.ModulesDirectory,
     tsconfig: tsConfigSrcPath,
     githubPages: false,
@@ -211,7 +212,9 @@ async function build(transformOutput: TransformOutput) {
   await app.generateDocs(typeDocProject, docsOutPath)
 }
 
-await emptyDir(outDir)
+await Promise.all([emptyDir(outDir), emptyDir(ProjectFiles.DocsAPIDirectory)])
+await Deno.mkdir(ProjectFiles.DocsAPIDirectory, { recursive: true })
+
 await copyStaticFiles()
 const transformOutput = await createTransformer()
 

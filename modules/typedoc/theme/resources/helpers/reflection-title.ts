@@ -12,27 +12,73 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import { PageEvent, ParameterReflection } from 'typedoc'
+import { PageEvent, ReflectionKind, SignatureReflection } from 'typedoc'
 import { escapeChars } from '../../utils.ts'
 import { MarkdownTheme } from '../../theme.ts'
+import * as path from 'path'
 
 export default function (theme: MarkdownTheme) {
-  Handlebars.registerHelper('reflectionTitle', function (this: PageEvent<any>, shouldEscape = true) {
-    const title: string[] = ['']
-    if (this.model && this.model.kindString && this.url !== this.project.url) {
-      title.push(`${this.model.kindString}: `)
+  Handlebars.registerHelper('reflectionTitle', function <
+    T extends SignatureReflection
+  >(this: PageEvent<T>, shouldEscape = true) {
+    const { model } = this
+    let title: string
+    let declaration: string[] = []
+
+    if (model && model.kindString && this.url !== this.project.url) {
+      title = `${model.kindString}: `
     }
     if (this.url === this.project.url) {
-      title.push(theme.indexTitle || this.project.name)
+      title = theme.indexTitle || this.project.name
     } else {
-      title.push(shouldEscape ? escapeChars(this.model.name) : this.model.name)
-      if (this.model.typeParameters) {
-        const typeParameters = this.model.typeParameters
-          .map((typeParameter: ParameterReflection) => typeParameter.name)
-          .join(', ')
-        title.push(`<${typeParameters}${shouldEscape ? '\\>' : '>'}`)
-      }
+      title = shouldEscape ? escapeChars(model.name) : model.name
     }
-    return title.join('')
+
+    // const typeParameters = model.typeParameters
+    //   ? `<${model.typeParameters.map((typeParameter) => typeParameter.name).join(', ')}>`
+    //   : ''
+
+    if (model.sources?.[0]) {
+      const source = model.sources[0]
+      const basePath = path.posix.join('keywork', path.dirname(source.fileName))
+      const browserURL = new URL(basePath, 'https://esm.sh/')
+      const denoURL = new URL(`/x/keywork/${source.fileName}`, 'https://deno.land')
+
+      const importPattern = model.kindOf(ReflectionKind.Module)
+        ? `import * as ${model.name}`
+        : `import { ${model.originalName} }`
+
+      declaration = [
+        '',
+        `<Tabs groupId="usage">`,
+        `  <TabItem value="Node">`,
+        '```ts',
+        `${importPattern} from '${basePath}'`,
+        '```',
+        `  </TabItem>`,
+
+        `  <TabItem value="Deno">`,
+        '```ts',
+        `${importPattern} from '${denoURL.toString()}'`,
+        '```',
+        `  </TabItem>`,
+
+        `  <TabItem value="Browser">`,
+        '```ts',
+        `${importPattern} from '${browserURL.toString()}'`,
+        '```',
+        `  </TabItem>`,
+
+        `</Tabs>`,
+      ]
+    }
+
+    return [
+      `import Tabs from '@theme/Tabs'`,
+      `import TabItem from '@theme/TabItem'`,
+
+      `# ${title}`,
+      declaration.join('\n'),
+    ].join('\n\n')
   })
 }

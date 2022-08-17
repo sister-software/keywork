@@ -32,7 +32,7 @@ export const prependYAML = (contents: string, vars: FrontMatterVars) => {
  * Returns the page title as rendered in the document h1(# title)
  * @param page
  */
-export const getPageTitle = (page: PageEvent) => {
+export const getPageTitle = (page: PageEvent<any>) => {
   return Handlebars.helpers.reflectionTitle.call(page, false)
 }
 

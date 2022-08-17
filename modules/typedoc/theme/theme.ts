@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import * as ProjectFiles from '@keywork/monorepo/common/project'
 import * as path from 'path'
 import {
   ContainerReflection,
+  Converter,
   DeclarationReflection,
   PageEvent,
   ProjectReflection,
@@ -24,7 +24,9 @@ import {
   Renderer,
   RendererEvent,
   Theme,
+  Comment,
   UrlMapping,
+  Context,
 } from 'typedoc'
 import { getKindPlural } from './groups.ts'
 import { NavigationItem } from './navigation-item.ts'
@@ -37,12 +39,12 @@ import {
 } from './render-utils.ts'
 import { formatContents } from './utils.ts'
 
-interface FileChange {
-  author: string
-  date: string
+interface Mapping {
+  kind: ReflectionKind[]
+  isLeaf: boolean
+  directory: string
+  template: (pageEvent: PageEvent<ContainerReflection>) => string
 }
-const READ_PREFIX = '/nirrius/keywork/blob/main/modules'
-const EDIT_PREFIX = '/nirrius/keywork/edit/main/modules'
 
 export class MarkdownTheme extends Theme {
   allReflectionsHaveOwnDocument!: boolean
@@ -128,9 +130,11 @@ export class MarkdownTheme extends Theme {
 
   buildUrls(reflection: DeclarationReflection, urls: UrlMapping[]): UrlMapping[] {
     const mapping = this.mappings.find((mapping) => reflection.kindOf(mapping.kind))
+
     if (mapping) {
       if (!reflection.url || !MarkdownTheme.URL_PREFIX.test(reflection.url)) {
         const url = this.toUrl(mapping, reflection)
+
         urls.push(new UrlMapping(url, reflection, mapping.template as any))
         reflection.url = url
         reflection.hasOwnDocument = true
@@ -149,15 +153,22 @@ export class MarkdownTheme extends Theme {
     return urls
   }
 
-  toUrl(mapping: any, reflection: DeclarationReflection) {
-    return mapping.directory + '/' + this.getUrl(reflection) + '.md'
+  toUrl(mapping: Mapping, reflection: DeclarationReflection) {
+    return this.getUrl(mapping, reflection) + '.mdx'
   }
 
-  getUrl(reflection: Reflection, relative?: Reflection): string {
-    let url = reflection.getAlias()
+  getUrl(mapping: Mapping, reflection: Reflection, relative?: Reflection): string {
+    let url = reflection.originalName
 
-    if (reflection.parent && reflection.parent !== relative && !(reflection.parent instanceof ProjectReflection)) {
-      url = this.getUrl(reflection.parent, relative) + this.filenameSeparator + url
+    if (reflection.parent && reflection.parent !== relative) {
+      if (!(reflection.parent instanceof ProjectReflection)) {
+        url = path.posix.join(this.getUrl(mapping, reflection.parent, relative), url)
+      } else {
+        const parsed = path.posix.parse(reflection.originalName)
+        const lastSegment =
+          mapping.kind[0] === ReflectionKind.Module ? 'README' : path.posix.join('api', mapping.directory)
+        url = path.posix.join(parsed.dir, parsed.base, lastSegment)
+      }
     }
 
     return url.replace(/^_/, '')
@@ -192,99 +203,35 @@ export class MarkdownTheme extends Theme {
     return reflectionId
   }
 
-  isContentPresent(value: string): boolean {
-    value = value.trim()
-    if (!value) return false
-
-    const lineCount = (value.match(/\n/g) || '').length + 1
-    // Empty entries only have the title and newline
-    return lineCount > 2
+  /**
+   * Create a new CommentPlugin instance.
+   */
+  override initialize() {
+    this.listenTo(this.owner, {
+      [Converter.EVENT_CREATE_DECLARATION]: this.onDeclaration,
+      [Converter.EVENT_CREATE_SIGNATURE]: this.onDeclaration,
+    })
   }
 
-  _modelToFrontMatter(model: ContainerReflection) {
-    const frontMatter = new Map<string, string>()
-    const isModule = model.kind === ReflectionKind.Module
-    const kindString = model.kindString || 'Index'
-    const tags: string[] = [kindString]
+  private onDeclaration(_context: Context, reflection: Reflection) {
+    const comment = reflection.comment
+    if (!comment) return
 
-    if (isModule) {
-      frontMatter.set('position', '999')
-    }
-
-    frontMatter.set('id', isModule ? 'index' : model.getAlias())
-    frontMatter.set('title', JSON.stringify(isModule ? `${kindString}: ${model.name}` : model.name))
-    frontMatter.set('sidebar_label', JSON.stringify(model.originalName))
-    frontMatter.set('sidebar_class_name', `doc-kind-${kindString.toLowerCase()}`)
-    frontMatter.set(
-      'tags',
-      tags.reduce((acc, tag) => `${acc}\n  - ${JSON.stringify(tag)}`, '')
-    )
-
-    if (!Date.now() && model.sources?.[0]) {
-      const [source] = model.sources
-
-      // Omit Deno deps
-      if (!source.fileName.includes('deps/deno')) {
-        const sourceMapPath = source.fullFileName + '.map'
-        const sourceMap = JSON.parse(Deno.readTextFileSync(sourceMapPath))
-        const [baseSourceFileName] = sourceMap.sources
-        const sourcePath = path.join(
-          path.dirname(source.fullFileName).substring(ProjectFiles.OutDirectory.length),
-          baseSourceFileName
-        )
-        const localSourcePath = path.join(ProjectFiles.ModulesDirectory, sourcePath)
-        const command = `git --no-pager log -1 --pretty='format:{"author":"%an", "date":"%ci"}%n' -- ${localSourcePath}`
-
-        const gitStdOut = Deno.spawnSync(command).stdout.toString()
-
-        try {
-          const fileChange: FileChange = JSON.parse(gitStdOut)
-
-          frontMatter.set('last_update', `\n  date: ${fileChange.date}\n  author: ${fileChange.author}`)
-        } catch (error) {
-          console.warn(command)
-          console.warn(source.fileName)
-          console.error(error)
+    console.log('>>>>', comment)
+    if (reflection.kindOf(ReflectionKind.Module)) {
+      const tag = comment.getTag('@module')
+      if (tag) {
+        // If no name is specified, this is a flag to mark a comment as a module comment
+        // and should not result in a reflection rename.
+        const newName = Comment.combineDisplayParts(tag.content).trim()
+        if (newName.length && !newName.includes('\n')) {
+          reflection.name = newName
         }
 
-        // Cast to URL to ensure paths are encoded correctly.
-        const sourceURL = new URL(path.posix.join(READ_PREFIX, sourcePath), 'https://github.com')
-        const customEditURL = new URL(path.posix.join(EDIT_PREFIX, sourcePath), 'https://github.com')
-
-        if (!source.url) {
-          source.url = sourceURL.toString()
-        }
-
-        // console.log(source)
-        // console.log(sourceMapPath)
-        // console.log(customEditURL)
-        frontMatter.set('source_url', sourceURL.toString())
-        frontMatter.set('custom_edit_url', customEditURL.toString())
+        comment.removeTags('@license')
+        comment.removeModifier('@license')
       }
     }
-
-    return frontMatter
-  }
-
-  /**
-   * @returns Template output with front matter
-   */
-  _renderWithFrontMatter<T extends ContainerReflection>(pageEvent: PageEvent<T>, templateOutput: string) {
-    const frontMatter = this._modelToFrontMatter(pageEvent.model)
-    if (!this.isContentPresent(templateOutput)) {
-      frontMatter.set('draft', 'true')
-    }
-
-    const output: string[] = [
-      '---',
-      ...Array.from(frontMatter.entries(), (pair) => pair.join(': ')),
-      '---',
-      '\n',
-      '\n',
-      templateOutput,
-    ]
-
-    return output.join('\n')
   }
 
   getRelativeUrl(absolute: string) {
@@ -298,40 +245,31 @@ export class MarkdownTheme extends Theme {
 
   getReflectionTemplate() {
     return (pageEvent: PageEvent<ContainerReflection>) => {
-      return this._renderWithFrontMatter(
-        pageEvent,
-        reflectionTemplate(pageEvent, {
-          allowProtoMethodsByDefault: true,
-          allowProtoPropertiesByDefault: true,
-          data: { theme: this },
-        })
-      )
+      return reflectionTemplate(pageEvent, {
+        allowProtoMethodsByDefault: true,
+        allowProtoPropertiesByDefault: true,
+        data: { theme: this },
+      })
     }
   }
 
   getReflectionMemberTemplate() {
     return (pageEvent: PageEvent<ContainerReflection>) => {
-      return this._renderWithFrontMatter(
-        pageEvent,
-        reflectionMemberTemplate(pageEvent, {
-          allowProtoMethodsByDefault: true,
-          allowProtoPropertiesByDefault: true,
-          data: { theme: this },
-        })
-      )
+      return reflectionMemberTemplate(pageEvent, {
+        allowProtoMethodsByDefault: true,
+        allowProtoPropertiesByDefault: true,
+        data: { theme: this },
+      })
     }
   }
 
   getIndexTemplate() {
     return (pageEvent: PageEvent<ContainerReflection>) => {
-      return this._renderWithFrontMatter(
-        pageEvent,
-        indexTemplate(pageEvent, {
-          allowProtoMethodsByDefault: true,
-          allowProtoPropertiesByDefault: true,
-          data: { theme: this },
-        })
-      )
+      return indexTemplate(pageEvent, {
+        allowProtoMethodsByDefault: true,
+        allowProtoPropertiesByDefault: true,
+        data: { theme: this },
+      })
     }
   }
 
@@ -383,7 +321,7 @@ export class MarkdownTheme extends Theme {
     return navigation
   }
 
-  get mappings() {
+  get mappings(): Mapping[] {
     return [
       {
         kind: [ReflectionKind.Module],

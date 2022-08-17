@@ -11,6 +11,7 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
+
 import Handlebars from 'handlebars'
 import { Comment } from 'typedoc'
 import { camelToTitleCase } from '../../utils.ts'

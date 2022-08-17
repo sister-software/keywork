@@ -43,6 +43,7 @@ import typeAndParentHelper from './resources/helpers/type-and-parent.ts'
 import typeParameterTableHelper from './resources/helpers/type-parameter-table.ts'
 import { MarkdownTheme } from './theme.ts'
 import { fileURLToPath } from 'url'
+import frontmatter from './resources/helpers/frontmatter.ts'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -68,6 +69,7 @@ export function registerPartials() {
 }
 
 export function registerHelpers(theme: MarkdownTheme) {
+  frontmatter()
   attemptExternalResolution(theme)
   breadcrumbsHelper(theme)
   commentHelper(theme)
