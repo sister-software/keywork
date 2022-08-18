@@ -66,6 +66,10 @@ export default function () {
       }
     }
 
+    if (isModule && !model.children?.length) {
+      frontMatter.set('draft', 'true')
+    }
+
     const output: string[] = [
       //
       '---',

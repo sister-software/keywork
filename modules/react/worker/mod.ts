@@ -10,16 +10,10 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
+ * @packageDocumentation
+ * @module React.Worker
  */
 
-/**
- * ### `keywork/react/worker`
- *
- * - Server-side rendering from your worker, made even faster with streamed responses.
- * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
- *
- * @packageDocumentation
- * @module react.worker
- */
+/* eslint-disable header/header */
 
 export * from './stream.ts'
