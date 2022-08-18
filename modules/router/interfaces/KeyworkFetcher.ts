@@ -21,10 +21,10 @@ import { MiddlewareFetch } from './MiddlewareFetch.ts'
  *
  * ```ts
  * export default {
- *  fetch(request, env, context) {
- *    return new Response('Hello')
- *  },
- *}
+ *   fetch(request, env, context) {
+ *     return new Response('Hello')
+ *   },
+ * }
  * ```
  *
  * In this setup, all incoming requests are classified as `'fetch'` events.
