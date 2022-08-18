@@ -3,7 +3,7 @@ title: Routing using Node
 tags: ['node', 'routing']
 ---
 
-The [`KeyworkRouter`](/modules/router/api/classes/KeyworkRouter) can be made
+The [`KeyworkRouter`](/modules/router/worker/api/classes/KeyworkRouter) can be made
 compatible with Node with the [`createServerHandler`](/modules/router/node/api/functions/createServerHandler) wrapper function:
 
 ```ts showLineNumbers

@@ -9,7 +9,7 @@ Building your web app in a Workers environment can be intimidating,
 especially so if you're unfamiliar with the quirks and limitations of V8.
 
 We're going to create a single Worker that sends the browser a "hello world" response.
-By the end of this example, you'll know how to use the [`KeyworkRouter`](/modules/router/api/classes/KeyworkRouter)
+By the end of this example, you'll know how to use the [`KeyworkRouter`](/modules/router/worker/api/classes/KeyworkRouter)
 class to handling incoming requests from the browser.
 
 :::info
@@ -39,7 +39,7 @@ Examples are always written with type annotations, but they can be omitted if yo
 
 ### Create a router to receive all incoming requests
 
-Building our app starts with the [`KeyworkRouter`](/modules/router/api/classes/KeyworkRouter)
+Building our app starts with the [`KeyworkRouter`](/modules/router/worker/api/classes/KeyworkRouter)
 class.
 
 ```ts title="worker.ts" showLineNumbers
@@ -75,7 +75,7 @@ export default app
 ```
 
 We call `app.get` with a path pattern matching the root of our app,
-along with a [`RouteRequestHandler`](/modules/router/route/api/interfaces/RouteRequestHandler)
+along with a [`RouteRequestHandler`](/modules/router/api/interfaces/RouteRequestHandler)
 callback that executes when our app receives a matching incoming request.
 
 #### Exporting the router

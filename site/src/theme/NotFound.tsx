@@ -15,12 +15,22 @@
 import { PageMetadata } from '@docusaurus/theme-common'
 import Translate, { translate } from '@docusaurus/Translate'
 import Layout from '@theme/Layout'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { DocIssueURL } from '../components/DocIssueURL'
 export default function NotFound() {
-  const query = decodeURIComponent(window.location.pathname)
-  const searchURL = new URL('/search', window.location.href)
-  searchURL.searchParams.set('query', query)
+  const [query, setQuery] = useState<string>()
+  const [searchURL, setSearchURL] = useState<string>()
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const query = decodeURIComponent(window.location.pathname)
+      const searchURL = new URL('/search', window.location.href)
+      searchURL.searchParams.set('query', query)
+
+      setQuery(query)
+      setSearchURL(searchURL.toString())
+    }
+  }, [])
 
   return (
     <>
@@ -47,13 +57,17 @@ export default function NotFound() {
                   <p>We could not find what you were looking for.</p>
                   <p>It&#39;s possible the page you are looking for has moved between versions of Keywork.</p>
                   <ul>
-                    <li>
-                      <a href={searchURL.toString()}>Search for &#34;{query}&#34;</a>
-                    </li>
+                    {searchURL && query ? (
+                      <li>
+                        <a href={searchURL}>Search for &#34;{query}&#34;</a>
+                      </li>
+                    ) : null}
 
-                    <li>
-                      <DocIssueURL source_url={window.location.href}>Report a missing page.</DocIssueURL>
-                    </li>
+                    {query ? (
+                      <li>
+                        <DocIssueURL source_url={query}>Report a missing page.</DocIssueURL>
+                      </li>
+                    ) : null}
 
                     <li>
                       <a href={'/'}>Start over on the Keywork homepage</a>

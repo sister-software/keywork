@@ -65,7 +65,7 @@ app.get('/', () => 'Hello there! 👋')
 
 ## Creating a RESTful API
 
-Instances of [`KeyworkRouter`](/modules/router/api/classes/KeyworkRouter) define each route handler by
+Instances of [`KeyworkRouter`](/modules/router/worker/api/classes/KeyworkRouter) define each route handler by
 invoking methods that correspond with HTTP method of the same name:
 
 | HTTP Method | Usage                                                |
@@ -134,7 +134,7 @@ You may need a polyfill if your app uses on a runtime that hasn't yet added [`UR
 
 ### `IsomorphicFetchEvent`
 
-When creating a [`RouteRequestHandler`](/modules/router/route/api/interfaces/RouteRequestHandler) callback,
+When creating a [`RouteRequestHandler`](/modules/router/api/interfaces/RouteRequestHandler) callback,
 you have access to an [`IsomorphicFetchEvent`](/modules/events/api/classes/IsomorphicFetchEvent):
 
 ```ts title="GET http://localhost:8788"
