@@ -18,15 +18,21 @@ import * as path from 'path'
 import * as ProjectFiles from '@keywork/monorepo/common/project'
 
 const textDecoder = new TextDecoder()
-const command = Deno.run({ cmd: [`command`, '-v', 'git'], stdout: 'piped' })
-const status = await command.status()
+// const command = Deno.run({ cmd: [`command`, '-v', 'git'], stdout: 'piped' })
+// const status = await command.status()
 
-if (!status.success) {
+// if (!status.success) {
+//   throw new Error('Git not found')
+// }
+
+// const rawOutput = await command.output()
+// const gitCommandPath = new TextDecoder().decode(rawOutput).trim()
+
+const gitCommandPath = Deno.env.get('GIT_PATH')
+
+if (!gitCommandPath) {
   throw new Error('Git not found')
 }
-
-const rawOutput = await command.output()
-const gitCommandPath = new TextDecoder().decode(rawOutput).trim()
 
 interface FileChange {
   author: string
