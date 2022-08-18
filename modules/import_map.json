@@ -20,6 +20,8 @@
     "shiki": "./polyfills/deno/shiki.ts",
     "child_process": "./polyfills/deno/child_process.ts",
     "handlebars": "https://esm.sh/handlebars@4.7.7",
+    "fast-glob": "https://esm.sh/fast-glob@3.2.11",
+    "dashify": "https://esm.sh/dashify@2.0.0",
     "https://esm.sh/v87/shiki": "./polyfills/deno/shiki.ts",
     "@keywork/monorepo/common/imports": "../common/imports/index.ts",
     "@keywork/monorepo/common/files": "../common/files/index.ts",

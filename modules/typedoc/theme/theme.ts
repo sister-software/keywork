@@ -15,7 +15,6 @@
 import * as path from 'path'
 import {
   ContainerReflection,
-  Converter,
   DeclarationReflection,
   PageEvent,
   ProjectReflection,
@@ -24,9 +23,7 @@ import {
   Renderer,
   RendererEvent,
   Theme,
-  Comment,
   UrlMapping,
-  Context,
 } from 'typedoc'
 import { getKindPlural } from './groups.ts'
 import { NavigationItem } from './navigation-item.ts'
@@ -38,11 +35,30 @@ import {
   registerPartials,
 } from './render-utils.ts'
 import { formatContents } from './utils.ts'
+import { readFileChangeFromGit } from './utils/sources.ts'
+import * as ProjectFiles from '@keywork/monorepo/common/project'
+
+const NEVER_RENDER: `@${string}`[] = ['@copyright', '@license', '@author', '@file']
+
+export interface CategoryConfig {
+  name?: string
+  label: string
+  dirName?: string
+  collapsible?: boolean
+  collapsed?: boolean
+  position: number
+}
+
+const defaultCategory: Partial<CategoryConfig> = {
+  collapsible: true,
+  collapsed: true,
+}
 
 interface Mapping {
   kind: ReflectionKind[]
   isLeaf: boolean
   directory: string
+  categoryConfig: CategoryConfig
   template: (pageEvent: PageEvent<ContainerReflection>) => string
 }
 
@@ -111,6 +127,13 @@ export class MarkdownTheme extends Theme {
 
   getUrls(project: ProjectReflection) {
     const urls: UrlMapping[] = []
+
+    for (const refl of Object.values(project.reflections)) {
+      for (const source of refl.sources || []) {
+        readFileChangeFromGit(source)
+      }
+    }
+
     const noReadmeFile = this.readme.endsWith('none')
     if (noReadmeFile) {
       project.url = this.entryDocument
@@ -130,6 +153,16 @@ export class MarkdownTheme extends Theme {
 
   buildUrls(reflection: DeclarationReflection, urls: UrlMapping[]): UrlMapping[] {
     const mapping = this.mappings.find((mapping) => reflection.kindOf(mapping.kind))
+    const comment = reflection.comment
+
+    if (comment) {
+      NEVER_RENDER.forEach((tag) => comment.removeTags(tag))
+
+      if (reflection.kind === ReflectionKind.Module) {
+        comment.removeTags('@remarks')
+        comment.removeTags('@see')
+      }
+    }
 
     if (mapping) {
       if (!reflection.url || !MarkdownTheme.URL_PREFIX.test(reflection.url)) {
@@ -138,6 +171,13 @@ export class MarkdownTheme extends Theme {
         urls.push(new UrlMapping(url, reflection, mapping.template as any))
         reflection.url = url
         reflection.hasOwnDocument = true
+
+        const categoryPath = path.dirname(path.join(this.out, url))
+        Deno.mkdirSync(categoryPath, { recursive: true })
+        Deno.writeTextFileSync(
+          path.join(categoryPath, ProjectFiles.Category),
+          JSON.stringify(mapping.categoryConfig, null, 2)
+        )
       }
 
       for (const child of reflection.children || []) {
@@ -165,8 +205,10 @@ export class MarkdownTheme extends Theme {
         url = path.posix.join(this.getUrl(mapping, reflection.parent, relative), url)
       } else {
         const parsed = path.posix.parse(reflection.originalName)
-        const lastSegment =
-          mapping.kind[0] === ReflectionKind.Module ? 'README' : path.posix.join('api', mapping.directory)
+        const lastSegment = path.posix.join(
+          'api',
+          mapping.kind[0] === ReflectionKind.Module ? 'README' : mapping.directory
+        )
         url = path.posix.join(parsed.dir, parsed.base, lastSegment)
       }
     }
@@ -201,37 +243,6 @@ export class MarkdownTheme extends Theme {
 
   toAnchorRef(reflectionId: string) {
     return reflectionId
-  }
-
-  /**
-   * Create a new CommentPlugin instance.
-   */
-  override initialize() {
-    this.listenTo(this.owner, {
-      [Converter.EVENT_CREATE_DECLARATION]: this.onDeclaration,
-      [Converter.EVENT_CREATE_SIGNATURE]: this.onDeclaration,
-    })
-  }
-
-  private onDeclaration(_context: Context, reflection: Reflection) {
-    const comment = reflection.comment
-    if (!comment) return
-
-    console.log('>>>>', comment)
-    if (reflection.kindOf(ReflectionKind.Module)) {
-      const tag = comment.getTag('@module')
-      if (tag) {
-        // If no name is specified, this is a flag to mark a comment as a module comment
-        // and should not result in a reflection rename.
-        const newName = Comment.combineDisplayParts(tag.content).trim()
-        if (newName.length && !newName.includes('\n')) {
-          reflection.name = newName
-        }
-
-        comment.removeTags('@license')
-        comment.removeModifier('@license')
-      }
-    }
   }
 
   getRelativeUrl(absolute: string) {
@@ -321,62 +332,96 @@ export class MarkdownTheme extends Theme {
     return navigation
   }
 
-  get mappings(): Mapping[] {
-    return [
-      {
-        kind: [ReflectionKind.Module],
-        isLeaf: false,
-        directory: 'modules',
-        template: this.getReflectionTemplate(),
+  mappings: Mapping[] = [
+    {
+      kind: [ReflectionKind.Module],
+      isLeaf: false,
+      directory: 'modules',
+      template: this.getReflectionTemplate(),
+      categoryConfig: {
+        ...defaultCategory,
+        label: 'API…',
+        position: 1.5,
       },
-      {
-        kind: [ReflectionKind.Namespace],
-        isLeaf: false,
-        directory: 'modules',
-        template: this.getReflectionTemplate(),
+    },
+    {
+      kind: [ReflectionKind.Namespace],
+      isLeaf: false,
+      directory: 'modules',
+      template: this.getReflectionTemplate(),
+      categoryConfig: {
+        ...defaultCategory,
+        label: 'API…',
+        position: 1.5,
       },
-      {
-        kind: [ReflectionKind.Enum],
-        isLeaf: false,
-        directory: 'enums',
-        template: this.getReflectionTemplate(),
+    },
+    {
+      kind: [ReflectionKind.Enum],
+      isLeaf: false,
+      directory: 'enums',
+      template: this.getReflectionTemplate(),
+      categoryConfig: {
+        ...defaultCategory,
+        label: 'Enums',
+        position: 3,
       },
-      {
-        kind: [ReflectionKind.Class],
-        isLeaf: false,
-        directory: 'classes',
-        template: this.getReflectionTemplate(),
+    },
+    {
+      kind: [ReflectionKind.Class],
+      isLeaf: false,
+      directory: 'classes',
+      template: this.getReflectionTemplate(),
+      categoryConfig: {
+        ...defaultCategory,
+        label: 'Classes',
+        position: 0,
       },
-      {
-        kind: [ReflectionKind.Interface],
-        isLeaf: false,
-        directory: 'interfaces',
-        template: this.getReflectionTemplate(),
+    },
+    {
+      kind: [ReflectionKind.Interface],
+      isLeaf: false,
+      directory: 'interfaces',
+      template: this.getReflectionTemplate(),
+      categoryConfig: {
+        ...defaultCategory,
+        label: 'Interfaces',
+        position: 1,
       },
-      ...(this.allReflectionsHaveOwnDocument
-        ? [
-            {
-              kind: [ReflectionKind.TypeAlias],
-              isLeaf: true,
-              directory: 'types',
-              template: this.getReflectionMemberTemplate(),
-            },
-            {
-              kind: [ReflectionKind.Variable],
-              isLeaf: true,
-              directory: 'variables',
-              template: this.getReflectionMemberTemplate(),
-            },
-            {
-              kind: [ReflectionKind.Function],
-              isLeaf: true,
-              directory: 'functions',
-              template: this.getReflectionMemberTemplate(),
-            },
-          ]
-        : []),
-    ]
-  }
+    },
+    {
+      kind: [ReflectionKind.TypeAlias],
+      isLeaf: true,
+      directory: 'types',
+      template: this.getReflectionMemberTemplate(),
+      categoryConfig: {
+        ...defaultCategory,
+        label: 'Types',
+        position: 4,
+      },
+    },
+    {
+      kind: [ReflectionKind.Variable],
+      isLeaf: true,
+      directory: 'variables',
+      template: this.getReflectionMemberTemplate(),
+      categoryConfig: {
+        ...defaultCategory,
+        label: 'Variables',
+        position: 5,
+      },
+    },
+    {
+      kind: [ReflectionKind.Function],
+      isLeaf: true,
+      directory: 'functions',
+      template: this.getReflectionMemberTemplate(),
+      categoryConfig: {
+        ...defaultCategory,
+        position: 2,
+        label: 'Functions',
+      },
+    },
+  ]
 
   /**
    * Triggered before the renderer starts rendering a project.

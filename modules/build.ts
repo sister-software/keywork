@@ -19,6 +19,7 @@ import { createProjectSync } from 'deno/dnt/deps'
 import { getPackageJson } from 'deno/dnt/package_json'
 import { ShimOptions, shimOptionsToTransformShims } from 'deno/dnt/shims'
 import { transform, TransformOutput } from 'deno/dnt/transform'
+import FastGlob from 'fast-glob'
 
 import { copy } from 'deno/fs/copy'
 import { Logger } from './logger/mod.ts'
@@ -128,7 +129,47 @@ function generatePackageJSON(transformOutput: TransformOutput) {
   writeFile(path.join(outDir, 'yarn.lock'), '')
 }
 
-//#endregion
+const getDest = (filePath: string) => {
+  return path.join(ProjectFiles.DocsAPIDirectory, filePath.substring(ProjectFiles.ModulesDirectory.length))
+}
+
+function createFileMap(filePaths: string[]): Map<string, string> {
+  return new Map<string, string>(
+    filePaths.map((filePath) => {
+      return [filePath, getDest(filePath)]
+    })
+  )
+}
+
+async function copyModuleDocs() {
+  logger.log('Copying static documentation...')
+
+  await Deno.copyFile(
+    path.join(ProjectFiles.ModulesDirectory, 'README.mdx'),
+    path.join(ProjectFiles.DocsAPIDirectory, 'README.mdx')
+  )
+
+  const ignore = [path.join('**', ProjectFiles.NodeModules)]
+  const categoryToDest = await FastGlob(path.join(ProjectFiles.ModulesDirectory, '*', '**', ProjectFiles.Category), {
+    ignore,
+  }).then(createFileMap)
+
+  const docPathToDest = await FastGlob(path.join(ProjectFiles.ModulesDirectory, '*', '**', '*.{md,mdx}'), {
+    ignore,
+  }).then(createFileMap)
+
+  await Promise.all(
+    [...categoryToDest.values(), ...docPathToDest.values()].map(async (destPath) => {
+      await Deno.mkdir(path.dirname(destPath), { recursive: true })
+    })
+  )
+
+  await Promise.all(
+    Array.from([...categoryToDest.entries(), ...docPathToDest.entries()], async ([filePath, destPath]) => {
+      return Deno.copyFile(filePath, destPath)
+    })
+  )
+}
 
 async function build(transformOutput: TransformOutput) {
   logger.log('Building project...')
@@ -183,9 +224,13 @@ async function build(transformOutput: TransformOutput) {
     return
   }
 
+  logger.log('Generating documentation...')
+  const docsOutPath = path.join(ProjectFiles.DocsAPIDirectory)
+
   app.bootstrap({
     name: 'keywork',
     theme: 'markdown',
+    out: docsOutPath,
     filenameSeparator: '/',
     basePath: ProjectFiles.ModulesDirectory,
     tsconfig: tsConfigSrcPath,
@@ -194,7 +239,7 @@ async function build(transformOutput: TransformOutput) {
     excludeExternals: true,
     hideGenerator: true,
     cleanOutputDir: false,
-    entryDocument: 'Readme.mdx',
+    entryDocument: 'README.mdx',
     readme: 'none',
     hideBreadcrumbs: true,
     hideInPageTOC: true,
@@ -206,8 +251,6 @@ async function build(transformOutput: TransformOutput) {
   if (!typeDocProject) {
     return
   }
-
-  const docsOutPath = path.join(ProjectFiles.DocsAPIDirectory, 'api')
 
   await app.generateDocs(typeDocProject, docsOutPath)
 }
@@ -221,3 +264,4 @@ const transformOutput = await createTransformer()
 generatePackageJSON(transformOutput)
 
 await build(transformOutput)
+await copyModuleDocs()

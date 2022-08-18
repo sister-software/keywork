@@ -15,17 +15,19 @@
 import Handlebars from 'handlebars'
 import { SignatureReflection } from 'typedoc'
 import { ArrayType, ReferenceType } from 'typedoc'
-import { escapeChars } from '../../utils.ts'
 
 export default function () {
   Handlebars.registerHelper('typeAndParent', function (this: ArrayType | ReferenceType) {
-    const getUrl = (name: string, url: string) => `[${name}](${Handlebars.helpers.relativeURL(url)})`
+    // const getUrl = (name: string, url: string) => `[${name}](${Handlebars.helpers.relativeURL(url)})`
+    const getUrl = (name: string, _url: string) => name
+
     if (this) {
       if ('elementType' in this) {
         return Handlebars.helpers.typeAndParent.call(this.elementType) + '[]'
       } else {
         if (this.reflection) {
           const md: string[] = []
+
           if (this.reflection instanceof SignatureReflection) {
             if (this.reflection.parent?.parent?.url) {
               md.push(getUrl(this.reflection.parent.parent.name, this.reflection.parent.parent.url))
@@ -41,9 +43,9 @@ export default function () {
               }
             }
           }
-          return md.join('.')
+          return '```ts\n' + md.join('.') + '\n```'
         } else {
-          return escapeChars(this.toString())
+          return '```ts\n' + this.toString() + '\n```'
         }
       }
     }

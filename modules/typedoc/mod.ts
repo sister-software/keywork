@@ -12,71 +12,17 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import * as fs from 'fs/promises'
 import * as path from 'path'
 import TypeDoc, { Logger, LogLevel } from 'typedoc'
 import { load as loadMarkdownPlugin, MarkdownTheme, MarkdownThemeOptions } from './theme/index.ts'
-import { checkFileExists } from '@keywork/monorepo/common/files'
 import { PackageExports } from '@keywork/monorepo/common/imports'
 import * as ProjectFiles from '@keywork/monorepo/common/project'
 import { ts } from 'https://deno.land/x/ts_morph@15.1.0/bootstrap/ts_morph_bootstrap.js'
-
-export interface CategoryConfig {
-  name?: string
-  label?: string
-  dirName?: string
-  collapsible?: boolean
-  collapsed?: boolean
-  position?: number
-}
-
-const defaultCategory: CategoryConfig = {
-  collapsible: true,
-  collapsed: true,
-}
 
 export class DocusaurusTypeDoc extends TypeDoc.Application {
   constructor(public program: ts.Program, public exports: PackageExports) {
     super()
     this.options.addReader(new TypeDoc.TSConfigReader())
-  }
-
-  categories = [
-    { dirName: '', config: { label: 'API…' } },
-    { dirName: 'classes', config: { label: 'Classes' } },
-    { dirName: 'types', config: { label: 'Types' } },
-    { dirName: 'variables', config: { label: 'Variables' } },
-    { dirName: 'functions', config: { label: 'Functions' } },
-    { dirName: 'interfaces', config: { label: 'Interfaces' } },
-    { dirName: 'enums', config: { label: 'Enums' } },
-  ]
-
-  async generateDocs(project: TypeDoc.ProjectReflection, out: string) {
-    await super.generateDocs(project, out)
-    await fs.rm(path.join(out, 'modules'), { force: true, recursive: true })
-
-    // Add a category configuration to the API root.
-    for (const category of Object.values(this.categories)) {
-      const categoryDir = path.join(out, category.dirName)
-      const exists = await checkFileExists(categoryDir)
-
-      if (!exists) continue
-
-      await fs.mkdir(categoryDir, { recursive: true })
-      await fs.writeFile(
-        path.join(categoryDir, ProjectFiles.Category),
-        JSON.stringify(
-          {
-            ...defaultCategory,
-            position: 1,
-            ...category.config,
-          },
-          null,
-          2
-        ),
-        'utf8'
-      )
-    }
   }
 
   getEntryPoints(): TypeDoc.DocumentationEntryPoint[] | undefined {

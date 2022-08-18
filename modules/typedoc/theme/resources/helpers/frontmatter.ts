@@ -15,15 +15,7 @@
 import Handlebars from 'handlebars'
 import { ContainerReflection, PageEvent, ReflectionKind } from 'typedoc'
 // import { camelToTitleCase } from '../../utils.ts'
-import * as ProjectFiles from '@keywork/monorepo/common/project'
-import * as path from 'path'
-
-interface FileChange {
-  author: string
-  date: string
-}
-const READ_PREFIX = '/nirrius/keywork/blob/main/modules'
-const EDIT_PREFIX = '/nirrius/keywork/edit/main/modules'
+import { SourceReferenceWithGit } from '../../utils/sources.ts'
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 function _isContentPresent(value: string): boolean {
@@ -59,52 +51,20 @@ export default function () {
       tags.reduce((acc, tag) => `${acc}\n  - ${JSON.stringify(tag)}`, '')
     )
 
-    if (!Date.now() && model.sources?.[0]) {
-      const [source] = model.sources
+    const sources = (model.sources || []) as SourceReferenceWithGit[]
+    for (const source of sources) {
+      if (source.url) {
+        frontMatter.set('source_url', source.url)
+      }
 
-      // Omit Deno deps
-      if (!source.fileName.includes('deps/deno')) {
-        const sourceMapPath = source.fullFileName + '.map'
-        const sourceMap = JSON.parse(Deno.readTextFileSync(sourceMapPath))
-        const [baseSourceFileName] = sourceMap.sources
-        const sourcePath = path.join(
-          path.dirname(source.fullFileName).substring(ProjectFiles.OutDirectory.length),
-          baseSourceFileName
-        )
-        const localSourcePath = path.join(ProjectFiles.ModulesDirectory, sourcePath)
-        const command = `git --no-pager log -1 --pretty='format:{"author":"%an", "date":"%ci"}%n' -- ${localSourcePath}`
+      if (source.editURL) {
+        frontMatter.set('custom_edit_url', source.editURL)
+      }
 
-        const gitStdOut = Deno.spawnSync(command).stdout.toString()
-
-        try {
-          const fileChange: FileChange = JSON.parse(gitStdOut)
-
-          frontMatter.set('last_update', `\n  date: ${fileChange.date}\n  author: ${fileChange.author}`)
-        } catch (error) {
-          console.warn(command)
-          console.warn(source.fileName)
-          console.error(error)
-        }
-
-        // Cast to URL to ensure paths are encoded correctly.
-        const sourceURL = new URL(path.posix.join(READ_PREFIX, sourcePath), 'https://github.com')
-        const customEditURL = new URL(path.posix.join(EDIT_PREFIX, sourcePath), 'https://github.com')
-
-        if (!source.url) {
-          source.url = sourceURL.toString()
-        }
-
-        // console.log(source)
-        // console.log(sourceMapPath)
-        // console.log(customEditURL)
-        frontMatter.set('source_url', sourceURL.toString())
-        frontMatter.set('custom_edit_url', customEditURL.toString())
+      if (source.fileChange) {
+        frontMatter.set('last_update', `\n  date: ${source.fileChange.date}\n  author: ${source.fileChange.author}`)
       }
     }
-
-    // if (!isContentPresent(templateOutput)) {
-    //   frontMatter.set('draft', 'true')
-    // }
 
     const output: string[] = [
       //

@@ -4,6 +4,8 @@
 
 {{#if typeParameters}}
 
+<div className="section type-parameters">
+
 #### Type parameters
 
 {{#with typeParameters}}
@@ -12,6 +14,8 @@
 
 {{/with}}
 
+</div>
+
 {{/if}}
 
 {{#if type.declaration}}
@@ -19,6 +23,7 @@
 {{#if type.declaration.indexSignature}}
 
 {{#with type.declaration.indexSignature}}
+
 
 #### Index signature
 
@@ -33,6 +38,7 @@
 {{#if type.declaration.signatures}}
 
 {{#if type.declaration.children}}
+
 
 #### Call signature
 

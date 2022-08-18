@@ -25,37 +25,3 @@ const logo = `
                           d8'
 `
 console.log(logo)
-
-function fetchModuleNameFromDOM() {
-  const metatag = document.querySelector('meta[property="publicImportPath"]')
-  console.log('>>>>', metatag)
-  return metatag?.content || null
-}
-
-function createImportURL(moduleName) {
-  return new URL(`keywork/${moduleName}`, 'https://esm.sh/')
-}
-
-async function initDemo() {
-  const moduleName = fetchModuleNameFromDOM()
-
-  if (moduleName) {
-    const importPath = createImportURL(moduleName)
-    try {
-      const mod = await import(importPath)
-      window.mod = mod
-    } catch (error) {
-      console.debug(error)
-    }
-
-    console.info("It looks like you're reading about the Router module")
-    console.info('Try it in the browser like this:')
-    console.info(`import * as mod from ${importPath}`)
-  }
-}
-
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', initDemo)
-} else {
-  initDemo()
-}

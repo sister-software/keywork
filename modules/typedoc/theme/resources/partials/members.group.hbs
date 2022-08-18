@@ -2,16 +2,15 @@
 
 {{#each categories}}
 
-{{#unless @first}}
-___
-{{/unless}}
-
 ## {{title}} {{../title}}
 
 {{#each children}}
 
+<div className="section member-group">
+
 {{> member}}
 
+</div>
 {{/each}}
 
 {{/each}}

@@ -15,6 +15,8 @@
 
 {{#if model.typeParameters}}
 
+<div className="section type-parameters">
+
 ## Type parameters
 
 {{#with model.typeParameters}}
@@ -23,9 +25,14 @@
 
 {{/with}}
 
+</div>
+
 {{/if}}
 
 {{#ifShowTypeHierarchy}}
+
+
+<div className="section hierarchy">
 
 ## Hierarchy
 
@@ -35,9 +42,13 @@
 
 {{/with}}
 
+</div>
 {{/ifShowTypeHierarchy}}
 
 {{#if model.implementedTypes}}
+
+
+<div className="section implements">
 
 ## Implements
 
@@ -45,9 +56,13 @@
 - {{{type}}}
 {{/each}}
 
+</div>
 {{/if}}
 
 {{#if model.implementedBy}}
+
+
+<div className="section implemented-by">
 
 ## Implemented by
 
@@ -55,9 +70,14 @@
 - {{{type}}}
 {{/each}}
 
+</div>
+
 {{/if}}
 
 {{#if model.signatures}}
+
+
+<div className="section callable">
 
 ## Callable
 
@@ -73,9 +93,14 @@
 
 {{/with}}
 
+</div>
+
 {{/if}}
 
 {{#if model.indexSignature}}
+
+
+<div className="section indexable">
 
 ## Indexable
 
@@ -91,6 +116,8 @@
 
 {{/with}}
 
+</div>
+
 {{/if}}
 
 {{#with model}}
@@ -98,3 +125,4 @@
 {{> main}}
 
 {{/with}}
+

@@ -13,37 +13,39 @@
  */
 import Handlebars from 'handlebars'
 import { ParameterReflection, ReflectionKind, SignatureReflection } from 'typedoc'
-import { memberSymbol } from '../../utils.ts'
 import { MarkdownTheme } from '../../theme.ts'
 
-export default function (theme: MarkdownTheme) {
+export default function (_theme: MarkdownTheme) {
   Handlebars.registerHelper(
     'signatureTitle',
     function (this: SignatureReflection, accessor?: string, standalone = true) {
       const md: string[] = []
 
-      if (standalone && !theme.hideMembersSymbol) {
-        md.push(`${memberSymbol(this)} `)
-      }
+      // if (standalone && !theme.hideMembersSymbol) {
+      //   md.push(`${memberSymbol(this)} `)
+      // }
 
       if (this.parent && this.parent.flags?.length > 0) {
         md.push(this.parent.flags.map((flag) => `\`${flag}\``).join(' ') + ' ')
       }
 
       if (accessor) {
-        md.push(`\`${accessor}\` **${this.name}**`)
+        md.push(`\`${accessor}\` **\`${this.name}\`**`)
       } else if (this.name !== '__call' && this.name !== '__type') {
-        md.push(`**${this.name}**`)
+        md.push(`**\`${this.name}\`**`)
       }
 
+      md.push('\n```ts\n')
       if (this.typeParameters) {
-        md.push(`<${this.typeParameters.map((typeParameter) => `\`${typeParameter.name}\``).join(', ')}\\>`)
+        md.push(`${this.name}<${this.typeParameters.map((typeParameter) => typeParameter.name).join(', ')}>`)
       }
-      md.push(`(${getParameters(this.parameters)})`)
+      md.push(`(${getParameters(this.parameters, false)})`)
 
       if (this.type && !this.parent?.kindOf(ReflectionKind.Constructor)) {
         md.push(`: ${Handlebars.helpers.type.call(this.type, 'object')}`)
       }
+      md.push('\n```')
+
       return md.join('') + (standalone ? '\n' : '')
     }
   )

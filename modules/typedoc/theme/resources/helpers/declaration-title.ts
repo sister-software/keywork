@@ -14,29 +14,33 @@
 import Handlebars from 'handlebars'
 import { DeclarationReflection, LiteralType, ParameterReflection, ReflectionKind, ReflectionType } from 'typedoc'
 import { MarkdownTheme } from '../../theme.ts'
-import { escapeChars, memberSymbol, stripComments, stripLineBreaks } from '../../utils.ts'
+import { stripComments, stripLineBreaks } from '../../utils.ts'
 
-export default function (theme: MarkdownTheme) {
+export default function (_theme: MarkdownTheme) {
   Handlebars.registerHelper('declarationTitle', function (this: ParameterReflection | DeclarationReflection) {
-    const md = theme.hideMembersSymbol ? [] : [memberSymbol(this)]
+    const md = ['```ts\n']
 
     function getType(reflection: ParameterReflection | DeclarationReflection) {
       const reflectionType = reflection.type as ReflectionType
       if (reflectionType && reflectionType.declaration?.children) {
         return ': `Object`'
       }
-      return (
-        (reflection.parent?.kindOf(ReflectionKind.Enum) ? ' = ' : ': ') +
-        Handlebars.helpers.type.call(reflectionType ? reflectionType : reflection, 'object')
-      )
+
+      const prefix = reflection.parent?.kindOf(ReflectionKind.Enum) ? ' = ' : ': '
+
+      return [
+        prefix + Handlebars.helpers.type.call(reflectionType ? reflectionType : reflection, 'object'),
+        '\n```',
+      ].join('')
     }
 
     if (this.flags && this.flags.length > 0 && !this.flags.isRest) {
-      md.push(' ' + this.flags.map((flag) => `\`${flag}\``).join(' '))
+      md.push(this.flags.map((flag) => flag.toLowerCase()).join(' '), ' ')
     }
-    md.push(`${this.flags.isRest ? '... ' : ''} **${escapeChars(this.name)}**`)
+
+    md.push([this.flags.isRest ? '... ' : '', this.name].filter(($) => $).join(' '))
     if (this instanceof DeclarationReflection && this.typeParameters) {
-      md.push(`<${this.typeParameters.map((typeParameter) => `\`${typeParameter.name}\``).join(', ')}\\>`)
+      md.push(`<${this.typeParameters.map((typeParameter) => typeParameter.name).join(', ')}>`)
     }
 
     md.push(getType(this))

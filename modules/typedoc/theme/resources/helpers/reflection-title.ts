@@ -16,6 +16,7 @@ import { PageEvent, ReflectionKind, SignatureReflection } from 'typedoc'
 import { escapeChars } from '../../utils.ts'
 import { MarkdownTheme } from '../../theme.ts'
 import * as path from 'path'
+import dashify from 'dashify'
 
 export default function (theme: MarkdownTheme) {
   Handlebars.registerHelper('reflectionTitle', function <
@@ -24,9 +25,10 @@ export default function (theme: MarkdownTheme) {
     const { model } = this
     let title: string
     let declaration: string[] = []
+    const kindString = model.kindString || 'Reflection'
 
-    if (model && model.kindString && this.url !== this.project.url) {
-      title = `${model.kindString}: `
+    if (model && this.url !== this.project.url) {
+      title = `${kindString}: `
     }
     if (this.url === this.project.url) {
       title = theme.indexTitle || this.project.name
@@ -34,42 +36,81 @@ export default function (theme: MarkdownTheme) {
       title = shouldEscape ? escapeChars(model.name) : model.name
     }
 
-    // const typeParameters = model.typeParameters
-    //   ? `<${model.typeParameters.map((typeParameter) => typeParameter.name).join(', ')}>`
-    //   : ''
-
     if (model.sources?.[0]) {
       const source = model.sources[0]
       const basePath = path.posix.join('keywork', path.dirname(source.fileName))
       const browserURL = new URL(basePath, 'https://esm.sh/')
       const denoURL = new URL(`/x/keywork/${source.fileName}`, 'https://deno.land')
+      const isModule = model.kindOf(ReflectionKind.Module)
+      let importName: string
+      let browserUsage: string
+      let importPattern: string
 
-      const importPattern = model.kindOf(ReflectionKind.Module)
-        ? `import * as ${model.name}`
-        : `import { ${model.originalName} }`
+      if (isModule || model.originalName === 'default') {
+        if (model.name === model.originalName || model.originalName === 'default') {
+          importName = 'mod'
+        } else {
+          importName = model.name
+        }
+
+        browserUsage = `let ${importName} = await import('${browserURL.toString()}')`
+        importPattern = `import * as ${importName}`
+      } else {
+        importName = model.originalName
+        importPattern = `import { ${model.originalName} }`
+        browserUsage = `let { ${importName} } = await import('${browserURL.toString()}')`
+      }
+      const browserCompatible = model.kindOf([
+        ReflectionKind.Module,
+        ReflectionKind.Class,
+        ReflectionKind.Function,
+        ReflectionKind.Variable,
+      ])
 
       declaration = [
+        ...(browserCompatible
+          ? [
+              '',
+              '<head>',
+              `  <script async defer>`,
+              `    console.info("It looks like you're reading about a Keywork API");`,
+              `    console.info("You can try it in the browser like this!");`,
+              `    console.info(decodeURIComponent("${encodeURIComponent(browserUsage)}"));`,
+              `  </script>`,
+              '</head>',
+            ]
+          : []),
         '',
         `<Tabs groupId="usage">`,
         `  <TabItem value="Node">`,
+        '',
         '```ts',
         `${importPattern} from '${basePath}'`,
         '```',
+        '',
         `  </TabItem>`,
 
         `  <TabItem value="Deno">`,
+        '',
         '```ts',
         `${importPattern} from '${denoURL.toString()}'`,
         '```',
+        '',
         `  </TabItem>`,
 
-        `  <TabItem value="Browser">`,
-        '```ts',
-        `${importPattern} from '${browserURL.toString()}'`,
-        '```',
-        `  </TabItem>`,
-
+        ...(browserCompatible
+          ? [
+              `  <TabItem value="Browser">`,
+              '',
+              '```ts',
+              `${importPattern} from '${browserURL.toString()}'`,
+              '```',
+              '',
+              `  </TabItem>`,
+            ]
+          : []),
         `</Tabs>`,
+        '',
       ]
     }
 
@@ -77,7 +118,7 @@ export default function (theme: MarkdownTheme) {
       `import Tabs from '@theme/Tabs'`,
       `import TabItem from '@theme/TabItem'`,
 
-      `# ${title}`,
+      `# ${title} {.kind-${dashify(kindString)}}`,
       declaration.join('\n'),
     ].join('\n\n')
   })

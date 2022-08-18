@@ -13,6 +13,7 @@
  */
 
 import { createRequire } from 'module'
+import { headingClasses } from './plugins/headingClasses.mjs'
 const require = createRequire(import.meta.url)
 
 import { relativeLinks } from './plugins/relativeLinks.mjs'
@@ -32,6 +33,7 @@ const presetOptions = {
       return url.toString()
     },
     showLastUpdateTime: true,
+    remarkPlugins: [headingClasses],
     rehypePlugins: [
       [
         relativeLinks,

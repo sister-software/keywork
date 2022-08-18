@@ -60,66 +60,72 @@ export default function () {
       emphasis = true
     ) {
       if (this instanceof ReferenceType) {
-        return getReferenceType(this, emphasis)
+        return getReferenceType(this, emphasis).trim()
       }
 
       if (this instanceof ArrayType && this.elementType) {
-        return getArrayType(this, emphasis)
+        return getArrayType(this, emphasis).trim()
       }
 
       if (this instanceof UnionType && this.types) {
-        return getUnionType(this, emphasis)
+        return getUnionType(this, emphasis).trim()
       }
 
       if (this instanceof IntersectionType && this.types) {
-        return getIntersectionType(this)
+        return getIntersectionType(this).trim()
       }
 
       if (this instanceof TupleType && this.elements) {
-        return getTupleType(this)
+        return getTupleType(this).trim()
       }
 
       if (this instanceof IntrinsicType && this.name) {
-        return getIntrinsicType(this, emphasis)
+        return getIntrinsicType(this, emphasis).trim()
       }
 
       if (this instanceof ReflectionType) {
-        return getReflectionType(this, collapse)
+        return getReflectionType(this, collapse).trim()
       }
 
       if (this instanceof DeclarationReflection) {
-        return getReflectionType(this, collapse)
+        return getReflectionType(this, collapse).trim()
       }
 
       if (this instanceof TypeOperatorType) {
-        return getTypeOperatorType(this)
+        return getTypeOperatorType(this).trim()
       }
 
       if (this instanceof QueryType) {
-        return getQueryType(this)
+        return getQueryType(this).trim()
       }
 
       if (this instanceof ConditionalType) {
-        return getConditionalType(this)
+        return getConditionalType(this).trim()
       }
 
       if (this instanceof IndexedAccessType) {
-        return getIndexAccessType(this)
+        return getIndexAccessType(this).trim()
       }
 
       if (this instanceof UnknownType) {
-        return getUnknownType(this)
+        return getUnknownType(this).trim()
       }
 
       if (this instanceof InferredType) {
-        return getInferredType(this)
+        return getInferredType(this).trim()
       }
 
       if (this instanceof LiteralType) {
-        return getLiteralType(this)
+        return getLiteralType(this).trim()
       }
 
-      return this ? escapeChars(this.toString()) : ''
+      const content = this?.toString() || ''
+
+      if (collapse === 'all') {
+        return '```ts\n' + content + '\n```'
+      }
+
+      return content
     }
   )
 }
@@ -128,7 +134,7 @@ function getLiteralType(model: LiteralType) {
   if (typeof model.value === 'bigint') {
     return `\`${model.value}n\``
   }
-  return `\`\`${JSON.stringify(model.value)}\`\``
+  return `\`${JSON.stringify(model.value)}\``
 }
 
 export function getReflectionType(model: DeclarationReflection | ReflectionType, collapse: Collapse) {
@@ -185,20 +191,27 @@ export function getFunctionType(modelSignatures: SignatureReflection[]) {
 function getReferenceType(model: ReferenceType, emphasis: boolean) {
   const externalUrl = Handlebars.helpers.attemptExternalResolution(model)
   if (model.reflection || (model.name && model.typeArguments)) {
-    const reflection: string[] = []
+    const reflection: string[] = ['`']
 
     if (model.reflection?.url) {
-      reflection.push(`[${`\`${model.reflection.name}\``}](${Handlebars.helpers.relativeURL(model.reflection.url)})`)
+      // reflection.push(`[${`${model.reflection.name}`}](${Handlebars.helpers.relativeURL(model.reflection.url)})`)
+      reflection.push(model.reflection.name)
     } else {
-      reflection.push(externalUrl ? `[${`\`${model.name}\``}]( ${externalUrl} )` : `\`${model.name}\``)
+      // reflection.push(externalUrl ? `[${`${model.name}`}]( ${externalUrl} )` : model.name)
+      reflection.push(model.name)
     }
     if (model.typeArguments && model.typeArguments.length > 0) {
       reflection.push(
-        `<${model.typeArguments.map((typeArgument) => Handlebars.helpers.type.call(typeArgument)).join(', ')}\\>`
+        `<${model.typeArguments
+          .map((typeArgument) => Handlebars.helpers.type.call(typeArgument, 'collapse', false))
+          .join(', ')}>`
       )
     }
+
+    reflection.push('`')
     return reflection.join('')
   }
+
   return emphasis
     ? externalUrl
       ? `[${`\`${model.name}\``}]( ${externalUrl} )`
@@ -212,7 +225,11 @@ function getArrayType(model: ArrayType, emphasis: boolean) {
 }
 
 function getUnionType(model: UnionType, emphasis: boolean) {
-  return model.types.map((unionType) => Handlebars.helpers.type.call(unionType, 'none', emphasis)).join(` \\| `)
+  return model.types
+    .map((unionType) => {
+      return Handlebars.helpers.type.call(unionType, 'none', emphasis)
+    })
+    .join(` | `)
 }
 
 function getIntersectionType(model: IntersectionType) {
@@ -224,7 +241,7 @@ function getTupleType(model: TupleType) {
 }
 
 function getIntrinsicType(model: IntrinsicType, emphasis: boolean) {
-  return emphasis ? `\`${model.name}\`` : escapeChars(model.name)
+  return emphasis ? `\`${model.name}\`` : model.name
 }
 
 function getTypeOperatorType(model: TypeOperatorType) {

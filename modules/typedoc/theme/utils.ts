@@ -24,7 +24,7 @@ export function formatContents(contents: string) {
 }
 
 export function escapeChars(str: string) {
-  return str.replace(/>/g, '\\>').replace(/_/g, '\\_').replace(/`/g, '\\`').replace(/\|/g, '\\|')
+  return str
 }
 
 export function memberSymbol(reflection: DeclarationReflection | ParameterReflection | SignatureReflection) {

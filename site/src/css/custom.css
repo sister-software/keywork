@@ -161,3 +161,18 @@ table thead tr {
 .docusaurus-mt-lg {
   margin-top: 2rem !important;
 }
+
+
+.section {
+  padding: 0.5rem;
+  backdrop-filter: hue-rotate(45deg);
+  border: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.section:not(:first-child) {
+  margin-top: 1rem;
+}
+
+.section:nth-child(even) {
+  backdrop-filter: hue-rotate(90deg);
+}
