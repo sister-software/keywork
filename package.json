@@ -20,7 +20,6 @@
     "build:modules": "yarn workspace keywork run build",
     "build:format": "ts-node ./scripts/format.ts",
     "build": "yarn run build:check && yarn run build:modules && yarn run build:format",
-    "docs:generate": "ts-node ./scripts/generate-api-docs.ts",
     "site:dev": "yarn workspace @keywork/site run dev",
     "site:build": "yarn workspace @keywork/site run build",
     "site:deploy": "wrangler pages publish",

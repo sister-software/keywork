@@ -33,13 +33,6 @@ jobs:
           NODE_ENV: production
           CI: true
 
-      - name: Generate docs
-        run: |
-          yarn docs:generate
-        env:
-          NODE_ENV: production
-          CI: true
-
       - name: Build site
         run: |
           yarn site:build
