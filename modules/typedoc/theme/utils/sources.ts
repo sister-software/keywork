@@ -14,24 +14,14 @@
 
 import { SourceReference } from 'typedoc'
 import * as path from 'path'
-
 import * as ProjectFiles from '@keywork/monorepo/common/project'
+import { whichSync } from 'https://deno.land/x/which@0.2.1/mod.ts'
+import { KeyworkResourceError } from '../../../errors/KeyworkResourceError.ts'
 
-const textDecoder = new TextDecoder()
-// const command = Deno.run({ cmd: [`command`, '-v', 'git'], stdout: 'piped' })
-// const status = await command.status()
-
-// if (!status.success) {
-//   throw new Error('Git not found')
-// }
-
-// const rawOutput = await command.output()
-// const gitCommandPath = new TextDecoder().decode(rawOutput).trim()
-
-const gitCommandPath = Deno.env.get('GIT_PATH')
+const gitCommandPath = whichSync('git')
 
 if (!gitCommandPath) {
-  throw new Error('Git not found')
+  throw new KeyworkResourceError("Git doesn't appear to be installed")
 }
 
 interface FileChange {
@@ -47,6 +37,7 @@ export interface SourceReferenceWithGit extends SourceReference {
 
 export const READ_PREFIX = '/nirrius/keywork/blob/main/modules'
 export const EDIT_PREFIX = '/nirrius/keywork/edit/main/modules'
+const textDecoder = new TextDecoder()
 
 export function readFileChangeFromGit(_source: SourceReference) {
   const source = _source as SourceReferenceWithGit

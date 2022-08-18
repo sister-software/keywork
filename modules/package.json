@@ -28,7 +28,7 @@
     "node": ">= 17.4"
   },
   "scripts": {
-    "build": "GIT_PATH=$(command -v git) deno run --unstable -A ./build.ts",
+    "build": "deno run --unstable -A ./build.ts",
     "test": "deno test --coverage=./cov .",
     "test:coverage": "deno coverage --lcov ./cov"
   },

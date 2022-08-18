@@ -27,6 +27,12 @@ jobs:
           node-version: 17.4
       - run: yarn install --immutable --immutable-cache --check-cache
 
+      - name: Build Modules
+        run: |
+          yarn build
+        env:
+          NODE_ENV: production
+
       - name: Run tests
         run: yarn workspace keywork run test
 
@@ -38,26 +44,17 @@ jobs:
         with:
           files: cov.lcov
 
-      - name: Build Modules
-        run: |
-          yarn build
-        env:
-          NODE_ENV: production
-          CI: true
-
       - name: Generate docs
         run: |
           yarn docs:generate
         env:
           NODE_ENV: production
-          CI: true
 
       - name: Build site
         run: |
           yarn site:build
         env:
           NODE_ENV: production
-          CI: true
 
       - name: Archive Keywork artifacts
         uses: actions/upload-artifact@v3
