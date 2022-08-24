@@ -193,10 +193,10 @@
       "import": "./stream/mod.js",
       "require": "./stream/mod.js"
     },
-    "./react/isomorphic": {
-      "types": "./react/isomorphic/mod.d.ts",
-      "import": "./react/isomorphic/mod.js",
-      "require": "./react/isomorphic/mod.js"
+    "./react": {
+      "types": "./react/mod.d.ts",
+      "import": "./react/mod.js",
+      "require": "./react/mod.js"
     },
     "./react/browser": {
       "types": "./react/browser/mod.d.ts",
@@ -213,20 +213,10 @@
       "import": "./react/worker/mod.js",
       "require": "./react/worker/mod.js"
     },
-    "./react/hooks": {
-      "types": "./react/hooks/mod.d.ts",
-      "import": "./react/hooks/mod.js",
-      "require": "./react/hooks/mod.js"
-    },
     "./router/cloudflare": {
       "types": "./router/cloudflare/mod.d.ts",
       "import": "./router/cloudflare/mod.js",
       "require": "./router/cloudflare/mod.js"
-    },
-    "./router/worker": {
-      "types": "./router/worker/mod.d.ts",
-      "import": "./router/worker/mod.js",
-      "require": "./router/worker/mod.js"
     },
     "./router/node": {
       "types": "./router/node/mod.d.ts",

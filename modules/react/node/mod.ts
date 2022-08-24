@@ -1,4 +1,11 @@
 /**
+ * :::info
+ * While this module is used internally by Keywork, the functions are available for use.
+ * :::
+ *
+ * @packageDocumentation
+ * @module Keywork#React#Node
+ *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -10,10 +17,7 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- *
- * @packageDocumentation
- * @module Keywork#React#Node
  */
 /* eslint-disable header/header */
 
-export * from './stream.ts'
+export * from './functions/mod.ts'

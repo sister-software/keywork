@@ -12,14 +12,14 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { isValidElement } from 'https://esm.sh/react@18.2.0'
 import { KeyworkResourceError, Status } from '../../errors/mod.ts'
-import { ReactRendererOptions, renderJSXToStream } from '../../react/isomorphic/mod.ts'
+import { ReactRendererOptions, renderJSXToStream } from '../../react/mod.ts'
+import Stream from '../../stream/mod.ts'
+import HTTP from '../mod.ts'
 import { ErrorResponse } from './ErrorResponse.ts'
 import { HTMLResponse } from './HTMLResponse.ts'
 import { JSONResponse } from './JSONResponse.ts'
-import { isValidElement } from 'https://esm.sh/react@18.2.0'
-import HTTP from '../mod.ts'
-import Stream from '../../stream/mod.ts'
 
 /**
  * Either a full `Response`, or a more primitive value to be processed.

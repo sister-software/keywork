@@ -15,18 +15,16 @@
 import { getAssetFromKV } from 'https://esm.sh/@cloudflare/kv-asset-handler@0.2.0'
 import type { AssetManifestType } from 'https://esm.sh/@cloudflare/kv-asset-handler@0.2.0/dist/types'
 import { KeyworkResourceError, Status } from '../../../errors/mod.ts'
-import type { KVNamespace } from '../../../kv/cloudflare/mod.ts'
 import { ErrorResponse } from '../../../http/response/mod.ts'
+import type { KVNamespace } from '../../../kv/cloudflare/mod.ts'
+import { KeyworkRouter } from '../../classes/KeyworkRouter.ts'
 import { RouteRequestHandler } from '../../interfaces/RouteRequestHandler.ts'
-import { KeyworkRouter } from '../../worker/mod.ts'
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { CloudflarePagesAssetRouter } from './CloudflarePagesAssetRouter.ts'
 /**
  * An asset environment binding available within Cloudflare Pages.
  *
  * This binding only exists in Cloudflare __Pages__.
  *
- * @see {CloudflarePagesAssetRouter} For use with Cloudflare Pages
+ * See {@link Keywork#Router#Cloudflare.CloudflarePagesAssetRouter `CloudflarePagesAssetRouter`} For use with Cloudflare Pages
  * @ignore
  */
 export const AssetBindingAlias = 'ASSETS'
@@ -42,7 +40,7 @@ export const AssetBindingAlias = 'ASSETS'
  * When using ESBuild, ensure that the virtual module `__STATIC_CONTENT_MANIFEST`
  * is marked as external:
  *
- * ```js
+ * ```ts
  * import {build} from 'esbuild'
  *
  * build({ external: ['__STATIC_CONTENT_MANIFEST']})

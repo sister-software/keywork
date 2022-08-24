@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { respondWithRouter } from './respondWithRouter.ts'
 import { IncomingMessage, ServerResponse } from 'http'
-import { KeyworkRouter } from '../../worker/classes/KeyworkRouter.ts'
+import { KeyworkRouter } from '../../classes/KeyworkRouter.ts'
+import { respondWithRouter } from './respondWithRouter.ts'
 
 /**
  * Node-compatible callback for use with `http.createServer`

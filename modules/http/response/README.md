@@ -8,7 +8,7 @@ pagination_label: 'Module: HTTP.Response'
 
 ## Module Overview
 
-While the [`KeyworkRouter`](/modules/router/worker/api/classes/KeyworkRouter) automatically
+While the [`KeyworkRouter`](/modules/router/classes/KeyworkRouter) automatically
 converts returned values via [`castToResponse`](modules/http/response/api/functions/castToResponse),
 Each `Response` class is available.
 

@@ -17,7 +17,7 @@ import HTTP from '../../../http/mod.ts'
 import { IncomingMessage, ServerResponse } from 'http'
 import { IsomorphicFetchEvent } from '../../../events/mod.ts'
 import { readGlobalScope } from '../../../polyfills/mod.ts'
-import { KeyworkRouter } from '../../worker/classes/KeyworkRouter.ts'
+import { KeyworkRouter } from '../../classes/KeyworkRouter.ts'
 
 /** @internal */
 export type ProcessChunkCallback = (chunkResult: ReadableStreamDefaultReadResult<Uint8Array>) => Promise<void>

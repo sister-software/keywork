@@ -1,9 +1,4 @@
 /**
- * Keywork includes client-side hydration that fits into your existing build pipeline.
- *
- * @packageDocumentation
- * @module Keywork#React#Browser
- *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -16,8 +11,9 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-/* eslint-disable header/header */
 
-export * from './classes/mod.ts'
-export * from './components/mod.ts'
-export * from './functions/mod.ts'
+export * from './KeyworkHTMLDocument.tsx'
+export * from './KeyworkProvidersComponent.tsx'
+export * from './RouteProvider.tsx'
+export * from './SSRPropsEmbed.tsx'
+export * from './StaticPropsProvider.tsx'

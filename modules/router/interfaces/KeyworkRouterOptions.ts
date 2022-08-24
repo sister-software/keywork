@@ -26,9 +26,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { ReactRendererOptions } from '../../react/isomorphic/mod.ts'
-import { MiddlewareDeclarationLike } from '../types/MiddlewareDeclarationLike.ts'
 import type { HTTPMethod } from '../../http/mod.ts'
+import type { ReactRendererOptions } from '../../react/mod.ts'
+import { MiddlewareDeclarationLike } from '../types/MiddlewareDeclarationLike.ts'
 
 /**
  * Public endpoints to aid in debugging your app.

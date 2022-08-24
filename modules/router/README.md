@@ -63,7 +63,7 @@ app.get('/', () => 'Hello there! 👋')
 
 ## Creating a RESTful API
 
-Instances of [`KeyworkRouter`](/modules/router/worker/api/classes/KeyworkRouter) define each route handler by
+Instances of [`KeyworkRouter`](/modules/router/classes/KeyworkRouter) define each route handler by
 invoking methods that correspond with HTTP method of the same name:
 
 | HTTP Method | Usage                                                |

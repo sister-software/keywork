@@ -15,7 +15,7 @@
  */
 /* eslint-disable header/header */
 
+export * from './classes/mod.ts'
+export * from './functions/mod.ts'
 export * from './interfaces/mod.ts'
 export * from './types/mod.ts'
-export * from './functions/mod.ts'
-export * from './worker/mod.ts'
