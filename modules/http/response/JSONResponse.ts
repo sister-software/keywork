@@ -13,7 +13,7 @@
  */
 
 import { CacheControlDirectives } from '../headers/caching/mod.ts'
-import { fileExtensionToContentTypeHeader } from '../headers/contentType.ts'
+import { fileExtensionToContentTypeHeader } from '../headers/content-type/mod.ts'
 import { CachableResponse } from './CachableResponse.ts'
 
 /**

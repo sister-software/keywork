@@ -1,4 +1,11 @@
 /**
+ * Keywork includes utilities for working with HTTP lifecycles.
+ *
+ * See each of HTTP's submodules for additional details.
+ *
+ * @packageDocumentation
+ * @module Keywork#HTTP
+ *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -10,8 +17,6 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- * @packageDocumentation
- * @module Keywork#HTTP
  */
 /* eslint-disable header/header */
 

@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { fileExtensionToContentTypeHeader } from '../headers/mod.ts'
 import { CacheControlDirectives } from '../headers/caching/mod.ts'
+import { fileExtensionToContentTypeHeader } from '../headers/content-type/mod.ts'
 import { CachableResponse } from './CachableResponse.ts'
 
 /**

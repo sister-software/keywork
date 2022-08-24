@@ -21,13 +21,13 @@ import { ShimOptions, shimOptionsToTransformShims } from 'deno/dnt/shims'
 import { transform, TransformOutput } from 'deno/dnt/transform'
 import FastGlob from 'fast-glob'
 
-import { copy } from 'deno/fs/copy'
-import { Logger } from './logger/mod.ts'
-import * as path from 'path'
 import { NPMPackageJSON, readNPMPackageJSON } from '@keywork/monorepo/common/imports'
 import { projectPath } from '@keywork/monorepo/common/paths'
 import * as ProjectFiles from '@keywork/monorepo/common/project'
+import { copy } from 'deno/fs/copy'
 import deepmerge from 'https://esm.sh/deepmerge@4.2.2'
+import * as path from 'path'
+import { Logger } from './logger/mod.ts'
 import { DocusaurusTypeDoc } from './typedoc/mod.ts'
 
 const outDir = ProjectFiles.OutDirectory
@@ -144,10 +144,10 @@ function createFileMap(filePaths: string[]): Map<string, string> {
 async function copyModuleDocs() {
   logger.log('Copying static documentation...')
 
-  await Deno.copyFile(
-    path.join(ProjectFiles.ModulesDirectory, 'README.mdx'),
-    path.join(ProjectFiles.DocsAPIDirectory, 'README.mdx')
-  )
+  // await Deno.copyFile(
+  //   path.join(ProjectFiles.ModulesDirectory, 'README.mdx'),
+  //   path.join(ProjectFiles.DocsAPIDirectory, 'README.mdx')
+  // )
 
   const ignore = [path.join('**', ProjectFiles.NodeModules)]
   const categoryToDest = await FastGlob(path.join(ProjectFiles.ModulesDirectory, '*', '**', ProjectFiles.Category), {

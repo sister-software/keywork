@@ -10,7 +10,11 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
+ *
+ * @packageDocumentation
+ * @module Keywork#HTTP#Headers#CSP#Directives
  */
+/* eslint-disable header/header */
 
 /**
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#self MDN Documentation}

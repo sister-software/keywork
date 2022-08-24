@@ -12,6 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import * as ProjectFiles from '@keywork/monorepo/common/project'
 import * as path from 'path'
 import {
   ContainerReflection,
@@ -35,8 +36,6 @@ import {
   registerPartials,
 } from './render-utils.ts'
 import { formatContents } from './utils.ts'
-import { readFileChangeFromGit } from './utils/sources.ts'
-import * as ProjectFiles from '@keywork/monorepo/common/project'
 
 const NEVER_RENDER: `@${string}`[] = ['@copyright', '@license', '@author', '@file']
 
@@ -128,11 +127,11 @@ export class MarkdownTheme extends Theme {
   getUrls(project: ProjectReflection) {
     const urls: UrlMapping[] = []
 
-    for (const refl of Object.values(project.reflections)) {
-      for (const source of refl.sources || []) {
-        readFileChangeFromGit(source)
-      }
-    }
+    // for (const refl of Object.values(project.reflections)) {
+    //   for (const source of refl.sources || []) {
+    //     readFileChangeFromGit(source)
+    //   }
+    // }
 
     const noReadmeFile = this.readme.endsWith('none')
     if (noReadmeFile) {
@@ -205,15 +204,12 @@ export class MarkdownTheme extends Theme {
         url = path.posix.join(this.getUrl(mapping, reflection.parent, relative), url)
       } else {
         const parsed = path.posix.parse(reflection.originalName)
-        const lastSegment = path.posix.join(
-          'api',
-          mapping.kind[0] === ReflectionKind.Module ? 'README' : mapping.directory
-        )
+        const lastSegment = path.posix.join(mapping.kind[0] === ReflectionKind.Module ? 'README' : mapping.directory)
         url = path.posix.join(parsed.dir, parsed.base, lastSegment)
       }
     }
 
-    return url.replace(/^_/, '')
+    return path.posix.normalize(url.replace(/^_/, ''))
   }
 
   applyAnchorUrl(reflection: Reflection, container: Reflection, isSymbol = false) {
@@ -301,6 +297,7 @@ export class MarkdownTheme extends Theme {
       children: NavigationItem[] = []
     ) => {
       const navigationItem = new NavigationItem(title, url)
+
       navigationItem.isLabel = isLabel
       navigationItem.children = children
       const { reflection, parent, ...filteredNavigationItem } = navigationItem

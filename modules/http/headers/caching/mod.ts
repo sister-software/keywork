@@ -10,11 +10,15 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
+ *
+ * @packageDocumentation
+ * @module Keywork#HTTP#Headers#Caching
  */
+/* eslint-disable header/header */
 
+import { DURATION_ONE_WEEK } from '../../../datetime/mod.ts'
 import { KeyworkResourceError, Status } from '../../../errors/mod.ts'
 import { arrayBufferToBase64, stringToArrayBuffer } from '../../../strings/mod.ts'
-import { DURATION_ONE_WEEK } from '../../../datetime/mod.ts'
 // Included for @link comment below
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 import type { CachableResponse } from '../../../http/response/mod.ts'

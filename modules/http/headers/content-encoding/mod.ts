@@ -10,7 +10,11 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
+ *
+ * @packageDocumentation
+ * @module Keywork#HTTP#Headers#ContentEncoding
  */
+/* eslint-disable header/header */
 
 /**
  * A format using the Brotli algorithm.

@@ -48,8 +48,10 @@ export default function () {
       frontMatter.set('title', JSON.stringify('Module: (Default Export)'))
       frontMatter.set('sidebar_label', 'Keywork')
     } else {
-      frontMatter.set('title', JSON.stringify(isModule ? `${kindString}: ${model.name}` : model.name))
+      const title = JSON.stringify(isModule ? `${kindString}: ${model.name}` : model.name)
+      frontMatter.set('title', title)
       frontMatter.set('sidebar_label', JSON.stringify(model.originalName))
+      frontMatter.set('pagination_label', title)
     }
 
     frontMatter.set('sidebar_class_name', `doc-kind-${kindString.toLowerCase()}`)

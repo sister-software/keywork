@@ -1,156 +1,163 @@
 /**
- * @module Keywork
+ * Keywork is a modular and opinionated library,
+ * providing structured guidence as your web app grows,
+ * without locking you into a specific pattern.
+ * ## Popular Modules
+ *
  * @packageDocumentation
- *
- * Most Keywork modules can be imported at its primary entrypoint:
- *
- * ```ts
- * import {Router, Errors, Logger, ...} from 'keywork'
- * ```
- *
- * However, runtime specific modules must be imported directly from their entrypoint:
- *
- * ```ts
- * import { WorkerSitesAssetRouter } from 'keywork/router/cloudflare'
- * ```
- *
- * @file This file is part of the Keywork project.
- * @copyright Nirrius, LLC. All rights reserved.
- * @author Teffen Ellis, et al.
- * @license AGPL-3.0
- *
- * @remarks Keywork is free software for non-commercial purposes.
- * You can be released from the requirements of the license by purchasing a commercial license.
- * Buying such a license is mandatory as soon as you develop commercial activities
- * involving the Keywork software without disclosing the source code of your own applications.
- *
- * @see LICENSE.md in the project root for further licensing information.
+ * @module Keywork
  */
 
 /* eslint-disable header/header */
 
 /**
- * Namespace: Errors
- *
  * ```ts
- * import * as mod from 'keywork/errors'
- * ```
- */
-export * as Errors from './errors/mod.ts'
-
-/**
- * Namespace: Events
- *
- * ```ts
- * import * as mod from 'keywork/events'
- * ```
- */
-export * as Events from './events/mod.ts'
-
-/**
- * Namespace: Logger
- *
- * ```ts
- * import * as mod from 'keywork/logger'
- * ```
- */
-export * as Logger from './logger/mod.ts'
-
-/**
- * Namespace: Math
- *
- * ```ts
- * import * as mod from 'keywork/math'
- * ```
- */
-export * as Math from './math/mod.ts'
-
-/**
- * Namespace: Strings
- *
- * ```ts
- * import * as mod from 'keywork/strings'
- * ```
- */
-export * as Strings from './strings/mod.ts'
-
-/**
- * Namespace: Datetime
- *
- * ```ts
+ * import { DatetimeUtils } from 'keywork'
  * import * as mod from 'keywork/datetime'
  * ```
+ *
+ * {@link Keywork#DatetimeUtils **_Explore the Datetime Utilities Module_ ›**}
  */
-export * as Datetime from './datetime/mod.ts'
-
+export * as DatetimeUtils from './datetime/mod.ts'
 /**
- * Namespace: Json
  *
  * ```ts
- * import * as mod from 'keywork/json'
+ * import { Errors } from 'keywork'
+ * import * as Errors from 'keywork/errors'
  * ```
- */
-export * as Json from './json/mod.ts'
-
-/**
- * Namespace: Timers
  *
- * ```ts
- * import * as mod from 'keywork/timers'
- * ```
+ * {@link Keywork#Errors **_Explore the Errors Module_ ›**}
  */
-export * as Timers from './timers/browser/mod.ts'
-
+export * as Errors from './errors/mod.ts'
 /**
- * Namespace: Files
- *
  * ```ts
- * import * as mod from 'keywork/files'
+ * import { Events } from 'keywork'
+ * import * as Events from 'keywork/events'
  * ```
+ *
+ * {@link Keywork#Events **_Explore the Events Module_ ›**}
  */
-export * as Files from './files/mod.ts'
-
+export * as Events from './events/mod.ts'
 /**
- * Namespace: IDs
- *
  * ```ts
- * import * as mod from 'keywork/ids'
+ * import { FileUtils } from 'keywork'
+ * import * as mod FileUtilsom 'keywork/files'
  * ```
+ *
+ * {@link Keywork#FileUtils **_Explore the File Utilities Module_ ›**}
  */
-export * as IDs from './ids/mod.ts'
-
+export * as FileUtils from './files/mod.ts'
 /**
- * Namespace: HTTP
- *
  * ```ts
- * import * as mod from 'keywork/http'
+ * import { HTTP } from 'keywork'
+ * import * as HTTPod from 'keywork/http'
  * ```
+ *
+ * {@link Keywork#HTTP **_Explore the HTTP Module_ ›**}
  */
 export * as HTTP from './http/mod.ts'
-
 /**
- * Namespace: Router
- *
  * ```ts
- * import * as mod from 'keywork/router'
+ * import { IDUtils } from 'keywork'
+ * import * as IDUtilsfrom 'keywork/ids'
+ * ```
+ *
+ * {@link Keywork#IDUtils **_Explore the ID Utilities Module_ ›**}
+ */
+export * as IDUtils from './ids/mod.ts'
+/**
+ * ```ts
+ * import { JSONUtils } from 'keywork'
+ * import * as mod from 'keywork/json'
+ * ```
+ *
+ * {@link Keywork#JSONUtils **_Explore the JSON Utilities Module_ ›**}
+ */
+export * as JSONUtils from './json/mod.ts'
+/**
+ * ```ts
+ * import { Logger } from 'keywork'
+ * import * as mod from 'keywork/logger'
+ * ```
+ *
+ * {@link Keywork#Logger **_Explore the Logger Module_ ›**}
+ */
+export * as Logger from './logger/mod.ts'
+/**
+ * ```ts
+ * import { MathUtils } from 'keywork'
+ * import * as mod from 'keywork/math'
+ * ```
+ *
+ * {@link Keywork#MathUtils **_Explore the Math Utilities Module_ ›**}
+ */
+export * as MathUtils from './math/mod.ts'
+/**
+ * Designed with familiarity in mind, the server-side routing API
+ * is inspired by Express.js, React Router, and the native Cloudflare Workers platform.
+ *
+ * {@link Keywork#Router **_Explore the Router Module_ ›**}
+ *
+ * ```ts title="worker.ts" runtime="cloudflare"
+ * import { KeyworkRouter } from 'keywork/router'
+ *
+ * const app = new KeyworkRouter()
+ *
+ * app.get('/', () => 'Hello there! 👋')
+ *
+ * export default app
+ * ```
+ *
+ * ```ts title="./your-project/server/mod.tsx" runtime="deno"
+ * import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
+ * import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
+ *
+ * const app = new KeyworkRouter()
+ * serve((request) => app.fetch(request))
+ * ```
+ *
+ * ```ts title="worker.ts" runtime="browser"
+ * import { KeyworkRouter } from 'https://esm.sh/keywork/router'
+ *
+ * const app = new KeyworkRouter()
+ *
+ * app.get('/', () => 'Hello there! 👋')
  * ```
  */
 export * as Router from './router/mod.ts'
-
 /**
- * Namespace: Session
- *
  * ```ts
- * import * as mod from 'keywork/session'
+ * import { Session } from 'keywork'
+ * import * as Sessionfrom 'keywork/session'
  * ```
+ *
+ * {@link Keywork#Session **_Explore the Session Module_ ›**}
  */
 export * as Session from './session/mod.ts'
-
 /**
- * Namespace: URL
- *
  * ```ts
- * import * as mod from 'keywork/uri'
+ * import { StringUtils } from 'keywork'
+ * import * as mod from 'keywork/strings'
  * ```
+ *
+ * {@link Keywork#StringUtils **_Explore the String Utilities Module_ ›**}
  */
-export * as URL from './uri/mod.ts'
+export * as StringUtils from './strings/mod.ts'
+/**
+ * ```ts
+ * import { TimerUtils } from 'keywork'
+ * import * as mod from 'keywork/browser/timers'
+ * ```
+ *
+ * {@link Keywork#TimerUtils#Browser **_Explore the Timer Utilities Module_ ›**}
+ */
+export * as TimerUtils from './timers/browser/mod.ts'
+/**
+ * ```ts
+ * import { URIUtils } from 'keywork'
+ * import * as mod URIUtilsrom 'keywork/uri'
+ * ```
+ *
+ * {@link Keywork#URIUtils **_Explore the URI Module_ ›**}
+ */
+export * as URIUtils from './uri/mod.ts'
