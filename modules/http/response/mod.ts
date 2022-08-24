@@ -10,16 +10,11 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- */
-
-/**
- * ### `keywork/http/responses`
- *
- * HTTP responses for content like JSON, HTML, and much more.
  *
  * @packageDocumentation
- * @module responses
+ * @module Keywork#HTTP#Response
  */
+/* eslint-disable header/header */
 
 export * from './CachableResponse.ts'
 export * from './common.ts'

@@ -14,6 +14,7 @@
 
 import { createRequire } from 'module'
 import { headingClasses } from './plugins/headingClasses.mjs'
+import { polygotPlugin } from './plugins/polygot.mjs'
 const require = createRequire(import.meta.url)
 
 import { relativeLinks } from './plugins/relativeLinks.mjs'
@@ -33,7 +34,7 @@ const presetOptions = {
       return url.toString()
     },
     showLastUpdateTime: true,
-    remarkPlugins: [headingClasses],
+    remarkPlugins: [polygotPlugin, headingClasses],
     rehypePlugins: [
       [
         relativeLinks,

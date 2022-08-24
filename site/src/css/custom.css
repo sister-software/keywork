@@ -82,18 +82,14 @@
   font-family: var(--ifm-font-family-monospace);
 }
 
-[href*="/interfaces/"],
-[href*="/interfaces/"] > *,
-[href*="/classes/"],
-[href*="/classes/"] > *,
-[href*="/functions/"],
-[href*="/functions/"] > *,
-[href*="/variables/"],
-[href*="/variables/"] > *,
-[href*="/types/"],
-[href*="/types/"] > *,
-[href*="/module/"],
-[href*="/module/"] > * {
+.kind-interface,
+.kind-class,
+.kind-function,
+.kind-variable,
+.kind-type,
+.kind-module {
+  --ifm-heading-font-family: var(--ifm-font-family-monospace);
+
   font-weight: 600;
   font-family: var(--ifm-font-family-monospace) !important;
 }

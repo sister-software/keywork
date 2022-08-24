@@ -10,18 +10,9 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- */
-
-/**
- * ### `keywork/router`
- *
- * Everything you need to handle incoming requests in a Worker environment.
- *
- * - Server-side rendering from your worker, made even faster with streamed responses.
- * - Routing helpers with a low-mental overhead that make splitting your app into separate workers a breeze.
- *
  * @packageDocumentation
- * @module router.common
+ * @module Keywork#HTTP#Request
  */
+/* eslint-disable header/header */
 
 export * from './common.ts'

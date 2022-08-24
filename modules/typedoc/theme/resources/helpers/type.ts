@@ -194,12 +194,11 @@ function getReferenceType(model: ReferenceType, emphasis: boolean) {
     const reflection: string[] = ['`']
 
     if (model.reflection?.url) {
-      // reflection.push(`[${`${model.reflection.name}`}](${Handlebars.helpers.relativeURL(model.reflection.url)})`)
       reflection.push(model.reflection.name)
     } else {
-      // reflection.push(externalUrl ? `[${`${model.name}`}]( ${externalUrl} )` : model.name)
       reflection.push(model.name)
     }
+
     if (model.typeArguments && model.typeArguments.length > 0) {
       reflection.push(
         `<${model.typeArguments
@@ -209,6 +208,12 @@ function getReferenceType(model: ReferenceType, emphasis: boolean) {
     }
 
     reflection.push('`')
+
+    if (model.reflection?.url) {
+      reflection.unshift('[')
+      reflection.push(`](${Handlebars.helpers.relativeURL(model.reflection.url)})`)
+    }
+
     return reflection.join('')
   }
 

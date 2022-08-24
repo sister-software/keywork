@@ -10,16 +10,10 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- */
-
-/**
- * ### `keywork/http/headers`
- *
- * Utilities for working with files.
- *
  * @packageDocumentation
- * @module files
+ * @module Keywork#FileUtils
  */
+/* eslint-disable header/header */
 
 export * from './common.ts'
 export * from './extensionToMimeType.ts'

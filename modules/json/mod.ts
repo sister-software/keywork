@@ -10,7 +10,10 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
+ * @packageDocumentation
+ * @module Keywork#JSONUtils
  */
+/* eslint-disable header/header */
 
 /**
  * @category JSON

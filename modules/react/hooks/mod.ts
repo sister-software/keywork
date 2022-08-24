@@ -10,15 +10,10 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- */
-
-/**
- * ### `keywork/react/hooks`
- *
- * React Hook Utilities
  *
  * @packageDocumentation
- * @module react.hooks
+ * @module Keywork#React#Hooks
  */
+/* eslint-disable header/header */
 
 export * from './createNamedContextHook.ts'

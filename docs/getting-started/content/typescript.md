@@ -38,13 +38,11 @@ declare global {
 
 ### Deno Deploy
 
-Deno support is experimental and in active development.
-
 Keywork can be used directly via [Deno Land](https://deno.land/x/keywork):
 
 ```tsx title="worker"
-import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
 import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
+import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
 
 const app = new KeyworkRouter()
 

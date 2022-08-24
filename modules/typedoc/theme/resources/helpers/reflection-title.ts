@@ -11,12 +11,13 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-import Handlebars from 'handlebars'
-import { PageEvent, ReflectionKind, SignatureReflection } from 'typedoc'
-import { escapeChars } from '../../utils.ts'
-import { MarkdownTheme } from '../../theme.ts'
-import * as path from 'path'
 import dashify from 'dashify'
+import Handlebars from 'handlebars'
+import * as path from 'path'
+import { PageEvent, ReflectionKind, SignatureReflection } from 'typedoc'
+import { runtimeToTabLabel } from '../../../../../common/runtime.mjs'
+import { MarkdownTheme } from '../../theme.ts'
+import { escapeChars } from '../../utils.ts'
 
 export default function (theme: MarkdownTheme) {
   Handlebars.registerHelper('reflectionTitle', function <
@@ -81,8 +82,8 @@ export default function (theme: MarkdownTheme) {
             ]
           : []),
         '',
-        `<Tabs groupId="usage">`,
-        `  <TabItem value="Node">`,
+        `<Tabs groupId="runtime">`,
+        `  <TabItem value="Node" label="${runtimeToTabLabel('node')}">`,
         '',
         '```ts',
         `${importPattern} from '${basePath}'`,
@@ -90,7 +91,7 @@ export default function (theme: MarkdownTheme) {
         '',
         `  </TabItem>`,
 
-        `  <TabItem value="Deno">`,
+        `  <TabItem value="Deno" label="${runtimeToTabLabel('deno')}">`,
         '',
         '```ts',
         `${importPattern} from '${denoURL.toString()}'`,
@@ -100,7 +101,7 @@ export default function (theme: MarkdownTheme) {
 
         ...(browserCompatible
           ? [
-              `  <TabItem value="Browser">`,
+              `  <TabItem value="Browser" label="${runtimeToTabLabel('browser')}">`,
               '',
               '```ts',
               `${importPattern} from '${browserURL.toString()}'`,

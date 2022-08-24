@@ -10,7 +10,10 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
+ * @packageDocumentation
+ * @module Keywork#Router
  */
+/* eslint-disable header/header */
 
 export * from './interfaces/mod.ts'
 export * from './types/mod.ts'

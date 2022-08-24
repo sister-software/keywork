@@ -19,6 +19,10 @@ export default function () {
   Handlebars.registerHelper('referenceMember', function (this: ReferenceReflection) {
     const referenced = this.tryGetTargetReflectionDeep()
 
+    if (this.hasComment()) {
+      return Handlebars.helpers.comments(this.comment)
+    }
+
     if (!referenced) {
       return `Re-exports ${this.name}`
     }

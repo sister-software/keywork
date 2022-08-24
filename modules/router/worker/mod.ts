@@ -10,16 +10,11 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- */
-
-/**
- * ### `keywork/router/worker`
- *
- * Everything you need to handle incoming requests in a Worker environment.
  *
  * @packageDocumentation
- * @module router.worker
+ * @module Keywork#Router#Worker
  */
+/* eslint-disable header/header */
 
 export * from './functions/mod.ts'
 export * from './classes/mod.ts'

@@ -43,8 +43,15 @@ export default function () {
     }
 
     frontMatter.set('id', isModule ? 'index' : model.getAlias())
-    frontMatter.set('title', JSON.stringify(isModule ? `${kindString}: ${model.name}` : model.name))
-    frontMatter.set('sidebar_label', JSON.stringify(model.originalName))
+
+    if (model.originalName === '.') {
+      frontMatter.set('title', JSON.stringify('Module: (Default Export)'))
+      frontMatter.set('sidebar_label', 'Keywork')
+    } else {
+      frontMatter.set('title', JSON.stringify(isModule ? `${kindString}: ${model.name}` : model.name))
+      frontMatter.set('sidebar_label', JSON.stringify(model.originalName))
+    }
+
     frontMatter.set('sidebar_class_name', `doc-kind-${kindString.toLowerCase()}`)
     frontMatter.set(
       'tags',

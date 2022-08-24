@@ -25,9 +25,9 @@ export default function (theme: MarkdownTheme) {
     const isVisible = this.groups?.some((group) => group.allChildrenHaveOwnDocument())
 
     function pushGroup(group: ReflectionGroup, md: string[]) {
-      const children = group.children.map(
-        (child) => `- [${escapeChars(child.name)}](${Handlebars.helpers.relativeURL(child.url)})`
-      )
+      const children = group.children.map((child) => {
+        return `- [\`${escapeChars(child.name)}\`](${Handlebars.helpers.relativeURL(child.url)})`
+      })
       md.push(children.join('\n'))
     }
 

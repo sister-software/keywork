@@ -16,23 +16,20 @@ import { DeclarationReflection, LiteralType, ParameterReflection, ReflectionKind
 import { MarkdownTheme } from '../../theme.ts'
 import { stripComments, stripLineBreaks } from '../../utils.ts'
 
+function getType(reflection: ParameterReflection | DeclarationReflection) {
+  const reflectionType = reflection.type as ReflectionType
+  if (reflectionType && reflectionType.declaration?.children) {
+    return ': `Object`'
+  }
+
+  const prefix = reflection.parent?.kindOf(ReflectionKind.Enum) ? ' = ' : ': '
+
+  return prefix + Handlebars.helpers.type.call(reflectionType ? reflectionType : reflection, 'object')
+}
+
 export default function (_theme: MarkdownTheme) {
   Handlebars.registerHelper('declarationTitle', function (this: ParameterReflection | DeclarationReflection) {
     const md = ['```ts\n']
-
-    function getType(reflection: ParameterReflection | DeclarationReflection) {
-      const reflectionType = reflection.type as ReflectionType
-      if (reflectionType && reflectionType.declaration?.children) {
-        return ': `Object`'
-      }
-
-      const prefix = reflection.parent?.kindOf(ReflectionKind.Enum) ? ' = ' : ': '
-
-      return [
-        prefix + Handlebars.helpers.type.call(reflectionType ? reflectionType : reflection, 'object'),
-        '\n```',
-      ].join('')
-    }
 
     if (this.flags && this.flags.length > 0 && !this.flags.isRest) {
       md.push(this.flags.map((flag) => flag.toLowerCase()).join(' '), ' ')
@@ -48,6 +45,8 @@ export default function (_theme: MarkdownTheme) {
     if (!(this.type instanceof LiteralType) && this.defaultValue && this.defaultValue !== '...') {
       md.push(` = \`${stripLineBreaks(stripComments(this.defaultValue))}\``)
     }
+
+    md.push('\n```')
     return md.join('')
   })
 }

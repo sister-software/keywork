@@ -32,8 +32,8 @@ export default function () {
     }
     return md.join('\n\n')
   })
+}
 
-  function getSymbol(level: number) {
-    return spaces(2) + [...Array(level)].map(() => '↳').join('')
-  }
+function getSymbol(level: number) {
+  return spaces(2) + [...Array(level)].map(() => '↳').join('')
 }

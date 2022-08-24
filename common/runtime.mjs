@@ -10,16 +10,21 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- * @packageDocumentation
- * @module Keywork#DatetimeUtils
  */
-/* eslint-disable header/header */
 
-/** 5 minutes in milliseconds. */
-export const DURATION_FIVE_MINUTES = 60 * 5 * 1000
-/** 1 hour in milliseconds. */
-export const DURATION_ONE_HOUR = 60 * 60 * 1000
-/** 1 day in milliseconds. */
-export const DURATION_ONE_DAY = 24 * 60 * 60 * 1000
-/** 1 week in milliseconds. */
-export const DURATION_ONE_WEEK = DURATION_ONE_DAY * 7
+export const runtimePattern = /runtime="([\w]+)"/
+
+const runtimeLabels = {
+  cloudflare: 'Cloudflare Workers',
+  deno: 'Deno',
+  browser: 'Browser/ESM',
+  node: 'Node',
+}
+
+/**
+ *
+ * @param {string} runtime
+ */
+export function runtimeToTabLabel(runtime) {
+  return runtimeLabels[runtime] || runtime
+}

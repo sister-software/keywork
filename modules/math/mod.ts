@@ -10,7 +10,10 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
+ * @packageDocumentation
+ * @module Keywork#MathUtils
  */
+/* eslint-disable header/header */
 
 /**
  * Limits a given number to minimum and maximum domain.

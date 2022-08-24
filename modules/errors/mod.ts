@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  *
  * @packageDocumentation
- * @module Errors
+ * @module Keywork#Errors
  */
 /* eslint-disable header/header */
 

@@ -1,10 +1,5 @@
 /* eslint-disable no-restricted-globals */
 /* eslint-disable header/header */
-/**
- * @packageDocumentation
- * @module polyfills.ReadableStream
- * @ignore
- */
 
 /**
  * @file This file is part of the Keywork project.
@@ -19,6 +14,9 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  *
+ * @packageDocumentation
+ * @module Keywork#Polyfills#ReadableStream
+ * @ignore
  */
 
 /**

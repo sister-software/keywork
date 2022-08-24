@@ -39,10 +39,8 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
         throw new Error(`${entryPointPath} not found`)
       }
 
-      const displayName = sourceFile.moduleName || namedExport
-
       entryPoints.push({
-        displayName,
+        displayName: namedExport,
         program: this.program,
         sourceFile,
       })

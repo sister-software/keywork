@@ -17,18 +17,33 @@ import { Comment } from 'typedoc'
 import { camelToTitleCase } from '../../utils.ts'
 
 export default function () {
-  Handlebars.registerHelper('comments', function (comment: Comment) {
+  Handlebars.registerHelper('comments', function (comment: Comment, includeHTMLWrappers = true) {
     const md: string[] = []
+    const blockTags = comment.blockTags?.filter((tag) => tag.tag !== '@returns') || []
 
-    if (comment.summary) {
-      md.push(Handlebars.helpers.comment(comment.summary))
+    if (comment.summary && includeHTMLWrappers) {
+      md.push(
+        //
+        `<div className="comment-summary">`,
+        Handlebars.helpers.comment(comment.summary),
+        '</div>'
+      )
     }
 
-    if (comment.blockTags?.length) {
-      const tags = comment.blockTags
-        .filter((tag) => tag.tag !== '@returns')
-        .map((tag) => `**\`${camelToTitleCase(tag.tag.substring(1))}\`**\n\n${Handlebars.helpers.comment(tag.content)}`)
-      md.push(tags.join('\n\n'))
+    for (const tag of blockTags) {
+      const tagID = tag.tag.slice(1)
+      const tagName = camelToTitleCase(tagID)
+
+      if (includeHTMLWrappers) {
+        md.push(
+          `#### ${tagName}`,
+          `<div className="comment-summary" data-tag="${tagID}">`,
+          Handlebars.helpers.comment(tag.content),
+          '</div>'
+        )
+      } else {
+        md.push(`**\`${tagName}\`**\n\n${Handlebars.helpers.comment(tag.content)}`)
+      }
     }
 
     return md.join('\n\n')

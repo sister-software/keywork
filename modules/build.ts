@@ -191,7 +191,7 @@ async function build(transformOutput: TransformOutput) {
   }
 
   const program = project.createProgram()
-  const app = new DocusaurusTypeDoc(program, packageJSON.exports)
+  const typeDocApp = new DocusaurusTypeDoc(program, packageJSON.exports)
 
   logger.log('Emitting project files...')
   const emitResult = program.emit(
@@ -227,7 +227,7 @@ async function build(transformOutput: TransformOutput) {
   logger.log('Generating documentation...')
   const docsOutPath = path.join(ProjectFiles.DocsAPIDirectory)
 
-  app.bootstrap({
+  typeDocApp.bootstrap({
     name: 'keywork',
     theme: 'markdown',
     out: docsOutPath,
@@ -246,13 +246,13 @@ async function build(transformOutput: TransformOutput) {
     allReflectionsHaveOwnDocument: true,
   })
 
-  const typeDocProject = app.convert()
+  const typeDocProject = typeDocApp.convert()
 
   if (!typeDocProject) {
     return
   }
 
-  await app.generateDocs(typeDocProject, docsOutPath)
+  await typeDocApp.generateDocs(typeDocProject, docsOutPath)
 }
 
 await Promise.all([emptyDir(outDir), emptyDir(ProjectFiles.DocsAPIDirectory)])

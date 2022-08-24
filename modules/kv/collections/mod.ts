@@ -22,7 +22,7 @@
  * - Extends Worker KV's API without abstracting away important details.
  *
  * @packageDocumentation
- * @module collections
+ * @module Keywork#KV#Collections
  */
 
 export * from './KeyworkCollection.ts'

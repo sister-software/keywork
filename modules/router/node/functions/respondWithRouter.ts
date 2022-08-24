@@ -12,15 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * ### `keywork/router/node`
- *
- * Everything you need to handle incoming requests in a Worker environment.
- *
- * @packageDocumentation
- * @module router.node
- */
-
 import HTTP from '../../../http/mod.ts'
 
 import { IncomingMessage, ServerResponse } from 'http'

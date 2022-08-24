@@ -72,7 +72,7 @@ function table(parameters: any) {
     }
     if (hasComments) {
       if (parameter.comment) {
-        row.push(stripLineBreaks(Handlebars.helpers.comments(parameter.comment)).replace(/\|/g, '\\|'))
+        row.push(stripLineBreaks(Handlebars.helpers.comments(parameter.comment, false)).replace(/\|/g, '\\|'))
       } else {
         row.push('-')
       }
