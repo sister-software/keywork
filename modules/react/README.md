@@ -18,7 +18,7 @@ While optional, Keywork uses React as its primary HTML templating engine.
 
 If you haven't already, make sure to add the React peer dependencies:
 
-<Tabs groupId="node-install">
+<Tabs groupId="npm">
   <TabItem value="yarn" label="Yarn">
 
 ```shell title="Run in the root of your project."

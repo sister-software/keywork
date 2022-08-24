@@ -21,7 +21,7 @@ import TabItem from '@theme/TabItem'
 Designed with familiarity in mind, the server-side routing API is inspired by
 Express.js, React Router, and the native Cloudflare Workers platform.
 
-<Tabs groupId="router">
+<Tabs groupId="runtime">
   <TabItem value="Cloudflare Workers">
 
 ```ts title="worker.ts"
@@ -38,8 +38,6 @@ export default app
 
   <TabItem value="Deno">
 
-Deno support is experimental, but should behave similar to Cloudflare Workers:
-
 ```ts title="./your-project/server/mod.tsx"
 import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
 import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
@@ -50,7 +48,7 @@ serve((request) => app.fetch(request))
 
   </TabItem>
 
-  <TabItem value="Browser">
+  <TabItem value="Browser/ESM">
 
 ```ts title="worker.ts"
 import { KeyworkRouter } from 'https://esm.sh/keywork/router'

@@ -10,7 +10,11 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
+ *
+ * @packageDocumentation
+ * @module Keywork#React#Browser
  */
+/* eslint-disable header/header */
 
 export * from './KeyworkApp.tsx'
 export * from './KeyworkPatternToPageComponent.tsx'

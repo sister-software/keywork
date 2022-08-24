@@ -10,6 +10,10 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
+ *
+ * @packageDocumentation
+ * @module Keywork#Router#Cloudflare
  */
+/* eslint-disable header/header */
 
 export * from './classes/mod.ts'
