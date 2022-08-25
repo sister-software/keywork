@@ -1,4 +1,7 @@
 /**
+ * @packageDocumentation
+ * @module Keywork#StringUtils
+ *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -10,9 +13,6 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- *
- * @packageDocumentation
- * @module Keywork#StringUtils
  */
 /* eslint-disable header/header */
 

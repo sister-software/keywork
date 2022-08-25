@@ -16,8 +16,8 @@ import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } f
 import React from 'https://esm.sh/react@18.2.0'
 import { Status } from '../../errors/mod.ts'
 import { KeyworkHeaders } from '../../http/headers/mod.ts'
-import HTTP from '../../http/mod.ts'
-import { JSONResponse } from '../../http/response/mod.ts'
+import { JSONResponse } from '../../http/mod.ts'
+import HTTP from '../../__internal/http.ts'
 import { KeyworkRouter } from './KeyworkRouter.ts'
 
 interface HelloResponseBody extends Record<PropertyKey, unknown> {

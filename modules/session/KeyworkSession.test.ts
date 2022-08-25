@@ -15,8 +15,8 @@
 import { assert, assertEquals } from 'deno/testing/asserts'
 import { parse as parseCookies } from 'https://esm.sh/cookie@0.5.0'
 import { CookieHeaders } from '../http/headers/mod.ts'
-import HTTP from '../http/mod.ts'
 import { KeyworkRouter } from '../router/mod.ts'
+import HTTP from '../__internal/http.ts'
 import { SessionMiddleware } from './mod.ts'
 
 Deno.test('Session Middleware', async () => {

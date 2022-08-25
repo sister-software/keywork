@@ -1,8 +1,4 @@
 /**
- *
- * @packageDocumentation
- * @module Keywork#Logger
- *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -15,7 +11,10 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-/* eslint-disable header/header */
 
-export * from './classes/Logger.ts'
-export * from './functions/prettyJSON.ts'
+/**
+ * Normalized HTTP methods in a JavaScript friendly format.
+ *
+ * @see {KeyworkRouter}
+ */
+export type RouterMethod = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options' | 'all'

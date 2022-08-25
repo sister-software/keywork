@@ -28,7 +28,7 @@
     "node": ">= 17.4"
   },
   "scripts": {
-    "build": "deno run --unstable -A ./build.ts",
+    "build": "deno run --unstable -A ./__internal/build.ts",
     "test": "deno test --coverage=./cov .",
     "test:coverage": "deno coverage --lcov ./cov"
   },
@@ -88,25 +88,10 @@
       "import": "./logger/mod.js",
       "require": "./logger/mod.js"
     },
-    "./math": {
-      "types": "./math/mod.d.ts",
-      "import": "./math/mod.js",
-      "require": "./math/mod.js"
-    },
     "./strings": {
       "types": "./strings/mod.d.ts",
       "import": "./strings/mod.js",
       "require": "./strings/mod.js"
-    },
-    "./datetime": {
-      "types": "./datetime/mod.d.ts",
-      "import": "./datetime/mod.js",
-      "require": "./datetime/mod.js"
-    },
-    "./json": {
-      "types": "./json/mod.d.ts",
-      "import": "./json/mod.js",
-      "require": "./json/mod.js"
     },
     "./timers/browser": {
       "types": "./timers/browser/mod.d.ts",
@@ -158,26 +143,6 @@
       "import": "./http/headers/content-encoding/mod.js",
       "require": "./http/headers/content-encoding/mod.js"
     },
-    "./http/request": {
-      "types": "./http/request/mod.d.ts",
-      "import": "./http/request/mod.js",
-      "require": "./http/request/mod.js"
-    },
-    "./http/request/cloudflare": {
-      "types": "./http/request/cloudflare/mod.d.ts",
-      "import": "./http/request/cloudflare/mod.js",
-      "require": "./http/request/cloudflare/mod.js"
-    },
-    "./http/response": {
-      "types": "./http/response/mod.d.ts",
-      "import": "./http/response/mod.js",
-      "require": "./http/response/mod.js"
-    },
-    "./stream": {
-      "types": "./stream/mod.d.ts",
-      "import": "./stream/mod.js",
-      "require": "./stream/mod.js"
-    },
     "./react": {
       "types": "./react/mod.d.ts",
       "import": "./react/mod.js",
@@ -222,11 +187,6 @@
       "types": "./uri/mod.d.ts",
       "import": "./uri/mod.js",
       "require": "./uri/mod.js"
-    },
-    "./polyfills": {
-      "types": "./polyfills/mod.d.ts",
-      "import": "./polyfills/mod.js",
-      "require": "./polyfills/mod.js"
     },
     "./polyfills/worker/ReadableStream": {
       "types": "./polyfills/worker/ReadableStream/mod.d.ts",

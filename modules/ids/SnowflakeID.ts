@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { hexToDec } from '../math/mod.ts'
+import { hexToDec } from '../__internal/math.ts'
 
 /**
  * A basic implementation of Twitter's original Snowflake ID system.

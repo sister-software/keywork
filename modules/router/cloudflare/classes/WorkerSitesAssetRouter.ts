@@ -15,7 +15,7 @@
 import { getAssetFromKV } from 'https://esm.sh/@cloudflare/kv-asset-handler@0.2.0'
 import type { AssetManifestType } from 'https://esm.sh/@cloudflare/kv-asset-handler@0.2.0/dist/types'
 import { KeyworkResourceError, Status } from '../../../errors/mod.ts'
-import { ErrorResponse } from '../../../http/response/mod.ts'
+import { ErrorResponse } from '../../../http/mod.ts'
 import type { KVNamespace } from '../../../__internal/interfaces/kv.ts'
 import { KeyworkRouter } from '../../classes/KeyworkRouter.ts'
 import { RouteRequestHandler } from '../../interfaces/RouteRequestHandler.ts'

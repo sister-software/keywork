@@ -3,6 +3,48 @@
  * providing structured guidence as your web app grows,
  * without locking you into a specific pattern.
  *
+ * Features are categorized into modules that can be imported directly:
+ *
+ * ```ts title="worker.ts" runtime="cloudflare"
+ * // highlight-next-line
+ * import { KeyworkRouter } from 'keywork/router'
+ *
+ * const app = new KeyworkRouter()
+ *
+ * app.get('/', () => 'Hello there! 👋')
+ *
+ * export default app
+ * ```
+ *
+ * ```ts title="./your-project/server/mod.tsx" runtime="deno"
+ * // highlight-next-line
+ * import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
+ * import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
+ *
+ * const app = new KeyworkRouter()
+ * serve((request) => app.fetch(request))
+ * ```
+ *
+ * ```ts title="worker.ts" runtime="browser"
+ * // highlight-next-line
+ * import { KeyworkRouter } from 'https://esm.sh/keywork/router'
+ *
+ * const app = new KeyworkRouter()
+ *
+ * app.get('/', () => 'Hello there! 👋')
+ * ```
+ *
+ * ::: tip
+ *
+ * While Keywork has many modules,
+ * modern bundlers and transpilers such as [ESBuild](https://esbuild.github.io/)
+ * will intelligently bundle only the Keywork modules you include in your web app.
+ *
+ * A full list of Keywork's modules are available in the navigation menu, however
+ * the most popular are shown below.
+ *
+ * :::
+ *
  * @packageDocumentation
  * @module Keywork
  *
@@ -21,16 +63,6 @@
 
 /* eslint-disable header/header */
 
-/**
- * ```ts
- * import { DatetimeUtils } from 'keywork'
- * import * as mod from 'keywork/datetime'
- * ```
- *
- * {@link Keywork#DatetimeUtils **_Explore the Datetime Utilities Module_ ›**}
- */
-export * as DatetimeUtils from './datetime/mod.ts'
-//
 /**
  * Whether you're handling errors in your V8 Worker, Node.JS, or even the browser,
  * Keywork includes error utilities that pair nicely with HTTP requests.
@@ -55,17 +87,6 @@ export * as DatetimeUtils from './datetime/mod.ts'
  */
 export * as Errors from './errors/mod.ts'
 //
-/**
- * Keywork uses the JavaScript [Events API](https://developer.mozilla.org/en-US/docs/Web/API/Event)
- * internally to handle HTTP requests.
- *
- * ```ts
- * import { Events } from 'keywork'
- * import * as Events from 'keywork/events'
- * ```
- *
- * {@link Keywork#Events **_Explore the Events Module_ ›**}
- */
 export * as Events from './events/mod.ts'
 //
 /**
@@ -82,54 +103,35 @@ export * as Events from './events/mod.ts'
 export * as FileUtils from './files/mod.ts'
 //
 /**
+ * Keywork includes utilities for working with incoming HTTP requests,
+ * and extends the native [`Request` class](https://developer.mozilla.org/en-US/docs/Web/API/Request)
+ * for use with [Cloudflare Workers](https://developers.cloudflare.com/workers/runtime-apis/request/#requestinitcfproperties)
+ *
+ * See each of HTTP's submodules for additional details.
+ *
  * ```ts
- * import { HTTP } from 'keywork'
- * import * as HTTPod from 'keywork/http'
+ * import { CachableResponse, ErrorResponse, isRedirection, ...etc } from 'keywork/http'
  * ```
  *
  * {@link Keywork#HTTP **_Explore the HTTP Module_ ›**}
  */
 export * as HTTP from './http/mod.ts'
-//
-/**
- * ```ts
- * import { IDUtils } from 'keywork'
- * import * as IDUtilsfrom 'keywork/ids'
- * ```
- *
- * {@link Keywork#IDUtils **_Explore the ID Utilities Module_ ›**}
- */
 export * as IDUtils from './ids/mod.ts'
 //
 /**
- * ```ts
- * import { JSONUtils } from 'keywork'
- * import * as mod from 'keywork/json'
- * ```
+ * Keywork includes an isomorphic logger available in both browser and worker environments.
  *
- * {@link Keywork#JSONUtils **_Explore the JSON Utilities Module_ ›**}
- */
-export * as JSONUtils from './json/mod.ts'
-//
-/**
  * ```ts
- * import { Logger } from 'keywork'
  * import * as mod from 'keywork/logger'
+ * const logger = new Logger('Todo API')
+ *
+ * logger.info('Fetching todo', todoID)
+ * logger.error('Unexpected error')
  * ```
  *
  * {@link Keywork#Logger **_Explore the Logger Module_ ›**}
  */
 export * as Logger from './logger/mod.ts'
-//
-/**
- * ```ts
- * import { MathUtils } from 'keywork'
- * import * as mod from 'keywork/math'
- * ```
- *
- * {@link Keywork#MathUtils **_Explore the Math Utilities Module_ ›**}
- */
-export * as MathUtils from './math/mod.ts'
 //
 /**
  * While optional, Keywork uses React as its primary HTML templating engine.
@@ -184,8 +186,7 @@ export * as Session from './session/mod.ts'
 //
 /**
  * ```ts
- * import { StringUtils } from 'keywork'
- * import * as mod from 'keywork/strings'
+ * import {arrayBufferToString, arrayBufferToBase64, ...etc} from 'keywork/strings'
  * ```
  *
  * {@link Keywork#StringUtils **_Explore the String Utilities Module_ ›**}
@@ -203,6 +204,10 @@ export * as StringUtils from './strings/mod.ts'
 export * as TimerUtils from './timers/browser/mod.ts'
 //
 /**
+ * Keywork uses JavaScript's built-in [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern) to create pattern matchers.
+ * The syntax is based on [path-to-regexp](https://github.com/pillarjs/path-to-regexp).
+ * Wildcards, named capture groups, regular groups, and group modifiers are all supported.
+ *
  * ```ts
  * import { URIUtils } from 'keywork'
  * import * as mod 'keywork/uri'
@@ -211,4 +216,3 @@ export * as TimerUtils from './timers/browser/mod.ts'
  * {@link Keywork#URIUtils **_Explore the URI Module_ ›**}
  */
 export * as URIUtils from './uri/mod.ts'
-//

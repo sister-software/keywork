@@ -86,7 +86,6 @@ class MockReadableStreamDefaultController implements ReadableStreamDefaultContro
  * @public
  *
  * @category Worker Polyfills
- * @ignore
  */
 export class ReadableStream<R = any> implements globalThis.ReadableStream<R> {
   private _readable: globalThis.ReadableStream

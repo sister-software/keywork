@@ -1,12 +1,10 @@
 /**
- * Keywork includes utilities for working with incoming HTTP requests,
- * and extends the native [`Request` class](https://developer.mozilla.org/en-US/docs/Web/API/Request)
- * for use with [Cloudflare Workers](https://developers.cloudflare.com/workers/runtime-apis/request/#requestinitcfproperties)
- *
- * See each of HTTP's submodules for additional details.
+ * :::info
+ * While this module is used internally by Keywork, the functions are available for use.
+ * :::
  *
  * @packageDocumentation
- * @module Keywork#HTTP
+ * @module Keywork#Stream
  *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
@@ -22,8 +20,14 @@
  */
 /* eslint-disable header/header */
 
-export * from './classes/mod.ts'
-export * from './functions/mod.ts'
-export * from './interfaces/mod.ts'
-export * from './types/mod.ts'
-export * from './variables/mod.ts'
+import { polyfillWithModule } from './functions/polyfillWithModule.ts'
+
+export type StreamExports = Pick<typeof globalThis, 'TransformStream' | 'ReadableStream' | 'WritableStream'>
+
+const Stream = await polyfillWithModule<StreamExports>('node:stream/web', [
+  'TransformStream',
+  'ReadableStream',
+  'WritableStream',
+])
+
+export default Stream

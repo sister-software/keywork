@@ -1,7 +1,5 @@
 /**
- * Keywork includes utilities for working with incoming HTTP requests,
- * and extends the native [`Request` class](https://developer.mozilla.org/en-US/docs/Web/API/Request)
- * for use with [Cloudflare Workers](https://developers.cloudflare.com/workers/runtime-apis/request/#requestinitcfproperties)
+ * Keywork includes utilities for working with HTTP lifecycles.
  *
  * See each of HTTP's submodules for additional details.
  *
@@ -22,8 +20,10 @@
  */
 /* eslint-disable header/header */
 
-export * from './classes/mod.ts'
-export * from './functions/mod.ts'
-export * from './interfaces/mod.ts'
-export * from './types/mod.ts'
-export * from './variables/mod.ts'
+import { polyfillWithModule } from './functions/polyfillWithModule.ts'
+
+export type HTTPExports = Pick<typeof globalThis, 'Request' | 'Headers' | 'Response'>
+
+const HTTP = await polyfillWithModule<HTTPExports>('undici', ['Request', 'Headers', 'Response'])
+
+export default HTTP

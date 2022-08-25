@@ -1,8 +1,4 @@
 /**
- *
- * @packageDocumentation
- * @module Keywork#Logger
- *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -15,7 +11,16 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-/* eslint-disable header/header */
 
-export * from './classes/Logger.ts'
-export * from './functions/prettyJSON.ts'
+import { HTTPMethod } from '../types/HTTPMethod.ts'
+import { RouterMethod } from '../types/RouterMethod.ts'
+import { methodVerbToRouterMethod } from './methodVerbToRouterMethod.ts'
+
+/**
+ * Given a standardized uppercase method verb such as `GET`, return the normalized form.
+ */
+export const routerMethodToHTTPMethod = new Map<RouterMethod, HTTPMethod>(
+  Array.from(methodVerbToRouterMethod.entries(), ([httpMethod, routerMethod]) => {
+    return [routerMethod, httpMethod]
+  })
+)

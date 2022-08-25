@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import HTTP from '../../../http/mod.ts'
+import HTTP from '../../../__internal/http.ts'
 
 import { IncomingMessage, ServerResponse } from 'http'
 import { IsomorphicFetchEvent } from '../../../events/mod.ts'
-import { readGlobalScope } from '../../../polyfills/mod.ts'
+import { readGlobalScope } from '../../../__internal/functions/readGlobalScope.ts'
 import { KeyworkRouter } from '../../classes/KeyworkRouter.ts'
 
 /** @internal */

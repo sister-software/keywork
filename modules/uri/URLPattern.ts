@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { polyfillWithModule } from '../polyfills/mod.ts'
+import { polyfillWithModule } from '../__internal/functions/polyfillWithModule.ts'
 
 type URLPatternModule = {
   URLPattern: typeof URLPattern

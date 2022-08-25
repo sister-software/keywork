@@ -13,7 +13,7 @@
  */
 
 import type { IsomorphicFetchEvent } from '../../events/mod.ts'
-import type { ResponseLike } from '../../http/response/mod.ts'
+import type { ResponseLike } from '../../http/mod.ts'
 import type { MiddlewareFetch } from './MiddlewareFetch.ts'
 
 /**

@@ -1,8 +1,4 @@
 /**
- *
- * @packageDocumentation
- * @module Keywork#Logger
- *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -15,7 +11,20 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-/* eslint-disable header/header */
 
-export * from './classes/Logger.ts'
-export * from './functions/prettyJSON.ts'
+/**
+ * An object that has a `url` property.
+ *
+ * @category Type Cast
+ * @ignore
+ */
+export type RequestLike = { url: string }
+
+/**
+ * Checks if the given object is shaped like a `Request`
+ * @param requestish An object that's possibly a `Request`
+ * @category Type Cast
+ */
+export function isRequestLike(requestish: unknown): requestish is RequestLike {
+  return Boolean(requestish && typeof requestish === 'object' && (requestish as any).url)
+}

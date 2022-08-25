@@ -1,8 +1,4 @@
 /**
- *
- * @packageDocumentation
- * @module Keywork#Logger
- *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -15,7 +11,14 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-/* eslint-disable header/header */
 
-export * from './classes/Logger.ts'
-export * from './functions/prettyJSON.ts'
+import HTTP from '../../__internal/http.ts'
+
+/**
+ * Checks if the given object is an instance of `Request`
+ * @param requestish An object that's possibly a `Request`
+ * @category Type Cast
+ */
+export function isInstanceOfRequest(requestish: unknown): requestish is globalThis.Request {
+  return Boolean(requestish instanceof globalThis.Request || requestish instanceof HTTP.Request)
+}

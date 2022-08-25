@@ -18,9 +18,9 @@
  */
 /* eslint-disable header/header */
 
-import { DURATION_ONE_WEEK } from '../../../datetime/mod.ts'
 import { KeyworkResourceError, Status } from '../../../errors/mod.ts'
 import { arrayBufferToBase64, stringToArrayBuffer } from '../../../strings/mod.ts'
+import { DURATION_ONE_WEEK } from '../../../__internal/datetime.ts'
 
 export interface CachingHeaders {
   /** The time, in seconds, that the object has been in a proxy cache. */

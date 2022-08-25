@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import HTTP from '../../http/mod.ts'
 import { Logger } from '../../logger/mod.ts'
+import HTTP from '../../__internal/http.ts'
 import { RouteRequestHandler } from '../interfaces/RouteRequestHandler.ts'
 
 /** @ignore */

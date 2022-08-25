@@ -13,7 +13,7 @@
  */
 
 import { Status } from '../../../errors/mod.ts'
-import { ErrorResponse } from '../../../http/response/mod.ts'
+import { ErrorResponse } from '../../../http/mod.ts'
 import { KeyworkRouter } from '../../classes/KeyworkRouter.ts'
 import type { KeyworkRouterOptions } from '../../interfaces/KeyworkRouterOptions.ts'
 import type { RouteRequestHandler } from '../../interfaces/RouteRequestHandler.ts'
