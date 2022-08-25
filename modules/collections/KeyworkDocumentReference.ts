@@ -13,16 +13,16 @@
  */
 
 import deepmerge from 'https://esm.sh/deepmerge@4.2.2'
-import { convertJSONToETaggableString, generateETag } from '../../http/headers/caching/mod.ts'
-import { KeyworkResourceError } from '../../errors/mod.ts'
-import type { KVNamespace } from '../../kv/cloudflare/mod.ts'
-import { resolvePathSegments } from '../../uri/mod.ts'
+import { KeyworkResourceError } from '../errors/mod.ts'
+import { convertJSONToETaggableString, generateETag } from '../http/headers/caching/mod.ts'
+import { resolvePathSegments } from '../uri/mod.ts'
+import type { KVNamespace } from '../__internal/interfaces/kv.ts'
+import type { KeyworkCollection } from './KeyworkCollection.ts'
 import type {
   DeserializationTransformers,
   DeserializationTypes,
   PutOrPatchOptions,
 } from './KeyworkCollection/common.ts'
-import type { KeyworkCollection } from './KeyworkCollection.ts'
 import {
   generateDocumentMetadata,
   isETaggable,

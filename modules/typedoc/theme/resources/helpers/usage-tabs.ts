@@ -11,24 +11,19 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-import dashify from 'dashify'
 import Handlebars from 'handlebars'
 import { PageEvent, SignatureReflection } from 'typedoc'
-import { MarkdownTheme } from '../../theme.ts'
-import { escapeChars } from '../../utils.ts'
-import { parseModel } from '../../utils/model.ts'
+import { createUsageMap, parseModel, renderBrowserDemo, renderUsageTabs } from '../../utils/model.ts'
 
-export default function (_theme: MarkdownTheme) {
-  Handlebars.registerHelper('reflectionTitle', function <
-    T extends SignatureReflection
-  >(this: PageEvent<T>, shouldEscape = true) {
+export default function () {
+  Handlebars.registerHelper('usageTabs', function <T extends SignatureReflection>(this: PageEvent<T>) {
     const parsedModel = parseModel(this.model)
+    const usageByRuntime = createUsageMap(parsedModel)
 
     return [
-      `# ${shouldEscape ? escapeChars(parsedModel.title) : parsedModel.title} {.kind-${dashify(
-        parsedModel.kindString
-      )}}`,
-      parsedModel.isModule ? '## Module Overview' : '## Overview',
+      '## Usage',
+      renderUsageTabs(usageByRuntime),
+      usageByRuntime.has('browser') ? renderBrowserDemo(usageByRuntime.get('browser')!) : '',
     ].join('\n\n')
   })
 }

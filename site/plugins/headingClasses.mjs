@@ -22,7 +22,6 @@ export function headingClasses() {
       let matched = string.match(/ {\.([^]+?)}$/)
 
       if (matched) {
-        // console.log('>>>>', matched)
         let className = matched[1]
         if (className.length) {
           if (!node.data) {

@@ -12,9 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * @ignore
- */
-export interface Disposable {
-  dispose(reason?: string): void | Promise<void>
-}
+export * from './createBrowserBuildOptions.ts'
+export * from './createWorkerBuildOptions.ts'

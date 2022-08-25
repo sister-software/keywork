@@ -25,7 +25,7 @@ const transformNode = (node, runtime) => {
   return [
     {
       type: 'jsx',
-      value: `<TabItem value="${runtime}" label="${runtimeToTabLabel(runtime)}">`,
+      value: `\n<TabItem value="${runtime}" label="${runtimeToTabLabel(runtime)}">\n`,
     },
     {
       type: node.type,
@@ -34,10 +34,12 @@ const transformNode = (node, runtime) => {
     },
     {
       type: 'jsx',
-      value: '</TabItem>',
+      value: '\n</TabItem>\n',
     },
   ]
 }
+
+const isImport = (node) => node.type === 'import'
 
 /**
  *
@@ -45,13 +47,17 @@ const transformNode = (node, runtime) => {
  * @returns
  */
 function matchRuntimeTag(node) {
-  return node.type === 'code' && runtimePattern.exec(node.meta || '')
+  if (!node || node.type !== 'code') return null
+
+  return (node.meta || '').match(runtimePattern)
 }
 
-// const nodeForImport = {
-//   type: 'import',
-//   value: "import Tabs from '@theme/Tabs';\nimport TabItem from '@theme/TabItem';",
-// }
+const nodeForImport = {
+  type: 'import',
+  value: "\nimport Tabs from '@theme/Tabs';\nimport TabItem from '@theme/TabItem';\n",
+}
+
+const insertImports = false
 
 export function polygotPlugin() {
   /**
@@ -60,11 +66,77 @@ export function polygotPlugin() {
    * @returns
    */
   function visitor(node) {
+    let alreadyImported = false
+
+    if (isImport(node) && node.value.includes('@theme/Tabs')) {
+      alreadyImported = true
+    }
+
     if (!Array.isArray(node.children)) return
 
-    let index = 0
-    const insertions = []
+    let tabGroupInserted = false
+    let indexOfCurrentTabGroup
 
+    const initialChildren = node.children.slice()
+    // Wrap the groups of code nodes in a tab group...
+    for (let i = 0; i < initialChildren.length; i++) {
+      const child = initialChildren[i]
+      const siblingIndex = i + 1
+      const sibling = initialChildren[siblingIndex]
+      const childMatches = matchRuntimeTag(child)
+      const siblingMatches = matchRuntimeTag(sibling)
+
+      if (childMatches) {
+        if (typeof indexOfCurrentTabGroup === 'undefined') {
+          // console.log(`The first match of type "${child.type}" is at index "${i}"`)
+          // console.log('Beginning tab group...')
+          tabGroupInserted = true
+          const childCurrentPosition = node.children.indexOf(child)
+
+          if (childCurrentPosition === -1) {
+            throw new Error(
+              `Could not find child of type ${child.type} at index "${i}" with current position "${childCurrentPosition}"`
+            )
+          }
+
+          node.children.splice(childCurrentPosition, 0, {
+            type: 'jsx',
+            value: `\n<Tabs groupId="runtime">\n`,
+          })
+
+          indexOfCurrentTabGroup = childCurrentPosition + 1
+        } else if (!siblingMatches && sibling) {
+          // console.log(`The current match's sibling is a "${sibling.type}" and isn't does not match`)
+          // console.log('Ending tab group...')
+
+          const siblingCurrentPosition = node.children.indexOf(sibling)
+          node.children.splice(siblingCurrentPosition, 0, {
+            type: 'jsx',
+            value: '\n</Tabs>\n',
+          })
+
+          indexOfCurrentTabGroup = undefined
+        } else if (i === initialChildren.length - 1 && typeof indexOfCurrentTabGroup !== 'undefined') {
+          // console.log('The last match is a runtime tag, but the tab group is still open.')
+          // console.log('Ending tab group...')
+
+          node.children.push({
+            type: 'jsx',
+            value: '\n</Tabs>\n',
+          })
+
+          indexOfCurrentTabGroup = undefined
+        }
+      }
+    }
+
+    if (typeof indexOfCurrentTabGroup !== 'undefined') {
+      // console.log('A dangling tab group exists. Should of ended it...')
+    }
+
+    let index = 0
+
+    // Wrap matching nodes with tab elements...
     while (index < node.children.length) {
       const child = node.children[index]
       const matches = matchRuntimeTag(child)
@@ -72,7 +144,6 @@ export function polygotPlugin() {
       if (matches) {
         const runtime = matches[1]
         const result = transformNode(child, runtime)
-        insertions.push(...result)
 
         node.children.splice(index, 1, ...result)
 
@@ -82,19 +153,8 @@ export function polygotPlugin() {
       }
     }
 
-    if (insertions.length) {
-      const beforeFirstInsertion = node.children.indexOf(insertions[0])
-      const afterLastInsertion = node.children.indexOf(insertions[insertions.length - 1]) + 2
-
-      node.children.splice(beforeFirstInsertion, 0, {
-        type: 'jsx',
-        value: `\n<Tabs groupId="runtime">\n`,
-      })
-
-      node.children.splice(afterLastInsertion, 0, {
-        type: 'jsx',
-        value: '\n</Tabs>\n',
-      })
+    if (insertImports && tabGroupInserted && !alreadyImported) {
+      node.children.unshift(nodeForImport)
     }
   }
 

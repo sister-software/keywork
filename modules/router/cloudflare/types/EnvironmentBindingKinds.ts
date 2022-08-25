@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KVNamespace } from '../../../kv/cloudflare/mod.ts'
-import type { DurableObjectNamespace } from '../interfaces/durable-objects.ts'
+import type { DurableObjectNamespace } from '../../../__internal/interfaces/durable-objects.ts'
+import type { KVNamespace } from '../../../__internal/interfaces/kv.ts'
 import type { WorkerEnvFetchBinding } from '../interfaces/WorkerEnvFetchBinding.ts'
 
 /**

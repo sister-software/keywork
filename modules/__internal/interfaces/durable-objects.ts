@@ -4,31 +4,31 @@
  * @see {@link https://github.com/cloudflare/miniflare}
  */
 
-/** @ignore */
+/** @internal */
 declare const kFetch: unique symbol
-/** @ignore */
+/** @internal */
 declare const kInstance: unique symbol
-/** @ignore */
+/** @internal */
 declare const kObjectName: unique symbol
 
-/** @ignore */
+/** @internal */
 export declare interface NewUniqueIdOptions {
   jurisdiction?: string
 }
-/** @ignore */
+/** @internal */
 export interface DurableObject {
   fetch(request: globalThis.Request): Promise<globalThis.Response>
 }
 
-/** @ignore */
+/** @internal */
 export interface DurableObjectConstructor {
   new (state: DurableObjectState, env: any): DurableObject
 }
 
-/** @ignore */
+/** @internal */
 export declare class DurableObjectError extends Error {}
 
-/** @ignore */
+/** @internal */
 export type DurableObjectErrorCode =
   | 'ERR_SCRIPT_NOT_FOUND'
   | 'ERR_CLASS_NOT_FOUND'
@@ -36,16 +36,16 @@ export type DurableObjectErrorCode =
   | 'ERR_DESERIALIZATION'
   | 'ERR_NO_HANDLER'
 
-/** @ignore */
+/** @internal */
 export type DurableObjectFactory = (id: DurableObjectId) => Promise<DurableObjectState>
 
-/** @ignore */
+/** @internal */
 export interface DurableObjectGetOptions {
   allowConcurrency?: boolean
   noCache?: boolean
 }
 
-/** @ignore */
+/** @internal */
 export declare class DurableObjectId {
   #private
   readonly name?: string | undefined;
@@ -55,7 +55,7 @@ export declare class DurableObjectId {
   toString(): string
 }
 
-/** @ignore */
+/** @internal */
 export declare interface DurableObjectListOptions extends DurableObjectGetOptions {
   start?: string
   end?: string
@@ -64,7 +64,7 @@ export declare interface DurableObjectListOptions extends DurableObjectGetOption
   limit?: number
 }
 
-/** @ignore */
+/** @internal */
 export declare class DurableObjectNamespace {
   #private
   constructor(objectName: string, factory: DurableObjectFactory, ctx?: any)
@@ -74,7 +74,7 @@ export declare class DurableObjectNamespace {
   get(id: DurableObjectId): DurableObjectStub
 }
 
-/** @ignore */
+/** @internal */
 export declare class DurableObjectState {
   #private
   readonly id: DurableObjectId
@@ -86,7 +86,7 @@ export declare class DurableObjectState {
   [kFetch](request: globalThis.Request): Promise<globalThis.Response>
 }
 
-/** @ignore */
+/** @internal */
 export declare class DurableObjectStub {
   #private
   readonly id: DurableObjectId

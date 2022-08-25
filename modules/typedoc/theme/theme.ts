@@ -36,8 +36,9 @@ import {
   registerPartials,
 } from './render-utils.ts'
 import { formatContents } from './utils.ts'
+import { readFileChangeFromGit } from './utils/sources.ts'
 
-const NEVER_RENDER: `@${string}`[] = ['@copyright', '@license', '@author', '@file']
+const NEVER_RENDER: `@${string}`[] = ['@copyright', '@license', '@author', '@file', '@deprecated']
 
 export interface CategoryConfig {
   name?: string
@@ -127,11 +128,19 @@ export class MarkdownTheme extends Theme {
   getUrls(project: ProjectReflection) {
     const urls: UrlMapping[] = []
 
-    // for (const refl of Object.values(project.reflections)) {
-    //   for (const source of refl.sources || []) {
-    //     readFileChangeFromGit(source)
-    //   }
-    // }
+    project.children?.forEach((child) => {
+      child.groups?.forEach((group) => {
+        if (group.title === 'References') {
+          group.title = 'Exports'
+        }
+      })
+    })
+
+    for (const reflection of Object.values(project.reflections)) {
+      for (const source of reflection.sources || []) {
+        readFileChangeFromGit(source)
+      }
+    }
 
     const noReadmeFile = this.readme.endsWith('none')
     if (noReadmeFile) {

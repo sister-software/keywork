@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { Disposable } from '../../disposable/mod.ts'
 import { KeyworkResourceError, Status } from '../../errors/mod.ts'
+import { Disposable } from '../../__internal/interfaces/disposable.ts'
 
 const kWaitUntil = Symbol('kWaitUntil')
 

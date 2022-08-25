@@ -29,7 +29,7 @@ export default function () {
     const tags: string[] = [kindString]
 
     if (isModule) {
-      frontMatter.set('position', '999')
+      frontMatter.set('sidebar_position', '-1')
     }
 
     const commentTags = model.comment?.getTags(`@tag`)
@@ -40,12 +40,12 @@ export default function () {
 
     frontMatter.set('id', isModule ? 'README' : model.getAlias())
 
-    if (model.originalName === '.') {
-      frontMatter.set('title', JSON.stringify('Module: Keywork'))
-      frontMatter.set('sidebar_label', 'Keywork')
+    if (model.originalName === 'Keywork') {
+      frontMatter.set('title', JSON.stringify('Keywork Modules'))
+      frontMatter.set('sidebar_label', 'Modules Overview')
     } else {
       frontMatter.set('title', JSON.stringify(isModule ? `${kindString}: ${title}` : title))
-      frontMatter.set('sidebar_label', JSON.stringify(model.originalName))
+      frontMatter.set('sidebar_label', isModule ? 'Module Overview' : JSON.stringify(model.originalName))
       frontMatter.set('pagination_label', JSON.stringify(isModule ? `${kindString}: ${title}` : title))
     }
 

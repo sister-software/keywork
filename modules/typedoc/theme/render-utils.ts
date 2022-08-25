@@ -14,13 +14,16 @@
 
 import Handlebars from 'handlebars'
 import * as path from 'path'
+import { fileURLToPath } from 'url'
 import attemptExternalResolution from './resources/helpers/attemptExternalResolution.ts'
 import breadcrumbsHelper from './resources/helpers/breadcrumbs.ts'
 import commentHelper from './resources/helpers/comment.ts'
 import commentsHelper from './resources/helpers/comments.ts'
 import declarationTitleHelper from './resources/helpers/declaration-title.ts'
 import escapeHelper from './resources/helpers/escape.ts'
+import frontmatter from './resources/helpers/frontmatter.ts'
 import hierarchyHelper from './resources/helpers/hierarchy.ts'
+import humanizeReflectionName from './resources/helpers/humanizeReflectionName.ts'
 import ifIsReference from './resources/helpers/if-is-reference.ts'
 import ifNamedAnchors from './resources/helpers/if-named-anchors.ts'
 import ifShowBreadcrumbsHelper from './resources/helpers/if-show-breadcrumbs.ts'
@@ -38,12 +41,11 @@ import relativeUrlHelper from './resources/helpers/relative-url.ts'
 import returns from './resources/helpers/returns.ts'
 import signatureTitleHelper from './resources/helpers/signature-title.ts'
 import tocHelper from './resources/helpers/toc.ts'
-import typeHelper from './resources/helpers/type.ts'
 import typeAndParentHelper from './resources/helpers/type-and-parent.ts'
 import typeParameterTableHelper from './resources/helpers/type-parameter-table.ts'
+import typeHelper from './resources/helpers/type.ts'
+import usageTabsHelper from './resources/helpers/usage-tabs.ts'
 import { MarkdownTheme } from './theme.ts'
-import { fileURLToPath } from 'url'
-import frontmatter from './resources/helpers/frontmatter.ts'
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
@@ -74,6 +76,7 @@ export function registerHelpers(theme: MarkdownTheme) {
   breadcrumbsHelper(theme)
   commentHelper(theme)
   commentsHelper()
+  humanizeReflectionName()
   declarationTitleHelper(theme)
   escapeHelper()
   hierarchyHelper()
@@ -89,6 +92,7 @@ export function registerHelpers(theme: MarkdownTheme) {
   propertyTableHelper()
   referenceMember()
   reflectionPathHelper()
+  usageTabsHelper()
   reflectionTitleHelper(theme)
   relativeUrlHelper(theme)
   returns()

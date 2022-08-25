@@ -1,4 +1,9 @@
 /**
+ * Using Keywork means that you'll spend less of your precious time configuring ESBuild,
+ * and more on the real task at hand — building great web apps.
+ *
+ * See [ESBuild Example](https://github.com/nirrius/keywork-starter-kit) for usage details.
+ *
  * @packageDocumentation
  * @module Keywork#Bundling#ESBuild
  *
@@ -16,5 +21,5 @@
  */
 /* eslint-disable header/header */
 
-export * from './browser.ts'
-export * from './worker.ts'
+export * from './functions/mod.ts'
+export * from './variables/BundledFileName.ts'

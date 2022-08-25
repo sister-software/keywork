@@ -1,9 +1,4 @@
 /**
- * Keywork provides utilities for working with runtimes that support key-value stores,
- * such as Cloudflare Workers.
- * @packageDocumentation
- * @module Keywork#KV
- *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -16,4 +11,28 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-/* eslint-disable header/header */
+
+import type { BuildOptions } from 'esbuild'
+
+/**
+ * ESBuild options for the browser bundle.
+ *
+ * @public
+ * @category ESBuild
+ */
+export function createBrowserBuildOptions(entryPoints: string[], outdir: string): BuildOptions {
+  return {
+    bundle: true,
+    entryPoints,
+    format: 'esm',
+    keepNames: true,
+    outdir,
+    platform: 'browser',
+    banner: {
+      js: `/**
+* @file This bundle is generated to run in browser environment.
+*/
+/* eslint-disable */`,
+    },
+  }
+}

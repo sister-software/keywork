@@ -15,10 +15,10 @@
 import { createContext, useContext } from 'https://esm.sh/react@18.2.0'
 
 /**
- * A convenience wrapper around `React.createContext` that creates a context and hook for the child components within a Provider's context.
+ * A convenience wrapper around `React.createContext` that
+ * creates a context and hook for the child components within a Provider's context.
  *
- * @example
- * Creating a named context Provider with a computed value.
+ * ### Creating a named context Provider with a computed value.
  *
  * ```tsx title=WidgetsProvider.tsx
  * const [WidgetsContext, useWidgetsContext] = createNamedContextHook<WidgetsProvider>()
@@ -34,7 +34,6 @@ import { createContext, useContext } from 'https://esm.sh/react@18.2.0'
  *   return <WidgetsContext.Provider value={value}>{children}</WidgetsContext.Provider>
  * }
  * ```
- * @param defaultValue
  * @returns contextTuple
  */
 export function createContextAndNamedHook<T>(

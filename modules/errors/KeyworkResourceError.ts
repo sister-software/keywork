@@ -27,15 +27,14 @@ export const $ClassID = 'Keywork.KeyworkResourceError'
 /**
  * An error class that feels fits nicely into an incoming HTTP request handler.
  *
- * @example
- *
  * ```ts
  * import { KeyworkResourceError, StatusCodes } from 'keywork/errors'
  *
- * if (isLoggedIn(someUser))
+ * if (isLoggedIn(someUser)) {
  *   throw new KeyworkResourceError("You must be logged in to do that", StatusCodes.UNAUTHORIZED)
  * }
- * if (someUser.role !== 'admin')
+ *
+ * if (someUser.role !== 'admin') {
  *   throw new KeyworkResourceError("Only an admin can access that", StatusCodes.FORBIDDEN)
  * }
  * ```

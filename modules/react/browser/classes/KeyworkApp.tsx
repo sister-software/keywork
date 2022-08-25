@@ -14,9 +14,9 @@
 
 import { hydrateRoot, HydrationOptions, Root } from 'https://esm.sh/react-dom@18.2.0/client'
 import React, { ReactNode } from 'https://esm.sh/react@18.2.0'
-import { Disposable } from '../../../disposable/mod.ts'
 import { KeyworkResourceError } from '../../../errors/mod.ts'
 import { Logger } from '../../../logger/mod.ts'
+import { Disposable } from '../../../__internal/interfaces/disposable.ts'
 import { KeyworkHTMLDocumentAppRoot } from '../../components/KeyworkHTMLDocument.tsx'
 import { RouteProvider } from '../../components/RouteProvider.tsx'
 import { StaticPropsProvider } from '../../components/StaticPropsProvider.tsx'

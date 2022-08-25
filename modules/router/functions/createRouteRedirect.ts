@@ -23,8 +23,7 @@ export type ResponseRedirectStatus = 301 | 302 | 303 | 307 | 308
  *
  * @returns The incoming request handler.
  *
- * @example
- * Creating a Worker that just redirects incoming requests.
+ * ### Creating a Worker that just redirects incoming requests.
  *
  * ```ts
  * const redirectToExample = new RedirectHandler('https://example.com')

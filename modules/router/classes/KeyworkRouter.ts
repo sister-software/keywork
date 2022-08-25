@@ -12,7 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Disposable } from '../../disposable/mod.ts'
 import { KeyworkResourceError, Status } from '../../errors/mod.ts'
 import { isExtendableEvent, IsomorphicFetchEvent } from '../../events/mod.ts'
 import { KeyworkHeaders } from '../../http/headers/mod.ts'
@@ -22,6 +21,7 @@ import { Logger } from '../../logger/mod.ts'
 import { ReactRendererOptions } from '../../react/mod.ts'
 import { renderReactStream } from '../../react/worker/mod.ts'
 import { normalizeURLPattern, normalizeURLPatternInput, URLPatternLike } from '../../uri/mod.ts'
+import { Disposable } from '../../__internal/interfaces/disposable.ts'
 import { isKeyworkFetcher } from '../functions/isKeyworkFetcher.ts'
 import { isMiddlewareDeclarationOption } from '../functions/isMiddlewareDeclarationOption.ts'
 import { KeyworkFetcher } from '../interfaces/KeyworkFetcher.ts'

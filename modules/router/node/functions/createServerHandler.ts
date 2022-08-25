@@ -24,8 +24,6 @@ export type ServerHandler = (req: IncomingMessage, res: ServerResponse) => void
 /**
  * Given a `KeyworkRouter`, creates a Node-compatible server handler.
  *
- * @example
- *
  * ```ts
  * import * as http from 'node:http'
  * import { KeyworkRouter } from 'keywork/router'

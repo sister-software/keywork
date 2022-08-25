@@ -25,8 +25,6 @@ export class ErrorResponse extends HTTP.Response {
   /**
    * Given an error-like object, attempt to respond with a `KeyworkResourceError`.
    *
-   * @example
-   *
    * ```ts
    * try {
    *   result = await fetchFoobarResource()

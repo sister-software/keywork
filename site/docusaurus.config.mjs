@@ -34,7 +34,8 @@ const presetOptions = {
       return url.toString()
     },
     showLastUpdateTime: true,
-    remarkPlugins: [polygotPlugin, headingClasses],
+    remarkPlugins: [polygotPlugin],
+    beforeDefaultRemarkPlugins: [headingClasses],
     rehypePlugins: [
       [
         relativeLinks,

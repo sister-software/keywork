@@ -31,8 +31,6 @@ function readNodeEnv<BoundAliases = {}>(): BoundAliases {
 /**
  * Given a `KeyworkRouter`, responds to an incoming request from a Node server.
  *
- * @example
- *
  * ```ts
  * import * as http from 'node:http'
  * import { KeyworkRouter } from 'keywork/router'

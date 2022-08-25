@@ -12,12 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from '../../errors/mod.ts'
-import type { KVNamespace } from '../cloudflare/mod.ts'
-import { PathBuilder, resolvePathSegments } from '../../uri/mod.ts'
+import { KeyworkResourceError } from '../errors/mod.ts'
+import { PathBuilder, resolvePathSegments } from '../uri/mod.ts'
+import type { KVNamespace } from '../__internal/interfaces/kv.ts'
 import type {
-  DeserializationTypes,
   CollectionDocumentReferencesResponse,
+  DeserializationTypes,
   FetchListOptions,
 } from './KeyworkCollection/common.ts'
 import {

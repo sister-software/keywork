@@ -68,11 +68,6 @@
       "import": "./mod.js",
       "require": "./mod.js"
     },
-    "./bundling": {
-      "types": "./bundling/mod.d.ts",
-      "import": "./bundling/mod.js",
-      "require": "./bundling/mod.js"
-    },
     "./bundling/esbuild": {
       "types": "./bundling/esbuild/mod.d.ts",
       "import": "./bundling/esbuild/mod.js",
@@ -108,11 +103,6 @@
       "import": "./datetime/mod.js",
       "require": "./datetime/mod.js"
     },
-    "./disposable": {
-      "types": "./disposable/mod.d.ts",
-      "import": "./disposable/mod.js",
-      "require": "./disposable/mod.js"
-    },
     "./json": {
       "types": "./json/mod.d.ts",
       "import": "./json/mod.js",
@@ -133,15 +123,10 @@
       "import": "./ids/mod.js",
       "require": "./ids/mod.js"
     },
-    "./kv/cloudflare": {
-      "types": "./kv/cloudflare/mod.d.ts",
-      "import": "./kv/cloudflare/mod.js",
-      "require": "./kv/cloudflare/mod.js"
-    },
-    "./kv/collections": {
-      "types": "./kv/collections/mod.d.ts",
-      "import": "./kv/collections/mod.js",
-      "require": "./kv/collections/mod.js"
+    "./collections": {
+      "types": "./collections/mod.d.ts",
+      "import": "./collections/mod.js",
+      "require": "./collections/mod.js"
     },
     "./http": {
       "types": "./http/mod.d.ts",

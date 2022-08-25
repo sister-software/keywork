@@ -1,6 +1,6 @@
 /**
  * Keywork uses the JavaScript [Events API](https://developer.mozilla.org/en-US/docs/Web/API/Event)
- * to handle HTTP requests.
+ * internally to handle HTTP requests.
  *
  * ## Related Entries
  *

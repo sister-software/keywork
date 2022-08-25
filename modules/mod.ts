@@ -30,23 +30,35 @@
  * {@link Keywork#DatetimeUtils **_Explore the Datetime Utilities Module_ ›**}
  */
 export * as DatetimeUtils from './datetime/mod.ts'
+//
 /**
  * Whether you're handling errors in your V8 Worker, Node.JS, or even the browser,
  * Keywork includes error utilities that pair nicely with HTTP requests.
  *
  * ```ts runtime="node"
- * import { Errors } from 'keywork'
- * import * as Errors from 'keywork/errors'
+ * import { KeyworkResourceError, StatusCodes } from 'keywork/errors'
+ *
+ * if (isLoggedIn(someUser)) {
+ *   throw new KeyworkResourceError("You must be logged in to do that", StatusCodes.UNAUTHORIZED)
+ * }
  * ```
  *
  * ```ts runtime="browser"
- * let Errors = await import('https://esm.sh/keywork/errors')
+ * let { KeyworkResourceError, StatusCodes } = await import('https://esm.sh/keywork/errors')
+ *
+ * if (isLoggedIn(someUser)) {
+ *   throw new KeyworkResourceError("You must be logged in to do that", StatusCodes.UNAUTHORIZED)
+ * }
  * ```
  *
  * {@link Keywork#Errors **_Explore the Errors Module_ ›**}
  */
 export * as Errors from './errors/mod.ts'
+//
 /**
+ * Keywork uses the JavaScript [Events API](https://developer.mozilla.org/en-US/docs/Web/API/Event)
+ * internally to handle HTTP requests.
+ *
  * ```ts
  * import { Events } from 'keywork'
  * import * as Events from 'keywork/events'
@@ -55,15 +67,20 @@ export * as Errors from './errors/mod.ts'
  * {@link Keywork#Events **_Explore the Events Module_ ›**}
  */
 export * as Events from './events/mod.ts'
+//
 /**
+ * Keywork includes utilities for working with files,
+ * such as determining the MIME type while handling an incoming HTTP request.
+ *
  * ```ts
  * import { FileUtils } from 'keywork'
- * import * as mod FileUtilsom 'keywork/files'
+ * import * as FileUtils 'keywork/files'
  * ```
  *
  * {@link Keywork#FileUtils **_Explore the File Utilities Module_ ›**}
  */
 export * as FileUtils from './files/mod.ts'
+//
 /**
  * ```ts
  * import { HTTP } from 'keywork'
@@ -73,6 +90,7 @@ export * as FileUtils from './files/mod.ts'
  * {@link Keywork#HTTP **_Explore the HTTP Module_ ›**}
  */
 export * as HTTP from './http/mod.ts'
+//
 /**
  * ```ts
  * import { IDUtils } from 'keywork'
@@ -82,6 +100,7 @@ export * as HTTP from './http/mod.ts'
  * {@link Keywork#IDUtils **_Explore the ID Utilities Module_ ›**}
  */
 export * as IDUtils from './ids/mod.ts'
+//
 /**
  * ```ts
  * import { JSONUtils } from 'keywork'
@@ -91,6 +110,7 @@ export * as IDUtils from './ids/mod.ts'
  * {@link Keywork#JSONUtils **_Explore the JSON Utilities Module_ ›**}
  */
 export * as JSONUtils from './json/mod.ts'
+//
 /**
  * ```ts
  * import { Logger } from 'keywork'
@@ -100,6 +120,7 @@ export * as JSONUtils from './json/mod.ts'
  * {@link Keywork#Logger **_Explore the Logger Module_ ›**}
  */
 export * as Logger from './logger/mod.ts'
+//
 /**
  * ```ts
  * import { MathUtils } from 'keywork'
@@ -109,12 +130,14 @@ export * as Logger from './logger/mod.ts'
  * {@link Keywork#MathUtils **_Explore the Math Utilities Module_ ›**}
  */
 export * as MathUtils from './math/mod.ts'
+//
 /**
  * While optional, Keywork uses React as its primary HTML templating engine.
  *
  * {@link Keywork#ReactUtils **_Explore the React Utilities Module_ ›**}
  */
 export * as ReactUtils from './react/mod.ts'
+//
 /**
  * Designed with familiarity in mind, the server-side routing API
  * is inspired by Express.js, React Router, and the native Cloudflare Workers platform.
@@ -148,6 +171,7 @@ export * as ReactUtils from './react/mod.ts'
  * ```
  */
 export * as Router from './router/mod.ts'
+//
 /**
  * ```ts
  * import { Session } from 'keywork'
@@ -157,6 +181,7 @@ export * as Router from './router/mod.ts'
  * {@link Keywork#Session **_Explore the Session Module_ ›**}
  */
 export * as Session from './session/mod.ts'
+//
 /**
  * ```ts
  * import { StringUtils } from 'keywork'
@@ -166,6 +191,7 @@ export * as Session from './session/mod.ts'
  * {@link Keywork#StringUtils **_Explore the String Utilities Module_ ›**}
  */
 export * as StringUtils from './strings/mod.ts'
+//
 /**
  * ```ts
  * import { TimerUtils } from 'keywork'
@@ -175,6 +201,7 @@ export * as StringUtils from './strings/mod.ts'
  * {@link Keywork#TimerUtils#Browser **_Explore the Timer Utilities Module_ ›**}
  */
 export * as TimerUtils from './timers/browser/mod.ts'
+//
 /**
  * ```ts
  * import { URIUtils } from 'keywork'
@@ -184,3 +211,4 @@ export * as TimerUtils from './timers/browser/mod.ts'
  * {@link Keywork#URIUtils **_Explore the URI Module_ ›**}
  */
 export * as URIUtils from './uri/mod.ts'
+//

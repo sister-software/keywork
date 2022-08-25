@@ -13,4 +13,3 @@
  */
 
 export * from './WorkerEnvFetchBinding.ts'
-export * from './durable-objects.ts'

@@ -12,25 +12,40 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { BuildOptions } from 'https://esm.sh/esbuild@0.14.48'
+import type { BuildOptions } from 'esbuild'
+import { BundledFileName } from '../variables/BundledFileName.ts'
 
 /**
- * ESBuild options for the browser bundle.
+ * ESBuild options for the Worker bundle.
+ *
+ * The Worker runtime on Cloudflare Pages may differ from a standard Worker deployment.
+ *
+ * If you're encountering runtime errors, consider adding the ReadableStream polyfill:
+ *
+ * ```js
+ * import esbuild from 'esbuild'
+ *
+ * esbuild.build({
+ *   ...workerBuildOptions,
+ *   inject: [require.resolve('keywork/polyfills/ReadableStream')],
+ * })
+ * ```
  *
  * @public
  * @category ESBuild
  */
-export function createBrowserBuildOptions(entryPoints: string[], outdir: string): BuildOptions {
+export function createWorkerBuildOptions(entryPoints: string[], outfile = BundledFileName): BuildOptions {
   return {
     bundle: true,
     entryPoints,
     format: 'esm',
     keepNames: true,
-    outdir,
+    outfile,
+    // 'browser' is the most accurate platform for workers.
     platform: 'browser',
     banner: {
       js: `/**
-* @file This bundle is generated to run in browser environment.
+* @file This bundle is generated to run in a V8 Isolate environment, such as Cloudflare Workers.
 */
 /* eslint-disable */`,
     },

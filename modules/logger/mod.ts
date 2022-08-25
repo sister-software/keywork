@@ -68,7 +68,6 @@ export const DEFAULT_LOG_LEVEL: LogLevel = LogLevel.Info
 /**
  * A isomorphic logger available in both the browser and worker environments.
  *
- * @example
  * ```ts
  * const logger = new Logger('Todo API')
  * logger.info('Fetching todo', todoID)

@@ -11,24 +11,19 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
+
 import dashify from 'dashify'
 import Handlebars from 'handlebars'
-import { PageEvent, SignatureReflection } from 'typedoc'
-import { MarkdownTheme } from '../../theme.ts'
+import { ReferenceReflection, ReflectionKind } from 'typedoc'
 import { escapeChars } from '../../utils.ts'
-import { parseModel } from '../../utils/model.ts'
 
-export default function (_theme: MarkdownTheme) {
-  Handlebars.registerHelper('reflectionTitle', function <
-    T extends SignatureReflection
-  >(this: PageEvent<T>, shouldEscape = true) {
-    const parsedModel = parseModel(this.model)
+export default function () {
+  Handlebars.registerHelper('humanizeReflectionName', function (this: ReferenceReflection) {
+    const url = this.kindOf(ReflectionKind.Reference) ? this.getTargetReflectionDeep().url : null
 
-    return [
-      `# ${shouldEscape ? escapeChars(parsedModel.title) : parsedModel.title} {.kind-${dashify(
-        parsedModel.kindString
-      )}}`,
-      parsedModel.isModule ? '## Module Overview' : '## Overview',
-    ].join('\n\n')
+    const name = `${escapeChars(this.name)}`
+    const content = url ? `[${name}](${Handlebars.helpers.relativeURL(url)})` : name
+
+    return `${content} {.kind-${dashify(this.kindString || 'unknown')}}`
   })
 }

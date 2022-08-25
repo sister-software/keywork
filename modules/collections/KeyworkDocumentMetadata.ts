@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ETaggable } from '../../http/headers/caching/mod.ts'
 import isPlainObject from 'https://esm.sh/lodash.isplainobject@4.0.6'
 import { ulid } from 'https://esm.sh/ulidx@0.3.0'
+import { ETaggable } from '../http/headers/caching/mod.ts'
 import type { DeserializationTransformers, PutOrPatchOptions } from './KeyworkCollection/common.ts'
 
 export interface CreateKeyworkDocumentMetadataOptions {

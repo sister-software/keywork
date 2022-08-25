@@ -25,11 +25,11 @@ export interface KVNamespace<K extends string = string> {
   list<Metadata = unknown>(options?: KVNamespaceListOptions): Promise<KVNamespaceListResult<Metadata>>
   /**
    * Creates a new key-value pair, or updates the value for a particular key.
+   * await NAMESPACE.put(key, value);
+   *
    * @param key key to associate with the value. A key cannot be empty, `.` or `..`. All other keys are valid.
    * @param value value to store. The type is inferred. The maximum size of a value is 25MB.
    * @returns Returns a `Promise` that you should `await` on in order to verify a successful update.
-   * @example
-   * await NAMESPACE.put(key, value);
    */
   put(
     key: K,
