@@ -1,4 +1,11 @@
 /**
+ * Keywork includes utilities for working with incoming HTTP requests,
+ * and extends the native [`Request` class](https://developer.mozilla.org/en-US/docs/Web/API/Request)
+ * for use with [Cloudflare Workers](https://developers.cloudflare.com/workers/runtime-apis/request/#requestinitcfproperties)
+ *
+ * @packageDocumentation
+ * @module Keywork#HTTP#Request
+ *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -10,8 +17,6 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- * @packageDocumentation
- * @module Keywork#HTTP#Request
  */
 /* eslint-disable header/header */
 

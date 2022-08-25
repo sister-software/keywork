@@ -2,10 +2,21 @@
  * Keywork is a modular and opinionated library,
  * providing structured guidence as your web app grows,
  * without locking you into a specific pattern.
- * ## Popular Modules
  *
  * @packageDocumentation
  * @module Keywork
+ *
+ * @file This file is part of the Keywork project.
+ * @copyright Nirrius, LLC. All rights reserved.
+ * @author Teffen Ellis, et al.
+ * @license AGPL-3.0
+ *
+ * @remarks Keywork is free software for non-commercial purposes.
+ * You can be released from the requirements of the license by purchasing a commercial license.
+ * Buying such a license is mandatory as soon as you develop commercial activities
+ * involving the Keywork software without disclosing the source code of your own applications.
+ *
+ * @see LICENSE.md in the project root for further licensing information.
  */
 
 /* eslint-disable header/header */
@@ -20,10 +31,16 @@
  */
 export * as DatetimeUtils from './datetime/mod.ts'
 /**
+ * Whether you're handling errors in your V8 Worker, Node.JS, or even the browser,
+ * Keywork includes error utilities that pair nicely with HTTP requests.
  *
- * ```ts
+ * ```ts runtime="node"
  * import { Errors } from 'keywork'
  * import * as Errors from 'keywork/errors'
+ * ```
+ *
+ * ```ts runtime="browser"
+ * let Errors = await import('https://esm.sh/keywork/errors')
  * ```
  *
  * {@link Keywork#Errors **_Explore the Errors Module_ ›**}
@@ -93,6 +110,12 @@ export * as Logger from './logger/mod.ts'
  */
 export * as MathUtils from './math/mod.ts'
 /**
+ * While optional, Keywork uses React as its primary HTML templating engine.
+ *
+ * {@link Keywork#ReactUtils **_Explore the React Utilities Module_ ›**}
+ */
+export * as ReactUtils from './react/mod.ts'
+/**
  * Designed with familiarity in mind, the server-side routing API
  * is inspired by Express.js, React Router, and the native Cloudflare Workers platform.
  *
@@ -155,7 +178,7 @@ export * as TimerUtils from './timers/browser/mod.ts'
 /**
  * ```ts
  * import { URIUtils } from 'keywork'
- * import * as mod URIUtilsrom 'keywork/uri'
+ * import * as mod 'keywork/uri'
  * ```
  *
  * {@link Keywork#URIUtils **_Explore the URI Module_ ›**}

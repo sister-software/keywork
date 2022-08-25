@@ -43,23 +43,27 @@ $ npm install keywork
 
   </TabItem>
 
-  <TabItem value="deno" label="Deno">
-
-```ts title="./your-project/server/mod.tsx"
-import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
-import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
-
-const app = new KeyworkRouter()
-serve((request) => app.fetch(request))
-```
-
-  </TabItem>
 </Tabs>
 
 ### If your app uses React...
 
 You'll need additional peer dependencies:
 
+<Tabs>
+
+  <TabItem value="npm" label="NPM">
+
+```shell title="Run in the root of your project."
+$ npm install --save react react-dom
+```
+
+  </TabItem>
+
+  <TabItem value="yarn" label="Yarn">
+
 ```shell title="Run in the root of your project."
 $ yarn add react react-dom
 ```
+
+  </TabItem>
+</Tabs>

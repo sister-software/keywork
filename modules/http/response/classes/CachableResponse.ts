@@ -12,11 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from '../../errors/mod.ts'
-import { isETagMatch } from '../../http/headers/caching/mod.ts'
-import { CacheControlDirectives, createCacheControlHeader } from '../../http/headers/caching/mod.ts'
+import { Status } from '../../../errors/mod.ts'
+import { CacheControlDirectives, createCacheControlHeader, isETagMatch } from '../../headers/caching/mod.ts'
+import HTTP from '../../mod.ts'
 import { NotModifiedResponse } from './NotModifiedResponse.ts'
-import HTTP from '../../http/mod.ts'
 
 /**
  * A client-side cachable response.

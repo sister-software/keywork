@@ -1,13 +1,11 @@
-/* eslint-disable header/header */
-
 /**
  * @file This file is part of the workers-types project.
  * @see {@link https://github.com/cloudflare/workers-types}
  * @packageDocumentation
  * @module Keywork#KV#Cloudflare
  * @ignore
-
  */
+/* eslint-disable header/header */
 
 /**
  * Workers KV is a global, low-latency, key-value data store. It supports exceptionally high read volumes with low-latency,

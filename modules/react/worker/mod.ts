@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  *
  * @packageDocumentation
- * @module Keywork#React#Worker
+ * @module Keywork#ReactUtils#Worker
  */
 /* eslint-disable header/header */
 

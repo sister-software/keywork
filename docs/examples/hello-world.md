@@ -75,7 +75,7 @@ export default app
 ```
 
 We call `app.get` with a path pattern matching the root of our app,
-along with a [`RouteRequestHandler`](/modules/router/api/interfaces/RouteRequestHandler)
+along with a [`RouteRequestHandler`](/modules/router/interfaces/RouteRequestHandler)
 callback that executes when our app receives a matching incoming request.
 
 #### Exporting the router
@@ -94,7 +94,7 @@ and the native Worker API.
 
 ### Using the `IsomorphicFetchEvent` object
 
-When defining a route's `RouteRequestHandler` callback, you have access to an [`IsomorphicFetchEvent`](/modules/events/api/classes/IsomorphicFetchEvent) that contains information about the request.
+When defining a route's `RouteRequestHandler` callback, you have access to an [`IsomorphicFetchEvent`](/modules/events/classes/IsomorphicFetchEvent) that contains information about the request.
 
 In this example, let's use `IsomorphicFetchEvent` to return information about where the request originated:
 

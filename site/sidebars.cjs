@@ -34,8 +34,8 @@ const topLevelModules = [
   { dirName: 'modules/router', label: 'Router' },
   { dirName: 'modules/session', label: 'Session' },
   { dirName: 'modules/uri', label: 'URI' },
-  { dirName: 'modules/kv', label: 'Key/Value' },
-  { dirName: 'modules/timers', label: 'Timers' },
+  { dirName: 'modules/kv/collections', label: 'KV Collections' },
+  { dirName: 'modules/timers/browser', label: 'Timers' },
   { dirName: 'modules/bundling', label: 'Bundling' },
   { dirName: 'modules/polyfills/worker/ReadableStream', label: 'Polyfills' },
 ]

@@ -1,4 +1,28 @@
 /**
+ * Keywork includes promise-based utilities for working with the DOM.
+ *
+ * ### Browser
+ *
+ * #### `waitUntilDOMReady`
+ *
+ * Creates a promise that blocks until the DOM has loaded.
+ *
+ * ```ts
+ * import { waitUntilDOMReady } from 'keywork/timers/browser'
+ *
+ * await waitUntilDOMReady()
+ * ```
+ *
+ * #### `requestAnimationFramePromise`
+ *
+ * Promise wrapper around `requestAnimationFrame`
+ *
+ * ```ts
+ * import { requestAnimationFrame } from 'keywork/timers/browser'
+ *
+ * await requestAnimationFrame()
+ * ```
+ *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.

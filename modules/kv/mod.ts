@@ -1,9 +1,8 @@
 /**
- * Keywork includes utilities for working with files,
- * such as determining the MIME type while handling an incoming HTTP request.
- *
+ * Keywork provides utilities for working with runtimes that support key-value stores,
+ * such as Cloudflare Workers.
  * @packageDocumentation
- * @module Keywork#FileUtils
+ * @module Keywork#KV
  *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
@@ -18,7 +17,3 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 /* eslint-disable header/header */
-
-export * from './common.ts'
-export * from './extensionToMimeType.ts'
-export * from './files.ts'

@@ -1,4 +1,25 @@
 /**
+ * Keywork includes error utilities that pair nicely with HTTP request handlers.
+ *
+ * ```ts
+ * import { KeyworkResourceError, StatusCodes } from 'keywork/errors'
+ *
+ * if (isLoggedIn(someUser)) {
+ *   throw new KeyworkResourceError('You must be logged in to do that', StatusCodes.UNAUTHORIZED)
+ * }
+ *
+ * if (someUser.role !== 'admin') {
+ *   throw new KeyworkResourceError('Only an admin can access that', StatusCodes.FORBIDDEN)
+ * }
+ * ```
+ *
+ * ## Related Entries
+ *
+ * - {@link Keywork#HTTP#Response.ErrorResponse `ErrorResponse`}
+ *
+ * @packageDocumentation
+ * @module Keywork#Errors
+ *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -10,9 +31,6 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- *
- * @packageDocumentation
- * @module Keywork#Errors
  */
 /* eslint-disable header/header */
 

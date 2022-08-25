@@ -70,7 +70,7 @@
  * export default app
  * ```
  * @packageDocumentation
- * @module Keywork#React
+ * @module Keywork#ReactUtils
  *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.

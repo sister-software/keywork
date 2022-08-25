@@ -1,4 +1,9 @@
 /**
+ * Utilities for managing ETags and caching.
+ *
+ * @packageDocumentation
+ * @module Keywork#HTTP#Headers#Caching
+ *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -10,18 +15,12 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- *
- * @packageDocumentation
- * @module Keywork#HTTP#Headers#Caching
  */
 /* eslint-disable header/header */
 
 import { DURATION_ONE_WEEK } from '../../../datetime/mod.ts'
 import { KeyworkResourceError, Status } from '../../../errors/mod.ts'
 import { arrayBufferToBase64, stringToArrayBuffer } from '../../../strings/mod.ts'
-// Included for @link comment below
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import type { CachableResponse } from '../../../http/response/mod.ts'
 
 export interface CachingHeaders {
   /** The time, in seconds, that the object has been in a proxy cache. */
@@ -79,7 +78,7 @@ export interface CacheControlDirectives {
  * Creates a `Cache-Control` header from the given object.
  * Generally, this is an internal function, but it may prove useful in unusual circumstances.
  *
- * @see {CachableResponse}
+ * See {@link Keywork#HTTP#Response.CachableResponse `CachableResponse`}
  *
  * @category Cache
  * @category HTTP Headers

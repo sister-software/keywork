@@ -1,7 +1,28 @@
-/* eslint-disable no-restricted-globals */
-/* eslint-disable header/header */
-
 /**
+ * `ReadableStream` Polyfill for building Keywork apps on Cloudflare Pages.
+ *
+ * ### Usage with ESBuild
+ *
+ * ```js
+ * import esbuild from 'esbuild'
+ * import { createRequire } from 'module'
+ * const require = createRequire(import.meta.url)
+ *
+ * esbuild.build({
+ *   format: 'esm',
+ *   entryPoints,
+ *   keepNames: true  ,
+ *   inject: [require.resolve('keywork/polyfills/ReadableStream')],
+ * })
+ * ```
+ *
+ * :::tip
+ * Make sure to set `keepNames` to preserve the polyfill's class names during minification.
+ * :::
+ *
+ * @packageDocumentation
+ * @module Keywork#Polyfills#ReadableStream
+ *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -13,11 +34,9 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- *
- * @packageDocumentation
- * @module Keywork#Polyfills#ReadableStream
- * @ignore
  */
+/* eslint-disable no-restricted-globals */
+/* eslint-disable header/header */
 
 /**
  * @internal

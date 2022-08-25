@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import * as path from 'path'
-import { ReflectionKind, SignatureReflection } from 'typedoc'
+import { Reflection, ReflectionKind } from 'typedoc'
 import { runtimeToTabLabel } from '../../../../common/runtime.mjs'
 
 type Runtimes = 'node' | 'deno' | 'cloudflare' | 'browser'
@@ -30,7 +30,7 @@ interface ParsedModel {
   basePath: string
 }
 
-export function parseModel<T extends SignatureReflection>(model: T): ParsedModel {
+export function parseModel<T extends Reflection>(model: T): ParsedModel {
   let title: string
   const kindString = model.kindString || 'Reflection'
   let importDeclaration: string
@@ -99,7 +99,7 @@ export function createUsageMap({
   return usageByRuntime
 }
 
-export const isModelBrowserCompatible = (model: SignatureReflection) => {
+export const isModelBrowserCompatible = (model: Reflection) => {
   return model.kindOf([ReflectionKind.Module, ReflectionKind.Class, ReflectionKind.Function, ReflectionKind.Variable])
 }
 
@@ -118,7 +118,7 @@ export function renderUsageTabs(usageByRuntime: Map<Runtimes, string>) {
 
     declaration.push(
       '',
-      `  <TabItem value="${runtime}" label="${runtimeToTabLabel('deno')}">`,
+      `  <TabItem value="${runtime}" label="${runtimeToTabLabel(runtime)}">`,
       '',
       '```ts',
       usage,

@@ -1,4 +1,11 @@
 /**
+ * :::info
+ * While this module is used internally by Keywork, the functions are available for use.
+ * :::
+ *
+ * @packageDocumentation
+ * @module Keywork#Stream
+ *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -11,6 +18,7 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
+/* eslint-disable header/header */
 
 import { polyfillWithModule } from '../polyfills/mod.ts'
 

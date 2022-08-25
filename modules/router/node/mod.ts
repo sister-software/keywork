@@ -1,4 +1,31 @@
 /**
+ * The {@link Keywork#Router.KeyworkRouter `KeyworkRouter`}
+ * can be made compatible with Node.js
+ * via the {@link Keywork#Router#Node.createServerHandler `createServerHandler`} wrapper function:
+ *
+ * ```ts showLineNumbers
+ * import * as http from 'node:http'
+ * import { KeyworkRouter } from 'keywork/router'
+ * import { createServerHandler } from 'keywork/router/node'
+ *
+ * // Create a router as you usually do...
+ * // highlight-next-line
+ * const router = new KeyworkRouter()
+ * router.get('/', () => 'Hello from Node')
+ *
+ * // And then wrap the router with `createServerHandler`
+ * // highlight-next-line
+ * http.createServer(createServerHandler(router))
+ * ```
+ *
+ * :::caution
+ * Node support is currently experimental and may change in the near future.
+ * :::
+ *
+ * @packageDocumentation
+ * @module Keywork#Router#Node
+ * @tag Node
+ * @tag Routing
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -10,8 +37,6 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- * @packageDocumentation
- * @module Keywork#Router#Node
  */
 /* eslint-disable header/header */
 

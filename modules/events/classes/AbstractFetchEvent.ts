@@ -12,9 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { KeyworkResourceError, Status } from '../../errors/mod.ts'
 import { IsomorphicExtendableEvent } from './IsomorphicExtendableEvent.ts'
-import { KeyworkResourceError, Status } from '../errors/mod.ts'
 
+/**
+ * @ignore
+ */
 export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> {
   /**
    * The incoming request received by the Worker.
@@ -38,6 +41,9 @@ export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> {
   match?: URLPatternResult
 }
 
+/**
+ * @ignore
+ */
 export abstract class AbstractFetchEvent extends IsomorphicExtendableEvent implements EventInit {
   readonly clientId!: string
   readonly resultingClientId!: string

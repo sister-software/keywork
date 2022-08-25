@@ -2,7 +2,7 @@
  * Keywork includes client-side hydration that fits into your existing build pipeline.
  *
  * @packageDocumentation
- * @module Keywork#React#Browser
+ * @module Keywork#ReactUtils#Browser
  *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.

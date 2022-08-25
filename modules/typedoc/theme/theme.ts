@@ -371,7 +371,7 @@ export class MarkdownTheme extends Theme {
       categoryConfig: {
         ...defaultCategory,
         label: 'Classes',
-        position: 0,
+        position: 100,
       },
     },
     {
@@ -382,7 +382,7 @@ export class MarkdownTheme extends Theme {
       categoryConfig: {
         ...defaultCategory,
         label: 'Interfaces',
-        position: 1,
+        position: 101,
       },
     },
     {
@@ -393,7 +393,7 @@ export class MarkdownTheme extends Theme {
       categoryConfig: {
         ...defaultCategory,
         label: 'Types',
-        position: 4,
+        position: 104,
       },
     },
     {
@@ -404,7 +404,7 @@ export class MarkdownTheme extends Theme {
       categoryConfig: {
         ...defaultCategory,
         label: 'Variables',
-        position: 5,
+        position: 105,
       },
     },
     {
@@ -414,7 +414,7 @@ export class MarkdownTheme extends Theme {
       template: this.getReflectionMemberTemplate(),
       categoryConfig: {
         ...defaultCategory,
-        position: 2,
+        position: 102,
         label: 'Functions',
       },
     },

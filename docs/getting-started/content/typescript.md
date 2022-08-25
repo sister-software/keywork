@@ -59,12 +59,9 @@ are recommended to avoid long import URLs:
 ```jsonc title=importmap.json
 {
   "imports": {
-    "keywork/router": "https://deno.land/x/keywork/modules/router/mod.ts",
-    "keywork/uri": "https://deno.land/x/keywork/modules/uri/mod.ts"
+    "keywork/router": "https://deno.land/x/keywork/router/mod.ts",
+    "keywork/uri": "https://deno.land/x/keywork/uri/mod.ts"
     // etc
   }
 }
 ```
-
-:::warning
-:::

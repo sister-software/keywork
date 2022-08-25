@@ -13,19 +13,9 @@
  */
 
 import Handlebars from 'handlebars'
-import { ContainerReflection, PageEvent, ReflectionKind } from 'typedoc'
-// import { camelToTitleCase } from '../../utils.ts'
+import { ContainerReflection, PageEvent } from 'typedoc'
+import { parseModel } from '../../utils/model.ts'
 import { SourceReferenceWithGit } from '../../utils/sources.ts'
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-function _isContentPresent(value: string): boolean {
-  value = value.trim()
-  if (!value) return false
-
-  const lineCount = (value.match(/\n/g) || '').length + 1
-  // Empty entries only have the title and newline
-  return lineCount > 2
-}
 
 export default function () {
   /**
@@ -33,8 +23,8 @@ export default function () {
    */
   Handlebars.registerHelper('frontmatter', function <T extends ContainerReflection>(this: PageEvent<T>) {
     const { model } = this
+    const { title, isModule } = parseModel(model)
     const frontMatter = new Map<string, string>()
-    const isModule = model.kind === ReflectionKind.Module
     const kindString = model.kindString || 'Index'
     const tags: string[] = [kindString]
 
@@ -42,25 +32,41 @@ export default function () {
       frontMatter.set('position', '999')
     }
 
-    frontMatter.set('id', isModule ? 'index' : model.getAlias())
+    const commentTags = model.comment?.getTags(`@tag`)
+
+    if (commentTags && commentTags.length) {
+      tags.push(...commentTags.map((tag) => tag.content[0].text))
+    }
+
+    frontMatter.set('id', isModule ? 'README' : model.getAlias())
 
     if (model.originalName === '.') {
-      frontMatter.set('title', JSON.stringify('Module: (Default Export)'))
+      frontMatter.set('title', JSON.stringify('Module: Keywork'))
       frontMatter.set('sidebar_label', 'Keywork')
     } else {
-      const title = JSON.stringify(isModule ? `${kindString}: ${model.name}` : model.name)
-      frontMatter.set('title', title)
+      frontMatter.set('title', JSON.stringify(isModule ? `${kindString}: ${title}` : title))
       frontMatter.set('sidebar_label', JSON.stringify(model.originalName))
-      frontMatter.set('pagination_label', title)
+      frontMatter.set('pagination_label', JSON.stringify(isModule ? `${kindString}: ${title}` : title))
     }
 
     frontMatter.set('sidebar_class_name', `doc-kind-${kindString.toLowerCase()}`)
+
     frontMatter.set(
       'tags',
       tags.reduce((acc, tag) => `${acc}\n  - ${JSON.stringify(tag)}`, '')
     )
 
+    const keywordTags = model.comment?.getTags(`@keyword`)
+
+    if (keywordTags && keywordTags.length) {
+      frontMatter.set(
+        'keywords',
+        tags.reduce((acc, tag) => `${acc}\n  - ${JSON.stringify(tag)}`, '')
+      )
+    }
+
     const sources = (model.sources || []) as SourceReferenceWithGit[]
+
     for (const source of sources) {
       if (source.url) {
         frontMatter.set('source_url', source.url)

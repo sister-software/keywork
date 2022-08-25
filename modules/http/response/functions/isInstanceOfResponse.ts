@@ -11,22 +11,14 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-import { Status, STATUS_TEXT } from '../../errors/mod.ts'
-import HTTP from '../../http/mod.ts'
+
+import HTTP from '../../mod.ts'
 
 /**
- * Given that a request's etag header matches an server entity or resource,
- * a `NotModifiedResponse` should be sent to the requestor as an indication that the client's cache is still applicable.
- *
- * @category HTTP Response
- * @category Cache
+ * Checks if the given object is an instance of `Response`
+ * @param responsish An object that's possibly a `Response`
+ * @category Type Cast
  */
-export class NotModifiedResponse extends HTTP.Response {
-  constructor(etag: string) {
-    super(undefined, {
-      status: Status.NotModified,
-      statusText: STATUS_TEXT[Status.NotModified],
-      headers: { ETag: etag },
-    })
-  }
+export function isInstanceOfResponse(responsish: unknown): responsish is globalThis.Response {
+  return Boolean(responsish instanceof globalThis.Response || responsish instanceof HTTP.Response)
 }

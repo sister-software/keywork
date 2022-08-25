@@ -1,4 +1,10 @@
 /**
+ * While the {@link Keywork#Router.KeyworkRouter `KeyworkRouter`} automatically
+ * converts returned values via {@link Keywork#HTTP#Response.castToResponse `castToResponse`}
+ *
+ * @packageDocumentation
+ * @module Keywork#HTTP#Response
+ *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -10,15 +16,8 @@
  * involving the Keywork software without disclosing the source code of your own applications.
  *
  * @see LICENSE.md in the project root for further licensing information.
- *
- * @packageDocumentation
- * @module Keywork#HTTP#Response
  */
 /* eslint-disable header/header */
 
-export * from './CachableResponse.ts'
-export * from './common.ts'
-export * from './ErrorResponse.ts'
-export * from './HTMLResponse.ts'
-export * from './JSONResponse.ts'
-export * from './NotModifiedResponse.ts'
+export * from './classes/mod.ts'
+export * from './functions/mod.ts'

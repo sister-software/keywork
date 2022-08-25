@@ -1,4 +1,26 @@
 /**
+ * Keywork includes utilities for generating IDs.
+ *
+ * ### ULIDs
+ *
+ * ULIDs are provided via [ULIDX](https://www.npmjs.com/package/ulidx)
+ *
+ * ```ts
+ * import { ulid } from 'keywork/ids'
+ *
+ * const id = ulid()
+ * ```
+ *
+ * ### Snowflake IDs
+ *
+ * Keywork's `SnowflakeID` is a basic implementation of Twitter's original [Snowflake ID system](https://en.wikipedia.org/wiki/Snowflake_ID).
+ *
+ * ```ts
+ * import { SnowflakeID } from 'keywork/ids'
+ *
+ * const id = new SnowflakeID()
+ * ```
+ *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.

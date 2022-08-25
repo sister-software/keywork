@@ -1,4 +1,7 @@
 /**
+ * @packageDocumentation
+ * @module Keywork#Bundling#ESBuild
+ *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -11,6 +14,7 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
+/* eslint-disable header/header */
 
 export * from './browser.ts'
 export * from './worker.ts'

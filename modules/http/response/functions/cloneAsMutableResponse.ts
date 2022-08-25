@@ -1,10 +1,4 @@
 /**
- * Keywork includes utilities for working with files,
- * such as determining the MIME type while handling an incoming HTTP request.
- *
- * @packageDocumentation
- * @module Keywork#FileUtils
- *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -17,8 +11,22 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-/* eslint-disable header/header */
 
-export * from './common.ts'
-export * from './extensionToMimeType.ts'
-export * from './files.ts'
+/**
+ * HTTP Status codes associated with a `Response.body === null`
+ * @see {@link https://fetch.spec.whatwg.org/#null-body-status WHATWG Spec}
+ *
+ */
+const NULL_BODY_STATUSES = new Set([101, 204, 205, 304])
+
+/**
+ * Clones a given `Response` as a mutable instance.
+ */
+export function cloneAsMutableResponse(response: globalThis.Response) {
+  return new globalThis.Response(
+    // This shouldn't be confused with `response.bodyIsUsed`
+    // https://fetch.spec.whatwg.org/#dom-body-bodyused
+    NULL_BODY_STATUSES.has(response.status) ? null : response.body,
+    response
+  )
+}
