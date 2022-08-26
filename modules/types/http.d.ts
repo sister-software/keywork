@@ -18,5 +18,6 @@ declare global {
   interface Headers {
     get<T = any>(name: keyof T): string | null
     set<T = any>(name: keyof T, value: T[keyof T]): void
+    append<T = any>(name: keyof T, value: T[keyof T]): void
   }
 }

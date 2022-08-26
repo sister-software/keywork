@@ -2,8 +2,8 @@
   "$schema": "https://cdn.deno.land/deno/versions/v1.23.3/raw/cli/schemas/config-file.v1.json",
   "compilerOptions": {
     "lib": [
-      "deno.ns",
       "deno.unstable",
+      "deno.window",
       "dom",
       "dom.iterable"
     ],

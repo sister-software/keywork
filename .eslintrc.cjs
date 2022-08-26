@@ -58,15 +58,15 @@ const config = {
       2,
       {
         name: 'Request',
-        message: "Use `import HTTP from 'keywork/platform/http'`",
+        message: "Use `import HTTP from './modules/__internal__/http.ts'`.",
       },
       {
         name: 'Headers',
-        message: "Use `import HTTP from 'keywork/platform/http'`",
+        message: "Use `import HTTP from './modules/__internal__/http.ts'`",
       },
       {
         name: 'Response',
-        message: "Use `import HTTP from 'keywork/platform/http'`",
+        message: "Use `import HTTP from './modules/__internal__/http.ts'`",
       },
       {
         name: 'TransformStream',

@@ -12,6 +12,15 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './ServiceBindingRouter.ts'
-export * from './CloudflarePagesAssetRouter.ts'
-export * from './WorkerSitesAssetRouter.ts'
+import type { DurableObjectNamespace } from '../../__internal/interfaces/durable-objects.ts'
+import type { KVNamespace } from '../../__internal/interfaces/kv.ts'
+import type { WorkerEnvFetchBinding } from '../interfaces/WorkerEnvFetchBinding.ts'
+
+/**
+ * Either:
+ *
+ * - `WorkerEnvFetchBinding` A `fetch` binding, usually an asset KV or external Worker.
+ * - `KVNamespace` A KV binding.
+ * - `DurableObjectNamespace` A Durable Object.
+ */
+export type EnvironmentBindingKinds = WorkerEnvFetchBinding | KVNamespace | DurableObjectNamespace

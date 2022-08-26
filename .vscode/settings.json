@@ -45,7 +45,7 @@
   "deno.enablePaths": [
     "./modules",
   ],
-  "deno.unstable": false,
+  "deno.unstable": true,
   "deno.lint": true,
   "deno.config": "./modules/deno.jsonc"
 }

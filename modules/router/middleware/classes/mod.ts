@@ -12,4 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './WorkerEnvFetchBinding.ts'
+export * from './CloudflarePagesAssetRouter.ts'
+export * from './CompressionMiddleware.ts'
+export * from './CORSMiddleware.ts'
+export * from './ServiceBindingRouter.ts'
+export * from './WorkerSitesAssetRouter.ts'

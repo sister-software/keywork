@@ -229,7 +229,8 @@ export interface CORSHeaders {
    */
   'Access-Control-Allow-Origin': string
   /**
-   * Indicates whether the response to the request can be exposed when the credentials flag is true.
+   * Indicates whether to expose the response to the front-end
+   * JavaScript code when the request's credentials mode
    */
   'Access-Control-Allow-Credentials': string
   /**

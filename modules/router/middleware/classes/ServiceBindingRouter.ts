@@ -17,10 +17,11 @@ import { ErrorResponse } from '../../../http/mod.ts'
 import { KeyworkRouter } from '../../classes/KeyworkRouter.ts'
 import type { KeyworkRouterOptions } from '../../interfaces/KeyworkRouterOptions.ts'
 import type { RouteRequestHandler } from '../../interfaces/RouteRequestHandler.ts'
-import type { WorkerEnvFetchBinding } from '../interfaces/WorkerEnvFetchBinding.ts'
+import { WorkerEnvFetchBinding } from '../../interfaces/WorkerEnvFetchBinding.ts'
 
 /**
- * A router that proxies requests directly to an environment binding, such as a service binding.
+ * A router that proxies requests directly to a Cloudflare Worker environment binding,
+ * such as a service binding.
  *
  * @typeParam BindingAlias The bound alias, usually defined in your wrangler.toml file.
  *
