@@ -63,7 +63,7 @@
  * ### `POST` (`app.post([path pattern], [...RouteRequestHandler])`)
  *
  * ```ts title="POST http://localhost:8788/users"
- * interface NewUserPayload{
+ * interface NewUserPayload {
  *   displayName: string
  *   email: string
  * }
