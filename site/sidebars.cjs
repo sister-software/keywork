@@ -32,7 +32,7 @@ const topLevelModules = [
   { dirName: 'modules/ids', label: 'IDs' },
   { dirName: 'modules/react', label: 'React' },
   { dirName: 'modules/router', label: 'Router' },
-  { dirName: 'modules/session', label: 'Session' },
+  { dirName: 'modules/middleware', label: 'Middleware' },
   { dirName: 'modules/uri', label: 'URI' },
   { dirName: 'modules/collections', label: 'KV Collections' },
   { dirName: 'modules/timers/browser', label: 'Timers' },

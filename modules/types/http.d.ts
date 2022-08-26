@@ -20,4 +20,32 @@ declare global {
     set<T = any>(name: keyof T, value: T[keyof T]): void
     append<T = any>(name: keyof T, value: T[keyof T]): void
   }
+
+  class CompressionStream {
+    /**
+     * Creates a new `CompressionStream` object which compresses a stream of
+     * data.
+     *
+     * Throws a `TypeError` if the format passed to the constructor is not
+     * supported.
+     */
+    constructor(format: string)
+
+    readonly readable: globalThis.ReadableStream<Uint8Array>
+    readonly writable: globalThis.WritableStream<Uint8Array>
+  }
+
+  class DecompressionStream {
+    /**
+     * Creates a new `DecompressionStream` object which decompresses a stream of
+     * data.
+     *
+     * Throws a `TypeError` if the format passed to the constructor is not
+     * supported.
+     */
+    constructor(format: string)
+
+    readonly readable: globalThis.ReadableStream<Uint8Array>
+    readonly writable: globalThis.WritableStream<Uint8Array>
+  }
 }

@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkFetcher } from '../interfaces/KeyworkFetcher.ts'
+import { Fetcher } from '../interfaces/Fetcher.ts'
 import type { RouteRequestHandler } from '../interfaces/RouteRequestHandler.ts'
 
 /**
@@ -36,7 +36,7 @@ export interface ParsedRouteFromRouteHandler<BoundAliases = {}> extends ParsedRo
  */
 export interface ParsedRouteFromFetcher<BoundAliases = {}> extends ParsedRouteBase {
   kind: 'fetcher'
-  fetcher: KeyworkFetcher<BoundAliases>
+  fetcher: Fetcher<BoundAliases>
 }
 
 export type ParsedRoute<BoundAliases = {}> =

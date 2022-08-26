@@ -13,5 +13,5 @@
  */
 
 export * from './createRouteRedirect.ts'
-export * from './isKeyworkFetcher.ts'
+export * from './isFetcher.ts'
 export * from './isMiddlewareDeclarationOption.ts'

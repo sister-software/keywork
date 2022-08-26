@@ -173,10 +173,10 @@
       "import": "./router/mod.js",
       "require": "./router/mod.js"
     },
-    "./session": {
-      "types": "./session/mod.d.ts",
-      "import": "./session/mod.js",
-      "require": "./session/mod.js"
+    "./middleware": {
+      "types": "./middleware/mod.d.ts",
+      "import": "./middleware/mod.js",
+      "require": "./middleware/mod.js"
     },
     "./uri": {
       "types": "./uri/mod.d.ts",

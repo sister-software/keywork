@@ -30,10 +30,10 @@ import { MiddlewareFetch } from './MiddlewareFetch.ts'
  * In this setup, all incoming requests are classified as `'fetch'` events.
  * The fetch handler receives the Request and replies with a Response.
  *
- * @see {WorkerEnvFetchBinding}
- * @see {KeyworkRouter#fetch}
+ * @see {Keywork#Router.WorkerEnvFetchBinding}
+ * @see {Keywork#Router.KeyworkRouter#fetch}
  */
-export interface KeyworkFetcher<BoundAliases = {}> {
+export interface Fetcher<BoundAliases = {}> {
   /**
    * A display name used for debugging and log messages.
    * @category Debug

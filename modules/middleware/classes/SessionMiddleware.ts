@@ -17,11 +17,40 @@ import {
   parse as parseCookies,
   serialize as serializeCookies,
 } from 'https://esm.sh/cookie@0.5.0'
-import type { CookieHeaders } from '../http/headers/mod.ts'
-import { ulid } from '../ids/mod.ts'
-import type { RouteRequestHandler } from '../router/mod.ts'
-import { KeyworkRouter } from '../router/mod.ts'
-import { DEFAULT_COOKIE_SERIALIZE_OPTIONS, DEFAULT_SESSION_COOKIE_KEY, SessionMiddlewareOptions } from './common.ts'
+import type { CookieHeaders } from '../../http/headers/mod.ts'
+import { ulid } from '../../ids/mod.ts'
+import { KeyworkRouter, RouteRequestHandler } from '../../router/mod.ts'
+
+/**
+ * The default session cookie key.
+ * @internal
+ */
+export const DEFAULT_SESSION_COOKIE_KEY = '_keyworkSessionID'
+
+/**
+ * The default cookie serialization options.
+ * @internal
+ */
+export const DEFAULT_COOKIE_SERIALIZE_OPTIONS: CookieSerializeOptions = {
+  sameSite: 'strict',
+  secure: true,
+  httpOnly: true,
+  maxAge: 60 * 60 * 24 * 90,
+} as const
+
+export interface SessionMiddlewareOptions {
+  /**
+   * The key used to read from the cookie header.
+   * @defaultValue {@link DEFAULT_SESSION_COOKIE_KEY}
+   */
+  cookieKey?: string
+
+  /**
+   * @defaultValue {@link DEFAULT_COOKIE_SERIALIZE_OPTIONS}
+   */
+
+  serializeOptions?: CookieSerializeOptions
+}
 
 /**
  * A simple session manager to aid in authenticating users.
@@ -42,6 +71,29 @@ export interface KeyworkSession {
   isNewSession: boolean
 }
 
+/**
+ * Middleware to manage and authenticate your users.
+ *
+ * ```ts
+ * import { SessionMiddleware } from 'keywork/session'
+ * import { KeyworkRouter } from 'keywork/router'
+ *
+ * const app = new KeyworkRouter({
+ *   displayName: 'Session Tester',
+ *   middleware: [new SessionMiddleware()],
+ * })
+ *
+ * app.get('/', (event) => {
+ *   const { session } = event.data
+ *
+ *   if (session.isNewSession) {
+ *     return 'Hello there, new user!'
+ *   }
+ *
+ *   return `Hello again, ${session.sessionID}!`
+ * })
+ * ```
+ */
 export class SessionMiddleware extends KeyworkRouter {
   /**
    * The key used to read from the cookie header.
@@ -79,6 +131,9 @@ export class SessionMiddleware extends KeyworkRouter {
     event.data.session = session
 
     const response = await next(event.request, event.env, event)
+
+    if (!response) return response
+
     const responseWithSession = response.clone()
 
     // @ts-ignore Generic Type

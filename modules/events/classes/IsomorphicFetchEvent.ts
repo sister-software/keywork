@@ -63,7 +63,8 @@ export class IsomorphicFetchEvent<
   public readonly env: BoundAliases
 
   /**
-   * Optional extra data to be passed to a route handler.
+   * Optional extra data to be passed to a route handler,
+   * usually from {@link Keywork#Middleware middleware}.
    */
   public data: Data
   /**

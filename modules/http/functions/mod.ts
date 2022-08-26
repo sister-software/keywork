@@ -14,7 +14,10 @@
 
 export * from './castToResponse.ts'
 export * from './cloneAsMutableResponse.ts'
+export * from './cors.ts'
+export * from './isCompressable.ts'
 export * from './isInstanceOfRequest.ts'
 export * from './isInstanceOfResponse.ts'
 export * from './isRequestLike.ts'
+export * from './shouldCompress.ts'
 export * from './status.ts'

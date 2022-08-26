@@ -12,16 +12,26 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from '../../../errors/mod.ts'
-import { ErrorResponse } from '../../../http/mod.ts'
-import { KeyworkRouter } from '../../classes/KeyworkRouter.ts'
-import type { KeyworkRouterOptions } from '../../interfaces/KeyworkRouterOptions.ts'
-import type { RouteRequestHandler } from '../../interfaces/RouteRequestHandler.ts'
-import { WorkerEnvFetchBinding } from '../../interfaces/WorkerEnvFetchBinding.ts'
+import { Status } from '../../errors/mod.ts'
+import { ErrorResponse } from '../../http/mod.ts'
+import { KeyworkRouter, KeyworkRouterOptions, RouteRequestHandler, WorkerEnvFetchBinding } from '../../router/mod.ts'
 
 /**
  * A router that proxies requests directly to a Cloudflare Worker environment binding,
  * such as a service binding.
+ *
+ * Middleware in Keywork can also be thought of as any object that implements the {@link Keywork#Router.Fetcher `Fetcher`} interface.
+ * Under the hood,  {@link Keywork#Router.KeyworkRouter `KeyworkRouter`} _is_ a `Fetcher`,
+ * and is the most common usage of middleware.
+ *
+ * Cloudflare's concept of "environment bindings" _almost_ satisfy the `Fetcher` interface,
+ * and with the help of the `ServiceBindingRouter` class, they can be used as middleware within Keywork!
+ *
+ * ### Combining Multiple Workers
+ *
+ * The `ServiceBindingRouter` class proxies requests directly to an environment binding,
+ * such as a service binding configured in your project's `wrangler.toml`,
+ * allowing you to compose your app from multiple Workers, regardless if they use Keywork or not.
  *
  * @typeParam BindingAlias The bound alias, usually defined in your wrangler.toml file.
  *

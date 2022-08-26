@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KeyworkFetcher } from '../interfaces/KeyworkFetcher.ts'
+import type { Fetcher } from '../interfaces/Fetcher.ts'
 
 /**
  * Checks if a given object is shaped like a KeyworkFetcher
@@ -23,6 +23,6 @@ import type { KeyworkFetcher } from '../interfaces/KeyworkFetcher.ts'
  * @internal
  * @ignore
  */
-export function isKeyworkFetcher<BoundAliases = {}>(fetcherLike: unknown): fetcherLike is KeyworkFetcher<BoundAliases> {
+export function isFetcher<BoundAliases = {}>(fetcherLike: unknown): fetcherLike is Fetcher<BoundAliases> {
   return Boolean(fetcherLike && typeof fetcherLike === 'object' && 'fetch' in fetcherLike)
 }

@@ -34,7 +34,7 @@
  * app.get('/', () => 'Hello there! 👋')
  * ```
  *
- * ::: tip
+ * :::tip
  *
  * While Keywork has many modules,
  * modern bundlers and transpilers such as [ESBuild](https://esbuild.github.io/)
@@ -62,6 +62,7 @@
  */
 
 /* eslint-disable header/header */
+// tslint:disable:ordered-imports
 
 /**
  * Whether you're handling errors in your V8 Worker, Node.JS, or even the browser,
@@ -175,14 +176,20 @@ export * as ReactUtils from './react/mod.ts'
 export * as Router from './router/mod.ts'
 //
 /**
- * ```ts
- * import { Session } from 'keywork'
- * import * as Sessionfrom 'keywork/session'
- * ```
+ * Keywork includes support for _middleware_ as instances of `KeyworkRouter`.
+ * Middleware can perform any task that of single router such as...
  *
- * {@link Keywork#Session **_Explore the Session Module_ ›**}
+ * - Executing any code
+ * - Make changes to the request and the response of another router
+ * - Terminate a request
+ * - Intercept a request to check for authentication
+ * - Call the next route handler in the stack
+ * - Automatic response compression
+ * - Cross-Origin Resource Sharing (CORS)
+ *
+ * {@link Keywork#Middleware **_Explore the Middleware Module_ ›**}
  */
-export * as Session from './session/mod.ts'
+export * as Middleware from './middleware/mod.ts'
 //
 /**
  * ```ts

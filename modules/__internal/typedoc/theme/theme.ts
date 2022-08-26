@@ -328,11 +328,10 @@ export class MarkdownTheme extends Theme {
       const kind = mapping.kind[0]
       const items = project.getReflectionsByKind(kind)
       if (items.length > 0) {
-        const children = items
-          .map((item) =>
-            createNavigationItem(item.getFullName(), (getUrlMapping(item.name) as any)?.url as string, true)
-          )
-          .sort((a, b) => (a.title > b.title ? 1 : -1))
+        const children = items.map((item) =>
+          createNavigationItem(item.getFullName(), (getUrlMapping(item.name) as any)?.url as string, true)
+        )
+        // .sort((a, b) => (a.title > b.title ? 1 : -1))
         const group = createNavigationItem(getKindPlural(kind), undefined, true, children)
         navigation.children?.push(group)
       }

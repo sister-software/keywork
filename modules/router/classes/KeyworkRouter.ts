@@ -30,9 +30,9 @@ import { renderReactStream } from '../../react/worker/mod.ts'
 import { normalizeURLPattern, normalizeURLPatternInput, URLPatternLike } from '../../uri/mod.ts'
 import HTTP from '../../__internal/http.ts'
 import { Disposable } from '../../__internal/interfaces/disposable.ts'
-import { isKeyworkFetcher } from '../functions/isKeyworkFetcher.ts'
+import { isFetcher } from '../functions/isFetcher.ts'
 import { isMiddlewareDeclarationOption } from '../functions/isMiddlewareDeclarationOption.ts'
-import { KeyworkFetcher } from '../interfaces/KeyworkFetcher.ts'
+import { Fetcher } from '../interfaces/Fetcher.ts'
 import {
   KeyworkRouterDebugEndpoints,
   KeyworkRouterOptions,
@@ -80,7 +80,7 @@ export type RouteMethodDeclaration<BoundAliases = {}, ExpectedParams = {}, Data 
  * @category Router
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  */
-export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAliases>, Disposable {
+export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, Disposable {
   /**
    * This router's known routes, categorized by their normalized HTTP method verbs into arrays of route handlers.
    *
@@ -107,18 +107,18 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
   public appendMethodRoutes(
     normalizedVerb: RouterMethod,
     urlPatternLike: URLPatternLike,
-    ...fetchersLike: Array<KeyworkFetcher<BoundAliases> | RouteRequestHandler<BoundAliases, any, any>>
+    ...fetchersLike: Array<Fetcher<BoundAliases> | RouteRequestHandler<BoundAliases, any, any>>
   ): void {
     const parsedHandlersCollection = this.routesByVerb.get(normalizedVerb)!
     const urlPattern = normalizeURLPattern(urlPatternLike)
 
     /**
      * Incoming request arguments may not always be normalized,
-     * but using a `KeyworkFetcher` wrapper ensures that we can always handle both shapes.
+     * but using a {@link Keywork#Router.Fetcher `Fetcher`} wrapper ensures that we can always handle both shapes.
      */
     const parsedHandlers = fetchersLike.map((fetcherLike): ParsedRoute<BoundAliases> => {
-      if (isKeyworkFetcher<BoundAliases>(fetcherLike)) {
-        // Likely a `KeyworkRouter` or `KeyworkFetcher`...
+      if (isFetcher<BoundAliases>(fetcherLike)) {
+        // Likely a `KeyworkRouter` or `Fetcher`...
         return {
           kind: 'fetcher',
           urlPattern,
@@ -344,11 +344,11 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
    *
    * @public
    */
-  public use(fetcher: KeyworkFetcher<any>): void
-  public use(mountURLPattern: URLPatternLike | string, fetcher: KeyworkFetcher<any>): void
+  public use(fetcher: Fetcher<any>): void
+  public use(mountURLPattern: URLPatternLike | string, fetcher: Fetcher<any>): void
   public use(...args: unknown[]): void {
     let mountURLPattern: URLPatternLike
-    let fetcher: KeyworkFetcher<any>
+    let fetcher: Fetcher<any>
 
     if (args.length > 1) {
       // Path pattern was provided...
@@ -356,13 +356,13 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
         appendWildcard: true,
       })
 
-      fetcher = args[1] as KeyworkFetcher<any>
+      fetcher = args[1] as Fetcher<any>
     } else {
       // Path pattern defaults to root...
       mountURLPattern = normalizeURLPattern('*', {
         appendWildcard: false,
       })
-      fetcher = args[0] as KeyworkFetcher<any>
+      fetcher = args[0] as Fetcher<any>
     }
 
     this.appendMethodRoutes('all', mountURLPattern, fetcher)
@@ -605,7 +605,7 @@ export class KeyworkRouter<BoundAliases = {}> implements KeyworkFetcher<BoundAli
   static readonly [kObjectName] = true as boolean
 
   static assertIsInstanceOf<BoundAliases = {}>(
-    routerLike: KeyworkFetcher<BoundAliases> | KeyworkRouter<BoundAliases>
+    routerLike: Fetcher<BoundAliases> | KeyworkRouter<BoundAliases>
   ): routerLike is KeyworkRouter<BoundAliases> {
     return Boolean(routerLike instanceof KeyworkRouter || kInstance in routerLike)
   }

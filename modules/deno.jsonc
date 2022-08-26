@@ -3,7 +3,6 @@
   "compilerOptions": {
     "lib": [
       "deno.unstable",
-      "deno.window",
       "dom",
       "dom.iterable"
     ],

@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './KeyworkFetcher.ts'
+export * from './Fetcher.ts'
 export * from './KeyworkRouterOptions.ts'
 export * from './MiddlewareFetch.ts'
 export * from './RouteMatch.ts'

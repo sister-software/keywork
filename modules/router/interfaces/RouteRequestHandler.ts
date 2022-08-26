@@ -14,7 +14,7 @@
 
 import type { IsomorphicFetchEvent } from '../../events/mod.ts'
 import type { ResponseLike } from '../../http/mod.ts'
-import type { MiddlewareFetch } from './MiddlewareFetch.ts'
+import type { MiddlewareFetch, MiddlewareReturnTypes } from './MiddlewareFetch.ts'
 
 /**
  * A function or method that handles incoming requests and replies with a `Response`.
@@ -24,7 +24,8 @@ import type { MiddlewareFetch } from './MiddlewareFetch.ts'
  *
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  * @typeParam ExpectedParams Optional string union of route path parameters. Only supported in Cloudflare Pages.
- * @typeParam Data Optional extra data to be passed to a route handler.
+ *
+ * @typeParam Data Optional extra data to be passed to a route handler, usually from {@link Keywork#Middleware middleware}.
  *
  * @category Request Handler
  */
@@ -34,7 +35,8 @@ export interface RouteRequestHandler<
   Data extends {} = Record<string, unknown>,
   ExpectedReturn extends ResponseLike = ResponseLike
 > {
-  (event: IsomorphicFetchEvent<BoundAliases, ExpectedParams, Data>, next: MiddlewareFetch<BoundAliases>):
-    | Promise<ExpectedReturn>
-    | ExpectedReturn
+  (
+    event: IsomorphicFetchEvent<BoundAliases, ExpectedParams, Data>,
+    next: MiddlewareFetch<BoundAliases, MiddlewareReturnTypes>
+  ): Promise<ExpectedReturn> | ExpectedReturn
 }

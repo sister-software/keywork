@@ -15,11 +15,14 @@
 
 import { RouteMatch } from './RouteMatch.ts'
 
+/** @ignore */
+export type MiddlewareReturnTypes = null | Response | Promise<null | Response>
+
 /**
  * A function within the Worker that receives all incoming requests.
  *
  * Generally, this interface is exclusive to {@link KeyworkRouter#fetch},
- * or any object that implements the {@link KeyworkFetcher} interface
+ * or any object that implements the {@link Keywork#Router.Fetcher `Fetcher`} interface
  *
  * This is nearly identical to `ExportedHandlerFetchHandler`
  * defined in the `@cloudflare/workers-types` package.
@@ -37,7 +40,7 @@ import { RouteMatch } from './RouteMatch.ts'
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  * @category Request
  */
-export interface MiddlewareFetch<BoundAliases = {}> {
+export interface MiddlewareFetch<BoundAliases = {}, ExpectedReturn extends MiddlewareReturnTypes = Promise<Response>> {
   (
     request: globalThis.Request,
     env?: BoundAliases,
@@ -55,7 +58,9 @@ export interface MiddlewareFetch<BoundAliases = {}> {
      * This is similar to Express.js Middleware.
      * Providing a request argument will override the path param parsing within `KeyworkRouter`.
      */
-    next?: (...args: Partial<Parameters<MiddlewareFetch<BoundAliases>>>) => null | Response | Promise<null | Response>,
+    next?: (
+      ...args: Partial<Parameters<MiddlewareFetch<BoundAliases, MiddlewareReturnTypes>>>
+    ) => MiddlewareReturnTypes,
     matchedRoutes?: RouteMatch<any>[]
-  ): Promise<Response>
+  ): ExpectedReturn
 }

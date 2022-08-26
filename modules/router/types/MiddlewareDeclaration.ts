@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkFetcher } from '../interfaces/KeyworkFetcher.ts'
+import { Fetcher } from '../interfaces/Fetcher.ts'
 
 /**
  * Middleware declaration in the convenient shape of `Map`'s constructor parameters.
@@ -22,5 +22,5 @@ import { KeyworkFetcher } from '../interfaces/KeyworkFetcher.ts'
  */
 export type MiddlewareDeclaration<PathPatternPrefix extends string = string> = readonly [
   PathPatternPrefix,
-  KeyworkFetcher<any>
+  Fetcher<any>
 ]

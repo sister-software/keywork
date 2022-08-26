@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkFetcher } from '../interfaces/KeyworkFetcher.ts'
+import { Fetcher } from '../interfaces/Fetcher.ts'
 import { MiddlewareDeclaration } from './MiddlewareDeclaration.ts'
 
 /** @ignore */
-export type MiddlewareDeclarationLike = KeyworkFetcher<any> | MiddlewareDeclaration
+export type MiddlewareDeclarationLike = Fetcher<any> | MiddlewareDeclaration

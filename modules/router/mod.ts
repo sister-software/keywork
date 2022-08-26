@@ -158,7 +158,7 @@
  * #### `IsomorphicFetchEvent.data`
  *
  * Optional extra data to be passed to a route handler,
- * usually from [middleware](/modules/router/middleware/).
+ * usually from {@link Keywork#Middleware middleware}.
  *
  * #### `IsomorphicFetchEvent.originalURL`
  *
@@ -227,7 +227,7 @@
  *
  * - {@link Keywork#URIUtils URI Module}
  * - {@link Keywork#Session Session Module}
- * - [Middleware Module](/modules/router/middleware)
+ * - {@link Keywork#Middleware Middleware Module}
  *
  * ## Further reading
  *
@@ -238,6 +238,7 @@
  * @module Keywork#Router
  *
  * @keyword Router
+ * @keyword Routing
  * @keyword Cloudflare Pages
  * @keyword Cloudflare Workers
  * @keyword Deno
