@@ -23,9 +23,7 @@
       "esnext",
       "dom",
       "dom.iterable"
-    ],
-    "sourceMap": true,
-    "declarationMap": true,
+    ]
   },
   "composite": true
 }
