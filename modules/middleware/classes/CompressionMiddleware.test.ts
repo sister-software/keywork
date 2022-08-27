@@ -12,6 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+/// <reference types="../../types/http.d.ts" />
+
 import { assertEquals } from 'deno/testing/asserts'
 import { KeyworkRouter } from '../../router/mod.ts'
 import { CompressionMiddleware } from './CompressionMiddleware.ts'

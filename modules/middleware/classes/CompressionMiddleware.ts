@@ -12,8 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Accepts } from 'https://deno.land/x/accepts@1.0.0/mod.ts'
+/// <reference types="../../types/http.d.ts" />
 
+import { Accepts } from 'https://deno.land/x/accepts@1.0.0/mod.ts'
 import { KeyworkResourceError, Status } from '../../errors/KeyworkResourceError.ts'
 import { shouldCompress } from '../../http/mod.ts'
 import { KeyworkRouter, KeyworkRouterOptions, RouteRequestHandler } from '../../router/mod.ts'
@@ -88,7 +89,7 @@ export class CompressionMiddleware extends KeyworkRouter {
     this.all('*', this.applyCompression)
   }
   protected applyCompression: RouteRequestHandler = async (event, next) => {
-    const originalResponse = await next(event.request, event.env, event)
+    const originalResponse = await next()
     if (!originalResponse || !originalResponse.body) return originalResponse
 
     const contentTypeHeader = originalResponse.headers.get('Content-Type')
