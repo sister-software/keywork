@@ -49,7 +49,7 @@ jobs:
 
       - name: Deploy Site
         run: |
-          yarn site:deploy --project-name keywork site/build
+          yarn site:deploy --project-name keywork --branch main site/build
         env:
           NODE_ENV: production
           CI: true
