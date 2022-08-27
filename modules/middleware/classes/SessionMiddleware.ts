@@ -130,7 +130,7 @@ export class SessionMiddleware extends KeyworkRouter {
 
     event.data.session = session
 
-    const response = await next(event.request, event.env, event)
+    const response = await next()
 
     if (!response) return response
 

@@ -42,7 +42,7 @@ export type MiddlewareReturnTypes = null | Response | Promise<null | Response>
  */
 export interface MiddlewareFetch<BoundAliases = {}, ExpectedReturn extends MiddlewareReturnTypes = Promise<Response>> {
   (
-    request: globalThis.Request,
+    request?: globalThis.Request,
     env?: BoundAliases,
     /**
      * An event-like object from the runtime.

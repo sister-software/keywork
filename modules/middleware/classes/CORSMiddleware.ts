@@ -46,7 +46,7 @@ export class CORSMiddleware extends KeyworkRouter {
   }
 
   protected applyCORSHeaders: RouteRequestHandler = async (event, next) => {
-    const originalResponse = await next(event.request, event.env, event)
+    const originalResponse = await next()
     const { request } = event
     const isPreflight = request.method === 'OPTIONS'
     let response: globalThis.Response

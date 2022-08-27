@@ -493,6 +493,10 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
     next,
     matchedRoutes
   ): Promise<globalThis.Response> => {
+    if (!request) {
+      return new ErrorResponse(Status.BadRequest, 'Request parameter must be provided when invoking `fetch`.')
+    }
+
     const normalizedMethodVerb = methodVerbToRouterMethod.get(request.method as HTTPMethod)
 
     if (!normalizedMethodVerb) {
