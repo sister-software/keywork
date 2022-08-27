@@ -1,6 +1,6 @@
 {
   "name": "keywork",
-  "version": "6.0.2",
+  "version": "6.1.0",
   "license": "AGPL-3.0",
   "author": "Teffen Ellis <teffen@nirri.us>",
   "description": "A batteries-included, magic-free, library for building web apps in V8 Isolates.",
