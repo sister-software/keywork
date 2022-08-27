@@ -41,6 +41,7 @@ import {
 import { MiddlewareFetch } from '../interfaces/MiddlewareFetch.ts'
 import { RouteMatch } from '../interfaces/RouteMatch.ts'
 import { RouteRequestHandler } from '../interfaces/RouteRequestHandler.ts'
+import { FetcherLike } from '../types/FetcherLike.ts'
 import { ParsedRoute } from '../types/ParsedRoute.ts'
 
 /**
@@ -344,11 +345,23 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
    *
    * @public
    */
-  public use(fetcher: Fetcher<any>): void
-  public use(mountURLPattern: URLPatternLike | string, fetcher: Fetcher<any>): void
+  public use(
+    /**
+     * The middleware to mount.
+     * The given middleware will execute _before_ any other request handlers
+     * that are defined _after_ invoking `use(...)`.
+     */
+    fetcher: FetcherLike<BoundAliases>
+  ): void
+  public use(
+    /** A `URLpattern` of where the given middleware should be mounted.  */
+    mountURLPattern: URLPatternLike,
+    /** The middleware to mount. */
+    fetcher: FetcherLike<BoundAliases>
+  ): void
   public use(...args: unknown[]): void {
     let mountURLPattern: URLPatternLike
-    let fetcher: Fetcher<any>
+    let fetcher: FetcherLike<BoundAliases>
 
     if (args.length > 1) {
       // Path pattern was provided...
@@ -356,7 +369,7 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
         appendWildcard: true,
       })
 
-      fetcher = args[1] as Fetcher<any>
+      fetcher = args[1] as FetcherLike<BoundAliases>
     } else {
       // Path pattern defaults to root...
       mountURLPattern = normalizeURLPattern('*', {

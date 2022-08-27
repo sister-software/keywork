@@ -18,6 +18,7 @@ import { Status } from '../../errors/mod.ts'
 import { KeyworkHeaders } from '../../http/headers/mod.ts'
 import { JSONResponse } from '../../http/mod.ts'
 import HTTP from '../../__internal/http.ts'
+import { RouteRequestHandler } from '../mod.ts'
 import { KeyworkRouter } from './KeyworkRouter.ts'
 
 interface HelloResponseBody extends Record<PropertyKey, unknown> {
@@ -156,4 +157,26 @@ Deno.test('Router supports middleware', async () => {
   const nestedRequest = await app.fetch(new HTTP.Request('http://localhost/hello/example-json'))
   assertEquals(nestedRequest.status, Status.OK, 'Nested request routes correctly')
   assertEquals(await nestedRequest.json(), { hello: 'world' }, 'Nested body includes content')
+})
+
+Deno.test('Router supports middleware as `RouteRequestHandler`', async () => {
+  const app = new KeyworkRouter({
+    displayName: 'Route Request Handler Tester',
+  })
+
+  const addTestingHeaderMiddleware: RouteRequestHandler = async (event, next) => {
+    const response = await next()
+    if (!response) return response
+
+    response.headers.set('X-Test-Header', 'Added by middleware')
+
+    return response
+  }
+
+  app.use(addTestingHeaderMiddleware)
+  app.get('/', () => 'Hello from out of the box!')
+
+  const response = await app.fetch(new globalThis.Request('http://localhost/'))
+
+  assertEquals(response.headers.get('X-Test-Header'), 'Added by middleware', 'Header was added')
 })
