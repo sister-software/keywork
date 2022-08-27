@@ -9,7 +9,7 @@ Building your web app in a Workers environment can be intimidating,
 especially so if you're unfamiliar with the quirks and limitations of V8.
 
 We're going to create a single Worker that sends the browser a "hello world" response.
-By the end of this example, you'll know how to use the [`KeyworkRouter`](/modules/router/classes/KeyworkRouter)
+By the end of this example, you'll know how to use the [`RequestRouter`](/modules/router/classes/RequestRouter)
 class to handling incoming requests from the browser.
 
 :::info
@@ -39,14 +39,14 @@ Examples are always written with type annotations, but they can be omitted if yo
 
 ### Create a router to receive all incoming requests
 
-Building our app starts with the [`KeyworkRouter`](/modules/router/classes/KeyworkRouter)
+Building our app starts with the [`RequestRouter`](/modules/router/classes/RequestRouter)
 class.
 
 ```ts title="worker.ts" showLineNumbers
-import { KeyworkRouter } from 'keywork/router'
+import { RequestRouter } from 'keywork/router'
 
 // highlight-next-line
-const app = new KeyworkRouter()
+const app = new RequestRouter()
 
 // Continue...
 ```
@@ -59,10 +59,10 @@ we can configure our router to handle incoming requests via the `app.get` method
 In our small example, we only need to define a single route handler:
 
 ```ts title="worker.ts" showLineNumbers
-import { KeyworkRouter } from 'keywork/router'
+import { RequestRouter } from 'keywork/router'
 
 // Create a router to receive all incoming requests...
-const app = new KeyworkRouter()
+const app = new RequestRouter()
 
 // e.g. GET http://example.com/
 // highlight-start
@@ -86,7 +86,7 @@ Remember, while you may import other modules, a bundler tool like ESBuild or Web
 will always create a single file with the one instance of `export default`.
 
 If you're familiar with Worker Sites, or Cloudflare Pages, you may have noticed that
-`KeyworkRouter` reduces much of the low-level boilerplate.
+`RequestRouter` reduces much of the low-level boilerplate.
 The Keywork API attempts to bridge the gap between existing web development patterns,
 and the native Worker API.
 
@@ -99,10 +99,10 @@ When defining a route's `RouteRequestHandler` callback, you have access to an [`
 In this example, let's use `IsomorphicFetchEvent` to return information about where the request originated:
 
 ```ts title="worker.ts" showLineNumbers
-import { KeyworkRouter } from 'keywork/router'
+import { RequestRouter } from 'keywork/router'
 
 // Create a router to receive all incoming requests...
-const app = new KeyworkRouter()
+const app = new RequestRouter()
 
 // e.g. GET http://example.com/anything/goes/here
 //highlight-next-line
@@ -130,9 +130,9 @@ Keywork gives us the optional type-safety of TypeScript.
 Let's illustrate this feature by adding a JSON endpoint to our router:
 
 ```ts title=_worker.ts
-import { KeyworkRouter } from 'keywork/router'
+import { RequestRouter } from 'keywork/router'
 
-const app = new KeyworkRouter()
+const app = new RequestRouter()
 
 // Define a TypeScript interface to enforce the shape
 interface HelloResponseBody {

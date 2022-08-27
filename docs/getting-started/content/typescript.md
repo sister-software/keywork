@@ -42,9 +42,9 @@ Keywork can be used directly via [Deno Land](https://deno.land/x/keywork):
 
 ```tsx title="worker"
 import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
-import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
+import { RequestRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
 
-const app = new KeyworkRouter()
+const app = new RequestRouter()
 
 app.get('/', () => <h1>Hello from Keywork! 👋</h1>)
 

@@ -22,10 +22,10 @@ import {
   CORSOptions,
   createDefaultCORSOptions,
 } from '../../http/mod.ts'
-import { KeyworkRouter, KeyworkRouterOptions, RouteRequestHandler } from '../../router/mod.ts'
+import { RequestRouter, RequestRouterOptions, RouteRequestHandler } from '../../router/mod.ts'
 import HTTP from '../../__internal/http.ts'
 
-export class CORSMiddleware extends KeyworkRouter {
+export class CORSMiddleware extends RequestRouter {
   protected headerAppliers: readonly CORSHeaderApplier[] = [
     applyOriginHeaders,
     applyCredentialsHeader,
@@ -35,7 +35,7 @@ export class CORSMiddleware extends KeyworkRouter {
 
   public readonly corsOptions: CORSOptions
 
-  constructor(corsOptions?: Partial<CORSOptions>, routerOptions?: KeyworkRouterOptions) {
+  constructor(corsOptions?: Partial<CORSOptions>, routerOptions?: RequestRouterOptions) {
     super(routerOptions)
     this.corsOptions = {
       ...createDefaultCORSOptions(),

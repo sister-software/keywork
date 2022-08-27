@@ -1,16 +1,16 @@
 /**
- * The {@link Keywork#Router.KeyworkRouter `KeyworkRouter`}
+ * The {@link Keywork#Router.RequestRouter `RequestRouter`}
  * can be made compatible with Node.js
  * via the {@link Keywork#Router#Node.createServerHandler `createServerHandler`} wrapper function:
  *
  * ```ts showLineNumbers
  * import * as http from 'node:http'
- * import { KeyworkRouter } from 'keywork/router'
+ * import { RequestRouter } from 'keywork/router'
  * import { createServerHandler } from 'keywork/router/node'
  *
  * // Create a router as you usually do...
  * // highlight-next-line
- * const router = new KeyworkRouter()
+ * const router = new RequestRouter()
  * router.get('/', () => 'Hello from Node')
  *
  * // And then wrap the router with `createServerHandler`

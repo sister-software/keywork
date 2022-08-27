@@ -3,9 +3,9 @@
  * Express.js, React Router, and the native Cloudflare Workers platform.
  *
  * ```ts title="worker.ts" runtime="cloudflare"
- * import { KeyworkRouter } from 'keywork/router'
+ * import { RequestRouter } from 'keywork/router'
  *
- * const app = new KeyworkRouter()
+ * const app = new RequestRouter()
  *
  * app.get('/', () => 'Hello there! 👋')
  *
@@ -13,24 +13,24 @@
  * ```
  *
  * ```ts title="./your-project/server/mod.tsx" runtime="deno"
- * import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
+ * import { RequestRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
  * import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
  *
- * const app = new KeyworkRouter()
+ * const app = new RequestRouter()
  * serve((request) => app.fetch(request))
  * ```
  *
  * ```ts title="worker.ts" runtime="browser"
- * import { KeyworkRouter } from 'https://esm.sh/keywork/router'
+ * import { RequestRouter } from 'https://esm.sh/keywork/router'
  *
- * const app = new KeyworkRouter()
+ * const app = new RequestRouter()
  *
  * app.get('/', () => 'Hello there! 👋')
  * ```
  *
  * ## Creating a RESTful API
  *
- * Instances of {@link Keywork#Router.KeyworkRouter `KeyworkRouter`} define each route handler by
+ * Instances of {@link Keywork#Router.RequestRouter `RequestRouter`} define each route handler by
  * invoking methods that correspond with HTTP method of the same name:
  *
  * | HTTP Method | Usage                                                |
@@ -92,7 +92,7 @@
  * Path matching is implemented via the JavaScript native
  * [`URLPattern`](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern)
  *
- * :::warning
+ * :::tip
  * You may need a polyfill if your app uses on a runtime that hasn't yet added
  * [`URLPattern`](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern) class.
  *
@@ -172,7 +172,7 @@
  * `next` can also be called after checking for some criteria, such as if the user has authenticated:
  *
  * ```ts title="Check if a user is allowed to view a page"
- * const authenticationRouter = new KeyworkRouter()
+ * const authenticationRouter = new RequestRouter()
  *
  * authenticationRouter.all('*',
  * (event, next) => {
@@ -189,13 +189,13 @@
  *
  * ### Overrides
  *
- * Providing a `request` argument will override the path param parsing within `KeyworkRouter`.
+ * Providing a `request` argument will override the path param parsing within `RequestRouter`.
  * This can be useful if your middleware needs to modify or omit some request
  * information before reaching the next route handler.
  *
  * ## Additional Perks
  *
- * The `KeyworkRouter` class also provides some small quality-of-life improvements
+ * The `RequestRouter` class also provides some small quality-of-life improvements
  * over the low-level APIs of the Workers platform.
  *
  * ### Automatic Response Parsing
@@ -208,10 +208,10 @@
  * However, this behavior can be avoided by explicitly providing a `Response` object,
  * or a class that extends from `Response` such as...
  *
- * - {@link Keywork#HTTP/Response.CachableResponse `CachableResponse`}
- * - {@link Keywork#HTTP/Response.HTMLResponse `HTMLResponse`}
- * - {@link Keywork#HTTP/Response.JSONResponse `JSONResponse`}
- * - {@link Keywork#HTTP/Response.ErrorResponse `ErrorResponse`}
+ * - {@link Keywork#HTTP.CachableResponse `CachableResponse`}
+ * - {@link Keywork#HTTP.HTMLResponse `HTMLResponse`}
+ * - {@link Keywork#HTTP.JSONResponse `JSONResponse`}
+ * - {@link Keywork#HTTP.ErrorResponse `ErrorResponse`}
  *
  * ### Errors
  *

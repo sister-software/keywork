@@ -15,20 +15,20 @@
 import React, { FC, ReactNode, useMemo } from 'https://esm.sh/react@18.2.0'
 import { createContextAndNamedHook } from '../functions/createNamedContextHook.ts'
 
-export interface KeyworkRouterProvider {
+export interface RequestRouterProvider {
   location: URL
 }
 
-const [RouteContext, useKeyworkRouter] = createContextAndNamedHook<KeyworkRouterProvider>(undefined, 'RouteContext')
-export { useKeyworkRouter }
+const [RouteContext, useRequestRouter] = createContextAndNamedHook<RequestRouterProvider>(undefined, 'RouteContext')
+export { useRequestRouter }
 
-export interface KeyworkRouterProps {
+export interface RequestRouterProps {
   initialLocation: URL
   children: ReactNode
 }
 
-export const RouteProvider: FC<KeyworkRouterProps> = ({ initialLocation, children }) => {
-  const value = useMemo<KeyworkRouterProvider>(
+export const RouteProvider: FC<RequestRouterProps> = ({ initialLocation, children }) => {
+  const value = useMemo<RequestRouterProvider>(
     () => ({
       location: initialLocation,
     }),

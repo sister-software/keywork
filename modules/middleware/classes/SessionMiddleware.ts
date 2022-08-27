@@ -19,7 +19,7 @@ import {
 } from 'https://esm.sh/cookie@0.5.0'
 import type { CookieHeaders } from '../../http/headers/mod.ts'
 import { ulid } from '../../ids/mod.ts'
-import { KeyworkRouter, RouteRequestHandler } from '../../router/mod.ts'
+import { RequestRouter, RouteRequestHandler } from '../../router/mod.ts'
 
 /**
  * The default session cookie key.
@@ -76,9 +76,9 @@ export interface KeyworkSession {
  *
  * ```ts
  * import { SessionMiddleware } from 'keywork/session'
- * import { KeyworkRouter } from 'keywork/router'
+ * import { RequestRouter } from 'keywork/router'
  *
- * const app = new KeyworkRouter({
+ * const app = new RequestRouter({
  *   displayName: 'Session Tester',
  *   middleware: [new SessionMiddleware()],
  * })
@@ -94,7 +94,7 @@ export interface KeyworkSession {
  * })
  * ```
  */
-export class SessionMiddleware extends KeyworkRouter {
+export class SessionMiddleware extends RequestRouter {
   /**
    * The key used to read from the cookie header.
    */

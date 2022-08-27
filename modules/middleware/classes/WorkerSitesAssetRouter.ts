@@ -16,7 +16,7 @@ import { getAssetFromKV } from 'https://esm.sh/@cloudflare/kv-asset-handler@0.2.
 import type { AssetManifestType } from 'https://esm.sh/@cloudflare/kv-asset-handler@0.2.0/dist/types'
 import { KeyworkResourceError, Status } from '../../errors/mod.ts'
 import { ErrorResponse } from '../../http/mod.ts'
-import { KeyworkRouter, RouteRequestHandler } from '../../router/mod.ts'
+import { RequestRouter, RouteRequestHandler } from '../../router/mod.ts'
 import type { KVNamespace } from '../../__internal/interfaces/kv.ts'
 /**
  * An asset environment binding available within Cloudflare Pages.
@@ -54,7 +54,7 @@ export const AssetBindingAlias = 'ASSETS'
  *
  * @see {@link https://developers.cloudflare.com/pages/platform/functions/#advanced-mode Cloudflare Worker Pages API}
  *
- * @category Asset Router
+ * @category Cloudflare Middleware
  */
 export interface WorkersSiteStaticContentBinding {
   __STATIC_CONTENT: KVNamespace
@@ -66,7 +66,7 @@ export interface WorkersSiteStaticContentBinding {
  * @category Asset Router
  * @see {CloudflarePagesAssetRouter}
  */
-export class WorkerSitesAssetRouter extends KeyworkRouter<WorkersSiteStaticContentBinding> {
+export class WorkerSitesAssetRouter extends RequestRouter<WorkersSiteStaticContentBinding> {
   /**
    * Injected via:
    *

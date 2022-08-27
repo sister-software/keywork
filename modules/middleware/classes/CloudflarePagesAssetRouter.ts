@@ -30,7 +30,8 @@ export const CloudflarePagesBindingAlias = 'ASSETS'
  * This binding only exists in Cloudflare __Pages__.
  *
  * @see {WorkerSitesAssetRouter} If you're using Worker Sites
- * @category Asset Router
+ *
+ * @category Cloudflare Middleware
  */
 export class CloudflarePagesAssetRouter extends ServiceBindingRouter<typeof CloudflarePagesBindingAlias> {
   constructor() {

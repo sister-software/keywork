@@ -33,12 +33,12 @@ import { Disposable } from '../../__internal/interfaces/disposable.ts'
 import { isFetcher } from '../functions/isFetcher.ts'
 import { isMiddlewareDeclarationOption } from '../functions/isMiddlewareDeclarationOption.ts'
 import { Fetcher } from '../interfaces/Fetcher.ts'
-import {
-  KeyworkRouterDebugEndpoints,
-  KeyworkRouterOptions,
-  RouteDebugEntrypoint,
-} from '../interfaces/KeyworkRouterOptions.ts'
 import { MiddlewareFetch } from '../interfaces/MiddlewareFetch.ts'
+import {
+  RequestRouterDebugEndpoints,
+  RequestRouterOptions,
+  RouteDebugEntrypoint,
+} from '../interfaces/RequestRouterOptions.ts'
 import { RouteMatch } from '../interfaces/RouteMatch.ts'
 import { RouteRequestHandler } from '../interfaces/RouteRequestHandler.ts'
 import { FetcherLike } from '../types/FetcherLike.ts'
@@ -46,14 +46,14 @@ import { ParsedRoute } from '../types/ParsedRoute.ts'
 
 /**
  * Used in place of the reference-sensitive `instanceof`
- * @see {KeyworkRouter.assertIsInstanceOf}
+ * @see {RequestRouter.assertIsInstanceOf}
  * @ignore
  */
-export const kObjectName = 'Keywork.KeyworkRouter'
+export const kObjectName = 'Keywork.RequestRouter'
 /**
  * @ignore
  */
-export const kInstance = 'Keywork.KeyworkRouter.instance'
+export const kInstance = 'Keywork.RequestRouter.instance'
 
 /**
  * @ignore
@@ -76,12 +76,12 @@ export type RouteMethodDeclaration<BoundAliases = {}, ExpectedParams = {}, Data 
  *
  * {@link https://keywork.app/modules/router Keywork Documentation}
  *
- * {@link https://keywork.app/modules/router/classes/KeyworkRouter Keywork API}
+ * {@link https://keywork.app/modules/router/classes/RequestRouter Keywork API}
  *
  * @category Router
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  */
-export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, Disposable {
+export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, Disposable {
   /**
    * This router's known routes, categorized by their normalized HTTP method verbs into arrays of route handlers.
    *
@@ -119,7 +119,7 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
      */
     const parsedHandlers = fetchersLike.map((fetcherLike): ParsedRoute<BoundAliases> => {
       if (isFetcher<BoundAliases>(fetcherLike)) {
-        // Likely a `KeyworkRouter` or `Fetcher`...
+        // Likely a `RequestRouter` or `Fetcher`...
         return {
           kind: 'fetcher',
           urlPattern,
@@ -287,7 +287,7 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
    * Defines a handler for incoming all HTTP requests.
    *
    * This will always be a **higher priority** than an explicitly defined method handler.
-   * If you're creating a router as middleware, `KeyworkRouter#all` can be especially useful for intercepting incoming requests.
+   * If you're creating a router as middleware, `RequestRouter#all` can be especially useful for intercepting incoming requests.
    *
    * @category HTTP Method Handler
    * @public
@@ -308,7 +308,7 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
    * Route handlers are matched in the order of their declaration:
    *
    * ```ts
-   * const app = new KeyworkRouter()
+   * const app = new RequestRouter()
    *
    * app.get('/foo', ({request}) => {
    *   return new Response('This handler got here first!')
@@ -323,7 +323,7 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
    * Call `use` before defining your route handlers:
    *
    * ```ts
-   * const authenticationRouter = new KeyworkRouter()
+   * const authenticationRouter = new RequestRouter()
    *
    * authenticationRouter.all('*', ({request, next}) => {
    *   if (!hasAuthCookie(request)) {
@@ -334,7 +334,7 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
    *   return next()
    * })
    *
-   * const app = new KeyworkRouter()
+   * const app = new RequestRouter()
    *
    * app.use('/', authenticationRouter)
    *
@@ -399,7 +399,7 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
   /**
    * Collates the known routes by HTTP method verb.
    *
-   * @see {KeyworkRouter#$prettyPrintRoutes}
+   * @see {RequestRouter#$prettyPrintRoutes}
    * @category Debug
    * @public
    */
@@ -413,7 +413,7 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
         kind: 'router',
         entries: parsedRoutes.map(({ urlPattern, ...parsedRoute }) => {
           const entries =
-            parsedRoute.kind === 'fetcher' && KeyworkRouter.assertIsInstanceOf(parsedRoute.fetcher)
+            parsedRoute.kind === 'fetcher' && RequestRouter.assertIsInstanceOf(parsedRoute.fetcher)
               ? parsedRoute.fetcher.$getRoutesByHTTPMethod()
               : []
 
@@ -493,8 +493,8 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
   /**
    * The Worker's primary incoming fetch handler.
    *
-   * This delegates to a method-specific handler you define, such as `KeyworkRouter#get`.
-   * Generally, `KeyworkRouter#fetch` should not be used within your app.
+   * This delegates to a method-specific handler you define, such as `RequestRouter#get`.
+   * Generally, `RequestRouter#fetch` should not be used within your app.
    * This is instead automatically called by the Worker runtime when an incoming request is received.
    *
    * @public
@@ -622,16 +622,16 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
   static readonly [kObjectName] = true as boolean
 
   static assertIsInstanceOf<BoundAliases = {}>(
-    routerLike: Fetcher<BoundAliases> | KeyworkRouter<BoundAliases>
-  ): routerLike is KeyworkRouter<BoundAliases> {
-    return Boolean(routerLike instanceof KeyworkRouter || kInstance in routerLike)
+    routerLike: Fetcher<BoundAliases> | RequestRouter<BoundAliases>
+  ): routerLike is RequestRouter<BoundAliases> {
+    return Boolean(routerLike instanceof RequestRouter || kInstance in routerLike)
   }
 
   //#endregion
 
   //#region Lifecyle
 
-  constructor(options?: KeyworkRouterOptions) {
+  constructor(options?: RequestRouterOptions) {
     this.displayName = options?.displayName || 'Keywork Router'
     this.logger = new Logger(this.displayName)
 
@@ -644,14 +644,14 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
       typeof options?.debug?.includeHeaders !== 'undefined' ? options.debug.includeHeaders : true
 
     if (options?.debug?.endpoints) {
-      const endpoints: KeyworkRouterDebugEndpoints =
+      const endpoints: RequestRouterDebugEndpoints =
         typeof options.debug.endpoints === 'boolean'
           ? {
               routes: true,
             }
           : options.debug.endpoints
       // TODO: flesh out
-      // this.use(new KeyworkRouterDebugMiddleware(options?.debug))
+      // this.use(new RequestRouterDebugMiddleware(options?.debug))
 
       if (endpoints.routes) {
         this.get('/keywork/routes', this.$routesEndpoint)
@@ -676,3 +676,6 @@ export class KeyworkRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
 
   //#endregion
 }
+
+// Legacy name for backwards compatibility
+export { RequestRouter as KeyworkRouter }

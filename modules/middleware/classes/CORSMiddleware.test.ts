@@ -14,7 +14,7 @@
 
 import { assertEquals } from 'deno/testing/asserts'
 import { Status } from '../../errors/mod.ts'
-import { KeyworkRouter } from '../../router/mod.ts'
+import { RequestRouter } from '../../router/mod.ts'
 import { DURATION_ONE_DAY } from '../../__internal/datetime.ts'
 import { CORSMiddleware } from './CORSMiddleware.ts'
 
@@ -36,7 +36,7 @@ Deno.test('Middleware sets defaults', async () => {
 })
 
 Deno.test('Middleware sends preflight', async () => {
-  const app = new KeyworkRouter({
+  const app = new RequestRouter({
     displayName: 'CORS Middleware Tester',
     middleware: [new CORSMiddleware()],
   })
@@ -59,7 +59,7 @@ Deno.test('Middleware sends preflight', async () => {
 })
 
 Deno.test('CORS middleware parses origins', async () => {
-  const app = new KeyworkRouter({
+  const app = new RequestRouter({
     displayName: 'CORS Middleware Tester',
     middleware: [new CORSMiddleware({ allowedOrigins: ['https://localhost', 'https://api.example.com'] })],
   })

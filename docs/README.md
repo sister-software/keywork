@@ -3,9 +3,9 @@
 **Keywork** is a batteries-included library for building serverless web apps on Cloudflare Workers, Deno, and Node.JS
 
 ```tsx
-import { KeyworkRouter } from 'keywork/router'
+import { RequestRouter } from 'keywork/router'
 
-const app = new KeyworkRouter()
+const app = new RequestRouter()
 
 app.get('/', () => <h1>Hello from Keywork! 👋</h1>)
 
@@ -75,7 +75,7 @@ interface User {
   email: string
 }
 
-const usersAPI = new KeyworkRouter()
+const usersAPI = new RequestRouter()
 
 usersAPI.get('/', () => {
   const users: User[] = [
@@ -90,7 +90,7 @@ usersAPI.get('/', () => {
 ```
 
 ```tsx title="Fetch your static props and return JSX!"
-const app = new KeyworkRouter({
+const app = new RequestRouter({
   middleware: [['/api/users', usersAPI]],
 })
 
@@ -119,7 +119,7 @@ Whether you're handling errors in your V8 Worker, Node.JS, or even the browser,
 Keywork includes error utilities that pair nicely with HTTP requests.
 
 ```ts
-import { KeyworkRouter } from 'keywork/router'
+import { RequestRouter } from 'keywork/router'
 import { KeyworkResourceError, Status } from 'keywork/errors'
 
 interface LoginPayload {

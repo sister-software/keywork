@@ -31,7 +31,7 @@ export type ResponseLike = globalThis.Response | React.ReactElement | {} | null 
 /**
  * Infers the appropriate Response constructor for the given `ResponseLike` body.
  *
- * While the {@link Keywork#Router.KeyworkRouter `KeyworkRouter`} automatically
+ * While the {@link Keywork#Router.RequestRouter `RequestRouter`} automatically
  * converts returned values via `castToResponse`.
  *
  * @throws {KeyworkResourceError}

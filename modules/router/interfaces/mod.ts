@@ -13,8 +13,8 @@
  */
 
 export * from './Fetcher.ts'
-export * from './KeyworkRouterOptions.ts'
 export * from './MiddlewareFetch.ts'
+export * from './RequestRouterOptions.ts'
 export * from './RouteMatch.ts'
 export * from './RouteRequestHandler.ts'
 export * from './WorkerEnvFetchBinding.ts'

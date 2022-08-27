@@ -13,7 +13,7 @@
  */
 
 import React, { FC, useMemo } from 'https://esm.sh/react@18.2.0'
-import { useKeyworkRouter } from '../../components/RouteProvider.tsx'
+import { useRequestRouter } from '../../components/RouteProvider.tsx'
 import { useStaticProps } from '../../components/StaticPropsProvider.tsx'
 import { createContextAndNamedHook } from '../../functions/createNamedContextHook.ts'
 import { matchRoute, PatternToPageComponentMap } from '../functions/matchRoute.ts'
@@ -34,7 +34,7 @@ export { useMatch }
  */
 export const KeyworkPatternToPageComponent: FC<KeyworkBrowserRouterProps> = ({ patternToPageComponent }) => {
   const staticProps = useStaticProps<any>()
-  const { location } = useKeyworkRouter()
+  const { location } = useRequestRouter()
 
   const possibleMatch = useMemo(() => {
     return matchRoute(patternToPageComponent, location)

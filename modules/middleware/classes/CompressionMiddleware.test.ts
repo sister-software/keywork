@@ -15,7 +15,7 @@
 /// <reference types="../../types/http.d.ts" />
 
 import { assertEquals } from 'deno/testing/asserts'
-import { KeyworkRouter } from '../../router/mod.ts'
+import { RequestRouter } from '../../router/mod.ts'
 import { CompressionMiddleware } from './CompressionMiddleware.ts'
 
 const dStream = new DecompressionStream('gzip')
@@ -23,7 +23,7 @@ const dStream = new DecompressionStream('gzip')
 Deno.test('Router compresseses response body', async () => {
   const textDecoder = new TextDecoder()
 
-  const app = new KeyworkRouter({
+  const app = new RequestRouter({
     displayName: 'Compression Middleware Tester',
     middleware: [new CompressionMiddleware('gzip')],
   })

@@ -14,14 +14,14 @@
 
 import { Status } from '../../errors/mod.ts'
 import { ErrorResponse } from '../../http/mod.ts'
-import { KeyworkRouter, KeyworkRouterOptions, RouteRequestHandler, WorkerEnvFetchBinding } from '../../router/mod.ts'
+import { RequestRouter, RequestRouterOptions, RouteRequestHandler, WorkerEnvFetchBinding } from '../../router/mod.ts'
 
 /**
  * A router that proxies requests directly to a Cloudflare Worker environment binding,
  * such as a service binding.
  *
  * Middleware in Keywork can also be thought of as any object that implements the {@link Keywork#Router.Fetcher `Fetcher`} interface.
- * Under the hood,  {@link Keywork#Router.KeyworkRouter `KeyworkRouter`} _is_ a `Fetcher`,
+ * Under the hood,  {@link Keywork#Router.RequestRouter `RequestRouter`} _is_ a `Fetcher`,
  * and is the most common usage of middleware.
  *
  * Cloudflare's concept of "environment bindings" _almost_ satisfy the `Fetcher` interface,
@@ -35,10 +35,10 @@ import { KeyworkRouter, KeyworkRouterOptions, RouteRequestHandler, WorkerEnvFetc
  *
  * @typeParam BindingAlias The bound alias, usually defined in your wrangler.toml file.
  *
- * @category Router
+ * @category Cloudflare Middleware
  * @public
  */
-export class ServiceBindingRouter<BindingAlias extends string> extends KeyworkRouter<
+export class ServiceBindingRouter<BindingAlias extends string> extends RequestRouter<
   Record<BindingAlias, WorkerEnvFetchBinding>
 > {
   constructor(
@@ -46,7 +46,7 @@ export class ServiceBindingRouter<BindingAlias extends string> extends KeyworkRo
      * The named alias of your binding. This is usually defined in your wrangler.toml file.
      */
     public bindingAlias: BindingAlias,
-    options?: KeyworkRouterOptions
+    options?: RequestRouterOptions
   ) {
     super({
       displayName: `Service Binding [${bindingAlias}]`,

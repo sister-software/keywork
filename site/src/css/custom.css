@@ -173,3 +173,7 @@ table thead tr {
 .section:nth-child(even) {
   backdrop-filter: hue-rotate(90deg);
 }
+
+.anchor > a {
+  color: unset;
+}

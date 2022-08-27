@@ -22,15 +22,15 @@ export const IsomorphicFetchEventObjectName = 'Keywork.IsomorphicFetchEvent'
 /**
  * An event object containing contextual data for a single and specific incoming HTTP request.
  *
- * Generally, this interface is exclusive to {@link KeyworkRouter#fetch}
+ * Generally, this interface is exclusive to {@link RequestRouter#fetch}
  * and automatically passed to your subclass's route handlers.
  *
  * This is similar to `EventContext` defined in the `@cloudflare/workers-types` package.
- * However, the `IsomorphicFetchEvent` type includes additional information from `KeyworkRouter`.
+ * However, the `IsomorphicFetchEvent` type includes additional information from `RequestRouter`.
  *
  * ### Caveats
  *
- * - The `request.url` property will be updated by route handler of `KeyworkRouter`.
+ * - The `request.url` property will be updated by route handler of `RequestRouter`.
  *
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  * @typeParam ExpectedParams URL parameters parsed from the incoming request's URL and the route's pattern.

@@ -21,7 +21,7 @@ export type MiddlewareReturnTypes = null | Response | Promise<null | Response>
 /**
  * A function within the Worker that receives all incoming requests.
  *
- * Generally, this interface is exclusive to {@link KeyworkRouter#fetch},
+ * Generally, this interface is exclusive to {@link RequestRouter#fetch},
  * or any object that implements the {@link Keywork#Router.Fetcher `Fetcher`} interface
  *
  * This is nearly identical to `ExportedHandlerFetchHandler`
@@ -56,7 +56,7 @@ export interface MiddlewareFetch<BoundAliases = {}, ExpectedReturn extends Middl
      * When invoked, will execute a route handler defined after the current.
      *
      * This is similar to Express.js Middleware.
-     * Providing a request argument will override the path param parsing within `KeyworkRouter`.
+     * Providing a request argument will override the path param parsing within `RequestRouter`.
      */
     next?: (
       ...args: Partial<Parameters<MiddlewareFetch<BoundAliases, MiddlewareReturnTypes>>>

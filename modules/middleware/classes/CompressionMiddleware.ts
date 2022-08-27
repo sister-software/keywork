@@ -17,7 +17,7 @@
 import { Accepts } from 'https://deno.land/x/accepts@1.0.0/mod.ts'
 import { KeyworkResourceError, Status } from '../../errors/KeyworkResourceError.ts'
 import { shouldCompress } from '../../http/mod.ts'
-import { KeyworkRouter, KeyworkRouterOptions, RouteRequestHandler } from '../../router/mod.ts'
+import { RequestRouter, RequestRouterOptions, RouteRequestHandler } from '../../router/mod.ts'
 import type { MimeDatabase } from '../../types/mime-db.d.ts'
 import HTTP from '../../__internal/http.ts'
 
@@ -36,9 +36,9 @@ export type CompressionEncoding = 'gzip' | 'deflate' | 'deflate-raw'
  * compresses the contents according to a client's `Accept-Encoding` request header.
  *
  * ```ts runtime=node
- * import {KeyworkRouter} from 'keywork/router'
+ * import {RequestRouter} from 'keywork/router'
  *
- * const app = new KeyworkRouter()
+ * const app = new RequestRouter()
  * app.use(new CompressionMiddleware('gzip'))
  *
  * app.get('/', (event) => {
@@ -61,7 +61,7 @@ export type CompressionEncoding = 'gzip' | 'deflate' | 'deflate-raw'
  *
  * :::
  */
-export class CompressionMiddleware extends KeyworkRouter {
+export class CompressionMiddleware extends RequestRouter {
   protected supportedServerEncodings: CompressionEncoding[]
   protected db?: MimeDatabase
 
@@ -72,7 +72,7 @@ export class CompressionMiddleware extends KeyworkRouter {
      * such as the [`mime-db`](https://www.npmjs.com/package/mime-db) package
      */
     db?: MimeDatabase,
-    routerOptions?: KeyworkRouterOptions
+    routerOptions?: RequestRouterOptions
   ) {
     super(routerOptions)
 

@@ -19,7 +19,7 @@ import { KeyworkHeaders } from '../../http/headers/mod.ts'
 import { JSONResponse } from '../../http/mod.ts'
 import HTTP from '../../__internal/http.ts'
 import { RouteRequestHandler } from '../mod.ts'
-import { KeyworkRouter } from './KeyworkRouter.ts'
+import { RequestRouter } from './RequestRouter.ts'
 
 interface HelloResponseBody extends Record<PropertyKey, unknown> {
   url: string
@@ -28,7 +28,7 @@ interface HelloResponseBody extends Record<PropertyKey, unknown> {
 }
 
 Deno.test('Router receives requests', async () => {
-  const app = new KeyworkRouter()
+  const app = new RequestRouter()
 
   app.get('/', (event) => {
     const url = new URL(event.request.url)
@@ -73,7 +73,7 @@ Deno.test('Router receives requests', async () => {
 })
 
 Deno.test('Router parses URL parameters', async () => {
-  const app = new KeyworkRouter()
+  const app = new RequestRouter()
 
   // Declaring a route with URL params...
   interface ExampleParams {
@@ -92,7 +92,7 @@ Deno.test('Router parses URL parameters', async () => {
 })
 
 Deno.test('Router renders JSX', async () => {
-  const app = new KeyworkRouter({
+  const app = new RequestRouter({
     displayName: 'JSX Tester Router',
   })
 
@@ -111,7 +111,7 @@ Deno.test('Router renders JSX', async () => {
 })
 
 Deno.test('Router supports middleware', async () => {
-  const HelloWorldRouter = new KeyworkRouter({
+  const HelloWorldRouter = new RequestRouter({
     displayName: 'Hello World Router',
   })
 
@@ -132,7 +132,7 @@ Deno.test('Router supports middleware', async () => {
   })
 
   // Create a router to receive all incoming requests...
-  const app = new KeyworkRouter({
+  const app = new RequestRouter({
     displayName: 'Middleware Tester App',
     middleware: [
       // The example routes...
@@ -160,7 +160,7 @@ Deno.test('Router supports middleware', async () => {
 })
 
 Deno.test('Router supports middleware as `RouteRequestHandler`', async () => {
-  const app = new KeyworkRouter({
+  const app = new RequestRouter({
     displayName: 'Route Request Handler Tester',
   })
 

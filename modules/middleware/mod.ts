@@ -1,5 +1,5 @@
 /**
- * _Middleware_ are instances of the {@link Keywork#Router.KeyworkRouter `KeyworkRouter`},
+ * _Middleware_ are instances of the {@link Keywork#Router.RequestRouter `RequestRouter`},
  * each with single responsibility
  * e.g. (users, blog posts, payments, authentication, etc.)
  *
@@ -8,10 +8,10 @@
  * import { BlogRouter } from '@local/worker/routers/BlogRouter'
  * import { AuthenticationRouter } from '@local/worker/routers/AuthenticationRouter'
  * import { CloudflarePagesAssetRouter } from 'keywork/assets'
- * import { KeyworkRouter } from 'keywork/router'
+ * import { RequestRouter } from 'keywork/router'
  *
  * // Create a router to receive all incoming requests...
- * const app = new KeyworkRouter({
+ * const app = new RequestRouter({
  *   // Here we combine our routers...
  *   // highlight-start
  *   middleware: [
@@ -44,7 +44,7 @@
  *   - {@link Keywork#Middleware.CloudflarePagesAssetRouter Serve static assets from _Cloudflare Pages_}
  *   - {@link Keywork#Middleware.WorkerSitesAssetRouter Serve static assets from a _Worker Site_}
  *   - {@link Keywork#Middleware.ServiceBindingRouter Proxy requests directly to another Cloudflare Worker}
- * *
+ *
  * @packageDocumentation
  * @module Keywork#Middleware
 

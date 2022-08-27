@@ -15,6 +15,6 @@
 /**
  * Normalized HTTP methods in a JavaScript friendly format.
  *
- * @see {KeyworkRouter}
+ * @see {RequestRouter}
  */
 export type RouterMethod = 'get' | 'post' | 'put' | 'patch' | 'delete' | 'head' | 'options' | 'all'

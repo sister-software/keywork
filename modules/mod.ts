@@ -7,9 +7,9 @@
  *
  * ```ts title="worker.ts" runtime="cloudflare"
  * // highlight-next-line
- * import { KeyworkRouter } from 'keywork/router'
+ * import { RequestRouter } from 'keywork/router'
  *
- * const app = new KeyworkRouter()
+ * const app = new RequestRouter()
  *
  * app.get('/', () => 'Hello there! 👋')
  *
@@ -18,18 +18,18 @@
  *
  * ```ts title="./your-project/server/mod.tsx" runtime="deno"
  * // highlight-next-line
- * import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
+ * import { RequestRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
  * import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
  *
- * const app = new KeyworkRouter()
+ * const app = new RequestRouter()
  * serve((request) => app.fetch(request))
  * ```
  *
  * ```ts title="worker.ts" runtime="browser"
  * // highlight-next-line
- * import { KeyworkRouter } from 'https://esm.sh/keywork/router'
+ * import { RequestRouter } from 'https://esm.sh/keywork/router'
  *
- * const app = new KeyworkRouter()
+ * const app = new RequestRouter()
  *
  * app.get('/', () => 'Hello there! 👋')
  * ```
@@ -62,7 +62,6 @@
  */
 
 /* eslint-disable header/header */
-// tslint:disable:ordered-imports
 
 /**
  * Whether you're handling errors in your V8 Worker, Node.JS, or even the browser,
@@ -135,48 +134,7 @@ export * as IDUtils from './ids/mod.ts'
 export * as Logger from './logger/mod.ts'
 //
 /**
- * While optional, Keywork uses React as its primary HTML templating engine.
- *
- * {@link Keywork#ReactUtils **_Explore the React Utilities Module_ ›**}
- */
-export * as ReactUtils from './react/mod.ts'
-//
-/**
- * Designed with familiarity in mind, the server-side routing API
- * is inspired by Express.js, React Router, and the native Cloudflare Workers platform.
- *
- * {@link Keywork#Router **_Explore the Router Module_ ›**}
- *
- * ```ts title="worker.ts" runtime="cloudflare"
- * import { KeyworkRouter } from 'keywork/router'
- *
- * const app = new KeyworkRouter()
- *
- * app.get('/', () => 'Hello there! 👋')
- *
- * export default app
- * ```
- *
- * ```ts title="./your-project/server/mod.tsx" runtime="deno"
- * import { KeyworkRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
- * import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
- *
- * const app = new KeyworkRouter()
- * serve((request) => app.fetch(request))
- * ```
- *
- * ```ts title="worker.ts" runtime="browser"
- * import { KeyworkRouter } from 'https://esm.sh/keywork/router'
- *
- * const app = new KeyworkRouter()
- *
- * app.get('/', () => 'Hello there! 👋')
- * ```
- */
-export * as Router from './router/mod.ts'
-//
-/**
- * Keywork includes support for _middleware_ as instances of `KeyworkRouter`.
+ * Keywork includes support for _middleware_ as instances of `RequestRouter`.
  * Middleware can perform any task that of single router such as...
  *
  * - Executing any code
@@ -190,6 +148,48 @@ export * as Router from './router/mod.ts'
  * {@link Keywork#Middleware **_Explore the Middleware Module_ ›**}
  */
 export * as Middleware from './middleware/mod.ts'
+//
+/**
+ * While optional, Keywork uses React as its primary HTML templating engine.
+ *
+ * {@link Keywork#ReactUtils **_Explore the React Utilities Module_ ›**}
+ */
+export * as ReactUtils from './react/mod.ts'
+//
+/**
+ * Designed with familiarity in mind, the server-side routing API
+ * is inspired by Express.js, React Router, and the native Cloudflare Workers platform.
+ *
+ * {@link Keywork#Router **_Explore the Router Module_ ›**}
+ *
+ * ```ts title="worker.ts" runtime="cloudflare"
+ * import { RequestRouter } from 'keywork/router'
+ *
+ * const app = new RequestRouter()
+ *
+ * app.get('/', () => 'Hello there! 👋')
+ *
+ * export default app
+ * ```
+ *
+ * ```ts title="./your-project/server/mod.tsx" runtime="deno"
+ * import { RequestRouter } from 'https://deno.land/x/keywork/modules/router/mod.ts'
+ * import { serve } from 'https://deno.land/std@0.140.0/http/server.ts'
+ *
+ * const app = new RequestRouter()
+ * serve((request) => app.fetch(request))
+ * ```
+ *
+ * ```ts title="worker.ts" runtime="browser"
+ * import { RequestRouter } from 'https://esm.sh/keywork/router'
+ *
+ * const app = new RequestRouter()
+ *
+ * app.get('/', () => 'Hello there! 👋')
+ * ```
+ */
+export * as RouterUtils from './router/mod.ts'
+export type { RequestRouterOptions } from './router/mod.ts'
 //
 /**
  * ```ts

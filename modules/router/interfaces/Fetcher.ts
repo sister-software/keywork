@@ -31,7 +31,7 @@ import { MiddlewareFetch } from './MiddlewareFetch.ts'
  * The fetch handler receives the Request and replies with a Response.
  *
  * @see {Keywork#Router.WorkerEnvFetchBinding}
- * @see {Keywork#Router.KeyworkRouter#fetch}
+ * @see {Keywork#Router.RequestRouter#fetch}
  */
 export interface Fetcher<BoundAliases = {}> {
   /**

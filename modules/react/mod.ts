@@ -45,13 +45,13 @@
  *
  * ## Usage
  *
- * Route handlers defined on an instance of {@link Keywork#Router.KeyworkRouter `KeyworkRouter`} can return a React component,
+ * Route handlers defined on an instance of {@link Keywork#Router.RequestRouter `RequestRouter`} can return a React component,
  * Keywork automatically converts the content into a streamed response.
  *
  * ```tsx
- * import { KeyworkRouter } from 'keywork/router'
+ * import { RequestRouter } from 'keywork/router'
  *
- * const app = new KeyworkRouter()
+ * const app = new RequestRouter()
  *
  * app.get('/', () => <h1>Hello from Keywork! 👋</h1>)
  *

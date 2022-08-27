@@ -141,6 +141,12 @@ const sidebars = {
 
     {
       type: 'link',
+      label: 'middleware',
+      href: '/modules/examples',
+    },
+
+    {
+      type: 'link',
       label: 'Help & Support',
       href: '/help',
     },

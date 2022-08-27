@@ -35,7 +35,7 @@ import { MiddlewareDeclarationLike } from '../types/MiddlewareDeclarationLike.ts
  * Available at `/keywork/*`
  * @ignore
  */
-export interface KeyworkRouterDebugEndpoints {
+export interface RequestRouterDebugEndpoints {
   /**
    * `/keywork/routes`
    * JSON endpoint to display routes.
@@ -43,7 +43,7 @@ export interface KeyworkRouterDebugEndpoints {
   routes: boolean
 }
 
-export interface KeyworkRouterDebugOptions {
+export interface RequestRouterDebugOptions {
   /**
    * Whether debugging headers should be included.
    * @defaultValue `true`
@@ -54,7 +54,7 @@ export interface KeyworkRouterDebugOptions {
    * Debug endpoints to enable.
    * @defaultValue true
    */
-  endpoints?: KeyworkRouterDebugEndpoints | boolean
+  endpoints?: RequestRouterDebugEndpoints | boolean
 }
 
 export interface RouteDebugEntrypoint {
@@ -69,7 +69,7 @@ export interface RouteDebugEntrypoint {
  * Options to configure the Worker Router.
  * @category Options
  */
-export interface KeyworkRouterOptions {
+export interface RequestRouterOptions {
   /**
    * A display name used for debugging and log messages.
    * @defaultValue `'Keywork Router'`
@@ -77,10 +77,10 @@ export interface KeyworkRouterOptions {
   displayName?: string
   /**
    * Middleware to apply to the router during construction.
-   * Middleware can also be applied via `KeyworkRouter#use`.
+   * Middleware can also be applied via `RequestRouter#use`.
    */
   middleware?: Array<MiddlewareDeclarationLike>
 
   react?: ReactRendererOptions
-  debug?: KeyworkRouterDebugOptions
+  debug?: RequestRouterDebugOptions
 }

@@ -17,7 +17,7 @@ import HTTP from '../../../__internal/http.ts'
 import { IncomingMessage, ServerResponse } from 'http'
 import { IsomorphicFetchEvent } from '../../../events/mod.ts'
 import { readGlobalScope } from '../../../__internal/functions/readGlobalScope.ts'
-import { KeyworkRouter } from '../../classes/KeyworkRouter.ts'
+import { RequestRouter } from '../../classes/RequestRouter.ts'
 
 /** @internal */
 export type ProcessChunkCallback = (chunkResult: ReadableStreamDefaultReadResult<Uint8Array>) => Promise<void>
@@ -29,14 +29,14 @@ function readNodeEnv<BoundAliases = {}>(): BoundAliases {
 }
 
 /**
- * Given a `KeyworkRouter`, responds to an incoming request from a Node server.
+ * Given a `RequestRouter`, responds to an incoming request from a Node server.
  *
  * ```ts
  * import * as http from 'node:http'
- * import { KeyworkRouter } from 'keywork/router'
+ * import { RequestRouter } from 'keywork/router'
  * import { respondWithRouter } from 'keywork/router/node'
  *
- * const router = new KeyworkRouter()
+ * const router = new RequestRouter()
  * http.createServer((req, res) => {
  *   respondWithRouter(router, req, res)
  * })
@@ -45,7 +45,7 @@ function readNodeEnv<BoundAliases = {}>(): BoundAliases {
  * @beta Node support is currently experimental and may change in the near future.
  */
 export async function respondWithRouter<BoundAliases = {}>(
-  router: KeyworkRouter<BoundAliases>,
+  router: RequestRouter<BoundAliases>,
   nodeRequest: IncomingMessage,
   nodeResponse: ServerResponse
 ): Promise<void> {

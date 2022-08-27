@@ -13,7 +13,7 @@
  */
 
 import { IncomingMessage, ServerResponse } from 'http'
-import { KeyworkRouter } from '../../classes/KeyworkRouter.ts'
+import { RequestRouter } from '../../classes/RequestRouter.ts'
 import { respondWithRouter } from './respondWithRouter.ts'
 
 /**
@@ -22,20 +22,20 @@ import { respondWithRouter } from './respondWithRouter.ts'
 export type ServerHandler = (req: IncomingMessage, res: ServerResponse) => void
 
 /**
- * Given a `KeyworkRouter`, creates a Node-compatible server handler.
+ * Given a `RequestRouter`, creates a Node-compatible server handler.
  *
  * ```ts
  * import * as http from 'node:http'
- * import { KeyworkRouter } from 'keywork/router'
+ * import { RequestRouter } from 'keywork/router'
  * import { createServerHandler } from 'keywork/router/node'
  *
- * const router = new KeyworkRouter()
+ * const router = new RequestRouter()
  * http.createServer(createServerHandler(router))
  * ```
  *
  * @see {respondWithRouter}
  * @beta Node support is currently experimental and may change in the near future.
  */
-export function createServerHandler<BoundAliases = {}>(router: KeyworkRouter<BoundAliases>): ServerHandler {
+export function createServerHandler<BoundAliases = {}>(router: RequestRouter<BoundAliases>): ServerHandler {
   return (req, res) => respondWithRouter<BoundAliases>(router, req, res)
 }

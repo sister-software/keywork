@@ -38,7 +38,16 @@ import {
 import { formatContents } from './utils.ts'
 import { readFileChangeFromGit } from './utils/sources.ts'
 
-const NEVER_RENDER: `@${string}`[] = ['@copyright', '@license', '@author', '@file', '@deprecated']
+const NEVER_RENDER: `@${string}`[] = [
+  //
+  '@copyright',
+  '@license',
+  '@author',
+  '@file',
+  '@deprecated',
+  '@keyword',
+  '@tag',
+]
 
 export interface CategoryConfig {
   name?: string
