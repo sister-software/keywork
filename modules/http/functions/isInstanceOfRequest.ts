@@ -12,13 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import HTTP from '../../__internal/http.ts'
-
 /**
  * Checks if the given object is an instance of `Request`
  * @param requestish An object that's possibly a `Request`
  * @category Type Cast
  */
-export function isInstanceOfRequest(requestish: unknown): requestish is globalThis.Request {
-  return Boolean(requestish instanceof globalThis.Request || requestish instanceof HTTP.Request)
+export function isInstanceOfRequest(requestish: unknown): requestish is Request {
+  return Boolean(requestish instanceof Request || requestish instanceof Request)
 }

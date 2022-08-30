@@ -97,7 +97,7 @@ export function _parseValueTypeInfo(value: unknown): DeserializationTransformers
       return 'json'
     }
 
-    if (typeof globalThis.ReadableStream !== 'undefined' && value instanceof globalThis.ReadableStream) return 'stream'
+    if (typeof ReadableStream !== 'undefined' && value instanceof ReadableStream) return 'stream'
     if (typeof ArrayBuffer !== 'undefined' && value instanceof ArrayBuffer) return 'arrayBuffer'
   }
 

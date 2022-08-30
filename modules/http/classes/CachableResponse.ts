@@ -13,7 +13,6 @@
  */
 
 import { Status } from '../../errors/mod.ts'
-import HTTP from '../../__internal/http.ts'
 import { CacheControlDirectives, createCacheControlHeader, isETagMatch } from '../headers/caching/mod.ts'
 import { NotModifiedResponse } from './NotModifiedResponse.ts'
 
@@ -26,13 +25,13 @@ import { NotModifiedResponse } from './NotModifiedResponse.ts'
  * @category HTTP Response
  * @category Cache
  */
-export class CachableResponse extends HTTP.Response {
+export class CachableResponse extends Response {
   constructor(
     /** A body sent with the response. */
     body: BodyInit | null,
     /** A request to check for etag headers. */
     // eslint-disable-next-line no-restricted-globals
-    request?: globalThis.Request,
+    request?: Request,
     /** An etag for the given `body` parameter. */
     etag?: string | null,
     /** Options to generate a cache control header. */
@@ -44,7 +43,7 @@ export class CachableResponse extends HTTP.Response {
       return new NotModifiedResponse(etag)
     }
 
-    const headers = new HTTP.Headers({
+    const headers = new Headers({
       ...headersInit,
       ...createCacheControlHeader(cacheControlOptions),
     })

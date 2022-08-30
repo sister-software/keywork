@@ -32,7 +32,7 @@
  * @category HTTP Headers
  * @public
  */
-export function getBrowserIdentifier(request: globalThis.Request): string {
+export function getBrowserIdentifier(request: Request): string {
   const userAgent = (request.headers.get('user-agent') || '').toLowerCase()
 
   if (userAgent.includes('chrome')) {
@@ -57,7 +57,7 @@ export const KeyworkHeaders = {
  * This mutates the `destination` headers.
  *
  */
-export function mergeHeaders(destination: globalThis.Headers, ...sources: globalThis.Headers[]): void {
+export function mergeHeaders(destination: Headers, ...sources: Headers[]): void {
   for (const source of sources) {
     source.forEach((value, key) => {
       destination.set(key, value)

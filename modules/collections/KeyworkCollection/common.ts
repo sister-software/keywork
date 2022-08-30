@@ -21,7 +21,7 @@ export interface PutOrPatchOptions {
 
 export type DeserializationTransformers = 'text' | 'json' | 'arrayBuffer' | 'stream'
 
-export type DeserializationTypes = string | ArrayBuffer | typeof globalThis.ReadableStream
+export type DeserializationTypes = string | ArrayBuffer | typeof ReadableStream
 
 export interface KVNamespaceListOptions {
   limit?: number

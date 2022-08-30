@@ -12,7 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import { Status, STATUS_TEXT } from '../../errors/mod.ts'
-import HTTP from '../../__internal/http.ts'
 
 /**
  * Given that a request's etag header matches an server entity or resource,
@@ -21,7 +20,7 @@ import HTTP from '../../__internal/http.ts'
  * @category HTTP Response
  * @category Cache
  */
-export class NotModifiedResponse extends HTTP.Response {
+export class NotModifiedResponse extends Response {
   constructor(etag: string) {
     super(undefined, {
       status: Status.NotModified,

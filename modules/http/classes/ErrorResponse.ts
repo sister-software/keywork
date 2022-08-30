@@ -13,7 +13,6 @@
  */
 
 import { KeyworkResourceError, Status, STATUS_TEXT } from '../../errors/mod.ts'
-import HTTP from '../../__internal/http.ts'
 
 /**
  * An error response sent to a client when a request is deemed to be invalid in some way.
@@ -21,7 +20,7 @@ import HTTP from '../../__internal/http.ts'
  * @category HTTP Response
  * @category Error
  */
-export class ErrorResponse extends HTTP.Response {
+export class ErrorResponse extends Response {
   /**
    * Given an error-like object, attempt to respond with a `KeyworkResourceError`.
    *

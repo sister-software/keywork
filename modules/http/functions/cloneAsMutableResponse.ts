@@ -22,8 +22,8 @@ const NULL_BODY_STATUSES = new Set([101, 204, 205, 304])
 /**
  * Clones a given `Response` as a mutable instance.
  */
-export function cloneAsMutableResponse(response: globalThis.Response) {
-  return new globalThis.Response(
+export function cloneAsMutableResponse(response: Response) {
+  return new Response(
     // This shouldn't be confused with `response.bodyIsUsed`
     // https://fetch.spec.whatwg.org/#dom-body-bodyused
     NULL_BODY_STATUSES.has(response.status) ? null : response.body,

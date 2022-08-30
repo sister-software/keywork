@@ -28,7 +28,6 @@ import { Logger } from '../../logger/mod.ts'
 import { ReactRendererOptions } from '../../react/mod.ts'
 import { renderReactStream } from '../../react/worker/mod.ts'
 import { normalizeURLPattern, normalizeURLPatternInput, URLPatternLike } from '../../uri/mod.ts'
-import HTTP from '../../__internal/http.ts'
 import { Disposable } from '../../__internal/interfaces/disposable.ts'
 import { isFetcher } from '../functions/isFetcher.ts'
 import { isMiddlewareDeclarationOption } from '../functions/isMiddlewareDeclarationOption.ts'
@@ -129,7 +128,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
       }
 
       // Likely a `RouteRequestHandler`...
-      const fetch: RouteRequestHandler<BoundAliases, any, any, globalThis.Response> = async (event, next) => {
+      const fetch: RouteRequestHandler<BoundAliases, any, any, Response> = async (event, next) => {
         const responseLike = await fetcherLike(event, next)
         const response = await castToResponse(responseLike, this.reactOptions)
 
@@ -499,13 +498,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
    *
    * @public
    */
-  fetch: MiddlewareFetch<BoundAliases> = async (
-    request,
-    env,
-    eventLike,
-    next,
-    matchedRoutes
-  ): Promise<globalThis.Response> => {
+  fetch: MiddlewareFetch<BoundAliases> = async (request, env, eventLike, next, matchedRoutes): Promise<Response> => {
     if (!request) {
       return new ErrorResponse(Status.BadRequest, 'Request parameter must be provided when invoking `fetch`.')
     }
@@ -544,7 +537,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
       // The current pattern only matches the beginning of the pathname.
       // So, we remove the matched portion which allows any nested routes to
       // behave as if the pathname did not include any unforseen prefixes.
-      request: new HTTP.Request(normalizedURL, request),
+      request: new Request(normalizedURL, request),
       originalURL,
       env,
       match,
@@ -562,7 +555,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
         return _next(request, _env, _event, this.terminateMiddleware, _matchedRoutes)
       })
 
-    let possibleResponse: globalThis.Response | null
+    let possibleResponse: Response | null
     this.logger.debug(
       `Delegating \`${requestURL.pathname}\` to ${parsedRoute.kind}`,
       parsedRoute.displayName || parsedRoute.urlPattern.pathname
@@ -596,7 +589,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
    * @returns Mutable instance of the given response
    * @ignore
    */
-  protected applyHeaders(response: globalThis.Response): globalThis.Response {
+  protected applyHeaders(response: Response): Response {
     const mutableResponse = cloneAsMutableResponse(response)
 
     if (this.includeDebugHeaders) {

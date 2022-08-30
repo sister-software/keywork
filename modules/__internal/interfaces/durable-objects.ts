@@ -17,7 +17,7 @@ export declare interface NewUniqueIdOptions {
 }
 /** @internal */
 export interface DurableObject {
-  fetch(request: globalThis.Request): Promise<globalThis.Response>
+  fetch(request: Request): Promise<Response>
 }
 
 /** @internal */
@@ -83,7 +83,7 @@ export declare class DurableObjectState {
   constructor(id: DurableObjectId, storage: any)
   waitUntil(_promise: Promise<void>): void
   blockConcurrencyWhile<T>(closure: () => Promise<T>): Promise<T>
-  [kFetch](request: globalThis.Request): Promise<globalThis.Response>
+  [kFetch](request: Request): Promise<Response>
 }
 
 /** @internal */
@@ -92,5 +92,5 @@ export declare class DurableObjectStub {
   readonly id: DurableObjectId
   constructor(factory: DurableObjectFactory, id: DurableObjectId, ctx?: any)
   get name(): string | undefined
-  fetch(input: RequestInfo, init?: RequestInit): Promise<globalThis.Response>
+  fetch(input: RequestInfo, init?: RequestInit): Promise<Response>
 }

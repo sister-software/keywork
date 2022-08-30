@@ -15,8 +15,6 @@
 import { isValidElement } from 'https://esm.sh/react@18.2.0'
 import { KeyworkResourceError, Status } from '../../errors/mod.ts'
 import { ReactRendererOptions, renderJSXToStream } from '../../react/mod.ts'
-import HTTP from '../../__internal/http.ts'
-import Stream from '../../__internal/stream.ts'
 import { ErrorResponse } from '../classes/ErrorResponse.ts'
 import { HTMLResponse } from '../classes/HTMLResponse.ts'
 import { JSONResponse } from '../classes/JSONResponse.ts'
@@ -26,7 +24,7 @@ import { isInstanceOfResponse } from './isInstanceOfResponse.ts'
  * Either a full `Response`, or a more primitive value to be processed.
  * @public
  */
-export type ResponseLike = globalThis.Response | React.ReactElement | {} | null | undefined | Error | string
+export type ResponseLike = Response | React.ReactElement | {} | null | undefined | Error | string
 
 /**
  * Infers the appropriate Response constructor for the given `ResponseLike` body.
@@ -41,14 +39,14 @@ export type ResponseLike = globalThis.Response | React.ReactElement | {} | null 
 export async function castToResponse(
   responseLike: ResponseLike,
   reactRenderOptions?: ReactRendererOptions
-): Promise<globalThis.Response> {
+): Promise<Response> {
   if (isInstanceOfResponse(responseLike)) {
     return responseLike
   }
 
   if (responseLike instanceof Error) return new ErrorResponse(responseLike)
 
-  if (responseLike instanceof Stream.ReadableStream) {
+  if (responseLike instanceof ReadableStream) {
     throw new KeyworkResourceError(
       `Keywork cannot infer the 'Content-Type' for \`ReadableStream\`. Instead, wrap this value in a \`Response\``,
       Status.InternalServerError
@@ -56,7 +54,7 @@ export async function castToResponse(
   }
 
   if (!responseLike) {
-    return new HTTP.Response(responseLike as any, { status: Status.NoContent })
+    return new Response(responseLike as any, { status: Status.NoContent })
   }
 
   if (typeof responseLike === 'string') {
@@ -64,7 +62,7 @@ export async function castToResponse(
       return new HTMLResponse(responseLike)
     }
 
-    return new HTTP.Response(responseLike)
+    return new Response(responseLike)
   }
 
   if (isValidElement(responseLike)) {

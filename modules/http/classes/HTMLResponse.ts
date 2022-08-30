@@ -32,7 +32,7 @@ export class HTMLResponse extends CachableResponse {
      */
     htmlLike: BodyInit,
     /** An optional request to check for etag headers. */
-    request?: globalThis.Request,
+    request?: Request,
     /** An optional etag for the given `json` parameter. */
     etag?: string,
     /** Options to generate a cache control header. */

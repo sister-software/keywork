@@ -17,7 +17,6 @@ import React from 'https://esm.sh/react@18.2.0'
 import { Status } from '../../errors/mod.ts'
 import { KeyworkHeaders } from '../../http/headers/mod.ts'
 import { JSONResponse } from '../../http/mod.ts'
-import HTTP from '../../__internal/http.ts'
 import { RouteRequestHandler } from '../mod.ts'
 import { RequestRouter } from './RequestRouter.ts'
 
@@ -59,7 +58,7 @@ Deno.test('Router receives requests', async () => {
   assertEquals(app.match(routesViaPOST, '/').length, 0, 'Root route only exists on GET')
   assertEquals(app.match(routesViaPOST, '/hello.json').length, 0, 'JSON route only exists on GET')
 
-  const rootResponse = await app.fetch(new HTTP.Request('http://localhost/'))
+  const rootResponse = await app.fetch(new Request('http://localhost/'))
   assertEquals(await rootResponse.text(), `Hello from /`, 'Text body matches')
 
   assertEquals(
@@ -68,7 +67,7 @@ Deno.test('Router receives requests', async () => {
     '"Powered by" header is present'
   )
 
-  const JSONResponse = await app.fetch(new HTTP.Request('http://localhost/hello.json'))
+  const JSONResponse = await app.fetch(new Request('http://localhost/hello.json'))
   assertObjectMatch(await JSONResponse.json(), jsonBody)
 })
 
@@ -86,7 +85,7 @@ Deno.test('Router parses URL parameters', async () => {
     return new JSONResponse(body)
   })
 
-  const rootResponse = await app.fetch(new HTTP.Request('http://localhost/json/jessie/james'))
+  const rootResponse = await app.fetch(new Request('http://localhost/json/jessie/james'))
   const body: ExampleParams = await rootResponse.json()
   assertEquals(body, { firstName: 'jessie', lastName: 'james' }, 'Params are parsed')
 })
@@ -105,7 +104,7 @@ Deno.test('Router renders JSX', async () => {
     )
   })
 
-  const response = await app.fetch(new HTTP.Request('http://localhost/'))
+  const response = await app.fetch(new Request('http://localhost/'))
   assertEquals(response.status, Status.OK)
   assertStringIncludes(await response.text(), `<div><h1>JSX Test</h1></div>`, 'Body includes rendered JSX')
 })
@@ -140,21 +139,21 @@ Deno.test('Router supports middleware', async () => {
     ],
   })
 
-  const simpleResponse = await app.fetch(new HTTP.Request('http://localhost/'))
+  const simpleResponse = await app.fetch(new Request('http://localhost/'))
   assertEquals(simpleResponse.status, Status.OK)
   assertStringIncludes(await simpleResponse.text(), `<h1>Hello there!</h1>`, 'Body includes default content')
 
   const greeting = `Hello at ${new Date().toJSON()}`
   const url = new URL('http://localhost')
   url.searchParams.set('greeting', greeting)
-  const responseWithQuery = await app.fetch(new HTTP.Request(url))
+  const responseWithQuery = await app.fetch(new Request(url))
 
   assertEquals(responseWithQuery.status, Status.OK)
   assertStringIncludes(await responseWithQuery.text(), `<h1>${greeting}</h1>`, 'Body includes query params')
 
   app.use('/hello', HelloWorldRouter)
 
-  const nestedRequest = await app.fetch(new HTTP.Request('http://localhost/hello/example-json'))
+  const nestedRequest = await app.fetch(new Request('http://localhost/hello/example-json'))
   assertEquals(nestedRequest.status, Status.OK, 'Nested request routes correctly')
   assertEquals(await nestedRequest.json(), { hello: 'world' }, 'Nested body includes content')
 })
@@ -176,7 +175,7 @@ Deno.test('Router supports middleware as `RouteRequestHandler`', async () => {
   app.use(addTestingHeaderMiddleware)
   app.get('/', () => 'Hello from out of the box!')
 
-  const response = await app.fetch(new globalThis.Request('http://localhost/'))
+  const response = await app.fetch(new Request('http://localhost/'))
 
   assertEquals(response.headers.get('X-Test-Header'), 'Added by middleware', 'Header was added')
 })

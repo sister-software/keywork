@@ -13,7 +13,6 @@
  */
 
 import { Logger } from '../../logger/mod.ts'
-import HTTP from '../../__internal/http.ts'
 import { RouteRequestHandler } from '../interfaces/RouteRequestHandler.ts'
 
 /** @ignore */
@@ -48,7 +47,7 @@ export function createRouteRedirect(
   const routeRequestHandler: RouteRequestHandler = ({ request }) => {
     logger.info(`Redirecting from ${request.url} to ${destinationURL.toString()}`)
 
-    return HTTP.Response.redirect(destinationURL.toString(), statusCode)
+    return Response.redirect(destinationURL.toString(), statusCode)
   }
 
   return routeRequestHandler

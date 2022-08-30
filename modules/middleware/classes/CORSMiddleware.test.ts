@@ -44,7 +44,7 @@ Deno.test('Middleware sends preflight', async () => {
   app.get('/', () => 'Hello from CORS')
 
   const response = await app.fetch(
-    new globalThis.Request('https://localhost/', {
+    new Request('https://localhost/', {
       method: 'OPTIONS',
       headers: {
         Origin: 'http://localhost',
@@ -67,7 +67,7 @@ Deno.test('CORS middleware parses origins', async () => {
   app.get('/', () => 'Hello from CORS')
 
   const validResponse = await app.fetch(
-    new globalThis.Request('https://api.example.com', {
+    new Request('https://api.example.com', {
       method: 'OPTIONS',
       headers: {
         Origin: 'https://api.example.com',
@@ -84,7 +84,7 @@ Deno.test('CORS middleware parses origins', async () => {
   )
 
   const invalidResponse = await app.fetch(
-    new globalThis.Request('https://api.example.com', {
+    new Request('https://api.example.com', {
       method: 'OPTIONS',
       headers: {
         Origin: 'https://malicious.example.com',

@@ -33,7 +33,7 @@ Deno.test('Router compresseses response body', async () => {
   })
 
   const rootResponse = await app.fetch(
-    new globalThis.Request('http://localhost/', {
+    new Request('http://localhost/', {
       headers: { 'Accept-Encoding': 'gzip, deflate' },
     })
   )

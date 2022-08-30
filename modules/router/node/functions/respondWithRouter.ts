@@ -12,8 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import HTTP from '../../../__internal/http.ts'
-
 import { IncomingMessage, ServerResponse } from 'http'
 import { IsomorphicFetchEvent } from '../../../events/mod.ts'
 import { readGlobalScope } from '../../../__internal/functions/readGlobalScope.ts'
@@ -49,7 +47,7 @@ export async function respondWithRouter<BoundAliases = {}>(
   nodeRequest: IncomingMessage,
   nodeResponse: ServerResponse
 ): Promise<void> {
-  const request = new HTTP.Request(nodeRequest.url || 'http://0.0.0.0', nodeRequest as unknown as RequestInit)
+  const request = new Request(nodeRequest.url || 'http://0.0.0.0', nodeRequest as unknown as RequestInit)
   const env = readNodeEnv<BoundAliases>()
   const event = new IsomorphicFetchEvent({ request, env })
 

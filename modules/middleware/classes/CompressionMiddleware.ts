@@ -19,7 +19,6 @@ import { KeyworkResourceError, Status } from '../../errors/KeyworkResourceError.
 import { shouldCompress } from '../../http/mod.ts'
 import { RequestRouter, RequestRouterOptions, RouteRequestHandler } from '../../router/mod.ts'
 import type { MimeDatabase } from '../../types/mime-db.d.ts'
-import HTTP from '../../__internal/http.ts'
 
 /**
  * The compression format used when encoding the response body.
@@ -102,7 +101,7 @@ export class CompressionMiddleware extends RequestRouter {
     const compressionStream = new CompressionStream(preferredClientEncoding)
     const stream = originalResponse.body.pipeThrough(compressionStream)
 
-    const response = new HTTP.Response(stream, originalResponse)
+    const response = new Response(stream, originalResponse)
     response.headers.set('Content-Encoding', preferredClientEncoding)
 
     return response

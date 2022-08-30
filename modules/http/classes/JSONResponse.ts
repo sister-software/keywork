@@ -29,7 +29,7 @@ export class JSONResponse extends CachableResponse {
     /** A non-cyclical object capable of JSON serialization. */
     json: {},
     /** A request to check for etag headers. */
-    request?: globalThis.Request,
+    request?: Request,
     /** An etag for the given `json` parameter. */
     etag?: string,
     /** Options to generate a cache control header. */

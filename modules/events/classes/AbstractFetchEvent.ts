@@ -26,7 +26,7 @@ export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> {
    * the current parsed route handler of `RequestRouter`.
    * @see {IsomorphicFetchEvent#originalURL}
    */
-  request: globalThis.Request
+  request: Request
 
   /**
    * The original URL associated with the `IsomorphicFetchEvent`.
@@ -57,7 +57,7 @@ export abstract class AbstractFetchEvent extends IsomorphicExtendableEvent imple
    * the current parsed route handler of `RequestRouter`.
    * @see {IsomorphicFetchEvent#originalURL}
    */
-  public request: globalThis.Request
+  public request: Request
 
   /**
    * The original URL associated with the `IsomorphicFetchEvent`.
@@ -77,7 +77,7 @@ export abstract class AbstractFetchEvent extends IsomorphicExtendableEvent imple
    *
    * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event/#respondwith Cloudflare Documentation}
    */
-  respondWith(_response: globalThis.Response): void {
+  respondWith(_response: Response): void {
     throw new KeyworkResourceError(
       'The `respondWith` method is only applicable to Service Workers',
       Status.InternalServerError

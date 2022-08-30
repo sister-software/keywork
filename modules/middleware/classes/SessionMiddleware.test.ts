@@ -16,7 +16,6 @@ import { assert, assertEquals } from 'deno/testing/asserts'
 import { parse as parseCookies } from 'https://esm.sh/cookie@0.5.0'
 import { CookieHeaders } from '../../http/headers/mod.ts'
 import { RequestRouter } from '../../router/mod.ts'
-import HTTP from '../../__internal/http.ts'
 import { SessionMiddleware } from './SessionMiddleware.ts'
 
 Deno.test('Session Middleware', async () => {
@@ -32,7 +31,7 @@ Deno.test('Session Middleware', async () => {
     return `Hello from ${url.pathname}`
   })
 
-  const rootResponse = await app.fetch(new HTTP.Request('http://localhost/'))
+  const rootResponse = await app.fetch(new Request('http://localhost/'))
   assertEquals(await rootResponse.text(), `Hello from /`, 'Response has body')
 
   // @ts-ignore Type annotation

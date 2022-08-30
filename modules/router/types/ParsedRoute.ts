@@ -28,7 +28,7 @@ export interface ParsedRouteBase {
  */
 export interface ParsedRouteFromRouteHandler<BoundAliases = {}> extends ParsedRouteBase {
   kind: 'routeHandler'
-  fetch: RouteRequestHandler<BoundAliases, any, any, globalThis.Response>
+  fetch: RouteRequestHandler<BoundAliases, any, any, Response>
 }
 
 /**

@@ -31,8 +31,8 @@ declare global {
      */
     constructor(format: string)
 
-    readonly readable: globalThis.ReadableStream<Uint8Array>
-    readonly writable: globalThis.WritableStream<Uint8Array>
+    readonly readable: ReadableStream<Uint8Array>
+    readonly writable: WritableStream<Uint8Array>
   }
 
   class DecompressionStream {
@@ -45,7 +45,7 @@ declare global {
      */
     constructor(format: string)
 
-    readonly readable: globalThis.ReadableStream<Uint8Array>
-    readonly writable: globalThis.WritableStream<Uint8Array>
+    readonly readable: ReadableStream<Uint8Array>
+    readonly writable: WritableStream<Uint8Array>
   }
 }

@@ -27,7 +27,7 @@ declare module 'https://esm.sh/react-dom@18.2.0/server.browser' {
     onError?: (error: unknown) => void
   }
 
-  export class ReactDOMServerReadableStream extends globalThis.ReadableStream {
+  export class ReactDOMServerReadableStream extends ReadableStream {
     allReady: Promise<void>
   }
 

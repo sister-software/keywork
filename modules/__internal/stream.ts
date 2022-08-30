@@ -24,7 +24,7 @@ import { polyfillWithModule } from './functions/polyfillWithModule.ts'
 
 export type StreamExports = Pick<typeof globalThis, 'TransformStream' | 'ReadableStream' | 'WritableStream'>
 
-const Stream = await polyfillWithModule<StreamExports>('node:stream/web', [
+const Stream = polyfillWithModule<StreamExports>('node:stream/web', [
   'TransformStream',
   'ReadableStream',
   'WritableStream',

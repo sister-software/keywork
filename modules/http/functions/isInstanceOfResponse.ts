@@ -12,13 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import HTTP from '../../__internal/http.ts'
-
 /**
  * Checks if the given object is an instance of `Response`
  * @param responsish An object that's possibly a `Response`
  * @category Type Cast
  */
-export function isInstanceOfResponse(responsish: unknown): responsish is globalThis.Response {
-  return Boolean(responsish instanceof globalThis.Response || responsish instanceof HTTP.Response)
+export function isInstanceOfResponse(responsish: unknown): responsish is Response {
+  return Boolean(responsish instanceof Response || responsish instanceof Response)
 }

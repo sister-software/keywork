@@ -17,11 +17,11 @@ export interface KVNamespace<K extends string = string> {
   get(key: K, type: 'text'): Promise<string | null>
   get<ExpectedValue = unknown>(key: K, type: 'json'): Promise<ExpectedValue | null>
   get(key: K, type: 'arrayBuffer'): Promise<ArrayBuffer | null>
-  get(key: K, type: 'stream'): Promise<globalThis.ReadableStream | null>
+  get(key: K, type: 'stream'): Promise<ReadableStream | null>
   get(key: K, options: KVNamespaceGetOptions<'text'>): Promise<string | null>
   get<ExpectedValue = unknown>(key: string, options: KVNamespaceGetOptions<'json'>): Promise<ExpectedValue | null>
   get(key: K, options: KVNamespaceGetOptions<'arrayBuffer'>): Promise<ArrayBuffer | null>
-  get(key: K, options: KVNamespaceGetOptions<'stream'>): Promise<globalThis.ReadableStream | null>
+  get(key: K, options: KVNamespaceGetOptions<'stream'>): Promise<ReadableStream | null>
   list<Metadata = unknown>(options?: KVNamespaceListOptions): Promise<KVNamespaceListResult<Metadata>>
   /**
    * Creates a new key-value pair, or updates the value for a particular key.
@@ -33,7 +33,7 @@ export interface KVNamespace<K extends string = string> {
    */
   put(
     key: K,
-    value: string | ArrayBuffer | ArrayBufferView | globalThis.ReadableStream,
+    value: string | ArrayBuffer | ArrayBufferView | ReadableStream,
     options?: KVNamespacePutOptions
   ): Promise<void>
   getWithMetadata<Metadata = unknown>(
@@ -52,7 +52,7 @@ export interface KVNamespace<K extends string = string> {
   getWithMetadata<Metadata = unknown>(
     key: K,
     type: 'stream'
-  ): Promise<KVNamespaceGetWithMetadataResult<globalThis.ReadableStream, Metadata>>
+  ): Promise<KVNamespaceGetWithMetadataResult<ReadableStream, Metadata>>
   getWithMetadata<Metadata = unknown>(
     key: K,
     options: KVNamespaceGetOptions<'text'>
@@ -68,7 +68,7 @@ export interface KVNamespace<K extends string = string> {
   getWithMetadata<Metadata = unknown>(
     key: K,
     options: KVNamespaceGetOptions<'stream'>
-  ): Promise<KVNamespaceGetWithMetadataResult<globalThis.ReadableStream, Metadata>>
+  ): Promise<KVNamespaceGetWithMetadataResult<ReadableStream, Metadata>>
   delete(name: string): Promise<void>
 }
 

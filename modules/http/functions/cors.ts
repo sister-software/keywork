@@ -86,11 +86,7 @@ export function createDefaultCORSOptions(): CORSOptions {
 }
 
 /** @ignore */
-function appendCORSHeader<T extends CORSHeaders & Conditionals>(
-  response: globalThis.Response,
-  name: keyof T,
-  value: T[keyof T]
-) {
+function appendCORSHeader<T extends CORSHeaders & Conditionals>(response: Response, name: keyof T, value: T[keyof T]) {
   response.headers.append(name, value)
 }
 
@@ -124,11 +120,7 @@ async function isOriginAllowed(requestOrigin: string, allowedOrigin: AllowedOrig
 }
 
 /** @ignore */
-export type CORSHeaderApplier = (
-  request: globalThis.Request,
-  response: globalThis.Response,
-  corsOptions: CORSOptions
-) => void | Promise<void>
+export type CORSHeaderApplier = (request: Request, response: Response, corsOptions: CORSOptions) => void | Promise<void>
 
 /** @ignore */
 export const applyOriginHeaders: CORSHeaderApplier = async (request, response, { allowedOrigins }) => {
@@ -148,11 +140,7 @@ export const applyOriginHeaders: CORSHeaderApplier = async (request, response, {
   }
 }
 /** @ignore */
-export const applyCredentialsHeader: CORSHeaderApplier = (
-  request,
-  response: globalThis.Response,
-  { includeCredentials }
-) => {
+export const applyCredentialsHeader: CORSHeaderApplier = (request, response: Response, { includeCredentials }) => {
   if (includeCredentials) {
     appendCORSHeader(response, 'Access-Control-Allow-Credentials', 'true')
   }

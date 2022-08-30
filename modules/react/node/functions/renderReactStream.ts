@@ -38,14 +38,14 @@ export class PipeableStreamWrapper implements ReactDOMServerReadableStream {
   pipeThrough<T>(
     _transform: ReadableWritablePair<T, any>,
     _options?: StreamPipeOptions | undefined
-  ): globalThis.ReadableStream<T> {
+  ): ReadableStream<T> {
     throw new Error('Method not implemented.')
   }
-  pipeTo(destination: globalThis.WritableStream<any>, _options?: StreamPipeOptions | undefined): Promise<void> {
+  pipeTo(destination: WritableStream<any>, _options?: StreamPipeOptions | undefined): Promise<void> {
     this.stream.pipe(destination as any)
     return Promise.resolve()
   }
-  tee(): [globalThis.ReadableStream<any>, globalThis.ReadableStream<any>] {
+  tee(): [ReadableStream<any>, ReadableStream<any>] {
     throw new Error('Method not implemented.')
   }
 }

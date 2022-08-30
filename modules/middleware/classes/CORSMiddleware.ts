@@ -23,7 +23,6 @@ import {
   createDefaultCORSOptions,
 } from '../../http/mod.ts'
 import { RequestRouter, RequestRouterOptions, RouteRequestHandler } from '../../router/mod.ts'
-import HTTP from '../../__internal/http.ts'
 
 export class CORSMiddleware extends RequestRouter {
   protected headerAppliers: readonly CORSHeaderApplier[] = [
@@ -49,10 +48,10 @@ export class CORSMiddleware extends RequestRouter {
     const originalResponse = await next()
     const { request } = event
     const isPreflight = request.method === 'OPTIONS'
-    let response: globalThis.Response
+    let response: Response
 
     if (isPreflight || !originalResponse) {
-      response = new HTTP.Response(null, {
+      response = new Response(null, {
         headers: originalResponse?.clone()?.headers,
         status: Status.NoContent,
         statusText: originalResponse?.statusText || STATUS_TEXT[Status.NoContent],

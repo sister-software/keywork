@@ -54,33 +54,6 @@ const config = {
     worker: true,
   },
   rules: {
-    'no-restricted-globals': [
-      2,
-      {
-        name: 'Request',
-        message: "Use `import HTTP from './modules/__internal__/http.ts'`.",
-      },
-      {
-        name: 'Headers',
-        message: "Use `import HTTP from './modules/__internal__/http.ts'`",
-      },
-      {
-        name: 'Response',
-        message: "Use `import HTTP from './modules/__internal__/http.ts'`",
-      },
-      {
-        name: 'TransformStream',
-        message: "Use `import Stream from 'keywork/platform/stream'`",
-      },
-      {
-        name: 'ReadableStream',
-        message: "Use `import Stream from 'keywork/platform/stream'`",
-      },
-      {
-        name: 'WritableStream',
-        message: "Use `import Stream from 'keywork/platform/stream'`",
-      },
-    ],
     'header/header': [1, 'block', headerLines, 1],
     'react/prop-types': 'off',
     'no-undef': 'off',
