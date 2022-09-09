@@ -12,90 +12,54 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { AbstractFetchEvent, IsomorphicFetchEventInit } from './AbstractFetchEvent.ts'
+import { KeyworkResourceError, Status } from '../../errors/mod.ts'
+import { IsomorphicFetchEventInit } from '../interfaces/mod.ts'
+import { IsomorphicExtendableEvent } from './IsomorphicExtendableEvent.ts'
 
 /**
  * @ignore
  */
-export const IsomorphicFetchEventObjectName = 'Keywork.IsomorphicFetchEvent'
-
-/**
- * An event object containing contextual data for a single and specific incoming HTTP request.
- *
- * Generally, this interface is exclusive to {@link RequestRouter#fetch}
- * and automatically passed to your subclass's route handlers.
- *
- * This is similar to `EventContext` defined in the `@cloudflare/workers-types` package.
- * However, the `IsomorphicFetchEvent` type includes additional information from `RequestRouter`.
- *
- * ### Caveats
- *
- * - The `request.url` property will be updated by route handler of `RequestRouter`.
- *
- * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
- * @typeParam ExpectedParams URL parameters parsed from the incoming request's URL and the route's pattern.
- * @typeParam Data Optional extra data to be passed to a route handler.
- *
- * @category Request
- *
- * @public
- * An approximate implementation of Cloudflare's Fetch event,
- *
- * @see {@link https://miniflare.dev/core/fetch Miniflare's Fetch Documentation}
- * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event Cloudflare's API Reference}
- *
- */
-export class IsomorphicFetchEvent<
-  BoundAliases = {},
-  ExpectedParams = {},
-  Data extends {} = {}
-> extends AbstractFetchEvent {
-  /**
-   * The bound environment aliases.
-   *
-   * #### Cloudflare Workers
-   * These are usually defined in your wrangler.toml file.
-   *
-   * #### Node.js
-   * This is similar to `process.env`.
-   *
-   */
-  public readonly env: BoundAliases
+export class IsomorphicFetchEvent extends IsomorphicExtendableEvent implements EventInit {
+  readonly clientId!: string
+  readonly resultingClientId!: string
+  readonly handled!: Promise<undefined>
+  readonly preloadResponse!: Promise<any>
 
   /**
-   * Optional extra data to be passed to a route handler,
-   * usually from {@link Keywork#Middleware middleware}.
+   * The incoming request received by the Worker.
    */
-  public data: Data
-  /**
-   * URL Patterns matched.
-   */
-  public match?: URLPatternResult
+  public request!: Request
 
-  constructor(eventInit: IsomorphicFetchEventInit<BoundAliases, Data>) {
-    super('fetch', eventInit)
-    this.env = (eventInit.env || {}) as BoundAliases
-    this.data = (eventInit.data || {}) as Data
-    this.match = eventInit.match
+  constructor(eventType = 'fetch', { request }: IsomorphicFetchEventInit) {
+    super(eventType)
+    this.request = request
   }
 
   /**
-   * The names and values of dynamic parameters in the URL.
-   * Parameters are parsed using the incoming request's URL and the route's pattern.
+   * Intercepts the request and allows the Worker to send a custom response.
+   *
+   * @deprecated The `respondWith` method is only applicable to Service Workers.
+   *
+   * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event/#respondwith Cloudflare Documentation}
    */
-  get params(): ExpectedParams {
-    return (this.match?.pathname.groups || {}) as any as ExpectedParams
+  respondWith(_response: Response): void {
+    throw new KeyworkResourceError(
+      'The `respondWith` method is only applicable to Service Workers',
+      Status.InternalServerError
+    )
   }
 
   /**
-   * Checks if the given object is an instance of `IsomorphicFetchEvent`
-   * @param eventLike An object that's possibly a `IsomorphicFetchEvent`
-   * @category Type Cast
+   * Prevents a runtime error response when the Worker script throws an unhandled exception.
+   *
+   * @deprecated The `passThroughOnException` method is only applicable to Service Workers
+   *
+   * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event/#passthroughonexception Cloudflare Documentation}
    */
-  public static assertIsInstanceOf(eventLike: unknown): eventLike is IsomorphicFetchEvent {
-    return Boolean(
-      eventLike instanceof IsomorphicFetchEvent ||
-        (eventLike && typeof eventLike === 'object' && IsomorphicFetchEventObjectName in eventLike)
+  passThroughOnException(): void {
+    throw new KeyworkResourceError(
+      'The `passThroughOnException` method is only applicable to Service Workers',
+      Status.InternalServerError
     )
   }
 }

@@ -27,7 +27,8 @@ export { PolyfillableURLPattern as URLPattern }
 /**
  * Either an instance of `URLPattern`,
  * or a string representing the `pathname` portion of a `URLPattern`
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern URLPattern Constructor via MDN}
+ *
+ * {@link https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern URLPattern Constructor via MDN}
  */
 export type URLPatternLike = URLPattern | string
 

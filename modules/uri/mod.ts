@@ -3,29 +3,37 @@
  * The syntax is based on [path-to-regexp](https://github.com/pillarjs/path-to-regexp).
  * Wildcards, named capture groups, regular groups, and group modifiers are all supported.
  *
+ * ## Usage
+ *
  * URL patterns can be matched against full URLs, or individual URL components:
  *
- * ```ts title="Matching URL pathname pattern."
+ * ### Matching URL pathname pattern.
+ *
+ * ```ts
  * const pattern = new URLPattern({ pathname: '/users/:user' })
  * const match = pattern.exec('/users/jessie')
  *
  * console.log(match.pathname.groups.user) // jessie
  * ```
  *
- * ```ts title="Matching a full URL pattern."
+ * ### Matching a full URL pattern.
+ *
+ * ```ts
  * const pattern = new URLPattern('https://example.com/books/:id')
  * console.log(pattern.test('https://example.com/books/123')) // true
  * console.log(pattern.test('https://keywork.app/books/123')) // false
  * ```
  *
- * ```ts title="Matching URL pathname pattern with a base URL"
+ * ### Matching URL pathname pattern with a base URL
+ *
+ * ```ts
  * const pattern = new URLPattern('/:article', 'https://blog.example.com')
  *
  * console.log(pattern.test('https://blog.example.com/article')) // true
  * console.log(pattern.test('https://blog.example.com/article/123')) // false
  * ```
  *
- * ### Peer Dependencies
+ * ## Peer Dependencies
  *
  * Support for the URL Pattern API varies across [browser runtimes](https://caniuse.com/mdn-api_urlpattern).
  * You may need a polyfill if your app uses a runtime that hasn't yet added [`URLPattern`](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern) class.
@@ -47,9 +55,10 @@
  *
  *   </TabItem>
  * </Tabs>
+ *
  * ## Related Entries
  *
- * - {@link Keywork#Router Router}
+ * - [Router Module](https://keywork.app/modules/router)
  *
  * ## External Resources
  * - [URL Pattern API via MDN](https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API)

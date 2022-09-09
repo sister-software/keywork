@@ -12,9 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './Fetcher.ts'
-export * from './MiddlewareFetch.ts'
+export * from './FetchEventHandler.ts'
+export * from './RequestHandler.ts'
 export * from './RequestRouterOptions.ts'
-export * from './RouteMatch.ts'
-export * from './RouteRequestHandler.ts'
-export * from './WorkerEnvFetchBinding.ts'
+export * from './WorkerServiceBinding.ts'

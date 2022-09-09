@@ -14,35 +14,52 @@
 
 /// <reference types="../../types/http.d.ts" />
 
+import { Status } from '../../errors/mod.ts'
+
 import { assertEquals } from 'deno/testing/asserts'
 import { RequestRouter } from '../../router/mod.ts'
 import { CompressionMiddleware } from './CompressionMiddleware.ts'
 
 const dStream = new DecompressionStream('gzip')
 
-Deno.test('Router compresseses response body', async () => {
-  const textDecoder = new TextDecoder()
+Deno.test({
+  name: 'Router compresseses response body',
+  fn: async () => {
+    const textDecoder = new TextDecoder()
 
-  const app = new RequestRouter({
-    displayName: 'Compression Middleware Tester',
-    middleware: [new CompressionMiddleware('gzip')],
-  })
-
-  app.get('/', () => {
-    return 'This body is automatically compressed!'
-  })
-
-  const rootResponse = await app.fetch(
-    new Request('http://localhost/', {
-      headers: { 'Accept-Encoding': 'gzip, deflate' },
+    const app = new RequestRouter({
+      debug: false,
+      displayName: 'App Tester',
+      middleware: [new CompressionMiddleware('gzip')],
     })
-  )
-  assertEquals(rootResponse.headers.get('Content-Encoding'), 'gzip', 'Content Encoding matches')
-  const decompressedStream = rootResponse.body!.pipeThrough(dStream)
-  const dReader = decompressedStream.getReader()
-  const result = await dReader.read()
 
-  const textContent = textDecoder.decode(result.value)
+    app.get('/', () => {
+      console.debug('Compression test body running')
+      return new Response('This body is automatically compressed!', {
+        headers: {
+          'X-Test': 'Test',
+        },
+      })
+    })
 
-  assertEquals(textContent, 'This body is automatically compressed!', 'Text body matches')
+    const response = await app.fetch(
+      new Request('http://localhost/', {
+        headers: { 'Accept-Encoding': 'gzip, deflate' },
+      })
+    )
+
+    console.debug('Response:', response.status, response.headers)
+
+    assertEquals(response.status, Status.OK, 'Status is OK')
+
+    assertEquals(response.headers.get('Content-Encoding'), 'gzip', 'Content Encoding matches')
+
+    const decompressedStream = response.body!.pipeThrough(dStream)
+    const dReader = decompressedStream.getReader()
+    const result = await dReader.read()
+
+    const textContent = textDecoder.decode(result.value)
+
+    assertEquals(textContent, 'This body is automatically compressed!', 'Text body matches')
+  },
 })

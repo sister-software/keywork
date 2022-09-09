@@ -141,8 +141,8 @@ const sidebars = {
 
     {
       type: 'link',
-      label: 'middleware',
-      href: '/modules/examples',
+      label: 'Middleware',
+      href: '/modules/middleware',
     },
 
     {

@@ -5,6 +5,9 @@
     "allowSyntheticDefaultImports": true,
     "alwaysStrict": true,
     "strict": true,
+    // Disabled because of requirement for overloaded arguments in response parsers.
+    // This may not be necessary in TS 4.8
+    "strictFunctionTypes": false,
     "noImplicitAny": true,
     "noImplicitReturns": false,
     "noImplicitThis": true,

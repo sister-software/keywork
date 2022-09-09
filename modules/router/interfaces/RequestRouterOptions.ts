@@ -26,43 +26,14 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { HTTPMethod } from '../../http/mod.ts'
-import type { ReactRendererOptions } from '../../react/mod.ts'
-import { MiddlewareDeclarationLike } from '../types/MiddlewareDeclarationLike.ts'
+import { ResponseHandler } from '../../http/mod.ts'
 
-/**
- * Public endpoints to aid in debugging your app.
- * Available at `/keywork/*`
- * @ignore
- */
-export interface RequestRouterDebugEndpoints {
-  /**
-   * `/keywork/routes`
-   * JSON endpoint to display routes.
-   */
-  routes: boolean
-}
-
-export interface RequestRouterDebugOptions {
+export interface DebuggingMiddlewareOptions {
   /**
    * Whether debugging headers should be included.
    * @defaultValue `true`
    */
   includeHeaders?: boolean
-
-  /**
-   * Debug endpoints to enable.
-   * @defaultValue true
-   */
-  endpoints?: RequestRouterDebugEndpoints | boolean
-}
-
-export interface RouteDebugEntrypoint {
-  displayName: string
-  kind: string
-  httpMethod?: HTTPMethod
-  urlPattern?: URLPattern
-  entries: RouteDebugEntrypoint[]
 }
 
 /**
@@ -70,17 +41,38 @@ export interface RouteDebugEntrypoint {
  * @category Options
  */
 export interface RequestRouterOptions {
+  // /**
+  //  * A display name used for debugging and log messages.
+  //  * @defaultValue `'Keywork Router'`
+  //  */
+  // displayName?: string
+  // /**
+  //  * Middleware to apply to the router during construction.
+  //  * Middleware can also be applied after a router is created via `RequestRouter.use`.
+  //  */
+  // middleware?: Array<MiddlewareDeclarationLike>
   /**
-   * A display name used for debugging and log messages.
-   * @defaultValue `'Keywork Router'`
+   * An advanced option to override the router's default response handler.
+   *
+   * If you're using this option, it's recommend that you include the default parsers.
+   *
+   * ```ts
+   * import { ResponseHandler, defaultResponseHandlerEntries } from 'keywork/http'
+   *
+   * const router = new RequestRouter({
+   *   responseHandler: new ResponseHandler([
+   *     ...defaultResponseHandlerEntries,
+   *     yourCustomParser
+   *   ])
+   * })
+   * ```
+   *
+   * @defaultValue `new KeyworkResponseHandler()`
    */
-  displayName?: string
+  responseHandler?: ResponseHandler
   /**
-   * Middleware to apply to the router during construction.
-   * Middleware can also be applied via `RequestRouter#use`.
+   * Options to configure debugging.
+   * By default, this is enabled with minimal debugging.
    */
-  middleware?: Array<MiddlewareDeclarationLike>
-
-  react?: ReactRendererOptions
-  debug?: RequestRouterDebugOptions
+  debug?: DebuggingMiddlewareOptions | boolean
 }

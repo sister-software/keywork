@@ -8,6 +8,9 @@
     ],
     "jsx": "react",
     "strict": true,
+    // Disabled because of requirement for overloaded arguments in response parsers.
+    // This may not be necessary in TS 4.8
+    "strictFunctionTypes": false,
     "checkJs": false,
     "allowJs": true,
     "types": [

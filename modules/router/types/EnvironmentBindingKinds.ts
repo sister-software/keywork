@@ -14,13 +14,13 @@
 
 import type { DurableObjectNamespace } from '../../__internal/interfaces/durable-objects.ts'
 import type { KVNamespace } from '../../__internal/interfaces/kv.ts'
-import type { WorkerEnvFetchBinding } from '../interfaces/WorkerEnvFetchBinding.ts'
+import type { WorkerServiceBinding } from '../interfaces/WorkerServiceBinding.ts'
 
 /**
  * Either:
  *
- * - `WorkerEnvFetchBinding` A `fetch` binding, usually an asset KV or external Worker.
+ * - `WorkerServiceBinding` A `fetch` binding, usually an asset KV or external Worker.
  * - `KVNamespace` A KV binding.
  * - `DurableObjectNamespace` A Durable Object.
  */
-export type EnvironmentBindingKinds = WorkerEnvFetchBinding | KVNamespace | DurableObjectNamespace
+export type EnvironmentBindingKinds = WorkerServiceBinding | KVNamespace | DurableObjectNamespace

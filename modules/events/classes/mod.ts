@@ -12,6 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export type { IsomorphicFetchEventInit } from './AbstractFetchEvent.ts'
 export * from './IsomorphicExtendableEvent.ts'
 export * from './IsomorphicFetchEvent.ts'

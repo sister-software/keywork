@@ -21,7 +21,6 @@ export default function () {
     const usageByRuntime = createUsageMap(parsedModel)
 
     return [
-      '## Usage',
       renderUsageTabs(usageByRuntime),
       usageByRuntime.has('browser') ? renderBrowserDemo(usageByRuntime.get('browser')!) : '',
     ].join('\n\n')

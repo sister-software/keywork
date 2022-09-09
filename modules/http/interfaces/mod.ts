@@ -13,3 +13,4 @@
  */
 
 export * from './IncomingRequestCfProperties.ts'
+export * from './ResponseHandler.ts'

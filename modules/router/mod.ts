@@ -30,25 +30,32 @@
  *
  * ## Creating a RESTful API
  *
- * Instances of {@link Keywork#Router.RequestRouter `RequestRouter`} define each route handler by
- * invoking methods that correspond with HTTP method of the same name:
+ * Instances of [`RequestRouter`](https://keywork.app/modules/router/classes/RequestRouter)
+ * define each route handler by invoking methods that correspond with HTTP method of the same name:
  *
  * | HTTP Method | Usage                                                |
  * | ----------- | ---------------------------------------------------- |
- * | `'GET'`     | `app.get([path pattern], [RouteRequestHandler])`     |
- * | `'POST'`    | `app.post([path pattern], [RouteRequestHandler])`    |
- * | `'PATCH'`   | `app.patch([path pattern], [RouteRequestHandler])`   |
- * | `'DELETE'`  | `app.delete([path pattern], [RouteRequestHandler])`  |
- * | `'HEAD'`    | `app.head([path pattern], [RouteRequestHandler])`    |
- * | `'OPTIONS'` | `app.options([path pattern], [RouteRequestHandler])` |
- * | `'*'`       | `app.all([path pattern], [RouteRequestHandler])`     |
+ * | `'GET'`     | `app.get([path pattern], [RequestHandler])`     |
+ * | `'POST'`    | `app.post([path pattern], [RequestHandler])`    |
+ * | `'PATCH'`   | `app.patch([path pattern], [RequestHandler])`   |
+ * | `'DELETE'`  | `app.delete([path pattern], [RequestHandler])`  |
+ * | `'HEAD'`    | `app.head([path pattern], [RequestHandler])`    |
+ * | `'OPTIONS'` | `app.options([path pattern], [RequestHandler])` |
+ * | `'*'`       | `app.all([path pattern], [RequestHandler])`     |
  *
- * ### `GET` (`app.get([path pattern], [...RouteRequestHandler])`)
+ * ### HTTP GET
+ *
+ * The HTTP GET method requests a representation of the specified resource.
+ * Requests using GET should only be used to request data.
+ *
+ * #### Return a string
  *
  * ```ts title="GET http://localhost:8788"
  * app.get('/', () => 'Hello there! 👋')
  * // Hello there! 👋
  * ```
+ *
+ * #### Returning a string with a URL parameter
  *
  * ```ts title="GET http://localhost:8788/greet/jessie"
  * app.get('/greet/:firstName', ({ params }) => `Hello there, ${params.firstName}!`)
@@ -60,7 +67,12 @@
  * // The current datetime is: 11:35:00 AM
  * ```
  *
- * ### `POST` (`app.post([path pattern], [...RouteRequestHandler])`)
+ * ### HTTP POST
+ *
+ * The HTTP POST method sends data to the server.
+ * The file type of the body of the request is indicated by the `Content-Type` header.
+ *
+ * #### Creating a user from a request payload
  *
  * ```ts title="POST http://localhost:8788/users"
  * interface NewUserPayload {
@@ -77,8 +89,7 @@
  *
  * ### Path Parameters
  *
- * Routes are defined with a
- * [`path-to-regexp` style](https://www.npmjs.com/package/path-to-regexp) path patterns.
+ * Route path parameters are defined with a [`path-to-regexp` style](https://www.npmjs.com/package/path-to-regexp) pattern.
  *
  * ```ts
  * app.get('/users/', ...)
@@ -96,14 +107,14 @@
  * You may need a polyfill if your app uses on a runtime that hasn't yet added
  * [`URLPattern`](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern) class.
  *
- * [**_Learn more from the URI Module_ ›**](/modules/uri)
+ * [**_Learn more from the URI Module_ ›**](https://keywork.app/modules/uri)
  *
  * :::
  *
  * ### `IsomorphicFetchEvent`
  *
- * When creating a {@link Keywork#Router.RouteRequestHandler `RouteRequestHandler`} callback,
- * you have access to an {@link Keywork#Events.IsomorphicFetchEvent `IsomorphicFetchEvent`}:
+ * When creating a [`RequestHandler`](https://keywork.app/modules/router/interfaces/RouteRequestHandler) callback,
+ * you have access to an [`IsomorphicFetchEvent`](https://keywork.app/modules/events/classes/IsomorphicFetchEvent):
  *
  * ```ts title="GET http://localhost:8788"
  * // highlight-next-line
@@ -208,26 +219,25 @@
  * However, this behavior can be avoided by explicitly providing a `Response` object,
  * or a class that extends from `Response` such as...
  *
- * - {@link Keywork#HTTP.CachableResponse `CachableResponse`}
- * - {@link Keywork#HTTP.HTMLResponse `HTMLResponse`}
- * - {@link Keywork#HTTP.JSONResponse `JSONResponse`}
- * - {@link Keywork#HTTP.ErrorResponse `ErrorResponse`}
+ * - [`CachableResponse`](https://keywork.app/modules/http/classes/CachableResponse)
+ * - [`HTMLResponse`](https://keywork.app/modules/http/classes/HTMLResponse)
+ * - [`JSONResponse`](https://keywork.app/modules/http/classes/JSONResponse)
+ * - [`ErrorResponse`](https://keywork.app/modules/http/classes/ErrorResponse)
  *
  * ### Errors
  *
  * Errors in your code are caught before they crash the runtime.
- * See {@link Keywork#Errors.KeyworkResourceError `KeyworkResourceError`} for further details.
+ * See [`KeyworkResourceError`](https://keywork.app/modules/errors/classes/KeyworkResourceError) for further details.
  *
  * ### Sessions
  *
  * Support for cookie-based sessions is automatically handled.
- * See {@link Keywork#Session.SessionMiddleware `SessionMiddleware`} for further details.
+ * See [`SessionMiddleware`](https://keywork.app/modules/middleware/classes/SessionMiddleware) for further details.
  *
  * ## Related Entries
  *
- * - {@link Keywork#URIUtils URI Module}
- * - {@link Keywork#Session Session Module}
- * - {@link Keywork#Middleware Middleware Module}
+ * - [URI Module](https://keywork.app/modules/uri)
+ * - [Middleware Module](https://keywork.app/modules/middleware)
  *
  * ## Further reading
  *

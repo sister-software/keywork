@@ -12,15 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Fetcher } from '../interfaces/Fetcher.ts'
+import { RequestMiddleware } from './RequestMiddleware.ts'
 
 /**
- * Middleware declaration in the convenient shape of `Map`'s constructor parameters.
+ * Middleware declaration in shape compatible with the `Map` constructor.
  *
- * @category Options
  * @typeParam PathPatternPrefix A path prefix defining where the middleware should be mounted. Combines with the given router's routes.
+ *
+ * @internal
  */
 export type MiddlewareDeclaration<PathPatternPrefix extends string = string> = readonly [
   PathPatternPrefix,
-  Fetcher<any>
+  RequestMiddleware<any>
 ]

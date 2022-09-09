@@ -26,5 +26,5 @@ export const methodVerbToRouterMethod = new Map<HTTPMethod, RouterMethod>([
   ['DELETE', 'delete'],
   ['HEAD', 'head'],
   ['OPTIONS', 'options'],
-  ['*', 'all'],
+  // ['*', 'all'],
 ])

@@ -4,8 +4,8 @@
  *
  * ## Related Entries
  *
- * - {@link Keywork#Router Router Module}
- * - {@link Keywork#URIUtils URI Module}
+ * - [Router Module](https://keywork.app/modules/router)
+ * - [URI Module](https://keywork.app/modules/uri)
  *
  * @packageDocumentation
  * @module Keywork#Events
@@ -25,3 +25,4 @@
 /* eslint-disable header/header */
 
 export * from './classes/mod.ts'
+export * from './interfaces/mod.ts'

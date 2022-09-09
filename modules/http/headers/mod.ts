@@ -2,12 +2,12 @@
  * Keywork includes utilities for working with common types HTTP headers,
  * including...
  *
- * - {@link Keywork#HTTP#Headers#Caching Caching and managing ETags}
- * - {@link Keywork#HTTP#Headers#ContentEncoding Content Encoding}
- * - {@link Keywork#HTTP#ContentType Content Type}
+ * - [Caching and managing ETags](https://keywork.app/modules/http/headers/caching)
+ * - [Content Encoding](https://keywork.app/modules/http/headers/content-encoding)
+ * - [Content Type](https://keywork.app/modules/http/headers/content-type)
  * - Content Security Policy
- *   - {@link Keywork#HTTP#Headers#CSP#Directives Directives}
- *   - {@link Keywork#HTTP#Headers#CSP#Policies Policies}
+ *   - [CSP#Directives Directives](https://keywork.app/modules/http/headers/csp/directives)
+ *   - [CSP#Policies Policies](https://keywork.app/modules/http/headers/csp/policies)
  *
  * @packageDocumentation
  * @module Keywork#HTTP#Headers
@@ -42,13 +42,6 @@ export function getBrowserIdentifier(request: Request): string {
   }
 
   return 'unknown'
-}
-
-/**
- * @ignore
- */
-export const KeyworkHeaders = {
-  'X-Powered-By': 'Keywork',
 }
 
 /**

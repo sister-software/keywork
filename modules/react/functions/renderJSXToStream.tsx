@@ -20,7 +20,7 @@ import { KeyworkHTMLDocument } from '../components/KeyworkHTMLDocument.tsx'
 import { KeyworkProviders } from '../components/KeyworkProvidersComponent.tsx'
 import { _SSRPropsEmbed } from '../components/SSRPropsEmbed.tsx'
 import { StaticPropsProvider } from '../components/StaticPropsProvider.tsx'
-import { ReactRendererOptions, ReactRenderStreamResult } from '../interfaces/ReactRendererOptions.ts'
+import { KeyworkRenderOptions, ReactRenderStreamResult } from '../interfaces/KeyworkRenderOptions.ts'
 import { renderReactStream } from '../worker/stream.ts'
 
 /**
@@ -30,7 +30,7 @@ import { renderReactStream } from '../worker/stream.ts'
 export async function renderJSXToStream<StaticProps extends {} | null = null>(
   /** The React component to render for this specific page. */
   pageElement: ReactElement<StaticProps>,
-  reactRenderOptions?: ReactRendererOptions
+  reactRenderOptions?: KeyworkRenderOptions
 ): Promise<ReactDOMServerReadableStream> {
   const logger = new Logger('react Stream Renderer')
 

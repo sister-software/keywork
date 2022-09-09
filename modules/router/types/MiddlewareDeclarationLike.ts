@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Fetcher } from '../interfaces/Fetcher.ts'
 import { MiddlewareDeclaration } from './MiddlewareDeclaration.ts'
+import { RequestMiddleware } from './RequestMiddleware.ts'
 
 /** @ignore */
-export type MiddlewareDeclarationLike = Fetcher<any> | MiddlewareDeclaration
+export type MiddlewareDeclarationLike = RequestMiddleware<any> | MiddlewareDeclaration

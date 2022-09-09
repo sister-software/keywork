@@ -45,8 +45,8 @@
  *
  * ## Usage
  *
- * Route handlers defined on an instance of {@link Keywork#Router.RequestRouter `RequestRouter`} can return a React component,
- * Keywork automatically converts the content into a streamed response.
+ * Request handlers defined on an instance of [`RequestRouter`](https://keywork.app/modules/router/classes/RequestRouter)
+ * can use React by returning JSX, or a defined React component.
  *
  * ```tsx
  * import { RequestRouter } from 'keywork/router'
@@ -69,6 +69,9 @@
  *
  * export default app
  * ```
+ *
+ * Keywork will automatically efficiently serve the content to the browser as a [streamed response](https://reactjs.org/docs/react-dom-server.html#rendertoreadablestream).
+ *
  * @packageDocumentation
  * @module Keywork#ReactUtils
  *

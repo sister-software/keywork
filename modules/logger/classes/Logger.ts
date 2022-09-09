@@ -22,6 +22,7 @@ import { prettyJSON } from '../functions/prettyJSON.ts'
  * @ignore
  */
 interface GlobalConsoleLike {
+  trace(message?: any, ...optionalParams: any[]): void
   debug(message?: any, ...optionalParams: any[]): void
   error(message?: any, ...optionalParams: any[]): void
   info(message?: any, ...optionalParams: any[]): void
@@ -38,25 +39,25 @@ _timestamp.toString = () => _timestamp()
 /**
  * @internal
  */
-const _logTypes = new Map<keyof GlobalConsoleLike, string>([
-  ['log', '💬'],
-  ['info', '💡'],
-  ['warn', '⚠️'],
-  ['debug', '🔎'],
-])
-
-/**
- * @internal
- */
 export enum LogLevel {
   Trace,
   Debug,
   Info,
   Warning,
   Error,
-  Critical,
   Off,
 }
+
+/**
+ * @internal
+ */
+const _logTypes = new Map<keyof GlobalConsoleLike, { icon: string; level: number }>([
+  ['trace', { icon: '👀', level: LogLevel.Trace }],
+  ['debug', { icon: '🔎', level: LogLevel.Debug }],
+  ['log', { icon: '💬', level: LogLevel.Info }],
+  ['info', { icon: '💡', level: LogLevel.Info }],
+  ['warn', { icon: '⚠️', level: LogLevel.Warning }],
+])
 
 /**
  * @internal
@@ -77,41 +78,44 @@ export const DEFAULT_LOG_LEVEL: LogLevel = LogLevel.Info
  */
 export class Logger {
   protected logPrefix: string
-  public _log: GlobalConsoleLike['log']
-  protected _error: GlobalConsoleLike['error']
+  protected level: LogLevel = DEFAULT_LOG_LEVEL
+  protected globalConsole: GlobalConsoleLike
 
+  public trace!: GlobalConsoleLike['trace']
+  public debug!: GlobalConsoleLike['debug']
   public log!: GlobalConsoleLike['log']
   public info!: GlobalConsoleLike['info']
   public warn!: GlobalConsoleLike['warn']
-  public debug!: GlobalConsoleLike['debug']
 
-  constructor(logPrefix: string, color = 'cyan') {
-    let globalConsole: GlobalConsoleLike
-
+  constructor(logPrefix: string, level: LogLevel = LogLevel.Warning, color = 'cyan') {
     if (typeof console !== 'undefined') {
-      globalConsole = console as GlobalConsoleLike
+      this.globalConsole = console as GlobalConsoleLike
     } else {
       throw new Error('Cannot create Prefixed Logger without a global console logger.')
     }
 
+    this.level = level
     this.logPrefix = `[${logPrefix}]`
-    this._log = globalConsole.log.bind(globalConsole)
 
     // @ts-ignore Iteratable
-    for (const [logType, logTypeLabel] of _logTypes.entries()) {
-      const bindArgs = [
-        //
-        `%c%s%c%s`,
-        `color: white;`,
-        logTypeLabel,
-        `color: ${color};`,
-        this.logPrefix,
-      ]
-
-      this[logType as 'log'] = globalConsole[logType as 'log'].bind(globalConsole, ...(bindArgs as [any]))
+    for (const [logType, { icon, level }] of _logTypes.entries()) {
+      if (this.level <= level) {
+        this[logType] = this._createLogMethod(logType, icon, color)
+      }
     }
+  }
 
-    this._error = globalConsole.error.bind(globalConsole, this.logPrefix)
+  _createLogMethod(logType: keyof GlobalConsoleLike, logTypeLabel: string, color: string) {
+    const bindArgs = [
+      //
+      `%c%s%c%s`,
+      `color: white;`,
+      logTypeLabel,
+      `color: ${color};`,
+      this.logPrefix,
+    ]
+
+    return this.globalConsole[logType as 'log'].bind(this.globalConsole, ...(bindArgs as [any]))
   }
 
   public error = (error: unknown) => {
@@ -119,7 +123,7 @@ export class Logger {
     const statusCode = error instanceof Error && KeyworkResourceError.assertIsInstanceOf(error) ? error.status : 500
     const stack = error instanceof Error ? error.stack : undefined
 
-    this._error(statusCode, message, stack)
+    this.globalConsole.error(this.logPrefix, statusCode, message, stack)
   }
 
   // eslint-disable-next-line @typescript-eslint/ban-types
@@ -132,7 +136,7 @@ export class Logger {
     this.log(`${this.logPrefix} ${label}:`)
     // @ts-ignore Iteratable
     for (const entry of json) {
-      this._log(prettyJSON(entry[key]))
+      this.globalConsole.log(prettyJSON(entry[key]))
     }
   }
 }

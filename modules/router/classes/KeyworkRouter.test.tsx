@@ -13,12 +13,11 @@
  */
 
 import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } from 'deno/testing/asserts'
-import React from 'https://esm.sh/react@18.2.0'
+import React, { useMemo, ValidationMap, WeakValidationMap } from 'https://esm.sh/react@18.2.0'
 import { Status } from '../../errors/mod.ts'
-import { KeyworkHeaders } from '../../http/headers/mod.ts'
 import { JSONResponse } from '../../http/mod.ts'
-import { RouteRequestHandler } from '../mod.ts'
-import { RequestRouter } from './RequestRouter.ts'
+import { findRoutesMatchingURL, RequestHandler } from '../mod.ts'
+import { KeyworkHeaders, RequestRouter } from './RequestRouter.ts'
 
 interface HelloResponseBody extends Record<PropertyKey, unknown> {
   url: string
@@ -26,156 +25,207 @@ interface HelloResponseBody extends Record<PropertyKey, unknown> {
   message: string
 }
 
-Deno.test('Router receives requests', async () => {
-  const app = new RequestRouter()
+interface JSXCompatibleResponse extends ResponseInit {
+  body?: BodyInit | null
+}
 
-  app.get('/', (event) => {
-    const url = new URL(event.request.url)
+/**
+ * A JSX component that represents an instance of the `Response` class.
+ */
+const JSXCompatibleResponse: Keywork.RC<JSXCompatibleResponse> = ({ body, ...responseInit }) => {
+  const response = useMemo(() => {
+    return new Response(body, responseInit)
+  }, [body, responseInit])
 
-    return `Hello from ${url.pathname}`
-  })
+  return response
+}
 
-  const jsonBody: HelloResponseBody = {
-    url: '___',
-    date: new Date().toJSON(),
-    message: 'Keywork rocks!',
-  }
+Deno.test({
+  name: 'Router receives requests',
+  fn: async () => {
+    const app = new RequestRouter({
+      displayName: 'Test Router #1',
+      debug: false,
+    })
 
-  app.get('/hello.json', (event) => {
-    const url = new URL(event.request.url)
-    jsonBody.url = url.toString()
+    app.get('/', (event) => {
+      const url = new URL(event.request.url)
 
-    return jsonBody
-  })
+      return `Hello from ${url.pathname}`
+    })
 
-  const routesViaGET = app.readMethodRoutes('get')
-  assertEquals(routesViaGET.length, 2, 'Multiple routes have been defined for GET')
-  assertEquals(app.match(routesViaGET, '/').length, 1, 'Root route exists')
-  assertExists(app.match(routesViaGET, '/hello.json'), 'JSON route exists')
-
-  const routesViaPOST = app.readMethodRoutes('post')
-  assertEquals(routesViaPOST.length, 0, 'No routes have been defined for POST')
-  assertEquals(app.match(routesViaPOST, '/').length, 0, 'Root route only exists on GET')
-  assertEquals(app.match(routesViaPOST, '/hello.json').length, 0, 'JSON route only exists on GET')
-
-  const rootResponse = await app.fetch(new Request('http://localhost/'))
-  assertEquals(await rootResponse.text(), `Hello from /`, 'Text body matches')
-
-  assertEquals(
-    rootResponse.headers.get('X-Powered-By'),
-    KeyworkHeaders['X-Powered-By'],
-    '"Powered by" header is present'
-  )
-
-  const JSONResponse = await app.fetch(new Request('http://localhost/hello.json'))
-  assertObjectMatch(await JSONResponse.json(), jsonBody)
-})
-
-Deno.test('Router parses URL parameters', async () => {
-  const app = new RequestRouter()
-
-  // Declaring a route with URL params...
-  interface ExampleParams {
-    firstName: string
-    lastName: string
-  }
-
-  app.get<ExampleParams>('/json/:firstName/:lastName', ({ params }) => {
-    const body = { firstName: params.firstName, lastName: params.lastName }
-    return new JSONResponse(body)
-  })
-
-  const rootResponse = await app.fetch(new Request('http://localhost/json/jessie/james'))
-  const body: ExampleParams = await rootResponse.json()
-  assertEquals(body, { firstName: 'jessie', lastName: 'james' }, 'Params are parsed')
-})
-
-Deno.test('Router renders JSX', async () => {
-  const app = new RequestRouter({
-    displayName: 'JSX Tester Router',
-  })
-
-  // Declaring a route that returns a React element...
-  app.get('/', () => {
-    return (
-      <div>
-        <h1>JSX Test</h1>
-      </div>
-    )
-  })
-
-  const response = await app.fetch(new Request('http://localhost/'))
-  assertEquals(response.status, Status.OK)
-  assertStringIncludes(await response.text(), `<div><h1>JSX Test</h1></div>`, 'Body includes rendered JSX')
-})
-
-Deno.test('Router supports middleware', async () => {
-  const HelloWorldRouter = new RequestRouter({
-    displayName: 'Hello World Router',
-  })
-
-  // Declaring a route that returns a React element...
-  HelloWorldRouter.get('/', async ({ request }) => {
-    const url = new URL(request.url)
-    // Reading some optional static props from the URL search params...
-    const staticProps = {
-      greeting: url.searchParams.get('greeting') || 'Hello there!',
+    const jsonBody: HelloResponseBody = {
+      url: '___',
+      date: new Date().toJSON(),
+      message: 'Keywork rocks!',
     }
 
-    return <h1>{staticProps.greeting}</h1>
-  })
+    app.get('/hello.json', (event) => {
+      const url = new URL(event.request.url)
+      jsonBody.url = url.toString()
 
-  // Declaring a route that returns JSON...
-  HelloWorldRouter.get('/example-json', () => {
-    return { hello: 'world' }
-  })
+      return jsonBody
+    })
 
-  // Create a router to receive all incoming requests...
-  const app = new RequestRouter({
-    displayName: 'Middleware Tester App',
-    middleware: [
-      // The example routes...
-      HelloWorldRouter,
-    ],
-  })
+    const routesViaGET = app.readMethodRoutes('get')
 
-  const simpleResponse = await app.fetch(new Request('http://localhost/'))
-  assertEquals(simpleResponse.status, Status.OK)
-  assertStringIncludes(await simpleResponse.text(), `<h1>Hello there!</h1>`, 'Body includes default content')
+    assertEquals(routesViaGET.size, 2, 'Multiple routes have been defined for GET')
+    assertEquals(findRoutesMatchingURL(routesViaGET, new URL('http://localhost/')).length, 1, 'Root route exists')
+    assertExists(findRoutesMatchingURL(routesViaGET, new URL('http://localhost/hello.json')), 'JSON route exists')
 
-  const greeting = `Hello at ${new Date().toJSON()}`
-  const url = new URL('http://localhost')
-  url.searchParams.set('greeting', greeting)
-  const responseWithQuery = await app.fetch(new Request(url))
+    const routesViaPOST = app.readMethodRoutes('post')
+    assertEquals(routesViaPOST.size, 0, 'No routes have been defined for POST')
+    assertEquals(findRoutesMatchingURL(routesViaPOST, '/').length, 0, 'Root route only exists on GET')
+    assertEquals(findRoutesMatchingURL(routesViaPOST, '/hello.json').length, 0, 'JSON route only exists on GET')
 
-  assertEquals(responseWithQuery.status, Status.OK)
-  assertStringIncludes(await responseWithQuery.text(), `<h1>${greeting}</h1>`, 'Body includes query params')
+    const rootResponse = await app.fetch(new Request('http://localhost/'))
+    const textBody = await rootResponse.text()
+    console.debug('>>>>', rootResponse)
+    assertEquals(textBody, `Hello from /`, 'Text body matches')
 
-  app.use('/hello', HelloWorldRouter)
-
-  const nestedRequest = await app.fetch(new Request('http://localhost/hello/example-json'))
-  assertEquals(nestedRequest.status, Status.OK, 'Nested request routes correctly')
-  assertEquals(await nestedRequest.json(), { hello: 'world' }, 'Nested body includes content')
+    const JSONResponse = await app.fetch(new Request('http://localhost/hello.json'))
+    assertObjectMatch(await JSONResponse.json(), jsonBody)
+  },
 })
 
-Deno.test('Router supports middleware as `RouteRequestHandler`', async () => {
-  const app = new RequestRouter({
-    displayName: 'Route Request Handler Tester',
-  })
+Deno.test({
+  name: 'Router allows middleware to modify headers',
+  fn: async () => {
+    const app = new RequestRouter()
 
-  const addTestingHeaderMiddleware: RouteRequestHandler = async (event, next) => {
-    const response = await next()
-    if (!response) return response
+    app.get('/', () => `Hello from header test`)
 
-    response.headers.set('X-Test-Header', 'Added by middleware')
+    const response = await app.fetch(new Request('http://localhost/'))
 
-    return response
-  }
+    assertEquals(
+      //
+      response.headers.get('X-Powered-By'),
+      KeyworkHeaders['X-Powered-By'],
+      '"Powered by" header is present'
+    )
+  },
+})
 
-  app.use(addTestingHeaderMiddleware)
-  app.get('/', () => 'Hello from out of the box!')
+Deno.test({
+  name: 'Router parses URL parameters',
+  fn: async () => {
+    const app = new RequestRouter()
 
-  const response = await app.fetch(new Request('http://localhost/'))
+    // Declaring a route with URL params...
+    interface ExampleParams {
+      firstName: string
+      lastName: string
+    }
 
-  assertEquals(response.headers.get('X-Test-Header'), 'Added by middleware', 'Header was added')
+    app.get<ExampleParams>('/json/:firstName/:lastName', ({ params }) => {
+      const body = { firstName: params.firstName, lastName: params.lastName }
+      return new JSONResponse(body)
+    })
+
+    const rootResponse = await app.fetch(new Request('http://localhost/json/jessie/james'))
+    const body: ExampleParams = await rootResponse.json()
+    assertEquals(body, { firstName: 'jessie', lastName: 'james' }, 'Params are parsed')
+  },
+})
+
+Deno.test({
+  name: 'Router renders JSX',
+  fn: async () => {
+    const app = new RequestRouter({
+      displayName: 'JSX Tester Router',
+    })
+
+    // Declaring a route that returns a React element...
+    app.get('/', () => {
+      return (
+        <div>
+          <h1>JSX Test</h1>
+        </div>
+      )
+    })
+
+    const response = await app.fetch(new Request('http://localhost/'))
+    assertEquals(response.status, Status.OK)
+    assertStringIncludes(await response.text(), `<div><h1>JSX Test</h1></div>`, 'Body includes rendered JSX')
+  },
+})
+
+Deno.test({
+  name: 'Router supports middleware',
+  fn: async () => {
+    const HelloWorldRouter = new RequestRouter({
+      displayName: 'Hello World Router',
+      debug: false,
+    })
+
+    // Declaring a route that returns a React element...
+    HelloWorldRouter.get('/', async ({ request }) => {
+      console.log('Hello World!')
+      const url = new URL(request.url)
+      // Reading some optional static props from the URL search params...
+      const staticProps = {
+        greeting: url.searchParams.get('greeting') || 'Hello there!',
+      }
+
+      return <h1>{staticProps.greeting}</h1>
+    })
+
+    // Declaring a route that returns JSON...
+    HelloWorldRouter.get('/example-json', () => {
+      return { hello: 'world' }
+    })
+
+    // Create a router to receive all incoming requests...
+    const app = new RequestRouter({
+      displayName: 'Middleware Tester App',
+      middleware: [
+        // The example routes...
+        HelloWorldRouter,
+      ],
+    })
+
+    // app.get('*', HelloWorldRouter)
+    // app.use('/hello', HelloWorldRouter)
+
+    const simpleResponse = await app.fetch(new Request('http://localhost/'))
+    assertEquals(simpleResponse.status, Status.OK)
+    assertStringIncludes(await simpleResponse.text(), `<h1>Hello there!</h1>`, 'Body includes default content')
+
+    const greeting = `Hello at ${new Date().toJSON()}`
+    const url = new URL('http://localhost')
+    url.searchParams.set('greeting', greeting)
+    const responseWithQuery = await app.fetch(new Request(url))
+
+    assertEquals(responseWithQuery.status, Status.OK)
+    assertStringIncludes(await responseWithQuery.text(), `<h1>${greeting}</h1>`, 'Body includes query params')
+
+    // const nestedRequest = await app.fetch(new Request('http://localhost/hello/example-json'))
+    // assertEquals(nestedRequest.status, Status.OK, 'Nested request routes correctly')
+    // assertEquals(await nestedRequest.json(), { hello: 'world' }, 'Nested body includes content')
+  },
+})
+
+Deno.test({
+  name: 'Router supports middleware as `RequestHandler`',
+  fn: async () => {
+    const app = new RequestRouter({
+      displayName: 'Route Request Handler Tester',
+    })
+
+    const addTestingHeaderMiddleware: RequestHandler = async (event) => {
+      const response = await next()
+      if (!response) return response
+
+      response.headers.set('X-Test-Header', 'Added by middleware')
+
+      return response
+    }
+
+    app.use(addTestingHeaderMiddleware)
+    app.get('/', () => 'Hello from out of the box!')
+
+    const response = await app.fetch(new Request('http://localhost/'))
+
+    assertEquals(response.headers.get('X-Test-Header'), 'Added by middleware', 'Header was added')
+  },
 })

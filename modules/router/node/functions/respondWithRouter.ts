@@ -35,6 +35,7 @@ function readNodeEnv<BoundAliases = {}>(): BoundAliases {
  * import { respondWithRouter } from 'keywork/router/node'
  *
  * const router = new RequestRouter()
+ *
  * http.createServer((req, res) => {
  *   respondWithRouter(router, req, res)
  * })
@@ -50,6 +51,13 @@ export async function respondWithRouter<BoundAliases = {}>(
   const request = new Request(nodeRequest.url || 'http://0.0.0.0', nodeRequest as unknown as RequestInit)
   const env = readNodeEnv<BoundAliases>()
   const event = new IsomorphicFetchEvent({ request, env })
+
+  nodeResponse.once('finish', async () => {
+    router.logger.debug('Node response finished')
+    await event.flushTasks()
+    router.logger.debug('Tasks completed')
+    event.dispose?.()
+  })
 
   const response = await router.fetch(request, env, event)
 
@@ -73,5 +81,5 @@ export async function respondWithRouter<BoundAliases = {}>(
     await reader.read().then(processChunk)
   }
 
-  await event.flushTasks()
+  nodeResponse.end()
 }

@@ -58,7 +58,7 @@ const config = {
     'react/prop-types': 'off',
     'no-undef': 'off',
     'no-extra-semi': 'off',
-    '@typescript-eslint/no-extra-semi': ['warn'],
+    '@typescript-eslint/no-extra-semi': 'off',
     'no-unused-vars': 'off',
     '@typescript-eslint/no-unused-vars': [
       'warn',

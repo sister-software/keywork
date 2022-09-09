@@ -15,4 +15,4 @@
 export * from './EnvironmentBindingKinds.ts'
 export * from './MiddlewareDeclaration.ts'
 export * from './MiddlewareDeclarationLike.ts'
-export * from './ParsedRoute.ts'
+export * from './RequestMiddleware.ts'

@@ -1,7 +1,7 @@
 /**
- * _Middleware_ are instances of the {@link Keywork#Router.RequestRouter `RequestRouter`},
+ * _Middleware_ are instances of [`RequestRouter`](https://keywork.app/modules/router/classes/RequestRouter),
  * each with single responsibility
- * e.g. (users, blog posts, payments, authentication, etc.)
+ * e.g. (users, blog posts, logging, authentication, etc.)
  *
  * ```ts
  * import { UsersRouter } from '@local/worker/routers/UsersRouter'

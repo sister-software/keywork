@@ -13,5 +13,6 @@
  */
 
 export * from './createRouteRedirect.ts'
-export * from './isFetcher.ts'
+export * from './findRoutesMatchingURL.ts'
 export * from './isMiddlewareDeclarationOption.ts'
+export * from './isServiceBinding.ts'

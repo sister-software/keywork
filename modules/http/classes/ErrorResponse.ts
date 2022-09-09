@@ -13,6 +13,7 @@
  */
 
 import { KeyworkResourceError, Status, STATUS_TEXT } from '../../errors/mod.ts'
+import type { ResponseConverter } from '../interfaces/mod.ts'
 
 /**
  * An error response sent to a client when a request is deemed to be invalid in some way.
@@ -96,5 +97,10 @@ export class ErrorResponse extends Response {
       statusText,
       headers: headersInit,
     })
+  }
+
+  /** @internal */
+  static fromResponseLike: ResponseConverter<Error> = (error) => {
+    return new ErrorResponse(error)
   }
 }

@@ -145,7 +145,7 @@ export class MarkdownTheme extends Theme {
       })
     })
 
-    if (Deno.env.get('NODE_ENV') === 'production') {
+    if (Deno.env.get('NODE_ENV') === 'production' || Deno.env.get('CI') === 'true') {
       for (const reflection of Object.values(project.reflections)) {
         for (const source of reflection.sources || []) {
           readFileChangeFromGit(source)

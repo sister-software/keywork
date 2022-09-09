@@ -12,4 +12,4 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './ReactRendererOptions.ts'
+export * from './KeyworkRenderOptions.ts'

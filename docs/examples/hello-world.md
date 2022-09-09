@@ -65,17 +65,14 @@ import { RequestRouter } from 'keywork/router'
 const app = new RequestRouter()
 
 // e.g. GET http://example.com/
-// highlight-start
-app.get('/', () => {
-  // highlight-end
-  return 'Hello from Keywork'
-})
+// highlight-next-line
+app.get('/', () => 'Hello from Keywork')
 
 export default app
 ```
 
 We call `app.get` with a path pattern matching the root of our app,
-along with a [`RouteRequestHandler`](/modules/router/interfaces/RouteRequestHandler)
+along with a [`RequestHandler`](/modules/router/interfaces/RequestHandler)
 callback that executes when our app receives a matching incoming request.
 
 #### Exporting the router
@@ -94,7 +91,7 @@ and the native Worker API.
 
 ### Using the `IsomorphicFetchEvent` object
 
-When defining a route's `RouteRequestHandler` callback, you have access to an [`IsomorphicFetchEvent`](/modules/events/classes/IsomorphicFetchEvent) that contains information about the request.
+When defining a route's `RequestHandler` callback, you have access to an [`IsomorphicFetchEvent`](/modules/events/classes/IsomorphicFetchEvent) that contains information about the request.
 
 In this example, let's use `IsomorphicFetchEvent` to return information about where the request originated:
 

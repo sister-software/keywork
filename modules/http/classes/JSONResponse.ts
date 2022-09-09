@@ -14,6 +14,7 @@
 
 import { CacheControlDirectives } from '../headers/caching/mod.ts'
 import { fileExtensionToContentTypeHeader } from '../headers/content-type/mod.ts'
+import type { ResponseConverter } from '../interfaces/mod.ts'
 import { CachableResponse } from './CachableResponse.ts'
 
 /**
@@ -49,5 +50,10 @@ export class JSONResponse extends CachableResponse {
         ...headersInit,
       }
     )
+  }
+
+  /** @internal */
+  static fromResponseLike: ResponseConverter<{}> = (json) => {
+    return new JSONResponse(json)
   }
 }

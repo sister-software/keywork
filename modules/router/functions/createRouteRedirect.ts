@@ -13,7 +13,7 @@
  */
 
 import { Logger } from '../../logger/mod.ts'
-import { RouteRequestHandler } from '../interfaces/RouteRequestHandler.ts'
+import { RequestHandler } from '../interfaces/RequestHandler.ts'
 
 /** @ignore */
 export type ResponseRedirectStatus = 301 | 302 | 303 | 307 | 308
@@ -41,10 +41,10 @@ export function createRouteRedirect(
    * @defaultValue `302` MOVED_TEMPORARILY
    */
   statusCode: ResponseRedirectStatus = 302
-): RouteRequestHandler {
+): RequestHandler {
   const logger = new Logger('Redirect')
 
-  const routeRequestHandler: RouteRequestHandler = ({ request }) => {
+  const routeRequestHandler: RequestHandler = ({ request }) => {
     logger.info(`Redirecting from ${request.url} to ${destinationURL.toString()}`)
 
     return Response.redirect(destinationURL.toString(), statusCode)

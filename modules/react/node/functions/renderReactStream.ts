@@ -19,7 +19,7 @@ import {
   ReactDOMServerReadableStream,
   renderToPipeableStream,
 } from 'https://esm.sh/react-dom@18.2.0/server'
-import { IReactStreamRenderer } from '../../interfaces/ReactRendererOptions.ts'
+import { IReactStreamRenderer } from '../../interfaces/KeyworkRenderOptions.ts'
 
 /**
  * @ignore

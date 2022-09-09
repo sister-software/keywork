@@ -143,6 +143,11 @@
       "import": "./http/headers/content-encoding/mod.js",
       "require": "./http/headers/content-encoding/mod.js"
     },
+    "./http/headers/content-type": {
+      "types": "./http/headers/content-type/mod.d.ts",
+      "import": "./http/headers/content-type/mod.js",
+      "require": "./http/headers/content-type/mod.js"
+    },
     "./react": {
       "types": "./react/mod.d.ts",
       "import": "./react/mod.js",

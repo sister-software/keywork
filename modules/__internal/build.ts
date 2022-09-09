@@ -144,11 +144,6 @@ function createFileMap(filePaths: string[]): Map<string, string> {
 async function copyModuleDocs() {
   logger.log('Copying static documentation...')
 
-  // await Deno.copyFile(
-  //   path.join(ProjectFiles.ModulesDirectory, 'README.mdx'),
-  //   path.join(ProjectFiles.DocsAPIDirectory, 'README.mdx')
-  // )
-
   const ignore = [path.join('**', ProjectFiles.NodeModules)]
   const categoryToDest = await FastGlob(path.join(ProjectFiles.ModulesDirectory, '*', '**', ProjectFiles.Category), {
     ignore,
@@ -193,43 +188,12 @@ async function build(transformOutput: TransformOutput) {
   const program = project.createProgram()
   const typeDocApp = new DocusaurusTypeDoc(program, packageJSON.exports)
 
-  logger.log('Emitting project files...')
-  const emitResult = program.emit(
-    undefined,
-    (filePath, data, writeByteOrderMark) => {
-      if (filePath.endsWith('.d.ts')) {
-        filePaths.push(filePath)
-      }
-
-      if (writeByteOrderMark) {
-        data = '\uFEFF' + data
-      }
-
-      if (path.basename(filePath) === 'mod.d.ts') {
-        // Fixes issue where TypeScript cannot find subpath types.
-        writeFile(path.join(path.dirname(filePath), 'index.d.ts'), data)
-      }
-
-      writeFile(filePath, data)
-    },
-    undefined,
-    undefined,
-    {
-      before: [compilerTransforms.transformImportMeta],
-    }
-  )
-
-  if (emitResult.diagnostics.length > 0) {
-    outputDiagnostics(emitResult.diagnostics)
-    return
-  }
-
   logger.log('Generating documentation...')
   const docsOutPath = path.join(ProjectFiles.DocsAPIDirectory)
 
   typeDocApp.bootstrap({
     name: 'keywork',
-    theme: 'markdown',
+    theme: 'custom-markdown',
     out: docsOutPath,
     filenameSeparator: '/',
     basePath: ProjectFiles.ModulesDirectory,
@@ -249,10 +213,69 @@ async function build(transformOutput: TransformOutput) {
   const typeDocProject = typeDocApp.convert()
 
   if (!typeDocProject) {
-    return
+    throw new Error('Failed to convert Typedoc project')
   }
 
+  logger.log('Generating docs...')
   await typeDocApp.generateDocs(typeDocProject, docsOutPath)
+
+  const urlPathnames = typeDocApp.getURLPathnames(typeDocProject)
+
+  logger.log('Emitting project files...')
+
+  const emitResult = program.emit(
+    undefined,
+    (filePath, fileContents, writeByteOrderMark) => {
+      if (filePath.endsWith('.d.ts')) {
+        filePaths.push(filePath)
+      }
+
+      // Check if the file contains any documentation URLs...
+      const documentationURLPattern = /\(https:\/\/keywork\.app\/modules\/(\S+)\)/g
+      let match: RegExpExecArray | null
+      const invalidURLPathnames: string[] = []
+
+      while ((match = documentationURLPattern.exec(fileContents)) !== null) {
+        if (!match[1]) continue
+
+        const url = new URL(match[1], 'https://keywork.app/modules/')
+
+        if (!urlPathnames.has(url.pathname)) {
+          invalidURLPathnames.push(url.pathname)
+        }
+      }
+
+      if (invalidURLPathnames.length > 0) {
+        logger.info('Valid URLs:')
+        for (const url of urlPathnames) {
+          logger.info(url)
+        }
+
+        throw new Error(`Found ${invalidURLPathnames.length} invalid documentation URLs at ${filePath}`)
+      }
+
+      if (writeByteOrderMark) {
+        fileContents = '\uFEFF' + fileContents
+      }
+
+      if (path.basename(filePath) === 'mod.d.ts') {
+        // Fixes issue where TypeScript cannot find subpath types.
+        writeFile(path.join(path.dirname(filePath), 'index.d.ts'), fileContents)
+      }
+
+      writeFile(filePath, fileContents)
+    },
+    undefined,
+    undefined,
+    {
+      before: [compilerTransforms.transformImportMeta],
+    }
+  )
+
+  if (emitResult.diagnostics.length > 0) {
+    outputDiagnostics(emitResult.diagnostics)
+    return
+  }
 }
 
 await Promise.all([emptyDir(outDir), emptyDir(ProjectFiles.DocsAPIDirectory)])
@@ -264,4 +287,4 @@ const transformOutput = await createTransformer()
 generatePackageJSON(transformOutput)
 
 await build(transformOutput)
-await copyModuleDocs()
+// await copyModuleDocs()

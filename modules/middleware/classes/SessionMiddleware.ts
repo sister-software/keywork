@@ -18,8 +18,9 @@ import {
   serialize as serializeCookies,
 } from 'https://esm.sh/cookie@0.5.0'
 import type { CookieHeaders } from '../../http/headers/mod.ts'
+import { cloneAsMutableResponse } from '../../http/mod.ts'
 import { ulid } from '../../ids/mod.ts'
-import { RequestRouter, RouteRequestHandler } from '../../router/mod.ts'
+import { RequestHandler, RequestRouter } from '../../router/mod.ts'
 
 /**
  * The default session cookie key.
@@ -94,29 +95,14 @@ export interface KeyworkSession {
  * })
  * ```
  */
-export class SessionMiddleware extends RequestRouter {
-  /**
-   * The key used to read from the cookie header.
-   */
-  public readonly cookieKey: string
+export function applySessionMiddleware(sessionOptions?: SessionMiddlewareOptions) {
+  const cookieKey = sessionOptions?.cookieKey || DEFAULT_SESSION_COOKIE_KEY
+  const serializeOptions = sessionOptions?.serializeOptions || DEFAULT_COOKIE_SERIALIZE_OPTIONS
 
-  public readonly serializeOptions: CookieSerializeOptions
-
-  constructor(sessionOptions: SessionMiddlewareOptions = {}) {
-    super({
-      displayName: 'Keywork Session Middleware',
-    })
-
-    this.cookieKey = sessionOptions?.cookieKey || DEFAULT_SESSION_COOKIE_KEY
-    this.serializeOptions = sessionOptions?.serializeOptions || DEFAULT_COOKIE_SERIALIZE_OPTIONS
-
-    this.all('*', this.applySession)
-  }
-
-  protected applySession: RouteRequestHandler = async (event, next) => {
+  const sessionMiddleware: RequestHandler = async (event, next) => {
     // @ts-ignore Generic Type
     const cookies = parseCookies(event.request.headers.get<CookieHeaders>('Cookie') || '')
-    const sessionID = cookies[this.cookieKey]
+    const sessionID = cookies[cookieKey]
 
     const session: KeyworkSession = sessionID
       ? {
@@ -131,19 +117,22 @@ export class SessionMiddleware extends RequestRouter {
     event.data.session = session
 
     const response = await next()
+    console.log('>>>> SESSION MIDDLEWARE GOT THIS', response)
 
     if (!response) return response
 
-    const responseWithSession = response.clone()
+    const responseWithSession = cloneAsMutableResponse(response)
 
     // @ts-ignore Generic Type
     responseWithSession.headers.set<CookieHeaders>(
       'Set-Cookie',
-      serializeCookies(this.cookieKey, sessionID, this.serializeOptions)
+      serializeCookies(cookieKey, sessionID, serializeOptions)
     )
 
     return responseWithSession
   }
+
+  return sessionMiddleware
 }
 
 /**

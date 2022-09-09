@@ -83,7 +83,7 @@
  * }
  * ```
  *
- * {@link Keywork#Errors **_Explore the Errors Module_ ›**}
+ * [Errors **_Explore the Errors Module_ ›**](https://keywork.app/modules/errors)
  */
 export * as Errors from './errors/mod.ts'
 //
@@ -98,7 +98,7 @@ export * as Events from './events/mod.ts'
  * import * as FileUtils 'keywork/files'
  * ```
  *
- * {@link Keywork#FileUtils **_Explore the File Utilities Module_ ›**}
+ * [FileUtils **_Explore the File Utilities Module_ ›**](https://keywork.app/modules/files)
  */
 export * as FileUtils from './files/mod.ts'
 //
@@ -113,7 +113,7 @@ export * as FileUtils from './files/mod.ts'
  * import { CachableResponse, ErrorResponse, isRedirection, ...etc } from 'keywork/http'
  * ```
  *
- * {@link Keywork#HTTP **_Explore the HTTP Module_ ›**}
+ * [HTTP **_Explore the HTTP Module_ ›**](https://keywork.app/modules/http)
  */
 export * as HTTP from './http/mod.ts'
 export * as IDUtils from './ids/mod.ts'
@@ -129,7 +129,7 @@ export * as IDUtils from './ids/mod.ts'
  * logger.error('Unexpected error')
  * ```
  *
- * {@link Keywork#Logger **_Explore the Logger Module_ ›**}
+ * [Logger **_Explore the Logger Module_ ›**](https://keywork.app/modules/logger)
  */
 export * as Logger from './logger/mod.ts'
 //
@@ -145,14 +145,14 @@ export * as Logger from './logger/mod.ts'
  * - Automatic response compression
  * - Cross-Origin Resource Sharing (CORS)
  *
- * {@link Keywork#Middleware **_Explore the Middleware Module_ ›**}
+ * [Middleware **_Explore the Middleware Module_ ›**](https://keywork.app/modules/middleware)
  */
 export * as Middleware from './middleware/mod.ts'
 //
 /**
  * While optional, Keywork uses React as its primary HTML templating engine.
  *
- * {@link Keywork#ReactUtils **_Explore the React Utilities Module_ ›**}
+ * [ReactUtils **_Explore the React Utilities Module_ ›**](https://keywork.app/modules/react)
  */
 export * as ReactUtils from './react/mod.ts'
 //
@@ -160,7 +160,7 @@ export * as ReactUtils from './react/mod.ts'
  * Designed with familiarity in mind, the server-side routing API
  * is inspired by Express.js, React Router, and the native Cloudflare Workers platform.
  *
- * {@link Keywork#Router **_Explore the Router Module_ ›**}
+ * [**_Explore the Router Module_ ›**](https://keywork.app/modules/router/)
  *
  * ```ts title="worker.ts" runtime="cloudflare"
  * import { RequestRouter } from 'keywork/router'
@@ -196,7 +196,7 @@ export type { RequestRouterOptions } from './router/mod.ts'
  * import {arrayBufferToString, arrayBufferToBase64, ...etc} from 'keywork/strings'
  * ```
  *
- * {@link Keywork#StringUtils **_Explore the String Utilities Module_ ›**}
+ * [StringUtils **_Explore the String Utilities Module_ ›**](https://keywork.app/modules/strings)
  */
 export * as StringUtils from './strings/mod.ts'
 //
@@ -206,7 +206,7 @@ export * as StringUtils from './strings/mod.ts'
  * import * as mod from 'keywork/browser/timers'
  * ```
  *
- * {@link Keywork#TimerUtils#Browser **_Explore the Timer Utilities Module_ ›**}
+ * [TimerUtils#Browser **_Explore the Timer Utilities Module_ ›**](https://keywork.app/modules/browser)
  */
 export * as TimerUtils from './timers/browser/mod.ts'
 //
@@ -220,6 +220,6 @@ export * as TimerUtils from './timers/browser/mod.ts'
  * import * as mod 'keywork/uri'
  * ```
  *
- * {@link Keywork#URIUtils **_Explore the URI Module_ ›**}
+ * [URIUtils **_Explore the URI Module_ ›**](https://keywork.app/modules/uri)
  */
 export * as URIUtils from './uri/mod.ts'

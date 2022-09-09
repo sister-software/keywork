@@ -12,12 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import * as path from 'path'
-import TypeDoc, { Logger, LogLevel } from 'typedoc'
-import { load as loadMarkdownPlugin, MarkdownTheme, MarkdownThemeOptions } from './theme/index.ts'
 import { PackageExports } from '@keywork/monorepo/common/imports'
 import * as ProjectFiles from '@keywork/monorepo/common/project'
 import { ts } from 'https://deno.land/x/ts_morph@15.1.0/bootstrap/ts_morph_bootstrap.js'
+import * as path from 'path'
+import TypeDoc, { Logger, LogLevel, ProjectReflection } from 'typedoc'
+import { load as loadMarkdownPlugin, MarkdownTheme, MarkdownThemeOptions } from './theme/index.ts'
 
 export class DocusaurusTypeDoc extends TypeDoc.Application {
   constructor(public program: ts.Program, public exports: PackageExports) {
@@ -88,25 +88,19 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
     }
     this.options.read(this.logger)
 
-    const renderer = this.renderer as any
+    const renderer = this.renderer
 
-    if (!renderer.themes.has('markdown')) {
-      throw new Error('Markdown theme not present')
-    }
+    renderer.defineTheme('custom-markdown', MarkdownTheme)
+  }
 
-    renderer.themes.set('markdown', MarkdownTheme)
+  getURLPathnames(project: ProjectReflection) {
+    const theme = new MarkdownTheme(this.renderer)
 
-    Object.defineProperty(this.renderer, 'cname', {
-      get() {
-        return ''
-      },
-    })
-
-    Object.defineProperty(this.renderer, 'githubPages', {
-      get() {
-        return ''
-      },
-    })
+    return new Set<string>(
+      theme.getUrls(project).map((urlMapping) => {
+        return '/modules/' + urlMapping.url.replaceAll('/README.mdx', '').replaceAll('.mdx', '')
+      })
+    )
   }
 }
 

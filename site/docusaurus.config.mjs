@@ -73,7 +73,7 @@ const themeConfig = {
 
     indexName: 'keywork',
     // contextualSearch: true,
-    searchPagePath: false,
+    searchPagePath: true,
   },
 
   colorMode: {

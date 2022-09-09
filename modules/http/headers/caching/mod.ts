@@ -73,6 +73,7 @@ export interface CacheControlDirectives {
   'stale-if-error': boolean
   'stale-while-revalidate': number
 }
+// options = options || { 'max-age': DURATION_ONE_WEEK, 'must-revalidate': true }
 
 /**
  * Creates a `Cache-Control` header from the given object.
@@ -84,12 +85,10 @@ export interface CacheControlDirectives {
  * @category HTTP Headers
  * @public
  */
-export function createCacheControlHeader(options: Partial<CacheControlDirectives> | undefined): CacheControlHeader {
-  options = options || { 'max-age': DURATION_ONE_WEEK, 'must-revalidate': true }
-
+export function castHeadersObjectToString(headersObject: Record<string, number | boolean | string>): string {
   const headerValues: string[] = []
 
-  for (const [key, value] of Object.entries(options)) {
+  for (const [key, value] of Object.entries(headersObject)) {
     if (typeof value === 'boolean') {
       if (!value) continue
 
@@ -99,9 +98,7 @@ export function createCacheControlHeader(options: Partial<CacheControlDirectives
     headerValues.push(`${key}=${value}`)
   }
 
-  return {
-    'Cache-Control': headerValues.join(', '),
-  }
+  return headerValues.join(', ')
 }
 
 /**
