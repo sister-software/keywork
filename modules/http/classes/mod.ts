@@ -12,11 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './CachableResponse.ts'
 export * from './EmptyResponse.ts'
 export * from './ErrorResponse.ts'
-export * from './HTMLResponse.ts'
+// export * from './HTMLResponse.ts'
 export * from './JSONResponse.ts'
-export * from './NextMiddlewareResponse.ts'
+// export * from './NextMiddlewareResponse.ts'
 export * from './NotModifiedResponse.ts'
 export * from './ResponseHandler.ts'

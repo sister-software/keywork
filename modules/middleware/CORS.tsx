@@ -13,10 +13,10 @@
  */
 
 import React from 'https://esm.sh/react@18.2.0'
-import { useHeaders, useRequest, useServerEffect } from '../contexts/mod.ts'
+import { useHeaders, useRequest, useResponseEffect } from '../contexts/mod.ts'
+import { MatchRequestChildren, RequestPattern } from '../hooks/useMatchedRoute.tsx'
 
 import { HTTPMethod } from '../http/mod.ts'
-import { RequestHandler } from '../router/mod.ts'
 import { DURATION_ONE_DAY } from '../__internal/datetime.ts'
 
 /** @ignore */
@@ -60,13 +60,6 @@ async function isOriginAllowed(requestOrigin: string, allowedOrigin: AllowedOrig
   return !!allowedOrigin
 }
 
-//  if (isPreflight || !response) {
-//   responseWithCORSHeaders = new Response(null, {
-//     headers: response?.clone()?.headers,
-//     status: Status.NoContent,
-//     statusText: response?.statusText || STATUS_TEXT[Status.NoContent],
-//   })
-
 interface CORSHeadersProps {
   /**
    * @defaultValue Any origin `'*'`
@@ -84,7 +77,7 @@ interface CORSHeadersProps {
    * @see {@link https://developer.mozilla.org/en-US/docs/Glossary/CORS-safelisted_response_header MDN}
    */
   exposeHeaders?: string[]
-  children: React.ReactNode | React.ReactNode[]
+  children: MatchRequestChildren
 }
 
 export const CORSHeaders: React.FC<CORSHeadersProps> = ({
@@ -104,7 +97,7 @@ export const CORSHeaders: React.FC<CORSHeadersProps> = ({
   const request = useRequest()
   const responseHeaders = useHeaders()
 
-  useServerEffect(
+  useResponseEffect(
     async ({ setHeaders }) => {
       if (request.method === 'OPTIONS') return
 
@@ -151,7 +144,7 @@ interface CORSPreflightHeadersProps {
    *
    * @defaultValue `DURATION_ONE_DAY`
    */
-  cachePreflightDuration: number
+  cachePreflightDuration?: number
 }
 
 const CORSPreflightHeaders: React.FC<CORSPreflightHeadersProps> = ({
@@ -162,7 +155,7 @@ const CORSPreflightHeaders: React.FC<CORSPreflightHeadersProps> = ({
   const responseHeaders = useHeaders()
   const request = useRequest()
 
-  useServerEffect(
+  useResponseEffect(
     ({ setHeaders }) => {
       const nextHeaders = new Headers(responseHeaders)
 
@@ -203,13 +196,13 @@ export type CORSMiddlewareProps = CORSHeadersProps & CORSPreflightHeadersProps
 export const CORSMiddleware: React.FC<CORSMiddlewareProps> = ({ children, ...props }) => {
   return (
     <>
-      <RequestHandler pathname="*">
+      <RequestPattern pathname="*">
         <CORSPreflightHeaders {...props} />
-      </RequestHandler>
+      </RequestPattern>
 
-      <RequestHandler allowedMethods="OPTIONS" pathname="*">
+      <RequestPattern allowedMethods="OPTIONS" pathname="*">
         <CORSHeaders {...props}>{children}</CORSHeaders>
-      </RequestHandler>
+      </RequestPattern>
     </>
   )
 }

@@ -18,7 +18,8 @@ import type { KeyworkRenderOptions } from '../../react/mod.ts'
  * Either a full `Response`, or a more primitive value to be processed.
  * @internal
  */
-export type ResponseLike = Response | React.ReactElement | {} | null | undefined | Error | string
+// export type ResponseLike = Response | React.ReactElement | {} | null | undefined | Error | string
+export type ResponseLike = React.ReactElement | null | undefined | string
 
 /**
  * A function that confirms whether a given `ResponseLike` can be matched to a `ResponseConverter`.

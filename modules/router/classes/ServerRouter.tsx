@@ -12,17 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { renderToStaticMarkup } from 'https://esm.sh/react-dom@18.2.0'
-import React, { useMemo } from 'https://esm.sh/react@18.2.0'
+import { renderToStaticMarkup } from 'https://esm.sh/react-dom@18.2.0/server'
+import React from 'https://esm.sh/react@18.2.0'
+import { MiddlewareStack, MiddlewareStackContext } from '../../contexts/MiddlewareStack.tsx'
 import {
-  EffectStackContext,
   EnvironmentContext,
   FetchEventContext,
   LoggerContext,
   MiddlewareProvider,
-  MiddlewareStack,
   RequestContext,
-  ServerEffectQueueContext,
+  ResponseEffectQueueContext,
 } from '../../contexts/mod.ts'
 import { IsomorphicFetchEvent } from '../../events/mod.ts'
 import { MatchRequestParent } from '../../hooks/mod.ts'
@@ -33,13 +32,12 @@ import { FetchEventHandler } from '../interfaces/mod.ts'
 
 export class ServerRouter {
   constructor(
-    protected children: MatchRequestParent,
+    protected children: () => MatchRequestParent,
     protected renderOptions: KeyworkRenderOptions = { streamRenderer: renderReactStream }
   ) {}
 
   fetch: FetchEventHandler = async (request, env = {}, fetchEvent = new IsomorphicFetchEvent('fetch', { request })) => {
     const middlewareStack = new MiddlewareStack()
-
     const wrappedRouter = (
       <Middleware
         request={request}
@@ -48,19 +46,21 @@ export class ServerRouter {
         effectStack={middlewareStack}
         logLevel={LogLevel.Warning}
       >
-        {this.children}
+        {this.children()}
       </Middleware>
     )
 
     for (const nextEffect of middlewareStack) {
-      await nextEffect.resolve()
+      await nextEffect.applyEffects()
     }
 
     renderToStaticMarkup(wrappedRouter)
-    await middlewareStack.run()
+    // await middlewareStack.
     // const initialResponse = new Response()
 
-    const stream = await renderJSXToStream(wrappedRouter, renderOptions)
+    const stream = await renderJSXToStream(wrappedRouter, this.renderOptions)
+
+    return stream
   }
 }
 
@@ -71,21 +71,31 @@ export interface ServerRouterProps {
   request: Request
   env: {}
   event?: IsomorphicFetchEvent
-  logLevel: LogLevel
+  logLevel?: LogLevel
   fetchEvent: IsomorphicFetchEvent
 }
 
-export const Middleware: React.FC<ServerRouterProps> = ({ env, effectStack, children, request, fetchEvent }) => {
+/**
+ * Context for creating a new layer of middleware.
+ */
+export const Middleware: React.FC<ServerRouterProps> = ({
+  env,
+  effectStack,
+  children,
+  request,
+  fetchEvent,
+  logLevel = LogLevel.Warning,
+}) => {
   return (
-    <LoggerContext.Provider value={LogLevel.Warning}>
+    <LoggerContext.Provider value={logLevel}>
       <EnvironmentContext.Provider value={env!}>
         <RequestContext.Provider value={request}>
           <FetchEventContext.Provider value={fetchEvent}>
-            <EffectStackContext.Provider value={effectStack}>
-              <ServerEffectQueueContext.Provider value={effectStack}>
+            <MiddlewareStackContext.Provider value={effectStack}>
+              <ResponseEffectQueueContext.Provider value={effectStack}>
                 <MiddlewareProvider>{children}</MiddlewareProvider>
-              </ServerEffectQueueContext.Provider>
-            </EffectStackContext.Provider>
+              </ResponseEffectQueueContext.Provider>
+            </MiddlewareStackContext.Provider>
           </FetchEventContext.Provider>
         </RequestContext.Provider>
       </EnvironmentContext.Provider>

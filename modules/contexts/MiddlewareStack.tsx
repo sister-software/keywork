@@ -14,38 +14,38 @@
 
 import { createContext, useContext } from 'https://esm.sh/react@18.2.0'
 import { Disposable } from '../__internal/interfaces/disposable.ts'
-import { ResponseContext } from './ResponseContext.tsx'
-import { ServerEffectQueue, useServerEffect } from './ServerEffectContext.ts'
+import { ResponseRef } from './ResponseContext.ts'
+import { ResponseEffectQueue } from './ResponseEffectQueue.ts'
 
 /**
  * A context for sharing a server effect queue pool.
  */
 export class MiddlewareStack implements Disposable {
-  protected entries: ServerEffectQueue[] = []
+  protected responseRef = new ResponseRef()
+  protected responseEffectQueues: ResponseEffectQueue[] = []
   protected poolIndex = 0
 
   public [Symbol.iterator]() {
-    return this.entries[Symbol.iterator]()
+    return this.responseEffectQueues[Symbol.iterator]()
   }
 
   /**
    *
    */
-  public push(newEntry: ServerEffectQueue): ServerEffectQueue {
-    if (this.entries[this.poolIndex]) {
-      return this.entries[this.poolIndex]
+  public push(newEntry: ResponseEffectQueue): ResponseEffectQueue {
+    if (this.responseEffectQueues[this.poolIndex]) {
+      return this.responseEffectQueues[this.poolIndex]
     }
 
-    this.entries[this.poolIndex] = newEntry
+    this.responseEffectQueues[this.poolIndex] = newEntry
 
     this.poolIndex++
     return newEntry
   }
 
   public async resolveQueues(): Promise<void> {
-    for (const entry of this.entries) {
-      entry.callback(next)
-      await entry.queue.resolve()
+    for (const entry of this.responseEffectQueues) {
+      await entry.applyEffects(this.responseRef)
     }
   }
 
@@ -54,26 +54,25 @@ export class MiddlewareStack implements Disposable {
   }
 
   public dispose(): void {
-    this.entries = []
+    this.responseEffectQueues = []
     this.poolIndex = 0
   }
 }
 
-export const EffectStackContext = createContext<MiddlewareStack>(undefined as any)
-EffectStackContext.displayName = 'EffectStackContext'
+export const MiddlewareStackContext = createContext<MiddlewareStack>(undefined as any)
+MiddlewareStackContext.displayName = 'MiddlewareStackContext'
 
 export type MiddlewareNext = () => Response | Promise<Response>
 export type MiddlewareCallback = (next: MiddlewareNext) => Promise<Response>
 
-// TODO: It's likely a response
-export const useMiddleware = (callback: MiddlewareCallback): ServerEffectQueue => {
-  const stack = useContext(EffectStackContext)
-  const queue = new ServerEffectQueue()
-  const nextServerEffectQueue = stack.push({
-    callback,
-  })
+// // TODO: It's likely a response
+export const useMiddleware = (callback: MiddlewareCallback): ResponseEffectQueue => {
+  const currentMiddlewareStack = useContext(MiddlewareStackContext)
+  const serverResponseState = new ResponseEffectQueue()
+  serverResponseState.enqueue(callback)
 
-  // useServerEffect
+  const nextServerEffectQueue = currentMiddlewareStack.push(serverResponseState)
+
   // const response = await middlewareCallback(next)
 
   return nextServerEffectQueue

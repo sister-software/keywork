@@ -12,5 +12,4 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './MiddlewareContext.tsx'
 export * from './NotFound.tsx'

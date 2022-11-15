@@ -13,10 +13,10 @@
  */
 
 import React, { createContext, useContext } from 'https://esm.sh/react@18.2.0'
+import { useMiddleware } from './MiddlewareStack.tsx'
 import { useRequest } from './RequestContext.tsx'
 import { ResponseContext } from './ResponseContext.tsx'
-import { ServerEffectQueueContext } from './ServerEffectContext.ts'
-import { useMiddleware } from './ServerEffectStack.ts'
+import { ResponseStateContext } from "./ResponseState.ts"
 
 export interface MiddlewareProviderProps {
   children: React.ReactNode | React.ReactNode[]
@@ -27,11 +27,17 @@ export interface MiddlewareProviderProps {
  */
 export const MiddlewareProvider: React.FC<MiddlewareProviderProps> = ({ children }) => {
   const request = useRequest()
-  const { serverEffectQueue, responseContextValue } = useMiddleware(() => {
-    ;<ServerEffectQueueContext.Provider value={serverEffectQueue}>
-      <ResponseContext.Provider value={responseContextValue}>{children}</ResponseContext.Provider>
-    </ServerEffectQueueContext.Provider>
+  // const
+
+  const foo = useMiddleware(({ serverEffectQueue, responseContextValue }) => {
+    return (
+      <ResponseStateContext.Provider value={serverEffectQueue}>
+        <ResponseContext.Provider value={responseContextValue}>{children}</ResponseContext.Provider>
+      </ResponseStateContext.Provider>
+    )
   })
+
+  foo.
 
   return null
 }

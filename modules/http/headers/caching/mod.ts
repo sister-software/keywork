@@ -20,7 +20,6 @@
 
 import { KeyworkResourceError, Status } from '../../../errors/mod.ts'
 import { arrayBufferToBase64, stringToArrayBuffer } from '../../../strings/mod.ts'
-import { DURATION_ONE_WEEK } from '../../../__internal/datetime.ts'
 
 export interface CachingHeaders {
   /** The time, in seconds, that the object has been in a proxy cache. */
@@ -46,60 +45,7 @@ export type CacheControlHeader = HeadersInit & {
   'Cache-Control': string
 }
 
-/**
- * Directives for the Cache-Control header.
- * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Cache-Control MDN}
- *
- * @category Cache
- * @category HTTP Headers
- * @public
- */
-export interface CacheControlDirectives {
-  [cacheControlKey: string]: number | boolean | string
-
-  'max-age': number
-  'must-revalidate': boolean
-  immutable: boolean
-  'max-stale': number
-  'min-fresh': number
-  'no-cache': boolean
-  'no-store': boolean
-  'no-transform': boolean
-  'only-if-cached': boolean
-  private: boolean
-  'proxy-revalidate': boolean
-  public: boolean
-  's-maxage': number
-  'stale-if-error': boolean
-  'stale-while-revalidate': number
-}
 // options = options || { 'max-age': DURATION_ONE_WEEK, 'must-revalidate': true }
-
-/**
- * Creates a `Cache-Control` header from the given object.
- * Generally, this is an internal function, but it may prove useful in unusual circumstances.
- *
- * See {@link Keywork#HTTP#Response.CachableResponse `CachableResponse`}
- *
- * @category Cache
- * @category HTTP Headers
- * @public
- */
-export function castHeadersObjectToString(headersObject: Record<string, number | boolean | string>): string {
-  const headerValues: string[] = []
-
-  for (const [key, value] of Object.entries(headersObject)) {
-    if (typeof value === 'boolean') {
-      if (!value) continue
-
-      headerValues.push(key)
-    }
-
-    headerValues.push(`${key}=${value}`)
-  }
-
-  return headerValues.join(', ')
-}
 
 /**
  * Wraps `JSON.stringify` to ensure that JSON pretty printing doesn't influence ETag generation.

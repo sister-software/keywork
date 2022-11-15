@@ -14,7 +14,7 @@
 
 import React, { useMemo } from 'https://esm.sh/react@18.2.0'
 import { URLMatchContext } from '../contexts/mod.ts'
-import { HTTPMethod, isMethodAllowed } from '../http/mod.ts'
+import { HTTPMethod, isMethodAllowed, ResponseLike, useResponseHandler } from '../http/mod.ts'
 
 export interface MatchRequestProps extends URLPatternInit {
   /**
@@ -30,7 +30,7 @@ export interface MatchRequestProps extends URLPatternInit {
    */
   path?: string
 
-  // children?: ResponseLike
+  children?: ResponseLike
 }
 
 // const Match
@@ -39,7 +39,35 @@ export type MatchRequestChildren = React.ReactElement<MatchRequestProps>[] | Rea
 export type MatchRequestParent = React.ReactElement<{ children: MatchRequestChildren }>
 
 /**
- * Hook to reduce a given array of `MatchRequest` components to the first matching the current request.
+ * Reduces a given array of `MatchRequest` components to the first matching the current request.
+ *
+ * @category HTTP Request
+ */
+export function matchRoute(
+  children: MatchRequestChildren,
+  request: Request,
+  fallbackRoute: React.ReactElement
+): React.ReactElement {
+  const routeChildren = React.Children.toArray(children) as React.ReactElement<MatchRequestProps>[]
+
+  for (const child of routeChildren) {
+    const { allowedMethods = '*', path, ...patternInit } = child.props
+    const pattern = new URLPattern(patternInit)
+
+    if (isMethodAllowed(request.method, allowedMethods)) {
+      const match = pattern.exec(request.url)
+
+      if (match) {
+        return <URLMatchContext.Provider value={match}>{child}</URLMatchContext.Provider>
+      }
+    }
+  }
+
+  return fallbackRoute
+}
+
+/**
+ * Memoized hook to reduce a given array of `MatchRequest` components to the first matching the current request.
  *
  * @category HTTP Request
  */
@@ -49,23 +77,14 @@ export function useMatchedRoute(
   fallbackRoute: React.ReactElement
 ): React.ReactElement {
   const MatchedRoute = useMemo<React.ReactElement>(() => {
-    const routeChildren = React.Children.toArray(children) as React.ReactElement<MatchRequestProps>[]
-
-    for (const child of routeChildren) {
-      const { allowedMethods = '*', path, ...patternInit } = child.props
-      const pattern = new URLPattern(patternInit)
-
-      if (isMethodAllowed(request.method, allowedMethods)) {
-        const match = pattern.exec(request.url)
-
-        if (match) {
-          return <URLMatchContext.Provider value={match}>{child}</URLMatchContext.Provider>
-        }
-      }
-    }
-
-    return fallbackRoute
+    return matchRoute(children, request, fallbackRoute)
   }, [children, fallbackRoute, request])
 
   return MatchedRoute
+}
+
+export const RequestPattern: React.FC<MatchRequestProps> = ({ children }) => {
+  const responseHandler = useResponseHandler()
+  responseHandler.convert(children)
+  return null
 }
