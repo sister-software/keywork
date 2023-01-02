@@ -195,7 +195,7 @@
     "cookie": "0.5.0",
     "deepmerge": "4.2.2",
     "lodash.isplainobject": "4.0.6",
-    "ulidx": "0.3.0"
+    "ulidx": "0.4.0"
   },
   "devDependencies": {
     "@types/cookie": "^0.5.1",
