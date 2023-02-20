@@ -6,8 +6,6 @@ id: open-source
 hide_footer: true
 ---
 
-import { PopupButton } from '@typeform/embed-react'
-
 # Open Source Usage
 
 Keywork is open-source software and distributed under the [AGPL-3.0 license](https://www.gnu.org/licenses/agpl-3.0.html).
@@ -20,8 +18,6 @@ AS LONG AS you comply with the source code sharing requirements of AGPL.
 
 Keywork is maintained by team that depends on your support to remain active and thriving.
 If our work has helped you, please consider donating to Keywork's developer fund.
-
-<PopupButton id="rTHsvoxn" className="button button--primary">Contact us about supporting Keywork</PopupButton>
 
 ### Permissions
 
@@ -46,5 +42,3 @@ If our work has helped you, please consider donating to Keywork's developer fund
 ## Commercial Usage
 
 A "[**commercial use license**](/license/commercial)" is mandatory as soon as you develop commercial activities involving the Keywork software without disclosing the source code of your own applications.
-
-<PopupButton id="rTHsvoxn" className="button button--primary">Contact us about commercial use</PopupButton>
