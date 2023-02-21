@@ -203,7 +203,7 @@
     "@cloudflare/kv-asset-handler": "0.2.0",
     "classnames": "2.3.1",
     "cookie": "0.5.0",
-    "deepmerge": "4.2.2",
+    "deepmerge": "4.3.0",
     "lodash.isplainobject": "4.0.6",
     "ulidx": "0.3.0"
   },
