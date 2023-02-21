@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "license": "AGPL-3.0",
-  "author": "Teffen Ellis <teffen@nirri.us>",
+  "author": "Teffen Ellis <teffen@sister.software>",
   "packageManager": "yarn@3.2.2",
   "type": "module",
   "engines": {
