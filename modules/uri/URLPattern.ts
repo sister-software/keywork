@@ -18,11 +18,12 @@ type URLPatternModule = {
   URLPattern: typeof URLPattern
 }
 
-const { URLPattern: PolyfillableURLPattern } = await polyfillWithModule<URLPatternModule>('urlpattern-polyfill', [
-  'URLPattern',
-])
-
-export { PolyfillableURLPattern as URLPattern }
+/**
+ * @internal
+ */
+export function polyfillURLPattern() {
+  return polyfillWithModule<URLPatternModule>('urlpattern-polyfill', ['URLPattern'])
+}
 
 /**
  * Either an instance of `URLPattern`,

@@ -43,6 +43,6 @@
     "node:net": "./node_modules/@types/node/net.d.ts",
     "node:stream/web": "./node_modules/@types/node/stream/web.d.ts",
     "node:crypto": "https://deno.land/std@0.149.0/node/crypto.ts",
-    "esbuild": "https://esm.sh/esbuild@0.14.48"
+    "esbuild": "https://esm.sh/esbuild@0.17.10"
   }
 }

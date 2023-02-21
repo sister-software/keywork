@@ -24,6 +24,9 @@ import { polyfillWithModule } from './functions/polyfillWithModule.ts'
 
 export type HTTPExports = Pick<typeof globalThis, 'Request' | 'Headers' | 'Response'>
 
-const HTTP = await polyfillWithModule<HTTPExports>('undici', ['Request', 'Headers', 'Response'])
-
-export default HTTP
+/**
+ * @internal
+ */
+export function polyfillHTTP() {
+  return polyfillWithModule<HTTPExports>('undici', ['Request', 'Headers', 'Response'])
+}
