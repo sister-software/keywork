@@ -14,6 +14,7 @@
 
 import { isValidElement } from 'https://esm.sh/react@18.2.0'
 import { KeyworkResourceError, Status } from '../../errors/mod.ts'
+import { IsomorphicFetchEvent } from '../../events/mod.ts'
 import { ReactRendererOptions, renderJSXToStream } from '../../react/mod.ts'
 import { ErrorResponse } from '../classes/ErrorResponse.ts'
 import { HTMLResponse } from '../classes/HTMLResponse.ts'
@@ -37,6 +38,7 @@ export type ResponseLike = Response | React.ReactElement | {} | null | undefined
  * @public
  */
 export async function castToResponse(
+  event: IsomorphicFetchEvent<any, any, any>,
   responseLike: ResponseLike,
   reactRenderOptions?: ReactRendererOptions
 ): Promise<Response> {
@@ -65,8 +67,8 @@ export async function castToResponse(
     return new Response(responseLike)
   }
 
-  if (isValidElement(responseLike)) {
-    const stream = await renderJSXToStream(responseLike, reactRenderOptions)
+  if (isValidElement<{} | null>(responseLike)) {
+    const stream = await renderJSXToStream(event, responseLike, reactRenderOptions)
     return new HTMLResponse(stream)
   }
 

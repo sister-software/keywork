@@ -13,20 +13,13 @@
  */
 
 import React, { FC, useMemo } from 'https://esm.sh/react@18.2.0'
-import { useRequestRouter } from '../../components/RouteProvider.tsx'
-import { useStaticProps } from '../../components/StaticPropsProvider.tsx'
-import { createContextAndNamedHook } from '../../functions/createNamedContextHook.ts'
-import { matchRoute, PatternToPageComponentMap } from '../functions/matchRoute.ts'
+import { useLocation } from '../hooks/LocationContext.ts'
+import { URLMatchContext, useStaticProps } from '../hooks/mod.ts'
+import { matchRoute, PatternToPageComponentMap } from './functions/matchRoute.ts'
 
 export interface KeyworkBrowserRouterProps {
   patternToPageComponent: PatternToPageComponentMap<any>
 }
-
-const [KeyworkRouteMatchContext, useMatch] = createContextAndNamedHook<URLPatternResult | null>(
-  undefined,
-  'KeyworkRouteMatchContext'
-)
-export { useMatch }
 
 /**
  * @beta
@@ -34,7 +27,7 @@ export { useMatch }
  */
 export const KeyworkPatternToPageComponent: FC<KeyworkBrowserRouterProps> = ({ patternToPageComponent }) => {
   const staticProps = useStaticProps<any>()
-  const { location } = useRequestRouter()
+  const location = useLocation()
 
   const possibleMatch = useMemo(() => {
     return matchRoute(patternToPageComponent, location)
@@ -48,9 +41,9 @@ export const KeyworkPatternToPageComponent: FC<KeyworkBrowserRouterProps> = ({ p
   }, [patternToPageComponent, possibleMatch])
 
   return (
-    <KeyworkRouteMatchContext.Provider value={possibleMatch}>
+    <URLMatchContext.Provider value={possibleMatch!}>
       <Component {...staticProps} />
-    </KeyworkRouteMatchContext.Provider>
+    </URLMatchContext.Provider>
   )
 }
 

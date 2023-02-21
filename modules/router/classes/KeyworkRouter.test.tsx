@@ -15,6 +15,7 @@
 import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } from 'deno/testing/asserts'
 import React from 'https://esm.sh/react@18.2.0'
 import { Status } from '../../errors/mod.ts'
+import { useParams } from '../../hooks/mod.ts'
 import { KeyworkHeaders } from '../../http/headers/mod.ts'
 import { JSONResponse } from '../../http/mod.ts'
 import { RouteRequestHandler } from '../mod.ts'
@@ -107,6 +108,41 @@ Deno.test('Router renders JSX', async () => {
   const response = await app.fetch(new Request('http://localhost/'))
   assertEquals(response.status, Status.OK)
   assertStringIncludes(await response.text(), `<div><h1>JSX Test</h1></div>`, 'Body includes rendered JSX')
+})
+
+Deno.test('Router uses match context', async () => {
+  const app = new RequestRouter({
+    displayName: 'JSX Match Context Tester Router',
+  })
+
+  interface ExampleParams {
+    firstName: string
+    lastName: string
+  }
+
+  const PageComponent: React.FC = () => {
+    const { firstName, lastName } = useParams<ExampleParams>()
+    const message = `Hello ${firstName} and ${lastName}`
+
+    return (
+      <div>
+        <h1>{message}</h1>
+      </div>
+    )
+  }
+
+  // Declaring a route that returns a React element...
+  app.get('/:firstName/:lastName', () => {
+    return <PageComponent />
+  })
+
+  const response = await app.fetch(new Request('http://localhost/Coheed/Cambria'))
+  assertEquals(response.status, Status.OK)
+  assertStringIncludes(
+    await response.text(),
+    `<div><h1>Hello Coheed and Cambria</h1></div>`,
+    'Body includes rendered JSX'
+  )
 })
 
 Deno.test('Router supports middleware', async () => {

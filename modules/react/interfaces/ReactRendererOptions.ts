@@ -13,9 +13,10 @@
  */
 
 import { ReactDOMServerReadableStream } from 'https://esm.sh/react-dom@18.2.0/server.browser'
+import type { KeyworkHTMLDocumentComponent } from '../../components/KeyworkHTMLDocument.tsx'
+import type { KeyworkProvidersComponent } from '../../components/KeyworkProvidersComponent.tsx'
 import type { KeyworkResourceError } from '../../errors/mod.ts'
-import type { KeyworkHTMLDocumentComponent } from '../components/KeyworkHTMLDocument.tsx'
-import type { KeyworkProvidersComponent } from '../components/KeyworkProvidersComponent.tsx'
+import { DEFAULT_LOG_LEVEL, LogLevel } from '../../logger/mod.ts'
 
 /**
  * @ignore
@@ -65,4 +66,10 @@ export interface ReactRendererOptions {
    * Use this if you need to inject a provider into the SSR pipeline.
    */
   Providers?: KeyworkProvidersComponent
+
+  /**
+   * The log level to use for the renderer.
+   * @default {DEFAULT_LOG_LEVEL}
+   */
+  logLevel?: LogLevel | typeof DEFAULT_LOG_LEVEL
 }

@@ -236,6 +236,7 @@ async function build(transformOutput: TransformOutput) {
     tsconfig: tsConfigSrcPath,
     githubPages: false,
     excludeInternal: true,
+    excludePrivate: true,
     excludeExternals: true,
     hideGenerator: true,
     cleanOutputDir: false,

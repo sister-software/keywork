@@ -12,4 +12,23 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './KeyworkPatternToPageComponent.tsx'
+import { createContext, useContext } from 'https://esm.sh/react@18.2.0'
+
+/**
+ * Context for consuming the current location.
+ * This is the URL of the current page and should be used
+ * when hydrating the application.
+ *
+ * @see {KeyworkApp}
+ * @internal
+ */
+export const LocationContext = createContext<URL>(undefined as any)
+LocationContext.displayName = 'LocationContext'
+
+/**
+ * Hook for consuming the current location during hydration.
+ * @internal
+ */
+export function useLocation() {
+  return useContext(LocationContext)
+}

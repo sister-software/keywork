@@ -12,14 +12,15 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from '../../../errors/mod.ts'
-import { globalScopeSSRKey } from '../../variables/globalScopeSSRKey.ts'
+import { KeyworkResourceError } from '../../errors/mod.ts'
 import { globalScopeHasSSRProps } from './globalScopeHasSSRProps.ts'
+import { globalScopeSSRKey } from './globalScopeSSRKey.ts'
 
 /**
  *
  * @param globalScope In most cases, this is either `window` or `self`.
  * @returns SSRProps
+ * @internal
  */
 export function getSSRPropsFromScope<SSRProps extends {}>(globalScope: unknown): SSRProps {
   if (!globalScopeHasSSRProps<SSRProps>(globalScope)) {

@@ -32,7 +32,7 @@ import type { MiddlewareFetch, MiddlewareReturnTypes } from './MiddlewareFetch.t
 export interface RouteRequestHandler<
   BoundAliases = {},
   ExpectedParams = {},
-  Data extends {} = Record<string, unknown>,
+  Data = Record<string, unknown>,
   ExpectedReturn extends ResponseLike = ResponseLike
 > {
   (

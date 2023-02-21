@@ -1,9 +1,4 @@
 /**
- * Keywork includes client-side hydration that fits into your existing build pipeline.
- *
- * @packageDocumentation
- * @module Keywork#ReactUtils#Browser
- *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -16,6 +11,23 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-/* eslint-disable header/header */
 
-export * from './classes/mod.ts'
+/**
+ * The global key where SSR props are assigned.
+ * This includes a ':' character to prevent `document.querySelector` from matching this key.
+ * @internal
+ */
+export const globalScopeSSRKey = ':KeyworkSSRProps:'
+
+/**
+ * @ignore
+ */
+export type GlobalScopeSSRKey = typeof globalScopeSSRKey
+
+/**
+ * @ignore
+ */
+export interface GlobalScopeWithKeyworkSSRProps<SSRProps extends {} = {}> extends Record<GlobalScopeSSRKey, SSRProps> {
+  document?: unknown
+  location: URL
+}

@@ -13,6 +13,7 @@
  */
 
 import { IncomingMessage, ServerResponse } from 'http'
+import type { ReadableStreamDefaultReadResult } from 'stream/web'
 import { IsomorphicFetchEvent } from '../../../events/mod.ts'
 import { readGlobalScope } from '../../../__internal/functions/readGlobalScope.ts'
 import { RequestRouter } from '../../classes/RequestRouter.ts'
@@ -49,7 +50,7 @@ export async function respondWithRouter<BoundAliases = {}>(
 ): Promise<void> {
   const request = new Request(nodeRequest.url || 'http://0.0.0.0', nodeRequest as unknown as RequestInit)
   const env = readNodeEnv<BoundAliases>()
-  const event = new IsomorphicFetchEvent({ request, env })
+  const event = new IsomorphicFetchEvent('fetch', { request, originalURL: request.url, env })
 
   const response = await router.fetch(request, env, event)
 

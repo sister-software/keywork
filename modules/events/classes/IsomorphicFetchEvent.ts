@@ -12,90 +12,84 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { AbstractFetchEvent, IsomorphicFetchEventInit } from './AbstractFetchEvent.ts'
+import { KeyworkResourceError, Status } from '../../errors/mod.ts'
+import { IsomorphicFetchEventInit } from '../interfaces/mod.ts'
+import { IsomorphicExtendableEvent } from './IsomorphicExtendableEvent.ts'
 
 /**
- * @ignore
+ * Represents an event dispatched when a network request is made.
+ *
+ * Keywork uses `IsomorphicFetchEvent` as a context object for each incoming request made to a `RequestRouter`.
+ * You can use this object to access the incoming request, the environment variables, and the data passed to the Worker.
+ *
+ * Generally, `IsomorphicFetchEvent` should not be instantiated directly,
+ * but rather is automatically created by the `RequestRouter` when a request is received.
  */
-export const IsomorphicFetchEventObjectName = 'Keywork.IsomorphicFetchEvent'
+export class IsomorphicFetchEvent<BoundAliases = {}, ExpectedParams = {}, Data = {}>
+  extends IsomorphicExtendableEvent
+  implements EventInit
+{
+  readonly clientId!: string
+  readonly resultingClientId!: string
+  readonly handled!: Promise<undefined>
+  readonly preloadResponse!: Promise<any>
 
-/**
- * An event object containing contextual data for a single and specific incoming HTTP request.
- *
- * Generally, this interface is exclusive to {@link RequestRouter#fetch}
- * and automatically passed to your subclass's route handlers.
- *
- * This is similar to `EventContext` defined in the `@cloudflare/workers-types` package.
- * However, the `IsomorphicFetchEvent` type includes additional information from `RequestRouter`.
- *
- * ### Caveats
- *
- * - The `request.url` property will be updated by route handler of `RequestRouter`.
- *
- * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
- * @typeParam ExpectedParams URL parameters parsed from the incoming request's URL and the route's pattern.
- * @typeParam Data Optional extra data to be passed to a route handler.
- *
- * @category Request
- *
- * @public
- * An approximate implementation of Cloudflare's Fetch event,
- *
- * @see {@link https://miniflare.dev/core/fetch Miniflare's Fetch Documentation}
- * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event Cloudflare's API Reference}
- *
- */
-export class IsomorphicFetchEvent<
-  BoundAliases = {},
-  ExpectedParams = {},
-  Data extends {} = {}
-> extends AbstractFetchEvent {
-  /**
-   * The bound environment aliases.
-   *
-   * #### Cloudflare Workers
-   * These are usually defined in your wrangler.toml file.
-   *
-   * #### Node.js
-   * This is similar to `process.env`.
-   *
-   */
-  public readonly env: BoundAliases
+  env: BoundAliases
+  data: Data
+  params: ExpectedParams
 
   /**
-   * Optional extra data to be passed to a route handler,
-   * usually from {@link Keywork#Middleware middleware}.
+   * The result of the URL pattern match from the `RequestRouter`.
    */
-  public data: Data
-  /**
-   * URL Patterns matched.
-   */
-  public match?: URLPatternResult
+  match: URLPatternResult
 
-  constructor(eventInit: IsomorphicFetchEventInit<BoundAliases, Data>) {
-    super('fetch', eventInit)
-    this.env = (eventInit.env || {}) as BoundAliases
-    this.data = (eventInit.data || {}) as Data
-    this.match = eventInit.match
+  /**
+   * The incoming request received by the Worker.
+   */
+  public request!: Request
+
+  /**
+   * The original URL of the request.
+   */
+  originalURL: string
+  constructor(
+    eventType = 'fetch',
+    { request, env, data, originalURL, match }: IsomorphicFetchEventInit<BoundAliases, Data>
+  ) {
+    super(eventType)
+    this.request = request
+    this.originalURL = originalURL
+    this.env = env || ({} as BoundAliases)
+    this.data = data || ({} as Data)
+    this.match = match || ({} as URLPatternResult)
+    this.params = (match ? match.pathname.groups : {}) as unknown as ExpectedParams
   }
 
   /**
-   * The names and values of dynamic parameters in the URL.
-   * Parameters are parsed using the incoming request's URL and the route's pattern.
+   * Intercepts the request and allows the Worker to send a custom response.
+   *
+   * @deprecated The `respondWith` method is only applicable to Service Workers.
+   *
+   * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event/#respondwith Cloudflare Documentation}
    */
-  get params(): ExpectedParams {
-    return (this.match?.pathname.groups || {}) as any as ExpectedParams
+  respondWith(_response: Response): void {
+    throw new KeyworkResourceError(
+      'The `respondWith` method is only applicable to Service Workers',
+      Status.InternalServerError
+    )
   }
 
   /**
-   * Checks if the given object is an instance of `IsomorphicFetchEvent`
-   * @param eventLike An object that's possibly a `IsomorphicFetchEvent`
-   * @category Type Cast
+   * Prevents a runtime error response when the Worker script throws an unhandled exception.
+   *
+   * @deprecated The `passThroughOnException` method is only applicable to Service Workers
+   *
+   * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event/#passthroughonexception Cloudflare Documentation}
    */
-  public static assertIsInstanceOf(eventLike: unknown): eventLike is IsomorphicFetchEvent {
-    return Boolean(
-      eventLike instanceof IsomorphicFetchEvent ||
-        (eventLike && typeof eventLike === 'object' && IsomorphicFetchEventObjectName in eventLike)
+  passThroughOnException(): void {
+    throw new KeyworkResourceError(
+      'The `passThroughOnException` method is only applicable to Service Workers',
+      Status.InternalServerError
     )
   }
 }

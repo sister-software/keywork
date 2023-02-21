@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { normalizeURLPattern, normalizeURLPatternInput } from '../../../uri/mod.ts'
+import { normalizeURLPattern, normalizeURLPatternInput } from '../../uri/mod.ts'
 /**
  * A **client-side** mapping of path patterns to their respective page components.
  * This is useful if your app bundles all React route handlers into a single Worker.

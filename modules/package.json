@@ -108,6 +108,16 @@
       "import": "./ids/mod.js",
       "require": "./ids/mod.js"
     },
+    "./components": {
+      "types": "./components/mod.d.ts",
+      "import": "./components/mod.js",
+      "require": "./components/mod.js"
+    },
+    "./hooks": {
+      "types": "./hooks/mod.d.ts",
+      "import": "./hooks/mod.js",
+      "require": "./hooks/mod.js"
+    },
     "./collections": {
       "types": "./collections/mod.d.ts",
       "import": "./collections/mod.js",

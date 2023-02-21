@@ -130,7 +130,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
       // Likely a `RouteRequestHandler`...
       const fetch: RouteRequestHandler<BoundAliases, any, any, Response> = async (event, next) => {
         const responseLike = await fetcherLike(event, next)
-        const response = await castToResponse(responseLike, this.reactOptions)
+        const response = await castToResponse(event, responseLike, this.reactOptions)
 
         return this.applyHeaders(response)
       }
@@ -532,7 +532,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
     }
     // Update the URL params...
 
-    const event = new IsomorphicFetchEvent({
+    const event = new IsomorphicFetchEvent('fetch', {
       ...(isExtendableEvent(eventLike) ? eventLike : {}),
       // The current pattern only matches the beginning of the pathname.
       // So, we remove the matched portion which allows any nested routes to

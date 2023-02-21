@@ -12,5 +12,18 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './getSSRPropsFromScope.ts'
-export * from './globalScopeHasSSRProps.ts'
+import { createContext, useContext } from 'https://esm.sh/react@18.2.0'
+
+/**
+ * A context for providing static props to the current route.
+ */
+export const StaticPropsContext = createContext({})
+StaticPropsContext.displayName = 'StaticPropsContext'
+
+/**
+ * A hook for accessing the static props for the current route.
+ * @returns The static props for the current route.
+ */
+export function useStaticProps<StaticProps extends {} = {}>() {
+  return useContext(StaticPropsContext) as StaticProps
+}

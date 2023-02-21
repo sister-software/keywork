@@ -12,8 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './KeyworkHTMLDocument.tsx'
-export * from './KeyworkProvidersComponent.tsx'
-export * from './RouteProvider.tsx'
-export * from './SSRPropsEmbed.tsx'
-export * from './StaticPropsProvider.tsx'
+import { globalScopeSSRKey, GlobalScopeWithKeyworkSSRProps } from './globalScopeSSRKey.ts'
+
+export function globalScopeHasSSRProps<SSRProps extends {}>(
+  globalScope: unknown
+): globalScope is GlobalScopeWithKeyworkSSRProps<SSRProps> {
+  return Boolean(globalScope && globalScopeSSRKey in (globalScope as any))
+}

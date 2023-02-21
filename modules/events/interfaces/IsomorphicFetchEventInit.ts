@@ -13,20 +13,25 @@
  */
 
 /**
- * The global key where SSR props are assigned.
- * This includes a ':' character to prevent `document.querySelector` from matching this key.
+ * @internal
  */
-export const globalScopeSSRKey = ':KeyworkSSRProps:'
+export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> {
+  /**
+   * The incoming request received by the Worker.
+   *
+   * Both the request's `url` property and the parent `IsomorphicFetchEvent` will reflect
+   * the current parsed route handler of `RequestRouter`.
+   * @see {IsomorphicFetchEvent#originalURL}
+   */
+  request: Request
 
-/**
- * @ignore
- */
-export type GlobalScopeSSRKey = typeof globalScopeSSRKey
+  originalURL: string
 
-/**
- * @ignore
- */
-export interface GlobalScopeWithKeyworkSSRProps<SSRProps extends {} = {}> extends Record<GlobalScopeSSRKey, SSRProps> {
-  document?: unknown
-  location: URL
+  env?: BoundAliases
+  data?: Data
+
+  match?: URLPatternResult
+
+  waitUntil?(promise: Promise<any>): void
+  passThroughOnException?(): void
 }

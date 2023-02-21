@@ -27,6 +27,8 @@ const path = require('path')
 const topLevelModules = [
   { dirName: 'modules/errors', label: 'Errors' },
   { dirName: 'modules/events', label: 'Events' },
+  { dirName: 'modules/components', label: 'Components' },
+  { dirName: 'modules/hooks', label: 'Hooks' },
   { dirName: 'modules/files', label: 'Files' },
   { dirName: 'modules/http', label: 'HTTP' },
   { dirName: 'modules/ids', label: 'IDs' },
@@ -137,12 +139,6 @@ const sidebars = {
       type: 'link',
       label: 'Examples',
       href: '/examples',
-    },
-
-    {
-      type: 'link',
-      label: 'middleware',
-      href: '/modules/examples',
     },
 
     {

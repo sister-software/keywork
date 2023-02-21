@@ -14,12 +14,13 @@
 
 import { ReactDOMServerReadableStream } from 'https://esm.sh/react-dom@18.2.0/server.browser'
 import React, { ReactElement } from 'https://esm.sh/react@18.2.0'
+import { KeyworkHTMLDocument } from '../../components/KeyworkHTMLDocument.tsx'
+import { KeyworkProviders } from '../../components/KeyworkProvidersComponent.tsx'
+import { _SSRPropsEmbed } from '../../components/SSRPropsEmbed.tsx'
 import { KeyworkResourceError } from '../../errors/mod.ts'
-import { Logger } from '../../logger/mod.ts'
-import { KeyworkHTMLDocument } from '../components/KeyworkHTMLDocument.tsx'
-import { KeyworkProviders } from '../components/KeyworkProvidersComponent.tsx'
-import { _SSRPropsEmbed } from '../components/SSRPropsEmbed.tsx'
-import { StaticPropsProvider } from '../components/StaticPropsProvider.tsx'
+import { IsomorphicFetchEvent } from '../../events/mod.ts'
+import { FetchEventProvider, StaticPropsContext } from '../../hooks/mod.ts'
+import { DEFAULT_LOG_LEVEL, Logger } from '../../logger/mod.ts'
 import { ReactRendererOptions, ReactRenderStreamResult } from '../interfaces/ReactRendererOptions.ts'
 import { renderReactStream } from '../worker/stream.ts'
 
@@ -28,6 +29,7 @@ import { renderReactStream } from '../worker/stream.ts'
  * @ignore
  */
 export async function renderJSXToStream<StaticProps extends {} | null = null>(
+  event: IsomorphicFetchEvent<any, any, any>,
   /** The React component to render for this specific page. */
   pageElement: ReactElement<StaticProps>,
   reactRenderOptions?: ReactRendererOptions
@@ -41,14 +43,16 @@ export async function renderJSXToStream<StaticProps extends {} | null = null>(
   const staticProps = pageElement.props
 
   const appDocument = (
-    <StaticPropsProvider staticProps={staticProps!}>
-      <Providers>
-        <DocumentComponent>
-          {pageElement}
-          <_SSRPropsEmbed staticProps={staticProps} />
-        </DocumentComponent>
-      </Providers>
-    </StaticPropsProvider>
+    <StaticPropsContext.Provider value={staticProps!}>
+      <FetchEventProvider event={event} logLevel={reactRenderOptions?.logLevel || DEFAULT_LOG_LEVEL}>
+        <Providers>
+          <DocumentComponent>
+            {pageElement}
+            <_SSRPropsEmbed staticProps={staticProps} />
+          </DocumentComponent>
+        </Providers>
+      </FetchEventProvider>
+    </StaticPropsContext.Provider>
   )
 
   let result: ReactRenderStreamResult
@@ -58,7 +62,7 @@ export async function renderJSXToStream<StaticProps extends {} | null = null>(
   } catch (error) {
     logger.error(error)
     throw new KeyworkResourceError(
-      'An runtime error occurred while rendering React. See server logs for additional information.'
+      'A runtime error occurred while rendering React. See server logs for additional information.'
     )
   }
 

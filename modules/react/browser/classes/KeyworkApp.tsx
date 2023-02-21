@@ -14,15 +14,16 @@
 
 import { hydrateRoot, HydrationOptions, Root } from 'https://esm.sh/react-dom@18.2.0/client'
 import React, { ReactNode } from 'https://esm.sh/react@18.2.0'
+import {
+  getSSRPropsFromScope,
+  globalScopeHasSSRProps,
+  GlobalScopeWithKeyworkSSRProps,
+  KeyworkHTMLDocumentAppRoot,
+} from '../../../components/mod.ts'
 import { KeyworkResourceError } from '../../../errors/mod.ts'
+import { LocationContext, StaticPropsContext } from '../../../hooks/mod.ts'
 import { Logger } from '../../../logger/mod.ts'
 import { Disposable } from '../../../__internal/interfaces/disposable.ts'
-import { KeyworkHTMLDocumentAppRoot } from '../../components/KeyworkHTMLDocument.tsx'
-import { RouteProvider } from '../../components/RouteProvider.tsx'
-import { StaticPropsProvider } from '../../components/StaticPropsProvider.tsx'
-import { GlobalScopeWithKeyworkSSRProps } from '../../variables/globalScopeSSRKey.ts'
-import { getSSRPropsFromScope } from '../functions/getSSRPropsFromScope.ts'
-import { globalScopeHasSSRProps } from '../functions/globalScopeHasSSRProps.ts'
 
 /**
  * @ignore
@@ -74,9 +75,9 @@ export class KeyworkApp implements Disposable {
     this.logger.debug(`Hydrating: ${location}`)
 
     const appElement = (
-      <StaticPropsProvider staticProps={staticProps}>
-        <RouteProvider initialLocation={location}>{initialChildren(staticProps)}</RouteProvider>
-      </StaticPropsProvider>
+      <StaticPropsContext.Provider value={staticProps}>
+        <LocationContext.Provider value={location}>{initialChildren(staticProps)}</LocationContext.Provider>
+      </StaticPropsContext.Provider>
     )
 
     this.root = hydrateRoot(container, appElement, options?.reactHydrationOptions)

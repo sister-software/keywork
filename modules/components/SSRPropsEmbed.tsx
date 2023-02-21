@@ -13,7 +13,7 @@
  */
 
 import React, { FC } from 'https://esm.sh/react@18.2.0'
-import { globalScopeSSRKey } from '../variables/globalScopeSSRKey.ts'
+import { globalScopeSSRKey } from './functions/globalScopeSSRKey.ts'
 
 export interface SSRProviderProps<StaticProps extends {}> {
   staticProps: StaticProps

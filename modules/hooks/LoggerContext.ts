@@ -12,10 +12,15 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { globalScopeSSRKey, GlobalScopeWithKeyworkSSRProps } from '../../variables/globalScopeSSRKey.ts'
+import { createContext, useContext, useMemo } from 'https://esm.sh/react@18.2.0'
 
-export function globalScopeHasSSRProps<SSRProps extends {}>(
-  globalScope: unknown
-): globalScope is GlobalScopeWithKeyworkSSRProps<SSRProps> {
-  return Boolean(globalScope && globalScopeSSRKey in (globalScope as any))
+import { Logger, LogLevel } from '../logger/mod.ts'
+
+export const LoggerContext = createContext<LogLevel>(LogLevel.Warning)
+
+export function useLogger(logPrefix: string): Logger {
+  const level = useContext(LoggerContext)
+  const logger = useMemo(() => new Logger(logPrefix, level), [level, logPrefix])
+
+  return logger
 }

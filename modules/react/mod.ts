@@ -86,7 +86,5 @@
  */
 /* eslint-disable header/header */
 
-export * from './components/mod.ts'
 export * from './functions/mod.ts'
 export * from './interfaces/mod.ts'
-export * from './variables/globalScopeSSRKey.ts'
