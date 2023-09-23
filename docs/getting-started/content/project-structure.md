@@ -16,7 +16,7 @@ It's recommended that you conceptualize your app as if it were **three separate 
 
 # Directory structure
 
-Keywork provides a batteries-included [example repo](https://github.com/nirrius/keywork-starter-kit)
+Keywork provides a batteries-included [example repo](https://github.com/sister-software/keywork-starter-kit)
 to help spending too much of your time implementing this project structure.
 
 This project uses ESBuild to bundle your code from three separate package directories...

@@ -20,7 +20,7 @@ interface DocIssueURLProps {
 }
 
 export const DocIssueURL: React.FC<DocIssueURLProps> = ({ source_url, children }) => {
-  const url = new URL('https://github.com/nirrius/keywork/issues/new?labels=documentation&template=doc.md')
+  const url = new URL('https://github.com/sister-software/keywork/issues/new?labels=documentation&template=doc.md')
   url.searchParams.set('title', `Doc: ${source_url || 'Needs improvement'}`)
 
   return (

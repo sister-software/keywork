@@ -143,7 +143,7 @@ app.post('/login', async ({ request }) => {
 Using Keywork means that you'll spend less of your precious time configuring ESBuild,
 and more on the real task at hand — building great web apps.
 
-And with [readymade templates](https://github.com/nirrius/keywork-starter-kit) available,
+And with [readymade templates](https://github.com/sister-software/keywork-starter-kit) available,
 you can skip the boilerplate and start coding in seconds.
 
 <a href="https://keywork.app/modules/bundling/" target="_blank"><strong><em>Try the Bundling Module</em> ›</strong></a>
@@ -178,7 +178,7 @@ The starter kit lets Keywork can be used to build a web app on [Cloudflare Pages
 - ⚡ Cloudflare Pages
 - 💪 Written in TypeScript
 
-<a href="https://github.com/nirrius/keywork-starter-kit" target="_blank"><strong><em>More details about the starter kit</em> ›</strong></a>
+<a href="https://github.com/sister-software/keywork-starter-kit" target="_blank"><strong><em>More details about the starter kit</em> ›</strong></a>
 
 ## Want to help?
 

@@ -6,13 +6,13 @@ slug: help
 
 Keywork is a fast-growing project, and development often outpaces our documentation.
 
-In case of problems or any further questions, please check [our documentation](https://keywork.app), or [open an issue](https://github.com/nirrius/keywork/issues/new).
+In case of problems or any further questions, please check [our documentation](https://keywork.app), or [open an issue](https://github.com/sister-software/keywork/issues/new).
 We always appreciate helpful tips and support for the project.
 
 ## Asking Questions
 
 If you have question that would resource to others searching for help,
-we recommend posting it on our [discussion forum](https://github.com/nirrius/keywork/discussions).
+we recommend posting it on our [discussion forum](https://github.com/sister-software/keywork/discussions).
 
 The active community and Keywork maintainers will be eager to assist you.
 

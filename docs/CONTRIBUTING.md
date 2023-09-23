@@ -12,7 +12,7 @@ The goal of this document is to provide a high-level overview of how you can get
 ## Providing Feedback
 
 If you find issues with the documentation, or have suggestions on how the project in general,
-please [file an issue on GitHub](https://github.com/nirrius/keywork/issues).
+please [file an issue on GitHub](https://github.com/sister-software/keywork/issues).
 
 Thank you for your patience 💕
 
@@ -26,7 +26,7 @@ Here's how you can report your issue as effectively as possible.
 
 Before you create a new issue, please do a search in [open issues](https://github.com/microsoft/vscode/issues) to see if the issue or feature request has already been filed.
 
-Be sure to scan through the [most popular](https://github.com/nirrius/keywork/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc) feature requests.
+Be sure to scan through the [most popular](https://github.com/sister-software/keywork/issues?q=is%3Aopen+is%3Aissue+label%3Afeature-request+sort%3Areactions-%2B1-desc) feature requests.
 
 If you find your issue already exists, make relevant comments and add your [reaction](https://github.com/blog/2119-add-reactions-to-pull-requests-issues-and-comments). Use a reaction in place of a "+1" comment:
 
@@ -80,7 +80,7 @@ and an understanding of TypeScript, Deno, and Node.
 - [Deno](https://deno.land/#installation) (>= 1.23)
 - [Yarn](https://yarnpkg.com/getting-started) (>= 3)
 
-After [forking Keywork](https://github.com/nirrius/keywork/fork) and cloning your repo,
+After [forking Keywork](https://github.com/sister-software/keywork/fork) and cloning your repo,
 you can start development via Yarn.
 
 ## Yarn Commands

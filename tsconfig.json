@@ -1,18 +1,26 @@
 {
-  "extends": "./tsconfig.base.json",
-  "include": [
-    "**/*"
-  ],
   "compilerOptions": {
-    "lib": [
-      "esnext"
-    ],
+    "baseUrl": ".",
+    "rootDir": ".",
+    "outDir": "dist",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "jsx": "react-jsx",
+    "skipLibCheck": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "lib": ["ESNext", "DOM", "DOM.Iterable"],
     "paths": {
-      "@keywork/monorepo/common/*": ["./common/*/index.ts"]
+      "keywork/*": ["./*"]
     }
   },
-  "ts-node": {
-    "esm": true,
-  },
-  "exclude": []
+  "exclude": [
+    //
+    "node_modules",
+    "dist",
+    "site"
+  ]
 }
+

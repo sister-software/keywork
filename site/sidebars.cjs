@@ -28,7 +28,7 @@ const topLevelModules = [
   { dirName: 'modules/errors', label: 'Errors' },
   { dirName: 'modules/events', label: 'Events' },
   { dirName: 'modules/components', label: 'Components' },
-  { dirName: 'modules/hooks', label: 'Hooks' },
+  { dirName: 'modules/contexts', label: 'Contexts' },
   { dirName: 'modules/files', label: 'Files' },
   { dirName: 'modules/http', label: 'HTTP' },
   { dirName: 'modules/ids', label: 'IDs' },
@@ -245,13 +245,13 @@ const sidebars = {
       items: [
         {
           type: 'link',
-          href: 'https://github.com/nirrius/keywork',
+          href: 'https://github.com/sister-software/keywork',
           label: 'GitHub',
         },
 
         {
           type: 'link',
-          href: 'https://github.com/nirrius/keywork/discussions',
+          href: 'https://github.com/sister-software/keywork/discussions',
           label: 'Forums',
         },
 

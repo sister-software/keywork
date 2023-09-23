@@ -34,4 +34,4 @@ Miniflare is licensed under [MIT](https://github.com/cloudflare/miniflare/blob/m
 - The folks at [Cloudflare](https://cloudflare.com) and the Workers team 💞
 - The visionaries at [Deno](https://deno.land) for all their inspiration
 - The brilliant engineers and maintainers of [code-server](https://github.com/coder/code-server)
-- And [all the wonderful people](https://github.com/nirrius/keywork/graphs/contributors) who've contributed to Keywork
+- And [all the wonderful people](https://github.com/sister-software/keywork/graphs/contributors) who've contributed to Keywork

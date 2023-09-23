@@ -14,7 +14,7 @@ class to handling incoming requests from the browser.
 
 :::info
 If you're already familiar with Cloudflare Workers, this might seem like a bit of review.
-And if you'd just like to skip a full example, checkout the [example repo](https://github.com/nirrius/keywork-starter-kit).
+And if you'd just like to skip a full example, checkout the [example repo](https://github.com/sister-software/keywork-starter-kit).
 
 :::
 

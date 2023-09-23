@@ -14,7 +14,7 @@ and compatible with Cloudflare Workers, Deno, and Node.js.
 ## Creating a new app from scratch
 
 If you're using Cloudflare, or would like to start from a template,
-checkout the [Keywork Starter Kit](https://github.com/nirrius/keywork-starter-kit).
+checkout the [Keywork Starter Kit](https://github.com/sister-software/keywork-starter-kit).
 The kit includes support for React, TypeScript, and ESBuild.
 
 ## Adding Keywork to your existing codebase

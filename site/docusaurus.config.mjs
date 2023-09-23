@@ -29,7 +29,7 @@ const presetOptions = {
     sidebarPath: './sidebars.cjs',
     routeBasePath: '/',
     editUrl: (params) => {
-      const url = new URL(`https://github.com/nirrius/keywork/edit/main/${params.docPath}`)
+      const url = new URL(`https://github.com/sister-software/keywork/edit/main/${params.docPath}`)
 
       return url.toString()
     },
@@ -123,7 +123,7 @@ const themeConfig = {
       },
 
       {
-        href: 'https://github.com/nirrius/keywork',
+        href: 'https://github.com/sister-software/keywork',
         position: 'right',
         label: 'Github',
         className: 'link-with-icon icon-github',
@@ -157,12 +157,12 @@ const themeConfig = {
           },
 
           {
-            href: 'https://github.com/nirrius/keywork',
+            href: 'https://github.com/sister-software/keywork',
             label: 'GitHub',
           },
 
           {
-            href: 'https://github.com/nirrius/keywork/discussions',
+            href: 'https://github.com/sister-software/keywork/discussions',
             label: 'Forums',
           },
 

@@ -10,7 +10,6 @@ in the render lifecyle, you can pass your component to the `RequestRouter`:
 
 ```tsx title=worker/components/AppHTMLDocument.tsx showLineNumbers
 import { KeyworkHTMLDocumentAppRoot } from 'keywork/react'
-import React from 'react'
 
 export interface AppHTMLDocumentProps {
   children: React.ReactNode
