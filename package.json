@@ -1,6 +1,6 @@
 {
   "name": "keywork",
-  "version": "7.1.0",
+  "version": "8.0.5",
   "license": "AGPL-3.0",
   "packageManager": "yarn@3.2.2",
   "author": "Teffen Ellis <teffen@sister.software>",
@@ -29,10 +29,16 @@
     "node": ">= 17.4"
   },
   "scripts": {
-    "build": "node --no-warnings --experimental-specifier-resolution=node --loader ts-node/esm ./build.mts",
+    "build:clean": "tsc --build --clean",
+    "build:compile": "yarn run build:clean && tsc --build",
+    "build": "yarn run build:compile",
+    "release": "yarn run build && yarn run release-it",
     "test": "deno test --coverage=./cov .",
     "test:coverage": "deno coverage --lcov ./cov"
   },
+  "files": [
+    "dist/**/*"
+  ],
   "workspaces": [
     "site"
   ],
@@ -73,6 +79,9 @@
     "handlebars": "^4.7.7",
     "prettier": "^3.0.3",
     "prettier-plugin-organize-imports": "^3.2.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "release-it": "^16.2.0",
     "stylelint": "^15.10.3",
     "ts-node": "^10.9.1",
     "typedoc": "^0.23.10",
@@ -90,12 +99,6 @@
     "esbuild": {
       "optional": true
     },
-    "react": {
-      "optional": true
-    },
-    "react-dom": {
-      "optional": true
-    },
     "undici": {
       "optional": true
     },
@@ -103,38 +106,95 @@
       "optional": true
     }
   },
-  "main": "./dist/dist/index.js",
-  "types": "./dist/dist/index.d.ts",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
   "exports": {
     "./package.json": "./dist/package.json",
-    ".": "./dist/index.js",
-    "./bundling/esbuild": "./dist/bundling/esbuild/index.js",
-    "./errors": "./dist/errors/index.js",
-    "./events": "./dist/events/index.js",
-    "./logger": "./dist/logger/index.js",
-    "./strings": "./dist/strings/index.js",
-    "./timers/browser": "./dist/timers/browser/index.js",
-    "./files": "./dist/files/index.js",
-    "./ids": "./dist/ids/index.js",
-    "./components": "./dist/components/index.js",
-    "./contexts": "./dist/contexts/index.js",
-    "./http": "./dist/http/index.js",
-    "./http/headers": "./dist/http/headers/index.js",
-    "./http/headers/caching": "./dist/http/headers/caching/index.js",
-    "./http/headers/csp/directives": "./dist/http/headers/csp/directives/index.js",
-    "./http/headers/csp/policies": "./dist/http/headers/csp/policies/index.js",
-    "./http/headers/content-encoding": "./dist/http/headers/content-encoding/index.js",
-    "./react-utils": "./dist/react/index.js",
-    "./react-utils/browser": "./dist/react/browser/index.js",
-    "./react-utils/node": "./dist/react/node/index.js",
-    "./react-utils/worker": "./dist/react/worker/index.js",
-    "./router/node": "./dist/router/node/index.js",
-    "./router": "./dist/router/index.js",
-    "./middleware": "./dist/middleware/index.js",
-    "./uri": "./dist/uri/index.js",
-    "./testing": "./dist/testing/index.js",
-    "./polyfills/worker/ReadableStream": "./dist/polyfills/worker/ReadableStream/index.js",
-    "./__internal/*": "./dist/__internal/*.js"
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./browser": {
+      "import": "./dist/browser/index.js",
+      "types": "./dist/browser/index.d.ts"
+    },
+    "./components": {
+      "import": "./dist/components/index.js",
+      "types": "./dist/components/index.d.ts"
+    },
+    "./contexts": {
+      "import": "./dist/contexts/index.js",
+      "types": "./dist/contexts/index.d.ts"
+    },
+    "./errors": {
+      "import": "./dist/errors/index.js",
+      "types": "./dist/errors/index.d.ts"
+    },
+    "./events": {
+      "import": "./dist/events/index.js",
+      "types": "./dist/events/index.d.ts"
+    },
+    "./files": {
+      "import": "./dist/files/index.js",
+      "types": "./dist/files/index.d.ts"
+    },
+    "./files/extensions": {
+      "import": "./dist/files/extensions/index.js",
+      "types": "./dist/files/extensions/index.d.ts"
+    },
+    "./http": {
+      "import": "./dist/http/index.js",
+      "types": "./dist/http/index.d.ts"
+    },
+    "./http/headers": {
+      "import": "./dist/http/headers/index.js",
+      "types": "./dist/http/headers/index.d.ts"
+    },
+    "./http/responses": {
+      "import": "./dist/http/responses/index.js",
+      "types": "./dist/http/responses/index.d.ts"
+    },
+    "./logger": {
+      "import": "./dist/logger/index.js",
+      "types": "./dist/logger/index.d.ts"
+    },
+    "./middleware": {
+      "import": "./dist/middleware/index.js",
+      "types": "./dist/middleware/index.d.ts"
+    },
+    "./node": {
+      "import": "./dist/node/index.js",
+      "types": "./dist/node/index.d.ts"
+    },
+    "./node/bundling": {
+      "import": "./dist/node/bundling/index.js",
+      "types": "./dist/node/bundling/index.d.ts"
+    },
+    "./router": {
+      "import": "./dist/router/index.js",
+      "types": "./dist/router/index.d.ts"
+    },
+    "./ssr": {
+      "import": "./dist/ssr/index.js",
+      "types": "./dist/ssr/index.d.ts"
+    },
+    "./testing": {
+      "import": "./dist/testing/index.js",
+      "types": "./dist/testing/index.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    },
+    "./worker": {
+      "import": "./dist/worker/index.js",
+      "types": "./dist/worker/index.d.ts"
+    },
+    "./worker/polyfills/worker/ReadableStream": {
+      "import": "./dist/worker/polyfills/ReadableStream/index.js"
+    },
+    "./__internal/*": "./dist/__internal/*.js",
+    "./*": "./dist/*.js"
   },
   "browserslist": [
     "last 2 Chrome versions",

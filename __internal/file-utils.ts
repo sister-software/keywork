@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import * as fs from 'fs/promises'
-import * as path from 'path'
+import * as fs from 'node:fs/promises'
+import * as path from 'node:path'
 
 export function changeExtension(filePath: string, extension: string) {
   const parsedPath = path.parse(filePath)
@@ -24,11 +24,9 @@ export function changeExtension(filePath: string, extension: string) {
 /**
  * @returns whether the file exists.
  */
-export async function checkFileExists(filePath: string): Promise<boolean> {
-  try {
-    await fs.stat(filePath)
-    return true
-  } catch {
-    return false
-  }
+export function checkFileExists(filePath: string): Promise<boolean> {
+  return fs
+    .stat(filePath)
+    .then(() => true)
+    .catch(() => false)
 }

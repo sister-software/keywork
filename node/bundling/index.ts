@@ -1,14 +1,11 @@
 /**
- * Keywork uses the JavaScript [Events API](https://developer.mozilla.org/en-US/docs/Web/API/Event)
- * internally to handle HTTP requests.
+ * Using Keywork means that you'll spend less of your precious time configuring ESBuild,
+ * and more on the real task at hand — building great web apps.
  *
- * ## Related Entries
- *
- * - {@link Keywork#Router Router Module}
- * - {@link Keywork#URIUtils URI Module}
+ * See [ESBuild Example](https://github.com/sister-software/keywork-starter-kit) for usage details.
  *
  * @packageDocumentation
- * @module Keywork#Events
+ * @module Keywork#Bundling#ESBuild
  *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
@@ -24,6 +21,5 @@
  */
 /* eslint-disable header/header */
 
-export type { IsomorphicFetchEventInit } from 'keywork/events/AbstractFetchEvent'
-export * from 'keywork/events/IsomorphicExtendableEvent'
-export * from 'keywork/events/IsomorphicFetchEvent'
+export * from 'keywork/node/bundling/createBrowserBuildOptions'
+export * from 'keywork/node/bundling/createWorkerBuildOptions'

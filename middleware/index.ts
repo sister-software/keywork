@@ -62,4 +62,9 @@
  */
 /* eslint-disable header/header */
 
-export * from 'keywork/middleware/classes'
+export * from 'keywork/middleware/CORSMiddleware'
+export * from 'keywork/middleware/CloudflarePagesAssetRouter'
+export * from 'keywork/middleware/CompressionMiddleware'
+export * from 'keywork/middleware/ServiceBindingRouter'
+export * from 'keywork/middleware/SessionMiddleware'
+export * from 'keywork/middleware/WorkerSitesAssetRouter'

@@ -17,5 +17,4 @@
  */
 /* eslint-disable header/header */
 
-export * from 'keywork/logger/classes/Logger'
-export * from 'keywork/logger/functions/prettyJSON'
+export * from 'keywork/logger/Logger'

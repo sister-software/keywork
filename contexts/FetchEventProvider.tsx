@@ -13,16 +13,14 @@
  */
 
 import { EnvironmentContext } from 'keywork/contexts/EnvironmentContext'
-import { LoggerContext } from 'keywork/contexts/LoggerContext'
+import { KeyworkLoggerProvider, KeyworkLoggerProviderProps } from 'keywork/contexts/LoggerContext'
 import { RequestContext } from 'keywork/contexts/RequestContext'
 import { URLMatchContext } from 'keywork/contexts/URLMatchContext'
 import { IsomorphicFetchEvent } from 'keywork/events'
-import { DEFAULT_LOG_LEVEL, LogLevel } from 'keywork/logger'
 
-interface MiddlewareContextProps {
-  logLevel?: LogLevel
+interface MiddlewareContextProps extends KeyworkLoggerProviderProps {
   event: IsomorphicFetchEvent<any, any, any>
-  children: React.ReactNode | React.ReactNode[]
+  children: React.ReactNode
 }
 
 /**
@@ -46,18 +44,14 @@ interface MiddlewareContextProps {
  * If you need to access the `FetchEvent` before the React component is rendered,
  * use the `event` parameter passed to the route handler.
  */
-export const FetchEventProvider: React.FC<MiddlewareContextProps> = ({
-  event,
-  logLevel = DEFAULT_LOG_LEVEL,
-  children,
-}) => {
+export const FetchEventProvider: React.FC<MiddlewareContextProps> = ({ event, logPrefix, logLevel, children }) => {
   return (
-    <LoggerContext.Provider value={logLevel}>
+    <KeyworkLoggerProvider logPrefix={logPrefix} logLevel={logLevel}>
       <EnvironmentContext.Provider value={event.env}>
         <RequestContext.Provider value={event.request}>
           <URLMatchContext.Provider value={event.match}>{children}</URLMatchContext.Provider>
         </RequestContext.Provider>
       </EnvironmentContext.Provider>
-    </LoggerContext.Provider>
+    </KeyworkLoggerProvider>
   )
 }

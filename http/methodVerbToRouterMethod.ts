@@ -1,15 +1,4 @@
 /**
- * Keywork uses the JavaScript [Events API](https://developer.mozilla.org/en-US/docs/Web/API/Event)
- * internally to handle HTTP requests.
- *
- * ## Related Entries
- *
- * - {@link Keywork#Router Router Module}
- * - {@link Keywork#URIUtils URI Module}
- *
- * @packageDocumentation
- * @module Keywork#Events
- *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -22,8 +11,21 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-/* eslint-disable header/header */
 
-export type { IsomorphicFetchEventInit } from 'keywork/events/AbstractFetchEvent'
-export * from 'keywork/events/IsomorphicExtendableEvent'
-export * from 'keywork/events/IsomorphicFetchEvent'
+import type { HTTPMethod } from 'keywork/http/HTTPMethod'
+import type { RouterMethod } from 'keywork/http/RouterMethod'
+import { ImmutableMap } from 'keywork/utils'
+
+/**
+ * Given a standard uppercase HTTP method verb such as `GET`, return the router method name.
+ */
+export const methodVerbToRouterMethod = new ImmutableMap<HTTPMethod, RouterMethod>([
+  ['GET', 'get'],
+  ['POST', 'post'],
+  ['PUT', 'put'],
+  ['PATCH', 'patch'],
+  ['DELETE', 'delete'],
+  ['HEAD', 'head'],
+  ['OPTIONS', 'options'],
+  ['*', 'all'],
+])

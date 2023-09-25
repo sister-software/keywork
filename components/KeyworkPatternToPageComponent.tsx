@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { PatternToPageComponentMap, matchRoute } from 'keywork/components/functions'
 import { URLMatchContext, useLocation, useStaticProps } from 'keywork/contexts'
+import { PatternToPageComponentMap, matchRoute } from 'keywork/ssr'
 import { FC, useMemo } from 'react'
 
 export interface KeyworkBrowserRouterProps {

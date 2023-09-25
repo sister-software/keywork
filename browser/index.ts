@@ -1,14 +1,8 @@
 /**
- * Keywork uses the JavaScript [Events API](https://developer.mozilla.org/en-US/docs/Web/API/Event)
- * internally to handle HTTP requests.
- *
- * ## Related Entries
- *
- * - {@link Keywork#Router Router Module}
- * - {@link Keywork#URIUtils URI Module}
+ * Keywork includes client-side hydration that fits into your existing build pipeline.
  *
  * @packageDocumentation
- * @module Keywork#Events
+ * @module Keywork#ReactUtils#Browser
  *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
@@ -24,6 +18,6 @@
  */
 /* eslint-disable header/header */
 
-export type { IsomorphicFetchEventInit } from 'keywork/events/AbstractFetchEvent'
-export * from 'keywork/events/IsomorphicExtendableEvent'
-export * from 'keywork/events/IsomorphicFetchEvent'
+export * from 'keywork/browser/KeyworkApp'
+export * from 'keywork/browser/requestAnimationFramePromise'
+export * from 'keywork/browser/waitUntilDOMReady'

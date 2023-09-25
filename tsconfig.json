@@ -4,6 +4,7 @@
     "rootDir": ".",
     "outDir": "dist",
     "target": "ESNext",
+    "declaration": true,
     "module": "ESNext",
     "moduleResolution": "node",
     "jsx": "react-jsx",

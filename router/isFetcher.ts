@@ -1,15 +1,4 @@
 /**
- * Keywork uses the JavaScript [Events API](https://developer.mozilla.org/en-US/docs/Web/API/Event)
- * internally to handle HTTP requests.
- *
- * ## Related Entries
- *
- * - {@link Keywork#Router Router Module}
- * - {@link Keywork#URIUtils URI Module}
- *
- * @packageDocumentation
- * @module Keywork#Events
- *
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
  * @author Teffen Ellis, et al.
@@ -22,8 +11,18 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-/* eslint-disable header/header */
 
-export type { IsomorphicFetchEventInit } from 'keywork/events/AbstractFetchEvent'
-export * from 'keywork/events/IsomorphicExtendableEvent'
-export * from 'keywork/events/IsomorphicFetchEvent'
+import type { Fetcher } from 'keywork/router/Fetcher'
+
+/**
+ * Checks if a given object is shaped like a KeyworkFetcher
+ *
+ * This fixes some weirdness where `instanceof` may get clobbered
+ * by a user's ESBuild configuration.
+ *
+ * @internal
+ * @ignore
+ */
+export function isFetcher<BoundAliases = {}>(fetcherLike: unknown): fetcherLike is Fetcher<BoundAliases> {
+  return Boolean(fetcherLike && typeof fetcherLike === 'object' && 'fetch' in fetcherLike)
+}

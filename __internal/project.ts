@@ -13,7 +13,7 @@
  */
 
 import { repoRootPathBuilder } from 'keywork/__internal/paths'
-import * as path from 'path'
+import * as path from 'node:path'
 
 /** Prepared TS output for distribution. */
 export const OutDirectory = repoRootPathBuilder('dist')

@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { globalScopeSSRKey } from 'keywork/components/functions'
+import { globalScopeSSRKey } from 'keywork/ssr'
 import { FC } from 'react'
 
 export interface SSRProviderProps<StaticProps extends {}> {
