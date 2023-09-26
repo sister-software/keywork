@@ -1,0 +1,27 @@
+{
+	"name": "@keywork/node",
+	"version": "8.0.6",
+	"license": "AGPL-3.0",
+	"author": "Teffen Ellis <teffen@sister.software>",
+	"engines": {
+		"node": ">= 16.7"
+	},
+	"type": "module",
+	"dependencies": {
+		"keywork": "^8.0.6",
+		"undici": "^5.25.2"
+	},
+	"types": "dist/index.d.ts",
+	"main": "dist/index.js",
+	"exports": {
+		"./package.json": "./package.json",
+		".": {
+			"import": "./dist/index.js",
+			"types": "./dist/index.d.ts"
+		},
+		"./*": {
+			"import": "./dist/*.js",
+			"types": "./dist/*.d.ts"
+		}
+	}
+}

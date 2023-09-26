@@ -1,24 +1,20 @@
 {
-  "compilerOptions": {
+  "extends": "./tsconfig.base.json",
+	"compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
-    "outDir": "dist",
-    "target": "ESNext",
-    "declaration": true,
-    "module": "ESNext",
-    "moduleResolution": "node",
-    "jsx": "react-jsx",
-    "skipLibCheck": true,
-    "allowJs": true,
-    "allowSyntheticDefaultImports": true,
-    "strict": true,
-    "lib": ["ESNext", "DOM", "DOM.Iterable"],
+		"outDir": "dist",
+		"composite": true,
     "paths": {
-      "keywork/*": ["./*"]
-    }
-  },
-  "exclude": [
-    //
+      "keywork/*": ["./packages/keywork/*"],
+      "@keywork/node/*": ["./packages/node/*"],
+    },
+	},
+  "references": [
+		{ "path": "./packages/node" },
+		{ "path": "./packages/keywork" },
+	],
+	"exclude": [
     "node_modules",
     "dist",
     "site"

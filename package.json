@@ -1,58 +1,20 @@
 {
-  "name": "keywork",
+  "name": "@keywork/monorepo",
   "version": "8.0.5",
   "license": "AGPL-3.0",
   "packageManager": "yarn@3.2.2",
-  "author": "Teffen Ellis <teffen@sister.software>",
-  "description": "A batteries-included, magic-free, library for building web apps in V8 Isolates.",
-  "bugs": {
-    "url": "https://keywork.app/help"
-  },
-  "keywords": [
-    "cloudflare",
-    "workers",
-    "cloudflare workers",
-    "deno",
-    "serverless",
-    "isolates",
-    "react"
-  ],
-  "funding": [
-    {
-      "type": "individual",
-      "url": "https://keywork.app/contributing"
-    }
-  ],
-  "type": "module",
-  "sideEffects": false,
-  "engines": {
-    "node": ">= 17.4"
-  },
   "scripts": {
     "build:clean": "tsc --build --clean",
-    "build:compile": "yarn run build:clean && tsc --build",
-    "build": "yarn run build:compile",
-    "release": "yarn run build && yarn run release-it",
+    "build:compile": "tsc --build",
+    "build": "run-p build:clean build:compile",
+    "release": "run-p build release-it",
     "test": "deno test --coverage=./cov .",
     "test:coverage": "deno coverage --lcov ./cov"
   },
-  "files": [
-    "dist/**/*"
-  ],
   "workspaces": [
+    "packages/*",
     "site"
   ],
-  "dependencies": {
-    "@cloudflare/kv-asset-handler": "0.2.0",
-    "classnames": "^2.3.1",
-    "cookie": "^0.5.0",
-    "deepmerge": "^4.3.1",
-    "deepmerge-ts": "^5.1.0",
-    "lodash.isplainobject": "^4.0.6",
-    "negotiator": "^0.6.3",
-    "ulidx": "^0.3.0",
-    "urlpattern-polyfill": "^9.0.0"
-  },
   "devDependencies": {
     "@deno/shim-deno": "^0.16.1",
     "@sister.software/eslint-config": "^2.0.1",
@@ -77,6 +39,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-tsdoc": "^0.2.17",
     "handlebars": "^4.7.7",
+    "npm-run-all": "^4.1.5",
     "prettier": "^3.0.3",
     "prettier-plugin-organize-imports": "^3.2.3",
     "react": "^18.2.0",
@@ -87,114 +50,6 @@
     "typedoc": "^0.23.10",
     "typescript": "5.2.2",
     "which": "^4.0.0"
-  },
-  "peerDependencies": {
-    "esbuild": "~0.17",
-    "react": ">=18.2",
-    "react-dom": ">=18.2",
-    "undici": ">=5.7",
-    "urlpattern-polyfill": "^5.0.5"
-  },
-  "peerDependenciesMeta": {
-    "esbuild": {
-      "optional": true
-    },
-    "undici": {
-      "optional": true
-    },
-    "urlpattern-polyfill": {
-      "optional": true
-    }
-  },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    "./package.json": "./dist/package.json",
-    ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
-    },
-    "./browser": {
-      "import": "./dist/browser/index.js",
-      "types": "./dist/browser/index.d.ts"
-    },
-    "./components": {
-      "import": "./dist/components/index.js",
-      "types": "./dist/components/index.d.ts"
-    },
-    "./contexts": {
-      "import": "./dist/contexts/index.js",
-      "types": "./dist/contexts/index.d.ts"
-    },
-    "./errors": {
-      "import": "./dist/errors/index.js",
-      "types": "./dist/errors/index.d.ts"
-    },
-    "./events": {
-      "import": "./dist/events/index.js",
-      "types": "./dist/events/index.d.ts"
-    },
-    "./files": {
-      "import": "./dist/files/index.js",
-      "types": "./dist/files/index.d.ts"
-    },
-    "./files/extensions": {
-      "import": "./dist/files/extensions/index.js",
-      "types": "./dist/files/extensions/index.d.ts"
-    },
-    "./http": {
-      "import": "./dist/http/index.js",
-      "types": "./dist/http/index.d.ts"
-    },
-    "./http/headers": {
-      "import": "./dist/http/headers/index.js",
-      "types": "./dist/http/headers/index.d.ts"
-    },
-    "./http/responses": {
-      "import": "./dist/http/responses/index.js",
-      "types": "./dist/http/responses/index.d.ts"
-    },
-    "./logger": {
-      "import": "./dist/logger/index.js",
-      "types": "./dist/logger/index.d.ts"
-    },
-    "./middleware": {
-      "import": "./dist/middleware/index.js",
-      "types": "./dist/middleware/index.d.ts"
-    },
-    "./node": {
-      "import": "./dist/node/index.js",
-      "types": "./dist/node/index.d.ts"
-    },
-    "./node/bundling": {
-      "import": "./dist/node/bundling/index.js",
-      "types": "./dist/node/bundling/index.d.ts"
-    },
-    "./router": {
-      "import": "./dist/router/index.js",
-      "types": "./dist/router/index.d.ts"
-    },
-    "./ssr": {
-      "import": "./dist/ssr/index.js",
-      "types": "./dist/ssr/index.d.ts"
-    },
-    "./testing": {
-      "import": "./dist/testing/index.js",
-      "types": "./dist/testing/index.d.ts"
-    },
-    "./utils": {
-      "import": "./dist/utils/index.js",
-      "types": "./dist/utils/index.d.ts"
-    },
-    "./worker": {
-      "import": "./dist/worker/index.js",
-      "types": "./dist/worker/index.d.ts"
-    },
-    "./worker/polyfills/worker/ReadableStream": {
-      "import": "./dist/worker/polyfills/ReadableStream/index.js"
-    },
-    "./__internal/*": "./dist/__internal/*.js",
-    "./*": "./dist/*.js"
   },
   "browserslist": [
     "last 2 Chrome versions",

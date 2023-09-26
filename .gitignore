@@ -3,7 +3,6 @@
 .mf
 .tmp
 dist
-out
 tsconfig.tsbuildinfo
 
 # Dependencies
