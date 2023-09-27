@@ -1,19 +1,24 @@
 {
-  "extends": "./tsconfig.base.json",
 	"compilerOptions": {
     "baseUrl": ".",
     "rootDir": ".",
 		"outDir": "dist",
-		"composite": true,
+    "jsx": "react-jsx",
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "allowJs": false,
+    "declarationMap": true,
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "strict": true,
+    "isolatedModules": true,
     "paths": {
-      "keywork/*": ["./packages/keywork/*"],
-      "@keywork/node/*": ["./packages/node/*"],
+      "keywork/*": ["./*"],
     },
 	},
-  "references": [
-		{ "path": "./packages/node" },
-		{ "path": "./packages/keywork" },
-	],
 	"exclude": [
     "node_modules",
     "dist",

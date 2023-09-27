@@ -1,7 +1,35 @@
 {
-  "name": "@keywork/monorepo",
-  "version": "8.0.5",
+  "name": "keywork",
+  "version": "8.0.6",
   "license": "AGPL-3.0",
+  "author": "Teffen Ellis <teffen@sister.software>",
+  "description": "A batteries-included, magic-free, library for building web apps in V8 Isolates.",
+  "bugs": {
+    "url": "https://keywork.app/help"
+  },
+  "keywords": [
+    "cloudflare",
+    "workers",
+    "cloudflare workers",
+    "deno",
+    "serverless",
+    "isolates",
+    "react"
+  ],
+  "funding": [
+    {
+      "type": "individual",
+      "url": "https://keywork.app/contributing"
+    }
+  ],
+  "type": "module",
+  "sideEffects": false,
+  "engines": {
+    "node": ">= 17.4"
+  },
+  "files": [
+    "dist/**/*"
+  ],
   "packageManager": "yarn@3.2.2",
   "scripts": {
     "build:clean": "tsc --build --clean",
@@ -12,10 +40,11 @@
     "test:coverage": "deno coverage --lcov ./cov"
   },
   "workspaces": [
-    "packages/*",
+    "docgen",
     "site"
   ],
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20230922.0",
     "@deno/shim-deno": "^0.16.1",
     "@sister.software/eslint-config": "^2.0.1",
     "@sister.software/prettier-config": "^2.0.1",
@@ -49,7 +78,114 @@
     "ts-node": "^10.9.1",
     "typedoc": "^0.23.10",
     "typescript": "5.2.2",
+    "undici": "^5.25.2",
     "which": "^4.0.0"
+  },
+  "dependencies": {
+    "@cloudflare/kv-asset-handler": "0.2.0",
+    "classnames": "^2.3.1",
+    "cookie": "^0.5.0",
+    "deepmerge-ts": "^5.1.0",
+    "lodash.isplainobject": "^4.0.6",
+    "negotiator": "^0.6.3",
+    "ulidx": "^0.3.0",
+    "urlpattern-polyfill": "^9.0.0"
+  },
+  "peerDependencies": {
+    "react": ">=18.2",
+    "react-dom": ">=18.2",
+    "undici": ">=5.25.2",
+    "urlpattern-polyfill": "^5.0.5"
+  },
+  "peerDependenciesMeta": {
+    "undici": {
+      "optional": true
+    },
+    "urlpattern-polyfill": {
+      "optional": true
+    }
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./browser": {
+      "import": "./dist/browser/index.js",
+      "types": "./dist/browser/index.d.ts"
+    },
+    "./components": {
+      "import": "./dist/components/index.js",
+      "types": "./dist/components/index.d.ts"
+    },
+    "./contexts": {
+      "import": "./dist/contexts/index.js",
+      "types": "./dist/contexts/index.d.ts"
+    },
+    "./errors": {
+      "import": "./dist/errors/index.js",
+      "types": "./dist/errors/index.d.ts"
+    },
+    "./events": {
+      "import": "./dist/events/index.js",
+      "types": "./dist/events/index.d.ts"
+    },
+    "./files": {
+      "import": "./dist/files/index.js",
+      "types": "./dist/files/index.d.ts"
+    },
+    "./files/extensions": {
+      "import": "./dist/files/extensions/index.js",
+      "types": "./dist/files/extensions/index.d.ts"
+    },
+    "./http": {
+      "import": "./dist/http/index.js",
+      "types": "./dist/http/index.d.ts"
+    },
+    "./http/headers": {
+      "import": "./dist/http/headers/index.js",
+      "types": "./dist/http/headers/index.d.ts"
+    },
+    "./http/responses": {
+      "import": "./dist/http/responses/index.js",
+      "types": "./dist/http/responses/index.d.ts"
+    },
+    "./lifecycle": {
+      "import": "./dist/lifecycle/index.js",
+      "types": "./dist/lifecycle/index.d.ts"
+    },
+    "./logger": {
+      "import": "./dist/logger/index.js",
+      "types": "./dist/logger/index.d.ts"
+    },
+    "./middleware": {
+      "import": "./dist/middleware/index.js",
+      "types": "./dist/middleware/index.d.ts"
+    },
+    "./router": {
+      "import": "./dist/router/index.js",
+      "types": "./dist/router/index.d.ts"
+    },
+    "./ssr": {
+      "import": "./dist/ssr/index.js",
+      "types": "./dist/ssr/index.d.ts"
+    },
+    "./cloudflare": {
+      "import": "./dist/cloudflare/index.js",
+      "types": "./dist/cloudflare/index.d.ts"
+    },
+    "./testing": {
+      "import": "./dist/testing/index.js",
+      "types": "./dist/testing/index.d.ts"
+    },
+    "./utils": {
+      "import": "./dist/utils/index.js",
+      "types": "./dist/utils/index.d.ts"
+    },
+    "./*": "./dist/*.js"
   },
   "browserslist": [
     "last 2 Chrome versions",

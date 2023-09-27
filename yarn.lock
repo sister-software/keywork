@@ -3012,62 +3012,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@keywork/docgen@workspace:packages/docgen":
-  version: 0.0.0-use.local
-  resolution: "@keywork/docgen@workspace:packages/docgen"
-  languageName: unknown
-  linkType: soft
-
-"@keywork/monorepo@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "@keywork/monorepo@workspace:."
-  dependencies:
-    "@deno/shim-deno": ^0.16.1
-    "@sister.software/eslint-config": ^2.0.1
-    "@sister.software/prettier-config": ^2.0.1
-    "@sister.software/typescript-esm-packager": ^1.2.10
-    "@types/cookie": ^0.5.2
-    "@types/dashify": ^1.0.1
-    "@types/lodash.isplainobject": ^4.0.7
-    "@types/negotiator": ^0.6.1
-    "@types/node": ^20.6.3
-    "@types/react": ^18.2.22
-    "@types/react-dom": ^18.2.7
-    "@types/which": ^3.0.0
-    "@typescript-eslint/eslint-plugin": ^5.48.1
-    "@typescript-eslint/parser": ^5.48.1
-    dashify: ^2.0.0
-    esbuild: ^0.19.3
-    eslint: ^8.37.0
-    eslint-config-prettier: ^8.8.0
-    eslint-plugin-header: ^3.1.1
-    eslint-plugin-react: ^7.32.2
-    eslint-plugin-react-hooks: ^4.6.0
-    eslint-plugin-tsdoc: ^0.2.17
-    handlebars: ^4.7.7
-    npm-run-all: ^4.1.5
-    prettier: ^3.0.3
-    prettier-plugin-organize-imports: ^3.2.3
-    react: ^18.2.0
-    react-dom: ^18.2.0
-    release-it: ^16.2.0
-    stylelint: ^15.10.3
-    ts-node: ^10.9.1
-    typedoc: ^0.23.10
-    typescript: 5.2.2
-    which: ^4.0.0
-  languageName: unknown
-  linkType: soft
-
-"@keywork/node@workspace:packages/node":
-  version: 0.0.0-use.local
-  resolution: "@keywork/node@workspace:packages/node"
-  dependencies:
-    keywork: ^8.0.6
-    undici: ^5.25.2
-  languageName: unknown
-  linkType: soft
-
 "@keywork/site@workspace:site":
   version: 0.0.0-use.local
   resolution: "@keywork/site@workspace:site"
@@ -10503,24 +10447,58 @@ __metadata:
   languageName: node
   linkType: hard
 
-"keywork@^8.0.6, keywork@workspace:packages/keywork":
+"keywork@workspace:.":
   version: 0.0.0-use.local
-  resolution: "keywork@workspace:packages/keywork"
+  resolution: "keywork@workspace:."
   dependencies:
     "@cloudflare/kv-asset-handler": 0.2.0
     "@cloudflare/workers-types": ^4.20230922.0
+    "@deno/shim-deno": ^0.16.1
+    "@sister.software/eslint-config": ^2.0.1
+    "@sister.software/prettier-config": ^2.0.1
+    "@sister.software/typescript-esm-packager": ^1.2.10
+    "@types/cookie": ^0.5.2
+    "@types/dashify": ^1.0.1
+    "@types/lodash.isplainobject": ^4.0.7
+    "@types/negotiator": ^0.6.1
+    "@types/node": ^20.6.3
+    "@types/react": ^18.2.22
+    "@types/react-dom": ^18.2.7
+    "@types/which": ^3.0.0
+    "@typescript-eslint/eslint-plugin": ^5.48.1
+    "@typescript-eslint/parser": ^5.48.1
     classnames: ^2.3.1
     cookie: ^0.5.0
+    dashify: ^2.0.0
     deepmerge-ts: ^5.1.0
+    esbuild: ^0.19.3
+    eslint: ^8.37.0
+    eslint-config-prettier: ^8.8.0
+    eslint-plugin-header: ^3.1.1
+    eslint-plugin-react: ^7.32.2
+    eslint-plugin-react-hooks: ^4.6.0
+    eslint-plugin-tsdoc: ^0.2.17
+    handlebars: ^4.7.7
     lodash.isplainobject: ^4.0.6
     negotiator: ^0.6.3
+    npm-run-all: ^4.1.5
+    prettier: ^3.0.3
+    prettier-plugin-organize-imports: ^3.2.3
     react: ^18.2.0
     react-dom: ^18.2.0
+    release-it: ^16.2.0
+    stylelint: ^15.10.3
+    ts-node: ^10.9.1
+    typedoc: ^0.23.10
+    typescript: 5.2.2
     ulidx: ^0.3.0
+    undici: ^5.25.2
     urlpattern-polyfill: ^9.0.0
+    which: ^4.0.0
   peerDependencies:
     react: ">=18.2"
     react-dom: ">=18.2"
+    undici: ">=5.25.2"
     urlpattern-polyfill: ^5.0.5
   peerDependenciesMeta:
     undici:
