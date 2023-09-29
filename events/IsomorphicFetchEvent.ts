@@ -17,6 +17,7 @@
 import { KeyworkResourceError, Status } from 'keywork/errors'
 import { IsomorphicExtendableEvent } from 'keywork/events/IsomorphicExtendableEvent'
 import { IsomorphicFetchEventInit } from 'keywork/events/IsomorphicFetchEventInit'
+import { SSRDocument } from 'keywork/events/SSRDocument'
 
 /**
  * Represents an event dispatched when a network request is made.
@@ -38,6 +39,12 @@ export class IsomorphicFetchEvent<BoundAliases = {}, ExpectedParams = {}, Data =
 
   env: BoundAliases
   data: Data
+  /**
+   * A server-side representation of the HTML document to be rendered.
+   *
+   * This is useful when you need to inject data into the document's `<head>` element.
+   */
+  document: SSRDocument
   params: ExpectedParams
 
   /**
@@ -56,7 +63,7 @@ export class IsomorphicFetchEvent<BoundAliases = {}, ExpectedParams = {}, Data =
   originalURL: string
   constructor(
     eventType = 'fetch',
-    { request, env, data, originalURL, match }: IsomorphicFetchEventInit<BoundAliases, Data>
+    { request, env, data, originalURL, match, document }: IsomorphicFetchEventInit<BoundAliases, Data>
   ) {
     super(eventType)
     this.request = request
@@ -65,6 +72,7 @@ export class IsomorphicFetchEvent<BoundAliases = {}, ExpectedParams = {}, Data =
     this.data = data || ({} as Data)
     this.match = match || ({} as URLPatternResult)
     this.params = (match ? match.pathname.groups : {}) as unknown as ExpectedParams
+    this.document = document || {}
   }
 
   /**

@@ -13,8 +13,8 @@
  */
 
 import { changeExtension } from 'keywork/docgen/file-utils'
-import { repoRootPathBuilder } from 'keywork/docgen/paths'
 import { OutBuildManifest, OutDirectory, PackageJSON } from 'keywork/docgen/project'
+import { projectRootPathBuilder } from 'keywork/node/paths'
 import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
 
@@ -151,7 +151,9 @@ export async function writeBuildManifest(filePaths: string[]) {
   return fs.writeFile(OutBuildManifest, JSON.stringify(buildManifest, null, 2), 'utf8')
 }
 
-export async function readNPMPackageJSON(filePath: string = repoRootPathBuilder(PackageJSON)): Promise<NPMPackageJSON> {
+export async function readNPMPackageJSON(
+  filePath: string = projectRootPathBuilder(PackageJSON)
+): Promise<NPMPackageJSON> {
   const packageJSONContents = await fs.readFile(filePath, 'utf8')
   return JSON.parse(packageJSONContents)
 }

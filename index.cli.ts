@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 /**
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.
@@ -12,17 +14,28 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-interface ReadableStreamBYOBRequest {
-  readonly view: Uint8Array | null
-  respond(bytesWritten: number): void
-  respondWithNewView(view: ArrayBuffer | ArrayBufferView): void
-  readonly atLeast: number | null
-}
+import { serveBuilder, serveCommand } from 'keywork/cli/serve'
+import yargs from 'yargs'
+import { hideBin } from 'yargs/helpers'
 
-interface ReadableByteStreamController {
-  readonly byobRequest: ReadableStreamBYOBRequest | null
-  readonly desiredSize: number | null
-  close(): void
-  enqueue(chunk: ArrayBuffer | ArrayBufferView): void
-  error(reason: any): void
-}
+const cli = yargs(hideBin(process.argv), process.cwd())
+  // --
+  .scriptName('keywork')
+  .strict()
+  .wrap(72)
+
+cli
+  // --
+  .command('serve <publicDir>', 'Serves a Keywork Router', serveCommand, serveBuilder)
+  .alias('s', 'serve')
+
+cli.help()
+
+await cli
+  .check((argv) => {
+    if (argv._.length === 0) {
+      throw new Error('No command specified')
+    }
+    return true
+  })
+  .parse()

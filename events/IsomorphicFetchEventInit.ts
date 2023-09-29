@@ -12,6 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import type { SSRDocument } from 'keywork/events/SSRDocument'
+
 /**
  * @internal
  */
@@ -34,4 +36,5 @@ export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> {
 
   waitUntil?(promise: Promise<any>): void
   passThroughOnException?(): void
+  document?: SSRDocument
 }

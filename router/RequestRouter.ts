@@ -16,6 +16,7 @@
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
 import { IsomorphicFetchEvent, isExtendableEvent } from 'keywork/events'
+import { SSRDocument } from 'keywork/events/SSRDocument'
 import {
   ErrorResponse,
   HTTPMethod,
@@ -26,7 +27,7 @@ import {
   methodVerbToRouterMethod,
   routerMethodToHTTPMethod,
 } from 'keywork/http'
-import { Disposable } from 'keywork/lifecycle'
+import { IDisposable } from 'keywork/lifecycle'
 import { Fetcher } from 'keywork/router/Fetcher'
 import { FetcherLike } from 'keywork/router/FetcherLike'
 import { MiddlewareFetch } from 'keywork/router/MiddlewareFetch'
@@ -41,7 +42,7 @@ import { RouteRequestHandler } from 'keywork/router/RouteRequestHandler'
 import { isFetcher } from 'keywork/router/isFetcher'
 import { isMiddlewareDeclarationOption } from 'keywork/router/isMiddlewareDeclarationOption'
 import { ReactRendererOptions, renderReactStream } from 'keywork/ssr'
-import { Logger, URLPatternLike, normalizeURLPattern, normalizeURLPatternInit } from 'keywork/utils'
+import { KeyworkLogger, URLPatternLike, normalizeURLPattern, normalizeURLPatternInit } from 'keywork/utils'
 
 /**
  * Used in place of the reference-sensitive `instanceof`
@@ -80,7 +81,7 @@ export type RouteMethodDeclaration<BoundAliases = {}, ExpectedParams = {}, Data 
  * @category Router
  * @typeParam BoundAliases The bound aliases, usually defined in your wrangler.toml file.
  */
-export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, Disposable {
+export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, IDisposable {
   /**
    * This router's known routes, categorized by their normalized HTTP method verbs into arrays of route handlers.
    *
@@ -393,7 +394,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
   /**
    * A server-side logger.
    */
-  public readonly logger: Logger
+  public readonly logger: KeyworkLogger
 
   /**
    * Collates the known routes by HTTP method verb.
@@ -463,6 +464,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
    */
   readonly includeDebugHeaders: boolean
   readonly reactOptions: ReactRendererOptions
+  readonly ssrDocument?: SSRDocument
 
   //#endregion
 
@@ -525,9 +527,11 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
       }
 
       if (!next) {
+        this.logger.debug(`No next middleware found for \`${requestURL.pathname}\``)
         return this.respondWith(new ErrorResponse(Status.NotFound, undefined))
       }
 
+      this.logger.debug(`Delegating \`${requestURL.pathname}\` to next middleware...`)
       return null as any
     }
 
@@ -542,6 +546,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
 
     const event = new IsomorphicFetchEvent('fetch', {
       ...(isExtendableEvent(eventLike) ? eventLike : {}),
+      document: this.ssrDocument,
       // The current pattern only matches the beginning of the pathname.
       // So, we remove the matched portion which allows any nested routes to
       // behave as if the pathname did not include any unforseen prefixes.
@@ -634,12 +639,14 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
 
   constructor(options?: RequestRouterOptions) {
     this.displayName = options?.displayName || 'Keywork Router'
-    this.logger = new Logger(this.displayName, options?.logLevel || 'Log')
+    this.logger = new KeyworkLogger(this.displayName, options?.logLevel || 'Log')
 
     this.reactOptions = {
       streamRenderer: renderReactStream,
       ...options?.react,
     }
+
+    this.ssrDocument = options?.document
 
     this.includeDebugHeaders =
       typeof options?.debug?.includeHeaders !== 'undefined' ? options.debug.includeHeaders : true

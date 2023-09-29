@@ -57,6 +57,7 @@
     "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
     "@types/which": "^3.0.0",
+    "@types/yargs": "^17.0.26",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
     "dashify": "^2.0.0",
@@ -89,7 +90,8 @@
     "lodash.isplainobject": "^4.0.6",
     "negotiator": "^0.6.3",
     "ulidx": "^0.3.0",
-    "urlpattern-polyfill": "^9.0.0"
+    "urlpattern-polyfill": "^9.0.0",
+    "yargs": "^17.7.2"
   },
   "peerDependencies": {
     "react": ">=18.2",
@@ -107,15 +109,20 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "bin": "./dist/index.cli.js",
   "exports": {
     "./package.json": "./package.json",
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
-    "./browser": {
-      "import": "./dist/browser/index.js",
-      "types": "./dist/browser/index.d.ts"
+    "./cli": {
+      "import": "./dist/cli/index.js",
+      "types": "./dist/cli/index.d.ts"
+    },
+    "./node": {
+      "import": "./dist/node/index.js",
+      "types": "./dist/node/index.d.ts"
     },
     "./components": {
       "import": "./dist/components/index.js",

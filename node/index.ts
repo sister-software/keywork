@@ -41,6 +41,8 @@
 /* eslint-disable header/header */
 
 export * from 'keywork/node/createServerHandler'
+export * from 'keywork/node/paths'
 export * from 'keywork/node/polyfills'
 export * from 'keywork/node/renderReactStream'
 export * from 'keywork/node/respondWithRouter'
+export * from 'keywork/node/static'

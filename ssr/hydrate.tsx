@@ -15,9 +15,9 @@
 import { KeyworkHTMLDocumentAppRoot } from 'keywork/components'
 import { LocationContext, StaticPropsContext } from 'keywork/contexts'
 import { KeyworkResourceError } from 'keywork/errors'
-import { Disposable } from 'keywork/lifecycle'
+import { IDisposable } from 'keywork/lifecycle'
 import { GlobalScopeWithKeyworkSSRProps, getSSRPropsFromScope, globalScopeHasSSRProps } from 'keywork/ssr'
-import { Logger, readGlobalScope } from 'keywork/utils'
+import { KeyworkLogger, readGlobalScope } from 'keywork/utils'
 import { ReactNode } from 'react'
 import { HydrationOptions, Root, hydrateRoot } from 'react-dom/client'
 
@@ -38,8 +38,8 @@ export type HydrationCallback<StaticProps extends {} | null = null> = (staticPro
 /**
  * A class representing a Keywork App's lifecycle.
  */
-export class KeyworkApp implements Disposable {
-  private logger = new Logger('KeyworkApp')
+export class KeyworkApp implements IDisposable {
+  private logger = new KeyworkLogger('KeyworkApp')
   private root?: Root
 
   /**

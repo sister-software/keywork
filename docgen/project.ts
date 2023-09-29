@@ -12,18 +12,18 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { repoRootPathBuilder } from 'keywork/docgen/paths'
+import { projectRootPathBuilder } from 'keywork/node/paths'
 import * as path from 'node:path'
 
 /** Prepared TS output for distribution. */
-export const OutDirectory = repoRootPathBuilder('dist')
+export const OutDirectory = projectRootPathBuilder('dist')
 export const BuildManifest = 'build-manifest.json'
 export const OutBuildManifest = path.join(OutDirectory, BuildManifest)
-export const DocsDirectory = repoRootPathBuilder('docs')
-export const DocsAPIDirectory = repoRootPathBuilder('docs', 'modules')
+export const DocsDirectory = projectRootPathBuilder('docs')
+export const DocsAPIDirectory = projectRootPathBuilder('docs', 'modules')
 export const TSConfig = 'tsconfig.json'
 /** Source content. */
-export const ModulesDirectory = repoRootPathBuilder('modules')
+export const ModulesDirectory = projectRootPathBuilder('modules')
 export const ImportMap = path.join(ModulesDirectory, 'import_map.json')
 export const PackageJSON = 'package.json'
 export const NodeModules = 'node_modules'

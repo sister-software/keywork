@@ -15,14 +15,21 @@
 import { KeyworkHTMLDocument } from 'keywork/components/KeyworkHTMLDocument'
 import { KeyworkProviders } from 'keywork/components/KeyworkProvidersComponent'
 import { _SSRPropsEmbed } from 'keywork/components/SSRPropsEmbed'
-import { FetchEventProvider, StaticPropsContext } from 'keywork/contexts'
+import { DocumentHeadPortal, FetchEventProvider, StaticPropsContext } from 'keywork/contexts'
 import { KeyworkResourceError } from 'keywork/errors'
 import { IsomorphicFetchEvent } from 'keywork/events'
 import { ReactRenderStreamResult, ReactRendererOptions } from 'keywork/ssr'
 import { renderReactStream } from 'keywork/ssr/stream'
-import { DEFAULT_LOG_LEVEL, Logger } from 'keywork/utils'
-import { ReactElement } from 'react'
+import { DEFAULT_LOG_LEVEL, KeyworkLogger } from 'keywork/utils'
+import React from 'react'
 import type { ReactDOMServerReadableStream } from 'react-dom/server'
+
+/**
+ * @ignore
+ */
+export interface PageElementProps<StaticProps extends {} | null = null> extends React.ReactElement<StaticProps> {
+  children?: React.ReactNode
+}
 
 /**
  * Renders the given React content to an HTML stream.
@@ -31,10 +38,10 @@ import type { ReactDOMServerReadableStream } from 'react-dom/server'
 export async function renderJSXToStream<StaticProps extends {} | null = null>(
   event: IsomorphicFetchEvent<any, any, any>,
   /** The React component to render for this specific page. */
-  pageElement: ReactElement<StaticProps>,
+  pageElement: PageElementProps<StaticProps>,
   reactRenderOptions?: ReactRendererOptions
 ): Promise<ReactDOMServerReadableStream> {
-  const logger = new Logger('react Stream Renderer')
+  const logger = new KeyworkLogger('react Stream Renderer')
 
   const streamRenderer = reactRenderOptions?.streamRenderer || renderReactStream
   const DocumentComponent = reactRenderOptions?.DocumentComponent || KeyworkHTMLDocument
@@ -42,11 +49,13 @@ export async function renderJSXToStream<StaticProps extends {} | null = null>(
 
   const staticProps = pageElement.props
 
+  console.log('DocumentHeadPortal', DocumentHeadPortal.state)
+
   const appDocument = (
     <StaticPropsContext.Provider value={staticProps!}>
       <FetchEventProvider event={event} logLevel={reactRenderOptions?.logLevel || DEFAULT_LOG_LEVEL}>
         <Providers>
-          <DocumentComponent>
+          <DocumentComponent event={event}>
             {pageElement}
             <_SSRPropsEmbed staticProps={staticProps} />
           </DocumentComponent>

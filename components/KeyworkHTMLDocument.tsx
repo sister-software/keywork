@@ -13,7 +13,8 @@
  */
 
 import classNames from 'classnames'
-import { FC, HtmlHTMLAttributes, ReactFragment, ReactNode } from 'react'
+import { IsomorphicFetchEvent } from 'keywork/events'
+import { FC, ReactNode } from 'react'
 
 /**
  * The default ID assigned to the React root element.
@@ -50,19 +51,8 @@ export interface KeyworkHTMLDocumentProps {
   browserIdentifier?: string
   className?: string
   buildId?: string
+  event?: IsomorphicFetchEvent<any, any, any>
   children: ReactNode
-  /** Document title. */
-  title?: string
-  /** Optional `<meta>` tags */
-  meta?: ReactFragment
-  /** Optional `<link>` tags */
-  link?: ReactFragment
-  /** Optional `<style>` tags */
-  style?: ReactFragment
-  /** Optional `<script>` tags */
-  script?: ReactFragment
-
-  htmlAttributes?: HtmlHTMLAttributes<HTMLHtmlElement>
 }
 
 export type KeyworkHTMLDocumentComponent = FC<KeyworkHTMLDocumentProps>
@@ -76,12 +66,7 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
   browserIdentifier,
   className,
   buildId,
-  htmlAttributes,
-  title = 'Keywork App',
-  meta,
-  link,
-  style,
-  script,
+  event,
 }) => {
   /** Added to trigger cache busting. */
   const assetSearchParams = new URLSearchParams({
@@ -90,36 +75,89 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
 
   const $assetSearchParams = assetSearchParams.toString()
 
+  const document = event?.document || {}
+  const charSet = document.charSet || 'utf-8'
+  const documentTitle = document.title || 'Keywork App'
+  const lang = document.lang || document.htmlAttributes?.lang || 'en'
+
   return (
     <html
-      lang="en-US"
-      className={classNames('static has-pointer', className)}
+      lang={lang}
+      className={classNames('static', className)}
       data-browser={browserIdentifier}
-      {...htmlAttributes}
+      {...document.htmlAttributes}
     >
       <head>
-        <meta charSet="utf-8" />
-        <title>{title}</title>
+        <meta charSet={charSet} />
+        <title>{documentTitle}</title>
+        <meta property="og:title" content={documentTitle} />
+        <meta name="twitter:title" content={documentTitle} />
 
-        {meta}
-        {link}
+        {document.meta}
+
+        {document.themeColor ? <meta name="theme-color" content={document.themeColor} /> : null}
+
+        {document.keywords ? <meta name="keywords" content={document.keywords.join(', ')} /> : null}
+
+        {document.linkingData ? (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(document.linkingData),
+            }}
+          />
+        ) : null}
+
+        {document.siteName ? <meta property="og:site_name" content={document.siteName} /> : null}
+        {document.siteURL ? <meta property="og:url" content={document.siteURL} /> : null}
+
+        {document.description ? (
+          <>
+            <meta name="description" content={document.description} />
+            <meta property="og:description" content={document.description} />
+            <meta name="twitter:description" content={document.description} />
+          </>
+        ) : null}
+
+        {document.image ? (
+          <>
+            <meta key="twitter:image" name="twitter:image" content={document.image.url} />,
+            <meta key="og:image" property="og:image" content={document.image.url} />,
+            {document.image.height ? (
+              <meta key="og:image:height" property="og:image:height" content={document.image.height.toString()} />
+            ) : null}
+            {document.image.width ? (
+              <meta key="og:image:width" property="og:image:width" content={document.image.width.toString()} />
+            ) : null}
+          </>
+        ) : null}
+        {document.author ? <meta name="author" content={document.author} /> : null}
+
+        {document.link}
+
+        {document.importMap ? (
+          <script
+            type="importmap"
+            dangerouslySetInnerHTML={{
+              __html: JSON.stringify(document.importMap, null, 2),
+            }}
+          />
+        ) : null}
 
         <script
           dangerouslySetInnerHTML={{
-            __html: `
-              document.documentElement.classList.remove('static')
-            `,
+            __html: `document.documentElement.classList.remove('static')`,
           }}
         />
 
-        {style}
-        {script}
+        {document.style}
+        {document.script}
       </head>
       <body>
         <div id={KeyworkHTMLDocumentAppRoot}>{children}</div>
         <div id={KeyworkHTMLDocumentStyleRoot} />
 
-        <script type="module" src={`/main.js?${$assetSearchParams}`}></script>
+        {document.omitHydrationScript ? null : <script type="module" src={`/main.js?${$assetSearchParams}`}></script>}
       </body>
     </html>
   )

@@ -14,9 +14,9 @@
 
 import { createContext, useContext, useMemo } from 'react'
 
-import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_PREFIX, KeyworkLogLevel, Logger } from 'keywork/utils'
+import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_PREFIX, KeyworkLogLevel, KeyworkLogger } from 'keywork/utils'
 
-export const KeyworkLoggerContext = createContext<Logger>(new Logger())
+export const KeyworkLoggerContext = createContext<KeyworkLogger>(new KeyworkLogger())
 KeyworkLoggerContext.displayName = 'KeyworkLoggerContext'
 
 /**
@@ -35,7 +35,7 @@ export const KeyworkLoggerProvider: React.FC<KeyworkLoggerProviderProps> = ({
   logLevel = DEFAULT_LOG_LEVEL,
   children,
 }) => {
-  const logger = useMemo(() => new Logger(logPrefix, logLevel), [logPrefix, logLevel])
+  const logger = useMemo(() => new KeyworkLogger(logPrefix, logLevel), [logPrefix, logLevel])
 
   return <KeyworkLoggerContext.Provider value={logger}>{children}</KeyworkLoggerContext.Provider>
 }

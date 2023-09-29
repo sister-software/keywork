@@ -13,7 +13,7 @@
  */
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
-import type { Disposable } from 'keywork/lifecycle'
+import type { IDisposable } from 'keywork/lifecycle'
 
 const kWaitUntil = Symbol('kWaitUntil')
 
@@ -24,7 +24,7 @@ const kWaitUntil = Symbol('kWaitUntil')
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/ExtendableEvent ExtendableEvent on MDN}
  * @see {@link https://developers.cloudflare.com/workers/runtime-apis/fetch-event/ Cloudflare Documentation}
  */
-export class IsomorphicExtendableEvent extends Event implements Disposable {
+export class IsomorphicExtendableEvent extends Event implements IDisposable {
   private [kWaitUntil]: Promise<unknown>[] = []
 
   /**

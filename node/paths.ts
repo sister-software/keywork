@@ -20,12 +20,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 /**
  * The root repo directory.
  */
-export const repoRoot = path.resolve(__dirname, '..', '..', '..', '..') as RepoRoot
+export const projectRoot = path.resolve(__dirname, '..', '..') as RepoRoot
 
 /**
  * Path builder relative to the repo root.
  */
 
-export function repoRootPathBuilder<S extends string[]>(...pathSegments: S) {
-  return path.join(repoRoot, ...pathSegments) as ConstantPath<[RepoRoot, ...S]>
+export function projectRootPathBuilder<S extends string[]>(...pathSegments: S) {
+  return path.join(projectRoot, ...pathSegments) as ConstantPath<[RepoRoot, ...S]>
 }

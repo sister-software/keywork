@@ -65,6 +65,7 @@
  */
 /* eslint-disable header/header */
 
+export * from 'keywork/contexts/DocumentHeaderProvider'
 export * from 'keywork/contexts/EnvironmentContext'
 export * from 'keywork/contexts/FetchEventProvider'
 export * from 'keywork/contexts/LocationContext'

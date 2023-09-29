@@ -74,7 +74,17 @@ export const _KeyworkLogLevelConfigs = [
   {
     level: 'Trace',
     method: 'trace',
-    prefix: '👀',
+    prefix: '👀 ',
+  },
+  {
+    level: 'Log',
+    method: 'log',
+    prefix: '💬 ',
+  },
+  {
+    level: 'Info',
+    method: 'info',
+    prefix: '💡 ',
   },
   {
     level: 'Error',
@@ -83,22 +93,12 @@ export const _KeyworkLogLevelConfigs = [
   {
     level: 'Warning',
     method: 'warn',
-    prefix: '⚠️',
-  },
-  {
-    level: 'Log',
-    method: 'log',
-    prefix: '💬',
-  },
-  {
-    level: 'Info',
-    method: 'info',
-    prefix: '💡',
+    prefix: '⚠️ ',
   },
   {
     level: 'Debug',
     method: 'debug',
-    prefix: '🔎',
+    prefix: '🔎 ',
   },
 ] as const satisfies readonly KeyworkLoggerConfig[]
 
@@ -138,7 +138,7 @@ const noop = () => void 0
  * @category Error
  * @public
  */
-export class Logger {
+export class KeyworkLogger {
   protected readonly logPrefix: string
   protected readonly globalConsole: GlobalConsoleLike
   protected readonly config: KeyworkLoggerConfig

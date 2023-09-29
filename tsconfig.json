@@ -16,7 +16,8 @@
     "strict": true,
     "isolatedModules": true,
     "paths": {
-      "keywork/*": ["./*"],
+      "keywork": ["./index.ts"],
+      "keywork/*": ["./*"]
     },
 	},
 	"exclude": [

@@ -16,7 +16,7 @@ import { KeyworkResourceError, Status } from 'keywork/errors'
 import type { IsomorphicFetchEvent } from 'keywork/events'
 import { isInstanceOfResponse } from 'keywork/http/isInstanceOfResponse'
 import { ErrorResponse, HTMLResponse, JSONResponse } from 'keywork/http/responses'
-import { ReactRendererOptions, renderJSXToStream } from 'keywork/ssr'
+import { PageElementProps, ReactRendererOptions, renderJSXToStream } from 'keywork/ssr'
 import { isValidElement } from 'react'
 
 /**
@@ -65,7 +65,7 @@ export async function castToResponse(
     return new Response(responseLike)
   }
 
-  if (isValidElement<{} | null>(responseLike)) {
+  if (isValidElement<PageElementProps>(responseLike)) {
     const stream = await renderJSXToStream(event, responseLike, reactRenderOptions)
     return new HTMLResponse(stream)
   }

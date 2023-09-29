@@ -14,12 +14,9 @@
 
 import { IsomorphicFetchEvent } from 'keywork/events'
 import { transformIncomingMessageToRequest } from 'keywork/node/transformers'
-import type { RequestRouter } from 'keywork/router/RequestRouter'
+import { RequestRouter } from 'keywork/router'
 import { readGlobalScope } from 'keywork/utils'
 import type { IncomingMessage, ServerResponse } from 'node:http'
-
-/** @internal */
-export type ProcessChunkCallback = (chunkResult: ReadableStreamReadResult<Uint8Array>) => Promise<void>
 
 function readNodeEnv<BoundAliases = {}>(): BoundAliases {
   const globalScope = readGlobalScope()
@@ -42,7 +39,6 @@ function readNodeEnv<BoundAliases = {}>(): BoundAliases {
  * ```
  *
  * @see {createServerHandler}
- * @beta Node support is currently experimental and may change in the near future.
  */
 export async function respondWithRouter<BoundAliases = {}>(
   router: RequestRouter<BoundAliases>,
@@ -62,24 +58,33 @@ export async function respondWithRouter<BoundAliases = {}>(
     serverResponse.setHeader(name, value)
   })
 
-  if (fetchResponse.body) {
-    const reader = fetchResponse.body.getReader()
+  await processWebStreamToNodeStream(fetchResponse, serverResponse)
+    .then(() => event.flushTasks())
+    .catch((error) => {
+      router.logger?.error(error)
+    })
+    .finally(() => {
+      serverResponse.end()
+    })
+}
 
-    const processChunk: ProcessChunkCallback = async ({ done, value: chunk }) => {
-      if (done) {
-        serverResponse.end()
-        return
-      }
+/**
+ * Processes a `ReadableStream` from a `fetch` response into a Node `ServerResponse`.
+ */
+async function processWebStreamToNodeStream(fetchResponse: Response, serverResponse: ServerResponse): Promise<void> {
+  if (!fetchResponse.body) return
 
-      if (chunk) {
-        serverResponse.write(chunk)
-      }
+  const bodyReader = fetchResponse.body.getReader()
 
-      await reader.read().then(processChunk)
+  let chunkResult: ReadableStreamReadResult<Uint8Array>
+
+  do {
+    chunkResult = await bodyReader.read()
+
+    if (chunkResult.done) break
+
+    if (chunkResult.value) {
+      serverResponse.write(chunkResult.value)
     }
-
-    await reader.read().then(processChunk)
-  }
-
-  await event.flushTasks()
+  } while (!chunkResult.done)
 }

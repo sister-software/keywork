@@ -61,8 +61,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/* eslint-disable header/header */
-
 // organize-imports-ignore
 
 /**

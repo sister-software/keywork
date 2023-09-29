@@ -12,7 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { IDisposable } from 'keywork/lifecycle'
 import type { MiddlewareFetch } from 'keywork/router/MiddlewareFetch'
+import { KeyworkLogger } from 'keywork/utils'
 
 /**
  * ### Cloudflare Usage
@@ -33,12 +35,27 @@ import type { MiddlewareFetch } from 'keywork/router/MiddlewareFetch'
  * @see {Keywork#Router.WorkerEnvFetchBinding}
  * @see {Keywork#Router.RequestRouter#fetch}
  */
-export interface Fetcher<BoundAliases = {}> {
+export interface Fetcher<BoundAliases = {}> extends IDisposable {
   /**
    * A display name used for debugging and log messages.
    * @category Debug
    */
   displayName?: string
 
+  /**
+   * The fetcher's primary request handler.
+   */
   fetch: MiddlewareFetch<BoundAliases>
+
+  /**
+   * A possible logger to use for debugging.
+   */
+  logger?: KeyworkLogger
+}
+
+/**
+ * A module that exports a Keywork Fetcher, typically a `_worker.js` file with an exported default router.
+ */
+export interface FetcherModuleExports<BoundAliases = {}> {
+  default: Fetcher<BoundAliases>
 }

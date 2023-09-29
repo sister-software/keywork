@@ -12,10 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * @internal
- * @todo Migrate to native Symbol.dispose when it's available.
- */
-export interface IDisposable {
-  dispose(reason?: string): void | Promise<void>
-}
+export * from 'keywork/cli/serve'
+export * from 'keywork/cli/yargs'
