@@ -93,11 +93,11 @@ export async function serveBuilder({ port, host, ...serveArgs }: ServeArgs) {
     }).fetchStaticFile
   )
 
-  // fetcher.use(
-  //   new NodeStaticFileRouter({
-  //     filesDirectoryPath: absolutePublicDirPath,
-  //   })
-  // )
+  fetcher.use(
+    new NodeStaticFileRouter({
+      filesDirectoryPath: absolutePublicDirPath,
+    })
+  )
 
   // And then wrap the router with `createServerHandler`
   const server = http.createServer(createNodeServerHandler(fetcher))

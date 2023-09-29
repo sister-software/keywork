@@ -85,10 +85,6 @@ export class NodeStaticFileRouter extends RequestRouter {
     const fileHandle = await open(filePathAbsolute, 'r')
     const nodeFileStream = fileHandle.createReadStream()
 
-    nodeFileStream.on('data', (chunk) => {
-      bodyWriter.write(chunk)
-    })
-
     nodeFileStream.on('end', () => {
       bodyWriter.close()
     })
