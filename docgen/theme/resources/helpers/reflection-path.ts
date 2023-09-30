@@ -12,10 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import { ContainerReflection, ReflectionKind } from 'typedoc'
-import { PageEvent } from 'typedoc'
+import { ContainerReflection, PageEvent, ReflectionKind } from 'typedoc'
 
-export default function () {
+export function reflectionPathHelper() {
   Handlebars.registerHelper(
     'reflectionPath',
 

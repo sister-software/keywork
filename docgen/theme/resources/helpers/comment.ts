@@ -11,11 +11,12 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme/MarkdownTheme'
-import { CommentDisplayPart } from 'typedoc'
 
-export default function (_theme: MarkdownTheme) {
+import Handlebars from 'handlebars'
+import type { CommentDisplayPart } from 'typedoc'
+import type { MarkdownTheme } from '../../MarkdownTheme.js'
+
+export function commentHelper(_theme: MarkdownTheme) {
   Handlebars.registerHelper('comment', function (parts: CommentDisplayPart[]) {
     const result: string[] = []
     for (const part of parts) {

@@ -16,9 +16,9 @@ import { Deno } from '@deno/shim-deno'
 import { useParams } from 'keywork/contexts'
 import { Status } from 'keywork/errors'
 import { JSONResponse, KeyworkHeaders } from 'keywork/http'
-import { RequestRouter } from 'keywork/router/RequestRouter'
-import type { RouteRequestHandler } from 'keywork/router/RouteRequestHandler'
 import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } from 'keywork/testing'
+import { RequestRouter } from './RequestRouter.js'
+import type { RouteRequestHandler } from './RouteRequestHandler.js'
 
 interface HelloResponseBody extends Record<PropertyKey, unknown> {
   url: string

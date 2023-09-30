@@ -24,6 +24,7 @@
  */
 /* eslint-disable header/header */
 
-export type { IsomorphicFetchEventInit } from 'keywork/events/AbstractFetchEvent'
-export * from 'keywork/events/IsomorphicExtendableEvent'
-export * from 'keywork/events/IsomorphicFetchEvent'
+export type { IsomorphicFetchEventInit } from './AbstractFetchEvent.js'
+export * from './IsomorphicExtendableEvent.js'
+export * from './IsomorphicFetchEvent.js'
+export * from './SSRDocument.js'

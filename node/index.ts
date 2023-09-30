@@ -40,9 +40,10 @@
  */
 /* eslint-disable header/header */
 
-export * from 'keywork/node/createServerHandler'
-export * from 'keywork/node/paths'
-export * from 'keywork/node/polyfills'
-export * from 'keywork/node/renderReactStream'
-export * from 'keywork/node/respondWithRouter'
-export * from 'keywork/node/static'
+export * from './createServerHandler.js'
+export * from './paths.js'
+export * from './polyfills.js'
+export * from './project.js'
+export * from './renderReactStream.js'
+export * from './respondWithRouter.js'
+export * from './static.js'

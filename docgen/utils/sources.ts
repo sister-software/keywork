@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import * as ProjectFiles from 'keywork/docgen/project'
 import { KeyworkResourceError } from 'keywork/errors'
+import { ProjectFiles } from 'keywork/node'
 import { execSync } from 'node:child_process'
 import * as path from 'node:path'
 import { SourceReference } from 'typedoc'

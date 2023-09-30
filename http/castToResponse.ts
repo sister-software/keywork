@@ -14,10 +14,10 @@
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
 import type { IsomorphicFetchEvent } from 'keywork/events'
-import { isInstanceOfResponse } from 'keywork/http/isInstanceOfResponse'
 import { ErrorResponse, HTMLResponse, JSONResponse } from 'keywork/http/responses'
 import { PageElementProps, ReactRendererOptions, renderJSXToStream } from 'keywork/ssr'
 import { isValidElement } from 'react'
+import { isInstanceOfResponse } from './isInstanceOfResponse.js'
 
 /**
  * Either a full `Response`, or a more primitive value to be processed.

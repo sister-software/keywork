@@ -13,10 +13,10 @@
  */
 
 import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme/MarkdownTheme'
+import type { MarkdownTheme } from 'keywork/docgen/theme'
 import { PageEvent } from 'typedoc'
 
-export default function (theme: MarkdownTheme) {
+export function ifShowPageTitleHelper(theme: MarkdownTheme) {
   Handlebars.registerHelper('ifShowPageTitle', function (this: PageEvent, options: Handlebars.HelperOptions) {
     return theme.hidePageTitle ? options.inverse(this) : options.fn(this)
   })

@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme/MarkdownTheme'
-import { escapeChars } from 'keywork/docgen/theme/utils'
-import { DeclarationReflection, ProjectReflection, ReflectionGroup } from 'typedoc'
+import type { MarkdownTheme } from 'keywork/docgen/theme'
+import { escapeChars } from 'keywork/docgen/utils'
+import type { DeclarationReflection, ProjectReflection, ReflectionGroup } from 'typedoc'
 
-export default function (theme: MarkdownTheme) {
+export function tocHelper(theme: MarkdownTheme) {
   Handlebars.registerHelper('toc', function (this: ProjectReflection | DeclarationReflection) {
     const md: string[] = []
 

@@ -10526,7 +10526,7 @@ __metadata:
     ts-node: ^10.9.1
     typedoc: ^0.23.10
     typescript: 5.2.2
-    ulidx: ^0.3.0
+    ulidx: ^2.1.0
     undici: ^5.25.2
     urlpattern-polyfill: ^9.0.0
     which: ^4.0.0
@@ -10592,10 +10592,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"layerr@npm:^0.1.2":
-  version: 0.1.2
-  resolution: "layerr@npm:0.1.2"
-  checksum: db34bae003a8f289c858a7657c260104e40c4fdb6df8d35badbc42dc3ffe7d361c6dbf54f0c91cdaf6f364788b8af432131448dd9a240b82b8b2502b917fa052
+"layerr@npm:^2.0.1":
+  version: 2.0.1
+  resolution: "layerr@npm:2.0.1"
+  checksum: a57b0ceff240b4869571b0b87c0bc28dc71b131a652c6da5fee03d6f590581c5a57f794edb2ec5ee7c8f7030bf99a4e090516efbd92a2e7382336d60a3d10763
   languageName: node
   linkType: hard
 
@@ -15822,12 +15822,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"ulidx@npm:^0.3.0":
-  version: 0.3.0
-  resolution: "ulidx@npm:0.3.0"
+"ulidx@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "ulidx@npm:2.1.0"
   dependencies:
-    layerr: ^0.1.2
-  checksum: f301b4ccdfea9c0c6a842706d0a463c71a93f87b61e8f6b39099aa3a663f9e5efbe7316289211e73788782f6fbfd83ef45a4757f0efb7a9f3bf29d0efdc97533
+    layerr: ^2.0.1
+  checksum: 9d741b89f2af5320d62c069ee20c41bf9eaf39a26811be2bdc3cf6442eb354f7820d0024313b6c70d8ee64dfba5e061932236c7f8843b8e40a98fdb7396b7248
   languageName: node
   linkType: hard
 

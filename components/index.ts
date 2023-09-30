@@ -37,7 +37,7 @@
  */
 /* eslint-disable header/header */
 
-export * from 'keywork/components/KeyworkHTMLDocument'
-export * from 'keywork/components/KeyworkPatternToPageComponent'
-export * from 'keywork/components/KeyworkProvidersComponent'
-export * from 'keywork/components/SSRPropsEmbed'
+export * from './KeyworkHTMLDocument.js'
+export * from './KeyworkPatternToPageComponent.js'
+export * from './KeyworkProvidersComponent.js'
+export * from './SSRPropsEmbed.js'

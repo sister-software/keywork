@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from 'keywork/files/extensions/Forms'
-export * from 'keywork/files/extensions/Images'
-export * from 'keywork/files/extensions/JavaScript'
-export * from 'keywork/files/extensions/PlainText'
-export * from 'keywork/files/extensions/XML'
+export * from './Forms.js'
+export * from './Images.js'
+export * from './JavaScript.js'
+export * from './PlainText.js'
+export * from './XML.js'

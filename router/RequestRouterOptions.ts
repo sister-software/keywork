@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { SSRDocument } from 'keywork/events/SSRDocument'
+import type { SSRDocument } from 'keywork/events'
 import type { HTTPMethod } from 'keywork/http'
-import type { MiddlewareDeclarationLike } from 'keywork/router/MiddlewareDeclarationLike'
 import type { ReactRendererOptions } from 'keywork/ssr'
-import type { KeyworkLogLevel } from 'keywork/utils'
+import type { IURLPattern, KeyworkLogLevel } from 'keywork/utils'
+import type { MiddlewareDeclarationLike } from './MiddlewareDeclarationLike.js'
 
 /**
  * Public endpoints to aid in debugging your app.
@@ -49,7 +49,7 @@ export interface RouteDebugEntrypoint {
   displayName: string
   kind: string
   httpMethod?: HTTPMethod
-  urlPattern?: URLPattern
+  urlPattern?: IURLPattern
   entries: RouteDebugEntrypoint[]
 }
 

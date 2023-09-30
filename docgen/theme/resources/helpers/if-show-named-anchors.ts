@@ -13,10 +13,10 @@
  */
 
 import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme/MarkdownTheme'
+import type { MarkdownTheme } from 'keywork/docgen/theme'
 import { PageEvent } from 'typedoc'
 
-export default function (theme: MarkdownTheme) {
+export function ifShowNamedAnchorsHelper(theme: MarkdownTheme) {
   Handlebars.registerHelper('ifShowNamedAnchors', function (this: PageEvent, options: Handlebars.HelperOptions) {
     return theme.namedAnchors ? options.fn(this) : options.inverse(this)
   })

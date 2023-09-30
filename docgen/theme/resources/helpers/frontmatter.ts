@@ -13,11 +13,10 @@
  */
 
 import Handlebars from 'handlebars'
-import { parseModel } from 'keywork/docgen/theme/utils/model'
-import { SourceReferenceWithGit } from 'keywork/docgen/theme/utils/sources'
-import { ContainerReflection, PageEvent } from 'typedoc'
+import { SourceReferenceWithGit, parseModel } from 'keywork/docgen/utils'
+import type { ContainerReflection, PageEvent } from 'typedoc'
 
-export default function () {
+export function frontmatterHelper() {
   /**
    * @returns Template output with front matter
    */

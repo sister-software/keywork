@@ -12,9 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme/MarkdownTheme'
-import { stripComments, stripLineBreaks } from 'keywork/docgen/theme/utils'
-import { DeclarationReflection, LiteralType, ParameterReflection, ReflectionKind, ReflectionType } from 'typedoc'
+import { stripComments, stripLineBreaks } from 'keywork/docgen/utils'
+import type { ParameterReflection, ReflectionType } from 'typedoc'
+import { DeclarationReflection, LiteralType, ReflectionKind } from 'typedoc'
+import type { MarkdownTheme } from '../../MarkdownTheme.js'
 
 function getType(reflection: ParameterReflection | DeclarationReflection) {
   const reflectionType = reflection.type as ReflectionType
@@ -27,7 +28,7 @@ function getType(reflection: ParameterReflection | DeclarationReflection) {
   return prefix + Handlebars.helpers.type.call(reflectionType ? reflectionType : reflection, 'object')
 }
 
-export default function (_theme: MarkdownTheme) {
+export function declarationTitleHelper(_theme: MarkdownTheme) {
   Handlebars.registerHelper('declarationTitle', function (this: ParameterReflection | DeclarationReflection) {
     const md = ['```ts\n']
 

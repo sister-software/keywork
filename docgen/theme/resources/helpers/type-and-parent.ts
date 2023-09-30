@@ -13,10 +13,9 @@
  */
 
 import Handlebars from 'handlebars'
-import { SignatureReflection } from 'typedoc'
-import { ArrayType, ReferenceType } from 'typedoc'
+import { ArrayType, ReferenceType, SignatureReflection } from 'typedoc'
 
-export default function () {
+export function typeAndParentHelper() {
   Handlebars.registerHelper('typeAndParent', function (this: ArrayType | ReferenceType) {
     // const getUrl = (name: string, url: string) => `[${name}](${Handlebars.helpers.relativeURL(url)})`
     const getUrl = (name: string, _url: string) => name

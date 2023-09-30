@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import { getReflectionType } from 'keywork/docgen/theme/resources/helpers/type'
-import { stripLineBreaks } from 'keywork/docgen/theme/utils'
+import { stripLineBreaks } from 'keywork/docgen/utils'
 import { ParameterReflection, ReflectionKind } from 'typedoc'
+import { getReflectionType } from './type.js'
 
-export default function () {
+export function parameterTableHelper() {
   Handlebars.registerHelper(
     'parameterTable',
 

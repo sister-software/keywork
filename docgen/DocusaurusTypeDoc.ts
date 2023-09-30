@@ -12,13 +12,13 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { PackageExports } from 'keywork/docgen/package-exports'
-import * as ProjectFiles from 'keywork/docgen/project'
 import { load as loadMarkdownPlugin, MarkdownTheme, MarkdownThemeOptions } from 'keywork/docgen/theme'
+import { ProjectFiles } from 'keywork/node'
 import * as path from 'node:path'
 import * as TypeDoc from 'typedoc'
 import { Logger, LogLevel } from 'typedoc'
 import * as ts from 'typescript'
+import { PackageExports } from './package-exports.js'
 
 export class DocusaurusTypeDoc extends TypeDoc.Application {
   constructor(

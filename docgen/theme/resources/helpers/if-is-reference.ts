@@ -14,7 +14,7 @@
 import Handlebars from 'handlebars'
 import { DeclarationReflection, ReferenceReflection } from 'typedoc'
 
-export default function () {
+export function ifIsReference() {
   Handlebars.registerHelper(
     'ifIsReference',
     function (this: DeclarationReflection | ReferenceReflection, options: Handlebars.HelperOptions) {

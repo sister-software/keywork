@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { Fetcher } from 'keywork/router/Fetcher'
-import type { MiddlewareDeclaration } from 'keywork/router/MiddlewareDeclaration'
+import type { Fetcher } from './Fetcher.js'
+import type { MiddlewareDeclaration } from './MiddlewareDeclaration.js'
 
 /** @ignore */
 export type MiddlewareDeclarationLike = Fetcher<any> | MiddlewareDeclaration

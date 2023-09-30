@@ -15,7 +15,7 @@
 import Handlebars from 'handlebars'
 import { Comment } from 'typedoc'
 
-export default function () {
+export function returnsHelper() {
   Handlebars.registerHelper('returns', function (comment: Comment) {
     const md: string[] = []
 

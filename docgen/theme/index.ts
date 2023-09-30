@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { MarkdownTheme } from 'keywork/docgen/theme/MarkdownTheme'
-import { MarkdownThemeOptionsReader } from 'keywork/docgen/theme/options-reader'
 import { Application, ParameterType } from 'typedoc'
+import { MarkdownTheme } from './MarkdownTheme.js'
+import { MarkdownThemeOptionsReader } from './options-reader.js'
 
 export interface MarkdownThemeOptions {
   /**

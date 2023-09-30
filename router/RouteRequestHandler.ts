@@ -14,7 +14,7 @@
 
 import type { IsomorphicFetchEvent } from 'keywork/events'
 import type { ResponseLike } from 'keywork/http'
-import type { MiddlewareFetch, MiddlewareReturnTypes } from 'keywork/router/MiddlewareFetch'
+import type { MiddlewareFetch, MiddlewareReturnTypes } from './MiddlewareFetch.js'
 
 /**
  * A function or method that handles incoming requests and replies with a `Response`.

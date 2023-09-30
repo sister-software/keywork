@@ -2,7 +2,7 @@
  * Keywork includes error utilities that pair nicely with HTTP request handlers.
  *
  * ```ts
- * import { KeyworkResourceError, StatusCodes } from 'keywork/errors'
+ * import { KeyworkResourceError, StatusCodes } from 'keywork'
  *
  * if (isLoggedIn(someUser)) {
  *   throw new KeyworkResourceError('You must be logged in to do that', StatusCodes.UNAUTHORIZED)
@@ -34,5 +34,5 @@
  */
 /* eslint-disable header/header */
 
-export * from 'keywork/errors/KeyworkResourceError'
-export * from 'keywork/errors/common'
+export * from './KeyworkResourceError.js'
+export * from './common.js'

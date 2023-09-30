@@ -12,8 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { globalScopeSSRKey, GlobalScopeWithKeyworkSSRProps } from 'keywork/ssr/globalScopeSSRKey'
+import { globalScopeSSRKey, GlobalScopeWithKeyworkSSRProps } from './globalScopeSSRKey.js'
 
+/**
+ * Predicate to check if a global scope has embedded Keywork SSR props.
+ */
 export function globalScopeHasSSRProps<SSRProps extends {}>(
   globalScope: unknown
 ): globalScope is GlobalScopeWithKeyworkSSRProps<SSRProps> {

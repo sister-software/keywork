@@ -13,11 +13,11 @@
  */
 
 import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme/MarkdownTheme'
-import { escapeChars } from 'keywork/docgen/theme/utils'
+import { escapeChars } from 'keywork/docgen/utils'
 import { PageEvent } from 'typedoc'
+import type { MarkdownTheme } from '../../MarkdownTheme.js'
 
-export default function (theme: MarkdownTheme) {
+export function breadcrumbsHelper(theme: MarkdownTheme) {
   Handlebars.registerHelper('breadcrumbs', function (this: PageEvent) {
     const { entryPoints, entryDocument, project, readme } = theme
 

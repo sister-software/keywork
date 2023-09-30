@@ -3,7 +3,7 @@
  * Express.js, React Router, and the native Cloudflare Workers platform.
  *
  * ```ts title="worker.ts" runtime="cloudflare"
- * import { RequestRouter } from 'keywork/router'
+ * import { RequestRouter } from 'keywork'
  *
  * const app = new RequestRouter()
  *
@@ -21,7 +21,7 @@
  * ```
  *
  * ```ts title="worker.ts" runtime="browser"
- * import { RequestRouter } from 'https://esm.sh/keywork/router'
+ * import { RequestRouter } from 'https://esm.sh/keywork'
  *
  * const app = new RequestRouter()
  *
@@ -257,17 +257,17 @@
  */
 /* eslint-disable header/header */
 
-export * from 'keywork/router/Fetcher'
-export * from 'keywork/router/FetcherLike'
-export * from 'keywork/router/MiddlewareDeclaration'
-export * from 'keywork/router/MiddlewareDeclarationLike'
-export * from 'keywork/router/MiddlewareFetch'
-export * from 'keywork/router/ParsedRoute'
-export * from 'keywork/router/RequestRouter'
-export * from 'keywork/router/RequestRouterOptions'
-export * from 'keywork/router/RouteMatch'
-export * from 'keywork/router/RouteRequestHandler'
-export * from 'keywork/router/WorkerEnvFetchBinding'
-export * from 'keywork/router/createRouteRedirect'
-export * from 'keywork/router/isFetcher'
-export * from 'keywork/router/isMiddlewareDeclarationOption'
+export * from './Fetcher.js'
+export * from './FetcherLike.js'
+export * from './MiddlewareDeclaration.js'
+export * from './MiddlewareDeclarationLike.js'
+export * from './MiddlewareFetch.js'
+export * from './ParsedRoute.js'
+export * from './RequestRouter.js'
+export * from './RequestRouterOptions.js'
+export * from './RouteMatch.js'
+export * from './RouteRequestHandler.js'
+export * from './WorkerEnvFetchBinding.js'
+export * from './createRouteRedirect.js'
+export * from './isFetcher.js'
+export * from './isMiddlewareDeclarationOption.js'

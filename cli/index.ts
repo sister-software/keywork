@@ -12,5 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from 'keywork/cli/serve'
-export * from 'keywork/cli/yargs'
+export * from './serve.js'
+export * from './yargs.js'

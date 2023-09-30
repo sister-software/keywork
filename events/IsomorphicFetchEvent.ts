@@ -12,12 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/// <reference types="urlpattern-polyfill" />
-
 import { KeyworkResourceError, Status } from 'keywork/errors'
-import { IsomorphicExtendableEvent } from 'keywork/events/IsomorphicExtendableEvent'
-import { IsomorphicFetchEventInit } from 'keywork/events/IsomorphicFetchEventInit'
-import { SSRDocument } from 'keywork/events/SSRDocument'
+import type { URLPatternResult } from 'keywork/utils'
+import { IsomorphicExtendableEvent } from './IsomorphicExtendableEvent.js'
+import { IsomorphicFetchEventInit } from './IsomorphicFetchEventInit.js'
+import { SSRDocument } from './SSRDocument.js'
 
 /**
  * Represents an event dispatched when a network request is made.

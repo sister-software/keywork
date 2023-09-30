@@ -13,7 +13,7 @@
  */
 
 import Handlebars from 'handlebars'
-import { escapeChars } from 'keywork/docgen/theme/utils'
+import { escapeChars } from 'keywork/docgen/utils'
 import {
   ArrayType,
   ConditionalType,
@@ -36,7 +36,7 @@ import {
 
 type Collapse = 'object' | 'function' | 'all' | 'none'
 
-export default function () {
+export function typeHelper() {
   Handlebars.registerHelper(
     'type',
     function (

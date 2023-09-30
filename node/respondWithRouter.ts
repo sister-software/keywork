@@ -13,10 +13,10 @@
  */
 
 import { IsomorphicFetchEvent } from 'keywork/events'
-import { transformIncomingMessageToRequest } from 'keywork/node/transformers'
 import { RequestRouter } from 'keywork/router'
 import { readGlobalScope } from 'keywork/utils'
 import type { IncomingMessage, ServerResponse } from 'node:http'
+import { transformIncomingMessageToRequest } from './transformers.js'
 
 function readNodeEnv<BoundAliases = {}>(): BoundAliases {
   const globalScope = readGlobalScope()

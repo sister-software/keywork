@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-///<reference types="../types/react-dom-server-browser" />
+///<reference types="../types/react-dom-server-browser.d.ts" />
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { IReactStreamRenderer } from 'keywork/ssr'
 import { renderToReadableStream } from 'react-dom/server.browser'
+import { IReactStreamRenderer } from './ReactRendererOptions.js'
 
 export const renderReactStream: IReactStreamRenderer = async (children, options) => {
   const controller = new AbortController()

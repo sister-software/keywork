@@ -15,8 +15,7 @@
 /// <reference lib="WebWorker" />
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
-import { IsomorphicFetchEvent, isExtendableEvent } from 'keywork/events'
-import { SSRDocument } from 'keywork/events/SSRDocument'
+import { IsomorphicFetchEvent, SSRDocument, isExtendableEvent } from 'keywork/events'
 import {
   ErrorResponse,
   HTTPMethod,
@@ -28,21 +27,17 @@ import {
   routerMethodToHTTPMethod,
 } from 'keywork/http'
 import { IDisposable } from 'keywork/lifecycle'
-import { Fetcher } from 'keywork/router/Fetcher'
-import { FetcherLike } from 'keywork/router/FetcherLike'
-import { MiddlewareFetch } from 'keywork/router/MiddlewareFetch'
-import { ParsedRoute } from 'keywork/router/ParsedRoute'
-import {
-  RequestRouterDebugEndpoints,
-  RequestRouterOptions,
-  RouteDebugEntrypoint,
-} from 'keywork/router/RequestRouterOptions'
-import { RouteMatch } from 'keywork/router/RouteMatch'
-import { RouteRequestHandler } from 'keywork/router/RouteRequestHandler'
-import { isFetcher } from 'keywork/router/isFetcher'
-import { isMiddlewareDeclarationOption } from 'keywork/router/isMiddlewareDeclarationOption'
 import { ReactRendererOptions, renderReactStream } from 'keywork/ssr'
 import { KeyworkLogger, URLPatternLike, normalizeURLPattern, normalizeURLPatternInit } from 'keywork/utils'
+import { Fetcher } from './Fetcher.js'
+import { FetcherLike } from './FetcherLike.js'
+import { MiddlewareFetch } from './MiddlewareFetch.js'
+import { ParsedRoute } from './ParsedRoute.js'
+import { RequestRouterDebugEndpoints, RequestRouterOptions, RouteDebugEntrypoint } from './RequestRouterOptions.js'
+import { RouteMatch } from './RouteMatch.js'
+import { RouteRequestHandler } from './RouteRequestHandler.js'
+import { isFetcher } from './isFetcher.js'
+import { isMiddlewareDeclarationOption } from './isMiddlewareDeclarationOption.js'
 
 /**
  * Used in place of the reference-sensitive `instanceof`
@@ -569,7 +564,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
       })
 
     let possibleResponse: Response | null
-    this.logger.debug(
+    this.logger.trace(
       `Delegating \`${requestURL.pathname}\` to ${parsedRoute.kind}`,
       parsedRoute.displayName || parsedRoute.urlPattern.pathname
     )

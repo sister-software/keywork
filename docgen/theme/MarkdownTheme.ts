@@ -12,7 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import * as ProjectFiles from 'keywork/docgen/project'
+import { formatContents, readFileChangeFromGit } from 'keywork/docgen/utils'
+import { ProjectFiles } from 'keywork/node'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import * as path from 'node:path'
 import {
@@ -27,17 +28,15 @@ import {
   Theme,
   UrlMapping,
 } from 'typedoc'
-import { getKindPlural } from './groups'
-import { NavigationItem } from './navigation-item'
+import { getKindPlural } from './groups.js'
+import { NavigationItem } from './navigation-item.js'
 import {
   indexTemplate,
   reflectionMemberTemplate,
   reflectionTemplate,
   registerHelpers,
   registerPartials,
-} from './render-utils'
-import { formatContents } from './utils'
-import { readFileChangeFromGit } from './utils/sources'
+} from './render-utils.js'
 
 const NEVER_RENDER: `@${string}`[] = [
   //

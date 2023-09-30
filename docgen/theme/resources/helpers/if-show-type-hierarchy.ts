@@ -12,10 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import { DeclarationHierarchy, DeclarationReflection } from 'typedoc'
-import { PageEvent } from 'typedoc'
+import { DeclarationHierarchy, DeclarationReflection, PageEvent } from 'typedoc'
 
-export default function () {
+export function ifShowTypeHierarchyHelper() {
   Handlebars.registerHelper(
     'ifShowTypeHierarchy',
     function (this: PageEvent<DeclarationReflection>, options: Handlebars.HelperOptions) {

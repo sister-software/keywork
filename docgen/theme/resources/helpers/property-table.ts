@@ -13,10 +13,10 @@
  */
 
 import Handlebars from 'handlebars'
-import { escapeChars, stripLineBreaks } from 'keywork/docgen/theme/utils'
+import { escapeChars, stripLineBreaks } from 'keywork/docgen/utils'
 import { DeclarationReflection, ReflectionType } from 'typedoc'
 
-export default function () {
+export function propertyTableHelper() {
   Handlebars.registerHelper('propertyTable', function (this: DeclarationReflection[]) {
     const comments = this.map((param) => !!param.comment?.hasVisibleComponent())
     const hasComments = !comments.every((value) => !value)

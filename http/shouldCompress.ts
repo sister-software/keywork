@@ -14,7 +14,7 @@
 
 import type { MimeDatabase } from 'keywork/files'
 import { ContentType, parse } from 'keywork/http/headers'
-import { isCompressible } from 'keywork/http/isCompressable'
+import { isCompressible } from './isCompressable.js'
 
 /**
  * Predicate function to determine if a given content type should be compressed.

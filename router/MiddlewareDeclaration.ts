@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { Fetcher } from 'keywork/router/Fetcher'
+import type { Fetcher } from './Fetcher.js'
 
 /**
  * Middleware declaration in the convenient shape of `Map`'s constructor parameters.

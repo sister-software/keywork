@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { HTTPMethod } from 'keywork/http/HTTPMethod'
-import type { RouterMethod } from 'keywork/http/RouterMethod'
-import { methodVerbToRouterMethod } from 'keywork/http/methodVerbToRouterMethod'
+import type { HTTPMethod } from './HTTPMethod.js'
+import type { RouterMethod } from './RouterMethod.js'
+import { methodVerbToRouterMethod } from './methodVerbToRouterMethod.js'
 
 /**
  * Given a standardized uppercase method verb such as `GET`, return the normalized form.

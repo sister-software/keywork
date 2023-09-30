@@ -12,16 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/// <reference types="urlpattern-polyfill" />
+import type { IURLPattern } from 'keywork/utils'
 
-import type { Fetcher } from 'keywork/router/Fetcher'
-import type { RouteRequestHandler } from 'keywork/router/RouteRequestHandler'
+import type { Fetcher } from './Fetcher.js'
+import type { RouteRequestHandler } from './RouteRequestHandler.js'
 
 /**
  * @ignore
  */
 export interface ParsedRouteBase {
-  urlPattern: URLPattern
+  urlPattern: IURLPattern
   displayName?: string
 }
 

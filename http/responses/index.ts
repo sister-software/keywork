@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from 'keywork/http/responses/CachableResponse'
-export * from 'keywork/http/responses/ErrorResponse'
-export * from 'keywork/http/responses/HTMLResponse'
-export * from 'keywork/http/responses/JSONResponse'
-export * from 'keywork/http/responses/NotModifiedResponse'
+export * from './CachableResponse.js'
+export * from './ErrorResponse.js'
+export * from './HTMLResponse.js'
+export * from './JSONResponse.js'
+export * from './NotModifiedResponse.js'

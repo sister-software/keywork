@@ -12,9 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { CacheControlDirectives } from 'keywork/http/headers/caching'
-import { fileExtensionToContentTypeHeader } from 'keywork/http/headers/content-type-utils'
-import { CachableResponse } from 'keywork/http/responses/CachableResponse'
+import { CacheControlDirectives, fileExtensionToContentTypeHeader } from 'keywork/http/headers'
+import { CachableResponse } from './CachableResponse.js'
 
 /**
  * A response that returns a full HTML document.

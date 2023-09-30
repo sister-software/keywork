@@ -12,9 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { changeExtension } from 'keywork/docgen/file-utils'
-import { OutBuildManifest, OutDirectory, PackageJSON } from 'keywork/docgen/project'
-import { projectRootPathBuilder } from 'keywork/node/paths'
+import { changeExtension } from 'keywork/docgen/utils'
+import { ProjectFiles, projectRootPathBuilder } from 'keywork/node'
 import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
 
@@ -105,7 +104,9 @@ export function extractEntrypoints(packageName: string, importMap: ImportMap) {
 }
 
 export async function readPackageEntryPoints(): Promise<string[]> {
-  const packageJSON: NPMPackageJSON = JSON.parse(await fs.readFile(path.join(OutDirectory, 'package.json'), 'utf8'))
+  const packageJSON: NPMPackageJSON = JSON.parse(
+    await fs.readFile(path.join(ProjectFiles.OutDirectory, 'package.json'), 'utf8')
+  )
   const absoluteEntryPoints = new Set<string>()
 
   if (typeof packageJSON.exports === 'string') {
@@ -113,7 +114,7 @@ export async function readPackageEntryPoints(): Promise<string[]> {
   } else if (typeof packageJSON.exports === 'object') {
     for (const relativeExportPath of Object.values(packageJSON.exports)) {
       if (relativeExportPath.import.endsWith('.json')) continue
-      const absolutePath = path.resolve(OutDirectory, relativeExportPath.import)
+      const absolutePath = path.resolve(ProjectFiles.OutDirectory, relativeExportPath.import)
       absoluteEntryPoints.add(absolutePath)
     }
   }
@@ -143,16 +144,16 @@ export async function writeBuildManifest(filePaths: string[]) {
   const buildManifest: BuildManifest = {
     filePaths: filePaths
       .map((filePath) => {
-        return `./${filePath.substring(OutDirectory.length + 1)}`
+        return `./${filePath.substring(ProjectFiles.OutDirectory.length + 1)}`
       })
       .sort((a, b) => a.localeCompare(b)),
   }
 
-  return fs.writeFile(OutBuildManifest, JSON.stringify(buildManifest, null, 2), 'utf8')
+  return fs.writeFile(ProjectFiles.OutBuildManifest, JSON.stringify(buildManifest, null, 2), 'utf8')
 }
 
 export async function readNPMPackageJSON(
-  filePath: string = projectRootPathBuilder(PackageJSON)
+  filePath: string = projectRootPathBuilder(ProjectFiles.PackageJSON)
 ): Promise<NPMPackageJSON> {
   const packageJSONContents = await fs.readFile(filePath, 'utf8')
   return JSON.parse(packageJSONContents)

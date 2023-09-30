@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { IDisposable } from 'keywork/lifecycle'
-import type { MiddlewareFetch } from 'keywork/router/MiddlewareFetch'
-import { KeyworkLogger } from 'keywork/utils'
+import type { IDisposable } from 'keywork/lifecycle'
+import type { KeyworkLogger } from 'keywork/utils'
+import type { MiddlewareFetch } from './MiddlewareFetch.js'
 
 /**
  * ### Cloudflare Usage

@@ -13,10 +13,10 @@
  */
 
 import Handlebars from 'handlebars'
-import { spaces } from 'keywork/docgen/theme/utils'
+import { spaces } from 'keywork/docgen/utils'
 import { DeclarationHierarchy } from 'typedoc'
 
-export default function () {
+export function hierarchyHelper() {
   Handlebars.registerHelper('hierarchy', function (this: DeclarationHierarchy, level: number) {
     const md: string[] = []
     const symbol = level > 0 ? getSymbol(level) : '-'

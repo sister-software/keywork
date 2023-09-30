@@ -15,8 +15,8 @@
 /// <reference lib="WebWorker" />
 
 import type { Conditionals, CORSHeaders } from 'keywork/http/headers'
-import type { HTTPMethod } from 'keywork/http/HTTPMethod'
 import { DURATION_ONE_DAY } from 'keywork/utils'
+import type { HTTPMethod } from './HTTPMethod.js'
 
 /** @ignore */
 export type AllowedOrigins =

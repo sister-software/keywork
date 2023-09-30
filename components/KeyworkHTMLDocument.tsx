@@ -12,7 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import classNames from 'classnames'
 import { IsomorphicFetchEvent } from 'keywork/events'
 import { FC, ReactNode } from 'react'
 
@@ -35,6 +34,11 @@ export const KeyworkHTMLDocumentAppRoot = 'app-root'
  * @ignore
  */
 export const KeyworkHTMLDocumentStyleRoot = 'style-root'
+
+/**
+ * The default class name applied to the document before hydration.
+ */
+export const KeyworkStaticClassName = 'static'
 
 export enum KeyworkQueryParamKeys {
   /** The current build ID. Used to bust caches on static assets. */
@@ -83,7 +87,7 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
   return (
     <html
       lang={lang}
-      className={classNames('static', className)}
+      className={className ? `${className} ${KeyworkStaticClassName}` : KeyworkStaticClassName}
       data-browser={browserIdentifier}
       {...document.htmlAttributes}
     >
@@ -146,7 +150,7 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
 
         <script
           dangerouslySetInnerHTML={{
-            __html: `document.documentElement.classList.remove('static')`,
+            __html: `document.documentElement.classList.remove('${KeyworkStaticClassName}')`,
           }}
         />
 

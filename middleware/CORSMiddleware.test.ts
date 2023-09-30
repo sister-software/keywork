@@ -16,10 +16,10 @@
 
 import { Deno } from '@deno/shim-deno'
 import { Status } from 'keywork/errors'
-import { CORSMiddleware } from 'keywork/middleware/CORSMiddleware'
 import { RequestRouter } from 'keywork/router'
 import { assertEquals } from 'keywork/testing'
 import { DURATION_ONE_DAY } from 'keywork/utils'
+import { CORSMiddleware } from './CORSMiddleware.js'
 
 Deno.test('Middleware sets defaults', async () => {
   const middleware = new CORSMiddleware()

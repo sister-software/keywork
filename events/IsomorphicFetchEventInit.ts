@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { SSRDocument } from 'keywork/events/SSRDocument'
-
+import type { URLPatternResult } from 'keywork/utils'
+import type { SSRDocument } from './SSRDocument.js'
 /**
  * @internal
  */

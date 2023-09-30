@@ -11,9 +11,9 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-import { runtimeToTabLabel } from 'keywork/docgen/runtime'
 import * as path from 'node:path'
 import { Reflection, ReflectionKind } from 'typedoc'
+import { runtimeToTabLabel } from './runtime.js'
 
 type Runtimes = 'node' | 'deno' | 'cloudflare' | 'browser'
 const runtimeTabOrder: Runtimes[] = ['node', 'deno', 'cloudflare', 'browser']

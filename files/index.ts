@@ -19,7 +19,7 @@
  */
 /* eslint-disable header/header */
 
-export * from 'keywork/files/common'
-export * from 'keywork/files/extensionToMimeType'
-export * from 'keywork/files/files'
-export * from 'keywork/files/mime'
+export * from './common.js'
+export * from './extensionToMimeType.js'
+export * from './files.js'
+export * from './mime.js'

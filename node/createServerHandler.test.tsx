@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { createNodeServerHandler } from 'keywork/node/createServerHandler'
-import { applyNodeKeyworkPolyfills } from 'keywork/node/polyfills'
 import { RequestRouter } from 'keywork/router'
 import { KeyworkLogger } from 'keywork/utils'
 import * as http from 'node:http'
+import { createNodeServerHandler } from './createServerHandler.js'
+import { applyNodeKeyworkPolyfills } from './polyfills.js'
 
 await applyNodeKeyworkPolyfills()
 

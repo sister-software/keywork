@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { Fetcher } from 'keywork/router/Fetcher'
-import type { RouteRequestHandler } from 'keywork/router/RouteRequestHandler'
+import type { Fetcher } from './Fetcher.js'
+import type { RouteRequestHandler } from './RouteRequestHandler.js'
 
 /** @ignore */
 export type FetcherLike<BoundAliases = {}> = Fetcher<BoundAliases> | RouteRequestHandler<BoundAliases, any, any>

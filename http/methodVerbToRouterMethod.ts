@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { HTTPMethod } from 'keywork/http/HTTPMethod'
-import type { RouterMethod } from 'keywork/http/RouterMethod'
 import { ImmutableMap } from 'keywork/utils'
+import type { HTTPMethod } from './HTTPMethod.js'
+import type { RouterMethod } from './RouterMethod.js'
 
 /**
  * Given a standard uppercase HTTP method verb such as `GET`, return the router method name.

@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme/MarkdownTheme'
+import type { MarkdownTheme } from 'keywork/docgen/theme'
 import { ParameterReflection, ReflectionKind, SignatureReflection } from 'typedoc'
 
-export default function (_theme: MarkdownTheme) {
+export function signatureTitleHelper(_theme: MarkdownTheme) {
   Handlebars.registerHelper(
     'signatureTitle',
     function (this: SignatureReflection, accessor?: string, standalone = true) {

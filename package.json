@@ -83,13 +83,11 @@
     "which": "^4.0.0"
   },
   "dependencies": {
-    "@cloudflare/kv-asset-handler": "0.2.0",
-    "classnames": "^2.3.1",
     "cookie": "^0.5.0",
     "deepmerge-ts": "^5.1.0",
     "lodash.isplainobject": "^4.0.6",
     "negotiator": "^0.6.3",
-    "ulidx": "^0.3.0",
+    "ulidx": "^2.1.0",
     "urlpattern-polyfill": "^9.0.0",
     "yargs": "^17.7.2"
   },
@@ -163,10 +161,6 @@
     "./lifecycle": {
       "import": "./dist/lifecycle/index.js",
       "types": "./dist/lifecycle/index.d.ts"
-    },
-    "./logger": {
-      "import": "./dist/logger/index.js",
-      "types": "./dist/logger/index.d.ts"
     },
     "./middleware": {
       "import": "./dist/middleware/index.js",

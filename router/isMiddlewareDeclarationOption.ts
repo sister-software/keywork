@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { MiddlewareDeclaration } from 'keywork/router/MiddlewareDeclaration'
-import type { MiddlewareDeclarationLike } from 'keywork/router/MiddlewareDeclarationLike'
+import type { MiddlewareDeclaration } from './MiddlewareDeclaration.js'
+import type { MiddlewareDeclarationLike } from './MiddlewareDeclarationLike.js'
 
 /**
  * Utility function for parsing middleware options.

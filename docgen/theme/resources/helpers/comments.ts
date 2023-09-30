@@ -13,10 +13,10 @@
  */
 
 import Handlebars from 'handlebars'
-import { camelToTitleCase } from 'keywork/docgen/theme/utils'
+import { camelToTitleCase } from 'keywork/docgen/utils'
 import { Comment } from 'typedoc'
 
-export default function () {
+export function commentsHelper() {
   Handlebars.registerHelper('comments', function (comment: Comment, includeHTMLWrappers = true) {
     const md: string[] = []
     const blockTags = comment.blockTags?.filter((tag) => tag.tag !== '@returns') || []

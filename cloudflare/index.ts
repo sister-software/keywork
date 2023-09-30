@@ -12,7 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from 'keywork/cloudflare/CloudflarePagesAssetRouter'
-export * from 'keywork/cloudflare/EnvironmentBindingKinds'
-export * from 'keywork/cloudflare/WorkerSitesAssetRouter'
-export * from 'keywork/cloudflare/bundling'
+export * from './CloudflarePagesAssetRouter.js'
+export * from './EnvironmentBindingKinds.js'
+export * from './bundling.js'

@@ -12,10 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { polyfillWithModule } from 'keywork/utils/polyfills'
+import { KeyworkResourceError } from 'keywork'
+import { readGlobalScope } from './globals.js'
+import { polyfillWithModule } from './polyfills.js'
 
 type URLPatternModule = {
-  URLPattern: typeof URLPattern
+  URLPattern: IURLPattern
 }
 
 /**
@@ -25,12 +27,70 @@ export function polyfillURLPattern() {
   return polyfillWithModule<URLPatternModule>('urlpattern-polyfill', ['URLPattern'])
 }
 
+export interface IURLPattern {
+  new (init?: URLPatternInput, baseURL?: string): IURLPattern
+
+  test(input?: URLPatternInput, baseURL?: string): boolean
+
+  exec(input?: URLPatternInput, baseURL?: string): URLPatternResult | null
+
+  readonly protocol: string
+  readonly username: string
+  readonly password: string
+  readonly hostname: string
+  readonly port: string
+  readonly pathname: string
+  readonly search: string
+  readonly hash: string
+}
+
+interface URLPatternInit {
+  baseURL?: string
+  username?: string
+  password?: string
+  protocol?: string
+  hostname?: string
+  port?: string
+  pathname?: string
+  search?: string
+  hash?: string
+}
+
+export interface URLPatternResult {
+  inputs: [URLPatternInput]
+  protocol: URLPatternComponentResult
+  username: URLPatternComponentResult
+  password: URLPatternComponentResult
+  hostname: URLPatternComponentResult
+  port: URLPatternComponentResult
+  pathname: URLPatternComponentResult
+  search: URLPatternComponentResult
+  hash: URLPatternComponentResult
+}
+
+export interface URLPatternComponentResult {
+  input: string
+  groups: {
+    [key: string]: string | undefined
+  }
+}
+
+interface WithURLPatternConstructor {
+  URLPattern: IURLPattern
+}
+
+function globalScopeHasURLPattern(
+  windowOrGlobal: any = readGlobalScope()
+): windowOrGlobal is WithURLPatternConstructor {
+  return windowOrGlobal && 'URLPattern' in windowOrGlobal
+}
+
 /**
  * Either an instance of `URLPattern`,
  * or a string representing the `pathname` portion of a `URLPattern`
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern URLPattern Constructor via MDN}
  */
-export type URLPatternLike = globalThis.URLPattern | string | URL
+export type URLPatternLike = IURLPattern | string | URL
 
 interface NormalizeURLPatternOptions {
   /**
@@ -45,7 +105,7 @@ interface NormalizeURLPatternOptions {
  *
  * @category Type Cast
  */
-export function normalizeURLPattern(patternLike: URLPatternLike, options?: NormalizeURLPatternOptions) {
+export function normalizeURLPattern(patternLike: URLPatternLike, options?: NormalizeURLPatternOptions): IURLPattern {
   const input: URLPatternInit =
     typeof patternLike === 'string'
       ? {
@@ -59,7 +119,15 @@ export function normalizeURLPattern(patternLike: URLPatternLike, options?: Norma
     pathname += '*'
   }
 
-  const urlPattern = new URLPattern({
+  const globalLike = readGlobalScope()
+
+  if (!globalScopeHasURLPattern(globalLike)) {
+    throw new KeyworkResourceError(
+      '`URLPattern` does not appear to be available in this environment. Consider using a polyfill.'
+    )
+  }
+
+  const urlPattern = new globalLike.URLPattern({
     ...input,
     pathname,
   })
@@ -75,3 +143,5 @@ export function normalizeURLPattern(patternLike: URLPatternLike, options?: Norma
 export function normalizeURLPatternInit(input: URLPatternInit | string): URLPatternInit {
   return typeof input === 'string' ? { pathname: input } : input
 }
+
+export type URLPatternInput = URLPatternInit | string

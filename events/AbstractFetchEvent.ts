@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/// <reference types="urlpattern-polyfill" />
 /// <reference lib="WebWorker" />
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
-import { IsomorphicExtendableEvent } from 'keywork/events/IsomorphicExtendableEvent'
+import type { URLPatternResult } from 'keywork/utils'
+import { IsomorphicExtendableEvent } from './IsomorphicExtendableEvent.js'
 
 /**
  * @ignore

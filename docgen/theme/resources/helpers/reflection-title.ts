@@ -13,12 +13,11 @@
  */
 import dashify from 'dashify'
 import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme/MarkdownTheme'
-import { escapeChars } from 'keywork/docgen/theme/utils'
-import { parseModel } from 'keywork/docgen/theme/utils/model'
+import type { MarkdownTheme } from 'keywork/docgen/theme'
+import { escapeChars, parseModel } from 'keywork/docgen/utils'
 import { PageEvent, SignatureReflection } from 'typedoc'
 
-export default function (_theme: MarkdownTheme) {
+export function reflectionTitleHelper(_theme: MarkdownTheme) {
   Handlebars.registerHelper('reflectionTitle', function <
     T extends SignatureReflection,
   >(this: PageEvent<T>, shouldEscape = true) {

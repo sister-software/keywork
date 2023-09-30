@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { respondWithRouter } from 'keywork/node/respondWithRouter'
 import type { RequestRouter } from 'keywork/router'
 import type { IncomingMessage, ServerResponse } from 'node:http'
+import { respondWithRouter } from './respondWithRouter.js'
 
 /**
  * Node-compatible callback for use with `http.createServer`

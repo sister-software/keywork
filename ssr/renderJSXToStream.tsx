@@ -12,17 +12,15 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkHTMLDocument } from 'keywork/components/KeyworkHTMLDocument'
-import { KeyworkProviders } from 'keywork/components/KeyworkProvidersComponent'
-import { _SSRPropsEmbed } from 'keywork/components/SSRPropsEmbed'
-import { DocumentHeadPortal, FetchEventProvider, StaticPropsContext } from 'keywork/contexts'
+import { KeyworkHTMLDocument, KeyworkProviders, _SSRPropsEmbed } from 'keywork/components'
+import { FetchEventProvider, StaticPropsContext } from 'keywork/contexts'
 import { KeyworkResourceError } from 'keywork/errors'
 import { IsomorphicFetchEvent } from 'keywork/events'
-import { ReactRenderStreamResult, ReactRendererOptions } from 'keywork/ssr'
-import { renderReactStream } from 'keywork/ssr/stream'
 import { DEFAULT_LOG_LEVEL, KeyworkLogger } from 'keywork/utils'
 import React from 'react'
 import type { ReactDOMServerReadableStream } from 'react-dom/server'
+import { ReactRenderStreamResult, ReactRendererOptions } from './ReactRendererOptions.js'
+import { renderReactStream } from './stream.js'
 
 /**
  * @ignore
@@ -48,8 +46,6 @@ export async function renderJSXToStream<StaticProps extends {} | null = null>(
   const Providers = reactRenderOptions?.Providers || KeyworkProviders
 
   const staticProps = pageElement.props
-
-  console.log('DocumentHeadPortal', DocumentHeadPortal.state)
 
   const appDocument = (
     <StaticPropsContext.Provider value={staticProps!}>

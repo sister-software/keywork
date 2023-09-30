@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { EnvironmentContext } from 'keywork/contexts/EnvironmentContext'
-import { KeyworkLoggerProvider, KeyworkLoggerProviderProps } from 'keywork/contexts/LoggerContext'
-import { RequestContext } from 'keywork/contexts/RequestContext'
-import { URLMatchContext } from 'keywork/contexts/URLMatchContext'
 import { IsomorphicFetchEvent } from 'keywork/events'
+import { EnvironmentContext } from './EnvironmentContext.js'
+import { KeyworkLoggerProvider, KeyworkLoggerProviderProps } from './LoggerContext.js'
+import { RequestContext } from './RequestContext.js'
+import { URLMatchContext } from './URLMatchContext.js'
 
 interface MiddlewareContextProps extends KeyworkLoggerProviderProps {
   event: IsomorphicFetchEvent<any, any, any>

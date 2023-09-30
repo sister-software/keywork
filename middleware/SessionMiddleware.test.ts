@@ -15,9 +15,9 @@
 import { Deno } from '@deno/shim-deno'
 import { parse as parseCookies } from 'cookie'
 import { CookieHeaders } from 'keywork/http'
-import { SessionMiddleware } from 'keywork/middleware/SessionMiddleware'
 import { RequestRouter } from 'keywork/router'
 import { assert, assertEquals } from 'keywork/testing'
+import { SessionMiddleware } from './SessionMiddleware.js'
 
 Deno.test('Session Middleware', async () => {
   const sessionMiddleware = new SessionMiddleware()

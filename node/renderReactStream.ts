@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-///<reference types="../types/react-dom-server-node" />
+///<reference types="../types/react-dom-server-node.d.ts" />
 ///<reference lib="webworker" />
 
 import { KeyworkResourceError } from 'keywork/errors'
-import type { IReactStreamRenderer } from 'keywork/ssr/ReactRendererOptions'
+import type { IReactStreamRenderer } from 'keywork/ssr'
 import { PipeableStream, ReactDOMServerReadableStream, renderToPipeableStream } from 'react-dom/server.node'
 
 /**

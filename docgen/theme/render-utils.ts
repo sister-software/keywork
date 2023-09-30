@@ -14,43 +14,44 @@
 
 import Handlebars from 'handlebars'
 import { MarkdownTheme } from 'keywork/docgen/theme'
-import attemptExternalResolution from 'keywork/docgen/theme/resources/helpers/attemptExternalResolution'
-import breadcrumbsHelper from 'keywork/docgen/theme/resources/helpers/breadcrumbs'
-import commentHelper from 'keywork/docgen/theme/resources/helpers/comment'
-import commentsHelper from 'keywork/docgen/theme/resources/helpers/comments'
-import declarationTitleHelper from 'keywork/docgen/theme/resources/helpers/declaration-title'
-import escapeHelper from 'keywork/docgen/theme/resources/helpers/escape'
-import frontmatter from 'keywork/docgen/theme/resources/helpers/frontmatter'
-import hierarchyHelper from 'keywork/docgen/theme/resources/helpers/hierarchy'
-import humanizeReflectionName from 'keywork/docgen/theme/resources/helpers/humanizeReflectionName'
-import ifIsReference from 'keywork/docgen/theme/resources/helpers/if-is-reference'
-import ifNamedAnchors from 'keywork/docgen/theme/resources/helpers/if-named-anchors'
-import ifShowBreadcrumbsHelper from 'keywork/docgen/theme/resources/helpers/if-show-breadcrumbs'
-import ifShowNamedAnchorsHelper from 'keywork/docgen/theme/resources/helpers/if-show-named-anchors'
-import ifShowPageTitleHelper from 'keywork/docgen/theme/resources/helpers/if-show-page-title'
-import ifShowReturnsHelper from 'keywork/docgen/theme/resources/helpers/if-show-returns'
-import ifShowTypeHierarchyHelper from 'keywork/docgen/theme/resources/helpers/if-show-type-hierarchy'
-import indexSignatureTitleHelper from 'keywork/docgen/theme/resources/helpers/index-signature-title'
-import parameterTableHelper from 'keywork/docgen/theme/resources/helpers/parameter-table'
-import propertyTableHelper from 'keywork/docgen/theme/resources/helpers/property-table'
-import referenceMember from 'keywork/docgen/theme/resources/helpers/reference-member'
-import reflectionPathHelper from 'keywork/docgen/theme/resources/helpers/reflection-path'
-import reflectionTitleHelper from 'keywork/docgen/theme/resources/helpers/reflection-title'
-import relativeUrlHelper from 'keywork/docgen/theme/resources/helpers/relative-url'
-import returns from 'keywork/docgen/theme/resources/helpers/returns'
-import signatureTitleHelper from 'keywork/docgen/theme/resources/helpers/signature-title'
-import tocHelper from 'keywork/docgen/theme/resources/helpers/toc'
-import typeHelper from 'keywork/docgen/theme/resources/helpers/type'
-import typeAndParentHelper from 'keywork/docgen/theme/resources/helpers/type-and-parent'
-import typeParameterTableHelper from 'keywork/docgen/theme/resources/helpers/type-parameter-table'
-import usageTabsHelper from 'keywork/docgen/theme/resources/helpers/usage-tabs'
+
+import {
+  attemptExternalResolutionHelper,
+  breadcrumbsHelper,
+  commentHelper,
+  commentsHelper,
+  declarationTitleHelper,
+  escapeHelper,
+  frontmatterHelper,
+  hierarchyHelper,
+  humanizeReflectionName,
+  ifIsReference,
+  ifNamedAnchors,
+  ifShowBreadcrumbsHelper,
+  ifShowNamedAnchorsHelper,
+  ifShowPageTitleHelper,
+  ifShowReturnsHelper,
+  ifShowTypeHierarchyHelper,
+  indexSignatureTitleHelper,
+  parameterTableHelper,
+  propertyTableHelper,
+  referenceMemberHelper,
+  reflectionPathHelper,
+  reflectionTitleHelper,
+  relativeURLHelper,
+  returnsHelper,
+  signatureTitleHelper,
+  tocHelper,
+  typeAndParentHelper,
+  typeHelper,
+  typeParameterTableHelper,
+  usageTabsHelper,
+} from 'docgen/theme/resources/helpers/index.js'
+import { projectRootPathBuilder } from 'keywork/node'
 import { readFileSync, readdirSync } from 'node:fs'
 import * as path from 'node:path'
-import { fileURLToPath } from 'node:url'
 
-const __filename = fileURLToPath(import.meta.url)
-const __dirname = path.dirname(__filename)
-const TEMPLATE_PATH = path.join(__dirname, 'resources', 'templates')
+const TEMPLATE_PATH = projectRootPathBuilder('docgen', 'templates')
 
 export const indexTemplate = Handlebars.compile(readFileSync(path.join(TEMPLATE_PATH, 'index.hbs'), 'utf8'))
 
@@ -61,7 +62,7 @@ export const reflectionMemberTemplate = Handlebars.compile(
 )
 
 export function registerPartials() {
-  const partialsFolder = path.join(__dirname, 'resources', 'partials')
+  const partialsFolder = projectRootPathBuilder('docgen', 'partials')
   const partialFiles = readdirSync(partialsFolder)
 
   for (const partialFile of partialFiles) {
@@ -72,8 +73,8 @@ export function registerPartials() {
 }
 
 export function registerHelpers(theme: MarkdownTheme) {
-  frontmatter()
-  attemptExternalResolution(theme)
+  frontmatterHelper()
+  attemptExternalResolutionHelper(theme)
   breadcrumbsHelper(theme)
   commentHelper(theme)
   commentsHelper()
@@ -91,12 +92,12 @@ export function registerHelpers(theme: MarkdownTheme) {
   indexSignatureTitleHelper()
   parameterTableHelper()
   propertyTableHelper()
-  referenceMember()
+  referenceMemberHelper()
   reflectionPathHelper()
   usageTabsHelper()
   reflectionTitleHelper(theme)
-  relativeUrlHelper(theme)
-  returns()
+  relativeURLHelper(theme)
+  returnsHelper()
   signatureTitleHelper(theme)
   tocHelper(theme)
   typeHelper()

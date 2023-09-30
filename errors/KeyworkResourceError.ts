@@ -12,8 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ErrorJSONBody } from 'keywork/errors/common'
 import { Status, STATUS_TEXT } from 'keywork/http'
+import { ErrorJSONBody } from './common.js'
+
 export { Status, STATUS_TEXT }
 
 /**
@@ -28,7 +29,7 @@ export const $ClassID = 'Keywork.KeyworkResourceError'
  * An error class that feels fits nicely into an incoming HTTP request handler.
  *
  * ```ts
- * import { KeyworkResourceError, StatusCodes } from 'keywork/errors'
+ * import { KeyworkResourceError, StatusCodes } from 'keywork'
  *
  * if (isLoggedIn(someUser)) {
  *   throw new KeyworkResourceError("You must be logged in to do that", StatusCodes.UNAUTHORIZED)

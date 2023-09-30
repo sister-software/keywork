@@ -72,7 +72,7 @@ export class NodeStaticFileRouter extends RequestRouter {
       .catch(() => false)
 
     if (!fileExists) {
-      console.log('....', filePathAbsolute)
+      // console.log('....', filePathAbsolute)
       return next()
     }
 

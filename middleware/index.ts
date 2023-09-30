@@ -62,7 +62,7 @@
  */
 /* eslint-disable header/header */
 
-export * from 'keywork/middleware/CORSMiddleware'
-export * from 'keywork/middleware/CompressionMiddleware'
-export * from 'keywork/middleware/ServiceBindingRouter'
-export * from 'keywork/middleware/SessionMiddleware'
+export * from './CORSMiddleware.js'
+export * from './CompressionMiddleware.js'
+export * from './ServiceBindingRouter.js'
+export * from './SessionMiddleware.js'

@@ -26,11 +26,10 @@
  */
 /* eslint-disable header/header */
 
-export * from 'keywork/http/RouterMethod'
-export * from 'keywork/http/headers/caching'
-export * from 'keywork/http/headers/common'
-export * from 'keywork/http/headers/content-encoding'
-export * from 'keywork/http/headers/content-type-parser'
-export * from 'keywork/http/headers/content-type-utils'
-export * from 'keywork/http/headers/csp-directives'
-export * from 'keywork/http/headers/csp-policies'
+export * from './caching.js'
+export * from './common.js'
+export * from './content-encoding.js'
+export * from './content-type-parser.js'
+export * from './content-type-utils.js'
+export * from './csp-directives.js'
+export * from './csp-policies.js'

@@ -15,7 +15,7 @@
 import Handlebars from 'handlebars'
 import { ReferenceReflection } from 'typedoc'
 
-export default function () {
+export function referenceMemberHelper() {
   Handlebars.registerHelper('referenceMember', function (this: ReferenceReflection) {
     const referenced = this.tryGetTargetReflectionDeep()
 

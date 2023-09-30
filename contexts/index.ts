@@ -65,11 +65,10 @@
  */
 /* eslint-disable header/header */
 
-export * from 'keywork/contexts/DocumentHeaderProvider'
-export * from 'keywork/contexts/EnvironmentContext'
-export * from 'keywork/contexts/FetchEventProvider'
-export * from 'keywork/contexts/LocationContext'
-export * from 'keywork/contexts/LoggerContext'
-export * from 'keywork/contexts/RequestContext'
-export * from 'keywork/contexts/StaticPropsContext'
-export * from 'keywork/contexts/URLMatchContext'
+export * from './EnvironmentContext.js'
+export * from './FetchEventProvider.js'
+export * from './LocationContext.js'
+export * from './LoggerContext.js'
+export * from './RequestContext.js'
+export * from './StaticPropsContext.js'
+export * from './URLMatchContext.js'

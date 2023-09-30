@@ -14,10 +14,10 @@
 
 import dashify from 'dashify'
 import Handlebars from 'handlebars'
-import { escapeChars } from 'keywork/docgen/theme/utils'
+import { escapeChars } from 'keywork/docgen/utils'
 import { ReferenceReflection, ReflectionKind } from 'typedoc'
 
-export default function () {
+export function humanizeReflectionName() {
   Handlebars.registerHelper('humanizeReflectionName', function (this: ReferenceReflection) {
     const url = this.kindOf(ReflectionKind.Reference) ? this.getTargetReflectionDeep().url : null
 

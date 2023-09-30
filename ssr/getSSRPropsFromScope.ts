@@ -13,8 +13,8 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { globalScopeHasSSRProps } from 'keywork/ssr/globalScopeHasSSRProps'
-import { globalScopeSSRKey } from 'keywork/ssr/globalScopeSSRKey'
+import { globalScopeHasSSRProps } from './globalScopeHasSSRProps.js'
+import { globalScopeSSRKey } from './globalScopeSSRKey.js'
 
 /**
  *

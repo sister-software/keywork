@@ -13,7 +13,7 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { prettyJSON } from 'keywork/utils'
+import { prettyJSON } from './json.js'
 
 /**
  * An common shape of the `Console` interface.

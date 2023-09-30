@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import type { URLPatternResult } from 'keywork/utils'
 import { createContext, useContext } from 'react'
-
 /**
  * Context for URL matching.
  */

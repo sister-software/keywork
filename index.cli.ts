@@ -14,7 +14,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { serveBuilder, serveCommand } from 'keywork/cli/serve'
+import { serveBuilder, serveCommand } from 'keywork/cli'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 

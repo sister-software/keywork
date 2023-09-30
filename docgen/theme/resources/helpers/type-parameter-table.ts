@@ -13,10 +13,10 @@
  */
 
 import Handlebars from 'handlebars'
-import { stripLineBreaks } from 'keywork/docgen/theme/utils'
+import { stripLineBreaks } from 'keywork/docgen/utils'
 import { TypeParameterReflection } from 'typedoc'
 
-export default function () {
+export function typeParameterTableHelper() {
   Handlebars.registerHelper('typeParameterTable', function (this: TypeParameterReflection[]) {
     return table(this)
   })

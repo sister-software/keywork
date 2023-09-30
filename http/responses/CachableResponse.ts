@@ -13,8 +13,8 @@
  */
 
 import { Status } from 'keywork/errors'
-import { CacheControlDirectives, createCacheControlHeader, isETagMatch } from 'keywork/http/headers/caching'
-import { NotModifiedResponse } from 'keywork/http/responses/NotModifiedResponse'
+import { CacheControlDirectives, createCacheControlHeader, isETagMatch } from 'keywork/http/headers'
+import { NotModifiedResponse } from './NotModifiedResponse.js'
 
 /**
  * A client-side cachable response.

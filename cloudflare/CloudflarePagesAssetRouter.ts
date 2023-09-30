@@ -12,14 +12,13 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ServiceBindingRouter } from 'keywork/middleware/ServiceBindingRouter'
+import { ServiceBindingRouter } from 'keywork/middleware'
 
 /**
  * An asset environment binding available within Cloudflare Pages.
  *
  * This binding only exists in Cloudflare __Pages__.
  *
- * See {@link Keywork#Router#Cloudflare.WorkerSitesAssetRouter `WorkerSitesAssetRouter`} For use with Cloudflare Pages
  * @ignore
  */
 export const CloudflarePagesBindingAlias = 'ASSETS'

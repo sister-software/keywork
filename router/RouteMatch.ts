@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { ParsedRoute } from 'keywork/router/ParsedRoute'
-
+import type { URLPatternResult } from 'keywork/utils'
+import type { ParsedRoute } from './ParsedRoute.js'
 /**
  * @ignore
  */

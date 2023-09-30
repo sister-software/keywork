@@ -17,7 +17,7 @@
 /* eslint-disable header/header */
 
 import { extensionToMimeType, fileNameToExtension } from 'keywork/files'
-import { PlainText } from 'keywork/files/extensions/PlainText'
+import { PlainText } from 'keywork/files/extensions'
 
 /**
  * Response headers with Content-Type.

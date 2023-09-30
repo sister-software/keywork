@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Runtime, runtimePattern, runtimeToTabLabel } from 'keywork/docgen/runtime'
+import { Runtime, runtimePattern, runtimeToTabLabel } from 'keywork/docgen/utils'
 import * as MDAST from 'mdast'
 import * as Unist from 'unist'
 import { visit } from 'unist-util-visit'

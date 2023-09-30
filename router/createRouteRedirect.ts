@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { RouteRequestHandler } from 'keywork/router/RouteRequestHandler'
 import { KeyworkLogger } from 'keywork/utils'
+import type { RouteRequestHandler } from './RouteRequestHandler.js'
 
 /** @ignore */
 export type ResponseRedirectStatus = 301 | 302 | 303 | 307 | 308
@@ -41,15 +41,13 @@ export function createRouteRedirect(
    * @defaultValue `302` MOVED_TEMPORARILY
    */
   statusCode: ResponseRedirectStatus = 302,
-  logger: KeyworkLogger = RedirectLogger
+  logger?: KeyworkLogger
 ): RouteRequestHandler<any, any, any, any> {
   const routeRequestHandler: RouteRequestHandler = ({ request }) => {
-    logger.info(`Redirecting from ${request.url} to ${destinationURL.toString()}`)
+    logger?.info(`Redirecting from ${request.url} to ${destinationURL.toString()}`)
 
     return Response.redirect(destinationURL.toString(), statusCode)
   }
 
   return routeRequestHandler
 }
-
-const RedirectLogger = new KeyworkLogger('Redirect')

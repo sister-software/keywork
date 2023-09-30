@@ -13,7 +13,7 @@
  */
 /* eslint-disable no-restricted-globals */
 
-import type { RouteMatch } from 'keywork/router/RouteMatch'
+import type { RouteMatch } from './RouteMatch.js'
 
 /** @ignore */
 export type MiddlewareReturnTypes = null | Response | Promise<null | Response>

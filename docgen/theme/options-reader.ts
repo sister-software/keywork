@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Options, OptionsReader } from 'typedoc'
+import type { Options, OptionsReader } from 'typedoc'
 
 export class MarkdownThemeOptionsReader implements OptionsReader {
   priority = 1000

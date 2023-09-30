@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import type { CacheControlDirectives } from 'keywork/http/headers'
 import { fileExtensionToContentTypeHeader } from 'keywork/http/headers'
-import type { CacheControlDirectives } from 'keywork/http/headers/caching'
-import { CachableResponse } from 'keywork/http/responses/CachableResponse'
+import { CachableResponse } from './CachableResponse.js'
 
 /**
  * A response sent to the client containing a JSON object.

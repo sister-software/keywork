@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import { createUsageMap, parseModel, renderBrowserDemo, renderUsageTabs } from 'keywork/docgen/theme/utils/model'
+import { createUsageMap, parseModel, renderBrowserDemo, renderUsageTabs } from 'keywork/docgen/utils'
 import { PageEvent, SignatureReflection } from 'typedoc'
 
-export default function () {
+export function usageTabsHelper() {
   Handlebars.registerHelper('usageTabs', function <T extends SignatureReflection>(this: PageEvent<T>) {
     const parsedModel = parseModel(this.model)
     const usageByRuntime = createUsageMap(parsedModel)

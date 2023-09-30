@@ -13,7 +13,7 @@
  */
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
-import { readGlobalScope } from 'keywork/utils/globals'
+import { readGlobalScope } from './globals.js'
 
 /** @internal */
 const platformModulesCache = new Map<string, any>()

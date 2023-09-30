@@ -15,9 +15,9 @@
 /// <reference lib="WebWorker" />
 
 import { Deno } from '@deno/shim-deno'
-import { CompressionMiddleware } from 'keywork/middleware/CompressionMiddleware'
 import { RequestRouter } from 'keywork/router'
 import { assertEquals } from 'keywork/testing'
+import { CompressionMiddleware } from './CompressionMiddleware.js'
 
 const dStream = new DecompressionStream('gzip')
 

@@ -14,9 +14,9 @@
 
 import Handlebars from 'handlebars'
 
-import type { MarkdownTheme } from 'keywork/docgen/theme/MarkdownTheme'
+import type { MarkdownTheme } from 'keywork/docgen/theme'
 
-export default function (theme: MarkdownTheme) {
+export function relativeURLHelper(theme: MarkdownTheme) {
   Handlebars.registerHelper('relativeURL', function (url: string) {
     return url ? (theme.publicPath ? theme.publicPath + url : theme.getRelativeUrl(url)) : url
   })
