@@ -12,13 +12,19 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { globalScopeSSRKey, GlobalScopeWithKeyworkSSRProps } from './globalScopeSSRKey.js'
+/**
+ * A boolean-like query param that hints to the worker that client-side React
+ * only needs the static props for an upcoming page transition.
+ */
+export const KEYWORK_STATIC_PROPS_QUERY_KEY = 'static-props'
 
 /**
- * Predicate to check if a global scope has embedded Keywork SSR props.
+ * Predicate to determine if a URL is a static props request.
  */
-export function globalScopeHasSSRProps<SSRProps extends {}>(
-  globalScope: unknown
-): globalScope is GlobalScopeWithKeyworkSSRProps<SSRProps> {
-  return Boolean(globalScope && globalScopeSSRKey in (globalScope as any))
+export function isStaticPropsRequestURL(url: URL | string): boolean {
+  if (typeof url === 'string') {
+    url = new URL(url)
+  }
+
+  return url.searchParams.has(KEYWORK_STATIC_PROPS_QUERY_KEY)
 }

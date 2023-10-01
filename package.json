@@ -118,6 +118,14 @@
       "import": "./dist/cli/index.js",
       "types": "./dist/cli/index.d.ts"
     },
+    "./client": {
+      "import": "./dist/client/index.js",
+      "types": "./dist/client/index.d.ts"
+    },
+    "./logging": {
+      "import": "./dist/logging/index.js",
+      "types": "./dist/logging/index.d.ts"
+    },
     "./node": {
       "import": "./dist/node/index.js",
       "types": "./dist/node/index.d.ts"
@@ -125,10 +133,6 @@
     "./components": {
       "import": "./dist/components/index.js",
       "types": "./dist/components/index.d.ts"
-    },
-    "./contexts": {
-      "import": "./dist/contexts/index.js",
-      "types": "./dist/contexts/index.d.ts"
     },
     "./errors": {
       "import": "./dist/errors/index.js",
@@ -185,6 +189,10 @@
     "./utils": {
       "import": "./dist/utils/index.js",
       "types": "./dist/utils/index.d.ts"
+    },
+    "./uri": {
+      "import": "./dist/uri/index.js",
+      "types": "./dist/uri/index.d.ts"
     },
     "./*": "./dist/*.js"
   },

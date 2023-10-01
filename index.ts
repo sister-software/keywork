@@ -155,8 +155,7 @@ export * from 'keywork/middleware'
  * {@link Keywork#ReactUtils **_Explore the React Utilities Module_ ›**}
  */
 export * from 'keywork/ssr'
-export * from 'keywork/components'
-export * from 'keywork/contexts'
+export * from 'keywork/uri'
 //
 /**
  * Designed with familiarity in mind, the server-side routing API
@@ -205,3 +204,4 @@ export * from 'keywork/router'
  */
 export * from 'keywork/utils'
 export * from 'keywork/cloudflare'
+export * from 'keywork/client'

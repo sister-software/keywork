@@ -14,9 +14,9 @@
 
 import { createContext, useContext, useMemo } from 'react'
 
-import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_PREFIX, KeyworkLogLevel, KeyworkLogger } from 'keywork/utils'
+import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_PREFIX, KeyworkLogLevel, KeyworkLogger } from './KeyworkLogger.js'
 
-export const KeyworkLoggerContext = createContext<KeyworkLogger>(null as any)
+export const KeyworkLoggerContext = createContext<KeyworkLogger>(undefined as any)
 KeyworkLoggerContext.displayName = 'KeyworkLoggerContext'
 
 /**

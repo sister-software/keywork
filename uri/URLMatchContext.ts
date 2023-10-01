@@ -12,21 +12,34 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { URLPatternResult } from 'keywork/utils'
+import { IURLPattern, type URLPatternResult } from 'keywork/uri'
 import { createContext, useContext } from 'react'
+
+/**
+ * Context for injecting a URL pattern.
+ *
+ * @internal
+ */
+export const URLPatternContext = createContext<IURLPattern>(undefined as any)
+URLPatternContext.displayName = 'URLPatternContext'
+
 /**
  * Context for URL matching.
+ *
+ * This is the result of matching the current URL against a URL pattern.
+ *
+ * @internal
  */
-export const URLMatchContext = createContext<URLPatternResult>(undefined as any)
-URLMatchContext.displayName = 'URLMatchContext'
+export const URLPatternResultContext = createContext<URLPatternResult>(undefined as any)
+URLPatternResultContext.displayName = 'URLMatchContext'
 
 /**
  * Hook for URL matching.
  * @returns The URL pattern result.
  * @see https://developer.mozilla.org/en-US/docs/Web/API/URLPatternResult
  */
-export function useMatch() {
-  return useContext(URLMatchContext)
+export function useURLPatternResult() {
+  return useContext(URLPatternResultContext)
 }
 
 /**
@@ -35,6 +48,6 @@ export function useMatch() {
  * @see https://developer.mozilla.org/en-US/docs/Web/API/URLPatternResult/parameters
  */
 export function useParams<ExpectedParams = Record<string, string>>() {
-  const match = useMatch()
+  const match = useURLPatternResult()
   return match.pathname.groups as unknown as ExpectedParams
 }

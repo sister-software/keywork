@@ -13,42 +13,13 @@
  */
 
 import { IsomorphicFetchEvent } from 'keywork/events'
+import { KEYWORK_APP_ROOT, KEYWORK_STYLE_ROOT } from 'keywork/utils'
 import { FC, ReactNode } from 'react'
-
-/**
- * The default ID assigned to the React root element.
- *
- * ```tsx
- * <div id={KeyworkHTMLDocumentAppRoot}>{children}</div>
- * ```
- * @ignore
- */
-export const KeyworkHTMLDocumentAppRoot = 'app-root'
-
-/**
- * The default ID assigned to the React root style element.
- *
- * ```tsx
- * <div id={KeyworkHTMLDocumentStyleRoot}>{children}</div>
- * ```
- * @ignore
- */
-export const KeyworkHTMLDocumentStyleRoot = 'style-root'
 
 /**
  * The default class name applied to the document before hydration.
  */
 export const KeyworkStaticClassName = 'static'
-
-export enum KeyworkQueryParamKeys {
-  /** The current build ID. Used to bust caches on static assets. */
-  BuildID = 'build-id',
-  /**
-   * A boolean-like query param that hints to the worker that client-side React
-   * only needs the static props for an upcoming page transition.
-   */
-  StaticProps = 'static-props',
-}
 
 export interface KeyworkHTMLDocumentProps {
   moduleManifest?: string[]
@@ -74,7 +45,7 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
 }) => {
   /** Added to trigger cache busting. */
   const assetSearchParams = new URLSearchParams({
-    [KeyworkQueryParamKeys.BuildID]: buildId || 'development',
+    buildID: buildId || 'development',
   })
 
   const $assetSearchParams = assetSearchParams.toString()
@@ -158,8 +129,8 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
         {document.script}
       </head>
       <body>
-        <div id={KeyworkHTMLDocumentAppRoot}>{children}</div>
-        <div id={KeyworkHTMLDocumentStyleRoot} />
+        <div id={KEYWORK_APP_ROOT}>{children}</div>
+        <div id={KEYWORK_STYLE_ROOT} />
 
         {document.omitHydrationScript ? null : <script type="module" src={`/main.js?${$assetSearchParams}`}></script>}
       </body>

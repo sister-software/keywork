@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { KeyworkLogger } from 'keywork/logging'
 import { RequestRouter } from 'keywork/router'
-import { KeyworkLogger } from 'keywork/utils'
 import * as http from 'node:http'
 import { createNodeServerHandler } from './createServerHandler.js'
 import { applyNodeKeyworkPolyfills } from './polyfills.js'

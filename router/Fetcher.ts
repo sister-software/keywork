@@ -13,7 +13,7 @@
  */
 
 import type { IDisposable } from 'keywork/lifecycle'
-import type { KeyworkLogger } from 'keywork/utils'
+import type { KeyworkLogger } from 'keywork/logging'
 import type { MiddlewareFetch } from './MiddlewareFetch.js'
 
 /**

@@ -12,20 +12,21 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { URLPatternResult } from 'keywork/utils'
+import type { URLPatternResult } from 'keywork/uri'
 import type { SSRDocument } from './SSRDocument.js'
+
 /**
  * @internal
  */
 export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> {
   /**
-   * The incoming request received by the Worker.
+   * The incoming request received by the Keywork router.
    *
    * Both the request's `url` property and the parent `IsomorphicFetchEvent` will reflect
    * the current parsed route handler of `RequestRouter`.
    * @see {IsomorphicFetchEvent#originalURL}
    */
-  request: Request
+  request?: Request
 
   originalURL: string
 

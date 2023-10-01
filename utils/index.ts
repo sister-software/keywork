@@ -12,16 +12,13 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './URLPattern.js'
+export * from './constants.js'
 export * from './datetime.js'
 export * from './globals.js'
 export * from './ids.js'
 export * from './json.js'
-export * from './logging.js'
 export * from './map.js'
 export * from './numbers.js'
 export * from './paths.js'
 export * from './polyfills.js'
-export * from './requestAnimationFramePromise.js'
 export * from './strings.js'
-export * from './waitUntilDOMReady.js'

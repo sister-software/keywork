@@ -12,12 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { URLPatternResult } from 'keywork/uri'
-import type { ParsedRoute } from './ParsedRoute.js'
-/**
- * @ignore
- */
-export interface RouteMatch<BoundAliases = {}> {
-  match: URLPatternResult
-  parsedRoute: ParsedRoute<BoundAliases>
-}
+export * from './KeyworkPatternToPageComponent.js'
+export * from './SSRPropsProvider.js'
+export * from './animation.js'
+export * from './dom.js'
+export * from './hydrate.js'

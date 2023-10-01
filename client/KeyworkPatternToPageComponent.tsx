@@ -12,7 +12,50 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { normalizeURLPattern, normalizeURLPatternInit } from 'keywork/utils'
+import { useRequestURL } from 'keywork/http'
+import { URLPatternResultContext, normalizeURLPattern, normalizeURLPatternInit } from 'keywork/uri'
+import { FC, useMemo } from 'react'
+import { useSSRProps } from './SSRPropsProvider.js'
+
+export interface KeyworkBrowserRouterProps {
+  patternToPageComponent: PatternToPageComponentMap<any>
+}
+
+/**
+ * @beta
+ * @ignore
+ */
+export const KeyworkPatternToPageComponent: FC<KeyworkBrowserRouterProps> = ({ patternToPageComponent }) => {
+  const staticProps = useSSRProps() as any
+  const location = useRequestURL()
+
+  const possibleMatch = useMemo(() => {
+    return matchRoute(patternToPageComponent, location)
+  }, [patternToPageComponent, location])
+
+  const Component = useMemo(() => {
+    if (!possibleMatch) return FallbackComponent
+    const _Component = patternToPageComponent.get(possibleMatch.pathname.groups['0']!)
+
+    return _Component || FallbackComponent
+  }, [patternToPageComponent, possibleMatch])
+
+  return (
+    <URLPatternResultContext.Provider value={possibleMatch!}>
+      <Component {...staticProps} />
+    </URLPatternResultContext.Provider>
+  )
+}
+
+const FallbackComponent: FC = () => {
+  return (
+    <>
+      <h1>Keywork Error</h1>
+      <h2>Page not found</h2>
+    </>
+  )
+}
+
 /**
  * A **client-side** mapping of path patterns to their respective page components.
  * This is useful if your app bundles all React route handlers into a single Worker.

@@ -24,7 +24,9 @@
  */
 /* eslint-disable header/header */
 
-export type { IsomorphicFetchEventInit } from './AbstractFetchEvent.js'
+export * from './EnvironmentContext.js'
+export * from './FetchEventProvider.js'
 export * from './IsomorphicExtendableEvent.js'
 export * from './IsomorphicFetchEvent.js'
+export * from './IsomorphicFetchEventInit.js'
 export * from './SSRDocument.js'

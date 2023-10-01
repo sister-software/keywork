@@ -31,7 +31,7 @@ export function useRequest() {
 /**
  * Hook for consuming the current request URL.
  */
-export function useURL(): URL {
+export function useRequestURL(): URL {
   const request = useContext(RequestContext)
 
   return useMemo(() => new URL(request.url), [request])
@@ -42,7 +42,7 @@ export function useURL(): URL {
  * @returns The current request URL search parameters.
  */
 export function useSearchParams(): URLSearchParams {
-  const url = useURL()
+  const url = useRequestURL()
 
   return useMemo(() => new URLSearchParams(url.search), [url])
 }

@@ -12,22 +12,5 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * The global key where SSR props are assigned.
- * This includes a ':' character to prevent `document.querySelector` from matching this key.
- * @internal
- */
-export const globalScopeSSRKey = ':KeyworkSSRProps:'
-
-/**
- * @ignore
- */
-export type GlobalScopeSSRKey = typeof globalScopeSSRKey
-
-/**
- * @ignore
- */
-export interface GlobalScopeWithKeyworkSSRProps<SSRProps extends {} = {}> extends Record<GlobalScopeSSRKey, SSRProps> {
-  document?: unknown
-  location: URL
-}
+export * from './KeyworkLogger.js'
+export * from './LoggerContext.js'

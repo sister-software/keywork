@@ -12,23 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { createContext, useContext } from 'react'
-
-/**
- * Context for consuming the current location.
- * This is the URL of the current page and should be used
- * when hydrating the application.
- *
- * @see {KeyworkApp}
- * @internal
- */
-export const LocationContext = createContext<URL>(undefined as any)
-LocationContext.displayName = 'LocationContext'
-
-/**
- * Hook for consuming the current location during hydration.
- * @internal
- */
-export function useLocation() {
-  return useContext(LocationContext)
-}
+export * from './URLContext.js'
+export * from './URLMatchContext.js'
+export * from './URLPattern.js'
+export * from './query.js'

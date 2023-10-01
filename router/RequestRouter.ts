@@ -27,8 +27,9 @@ import {
   routerMethodToHTTPMethod,
 } from 'keywork/http'
 import { IDisposable } from 'keywork/lifecycle'
+import { KeyworkLogger } from 'keywork/logging'
 import { ReactRendererOptions, renderReactStream } from 'keywork/ssr'
-import { KeyworkLogger, URLPatternLike, normalizeURLPattern, normalizeURLPatternInit } from 'keywork/utils'
+import { URLPatternLike, normalizeURLPattern, normalizeURLPatternInit } from 'keywork/uri'
 import { Fetcher } from './Fetcher.js'
 import { FetcherLike } from './FetcherLike.js'
 import { MiddlewareFetch } from './MiddlewareFetch.js'

@@ -12,22 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkHTMLDocument, KeyworkProviders, _SSRPropsEmbed } from 'keywork/components'
-import { FetchEventProvider, StaticPropsContext } from 'keywork/contexts'
 import { KeyworkResourceError } from 'keywork/errors'
-import { IsomorphicFetchEvent } from 'keywork/events'
-import { DEFAULT_LOG_LEVEL, KeyworkLogger } from 'keywork/utils'
-import React from 'react'
+import { FetchEventProvider, IsomorphicFetchEvent } from 'keywork/events'
+import { PageElementProps } from 'keywork/http'
+import { KeyworkLogger } from 'keywork/logging'
 import type { ReactDOMServerReadableStream } from 'react-dom/server'
+import { KeyworkHTMLDocument } from './KeyworkHTMLDocument.js'
+import { KeyworkProviders } from './KeyworkProvidersComponent.js'
+import { KeyworkSSREmbed } from './KeyworkSSREmbed.js'
 import { ReactRenderStreamResult, ReactRendererOptions } from './ReactRendererOptions.js'
 import { renderReactStream } from './stream.js'
-
-/**
- * @ignore
- */
-export interface PageElementProps<StaticProps extends {} | null = null> extends React.ReactElement<StaticProps> {
-  children?: React.ReactNode
-}
 
 /**
  * Renders the given React content to an HTML stream.
@@ -39,7 +33,7 @@ export async function renderJSXToStream<StaticProps extends {} | null = null>(
   pageElement: PageElementProps<StaticProps>,
   reactRenderOptions?: ReactRendererOptions
 ): Promise<ReactDOMServerReadableStream> {
-  const logger = new KeyworkLogger('react Stream Renderer')
+  const logger = reactRenderOptions?.logger || new KeyworkLogger('Keywork SSR')
 
   const streamRenderer = reactRenderOptions?.streamRenderer || renderReactStream
   const DocumentComponent = reactRenderOptions?.DocumentComponent || KeyworkHTMLDocument
@@ -48,16 +42,14 @@ export async function renderJSXToStream<StaticProps extends {} | null = null>(
   const staticProps = pageElement.props
 
   const appDocument = (
-    <StaticPropsContext.Provider value={staticProps!}>
-      <FetchEventProvider event={event} logLevel={reactRenderOptions?.logLevel || DEFAULT_LOG_LEVEL}>
-        <Providers>
-          <DocumentComponent event={event}>
-            {pageElement}
-            <_SSRPropsEmbed staticProps={staticProps} />
-          </DocumentComponent>
-        </Providers>
-      </FetchEventProvider>
-    </StaticPropsContext.Provider>
+    <FetchEventProvider event={event} logger={logger}>
+      <Providers>
+        <DocumentComponent event={event}>
+          {pageElement}
+          <KeyworkSSREmbed eventInit={event.toJSON()} staticProps={staticProps} />
+        </DocumentComponent>
+      </Providers>
+    </FetchEventProvider>
   )
 
   let result: ReactRenderStreamResult

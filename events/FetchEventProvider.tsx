@@ -13,13 +13,14 @@
  */
 
 import { IsomorphicFetchEvent } from 'keywork/events'
+import { RequestContext } from 'keywork/http'
+import { KeyworkLogger, KeyworkLoggerContext } from 'keywork/logging'
+import { URLPatternResultContext } from 'keywork/uri'
 import { EnvironmentContext } from './EnvironmentContext.js'
-import { KeyworkLoggerProvider, KeyworkLoggerProviderProps } from './LoggerContext.js'
-import { RequestContext } from './RequestContext.js'
-import { URLMatchContext } from './URLMatchContext.js'
 
-interface MiddlewareContextProps extends KeyworkLoggerProviderProps {
-  event: IsomorphicFetchEvent<any, any, any>
+export interface FetchEventProviderProps<BoundAliases = {}, ExpectedParams = {}, Data = {}> {
+  logger: KeyworkLogger
+  event: IsomorphicFetchEvent<BoundAliases, ExpectedParams, Data>
   children: React.ReactNode
 }
 
@@ -27,7 +28,7 @@ interface MiddlewareContextProps extends KeyworkLoggerProviderProps {
  * Context for consuming the current `FetchEvent` in a React component.
  *
  * Note that when used with `RequestRouter`, context hooks are only available
- * within the React component returned by a route handler:
+ * when a React component is returned by a route handler:
  *
  * ```tsx
  * const PageComponent: React.FC = () => {
@@ -44,14 +45,14 @@ interface MiddlewareContextProps extends KeyworkLoggerProviderProps {
  * If you need to access the `FetchEvent` before the React component is rendered,
  * use the `event` parameter passed to the route handler.
  */
-export const FetchEventProvider: React.FC<MiddlewareContextProps> = ({ event, logPrefix, logLevel, children }) => {
+export const FetchEventProvider: React.FC<FetchEventProviderProps> = ({ logger, event, children }) => {
   return (
-    <KeyworkLoggerProvider logPrefix={logPrefix} logLevel={logLevel}>
+    <KeyworkLoggerContext.Provider value={logger}>
       <EnvironmentContext.Provider value={event.env}>
         <RequestContext.Provider value={event.request}>
-          <URLMatchContext.Provider value={event.match}>{children}</URLMatchContext.Provider>
+          <URLPatternResultContext.Provider value={event.match}>{children}</URLPatternResultContext.Provider>
         </RequestContext.Provider>
       </EnvironmentContext.Provider>
-    </KeyworkLoggerProvider>
+    </KeyworkLoggerContext.Provider>
   )
 }

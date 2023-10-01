@@ -14,8 +14,9 @@
 
 import type { SSRDocument } from 'keywork/events'
 import type { HTTPMethod } from 'keywork/http'
+import type { KeyworkLogLevel } from 'keywork/logging'
 import type { ReactRendererOptions } from 'keywork/ssr'
-import type { IURLPattern, KeyworkLogLevel } from 'keywork/utils'
+import type { IURLPattern } from 'keywork/uri'
 import type { MiddlewareDeclarationLike } from './MiddlewareDeclarationLike.js'
 
 /**

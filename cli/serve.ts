@@ -13,6 +13,7 @@
  */
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
+import { KeyworkLogger } from 'keywork/logging'
 import {
   NodeStaticFileRouter,
   applyNodeKeyworkPolyfills,
@@ -20,7 +21,6 @@ import {
   projectRootPathBuilder,
 } from 'keywork/node'
 import { FetcherModuleExports, RequestRouter } from 'keywork/router'
-import { KeyworkLogger } from 'keywork/utils'
 import * as http from 'node:http'
 import { Socket } from 'node:net'
 import * as path from 'node:path'

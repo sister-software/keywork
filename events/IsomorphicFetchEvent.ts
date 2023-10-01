@@ -13,7 +13,7 @@
  */
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
-import type { URLPatternResult } from 'keywork/utils'
+import type { URLPatternResult } from 'keywork/uri'
 import { IsomorphicExtendableEvent } from './IsomorphicExtendableEvent.js'
 import { IsomorphicFetchEventInit } from './IsomorphicFetchEventInit.js'
 import { SSRDocument } from './SSRDocument.js'
@@ -65,8 +65,8 @@ export class IsomorphicFetchEvent<BoundAliases = {}, ExpectedParams = {}, Data =
     { request, env, data, originalURL, match, document }: IsomorphicFetchEventInit<BoundAliases, Data>
   ) {
     super(eventType)
-    this.request = request
     this.originalURL = originalURL
+    this.request = request || new Request(originalURL)
     this.env = env || ({} as BoundAliases)
     this.data = data || ({} as Data)
     this.match = match || ({} as URLPatternResult)
@@ -100,5 +100,12 @@ export class IsomorphicFetchEvent<BoundAliases = {}, ExpectedParams = {}, Data =
       'The `passThroughOnException` method is only applicable to Service Workers',
       Status.InternalServerError
     )
+  }
+
+  public toJSON(): IsomorphicFetchEventInit<BoundAliases, Data> {
+    return {
+      originalURL: this.originalURL,
+      match: this.match,
+    }
   }
 }

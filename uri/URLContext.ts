@@ -15,15 +15,20 @@
 import { createContext, useContext } from 'react'
 
 /**
- * A context for providing static props to the current route.
+ * Context for consuming the current location.
+ * This is the URL of the current page and should be used
+ * when hydrating the application.
+ *
+ * @see {KeyworkApp}
+ * @internal
  */
-export const StaticPropsContext = createContext({})
-StaticPropsContext.displayName = 'StaticPropsContext'
+export const URLContext = createContext<URL>(undefined as any)
+URLContext.displayName = 'URLContext'
 
 /**
- * A hook for accessing the static props for the current route.
- * @returns The static props for the current route.
+ * Hook for consuming the current location during hydration.
+ * @internal
  */
-export function useStaticProps<StaticProps extends {} = {}>() {
-  return useContext(StaticPropsContext) as StaticProps
+export function useURLContext() {
+  return useContext(URLContext)
 }

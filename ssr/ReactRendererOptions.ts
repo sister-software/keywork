@@ -12,10 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KeyworkHTMLDocumentComponent, KeyworkProvidersComponent } from 'keywork/components'
 import type { KeyworkResourceError } from 'keywork/errors'
-import type { KeyworkLogLevel } from 'keywork/utils'
+import type { KeyworkLogger } from 'keywork/logging'
 import type { ReactDOMServerReadableStream } from 'react-dom/server'
+import type { KeyworkHTMLDocumentComponent } from './KeyworkHTMLDocument.js'
+import type { KeyworkProvidersComponent } from './KeyworkProvidersComponent.js'
 
 /**
  * @ignore
@@ -67,8 +68,8 @@ export interface ReactRendererOptions {
   Providers?: KeyworkProvidersComponent
 
   /**
-   * The log level to use for the renderer.
-   * @default {DEFAULT_LOG_LEVEL}
+   * Logger used during rendering. This defaults to the router's logger.
+   * @internal
    */
-  logLevel?: KeyworkLogLevel
+  logger?: KeyworkLogger
 }

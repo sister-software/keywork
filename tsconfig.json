@@ -18,9 +18,10 @@
     "paths": {
       "keywork": ["./index.ts"],
       "keywork/cli": ["./cli/index.ts"],
+      "keywork/client": ["./client/index.ts"],
+      "keywork/logging": ["./logging/index.ts"],
       "keywork/node": ["./node/index.ts"],
       "keywork/components": ["./components/index.ts"],
-      "keywork/contexts": ["./contexts/index.ts"],
       "keywork/errors": ["./errors/index.ts"],
       "keywork/docgen": ["./docgen/index.ts"],
       "keywork/docgen/utils": ["./docgen/utils/index.ts"],
@@ -39,6 +40,7 @@
       "keywork/cloudflare": ["./cloudflare/index.ts"],
       "keywork/testing": ["./testing/index.ts"],
       "keywork/utils": ["./utils/index.ts"],
+      "keywork/uri": ["./uri/index.ts"]
     },
 	},
 	"exclude": [

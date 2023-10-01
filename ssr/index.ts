@@ -86,11 +86,8 @@
  */
 /* eslint-disable header/header */
 
+export * from './KeyworkHTMLDocument.js'
+export * from './KeyworkSSREmbed.js'
 export * from './ReactRendererOptions.js'
-export * from './getSSRPropsFromScope.js'
-export * from './globalScopeHasSSRProps.js'
-export * from './globalScopeSSRKey.js'
-export * from './hydrate.js'
-export * from './matchRoute.js'
 export * from './renderJSXToStream.js'
 export * from './stream.js'

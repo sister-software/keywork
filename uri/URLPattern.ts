@@ -13,8 +13,7 @@
  */
 
 import { KeyworkResourceError } from 'keywork'
-import { readGlobalScope } from './globals.js'
-import { polyfillWithModule } from './polyfills.js'
+import { polyfillWithModule, readGlobalScope } from 'keywork/utils'
 
 type URLPatternModule = {
   URLPattern: IURLPattern
@@ -90,7 +89,7 @@ function globalScopeHasURLPattern(
  * or a string representing the `pathname` portion of a `URLPattern`
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern URLPattern Constructor via MDN}
  */
-export type URLPatternLike = IURLPattern | string | URL
+export type URLPatternLike = IURLPattern | URLPatternInit | string | URL
 
 interface NormalizeURLPatternOptions {
   /**

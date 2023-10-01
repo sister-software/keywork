@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkLogger } from 'keywork/utils'
+import { KeyworkLogger } from 'keywork/logging'
 import type { RouteRequestHandler } from './RouteRequestHandler.js'
 
 /** @ignore */

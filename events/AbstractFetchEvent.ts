@@ -15,34 +15,8 @@
 /// <reference lib="WebWorker" />
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
-import type { URLPatternResult } from 'keywork/utils'
 import { IsomorphicExtendableEvent } from './IsomorphicExtendableEvent.js'
-
-/**
- * @ignore
- */
-export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> {
-  /**
-   * The incoming request received by the Worker.
-   *
-   * Both the request's `url` property and the parent `IsomorphicFetchEvent` will reflect
-   * the current parsed route handler of `RequestRouter`.
-   * @see {IsomorphicFetchEvent#originalURL}
-   */
-  request: Request
-
-  /**
-   * The original URL associated with the `IsomorphicFetchEvent`.
-   */
-  originalURL?: string
-
-  env?: BoundAliases
-  data?: Data
-  /**
-   * URL Patterns matched.
-   */
-  match?: URLPatternResult
-}
+import type { IsomorphicFetchEventInit } from './IsomorphicFetchEventInit.js'
 
 /**
  * @ignore
@@ -69,8 +43,8 @@ export abstract class AbstractFetchEvent extends IsomorphicExtendableEvent imple
 
   constructor(eventType = 'fetch', { request, originalURL }: IsomorphicFetchEventInit) {
     super(eventType)
-    this.request = request
-    this.originalURL = originalURL || request.url
+    this.originalURL = originalURL
+    this.request = request || new Request(this.originalURL)
   }
 
   /**
