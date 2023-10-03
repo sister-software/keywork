@@ -12,49 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { useRequestURL } from 'keywork/http'
 import { URLPatternResultContext, normalizeURLPattern, normalizeURLPatternInit } from 'keywork/uri'
-import { FC, useMemo } from 'react'
+import { useMemo } from 'react'
 import { useSSRProps } from './SSRPropsProvider.js'
-
-export interface KeyworkBrowserRouterProps {
-  patternToPageComponent: PatternToPageComponentMap<any>
-}
-
-/**
- * @beta
- * @ignore
- */
-export const KeyworkPatternToPageComponent: FC<KeyworkBrowserRouterProps> = ({ patternToPageComponent }) => {
-  const staticProps = useSSRProps() as any
-  const location = useRequestURL()
-
-  const possibleMatch = useMemo(() => {
-    return matchRoute(patternToPageComponent, location)
-  }, [patternToPageComponent, location])
-
-  const Component = useMemo(() => {
-    if (!possibleMatch) return FallbackComponent
-    const _Component = patternToPageComponent.get(possibleMatch.pathname.groups['0']!)
-
-    return _Component || FallbackComponent
-  }, [patternToPageComponent, possibleMatch])
-
-  return (
-    <URLPatternResultContext.Provider value={possibleMatch!}>
-      <Component {...staticProps} />
-    </URLPatternResultContext.Provider>
-  )
-}
-
-const FallbackComponent: FC = () => {
-  return (
-    <>
-      <h1>Keywork Error</h1>
-      <h2>Page not found</h2>
-    </>
-  )
-}
+import { useLocation } from './hooks.js'
 
 /**
  * A **client-side** mapping of path patterns to their respective page components.
@@ -64,7 +25,7 @@ const FallbackComponent: FC = () => {
  *
  * ```ts
  * // Order your routes from most to least specific:
- * export const routeRecords = new PatternToPageComponentMap<any>([
+ * export const routes = [
  *   ['/todos/:todoSlug/:subTaskSlug/', TodoSubTaskPage],
  *   ['/todos/:todoSlug/', TodoPage],
  *   ['/todos/', TodosIndexPage],
@@ -72,18 +33,64 @@ const FallbackComponent: FC = () => {
  *   ['/privacy/', PrivacyPage],
  *   ['/', IndexPage],
  *   ['*', NotFoundErrorPage],
- * ])
+ * ]
  * ```
+ */
+export type KeyworkRoutePatternEntry = [string, React.ComponentType<any>]
+
+export interface KeyworkBrowserRouterProps {
+  routes: Iterable<KeyworkRoutePatternEntry> | Map<string, React.ComponentType<any>>
+}
+
+/**
  * @beta
  * @ignore
  */
-export class PatternToPageComponentMap<StaticProps extends {}> extends Map<string, React.ComponentType<StaticProps>> {}
+export const KeyworkPatternToPageComponent: React.FC<KeyworkBrowserRouterProps> = ({ routes }) => {
+  const staticProps = useSSRProps()
+  const location = useLocation()
+
+  const routesMap = useMemo(() => new Map(routes), [routes])
+
+  const possibleMatch = useMemo(() => {
+    return matchRoute(routes, location)
+  }, [routes, location])
+
+  const Component = useMemo(() => {
+    if (!possibleMatch) return FallbackComponent
+    const _Component = routesMap.get(possibleMatch.pathname.input)
+
+    return _Component || FallbackComponent
+  }, [routes, possibleMatch])
+
+  const pageStaticProps = staticProps.get(possibleMatch?.pathname.input!) || {}
+
+  return (
+    <URLPatternResultContext.Provider value={possibleMatch!}>
+      <Component {...pageStaticProps} />
+    </URLPatternResultContext.Provider>
+  )
+}
+
+const FallbackComponent: React.FC = () => {
+  return (
+    <>
+      <h1>Keywork Error</h1>
+      <h2>Page not found</h2>
+    </>
+  )
+}
+
+FallbackComponent.displayName = 'KeyworkFallbackPage'
 
 /**
  * @beta
  */
-export function matchRoute(patternToPageComponent: PatternToPageComponentMap<any>, location: URL) {
-  for (const pattern of patternToPageComponent.keys()) {
+export function matchRoute(
+  patternToPageComponent: Iterable<KeyworkRoutePatternEntry>,
+  location: Pick<URL, 'pathname'>
+) {
+  for (const [pattern] of patternToPageComponent) {
     const urlPattern = normalizeURLPattern(pattern)
     const possibleMatch = urlPattern.exec(normalizeURLPatternInit(location.pathname))
 

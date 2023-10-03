@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { useRequestURL } from 'keywork/http'
 import { useKeyworkLogger } from 'keywork/logging'
 import { KEYWORK_STATIC_PROPS_QUERY_KEY } from 'keywork/uri'
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { useLocation } from './hooks.js'
 
 /**
  * A mapping of static props to a given path.
@@ -40,7 +40,7 @@ export const SSRPropsProvider: React.FC<SSRPropsProviderProps> = ({
 }) => {
   const lastRenderLocationRef = useRef(initialLocation)
   const [propsByPath, setPropsByPath] = useState(initialPropsByPath)
-  const location = useRequestURL()
+  const location = useLocation()
   const logger = useKeyworkLogger()
 
   const fetchRouteData = useCallback(async () => {

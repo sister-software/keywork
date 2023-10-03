@@ -1,4 +1,5 @@
 import { RequestRouter } from 'keywork'
+import { IndexPage } from './public/pages/Index.js'
 
 const router = new RequestRouter({
   logLevel: 'Debug',
@@ -50,21 +51,7 @@ const router = new RequestRouter({
 router.get('/', ({ document }) => {
   document.author = 'Teffen Ellis'
 
-  return <App renderTimestamp={new Date()} />
+  return <IndexPage renderTimestamp={new Date().toISOString()} />
 })
-
-export interface AppProps {
-  renderTimestamp: Date
-}
-
-const App: React.FC<AppProps> = ({ renderTimestamp }) => {
-  return (
-    <div>
-      <h1>Hello from Keywork!</h1>
-      <h2>{renderTimestamp.toISOString()}</h2>
-      <p>And this is a JSX response!</p>
-    </div>
-  )
-}
 
 export default router

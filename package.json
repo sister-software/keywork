@@ -53,8 +53,8 @@
     "@types/dashify": "^1.0.1",
     "@types/negotiator": "^0.6.1",
     "@types/node": "^20.6.3",
-    "@types/react": "^18.2.22",
-    "@types/react-dom": "^18.2.7",
+    "@types/react": "^18.2.24",
+    "@types/react-dom": "^18.2.8",
     "@types/which": "^3.0.0",
     "@types/yargs": "^17.0.26",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
@@ -96,11 +96,9 @@
   },
   "peerDependenciesMeta": {
     "react": {
-      "optional": false,
-      "exports": ["jsx-runtime"]
+      "optional": false
     },
     "react-dom": {
-      "exports": ["server", "server.browser", "client"],
       "optional": false
     },
     "undici": {

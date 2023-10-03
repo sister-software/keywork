@@ -34,12 +34,12 @@ const AS_ENCODED = (value: any) => encodeURIComponent(AS_STRING(value))
  * Embeds the given SSR props in the DOM for client-side hydration.
  * @internal This is primarily used by `KeyworkStaticPropsRequestHandler`
  */
-export const KeyworkSSREmbed: FC<SSRProviderProps<any>> = ({ staticProps }) => {
+export const KeyworkSSREmbed: FC<SSRProviderProps<any>> = ({ staticProps, eventInit }) => {
   const __html = /* javascript */ `(function() {
     const encodedStaticProps = '${AS_ENCODED(staticProps)}';
     self[${AS_STRING(KEYWORK_SSR_PROPS_KEY)}] = JSON.parse(decodeURIComponent(encodedStaticProps));
 
-    const encodedEventInit = '${AS_ENCODED(staticProps)}';
+    const encodedEventInit = '${AS_ENCODED(eventInit)}';
     self[${AS_STRING(KEYWORK_SSR_INIT_KEY)}] = JSON.parse(decodeURIComponent(encodedEventInit));
 
     document.getElementById(${AS_STRING(KEYWORK_SSR_EMBED_ID)}).remove();

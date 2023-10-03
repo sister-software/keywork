@@ -51,7 +51,7 @@ export function readSSREmbed<SSRProps extends {} | null = {}>(globalScope: unkno
   }
 
   // Remove them from the global scope...
-  globalScope[KEYWORK_SSR_PROPS_KEY] = null as any
+  // globalScope[KEYWORK_SSR_PROPS_KEY] = null as any
 
   // Likewise, we check if the SSR event init has been embedded in the global scope...
   if (!(KEYWORK_SSR_INIT_KEY in globalScope)) {
@@ -62,7 +62,7 @@ export function readSSREmbed<SSRProps extends {} | null = {}>(globalScope: unkno
   const eventInit = globalScope[KEYWORK_SSR_INIT_KEY] as IsomorphicFetchEventInit
 
   // Likewise, we remove them from the global scope...
-  globalScope[KEYWORK_SSR_INIT_KEY] = null as any
+  // globalScope[KEYWORK_SSR_INIT_KEY] = null as any
 
   return {
     staticProps,

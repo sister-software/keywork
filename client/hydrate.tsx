@@ -37,6 +37,7 @@ export const KeyworkApp: React.FC<KeyworkAppProps> = ({
   children,
 }) => {
   const logger = new KeyworkLogger(logPrefix, logLevel)
+
   const { staticProps, eventInit } = readSSREmbed()
   const fetchEvent = new IsomorphicFetchEvent('fetch', eventInit)
   const initialNavigatorURL = pluckNavigatorURL()
