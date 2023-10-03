@@ -12,6 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { ImportMap } from 'keywork/files'
 import { HtmlHTMLAttributes } from 'react'
 
 /**
@@ -118,17 +119,4 @@ export interface DocumentImage {
   width?: number
   height?: number
   url: string
-}
-
-export interface ImportMapRecord {
-  [specifier: string]: string
-}
-
-export interface ImportMapScopesRecord {
-  [scope: string]: ImportMapRecord
-}
-
-export interface ImportMap {
-  imports: ImportMapRecord
-  scopes?: ImportMapScopesRecord
 }

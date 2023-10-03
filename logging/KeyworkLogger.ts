@@ -13,7 +13,8 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { prettyJSON } from '../utils/json.js'
+
+const prettyJSON = (value: any) => JSON.stringify(value, null, 2)
 
 /**
  * An common shape of the `Console` interface.

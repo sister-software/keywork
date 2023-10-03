@@ -12,7 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './files.js'
 export * from './front-matter.js'
 export * from './model.js'
 export * from './reflections.js'

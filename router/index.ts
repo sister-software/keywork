@@ -225,7 +225,6 @@
  *
  * ## Related Entries
  *
- * - {@link Keywork#URIUtils URI Module}
  * - {@link Keywork#Session Session Module}
  * - {@link Keywork#Middleware Middleware Module}
  *

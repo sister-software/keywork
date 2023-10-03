@@ -518,7 +518,8 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
     }
 
     if (!matchedRoutes.length) {
-      if (requestURL.pathname !== '/favicon.ico') {
+      const pathIsFavicon = requestURL.pathname === '/favicon.ico'
+      if (!pathIsFavicon) {
         this.logger.debug(`No matching routes found for \`${requestURL.pathname}\``)
       }
 
@@ -527,7 +528,9 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
         return this.respondWith(new ErrorResponse(Status.NotFound, undefined))
       }
 
-      this.logger.debug(`Delegating \`${requestURL.pathname}\` to next middleware...`)
+      if (!pathIsFavicon) {
+        this.logger.debug(`Delegating \`${requestURL.pathname}\` to next middleware...`)
+      }
       return null as any
     }
 

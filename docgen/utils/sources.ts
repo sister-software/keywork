@@ -13,7 +13,6 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { ProjectFiles } from 'keywork/node'
 import { execSync } from 'node:child_process'
 import * as path from 'node:path'
 import { SourceReference } from 'typedoc'
@@ -49,7 +48,7 @@ export function readFileChangeFromGit(_source: SourceReference) {
   if (source.fileName.includes('node_modules')) return
 
   const lineNumber = source.line !== 0 ? `#L${source.line}` : ''
-  const sourcePath = path.posix.join(ProjectFiles.ModulesDirectory, source.fileName)
+  const sourcePath = source.fileName
   source.url = new URL(path.posix.join(READ_PREFIX, source.fileName) + lineNumber, 'https://github.com').toString()
   source.editURL = new URL(path.posix.join(EDIT_PREFIX, source.fileName) + lineNumber, 'https://github.com').toString()
 

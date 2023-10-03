@@ -24,6 +24,7 @@
 
 export * from 'keywork/http/headers'
 export * from 'keywork/http/responses'
+
 export * from './HTTPMethod.js'
 export * from './IncomingRequestCfProperties.js'
 export * from './RequestContext.js'
@@ -39,4 +40,3 @@ export * from './isRequestLike.js'
 export * from './methodVerbToRouterMethod.js'
 export * from './routerMethodToHTTPMethod.js'
 export * from './shouldCompress.js'
-export * from './status.js'

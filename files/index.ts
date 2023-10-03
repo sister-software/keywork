@@ -22,4 +22,5 @@
 export * from './common.js'
 export * from './extensionToMimeType.js'
 export * from './files.js'
+export * from './import-map.js'
 export * from './mime.js'

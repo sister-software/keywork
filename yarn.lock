@@ -1969,15 +1969,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@cloudflare/kv-asset-handler@npm:0.2.0":
-  version: 0.2.0
-  resolution: "@cloudflare/kv-asset-handler@npm:0.2.0"
-  dependencies:
-    mime: ^3.0.0
-  checksum: bc6a02a9c80be6de90e46454ef4de09301e68726eaa4835de0e30216e50fffcc5612274a17dfb455916cf3418f0cb25fefd2b561a9d2282f4cc10d40527f0acb
-  languageName: node
-  linkType: hard
-
 "@cloudflare/workers-types@npm:^4.20230922.0":
   version: 4.20230922.0
   resolution: "@cloudflare/workers-types@npm:4.20230922.0"
@@ -3906,22 +3897,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/lodash.isplainobject@npm:^4.0.7":
-  version: 4.0.7
-  resolution: "@types/lodash.isplainobject@npm:4.0.7"
-  dependencies:
-    "@types/lodash": "*"
-  checksum: a3946dbcef66c5931073c0c8a0ecc2bd38a6bf808daa018d1af7db5e980fdb4bc03664ffe3c583c6a8e0a082bbcfba8328b32b96a5a955569ee5704e92bf0b3a
-  languageName: node
-  linkType: hard
-
-"@types/lodash@npm:*":
-  version: 4.14.182
-  resolution: "@types/lodash@npm:4.14.182"
-  checksum: 7dd137aa9dbabd632408bd37009d984655164fa1ecc3f2b6eb94afe35bf0a5852cbab6183148d883e9c73a958b7fec9a9bcf7c8e45d41195add6a18c34958209
-  languageName: node
-  linkType: hard
-
 "@types/mdast@npm:^3.0.0":
   version: 3.0.10
   resolution: "@types/mdast@npm:3.0.10"
@@ -5737,13 +5712,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"classnames@npm:^2.3.1":
-  version: 2.3.2
-  resolution: "classnames@npm:2.3.2"
-  checksum: 2c62199789618d95545c872787137262e741f9db13328e216b093eea91c85ef2bfb152c1f9e63027204e2559a006a92eb74147d46c800a9f96297ae1d9f96f4e
-  languageName: node
-  linkType: hard
-
 "clean-css@npm:^5.2.2, clean-css@npm:^5.3.0":
   version: 5.3.1
   resolution: "clean-css@npm:5.3.1"
@@ -6586,13 +6554,6 @@ __metadata:
   version: 0.1.4
   resolution: "deep-is@npm:0.1.4"
   checksum: edb65dd0d7d1b9c40b2f50219aef30e116cedd6fc79290e740972c132c09106d2e80aa0bc8826673dd5a00222d4179c84b36a790eef63a4c4bca75a37ef90804
-  languageName: node
-  linkType: hard
-
-"deepmerge-ts@npm:^5.1.0":
-  version: 5.1.0
-  resolution: "deepmerge-ts@npm:5.1.0"
-  checksum: 6b57db93c2985e4a35f24b2451db31715050d143988b7d6346f4049c9aec21a6c289514b88d3ee3d6e0697e72ef5d96ff0bbb7cb75422d56fee55ee85c7168e7
   languageName: node
   linkType: hard
 
@@ -10485,7 +10446,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "keywork@workspace:."
   dependencies:
-    "@cloudflare/kv-asset-handler": 0.2.0
     "@cloudflare/workers-types": ^4.20230922.0
     "@deno/shim-deno": ^0.16.1
     "@sister.software/eslint-config": ^2.0.1
@@ -10493,7 +10453,6 @@ __metadata:
     "@sister.software/typescript-esm-packager": ^1.2.10
     "@types/cookie": ^0.5.2
     "@types/dashify": ^1.0.1
-    "@types/lodash.isplainobject": ^4.0.7
     "@types/negotiator": ^0.6.1
     "@types/node": ^20.6.3
     "@types/react": ^18.2.22
@@ -10502,10 +10461,8 @@ __metadata:
     "@types/yargs": ^17.0.26
     "@typescript-eslint/eslint-plugin": ^5.48.1
     "@typescript-eslint/parser": ^5.48.1
-    classnames: ^2.3.1
     cookie: ^0.5.0
     dashify: ^2.0.0
-    deepmerge-ts: ^5.1.0
     esbuild: ^0.19.3
     eslint: ^8.37.0
     eslint-config-prettier: ^8.8.0
@@ -10514,7 +10471,6 @@ __metadata:
     eslint-plugin-react-hooks: ^4.6.0
     eslint-plugin-tsdoc: ^0.2.17
     handlebars: ^4.7.7
-    lodash.isplainobject: ^4.0.6
     negotiator: ^0.6.3
     npm-run-all: ^4.1.5
     prettier: ^3.0.3
@@ -11158,15 +11114,6 @@ __metadata:
   bin:
     mime: cli.js
   checksum: fef25e39263e6d207580bdc629f8872a3f9772c923c7f8c7e793175cee22777bbe8bba95e5d509a40aaa292d8974514ce634ae35769faa45f22d17edda5e8557
-  languageName: node
-  linkType: hard
-
-"mime@npm:^3.0.0":
-  version: 3.0.0
-  resolution: "mime@npm:3.0.0"
-  bin:
-    mime: cli.js
-  checksum: f43f9b7bfa64534e6b05bd6062961681aeb406a5b53673b53b683f27fcc4e739989941836a355eef831f4478923651ecc739f4a5f6e20a76487b432bfd4db928
   languageName: node
   linkType: hard
 

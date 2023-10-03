@@ -12,6 +12,13 @@
     "site/temp": true,
     "site/docusaurus.config.js": true
   },
+  "explorer.fileNesting.patterns": {
+    "*.ts": "${capture}.js, ${capture}.test.ts, ${capture}.test.tsx",
+    "tsconfig.json": "tsconfig.*.json",
+    "package.json": "package-lock.json, yarn.lock",
+    "index.ts": "${capture}.js, _category_.json",
+    "*.js": "${capture}.d.ts.map, ${capture}.map, ${capture}.d.ts, ${capture}.js.map"
+  },
   "files.exclude": {
     "**/.git": true,
     ".yarn": true,

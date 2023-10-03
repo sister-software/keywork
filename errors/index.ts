@@ -35,4 +35,4 @@
 /* eslint-disable header/header */
 
 export * from './KeyworkResourceError.js'
-export * from './common.js'
+export * from './status.js'

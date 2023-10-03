@@ -13,7 +13,6 @@
  */
 
 import { formatContents, readFileChangeFromGit } from 'keywork/docgen/utils'
-import { ProjectFiles } from 'keywork/node'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import * as path from 'node:path'
 import {
@@ -48,6 +47,8 @@ const NEVER_RENDER: `@${string}`[] = [
   '@keyword',
   '@tag',
 ]
+
+const KEYWORK_CATEGORY_FILENAME = '_category_.json'
 
 export interface CategoryConfig {
   name?: string
@@ -194,7 +195,7 @@ export class MarkdownTheme extends Theme {
         const categoryPath = path.dirname(path.join(this.out, url))
         mkdirSync(categoryPath, { recursive: true })
         writeFileSync(
-          path.join(categoryPath, ProjectFiles.Category),
+          path.join(categoryPath, KEYWORK_CATEGORY_FILENAME),
           JSON.stringify(mapping.categoryConfig, null, 2),
           'utf8'
         )

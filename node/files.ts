@@ -15,7 +15,20 @@
 import * as fs from 'node:fs/promises'
 import * as path from 'node:path'
 
-export function changeExtension(filePath: string, extension: string) {
+/**
+ * @internal
+ */
+export type FileExtensionLike = `.${string}`
+/**
+ * @internal
+ */
+export function changeExtension(
+  filePath: string,
+  /**
+   * File extension with dot prefix.
+   */
+  extension: FileExtensionLike
+) {
   const parsedPath = path.parse(filePath)
 
   return parsedPath.dir + path.sep + parsedPath.name + extension

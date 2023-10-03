@@ -34,13 +34,13 @@
   "scripts": {
     "build:clean": "tsc --build --clean",
     "build:compile": "tsc --build",
+    "build:importmap": "node ./dist/scripts/import-map/index.js",
     "build": "run-p build:clean build:compile",
     "release": "run-p build release-it",
     "test": "deno test --coverage=./cov .",
     "test:coverage": "deno coverage --lcov ./cov"
   },
   "workspaces": [
-    "docgen",
     "site"
   ],
   "devDependencies": {
@@ -51,7 +51,6 @@
     "@sister.software/typescript-esm-packager": "^1.2.10",
     "@types/cookie": "^0.5.2",
     "@types/dashify": "^1.0.1",
-    "@types/lodash.isplainobject": "^4.0.7",
     "@types/negotiator": "^0.6.1",
     "@types/node": "^20.6.3",
     "@types/react": "^18.2.22",
@@ -80,16 +79,14 @@
     "typedoc": "^0.23.10",
     "typescript": "5.2.2",
     "undici": "^5.25.2",
-    "which": "^4.0.0"
+    "urlpattern-polyfill": "^9.0.0",
+    "which": "^4.0.0",
+    "yargs": "^17.7.2"
   },
   "dependencies": {
     "cookie": "^0.5.0",
-    "deepmerge-ts": "^5.1.0",
-    "lodash.isplainobject": "^4.0.6",
     "negotiator": "^0.6.3",
-    "ulidx": "^2.1.0",
-    "urlpattern-polyfill": "^9.0.0",
-    "yargs": "^17.7.2"
+    "ulidx": "^2.1.0"
   },
   "peerDependencies": {
     "react": ">=18.2",
@@ -98,6 +95,14 @@
     "urlpattern-polyfill": "^5.0.5"
   },
   "peerDependenciesMeta": {
+    "react": {
+      "optional": false,
+      "exports": ["jsx-runtime"]
+    },
+    "react-dom": {
+      "exports": ["server", "server.browser", "client"],
+      "optional": false
+    },
     "undici": {
       "optional": true
     },
@@ -114,6 +119,22 @@
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"
     },
+    "./docgen": {
+      "import": "./dist/docgen/index.js",
+      "types": "./dist/docgen/index.d.ts"
+    },
+    "./docgen/utils": {
+      "import": "./dist/docgen/utils/index.js",
+      "types": "./dist/docgen/utils/index.d.ts"
+    },
+    "./docgen/helpers": {
+      "import": "./dist/docgen/helpers/index.js",
+      "types": "./dist/docgen/helpers/index.d.ts"
+    },
+    "./docgen/theme": {
+      "import": "./dist/docgen/theme/index.js",
+      "types": "./dist/docgen/theme/index.d.ts"
+    },
     "./cli": {
       "import": "./dist/cli/index.js",
       "types": "./dist/cli/index.d.ts"
@@ -129,10 +150,6 @@
     "./node": {
       "import": "./dist/node/index.js",
       "types": "./dist/node/index.d.ts"
-    },
-    "./components": {
-      "import": "./dist/components/index.js",
-      "types": "./dist/components/index.d.ts"
     },
     "./errors": {
       "import": "./dist/errors/index.js",
@@ -194,7 +211,10 @@
       "import": "./dist/uri/index.js",
       "types": "./dist/uri/index.d.ts"
     },
-    "./*": "./dist/*.js"
+    "./scripts/*": {
+      "import": "./dist/scripts/*/index.js",
+      "types": "./dist/scripts/*/index.d.ts"
+    }
   },
   "browserslist": [
     "last 2 Chrome versions",

@@ -5,7 +5,6 @@
  * ## Related Entries
  *
  * - {@link Keywork#Router Router Module}
- * - {@link Keywork#URIUtils URI Module}
  *
  * @packageDocumentation
  * @module Keywork#Events

@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork'
+import { KeyworkResourceError } from 'keywork/errors'
 import { KEYWORK_APP_ROOT, readGlobalScope } from 'keywork/utils'
 
 /// <reference lib="dom" />

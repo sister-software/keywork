@@ -12,10 +12,16 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status, STATUS_TEXT } from 'keywork/http'
-import { ErrorJSONBody } from './common.js'
+import { Status, STATUS_TEXT } from './status.js'
 
-export { Status, STATUS_TEXT }
+/**
+ * A JSON representation of a `KeyworkResourceError`
+ * @category Error
+ */
+export interface ErrorJSONBody {
+  status: string
+  statusCode: number
+}
 
 /**
  * Used in place of the reference-sensitive `instanceof`
@@ -136,5 +142,22 @@ export class KeyworkResourceError extends Error {
       typeof ErrorCtor === 'function' &&
         (Object.getPrototypeOf(ErrorCtor) === KeyworkResourceError || $ClassID in ErrorCtor)
     )
+  }
+
+  [Symbol.for('nodejs.util.inspect.custom')](): string {
+    const stackLines = (this.stack || '').split(/\sat\s/g).map((line) => {
+      return line
+        .replace(/:\d+|file:\/\//g, (line) => `\x1b[2m${line}\x1b[22m`)
+        .replace(/async/g, (line) => `\x1b[1m${line}\x1b[22m`)
+    })
+
+    return [
+      // ---
+      `KeyworkResourceError (${this.status}) \x1b[1m${this.statusText}\x1b[22m\n\n`,
+      ...stackLines,
+      this.cause,
+    ]
+      .filter(Boolean)
+      .join('')
   }
 }

@@ -12,11 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-/**
- * A JSON representation of a `KeyworkResourceError`
- * @category Error
- */
-export interface ErrorJSONBody {
-  status: string
-  statusCode: number
+import Handlebars from 'handlebars'
+import type { MarkdownTheme } from 'keywork/docgen/theme'
+import type { ReferenceType } from 'typedoc'
+
+export function attemptExternalResolutionHelper(theme: MarkdownTheme) {
+  Handlebars.registerHelper('attemptExternalResolution', function (type: ReferenceType) {
+    return (theme.owner as any).attemptExternalResolution(type)
+  })
 }

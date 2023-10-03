@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork'
+import { KeyworkResourceError } from 'keywork/errors'
 import { polyfillWithModule, readGlobalScope } from 'keywork/utils'
 
 type URLPatternModule = {

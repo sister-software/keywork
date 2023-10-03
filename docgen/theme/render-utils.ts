@@ -46,7 +46,7 @@ import {
   typeHelper,
   typeParameterTableHelper,
   usageTabsHelper,
-} from 'docgen/theme/resources/helpers/index.js'
+} from 'keywork/docgen/helpers'
 import { projectRootPathBuilder } from 'keywork/node'
 import { readFileSync, readdirSync } from 'node:fs'
 import * as path from 'node:path'
