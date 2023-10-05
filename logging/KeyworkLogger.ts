@@ -39,7 +39,7 @@ _timestamp.toString = () => _timestamp()
 
 export interface KeyworkLoggerConfig {
   readonly method: keyof GlobalConsoleLike | null
-  readonly level: KeyworkLogLevel
+  readonly level: KeyworkLogLevelValue
   readonly prefix?: string
 }
 
@@ -51,12 +51,24 @@ export const _KEYWORK_LOG_LEVELS = ['None', 'Trace', 'Error', 'Warning', 'Log', 
 /**
  * Levels available to the Keywork logger.
  */
-export type KeyworkLogLevel = (typeof _KEYWORK_LOG_LEVELS)[number]
+export type KeyworkLogLevelValue = (typeof _KEYWORK_LOG_LEVELS)[number]
 
+/**
+ * Enum-like record of Keywork log levels.
+ */
+export const KeyworkLogLevel = {
+  None: 'None',
+  Trace: 'Trace',
+  Error: 'Error',
+  Warning: 'Warning',
+  Log: 'Log',
+  Info: 'Info',
+  Debug: 'Debug',
+} as const satisfies Record<KeyworkLogLevelValue, KeyworkLogLevelValue>
 /**
  * The default level used by the Keywork logger.
  */
-export const DEFAULT_LOG_LEVEL = 'Info' satisfies KeyworkLogLevel
+export const DEFAULT_LOG_LEVEL = 'Info' satisfies KeyworkLogLevelValue
 
 /**
  * The default prefix used by the Keywork logger.
@@ -107,7 +119,7 @@ export const _KeyworkLogLevelConfigs = [
  * A map of log levels to their respective configuration.
  * @internal
  */
-const _KeyworkLogLevelConfigMap = new Map<KeyworkLogLevel, KeyworkLoggerConfig>()
+const _KeyworkLogLevelConfigMap = new Map<KeyworkLogLevelValue, KeyworkLoggerConfig>()
 /**
  * A map of log levels to their respective indexes.
  *
@@ -150,7 +162,7 @@ export class KeyworkLogger {
   public info!: GlobalConsoleLike['info']
   public warn!: GlobalConsoleLike['warn']
 
-  constructor(logPrefix: string = 'Keywork', level: KeyworkLogLevel | number = 'Info', color = 'cyan') {
+  constructor(logPrefix = 'Keywork', level: KeyworkLogLevelValue | number = KeyworkLogLevel.Info, color = 'cyan') {
     if (typeof console !== 'undefined') {
       this.globalConsole = console as GlobalConsoleLike
     } else {
@@ -178,7 +190,7 @@ export class KeyworkLogger {
     }
   }
 
-  _createLogMethod(logType: keyof GlobalConsoleLike, logTypeLabel: string = '', color: string) {
+  _createLogMethod(logType: keyof GlobalConsoleLike, logTypeLabel = '', color: string) {
     const bindArgs = [
       //
       `%c%s%c%s`,

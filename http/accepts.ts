@@ -1,9 +1,15 @@
-/*!
- * Based on https://github.com/jshttp/accepts/blob/master/index.js
- * Copyright(c) 2014 Jonathan Ong
- * Copyright(c) 2015 Douglas Christopher Wilson
- * Copyright(c) 2020 Henry Zhuang
- * MIT Licensed
+/**
+ * @file This file is part of the Keywork project.
+ * @copyright Nirrius, LLC. All rights reserved.
+ * @author Teffen Ellis, et al.
+ * @license AGPL-3.0
+ *
+ * @remarks Keywork is free software for non-commercial purposes.
+ * You can be released from the requirements of the license by purchasing a commercial license.
+ * Buying such a license is mandatory as soon as you develop commercial activities
+ * involving the Keywork software without disclosing the source code of your own applications.
+ *
+ * @see LICENSE.md in the project root for further licensing information.
  */
 
 import { fileExtensionToContentTypeHeader } from 'keywork/http/headers'
@@ -141,16 +147,4 @@ export class Accepts {
 
     return this.negotiator.languages(languages)[0] || false
   }
-}
-
-/**
- * Check if mime is valid.
- *
- * @param {String} type
- * @return {String}
- * @private
- */
-
-function validMime(type?: string): boolean {
-  return typeof type === 'string'
 }

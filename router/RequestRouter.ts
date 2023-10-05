@@ -29,7 +29,13 @@ import {
 import { IDisposable } from 'keywork/lifecycle'
 import { KeyworkLogger } from 'keywork/logging'
 import { ReactRendererOptions, renderReactStream } from 'keywork/ssr'
-import { URLPatternLike, normalizeURLPattern, normalizeURLPatternInit } from 'keywork/uri'
+import {
+  PatternRouteComponentMap,
+  URLPatternLike,
+  normalizeURLPattern,
+  normalizeURLPatternInit,
+  pluckClientModuleRoutes,
+} from 'keywork/uri'
 import { Fetcher } from './Fetcher.js'
 import { FetcherLike } from './FetcherLike.js'
 import { MiddlewareFetch } from './MiddlewareFetch.js'
@@ -127,7 +133,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
       // Likely a `RouteRequestHandler`...
       const fetch: RouteRequestHandler<BoundAliases, any, any, Response> = async (event, next) => {
         const responseLike = await fetcherLike(event, next)
-        const response = await castToResponse(event, responseLike, this.reactOptions)
+        const response = await castToResponse(event, responseLike, this.reactOptions, this.routeComponentMap)
 
         return this.respondWith(response)
       }
@@ -461,6 +467,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
   readonly includeDebugHeaders: boolean
   readonly reactOptions: ReactRendererOptions
   readonly ssrDocument?: SSRDocument
+  readonly routeComponentMap?: PatternRouteComponentMap
 
   //#endregion
 
@@ -550,6 +557,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
       // So, we remove the matched portion which allows any nested routes to
       // behave as if the pathname did not include any unforseen prefixes.
       request: new Request(normalizedURL, request),
+      urlPattern: parsedRoute.urlPattern,
       originalURL,
       env,
       match,
@@ -643,6 +651,10 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
     this.reactOptions = {
       streamRenderer: renderReactStream,
       ...options?.react,
+    }
+
+    if (options?.browserRouter) {
+      this.routeComponentMap = new PatternRouteComponentMap(pluckClientModuleRoutes(options.browserRouter))
     }
 
     this.ssrDocument = options?.document

@@ -1,5 +1,4 @@
 #!/usr/bin/env node
-
 /**
  * @file This file is part of the Keywork project.
  * @copyright Nirrius, LLC. All rights reserved.

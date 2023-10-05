@@ -12,15 +12,18 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { BrowserRouter } from 'keywork'
-import { IndexPage } from './pages/Index.js'
-import { TodoItemPage } from './pages/TodoItem.js'
+export interface TodoItemPageProps {
+  id: string
+  title: string
+  completed: boolean
+}
 
-export default (
-  <BrowserRouter
-    routes={[
-      ['/', IndexPage],
-      ['/todo/:id', TodoItemPage],
-    ]}
-  />
-)
+export const TodoItemPage: React.FC<TodoItemPageProps> = ({ title, completed, id }) => {
+  return (
+    <div>
+      <h1>{title}</h1>
+      <h2>{completed ? 'Complete' : 'Not complete'}</h2>
+      <h3>{id}</h3>
+    </div>
+  )
+}

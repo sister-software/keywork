@@ -12,62 +12,31 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { URLPatternResultContext, normalizeURLPattern, normalizeURLPatternInit } from 'keywork/uri'
+import { PatternRouteComponentMap, RoutePatternsProps, URLPatternResultContext } from 'keywork/uri'
 import { useMemo } from 'react'
-import { useSSRProps } from './SSRPropsProvider.js'
+import { useSSRPropsByPath } from './SSRPropsProvider.js'
 import { useLocation } from './hooks.js'
-
-/**
- * A **client-side** mapping of path patterns to their respective page components.
- * This is useful if your app bundles all React route handlers into a single Worker.
- * *
- * A collection of patterns to their respective React components.
- *
- * ```ts
- * // Order your routes from most to least specific:
- * export const routes = [
- *   ['/todos/:todoSlug/:subTaskSlug/', TodoSubTaskPage],
- *   ['/todos/:todoSlug/', TodoPage],
- *   ['/todos/', TodosIndexPage],
- *   ['/about/', AboutPage],
- *   ['/privacy/', PrivacyPage],
- *   ['/', IndexPage],
- *   ['*', NotFoundErrorPage],
- * ]
- * ```
- */
-export type KeyworkRoutePatternEntry = [string, React.ComponentType<any>]
-
-export interface KeyworkBrowserRouterProps {
-  routes: Iterable<KeyworkRoutePatternEntry> | Map<string, React.ComponentType<any>>
-}
 
 /**
  * @beta
  * @ignore
  */
-export const KeyworkPatternToPageComponent: React.FC<KeyworkBrowserRouterProps> = ({ routes }) => {
-  const staticProps = useSSRProps()
+export const KeyworkPatternToPageComponent: React.FC<RoutePatternsProps> = ({ routes }) => {
   const location = useLocation()
+  const staticPropsByPath = useSSRPropsByPath()
+  const patternRouteComponentMap = useMemo(() => new PatternRouteComponentMap(routes), [routes])
+  const result = useMemo(() => patternRouteComponentMap.match(location), [location, patternRouteComponentMap])
 
-  const routesMap = useMemo(() => new Map(routes), [routes])
+  if (!result) {
+    return <FallbackComponent />
+  }
 
-  const possibleMatch = useMemo(() => {
-    return matchRoute(routes, location)
-  }, [routes, location])
-
-  const Component = useMemo(() => {
-    if (!possibleMatch) return FallbackComponent
-    const _Component = routesMap.get(possibleMatch.pathname.input)
-
-    return _Component || FallbackComponent
-  }, [routes, possibleMatch])
-
-  const pageStaticProps = staticProps.get(possibleMatch?.pathname.input!) || {}
+  const { Component, match } = result
+  const staticProps = staticPropsByPath.get(location.pathname)
 
   return (
-    <URLPatternResultContext.Provider value={possibleMatch!}>
-      <Component {...pageStaticProps} />
+    <URLPatternResultContext.Provider value={match}>
+      <Component {...staticProps} />
     </URLPatternResultContext.Provider>
   )
 }
@@ -82,20 +51,3 @@ const FallbackComponent: React.FC = () => {
 }
 
 FallbackComponent.displayName = 'KeyworkFallbackPage'
-
-/**
- * @beta
- */
-export function matchRoute(
-  patternToPageComponent: Iterable<KeyworkRoutePatternEntry>,
-  location: Pick<URL, 'pathname'>
-) {
-  for (const [pattern] of patternToPageComponent) {
-    const urlPattern = normalizeURLPattern(pattern)
-    const possibleMatch = urlPattern.exec(normalizeURLPatternInit(location.pathname))
-
-    if (possibleMatch) return possibleMatch
-  }
-
-  return null
-}

@@ -12,6 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+export * from './BrowserRouter.js'
 export * from './KeyworkPatternToPageComponent.js'
 export * from './SSRPropsProvider.js'
 export * from './animation.js'

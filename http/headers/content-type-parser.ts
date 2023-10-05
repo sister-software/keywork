@@ -1,8 +1,15 @@
-/*!
- * Based on https://github.com/jshttp/content-type/blob/master/index.js
- * Copyright(c) 2015 Douglas Christopher Wilson
- * Copyright(c) 2020 Henry Zhuang
- * MIT Licensed
+/**
+ * @file This file is part of the Keywork project.
+ * @copyright Nirrius, LLC. All rights reserved.
+ * @author Teffen Ellis, et al.
+ * @license AGPL-3.0
+ *
+ * @remarks Keywork is free software for non-commercial purposes.
+ * You can be released from the requirements of the license by purchasing a commercial license.
+ * Buying such a license is mandatory as soon as you develop commercial activities
+ * involving the Keywork software without disclosing the source code of your own applications.
+ *
+ * @see LICENSE.md in the project root for further licensing information.
  */
 
 export type Parameters = { [key: string]: string }
@@ -36,7 +43,9 @@ class ContentTypeImpl implements ContentType {
  * quoted-pair   = "\" ( HTAB / SP / VCHAR / obs-text )
  */
 const PARAM_REGEXP =
+  // eslint-disable-next-line no-control-regex
   /; *([!#$%&'*+.^_`|~0-9A-Za-z-]+) *= *("(?:[\u000b\u0020\u0021\u0023-\u005b\u005d-\u007e\u0080-\u00ff]|\\[\u000b\u0020-\u00ff])*"|[!#$%&'*+.^_`|~0-9A-Za-z-]+) */g
+// eslint-disable-next-line no-control-regex
 const TEXT_REGEXP = /^[\u000b\u0020-\u007e\u0080-\u00ff]+$/
 const TOKEN_REGEXP = /^[!#$%&'*+.^_`|~0-9A-Za-z-]+$/
 
@@ -46,6 +55,7 @@ const TOKEN_REGEXP = /^[!#$%&'*+.^_`|~0-9A-Za-z-]+$/
  * quoted-pair = "\" ( HTAB / SP / VCHAR / obs-text )
  * obs-text    = %x80-FF
  */
+// eslint-disable-next-line no-control-regex
 const QESC_REGEXP = /\\([\u000b\u0020-\u00ff])/g
 
 /**

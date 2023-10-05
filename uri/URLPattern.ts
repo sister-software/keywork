@@ -27,6 +27,7 @@ export function polyfillURLPattern() {
 }
 
 export interface IURLPattern {
+  // eslint-disable-next-line @typescript-eslint/no-misused-new
   new (init?: URLPatternInput, baseURL?: string): IURLPattern
 
   test(input?: URLPatternInput, baseURL?: string): boolean
@@ -53,6 +54,10 @@ interface URLPatternInit {
   pathname?: string
   search?: string
   hash?: string
+}
+
+export interface URLPathnameInput {
+  pathname: string
 }
 
 export interface URLPatternResult {

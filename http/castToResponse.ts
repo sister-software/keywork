@@ -14,17 +14,18 @@
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
 import type { IsomorphicFetchEvent } from 'keywork/events'
-import {
-  ErrorResponse,
-  HTMLResponse,
-  JSONResponse,
-  PageElementProps,
-  StaticPropsResponse,
-} from 'keywork/http/responses'
+import { ErrorResponse, HTMLResponse, JSONResponse } from 'keywork/http/responses'
 import { ReactRendererOptions, renderJSXToStream } from 'keywork/ssr'
-import { isStaticPropsRequestURL } from 'keywork/uri'
-import { isValidElement } from 'react'
+import { PatternRouteComponentMap, isStaticPropsRequestURL } from 'keywork/uri'
+import { createElement, isValidElement } from 'react'
 import { isInstanceOfResponse } from './isInstanceOfResponse.js'
+
+/**
+ * @ignore
+ */
+export interface PageElementProps<StaticProps extends {} | null = null> extends React.ReactElement<StaticProps> {
+  children?: React.ReactNode
+}
 
 /**
  * Either a full `Response`, or a more primitive value to be processed.
@@ -45,7 +46,8 @@ export type ResponseLike = Response | React.ReactElement | {} | null | undefined
 export async function castToResponse(
   event: IsomorphicFetchEvent<any, any, any>,
   responseLike: ResponseLike,
-  reactRenderOptions?: ReactRendererOptions
+  reactRenderOptions?: ReactRendererOptions,
+  routeComponentMap?: PatternRouteComponentMap
 ): Promise<Response> {
   if (isInstanceOfResponse(responseLike)) {
     return responseLike
@@ -72,12 +74,21 @@ export async function castToResponse(
     return new Response(responseLike)
   }
 
-  if (isValidElement<PageElementProps>(responseLike)) {
-    if (isStaticPropsRequestURL(event.request.url)) {
-      return new StaticPropsResponse(responseLike)
-    }
+  if (isStaticPropsRequestURL(event.request.url)) {
+    const staticProps = isValidElement<PageElementProps>(responseLike) ? responseLike.props : responseLike
 
+    return new JSONResponse(staticProps)
+  }
+
+  if (isValidElement<PageElementProps>(responseLike)) {
     const stream = await renderJSXToStream(event, responseLike, reactRenderOptions)
+    return new HTMLResponse(stream)
+  }
+
+  const RouteComponent = routeComponentMap?.get(event.urlPattern)
+
+  if (RouteComponent) {
+    const stream = await renderJSXToStream(event, createElement(RouteComponent, responseLike), reactRenderOptions)
     return new HTMLResponse(stream)
   }
 

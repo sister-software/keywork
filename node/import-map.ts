@@ -34,6 +34,8 @@ export function transformTSConfigToImportMap(
   const packageName = packageJSON.name
 
   const importMap: ImportMap = {
+    _comment: 'This importmap was generated for the Keywork project.',
+    packageVersion: packageJSON.version,
     imports: {},
   }
 
@@ -71,10 +73,12 @@ export function transformTSConfigToImportMap(
   for (const [depName, depVersion] of externalDeps) {
     importMap.imports[depName] = `${externalDepHost}/${depName}@${depVersion}`
 
-    const peerDepMeta = packageJSON.peerDependenciesMeta[depName]
+    const peerExports = packageJSON.peerDependencyExports[depName]
 
-    for (const peerDepExport of peerDepMeta?.exports || []) {
-      importMap.imports[`${depName}/${peerDepExport}`] = `${externalDepHost}/${depName}@${depVersion}/${peerDepExport}`
+    for (const peerDepExportName of peerExports || []) {
+      importMap.imports[
+        `${depName}/${peerDepExportName}`
+      ] = `${externalDepHost}/${depName}@${depVersion}/${peerDepExportName}`
     }
   }
 

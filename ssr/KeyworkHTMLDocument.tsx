@@ -12,7 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { IsomorphicFetchEvent } from 'keywork/events'
+import type { IsomorphicFetchEvent } from 'keywork/events'
+import type { ImportMap } from 'keywork/files'
 import { KEYWORK_APP_ROOT, KEYWORK_STYLE_ROOT } from 'keywork/utils'
 import { FC, ReactNode } from 'react'
 
@@ -27,6 +28,7 @@ export interface KeyworkHTMLDocumentProps {
   className?: string
   buildId?: string
   event?: IsomorphicFetchEvent<any, any, any>
+  importMap?: ImportMap
   children: ReactNode
 }
 
@@ -40,15 +42,16 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
   children,
   browserIdentifier,
   className,
-  buildId,
   event,
+  importMap,
+  // buildId,
 }) => {
   /** Added to trigger cache busting. */
-  const assetSearchParams = new URLSearchParams({
-    buildID: buildId || 'development',
-  })
+  // const assetSearchParams = new URLSearchParams({
+  //   buildID: buildId || 'development',
+  // })
 
-  const $assetSearchParams = assetSearchParams.toString()
+  // const $assetSearchParams = assetSearchParams.toString()
 
   const document = event?.document || {}
   const charSet = document.charSet || 'utf-8'
@@ -110,11 +113,11 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
 
         {document.link}
 
-        {document.importMap ? (
+        {importMap ? (
           <script
             type="importmap"
             dangerouslySetInnerHTML={{
-              __html: JSON.stringify(document.importMap, null, 2),
+              __html: JSON.stringify(importMap, null, 2),
             }}
           />
         ) : null}
@@ -132,7 +135,17 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
         <div id={KEYWORK_APP_ROOT}>{children}</div>
         <div id={KEYWORK_STYLE_ROOT} />
 
-        {document.omitHydrationScript ? null : <script type="module" src={`/main.js?${$assetSearchParams}`}></script>}
+        {document.omitHydrationScript ? null : (
+          <script
+            type="module"
+            dangerouslySetInnerHTML={{
+              __html: /* javascript */ `
+              import {hydrate} from 'keywork/client'
+              hydrate()
+`,
+            }}
+          />
+        )}
       </body>
     </html>
   )

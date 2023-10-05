@@ -14,6 +14,7 @@
 
 import { KeyworkResourceError } from 'keywork/errors'
 import { FetchEventProvider, IsomorphicFetchEvent } from 'keywork/events'
+import { fetchImportMap } from 'keywork/files'
 import { PageElementProps } from 'keywork/http'
 import { KeyworkLogger } from 'keywork/logging'
 import type { ReactDOMServerReadableStream } from 'react-dom/server'
@@ -38,13 +39,13 @@ export async function renderJSXToStream<StaticProps extends {} | null = null>(
   const streamRenderer = reactRenderOptions?.streamRenderer || renderReactStream
   const DocumentComponent = reactRenderOptions?.DocumentComponent || KeyworkHTMLDocument
   const Providers = reactRenderOptions?.Providers || KeyworkProviders
-
+  const importMap = event.document.importMap || (await fetchImportMap())
   const staticProps = pageElement.props
 
   const appDocument = (
     <FetchEventProvider event={event} logger={logger}>
       <Providers>
-        <DocumentComponent event={event}>
+        <DocumentComponent event={event} importMap={importMap}>
           {pageElement}
           <KeyworkSSREmbed eventInit={event.toJSON()} staticProps={staticProps} />
         </DocumentComponent>

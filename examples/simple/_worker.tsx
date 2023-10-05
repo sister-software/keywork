@@ -1,57 +1,73 @@
-import { RequestRouter } from 'keywork'
-import { IndexPage } from './public/pages/Index.js'
+/**
+ * @file This file is part of the Keywork project.
+ * @copyright Nirrius, LLC. All rights reserved.
+ * @author Teffen Ellis, et al.
+ * @license AGPL-3.0
+ *
+ * @remarks Keywork is free software for non-commercial purposes.
+ * You can be released from the requirements of the license by purchasing a commercial license.
+ * Buying such a license is mandatory as soon as you develop commercial activities
+ * involving the Keywork software without disclosing the source code of your own applications.
+ *
+ * @see LICENSE.md in the project root for further licensing information.
+ */
+
+import { KeyworkResourceError, RequestRouter } from 'keywork'
+import AppBrowserRouter from './public/main.js'
+import { TodoItemPageProps } from './public/pages/TodoItem.js'
 
 const router = new RequestRouter({
   logLevel: 'Debug',
   document: {
     title: 'Keywork example app',
     themeColor: '#65b9e2',
-    importMap: {
-      imports: {
-        keywork: './dist/index.js',
-        'keywork/cli': './dist/cli/index.js',
-        'keywork/client': './dist/client/index.js',
-        'keywork/logging': './dist/logging/index.js',
-        'keywork/node': './dist/node/index.js',
-        'keywork/errors': './dist/errors/index.js',
-        'keywork/docgen': './dist/docgen/index.js',
-        'keywork/docgen/utils': './dist/docgen/utils/index.js',
-        'keywork/docgen/helpers': './dist/docgen/helpers/index.js',
-        'keywork/docgen/theme': './dist/docgen/theme/index.js',
-        'keywork/events': './dist/events/index.js',
-        'keywork/files': './dist/files/index.js',
-        'keywork/files/extensions': './dist/files/extensions/index.js',
-        'keywork/http': './dist/http/index.js',
-        'keywork/http/headers': './dist/http/headers/index.js',
-        'keywork/http/responses': './dist/http/responses/index.js',
-        'keywork/lifecycle': './dist/lifecycle/index.js',
-        'keywork/middleware': './dist/middleware/index.js',
-        'keywork/router': './dist/router/index.js',
-        'keywork/ssr': './dist/ssr/index.js',
-        'keywork/cloudflare': './dist/cloudflare/index.js',
-        'keywork/testing': './dist/testing/index.js',
-        'keywork/utils': './dist/utils/index.js',
-        'keywork/uri': './dist/uri/index.js',
-        cookie: 'https://esm.sh/cookie@^0.5.0',
-        negotiator: 'https://esm.sh/negotiator@^0.6.3',
-        ulidx: 'https://esm.sh/ulidx@^2.1.0',
-        react: 'https://esm.sh/react@>=18.2',
-        'react/jsx-runtime': 'https://esm.sh/react@>=18.2/jsx-runtime',
-        'react-dom': 'https://esm.sh/react-dom@>=18.2',
-        'react-dom/server': 'https://esm.sh/react-dom@>=18.2/server',
-        'react-dom/server.browser': 'https://esm.sh/react-dom@>=18.2/server.browser',
-        'react-dom/client': 'https://esm.sh/react-dom@>=18.2/client',
-        undici: 'https://esm.sh/undici@>=5.25.2',
-        'urlpattern-polyfill': 'https://esm.sh/urlpattern-polyfill@^5.0.5',
-      },
-    },
   },
+  browserRouter: AppBrowserRouter,
 })
 
 router.get('/', ({ document }) => {
   document.author = 'Teffen Ellis'
 
-  return <IndexPage renderTimestamp={new Date().toISOString()} />
+  return {
+    renderTimestamp: new Date().toISOString(),
+  }
+})
+
+const mockTodos = new Map<string, TodoItemPageProps>([
+  [
+    '1',
+    {
+      id: '1',
+      title: 'Todo 1',
+      completed: false,
+    },
+  ],
+  [
+    '2',
+    {
+      id: '2',
+      title: 'Todo 2',
+      completed: false,
+    },
+  ],
+  [
+    '3',
+    {
+      id: '3',
+      title: 'Todo 3',
+      completed: true,
+    },
+  ],
+])
+
+router.get<{ id: string }>('/todo/:id', ({ params }) => {
+  const todo = mockTodos.get(params.id)
+
+  if (!todo) {
+    return new KeyworkResourceError(`Todo ${params.id} not found`, 404)
+  }
+
+  return todo
 })
 
 export default router

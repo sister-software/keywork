@@ -108,11 +108,23 @@
       "optional": true
     }
   },
+  "peerDependencyExports": {
+    "_comment": "Used by the import-map generator.",
+    "react": [
+      "jsx-runtime"
+    ],
+    "react-dom": [
+      "server",
+      "server.browser",
+      "client"
+    ]
+  },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
   "bin": "./dist/index.cli.js",
   "exports": {
     "./package.json": "./package.json",
+    "./importmap.json": "./dist/importmap.json",
     ".": {
       "import": "./dist/index.js",
       "types": "./dist/index.d.ts"

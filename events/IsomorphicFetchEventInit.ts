@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { URLPatternResult } from 'keywork/uri'
+import type { IURLPattern, URLPatternResult } from 'keywork/uri'
 import type { SSRDocument } from './SSRDocument.js'
 
 /**
@@ -34,6 +34,8 @@ export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> {
   data?: Data
 
   match?: URLPatternResult
+
+  urlPattern?: IURLPattern
 
   waitUntil?(promise: Promise<any>): void
   passThroughOnException?(): void

@@ -22,10 +22,10 @@ import { useLocation } from './hooks.js'
  *
  * @internal
  */
-export type SSRPropsByPath = Map<string, any>
+export type SSRPropsByPath = Map<string, {} | undefined>
 
 const SSRPropsContext = createContext<SSRPropsByPath>(undefined as any)
-export const useSSRProps = () => useContext(SSRPropsContext)
+export const useSSRPropsByPath = () => useContext(SSRPropsContext)
 
 export interface SSRPropsProviderProps {
   initialPropsByPath: SSRPropsByPath
@@ -58,7 +58,7 @@ export const SSRPropsProvider: React.FC<SSRPropsProviderProps> = ({
     const data = await response.json()
 
     setPropsByPath(new Map([[location.pathname, data]]))
-  }, [location.pathname])
+  }, [location.pathname, logger])
 
   useEffect(() => {
     if (lastRenderLocationRef.current.pathname !== location.pathname) {

@@ -37,7 +37,6 @@ export interface SourceReferenceWithGit extends SourceReference {
 
 export const READ_PREFIX = '/nirrius/keywork/blob/main/modules'
 export const EDIT_PREFIX = '/nirrius/keywork/edit/main/modules'
-const textDecoder = new TextDecoder()
 
 export function readFileChangeFromGit(_source: SourceReference) {
   const source = _source as SourceReferenceWithGit
@@ -77,16 +76,4 @@ export function readFileChangeFromGit(_source: SourceReference) {
   }
 
   source.hasReadFromGit = true
-}
-
-function readLastGitCommit(): string {
-  try {
-    const commit = execSync('git rev-parse HEAD').toString().trim()
-
-    return commit.slice(0, 7)
-  } catch (error) {
-    console.log('Could not read last git commit.')
-
-    return 'unknown'
-  }
 }

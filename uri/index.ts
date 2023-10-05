@@ -15,4 +15,6 @@
 export * from './URLContext.js'
 export * from './URLMatchContext.js'
 export * from './URLPattern.js'
+export * from './URLPatternRouteMap.js'
+export * from './modules.js'
 export * from './query.js'

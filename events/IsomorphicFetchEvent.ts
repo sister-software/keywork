@@ -13,7 +13,7 @@
  */
 
 import { KeyworkResourceError, Status } from 'keywork/errors'
-import type { URLPatternResult } from 'keywork/uri'
+import { normalizeURLPattern, type IURLPattern, type URLPatternResult } from 'keywork/uri'
 import { IsomorphicExtendableEvent } from './IsomorphicExtendableEvent.js'
 import { IsomorphicFetchEventInit } from './IsomorphicFetchEventInit.js'
 import { SSRDocument } from './SSRDocument.js'
@@ -52,6 +52,11 @@ export class IsomorphicFetchEvent<BoundAliases = {}, ExpectedParams = {}, Data =
   match: URLPatternResult
 
   /**
+   * The URL pattern used to match the incoming request.
+   */
+  urlPattern: IURLPattern
+
+  /**
    * The incoming request received by the Worker.
    */
   public request!: Request
@@ -62,7 +67,7 @@ export class IsomorphicFetchEvent<BoundAliases = {}, ExpectedParams = {}, Data =
   originalURL: string
   constructor(
     eventType = 'fetch',
-    { request, env, data, originalURL, match, document }: IsomorphicFetchEventInit<BoundAliases, Data>
+    { request, env, data, originalURL, match, urlPattern, document }: IsomorphicFetchEventInit<BoundAliases, Data>
   ) {
     super(eventType)
     this.originalURL = originalURL
@@ -70,6 +75,7 @@ export class IsomorphicFetchEvent<BoundAliases = {}, ExpectedParams = {}, Data =
     this.env = env || ({} as BoundAliases)
     this.data = data || ({} as Data)
     this.match = match || ({} as URLPatternResult)
+    this.urlPattern = urlPattern || normalizeURLPattern(new URL(originalURL))
     this.params = (match ? match.pathname.groups : {}) as unknown as ExpectedParams
     this.document = document || {}
   }

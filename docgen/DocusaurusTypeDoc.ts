@@ -13,27 +13,24 @@
  */
 
 import { load as loadMarkdownPlugin, MarkdownTheme, MarkdownThemeOptions } from 'keywork/docgen/theme'
-import { changeExtension, PackageExportsRecord } from 'keywork/node'
+import { projectRootPathBuilder } from 'keywork/node'
 import * as TypeDoc from 'typedoc'
 import { Logger, LogLevel } from 'typedoc'
 import * as ts from 'typescript'
 
 export class DocusaurusTypeDoc extends TypeDoc.Application {
-  constructor(
-    public program: ts.Program,
-    public exports: PackageExportsRecord
-  ) {
+  constructor(public program: ts.Program) {
     super()
     this.options.addReader(new TypeDoc.TSConfigReader())
   }
 
   getEntryPoints(): TypeDoc.DocumentationEntryPoint[] | undefined {
     const entryPoints: TypeDoc.DocumentationEntryPoint[] = []
+    const tsConfigPaths = this.program.getCompilerOptions().paths!
 
-    for (const [namedExport, entry] of Object.entries(this.exports)) {
-      if (namedExport.endsWith('.json')) continue
-
-      const entryPointPath = changeExtension(entry.import, '.ts')
+    for (const importAlias in tsConfigPaths) {
+      const [relativePath] = tsConfigPaths[importAlias]
+      const entryPointPath = projectRootPathBuilder(relativePath)
 
       const sourceFile = this.program.getSourceFile(entryPointPath)
 
@@ -42,7 +39,7 @@ export class DocusaurusTypeDoc extends TypeDoc.Application {
       }
 
       entryPoints.push({
-        displayName: namedExport,
+        displayName: relativePath,
         program: this.program,
         sourceFile,
       })

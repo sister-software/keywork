@@ -34,6 +34,9 @@ export interface ImportMapScopesRecord {
  * @see {@link https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script/type/importmap | MDN}
  */
 export interface ImportMap {
+  $schema?: string
+  _comment?: string
+  packageVersion?: string
   imports: ImportMapRecord
   scopes?: ImportMapScopesRecord
 }
@@ -41,4 +44,34 @@ export interface ImportMap {
 /**
  * @internal
  */
-export const KEYWORK_IMPORT_MAP_FILE_NAME = 'import_map.json'
+export interface ImportMapModule {
+  default: ImportMap
+}
+
+/**
+ * @internal
+ */
+export const KEYWORK_IMPORT_MAP_FILE_NAME = 'importmap.json'
+
+/**
+ * Dynamically fetches the Keywork import map for server use.
+ *
+ * This is a useful utility for SSR and client-side hydration without bundling.
+ */
+export async function fetchImportMap(mountPoint = '/'): Promise<ImportMap> {
+  // We need to use the dynamic import syntax here because the import map is
+  // dynamically generated after the TypeScript's compilation step.
+  const modulePath = 'keywork/importmap' + '.json'
+
+  const { default: importMap }: ImportMapModule = await import(modulePath, {
+    assert: {
+      type: 'json',
+    },
+  })
+
+  for (const [key, value] of Object.entries(importMap.imports)) {
+    importMap.imports[key as keyof typeof importMap.imports] = value.replace('./', mountPoint)
+  }
+
+  return importMap
+}

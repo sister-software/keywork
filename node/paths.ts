@@ -1,3 +1,17 @@
+/**
+ * @file This file is part of the Keywork project.
+ * @copyright Nirrius, LLC. All rights reserved.
+ * @author Teffen Ellis, et al.
+ * @license AGPL-3.0
+ *
+ * @remarks Keywork is free software for non-commercial purposes.
+ * You can be released from the requirements of the license by purchasing a commercial license.
+ * Buying such a license is mandatory as soon as you develop commercial activities
+ * involving the Keywork software without disclosing the source code of your own applications.
+ *
+ * @see LICENSE.md in the project root for further licensing information.
+ */
+
 import { readParsedTSConfig } from '@sister.software/typescript-esm-packager'
 import { readFileSync } from 'node:fs'
 import * as path from 'node:path'
@@ -74,15 +88,10 @@ export interface KeyworkPackageJSON {
   exports: PackageExportsRecord
   dependencies: PackageDependencyRecord
   peerDependencies: PackageDependencyRecord
-  peerDependenciesMeta: PackageDependencyMetaRecord
+  peerDependencyExports: PackageDependencyExportsRecord
 }
 
-export interface PackageDependencyMeta {
-  optional: boolean
-  exports?: string[]
-}
-
-export type PackageDependencyMetaRecord = Record<string, PackageDependencyMeta | undefined>
+export type PackageDependencyExportsRecord = Record<string, string[] | undefined>
 
 /**
  * @internal
@@ -115,26 +124,6 @@ export function readKeyworkPackageJSON(): KeyworkPackageJSON {
 
   return JSON.parse(packageJSONContents)
 }
-
-/**
- * Plucks an import map friendly record of sub-package exports.
- * @internal
- * @ignore
- */
-export function pluckPublicExports(packageJSON: KeyworkPackageJSON): PackageExportsRecord {
-  const exports: PackageExportsRecord = {}
-
-  for (const [alias, declaration] of Object.entries(packageJSON.exports)) {
-    if (typeof declaration === 'string') continue
-    if (alias.endsWith('.json')) continue
-    if (alias.includes('*')) continue
-
-    exports[alias] = declaration
-  }
-
-  return exports
-}
-
 /**
  * @returns Parsed TSConfig used by Keywork.
  * @internal

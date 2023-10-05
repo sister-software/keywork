@@ -14,9 +14,9 @@
 
 import type { SSRDocument } from 'keywork/events'
 import type { HTTPMethod } from 'keywork/http'
-import type { KeyworkLogLevel } from 'keywork/logging'
+import type { KeyworkLogLevelValue } from 'keywork/logging'
 import type { ReactRendererOptions } from 'keywork/ssr'
-import type { IURLPattern } from 'keywork/uri'
+import type { ClientModuleInput, IURLPattern } from 'keywork/uri'
 import type { MiddlewareDeclarationLike } from './MiddlewareDeclarationLike.js'
 
 /**
@@ -73,12 +73,18 @@ export interface RequestRouterOptions {
 
   document?: SSRDocument
   react?: ReactRendererOptions
+  /**
+   * An optional client-side router that instructs maps path patterns to their respective page components.
+   *
+   * This is only required if your app uses server-side rendering and client hydration.
+   */
+  browserRouter?: ClientModuleInput
   debug?: RequestRouterDebugOptions
   /**
    * The log level to use for the router.
    *
-   * @see {@linkcode KeyworkLogLevel}
+   * @see {@linkcode KeyworkLogLevelValue}
    * @defaultValue 'Info'
    */
-  logLevel?: KeyworkLogLevel
+  logLevel?: KeyworkLogLevelValue
 }
