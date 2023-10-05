@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, Status } from 'keywork/errors'
+import { KeyworkResourceError, Status, isWithinStatusCodeRange } from 'keywork/errors'
 import type { IsomorphicFetchEvent } from 'keywork/events'
 import { ErrorResponse, HTMLResponse, JSONResponse } from 'keywork/http/responses'
 import { ReactRendererOptions, renderJSXToStream } from 'keywork/ssr'
@@ -72,6 +72,17 @@ export async function castToResponse(
     }
 
     return new Response(responseLike)
+  }
+
+  if (typeof responseLike === 'number') {
+    if (!isWithinStatusCodeRange(responseLike)) {
+      return new ErrorResponse(
+        Status.InternalServerError,
+        `Numeric response value ${responseLike} is not a valid status code.`
+      )
+    }
+
+    return new Response(undefined, { status: responseLike })
   }
 
   if (isStaticPropsRequestURL(event.request.url)) {

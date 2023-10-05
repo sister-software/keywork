@@ -342,3 +342,7 @@ export function isServerErrorStatus(status: Status): status is ServerErrorStatus
 export function isErrorStatus(status: Status): status is ErrorStatus {
   return status >= 400 && status < 600
 }
+
+export function isWithinStatusCodeRange(statusLike: number): statusLike is Status {
+  return statusLike >= 100 && statusLike < 600
+}

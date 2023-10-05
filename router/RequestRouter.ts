@@ -133,6 +133,11 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
       // Likely a `RouteRequestHandler`...
       const fetch: RouteRequestHandler<BoundAliases, any, any, Response> = async (event, next) => {
         const responseLike = await fetcherLike(event, next)
+
+        if (!responseLike) {
+          return this.terminateMiddleware()
+        }
+
         const response = await castToResponse(event, responseLike, this.reactOptions, this.routeComponentMap)
 
         return this.respondWith(response)
