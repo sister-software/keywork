@@ -23,7 +23,7 @@ import { isInstanceOfResponse } from './isInstanceOfResponse.js'
 /**
  * @ignore
  */
-export interface PageElementProps<StaticProps extends {} | null = null> extends React.ReactElement<StaticProps> {
+export interface PageElementComponent<StaticProps extends {} | null = {}> extends React.ReactElement<StaticProps> {
   children?: React.ReactNode
 }
 
@@ -86,12 +86,12 @@ export async function castToResponse(
   }
 
   if (isStaticPropsRequestURL(event.request.url)) {
-    const staticProps = isValidElement<PageElementProps>(responseLike) ? responseLike.props : responseLike
+    const staticProps = isValidElement<PageElementComponent>(responseLike) ? responseLike.props : responseLike
 
     return new JSONResponse(staticProps)
   }
 
-  if (isValidElement<PageElementProps>(responseLike)) {
+  if (isValidElement<PageElementComponent>(responseLike)) {
     const stream = await renderJSXToStream(event, responseLike, reactRenderOptions)
     return new HTMLResponse(stream)
   }

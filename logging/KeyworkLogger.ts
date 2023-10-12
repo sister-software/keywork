@@ -39,36 +39,26 @@ _timestamp.toString = () => _timestamp()
 
 export interface KeyworkLoggerConfig {
   readonly method: keyof GlobalConsoleLike | null
-  readonly level: KeyworkLogLevelValue
+  readonly level: KeyworkLogLevel
   readonly prefix?: string
 }
 
 /**
- * @internal
- */
-export const _KEYWORK_LOG_LEVELS = ['None', 'Trace', 'Error', 'Warning', 'Log', 'Info', 'Debug'] as const
-
-/**
- * Levels available to the Keywork logger.
- */
-export type KeyworkLogLevelValue = (typeof _KEYWORK_LOG_LEVELS)[number]
-
-/**
  * Enum-like record of Keywork log levels.
  */
-export const KeyworkLogLevel = {
-  None: 'None',
-  Trace: 'Trace',
-  Error: 'Error',
-  Warning: 'Warning',
-  Log: 'Log',
-  Info: 'Info',
-  Debug: 'Debug',
-} as const satisfies Record<KeyworkLogLevelValue, KeyworkLogLevelValue>
+export const enum KeyworkLogLevel {
+  None = 0,
+  Trace = 1,
+  Error = 2,
+  Warning = 3,
+  Log = 4,
+  Info = 5,
+  Debug = 6,
+}
 /**
  * The default level used by the Keywork logger.
  */
-export const DEFAULT_LOG_LEVEL = 'Info' satisfies KeyworkLogLevelValue
+export const DEFAULT_LOG_LEVEL = KeyworkLogLevel.Info
 
 /**
  * The default prefix used by the Keywork logger.
@@ -81,35 +71,35 @@ export const DEFAULT_LOG_PREFIX = 'Keywork'
  */
 export const _KeyworkLogLevelConfigs = [
   {
-    level: 'None',
+    level: KeyworkLogLevel.None,
     method: null,
   },
   {
-    level: 'Trace',
+    level: KeyworkLogLevel.Trace,
     method: 'trace',
     prefix: '👀 ',
   },
   {
-    level: 'Log',
+    level: KeyworkLogLevel.Log,
     method: 'log',
     prefix: '💬 ',
   },
   {
-    level: 'Info',
+    level: KeyworkLogLevel.Info,
     method: 'info',
     prefix: '💡 ',
   },
   {
-    level: 'Error',
+    level: KeyworkLogLevel.Error,
     method: 'error',
   },
   {
-    level: 'Warning',
+    level: KeyworkLogLevel.Warning,
     method: 'warn',
     prefix: '⚠️ ',
   },
   {
-    level: 'Debug',
+    level: KeyworkLogLevel.Debug,
     method: 'debug',
     prefix: '🔎 ',
   },
@@ -119,7 +109,7 @@ export const _KeyworkLogLevelConfigs = [
  * A map of log levels to their respective configuration.
  * @internal
  */
-const _KeyworkLogLevelConfigMap = new Map<KeyworkLogLevelValue, KeyworkLoggerConfig>()
+const _KeyworkLogLevelConfigMap = new Map<KeyworkLogLevel, KeyworkLoggerConfig>()
 /**
  * A map of log levels to their respective indexes.
  *
@@ -162,7 +152,7 @@ export class KeyworkLogger {
   public info!: GlobalConsoleLike['info']
   public warn!: GlobalConsoleLike['warn']
 
-  constructor(logPrefix = 'Keywork', level: KeyworkLogLevelValue | number = KeyworkLogLevel.Info, color = 'cyan') {
+  constructor(logPrefix = 'Keywork', level?: KeyworkLogLevel, color = 'cyan') {
     if (typeof console !== 'undefined') {
       this.globalConsole = console as GlobalConsoleLike
     } else {
@@ -171,11 +161,10 @@ export class KeyworkLogger {
 
     this.logPrefix = `[${logPrefix}]`
 
-    if (typeof level === 'number') {
-      this.config = _KeyworkLogLevelConfigs[level] || _KeyworkLogLevelConfigMap.get('Info')!
-    } else {
-      this.config = _KeyworkLogLevelConfigMap.get(level) || _KeyworkLogLevelConfigMap.get('Info')!
-    }
+    this.config =
+      typeof level === 'undefined'
+        ? _KeyworkLogLevelConfigMap.get(KeyworkLogLevel.Info)!
+        : _KeyworkLogLevelConfigMap.get(level)!
 
     const levelIndex = _KeyworkLogLevelIndexes.get(this.config)!
 

@@ -358,17 +358,17 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
      * The given middleware will execute _before_ any other request handlers
      * that are defined _after_ invoking `use(...)`.
      */
-    fetcher: FetcherLike<BoundAliases>
+    fetcher: FetcherLike<any>
   ): void
   public use(
     /** A `URLpattern` of where the given middleware should be mounted.  */
     mountURLPattern: URLPatternLike,
     /** The middleware to mount. */
-    fetcher: FetcherLike<BoundAliases>
+    fetcher: FetcherLike<any>
   ): void
   public use(...args: unknown[]): void {
     let mountURLPattern: URLPatternLike
-    let fetcher: FetcherLike<BoundAliases>
+    let fetcher: FetcherLike<any>
 
     if (args.length > 1) {
       // Path pattern was provided...
@@ -447,10 +447,10 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
     for (const { httpMethod, entries } of routesByHttpMethod) {
       if (!entries.length) continue
 
-      this.logger.log('METHOD:', httpMethod)
+      this.logger.info('METHOD:', httpMethod)
 
       for (const route of entries) {
-        this.logger.log(route.displayName || '', route.urlPattern?.pathname)
+        this.logger.info(route.displayName || '', route.urlPattern?.pathname)
 
         this.$prettyPrintRoutes(route.entries)
       }
@@ -651,7 +651,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
 
   constructor(options?: RequestRouterOptions) {
     this.displayName = options?.displayName || 'Keywork Router'
-    this.logger = new KeyworkLogger(this.displayName, options?.logLevel || 'Log')
+    this.logger = new KeyworkLogger(this.displayName, options?.logLevel)
 
     this.reactOptions = {
       streamRenderer: renderReactStream,

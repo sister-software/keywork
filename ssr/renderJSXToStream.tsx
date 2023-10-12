@@ -13,45 +13,31 @@
  */
 
 import { KeyworkResourceError } from 'keywork/errors'
-import { FetchEventProvider, IsomorphicFetchEvent } from 'keywork/events'
+import { IsomorphicFetchEvent } from 'keywork/events'
 import { fetchImportMap } from 'keywork/files'
-import { PageElementProps } from 'keywork/http'
+import { PageElementComponent } from 'keywork/http'
 import { KeyworkLogger } from 'keywork/logging'
 import type { ReactDOMServerReadableStream } from 'react-dom/server'
-import { KeyworkHTMLDocument } from './KeyworkHTMLDocument.js'
-import { KeyworkProviders } from './KeyworkProvidersComponent.js'
-import { KeyworkSSREmbed } from './KeyworkSSREmbed.js'
-import { ReactRenderStreamResult, ReactRendererOptions } from './ReactRendererOptions.js'
+import type { ReactRenderStreamResult, ReactRendererOptions } from './ReactRendererOptions.js'
+import { RequestDocument } from './RequestDocument.js'
 import { renderReactStream } from './stream.js'
 
 /**
  * Renders the given React content to an HTML stream.
  * @ignore
  */
-export async function renderJSXToStream<StaticProps extends {} | null = null>(
+export async function renderJSXToStream(
   event: IsomorphicFetchEvent<any, any, any>,
   /** The React component to render for this specific page. */
-  pageElement: PageElementProps<StaticProps>,
+  pageElement: PageElementComponent,
   reactRenderOptions?: ReactRendererOptions
 ): Promise<ReactDOMServerReadableStream> {
   const logger = reactRenderOptions?.logger || new KeyworkLogger('Keywork SSR')
 
   const streamRenderer = reactRenderOptions?.streamRenderer || renderReactStream
-  const DocumentComponent = reactRenderOptions?.DocumentComponent || KeyworkHTMLDocument
-  const Providers = reactRenderOptions?.Providers || KeyworkProviders
   const importMap = event.document.importMap || (await fetchImportMap())
-  const staticProps = pageElement.props
 
-  const appDocument = (
-    <FetchEventProvider event={event} logger={logger}>
-      <Providers>
-        <DocumentComponent event={event} importMap={importMap}>
-          {pageElement}
-          <KeyworkSSREmbed eventInit={event.toJSON()} staticProps={staticProps} />
-        </DocumentComponent>
-      </Providers>
-    </FetchEventProvider>
-  )
+  const appDocument = <RequestDocument event={event} pageElement={pageElement} importMap={importMap} />
 
   let result: ReactRenderStreamResult
 

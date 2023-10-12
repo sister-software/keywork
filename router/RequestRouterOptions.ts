@@ -14,7 +14,7 @@
 
 import type { SSRDocument } from 'keywork/events'
 import type { HTTPMethod } from 'keywork/http'
-import type { KeyworkLogLevelValue } from 'keywork/logging'
+import type { KeyworkLogLevel } from 'keywork/logging'
 import type { ReactRendererOptions } from 'keywork/ssr'
 import type { ClientModuleInput, IURLPattern } from 'keywork/uri'
 import type { MiddlewareDeclarationLike } from './MiddlewareDeclarationLike.js'
@@ -86,5 +86,5 @@ export interface RequestRouterOptions {
    * @see {@linkcode KeyworkLogLevelValue}
    * @defaultValue 'Info'
    */
-  logLevel?: KeyworkLogLevelValue
+  logLevel?: KeyworkLogLevel
 }

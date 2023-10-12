@@ -13,7 +13,7 @@
  */
 
 import { FetchEventProvider, IsomorphicFetchEvent } from 'keywork/events'
-import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_PREFIX, KeyworkLogLevelValue, KeyworkLogger } from 'keywork/logging'
+import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_PREFIX, KeyworkLogLevel, KeyworkLogger } from 'keywork/logging'
 import { RoutePatternsProps, URLContext } from 'keywork/uri'
 import { createContext, useContext, useMemo } from 'react'
 import { KeyworkPatternToPageComponent } from './KeyworkPatternToPageComponent.js'
@@ -38,7 +38,7 @@ export const useBrowserRouter = () => {
 
 export interface BrowserRouterProps extends RoutePatternsProps {
   logPrefix?: string
-  logLevel?: KeyworkLogLevelValue
+  logLevel?: KeyworkLogLevel
   history?: History
 }
 

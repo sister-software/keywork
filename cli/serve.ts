@@ -66,7 +66,7 @@ export type ServeArgs = StrictYargsOptionsToInterface<typeof serveCommand>
  */
 export async function serveBuilder({ port, host, ...serveArgs }: ServeArgs) {
   const logger = new KeyworkLogger('Keywork Server')
-  logger.info('>>>>', serveArgs)
+  logger.info('CLI Args', serveArgs)
 
   const absolutePublicDirPath = path.resolve(serveArgs.publicDir)
   const absoluteScriptPath = path.resolve(serveArgs.routerScript)
@@ -102,6 +102,8 @@ export async function serveBuilder({ port, host, ...serveArgs }: ServeArgs) {
       filesDirectoryPath: absolutePublicDirPath,
     })
   )
+
+  fetcher.$prettyPrintRoutes()
 
   // And then wrap the router with `createServerHandler`
   const server = http.createServer(createNodeServerHandler(fetcher))

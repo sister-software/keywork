@@ -44,7 +44,6 @@ export function transformIncomingMessageToRequest(
   let bodyInit: BodyInit | null = null
 
   if (hasReadableBody(incomingMessage)) {
-    console.log('>>> hasReadableBody', incomingMessage.method, incomingMessage.readable)
     bodyInit = new ReadableStream({
       async pull(controller) {
         const chunk = incomingMessage.read()

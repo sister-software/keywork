@@ -13,24 +13,7 @@
  */
 
 import { KeyworkResourceError, RequestRouter } from 'keywork'
-import AppBrowserRouter from './public/main.js'
-import { TodoItemPageProps } from './public/pages/TodoItem.js'
-
-const router = new RequestRouter({
-  document: {
-    title: 'Keywork example app',
-    themeColor: '#65b9e2',
-  },
-  browserRouter: AppBrowserRouter,
-})
-
-router.get('/', ({ document }) => {
-  document.author = 'Teffen Ellis'
-
-  return {
-    renderTimestamp: new Date().toISOString(),
-  }
-})
+import type { TodoItemPageProps } from './public/pages/TodoItem.js'
 
 const mockTodos = new Map<string, TodoItemPageProps>([
   [
@@ -59,7 +42,13 @@ const mockTodos = new Map<string, TodoItemPageProps>([
   ],
 ])
 
-router.get<{ id: string }>('/todo/:id', ({ params }) => {
+export const apiRouter = new RequestRouter()
+
+apiRouter.get('/todos', () => {
+  return mockTodos
+})
+
+apiRouter.get<{ id: string }>('/todo/:id', async ({ params }) => {
   const todo = mockTodos.get(params.id)
 
   if (!todo) {
@@ -68,5 +57,3 @@ router.get<{ id: string }>('/todo/:id', ({ params }) => {
 
   return todo
 })
-
-export default router

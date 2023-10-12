@@ -36,7 +36,10 @@ export function transformTSConfigToImportMap(
   const importMap: ImportMap = {
     _comment: 'This importmap was generated for the Keywork project.',
     packageVersion: packageJSON.version,
-    imports: {},
+    imports: {
+      [`${packageName}/package.json`]: './package.json',
+      [`${packageName}/importmap.json`]: './dist/importmap.json',
+    },
   }
 
   if (!tsConfigPaths) return importMap

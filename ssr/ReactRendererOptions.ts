@@ -15,8 +15,7 @@
 import type { KeyworkResourceError } from 'keywork/errors'
 import type { KeyworkLogger } from 'keywork/logging'
 import type { ReactDOMServerReadableStream } from 'react-dom/server'
-import type { KeyworkHTMLDocumentComponent } from './KeyworkHTMLDocument.js'
-import type { KeyworkProvidersComponent } from './KeyworkProvidersComponent.js'
+import type { RequestDocumentOverrideProps } from './RequestDocument.js'
 
 /**
  * @ignore
@@ -54,18 +53,8 @@ export interface IReactStreamRenderer {
   (children: React.ReactElement, options?: RenderToReadableStreamOptions): Promise<ReactRenderStreamResult>
 }
 
-export interface ReactRendererOptions {
+export interface ReactRendererOptions extends RequestDocumentOverrideProps {
   streamRenderer?: IReactStreamRenderer
-  /**
-   * A HTML Document React component which wraps the entire application.
-   * Use this if you need to replace the default HTML Document.
-   */
-  DocumentComponent?: KeyworkHTMLDocumentComponent
-  /**
-   * A React component which wraps the SSR routes.
-   * Use this if you need to inject a provider into the SSR pipeline.
-   */
-  Providers?: KeyworkProvidersComponent
 
   /**
    * Logger used during rendering. This defaults to the router's logger.

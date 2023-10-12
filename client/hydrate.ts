@@ -12,13 +12,13 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import { KeyworkResourceError } from 'keywork/errors'
-import { KeyworkLogLevel, KeyworkLogLevelValue, KeyworkLogger } from 'keywork/logging'
+import { KeyworkLogLevel, KeyworkLogger } from 'keywork/logging'
 import { isKeyworkClientModule } from 'keywork/uri'
 import { hydrateRoot } from 'react-dom/client'
 import { pluckKeyworkHydrationElement, waitUntilDOMReady } from './dom.js'
 
 export interface KeyworkHydrationOptions {
-  logLevel?: KeyworkLogLevelValue
+  logLevel?: KeyworkLogLevel
   logPrefix?: string
   scriptPath?: string
 }

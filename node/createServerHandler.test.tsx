@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkLogger } from 'keywork/logging'
+import { KeyworkLogLevel, KeyworkLogger } from 'keywork/logging'
 import { RequestRouter } from 'keywork/router'
 import * as http from 'node:http'
 import { createNodeServerHandler } from './createServerHandler.js'
@@ -24,7 +24,7 @@ const logger = new KeyworkLogger('Test Server')
 
 // Create a router as you usually do...
 const router = new RequestRouter({
-  logLevel: 'Debug',
+  logLevel: KeyworkLogLevel.Debug,
 })
 router.get('/', () => 'Hello from Node')
 
