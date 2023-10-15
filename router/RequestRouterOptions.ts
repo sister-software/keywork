@@ -16,7 +16,7 @@ import type { SSRDocument } from '../events/index.js'
 import type { HTTPMethod } from '../http/index.js'
 import type { KeyworkLogLevel } from '../logging/index.js'
 import type { ReactRendererOptions } from '../ssr/index.js'
-import type { ClientModuleInput, IURLPattern } from '../uri/index.js'
+import type { IURLPattern } from '../uri/index.js'
 import type { MiddlewareDeclarationLike } from './MiddlewareDeclarationLike.js'
 
 /**
@@ -73,12 +73,6 @@ export interface RequestRouterOptions {
 
   document?: SSRDocument
   react?: ReactRendererOptions
-  /**
-   * An optional client-side router that instructs maps path patterns to their respective page components.
-   *
-   * This is only required if your app uses server-side rendering and client hydration.
-   */
-  browserRouter?: ClientModuleInput
   debug?: RequestRouterDebugOptions
   /**
    * The log level to use for the router.

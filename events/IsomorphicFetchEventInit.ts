@@ -33,7 +33,7 @@ export interface IsomorphicFetchEventInit<BoundAliases = {}, Data = {}> {
   env?: BoundAliases
   data?: Data
 
-  match?: URLPatternResult
+  match?: URLPatternResult | null
 
   urlPattern?: IURLPattern
 

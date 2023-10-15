@@ -12,14 +12,35 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { IURLPattern, URLPathnameInput, URLPatternResult, normalizeURLPattern } from './URLPattern.js'
+import {
+  IURLPattern,
+  KeyworkRouteComponent,
+  URLPathnameInput,
+  URLPatternResult,
+  isKeyworkRouteComponent,
+  normalizeURLPattern,
+} from './URLPattern.js'
 
-export type RoutePatternEntry = [string, React.ComponentType<any>]
+export type RoutePatternEntry = [string, KeyworkRouteComponent<any>]
 
-export type RoutePatternEntries = Iterable<RoutePatternEntry> | Map<string, React.ComponentType<any>>
+export type RoutePatternEntries = Iterable<RoutePatternEntry> | Map<string, KeyworkRouteComponent<any>>
+export type PatternRouteComponentMapInput = RoutePatternEntries | KeyworkRouteComponent<any>[]
+/**
+ * Predicate for determining if a value is a `RoutePatternEntries`.
+ */
+export function isRoutePatternEntries(input: any): input is RoutePatternEntries {
+  return Boolean(input && (input instanceof Map || (Array.isArray(input) && input.every(isRoutePatternEntry))))
+}
+
+/**
+ * Predicate for determining if a value is a `RoutePatternEntry`.
+ */
+export function isRoutePatternEntry(input: any): input is RoutePatternEntry {
+  return Array.isArray(input) && input.length === 2 && typeof input[0] === 'string' && typeof input[1] === 'function'
+}
 
 export interface RoutePatternsProps {
-  routes: RoutePatternEntries
+  routes: PatternRouteComponentMapInput
 }
 
 /**
@@ -42,6 +63,18 @@ export interface RoutePatternsProps {
  * ```
  */
 export class PatternRouteComponentMap extends Map<string, React.ComponentType<any>> {
+  constructor(input?: PatternRouteComponentMapInput) {
+    let normalizedInput: RoutePatternEntries | undefined
+
+    if (Array.isArray(input) && input.every(isKeyworkRouteComponent)) {
+      normalizedInput = input.map((component): RoutePatternEntry => [component.pathname!, component])
+    } else {
+      normalizedInput = input
+    }
+
+    super(normalizedInput)
+  }
+
   public get(input: URLPathnameInput | string): React.ComponentType<any> | undefined {
     const pathnamePattern = typeof input === 'string' ? input : input.pathname
 

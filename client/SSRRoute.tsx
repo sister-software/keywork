@@ -11,7 +11,7 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-import { normalizeURLPattern, normalizeURLPatternInit, useURLPatternResult } from '../uri/index.js'
+import { normalizeURLPattern, useURLPatternResult } from '../uri/index.js'
 import { useSSRPropsByPath } from './SSRPropsProvider.js'
 
 interface RouteDataFetcherProps {
@@ -22,7 +22,7 @@ interface RouteDataFetcherProps {
 export const RouteWithSSR: React.FC<RouteDataFetcherProps> = ({ pathname, component: Component }) => {
   const propsByPath = useSSRPropsByPath()
   const initialPatternResult = useURLPatternResult()
-  const currentPattern = normalizeURLPattern(normalizeURLPatternInit(initialPatternResult.inputs[0]))
+  const currentPattern = normalizeURLPattern(initialPatternResult.inputs[0])
   const currentMatch = currentPattern.exec(pathname)
 
   if (!currentMatch) return null

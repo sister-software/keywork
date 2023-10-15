@@ -13,7 +13,6 @@
  */
 
 import { KeyworkResourceError, RequestRouter } from 'keywork'
-import AppBrowserRouter from './public/main.js'
 import { TodoItemPageProps } from './public/pages/TodoItem.js'
 
 const router = new RequestRouter({
@@ -21,7 +20,6 @@ const router = new RequestRouter({
     title: 'Keywork example app',
     themeColor: '#65b9e2',
   },
-  browserRouter: AppBrowserRouter,
 })
 
 router.get('/', ({ document }) => {

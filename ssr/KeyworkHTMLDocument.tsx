@@ -46,13 +46,6 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
   importMap,
   // buildId,
 }) => {
-  /** Added to trigger cache busting. */
-  // const assetSearchParams = new URLSearchParams({
-  //   buildID: buildId || 'development',
-  // })
-
-  // const $assetSearchParams = assetSearchParams.toString()
-
   const document = event?.document || {}
   const charSet = document.charSet || 'utf-8'
   const documentTitle = document.title || 'Keywork App'
@@ -129,7 +122,7 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
         />
 
         {document.style}
-        {document.script}
+        {document.headScripts}
       </head>
       <body>
         <div id={KEYWORK_APP_ROOT}>{children}</div>
@@ -146,6 +139,8 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
             }}
           />
         )}
+
+        {document.bodyScripts}
       </body>
     </html>
   )

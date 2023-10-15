@@ -87,8 +87,11 @@ export interface SSRDocument {
   /** Optional `<style>` tags */
   style?: React.ReactNode
 
-  /** Optional `<script>` tags */
-  script?: React.ReactNode
+  /** Optional `<script>` tags in the <head> */
+  headScripts?: React.ReactNode
+
+  /** Optional `<script>` tags in the <body> */
+  bodyScripts?: React.ReactNode
 
   /**
    * The language of the document.

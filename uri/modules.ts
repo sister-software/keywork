@@ -12,9 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork'
 import { isValidElement } from 'react'
-import type { RoutePatternEntries, RoutePatternsProps } from './URLPatternRouteMap.js'
+import { KeyworkResourceError } from '../errors/index.js'
+import { isRoutePatternEntries } from '../uri/index.js'
+import type { PatternRouteComponentMapInput, RoutePatternEntries, RoutePatternsProps } from './URLPatternRouteMap.js'
 
 export interface KeyworkClientModule {
   default: React.ReactElement<RoutePatternsProps>
@@ -30,16 +31,14 @@ export function isKeyworkClientModuleDefault(
   return isValidElement<RoutePatternsProps>(moduleExport)
 }
 
-export type ClientModuleInput = React.ReactElement<RoutePatternsProps> | KeyworkClientModule
+export type ClientModuleInput = React.ReactElement<RoutePatternsProps> | KeyworkClientModule | RoutePatternEntries
 
-export function pluckClientModuleRoutes(moduleLike: any): RoutePatternEntries {
-  if (isKeyworkClientModuleDefault(moduleLike)) {
-    return moduleLike.props.routes
-  }
+export function pluckClientModuleRoutes(moduleLike: any): PatternRouteComponentMapInput {
+  if (isRoutePatternEntries(moduleLike)) return moduleLike
 
-  if (isKeyworkClientModule(moduleLike)) {
-    return pluckClientModuleRoutes(moduleLike.default)
-  }
+  if (isKeyworkClientModuleDefault(moduleLike)) return moduleLike.props.routes
+
+  if (isKeyworkClientModule(moduleLike)) return pluckClientModuleRoutes(moduleLike.default)
 
   throw new KeyworkResourceError("Cannot pluck routes from module. It doesn't appear to be a Keywork client module.")
 }

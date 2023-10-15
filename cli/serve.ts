@@ -93,7 +93,7 @@ export async function serveBuilder({ port, host, ...serveArgs }: ServeArgs) {
     '/dist/*',
     new NodeStaticFileRouter({
       filesDirectoryPath: projectRootPathBuilder('dist'),
-      mountPath: 'dist',
+      mountPath: '/dist',
     }).fetchStaticFile
   )
 

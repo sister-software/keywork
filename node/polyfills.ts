@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import type { Headers, Request, Response } from 'undici'
-import { polyfillWithModule } from '../utils/index.js'
+import { polyfillWithModule, readGlobalScope } from '../utils/index.js'
 
 type HTTPModule = {
   Request: Request
@@ -30,10 +30,13 @@ let hasAppliedPolyfills = false
  */
 export async function applyNodeKeyworkPolyfills() {
   if (hasAppliedPolyfills) return
+  const globalScope = readGlobalScope()
 
   await polyfillWithModule('urlpattern-polyfill', ['URLPattern'])
   await polyfillWithModule<HTTPModule>('undici', ['Request', 'Headers', 'Response'])
   await polyfillWithModule<StreamExports>('node:stream/web', ['TransformStream', 'ReadableStream', 'WritableStream'])
+  const crypto = await import('node:crypto')
+  globalScope.crypto = crypto.webcrypto
 
   hasAppliedPolyfills = true
 }

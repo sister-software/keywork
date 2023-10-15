@@ -43,12 +43,14 @@ export const KeyworkHeaders = {
  * This mutates the `destination` headers.
  *
  */
-export function mergeHeaders(destination: Headers, ...sources: Headers[]): void {
+export function mergeHeaders(destination: Headers, ...sources: Headers[]): Headers {
   for (const source of sources) {
     source.forEach((value, key) => {
       destination.set(key, value)
     })
   }
+
+  return destination
 }
 
 export interface CookieHeaders {

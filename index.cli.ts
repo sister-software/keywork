@@ -20,6 +20,7 @@ import { serveBuilder, serveCommand } from './cli/index.js'
 const cli = yargs(hideBin(process.argv), process.cwd())
   // --
   .scriptName('keywork')
+  .config('keywork')
   .strict()
   .wrap(72)
 

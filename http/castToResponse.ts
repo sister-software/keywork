@@ -96,7 +96,7 @@ export async function castToResponse(
     return new HTMLResponse(stream)
   }
 
-  const RouteComponent = routeComponentMap?.get(event.urlPattern)
+  const RouteComponent = routeComponentMap?.get(event.urlPattern.pathname)
 
   if (RouteComponent) {
     const stream = await renderJSXToStream(event, createElement(RouteComponent, responseLike), reactRenderOptions)

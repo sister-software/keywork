@@ -1,6 +1,6 @@
 {
   "name": "keywork",
-  "version": "8.1.0",
+  "version": "8.1.14",
   "license": "AGPL-3.0",
   "author": "Teffen Ellis <teffen@sister.software>",
   "description": "A batteries-included, magic-free, library for building web apps in V8 Isolates.",
@@ -27,14 +27,11 @@
   "engines": {
     "node": ">= 17.4"
   },
-  "files": [
-    "dist/**/*"
-  ],
   "packageManager": "yarn@3.2.2",
   "scripts": {
     "build:clean": "tsc --build --clean",
     "build:compile": "tsc --build",
-    "build:importmap": "node ./dist/scripts/import-map/index.js",
+    "build:importmap": "node ./scripts/import-map/index.js",
     "build": "run-p build:clean build:compile",
     "release": "run-p build release-it",
     "test": "deno test --coverage=./cov .",
@@ -80,13 +77,13 @@
     "typescript": "5.2.2",
     "undici": "^5.25.2",
     "urlpattern-polyfill": "^9.0.0",
-    "which": "^4.0.0",
-    "yargs": "^17.7.2"
+    "which": "^4.0.0"
   },
   "dependencies": {
     "cookie": "^0.5.0",
     "negotiator": "^0.6.3",
-    "ulidx": "^2.1.0"
+    "ulidx": "^2.1.0",
+    "yargs": "^17.7.2"
   },
   "peerDependencies": {
     "react": ">=18.2",
@@ -119,111 +116,111 @@
       "client"
     ]
   },
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
-  "bin": "./dist/index.cli.js",
+  "main": "./index.js",
+  "types": "./index.d.ts",
+  "bin": "./index.cli.js",
   "exports": {
     "./package.json": "./package.json",
-    "./importmap.json": "./dist/importmap.json",
+    "./importmap.json": "./importmap.json",
     ".": {
-      "import": "./dist/index.js",
-      "types": "./dist/index.d.ts"
+      "import": "./index.js",
+      "types": "./index.d.ts"
     },
     "./docgen": {
-      "import": "./dist/docgen/index.js",
-      "types": "./dist/docgen/index.d.ts"
+      "import": "./docgen/index.js",
+      "types": "./docgen/index.d.ts"
     },
     "./docgen/utils": {
-      "import": "./dist/docgen/utils/index.js",
-      "types": "./dist/docgen/utils/index.d.ts"
+      "import": "./docgen/utils/index.js",
+      "types": "./docgen/utils/index.d.ts"
     },
     "./docgen/helpers": {
-      "import": "./dist/docgen/helpers/index.js",
-      "types": "./dist/docgen/helpers/index.d.ts"
+      "import": "./docgen/helpers/index.js",
+      "types": "./docgen/helpers/index.d.ts"
     },
     "./docgen/theme": {
-      "import": "./dist/docgen/theme/index.js",
-      "types": "./dist/docgen/theme/index.d.ts"
+      "import": "./docgen/theme/index.js",
+      "types": "./docgen/theme/index.d.ts"
     },
     "./cli": {
-      "import": "./dist/cli/index.js",
-      "types": "./dist/cli/index.d.ts"
+      "import": "./cli/index.js",
+      "types": "./cli/index.d.ts"
     },
     "./client": {
-      "import": "./dist/client/index.js",
-      "types": "./dist/client/index.d.ts"
+      "import": "./client/index.js",
+      "types": "./client/index.d.ts"
     },
     "./logging": {
-      "import": "./dist/logging/index.js",
-      "types": "./dist/logging/index.d.ts"
+      "import": "./logging/index.js",
+      "types": "./logging/index.d.ts"
     },
     "./node": {
-      "import": "./dist/node/index.js",
-      "types": "./dist/node/index.d.ts"
+      "import": "./node/index.js",
+      "types": "./node/index.d.ts"
     },
     "./errors": {
-      "import": "./dist/errors/index.js",
-      "types": "./dist/errors/index.d.ts"
+      "import": "./errors/index.js",
+      "types": "./errors/index.d.ts"
     },
     "./events": {
-      "import": "./dist/events/index.js",
-      "types": "./dist/events/index.d.ts"
+      "import": "./events/index.js",
+      "types": "./events/index.d.ts"
     },
     "./files": {
-      "import": "./dist/files/index.js",
-      "types": "./dist/files/index.d.ts"
+      "import": "./files/index.js",
+      "types": "./files/index.d.ts"
     },
     "./files/extensions": {
-      "import": "./dist/files/extensions/index.js",
-      "types": "./dist/files/extensions/index.d.ts"
+      "import": "./files/extensions/index.js",
+      "types": "./files/extensions/index.d.ts"
     },
     "./http": {
-      "import": "./dist/http/index.js",
-      "types": "./dist/http/index.d.ts"
+      "import": "./http/index.js",
+      "types": "./http/index.d.ts"
     },
     "./http/headers": {
-      "import": "./dist/http/headers/index.js",
-      "types": "./dist/http/headers/index.d.ts"
+      "import": "./http/headers/index.js",
+      "types": "./http/headers/index.d.ts"
     },
     "./http/responses": {
-      "import": "./dist/http/responses/index.js",
-      "types": "./dist/http/responses/index.d.ts"
+      "import": "./http/responses/index.js",
+      "types": "./http/responses/index.d.ts"
     },
     "./lifecycle": {
-      "import": "./dist/lifecycle/index.js",
-      "types": "./dist/lifecycle/index.d.ts"
+      "import": "./lifecycle/index.js",
+      "types": "./lifecycle/index.d.ts"
     },
     "./middleware": {
-      "import": "./dist/middleware/index.js",
-      "types": "./dist/middleware/index.d.ts"
+      "import": "./middleware/index.js",
+      "types": "./middleware/index.d.ts"
     },
     "./router": {
-      "import": "./dist/router/index.js",
-      "types": "./dist/router/index.d.ts"
+      "import": "./router/index.js",
+      "types": "./router/index.d.ts"
     },
     "./ssr": {
-      "import": "./dist/ssr/index.js",
-      "types": "./dist/ssr/index.d.ts"
+      "import": "./ssr/index.js",
+      "types": "./ssr/index.d.ts"
     },
     "./cloudflare": {
-      "import": "./dist/cloudflare/index.js",
-      "types": "./dist/cloudflare/index.d.ts"
+      "import": "./cloudflare/index.js",
+      "types": "./cloudflare/index.d.ts"
     },
     "./testing": {
-      "import": "./dist/testing/index.js",
-      "types": "./dist/testing/index.d.ts"
+      "import": "./testing/index.js",
+      "types": "./testing/index.d.ts"
     },
     "./utils": {
-      "import": "./dist/utils/index.js",
-      "types": "./dist/utils/index.d.ts"
+      "import": "./utils/index.js",
+      "types": "./utils/index.d.ts"
     },
     "./uri": {
-      "import": "./dist/uri/index.js",
-      "types": "./dist/uri/index.d.ts"
+      "import": "./uri/index.js",
+      "types": "./uri/index.d.ts"
     },
     "./scripts/*": {
-      "import": "./dist/scripts/*/index.js",
-      "types": "./dist/scripts/*/index.d.ts"
+      "import": "./scripts/*/index.js",
+      "types": "./scripts/*/index.d.ts"
     }
   },
   "browserslist": [

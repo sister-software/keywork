@@ -29,13 +29,7 @@ import {
 import { IDisposable } from '../lifecycle/index.js'
 import { KeyworkLogger } from '../logging/index.js'
 import { ReactRendererOptions, renderReactStream } from '../ssr/index.js'
-import {
-  PatternRouteComponentMap,
-  URLPatternLike,
-  normalizeURLPattern,
-  normalizeURLPatternInit,
-  pluckClientModuleRoutes,
-} from '../uri/index.js'
+import { PatternRouteComponentMap, URLPatternLike, isKeyworkRouteComponent, normalizeURLPattern } from '../uri/index.js'
 import { Fetcher } from './Fetcher.js'
 import { FetcherLike } from './FetcherLike.js'
 import { MiddlewareFetch } from './MiddlewareFetch.js'
@@ -64,11 +58,18 @@ export type RouteMethodDeclaration<BoundAliases = {}, ExpectedParams = {}, Data 
   /**
    * Either an instance of `URLPattern`,
    * or a string representing the `pathname` portion of a `URLPattern`
+   *
+   * Alternatively, passing a `RouteComponent` will automatically
+   * create a `URLPattern` for you.
+   *
    * @see {@link https://developer.mozilla.org/en-US/docs/Web/API/URLPattern/URLPattern URLPattern Constructor via MDN}
    */
-  urlPattern: URLPatternLike,
+  pathPatternOrRouteComponent: URLPatternLike,
   /**
    * One or more callback functions to handle an incoming request.
+   *
+   * If your first argument is a `RouteComponent`, this can be a function to fetch
+   * your component's static props.
    */
   ...handlers: Array<RouteRequestHandler<BoundAliases, ExpectedParams, Data>>
 ) => void
@@ -98,9 +99,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
    * however, a handler can act as middleware by continuing the chain by returning `next()`
    */
   protected readonly routesByVerb = new Map<RouterMethod, ParsedRoute<BoundAliases>[]>(
-    Array.from(methodVerbToRouterMethod.values(), (normalizedVerb) => {
-      return [normalizedVerb, []]
-    })
+    Array.from(methodVerbToRouterMethod.values(), (normalizedVerb) => [normalizedVerb, []])
   )
 
   /**
@@ -114,6 +113,10 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
   ): void {
     const parsedHandlersCollection = this.routesByVerb.get(normalizedVerb)!
     const urlPattern = normalizeURLPattern(urlPatternLike)
+
+    if (isKeyworkRouteComponent(urlPatternLike)) {
+      this.routeComponentMap.set(urlPattern.pathname, urlPatternLike)
+    }
 
     /**
      * Incoming request arguments may not always be normalized,
@@ -472,7 +475,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
   readonly includeDebugHeaders: boolean
   readonly reactOptions: ReactRendererOptions
   readonly ssrDocument?: SSRDocument
-  readonly routeComponentMap?: PatternRouteComponentMap
+  readonly routeComponentMap: PatternRouteComponentMap
 
   //#endregion
 
@@ -486,7 +489,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
     parsedRoutes: ParsedRoute<BoundAliases>[],
     matchingAgainst: URLPatternLike
   ): RouteMatch<BoundAliases>[] {
-    const matchInput = normalizeURLPatternInit(matchingAgainst)
+    const matchInput = normalizeURLPattern(matchingAgainst)
     const matchedRoutes: RouteMatch<BoundAliases>[] = []
 
     for (const parsedRoute of parsedRoutes) {
@@ -658,9 +661,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
       ...options?.react,
     }
 
-    if (options?.browserRouter) {
-      this.routeComponentMap = new PatternRouteComponentMap(pluckClientModuleRoutes(options.browserRouter))
-    }
+    this.routeComponentMap = new PatternRouteComponentMap()
 
     this.ssrDocument = options?.document
 

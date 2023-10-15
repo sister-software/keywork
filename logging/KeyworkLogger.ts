@@ -46,7 +46,7 @@ export interface KeyworkLoggerConfig {
 /**
  * Enum-like record of Keywork log levels.
  */
-export const enum KeyworkLogLevel {
+export enum KeyworkLogLevel {
   None = 0,
   Trace = 1,
   Error = 2,
