@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ImportMap } from 'keywork/files'
 import { HtmlHTMLAttributes } from 'react'
+import { ImportMap } from '../files/index.js'
 
 /**
  * Props related to rendering HTML document.

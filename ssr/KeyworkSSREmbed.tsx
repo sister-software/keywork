@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { IsomorphicFetchEventInit } from 'keywork/events'
-import { KEYWORK_SSR_INIT_KEY, KEYWORK_SSR_PROPS_KEY } from 'keywork/utils'
 import { FC } from 'react'
+import type { IsomorphicFetchEventInit } from '../events/index.js'
+import { KEYWORK_SSR_INIT_KEY, KEYWORK_SSR_PROPS_KEY } from '../utils/index.js'
 
 export interface SSRProviderProps<StaticProps extends {}> {
   staticProps: StaticProps

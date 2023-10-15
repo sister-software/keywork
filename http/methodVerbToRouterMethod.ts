@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ImmutableMap } from 'keywork/utils'
+import { ImmutableMap } from '../utils/index.js'
 import type { HTTPMethod } from './HTTPMethod.js'
 import type { RouterMethod } from './RouterMethod.js'
 

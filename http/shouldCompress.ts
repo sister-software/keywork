@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { MimeDatabase } from 'keywork/files'
-import { ContentType, parse } from 'keywork/http/headers'
+import type { MimeDatabase } from '../files/index.js'
+import { ContentType, parse } from './headers/index.js'
 import { isCompressible } from './isCompressable.js'
 
 /**

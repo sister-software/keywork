@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { readGlobalScope } from 'keywork/utils'
+import { readGlobalScope } from '../utils/index.js'
 
 /** @internal */
 type FrameRequestCallbackFn = (timestamp: number) => unknown

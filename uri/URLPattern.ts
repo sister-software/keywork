@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork/errors'
-import { polyfillWithModule, readGlobalScope } from 'keywork/utils'
+import { KeyworkResourceError } from '../errors/index.js'
+import { polyfillWithModule, readGlobalScope } from '../utils/index.js'
 
 type URLPatternModule = {
   URLPattern: IURLPattern

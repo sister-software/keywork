@@ -13,17 +13,17 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KEYWORK_IMPORT_MAP_FILE_NAME } from 'keywork/files'
-import { KeyworkLogger } from 'keywork/logging'
+import { writeFileSync } from 'node:fs'
+import * as path from 'node:path'
+import { KEYWORK_IMPORT_MAP_FILE_NAME } from '../../files/index.js'
+import { KeyworkLogger } from '../../logging/index.js'
 import {
   KEYWORK_PROJECT_DIST,
   readKeyworkPackageJSON,
   readKeyworkTSConfig,
   transformTSConfigToImportMap,
-} from 'keywork/node'
-import { prettyJSON } from 'keywork/utils'
-import { writeFileSync } from 'node:fs'
-import * as path from 'node:path'
+} from '../../node/index.js'
+import { prettyJSON } from '../../utils/index.js'
 
 const logger = new KeyworkLogger('Import Map')
 const packageJSON = readKeyworkPackageJSON()

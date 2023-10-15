@@ -14,8 +14,8 @@
 
 import dashify from 'dashify'
 import Handlebars from 'handlebars'
-import { escapeChars } from 'keywork/docgen/utils'
 import { ReferenceReflection, ReflectionKind } from 'typedoc'
+import { escapeChars } from '../utils/index.js'
 
 export function humanizeReflectionName() {
   Handlebars.registerHelper('humanizeReflectionName', function (this: ReferenceReflection) {

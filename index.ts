@@ -19,7 +19,7 @@
  * Keywork includes error utilities that pair nicely with HTTP requests.
  *
  * ```ts runtime="node"
- * import { KeyworkResourceError, StatusCodes } from 'keywork/errors'
+ * import { KeyworkResourceError, StatusCodes } from './errors/index.js'
  *
  * if (isLoggedIn(someUser)) {
  *   throw new KeyworkResourceError("You must be logged in to do that", StatusCodes.UNAUTHORIZED)
@@ -36,9 +36,9 @@
  *
  * {@link Keywork#Errors **_Explore the Errors Module_ ›**}
  */
-export * from 'keywork/errors'
+export * from './errors/index.js'
 //
-export * from 'keywork/events'
+export * from './events/index.js'
 //
 /**
  * Keywork includes utilities for working with files,
@@ -51,7 +51,7 @@ export * from 'keywork/events'
  *
  * {@link Keywork#FileUtils **_Explore the File Utilities Module_ ›**}
  */
-export * from 'keywork/files'
+export * from './files/index.js'
 //
 /**
  * Keywork includes utilities for working with incoming HTTP requests,
@@ -61,19 +61,19 @@ export * from 'keywork/files'
  * See each of HTTP's submodules for additional details.
  *
  * ```ts
- * import { CachableResponse, ErrorResponse, isRedirection, ...etc } from 'keywork/http'
+ * import { CachableResponse, ErrorResponse, isRedirection, ...etc } from './http/index.js'
  * ```
  *
  * {@link Keywork#HTTP **_Explore the HTTP Module_ ›**}
  */
-export * from 'keywork/http'
-export * from 'keywork/utils'
+export * from './http/index.js'
+export * from './utils/index.js'
 //
 /**
  * Keywork includes an isomorphic logger available in both browser and worker environments.
  *
  * ```ts
- * import { Logger } from 'keywork/utils'
+ * import { Logger } from './utils/index.js'
  * const logger = new Logger('Todo API')
  *
  * logger.info('Fetching todo', todoID)
@@ -82,7 +82,7 @@ export * from 'keywork/utils'
  *
  * {@link Keywork#Logger **_Explore the Logger Module_ ›**}
  */
-export * from 'keywork/utils'
+export * from './utils/index.js'
 //
 /**
  * Keywork includes support for _middleware_ as instances of `RequestRouter`.
@@ -98,15 +98,15 @@ export * from 'keywork/utils'
  *
  * {@link Keywork#Middleware **_Explore the Middleware Module_ ›**}
  */
-export * from 'keywork/middleware'
+export * from './middleware/index.js'
 //
 /**
  * While optional, Keywork uses React as its primary HTML templating engine.
  *
  * {@link Keywork#ReactUtils **_Explore the React Utilities Module_ ›**}
  */
-export * from 'keywork/ssr'
-export * from 'keywork/uri'
+export * from './ssr/index.js'
+export * from './uri/index.js'
 //
 /**
  * Designed with familiarity in mind, the server-side routing API
@@ -115,7 +115,7 @@ export * from 'keywork/uri'
  * {@link Keywork#Router **_Explore the Router Module_ ›**}
  *
  * ```ts title="worker.ts" runtime="cloudflare"
- * import { RequestRouter } from 'keywork/router'
+ * import { RequestRouter } from './router/index.js'
  *
  * const app = new RequestRouter()
  *
@@ -140,7 +140,7 @@ export * from 'keywork/uri'
  * app.get('/', () => 'Hello there! 👋')
  * ```
  */
-export * from 'keywork/router'
+export * from './router/index.js'
 //
 /**
  * Keywork uses JavaScript's built-in [URL Pattern API](https://developer.mozilla.org/en-US/docs/Web/API/URLPattern) to create pattern matchers.
@@ -148,12 +148,12 @@ export * from 'keywork/router'
  * Wildcards, named capture groups, regular groups, and group modifiers are all supported.
  *
  * ```ts
- * import * as mod from 'keywork/utils'
+ * import * as mod from './utils/index.js'
  * ```
  *
  * {@link Keywork#URIUtils **_Explore the Common Utilities Module_ ›**}
  */
-export * from 'keywork/utils'
-export * from 'keywork/cloudflare'
-export * from 'keywork/client'
-export * from 'keywork/logging'
+export * from './utils/index.js'
+export * from './cloudflare/index.js'
+export * from './client/index.js'
+export * from './logging/index.js'

@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { MimeDatabase } from 'keywork/files'
+import type { MimeDatabase } from '../files/index.js'
 
 /**
  * Module variables.

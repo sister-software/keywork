@@ -9,7 +9,7 @@ If you have a custom `<html>` document component, or want to inject your own pro
 in the render lifecyle, you can pass your component to the `RequestRouter`:
 
 ```tsx title=worker/components/AppHTMLDocument.tsx showLineNumbers
-import { KeyworkHTMLDocumentAppRoot } from 'keywork/react'
+import { KeyworkHTMLDocumentAppRoot } from './react/index.js'
 
 export interface AppHTMLDocumentProps {
   children: React.ReactNode
@@ -34,7 +34,7 @@ export const AppHTMLDocument: React.FC<AppHTMLDocumentProps> = ({ children }) =>
 ```tsx title=worker/routers/app.tsx showLineNumbers
 // highlight-next-line
 import { AppHTMLDocument } from '@local/worker/components/Document'
-import { RequestRouter } from 'keywork/router'
+import { RequestRouter } from './router/index.js'
 
 export const app = new RequestRouter({
   displayName: 'My App',

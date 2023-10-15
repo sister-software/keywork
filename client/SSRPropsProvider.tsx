@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { useKeyworkLogger } from 'keywork/logging'
-import { KEYWORK_STATIC_PROPS_QUERY_KEY } from 'keywork/uri'
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
+import { useKeyworkLogger } from '../logging/index.js'
+import { KEYWORK_STATIC_PROPS_QUERY_KEY } from '../uri/index.js'
 import { useLocation } from './hooks.js'
 
 /**

@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork/errors'
+import { KeyworkResourceError } from '../errors/index.js'
 
 const prettyJSON = (value: any) => JSON.stringify(value, null, 2)
 

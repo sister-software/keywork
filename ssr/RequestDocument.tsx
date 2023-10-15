@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { FetchEventProvider, IsomorphicFetchEvent } from 'keywork/events'
-import { ImportMap } from 'keywork/files'
-import { PageElementComponent } from 'keywork/http'
-import { KeyworkLogger } from 'keywork/logging'
+import { FetchEventProvider, IsomorphicFetchEvent } from '../events/index.js'
+import { ImportMap } from '../files/index.js'
+import { PageElementComponent } from '../http/index.js'
+import { KeyworkLogger } from '../logging/index.js'
 import { KeyworkHTMLDocument, KeyworkHTMLDocumentComponent } from './KeyworkHTMLDocument.js'
 import { KeyworkProviders, KeyworkProvidersComponent } from './KeyworkProvidersComponent.js'
 import { KeyworkSSREmbed } from './KeyworkSSREmbed.js'

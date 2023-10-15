@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, Status } from 'keywork/errors'
 import { createContext, useContext } from 'react'
+import { KeyworkResourceError, Status } from '../errors/index.js'
 
 /**
  * Context for consuming the environment bindings associated with the current request.

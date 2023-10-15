@@ -13,8 +13,8 @@
  */
 
 import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme'
 import type { ReferenceType } from 'typedoc'
+import type { MarkdownTheme } from '../theme/index.js'
 
 export function attemptExternalResolutionHelper(theme: MarkdownTheme) {
   Handlebars.registerHelper('attemptExternalResolution', function (type: ReferenceType) {

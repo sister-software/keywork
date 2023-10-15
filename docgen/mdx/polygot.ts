@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Runtime, runtimePattern, runtimeToTabLabel } from 'keywork/docgen/utils'
 import * as MDAST from 'mdast'
 import * as Unist from 'unist'
 import { visit } from 'unist-util-visit'
+import { Runtime, runtimePattern, runtimeToTabLabel } from '../utils/index.js'
 
 const transformNode = (node: any, runtime: Runtime): MDAST.Code[] => {
   return [

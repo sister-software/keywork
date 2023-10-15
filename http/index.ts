@@ -22,9 +22,6 @@
  */
 /* eslint-disable header/header */
 
-export * from 'keywork/http/headers'
-export * from 'keywork/http/responses'
-
 export * from './HTTPMethod.js'
 export * from './IncomingRequestCfProperties.js'
 export * from './RequestContext.js'
@@ -33,10 +30,12 @@ export * from './accepts.js'
 export * from './castToResponse.js'
 export * from './cloneAsMutableResponse.js'
 export * from './cors.js'
+export * from './headers/index.js'
 export * from './isCompressable.js'
 export * from './isInstanceOfRequest.js'
 export * from './isInstanceOfResponse.js'
 export * from './isRequestLike.js'
 export * from './methodVerbToRouterMethod.js'
+export * from './responses/index.js'
 export * from './routerMethodToHTTPMethod.js'
 export * from './shouldCompress.js'

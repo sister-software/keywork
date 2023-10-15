@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from 'keywork/errors'
-import { CacheControlDirectives, createCacheControlHeader, isETagMatch } from 'keywork/http/headers'
+import { Status } from '../../errors/index.js'
+import { CacheControlDirectives, createCacheControlHeader, isETagMatch } from '../../http/headers/index.js'
 import { NotModifiedResponse } from './NotModifiedResponse.js'
 
 /**

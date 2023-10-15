@@ -13,8 +13,8 @@
  */
 
 import Handlebars from 'handlebars'
-import { escapeChars, stripLineBreaks } from 'keywork/docgen/utils'
 import { DeclarationReflection, ReflectionType } from 'typedoc'
+import { escapeChars, stripLineBreaks } from '../utils/index.js'
 
 export function propertyTableHelper() {
   Handlebars.registerHelper('propertyTable', function (this: DeclarationReflection[]) {

@@ -14,8 +14,8 @@
 
 /// <reference lib="WebWorker" />
 
-import type { Conditionals, CORSHeaders } from 'keywork/http/headers'
-import { DURATION_ONE_DAY } from 'keywork/utils'
+import type { Conditionals, CORSHeaders } from '../http/headers/index.js'
+import { DURATION_ONE_DAY } from '../utils/index.js'
 import type { HTTPMethod } from './HTTPMethod.js'
 
 /** @ignore */

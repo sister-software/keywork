@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { KeyworkResourceError } from 'keywork/errors'
-import type { KeyworkLogger } from 'keywork/logging'
 import type { ReactDOMServerReadableStream } from 'react-dom/server'
+import type { KeyworkResourceError } from '../errors/index.js'
+import type { KeyworkLogger } from '../logging/index.js'
 import type { RequestDocumentOverrideProps } from './RequestDocument.js'
 
 /**

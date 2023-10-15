@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { ServiceBindingRouter } from 'keywork/middleware'
+import { ServiceBindingRouter } from '../middleware/index.js'
 
 /**
  * An asset environment binding available within Cloudflare Pages.

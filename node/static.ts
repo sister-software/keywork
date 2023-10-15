@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { CachableResponse, CacheControlDirectives, fileExtensionToContentTypeHeader } from 'keywork/http'
-import { RequestRouter, RequestRouterOptions, RouteRequestHandler } from 'keywork/router'
 import { open, stat } from 'node:fs/promises'
 import * as path from 'node:path'
+import { CachableResponse, CacheControlDirectives, fileExtensionToContentTypeHeader } from '../http/index.js'
+import { RequestRouter, RequestRouterOptions, RouteRequestHandler } from '../router/index.js'
 
 export interface StaticFileRequestHandlerParams {
   [0]: string

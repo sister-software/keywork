@@ -13,8 +13,8 @@
  */
 
 import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme'
 import type { CommentDisplayPart } from 'typedoc'
+import type { MarkdownTheme } from '../theme/index.js'
 
 export function commentHelper(_theme: MarkdownTheme) {
   Handlebars.registerHelper('comment', function (parts: CommentDisplayPart[]) {

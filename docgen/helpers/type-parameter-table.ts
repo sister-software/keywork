@@ -13,8 +13,8 @@
  */
 
 import Handlebars from 'handlebars'
-import { stripLineBreaks } from 'keywork/docgen/utils'
 import { TypeParameterReflection } from 'typedoc'
+import { stripLineBreaks } from '../utils/index.js'
 
 export function typeParameterTableHelper() {
   Handlebars.registerHelper('typeParameterTable', function (this: TypeParameterReflection[]) {

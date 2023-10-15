@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork/errors'
 import { execSync } from 'node:child_process'
 import * as path from 'node:path'
 import { SourceReference } from 'typedoc'
 import * as Which from 'which'
+import { KeyworkResourceError } from '../../errors/index.js'
 
 const gitCommandPath = Which.sync('git')
 

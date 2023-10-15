@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import { escapeChars } from 'keywork/docgen/utils'
+import { escapeChars } from '../utils/index.js'
 
 export function escapeHelper() {
   Handlebars.registerHelper('escape', function (str: string) {

@@ -14,7 +14,7 @@
 
 /// <reference lib="WebWorker" />
 
-import { KeyworkResourceError, Status } from 'keywork/errors'
+import { KeyworkResourceError, Status } from '../errors/index.js'
 import { IsomorphicExtendableEvent } from './IsomorphicExtendableEvent.js'
 import type { IsomorphicFetchEventInit } from './IsomorphicFetchEventInit.js'
 

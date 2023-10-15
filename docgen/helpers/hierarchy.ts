@@ -13,8 +13,8 @@
  */
 
 import Handlebars from 'handlebars'
-import { spaces } from 'keywork/docgen/utils'
 import { DeclarationHierarchy } from 'typedoc'
+import { spaces } from '../utils/index.js'
 
 export function hierarchyHelper() {
   Handlebars.registerHelper('hierarchy', function (this: DeclarationHierarchy, level: number) {

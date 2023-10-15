@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, Status } from 'keywork/errors'
-import { normalizeURLPattern, type IURLPattern, type URLPatternResult } from 'keywork/uri'
+import { KeyworkResourceError, Status } from '../errors/index.js'
+import { normalizeURLPattern, type IURLPattern, type URLPatternResult } from '../uri/index.js'
 import { IsomorphicExtendableEvent } from './IsomorphicExtendableEvent.js'
 import { IsomorphicFetchEventInit } from './IsomorphicFetchEventInit.js'
 import { SSRDocument } from './SSRDocument.js'

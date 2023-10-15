@@ -13,9 +13,9 @@
  */
 
 import { CookieSerializeOptions, parse as parseCookies, serialize as serializeCookies } from 'cookie'
-import type { CookieHeaders } from 'keywork/http/headers'
-import { RequestRouter, RouteRequestHandler } from 'keywork/router'
 import { ulid } from 'ulidx'
+import type { CookieHeaders } from '../http/headers/index.js'
+import { RequestRouter, RouteRequestHandler } from '../router/index.js'
 
 /**
  * The default session cookie key.
@@ -71,8 +71,8 @@ export interface KeyworkSession {
  * Middleware to manage and authenticate your users.
  *
  * ```ts
- * import { SessionMiddleware } from 'keywork/session'
- * import { RequestRouter } from 'keywork/router'
+ * import { SessionMiddleware } from './session/index.js'
+ * import { RequestRouter } from './router/index.js'
  *
  * const app = new RequestRouter({
  *   displayName: 'Session Tester',

@@ -11,8 +11,8 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-import { polyfillWithModule } from 'keywork/utils'
 import type { Headers, Request, Response } from 'undici'
+import { polyfillWithModule } from '../utils/index.js'
 
 type HTTPModule = {
   Request: Request

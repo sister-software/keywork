@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme'
-import { stripComments, stripLineBreaks } from 'keywork/docgen/utils'
 import type { ParameterReflection, ReflectionType } from 'typedoc'
 import { DeclarationReflection, LiteralType, ReflectionKind } from 'typedoc'
+import type { MarkdownTheme } from '../theme/index.js'
+import { stripComments, stripLineBreaks } from '../utils/index.js'
 
 function getType(reflection: ParameterReflection | DeclarationReflection) {
   const reflectionType = reflection.type as ReflectionType

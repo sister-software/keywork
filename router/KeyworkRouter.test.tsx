@@ -13,10 +13,10 @@
  */
 
 import { Deno } from '@deno/shim-deno'
-import { Status } from 'keywork/errors'
-import { JSONResponse, KeyworkHeaders } from 'keywork/http'
-import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } from 'keywork/testing'
-import { useParams } from 'keywork/uri'
+import { Status } from '../errors/index.js'
+import { JSONResponse, KeyworkHeaders } from '../http/index.js'
+import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } from '../testing/index.js'
+import { useParams } from '../uri/index.js'
 import { RequestRouter } from './RequestRouter.js'
 import type { RouteRequestHandler } from './RouteRequestHandler.js'
 

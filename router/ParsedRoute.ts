@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { IURLPattern } from 'keywork/uri'
+import type { IURLPattern } from '../uri/index.js'
 
 import type { Fetcher } from './Fetcher.js'
 import type { RouteRequestHandler } from './RouteRequestHandler.js'

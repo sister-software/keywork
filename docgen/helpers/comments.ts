@@ -13,8 +13,8 @@
  */
 
 import Handlebars from 'handlebars'
-import { camelToTitleCase } from 'keywork/docgen/utils'
 import { Comment } from 'typedoc'
+import { camelToTitleCase } from '../utils/index.js'
 
 export function commentsHelper() {
   Handlebars.registerHelper('comments', function (comment: Comment, includeHTMLWrappers = true) {

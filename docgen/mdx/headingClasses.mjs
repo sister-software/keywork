@@ -16,13 +16,13 @@ import { visit } from 'unist-util-visit'
 
 export function headingClasses() {
   function visitor(node) {
-    let lastChild = node.children[node.children.length - 1]
+    const lastChild = node.children[node.children.length - 1]
     if (lastChild && lastChild.type === 'text') {
       let string = lastChild.value.replace(/ +$/, '')
-      let matched = string.match(/ {\.([^]+?)}$/)
+      const matched = string.match(/ {\.([^]+?)}$/)
 
       if (matched) {
-        let className = matched[1]
+        const className = matched[1]
         if (className.length) {
           if (!node.data) {
             node.data = {}

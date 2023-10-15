@@ -11,7 +11,7 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-import { normalizeURLPattern, normalizeURLPatternInit, useURLPatternResult } from 'keywork/uri'
+import { normalizeURLPattern, normalizeURLPatternInit, useURLPatternResult } from '../uri/index.js'
 import { useSSRPropsByPath } from './SSRPropsProvider.js'
 
 interface RouteDataFetcherProps {

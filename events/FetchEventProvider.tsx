@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { IsomorphicFetchEvent } from 'keywork/events'
-import { RequestContext } from 'keywork/http'
-import { KeyworkLogger, KeyworkLoggerContext } from 'keywork/logging'
-import { URLPatternResultContext } from 'keywork/uri'
+import { IsomorphicFetchEvent } from '../events/index.js'
+import { RequestContext } from '../http/index.js'
+import { KeyworkLogger, KeyworkLoggerContext } from '../logging/index.js'
+import { URLPatternResultContext } from '../uri/index.js'
 import { EnvironmentContext } from './EnvironmentContext.js'
 
 export interface FetchEventProviderProps<BoundAliases = {}, ExpectedParams = {}, Data = {}> {

@@ -49,7 +49,7 @@
  * Keywork automatically converts the content into a streamed response.
  *
  * ```tsx
- * import { RequestRouter } from 'keywork/router'
+ * import { RequestRouter } from './router/index.js'
  *
  * const app = new RequestRouter()
  *

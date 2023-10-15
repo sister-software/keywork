@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import * as extensions from 'keywork/files/extensions'
+import * as extensions from './extensions/index.js'
 
 export const extensionToMimeType = new Map<string, string>(
   Object.values(extensions).map(({ extension, mimeType }) => {

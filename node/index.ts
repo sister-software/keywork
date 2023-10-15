@@ -5,8 +5,8 @@
  *
  * ```ts showLineNumbers
  * import * as http from 'node:http'
- * import { RequestRouter } from 'keywork/router'
- * import { createServerHandler } from 'keywork/router/node'
+ * import { RequestRouter } from './router/index.js'
+ * import { createServerHandler } from './router/node/index.js'
  *
  * // Create a router as you usually do...
  * // highlight-next-line

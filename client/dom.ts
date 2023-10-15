@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork/errors'
-import { KEYWORK_APP_ROOT, readGlobalScope } from 'keywork/utils'
+import { KeyworkResourceError } from '../errors/index.js'
+import { KEYWORK_APP_ROOT, readGlobalScope } from '../utils/index.js'
 
 /// <reference lib="dom" />
 

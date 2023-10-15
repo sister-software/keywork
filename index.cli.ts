@@ -13,9 +13,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { serveBuilder, serveCommand } from 'keywork/cli'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
+import { serveBuilder, serveCommand } from './cli/index.js'
 
 const cli = yargs(hideBin(process.argv), process.cwd())
   // --

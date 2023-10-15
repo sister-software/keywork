@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, Status, STATUS_TEXT } from 'keywork/errors'
+import { KeyworkResourceError, Status, STATUS_TEXT } from '../../errors/index.js'
 
 /**
  * An error response sent to a client when a request is deemed to be invalid in some way.

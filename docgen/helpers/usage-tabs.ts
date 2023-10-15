@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import { createUsageMap, parseModel, renderBrowserDemo, renderUsageTabs } from 'keywork/docgen/utils'
 import { PageEvent, SignatureReflection } from 'typedoc'
+import { createUsageMap, parseModel, renderBrowserDemo, renderUsageTabs } from '../utils/index.js'
 
 export function usageTabsHelper() {
   Handlebars.registerHelper('usageTabs', function <T extends SignatureReflection>(this: PageEvent<T>) {

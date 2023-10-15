@@ -12,7 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { formatContents, readFileChangeFromGit } from 'keywork/docgen/utils'
 import { mkdirSync, writeFileSync } from 'node:fs'
 import * as path from 'node:path'
 import {
@@ -27,6 +26,7 @@ import {
   Theme,
   UrlMapping,
 } from 'typedoc'
+import { formatContents, readFileChangeFromGit } from '../utils/index.js'
 import { getKindPlural } from './groups.js'
 import { NavigationItem } from './navigation-item.js'
 import {

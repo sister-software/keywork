@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, Status } from 'keywork/errors'
-import type { IDisposable } from 'keywork/lifecycle'
+import { KeyworkResourceError, Status } from '../errors/index.js'
+import type { IDisposable } from '../lifecycle/index.js'
 
 const kWaitUntil = Symbol('kWaitUntil')
 

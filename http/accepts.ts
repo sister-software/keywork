@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { fileExtensionToContentTypeHeader } from 'keywork/http/headers'
 import Negotiator from 'negotiator'
+import { fileExtensionToContentTypeHeader } from '../http/headers/index.js'
 /**
  * Create a new Accepts object for the given headers.
  *

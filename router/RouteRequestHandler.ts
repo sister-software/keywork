@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { IsomorphicFetchEvent } from 'keywork/events'
-import type { ResponseLike } from 'keywork/http'
+import type { IsomorphicFetchEvent } from '../events/index.js'
+import type { ResponseLike } from '../http/index.js'
 import type { MiddlewareFetch, MiddlewareReturnTypes } from './MiddlewareFetch.js'
 
 /**

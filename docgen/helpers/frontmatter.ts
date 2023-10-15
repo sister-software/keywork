@@ -13,8 +13,8 @@
  */
 
 import Handlebars from 'handlebars'
-import { SourceReferenceWithGit, parseModel } from 'keywork/docgen/utils'
 import type { ContainerReflection, PageEvent } from 'typedoc'
+import { SourceReferenceWithGit, parseModel } from '../utils/index.js'
 
 export function frontmatterHelper() {
   /**

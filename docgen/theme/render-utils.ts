@@ -13,8 +13,9 @@
  */
 
 import Handlebars from 'handlebars'
-import { MarkdownTheme } from 'keywork/docgen/theme'
-
+import { readFileSync, readdirSync } from 'node:fs'
+import * as path from 'node:path'
+import { projectRootPathBuilder } from '../../node/index.js'
 import {
   attemptExternalResolutionHelper,
   breadcrumbsHelper,
@@ -46,10 +47,8 @@ import {
   typeHelper,
   typeParameterTableHelper,
   usageTabsHelper,
-} from 'keywork/docgen/helpers'
-import { projectRootPathBuilder } from 'keywork/node'
-import { readFileSync, readdirSync } from 'node:fs'
-import * as path from 'node:path'
+} from '../helpers/index.js'
+import type { MarkdownTheme } from './MarkdownTheme.js'
 
 const TEMPLATE_PATH = projectRootPathBuilder('docgen', 'templates')
 

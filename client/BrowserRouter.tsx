@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { FetchEventProvider, IsomorphicFetchEvent } from 'keywork/events'
-import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_PREFIX, KeyworkLogLevel, KeyworkLogger } from 'keywork/logging'
-import { RoutePatternsProps, URLContext } from 'keywork/uri'
 import { createContext, useContext, useMemo } from 'react'
+import { FetchEventProvider, IsomorphicFetchEvent } from '../events/index.js'
+import { DEFAULT_LOG_LEVEL, DEFAULT_LOG_PREFIX, KeyworkLogLevel, KeyworkLogger } from '../logging/index.js'
+import { RoutePatternsProps, URLContext } from '../uri/index.js'
 import { KeyworkPatternToPageComponent } from './KeyworkPatternToPageComponent.js'
 import { SSRPropsByPath, SSRPropsProvider } from './SSRPropsProvider.js'
 import { pluckNavigatorURL } from './dom.js'

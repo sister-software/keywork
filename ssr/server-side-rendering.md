@@ -38,7 +38,7 @@ export const Page: React.FC<PageProps> = (props) => {
 
 ```tsx title=worker/worker.tsx showLineNumbers
 import { Page, PageProps } from '@local/shared/components/Page'
-import { RequestRouter } from 'keywork/router'
+import { RequestRouter } from './router/index.js'
 
 export const router = new RequestRouter()
 
@@ -119,8 +119,8 @@ With our props available, all that's left to do is hydrate the app:
 
 ```tsx title=/browser/src/main.tsx showLineNumbers
 import { Page } from '@local/shared/components/Page'
-import { KeyworkApp } from 'keywork/react-utils/browser'
-import { waitUntilDOMReady } from 'keywork/timers/browser'
+import { KeyworkApp } from './react-utils/browser/index.js'
+import { waitUntilDOMReady } from './timers/browser/index.js'
 
 waitUntilDOMReady().then(() => {
   const app = new KeyworkApp()

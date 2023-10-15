@@ -13,7 +13,7 @@
  */
 
 import type { DurableObjectNamespace, KVNamespace } from '@cloudflare/workers-types'
-import type { WorkerEnvFetchBinding } from 'keywork/router'
+import type { WorkerEnvFetchBinding } from '../router/index.js'
 
 /**
  * Either:

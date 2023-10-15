@@ -20,8 +20,8 @@
 
 /// <reference lib="WebWorker" />
 
-import { KeyworkResourceError, Status } from 'keywork/errors'
-import { DURATION_ONE_WEEK, arrayBufferToBase64, stringToArrayBuffer } from 'keywork/utils'
+import { KeyworkResourceError, Status } from '../../errors/index.js'
+import { DURATION_ONE_WEEK, arrayBufferToBase64, stringToArrayBuffer } from '../../utils/index.js'
 
 export interface CachingHeaders {
   /** The time, in seconds, that the object has been in a proxy cache. */

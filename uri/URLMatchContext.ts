@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { IURLPattern, type URLPatternResult } from 'keywork/uri'
 import { createContext, useContext } from 'react'
+import { IURLPattern, type URLPatternResult } from '../uri/index.js'
 
 /**
  * Context for injecting a URL pattern.

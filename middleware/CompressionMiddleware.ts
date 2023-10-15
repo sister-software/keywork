@@ -14,10 +14,10 @@
 
 /// <reference lib="WebWorker" />
 
-import { KeyworkResourceError, Status } from 'keywork/errors'
-import type { MimeDatabase } from 'keywork/files'
-import { Accepts, shouldCompress } from 'keywork/http'
-import { RequestRouter, RequestRouterOptions, RouteRequestHandler } from 'keywork/router'
+import { KeyworkResourceError, Status } from '../errors/index.js'
+import type { MimeDatabase } from '../files/index.js'
+import { Accepts, shouldCompress } from '../http/index.js'
+import { RequestRouter, RequestRouterOptions, RouteRequestHandler } from '../router/index.js'
 
 /**
  * The compression format used when encoding the response body.
@@ -34,7 +34,7 @@ export type CompressionEncoding = 'gzip' | 'deflate' | 'deflate-raw'
  * compresses the contents according to a client's `Accept-Encoding` request header.
  *
  * ```ts runtime=node
- * import {RequestRouter} from 'keywork/router'
+ * import {RequestRouter} from './router/index.js'
  *
  * const app = new RequestRouter()
  * app.use(new CompressionMiddleware('gzip'))

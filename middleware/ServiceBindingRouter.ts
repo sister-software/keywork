@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status } from 'keywork/errors'
-import { ErrorResponse } from 'keywork/http'
-import type { RequestRouterOptions, RouteRequestHandler, WorkerEnvFetchBinding } from 'keywork/router'
-import { RequestRouter } from 'keywork/router'
+import { Status } from '../errors/index.js'
+import { ErrorResponse } from '../http/index.js'
+import type { RequestRouterOptions, RouteRequestHandler, WorkerEnvFetchBinding } from '../router/index.js'
+import { RequestRouter } from '../router/index.js'
 
 /**
  * A router that proxies requests directly to a Cloudflare Worker environment binding,

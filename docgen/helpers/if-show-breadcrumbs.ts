@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme'
 import { PageEvent } from 'typedoc'
+import type { MarkdownTheme } from '../theme/index.js'
 
 export function ifShowBreadcrumbsHelper(theme: MarkdownTheme) {
   Handlebars.registerHelper('ifShowBreadcrumbs', function (this: PageEvent, options: Handlebars.HelperOptions) {

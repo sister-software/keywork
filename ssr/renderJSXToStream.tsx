@@ -12,12 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork/errors'
-import { IsomorphicFetchEvent } from 'keywork/events'
-import { fetchImportMap } from 'keywork/files'
-import { PageElementComponent } from 'keywork/http'
-import { KeyworkLogger } from 'keywork/logging'
 import type { ReactDOMServerReadableStream } from 'react-dom/server'
+import { KeyworkResourceError } from '../errors/index.js'
+import { IsomorphicFetchEvent } from '../events/index.js'
+import { fetchImportMap } from '../files/index.js'
+import { PageElementComponent } from '../http/index.js'
+import { KeyworkLogger } from '../logging/index.js'
 import type { ReactRenderStreamResult, ReactRendererOptions } from './ReactRendererOptions.js'
 import { RequestDocument } from './RequestDocument.js'
 import { renderReactStream } from './stream.js'

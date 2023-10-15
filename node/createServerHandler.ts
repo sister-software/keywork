@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { RequestRouter } from 'keywork/router'
 import type { IncomingMessage, ServerResponse } from 'node:http'
+import type { RequestRouter } from '../router/index.js'
 import { respondWithRouter } from './respondWithRouter.js'
 
 /**
@@ -26,7 +26,7 @@ export type ServerHandler = (req: IncomingMessage, res: ServerResponse) => void
  *
  * ```ts
  * import * as http from 'node:http'
- * import { RequestRouter } from 'keywork/router'
+ * import { RequestRouter } from './router/index.js'
  * import { createServerHandler, applyNodeKeyworkPolyfills } from 'keywork'
  *
  * await applyNodeKeyworkPolyfills()

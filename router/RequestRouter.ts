@@ -14,8 +14,8 @@
 
 /// <reference lib="WebWorker" />
 
-import { KeyworkResourceError, Status } from 'keywork/errors'
-import { IsomorphicFetchEvent, SSRDocument, isExtendableEvent } from 'keywork/events'
+import { KeyworkResourceError, Status } from '../errors/index.js'
+import { IsomorphicFetchEvent, SSRDocument, isExtendableEvent } from '../events/index.js'
 import {
   ErrorResponse,
   HTTPMethod,
@@ -25,17 +25,17 @@ import {
   cloneAsMutableResponse,
   methodVerbToRouterMethod,
   routerMethodToHTTPMethod,
-} from 'keywork/http'
-import { IDisposable } from 'keywork/lifecycle'
-import { KeyworkLogger } from 'keywork/logging'
-import { ReactRendererOptions, renderReactStream } from 'keywork/ssr'
+} from '../http/index.js'
+import { IDisposable } from '../lifecycle/index.js'
+import { KeyworkLogger } from '../logging/index.js'
+import { ReactRendererOptions, renderReactStream } from '../ssr/index.js'
 import {
   PatternRouteComponentMap,
   URLPatternLike,
   normalizeURLPattern,
   normalizeURLPatternInit,
   pluckClientModuleRoutes,
-} from 'keywork/uri'
+} from '../uri/index.js'
 import { Fetcher } from './Fetcher.js'
 import { FetcherLike } from './FetcherLike.js'
 import { MiddlewareFetch } from './MiddlewareFetch.js'

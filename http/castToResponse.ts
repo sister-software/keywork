@@ -12,12 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, Status, isWithinStatusCodeRange } from 'keywork/errors'
-import type { IsomorphicFetchEvent } from 'keywork/events'
-import { ErrorResponse, HTMLResponse, JSONResponse } from 'keywork/http/responses'
-import { ReactRendererOptions, renderJSXToStream } from 'keywork/ssr'
-import { PatternRouteComponentMap, isStaticPropsRequestURL } from 'keywork/uri'
 import { createElement, isValidElement } from 'react'
+import { KeyworkResourceError, Status, isWithinStatusCodeRange } from '../errors/index.js'
+import type { IsomorphicFetchEvent } from '../events/index.js'
+import { ErrorResponse, HTMLResponse, JSONResponse } from '../http/responses/index.js'
+import { ReactRendererOptions, renderJSXToStream } from '../ssr/index.js'
+import { PatternRouteComponentMap, isStaticPropsRequestURL } from '../uri/index.js'
 import { isInstanceOfResponse } from './isInstanceOfResponse.js'
 
 /**

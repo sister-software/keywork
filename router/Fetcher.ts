@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { IDisposable } from 'keywork/lifecycle'
-import type { KeyworkLogger } from 'keywork/logging'
+import type { IDisposable } from '../lifecycle/index.js'
+import type { KeyworkLogger } from '../logging/index.js'
 import type { MiddlewareFetch } from './MiddlewareFetch.js'
 
 /**

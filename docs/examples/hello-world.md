@@ -43,7 +43,7 @@ Building our app starts with the [`RequestRouter`](/modules/router/classes/Reque
 class.
 
 ```ts title="worker.ts" showLineNumbers
-import { RequestRouter } from 'keywork/router'
+import { RequestRouter } from './router/index.js'
 
 // highlight-next-line
 const app = new RequestRouter()
@@ -59,7 +59,7 @@ we can configure our router to handle incoming requests via the `app.get` method
 In our small example, we only need to define a single route handler:
 
 ```ts title="worker.ts" showLineNumbers
-import { RequestRouter } from 'keywork/router'
+import { RequestRouter } from './router/index.js'
 
 // Create a router to receive all incoming requests...
 const app = new RequestRouter()
@@ -99,7 +99,7 @@ When defining a route's `RouteRequestHandler` callback, you have access to an [`
 In this example, let's use `IsomorphicFetchEvent` to return information about where the request originated:
 
 ```ts title="worker.ts" showLineNumbers
-import { RequestRouter } from 'keywork/router'
+import { RequestRouter } from './router/index.js'
 
 // Create a router to receive all incoming requests...
 const app = new RequestRouter()
@@ -130,7 +130,7 @@ Keywork gives us the optional type-safety of TypeScript.
 Let's illustrate this feature by adding a JSON endpoint to our router:
 
 ```ts title=_worker.ts
-import { RequestRouter } from 'keywork/router'
+import { RequestRouter } from './router/index.js'
 
 const app = new RequestRouter()
 

@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Status, STATUS_TEXT } from 'keywork/errors'
+import { Status, STATUS_TEXT } from '../errors/index.js'
 import {
   applyCredentialsHeader,
   applyExposeHeadersHeader,
@@ -21,8 +21,8 @@ import {
   CORSHeaderApplier,
   CORSOptions,
   createDefaultCORSOptions,
-} from 'keywork/http'
-import { RequestRouter, RequestRouterOptions, RouteRequestHandler } from 'keywork/router'
+} from '../http/index.js'
+import { RequestRouter, RequestRouterOptions, RouteRequestHandler } from '../router/index.js'
 
 export class CORSMiddleware extends RequestRouter {
   protected headerAppliers: readonly CORSHeaderApplier[] = [

@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { PatternRouteComponentMap, RoutePatternsProps, URLPatternResultContext } from 'keywork/uri'
 import { useMemo } from 'react'
+import { PatternRouteComponentMap, RoutePatternsProps, URLPatternResultContext } from '../uri/index.js'
 import { useSSRPropsByPath } from './SSRPropsProvider.js'
 import { useLocation } from './hooks.js'
 

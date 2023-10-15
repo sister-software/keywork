@@ -11,7 +11,7 @@
  *
  * @see LICENSE.md in the project root for further licensing information.
  */
-import { Status, STATUS_TEXT } from 'keywork/errors'
+import { Status, STATUS_TEXT } from '../../errors/index.js'
 
 /**
  * Given that a request's etag header matches an server entity or resource,

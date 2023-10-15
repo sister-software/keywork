@@ -12,8 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 import Handlebars from 'handlebars'
-import { stripLineBreaks } from 'keywork/docgen/utils'
 import { ParameterReflection, ReflectionKind } from 'typedoc'
+import { stripLineBreaks } from '../utils/index.js'
 import { getReflectionType } from './type.js'
 
 export function parameterTableHelper() {

@@ -13,7 +13,6 @@
  */
 
 import Handlebars from 'handlebars'
-import { escapeChars } from 'keywork/docgen/utils'
 import {
   ArrayType,
   ConditionalType,
@@ -33,6 +32,7 @@ import {
   UnionType,
   UnknownType,
 } from 'typedoc'
+import { escapeChars } from '../utils/index.js'
 
 type Collapse = 'object' | 'function' | 'all' | 'none'
 

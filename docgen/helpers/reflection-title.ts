@@ -13,9 +13,9 @@
  */
 import dashify from 'dashify'
 import Handlebars from 'handlebars'
-import type { MarkdownTheme } from 'keywork/docgen/theme'
-import { escapeChars, parseModel } from 'keywork/docgen/utils'
 import { PageEvent, SignatureReflection } from 'typedoc'
+import type { MarkdownTheme } from '../theme/index.js'
+import { escapeChars, parseModel } from '../utils/index.js'
 
 export function reflectionTitleHelper(_theme: MarkdownTheme) {
   Handlebars.registerHelper('reflectionTitle', function <

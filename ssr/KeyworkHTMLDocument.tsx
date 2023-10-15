@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { IsomorphicFetchEvent } from 'keywork/events'
-import type { ImportMap } from 'keywork/files'
-import { KEYWORK_APP_ROOT, KEYWORK_STYLE_ROOT } from 'keywork/utils'
 import { FC, ReactNode } from 'react'
+import type { IsomorphicFetchEvent } from '../events/index.js'
+import type { ImportMap } from '../files/index.js'
+import { KEYWORK_APP_ROOT, KEYWORK_STYLE_ROOT } from '../utils/index.js'
 
 /**
  * The default class name applied to the document before hydration.
@@ -140,7 +140,7 @@ export const KeyworkHTMLDocument: KeyworkHTMLDocumentComponent = ({
             type="module"
             dangerouslySetInnerHTML={{
               __html: /* javascript */ `
-              import {hydrate} from 'keywork/client'
+              import {hydrate} from './client/index.js'
               hydrate()
 `,
             }}

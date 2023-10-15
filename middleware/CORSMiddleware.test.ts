@@ -15,10 +15,10 @@
 /// <reference lib="WebWorker" />
 
 import { Deno } from '@deno/shim-deno'
-import { Status } from 'keywork/errors'
-import { RequestRouter } from 'keywork/router'
-import { assertEquals } from 'keywork/testing'
-import { DURATION_ONE_DAY } from 'keywork/utils'
+import { Status } from '../errors/index.js'
+import { RequestRouter } from '../router/index.js'
+import { assertEquals } from '../testing/index.js'
+import { DURATION_ONE_DAY } from '../utils/index.js'
 import { CORSMiddleware } from './CORSMiddleware.js'
 
 Deno.test('Middleware sets defaults', async () => {

@@ -7,8 +7,8 @@
  * import { UsersRouter } from '@local/worker/routers/UsersRouter'
  * import { BlogRouter } from '@local/worker/routers/BlogRouter'
  * import { AuthenticationRouter } from '@local/worker/routers/AuthenticationRouter'
- * import { CloudflarePagesAssetRouter } from 'keywork/assets'
- * import { RequestRouter } from 'keywork/router'
+ * import { CloudflarePagesAssetRouter } from './assets/index.js'
+ * import { RequestRouter } from './router/index.js'
  *
  * // Create a router to receive all incoming requests...
  * const app = new RequestRouter({

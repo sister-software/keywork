@@ -12,10 +12,10 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { IsomorphicFetchEvent } from 'keywork/events'
-import { RequestRouter } from 'keywork/router'
-import { readGlobalScope } from 'keywork/utils'
 import type { IncomingMessage, ServerResponse } from 'node:http'
+import { IsomorphicFetchEvent } from '../events/index.js'
+import { RequestRouter } from '../router/index.js'
+import { readGlobalScope } from '../utils/index.js'
 import { transformIncomingMessageToRequest } from './transformers.js'
 
 function readNodeEnv<BoundAliases = {}>(): BoundAliases {
@@ -29,8 +29,8 @@ function readNodeEnv<BoundAliases = {}>(): BoundAliases {
  *
  * ```ts
  * import * as http from 'node:http'
- * import { RequestRouter } from 'keywork/router'
- * import { respondWithRouter } from 'keywork/router/node'
+ * import { RequestRouter } from './router/index.js'
+ * import { respondWithRouter } from './router/node/index.js'
  *
  * const router = new RequestRouter()
  * http.createServer((req, res) => {

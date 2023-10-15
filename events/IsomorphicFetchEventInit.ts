@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { IURLPattern, URLPatternResult } from 'keywork/uri'
+import type { IURLPattern, URLPatternResult } from '../uri/index.js'
 import type { SSRDocument } from './SSRDocument.js'
 
 /**

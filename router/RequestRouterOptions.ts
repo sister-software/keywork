@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { SSRDocument } from 'keywork/events'
-import type { HTTPMethod } from 'keywork/http'
-import type { KeyworkLogLevel } from 'keywork/logging'
-import type { ReactRendererOptions } from 'keywork/ssr'
-import type { ClientModuleInput, IURLPattern } from 'keywork/uri'
+import type { SSRDocument } from '../events/index.js'
+import type { HTTPMethod } from '../http/index.js'
+import type { KeyworkLogLevel } from '../logging/index.js'
+import type { ReactRendererOptions } from '../ssr/index.js'
+import type { ClientModuleInput, IURLPattern } from '../uri/index.js'
 import type { MiddlewareDeclarationLike } from './MiddlewareDeclarationLike.js'
 
 /**

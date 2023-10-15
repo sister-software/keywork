@@ -12,11 +12,11 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork/errors'
-import type { ImportMap } from 'keywork/files'
 import { existsSync } from 'node:fs'
 import * as path from 'node:path'
 import type { ParsedCommandLine } from 'typescript'
+import { KeyworkResourceError } from '../errors/index.js'
+import type { ImportMap } from '../files/index.js'
 import { changeExtension } from './files.js'
 import { KEYWORK_PROJECT_DIST_FILENAME, KeyworkPackageJSON, projectRootPathBuilder } from './paths.js'
 

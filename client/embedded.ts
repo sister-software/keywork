@@ -12,9 +12,9 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError } from 'keywork/errors'
-import { IsomorphicFetchEventInit } from 'keywork/events'
-import { KEYWORK_SSR_INIT_KEY, KEYWORK_SSR_PROPS_KEY, readGlobalScope } from 'keywork/utils'
+import { KeyworkResourceError } from '../errors/index.js'
+import { IsomorphicFetchEventInit } from '../events/index.js'
+import { KEYWORK_SSR_INIT_KEY, KEYWORK_SSR_PROPS_KEY, readGlobalScope } from '../utils/index.js'
 
 /**
  * The global scope with embedded Keywork SSR props.

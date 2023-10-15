@@ -12,19 +12,19 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { KeyworkResourceError, Status } from 'keywork/errors'
-import { KeyworkLogger } from 'keywork/logging'
+import * as http from 'node:http'
+import { Socket } from 'node:net'
+import * as path from 'node:path'
+import type { Argv } from 'yargs'
+import { KeyworkResourceError, Status } from '../errors/index.js'
+import { KeyworkLogger } from '../logging/index.js'
 import {
   NodeStaticFileRouter,
   applyNodeKeyworkPolyfills,
   createNodeServerHandler,
   projectRootPathBuilder,
-} from 'keywork/node'
-import { FetcherModuleExports, RequestRouter } from 'keywork/router'
-import * as http from 'node:http'
-import { Socket } from 'node:net'
-import * as path from 'node:path'
-import type { Argv } from 'yargs'
+} from '../node/index.js'
+import { FetcherModuleExports, RequestRouter } from '../router/index.js'
 import type { StrictYargsOptionsToInterface } from './yargs.js'
 
 await applyNodeKeyworkPolyfills()
