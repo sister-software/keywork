@@ -13,6 +13,7 @@
  */
 /* eslint-disable no-restricted-globals */
 
+import type { IsomorphicFetchEvent } from '../events/IsomorphicFetchEvent.js'
 import type { RouteMatch } from './RouteMatch.js'
 
 /** @ignore */
@@ -51,7 +52,7 @@ export interface MiddlewareFetch<BoundAliases = {}, ExpectedReturn extends Middl
      * @see {IsomorphicFetchEvent}
      * @see {ExecutionContext}
      */
-    eventLike?: unknown,
+    eventLike?: IsomorphicFetchEvent<BoundAliases, any, any>,
     /**
      * When invoked, will execute a route handler defined after the current.
      *

@@ -29,7 +29,13 @@ import {
 import { IDisposable } from '../lifecycle/index.js'
 import { KeyworkLogger } from '../logging/index.js'
 import { ReactRendererOptions, renderReactStream } from '../ssr/index.js'
-import { PatternRouteComponentMap, URLPatternLike, isKeyworkRouteComponent, normalizeURLPattern } from '../uri/index.js'
+import {
+  PatternRouteComponentMap,
+  URLPatternLike,
+  isKeyworkRouteComponent,
+  normalizeURLPattern,
+  normalizeURLPatternInput,
+} from '../uri/index.js'
 import { Fetcher } from './Fetcher.js'
 import { FetcherLike } from './FetcherLike.js'
 import { MiddlewareFetch } from './MiddlewareFetch.js'
@@ -489,7 +495,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
     parsedRoutes: ParsedRoute<BoundAliases>[],
     matchingAgainst: URLPatternLike
   ): RouteMatch<BoundAliases>[] {
-    const matchInput = normalizeURLPattern(matchingAgainst)
+    const matchInput = normalizeURLPatternInput(matchingAgainst)
     const matchedRoutes: RouteMatch<BoundAliases>[] = []
 
     for (const parsedRoute of parsedRoutes) {
@@ -554,6 +560,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
     const pathnameGroups = match.pathname.groups['0']
 
     if (pathnameGroups) {
+      console.log('>>>> Normalizing', normalizedURL.pathname, pathnameGroups)
       normalizedURL.pathname = pathnameGroups
     }
     // Update the URL params...
@@ -590,7 +597,7 @@ export class RequestRouter<BoundAliases = {}> implements Fetcher<BoundAliases>, 
     )
     try {
       if (parsedRoute.kind === 'routeHandler') {
-        possibleResponse = await parsedRoute.fetch(event, next as any)
+        possibleResponse = await parsedRoute.fetch(event, next)
       } else {
         possibleResponse = await parsedRoute.fetcher.fetch(event.request, env, event, next)
       }

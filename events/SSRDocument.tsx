@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { HtmlHTMLAttributes } from 'react'
+import { HtmlHTMLAttributes, createContext, useContext } from 'react'
 import { ImportMap } from '../files/index.js'
 
 /**
@@ -111,7 +111,8 @@ export interface SSRDocument {
 
   /**
    * Whether to omit the React hydration script from the document.
-   * This is useful when you want to render a static HTML page.
+   * This is useful when you want to render a static HTML page,
+   * or use your own hydration script.
    *
    * @default false
    */
@@ -122,4 +123,14 @@ export interface DocumentImage {
   width?: number
   height?: number
   url: string
+}
+
+/**
+ * @internal
+ */
+export const SSRDocumentContext = createContext<SSRDocument>(undefined as any)
+SSRDocumentContext.displayName = 'SSRDocumentContext'
+
+export function useSSRDocument() {
+  return useContext(SSRDocumentContext)
 }

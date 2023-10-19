@@ -12,6 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
+import { SSRPropsByPath, SSRPropsProvider } from '../client/SSRPropsProvider.js'
 import { FetchEventProvider, IsomorphicFetchEvent } from '../events/index.js'
 import { ImportMap } from '../files/index.js'
 import { PageElementComponent } from '../http/index.js'
@@ -54,15 +55,20 @@ export const RequestDocument: React.FC<RequestDocumentProps> = ({
 }) => {
   const staticProps = pageElement.props
 
+  const initialNavigatorURL = new URL(event.request.url)
+  const initialPropsByPath: SSRPropsByPath = new Map([[initialNavigatorURL.pathname, staticProps]])
+
   const appDocument = (
-    <FetchEventProvider event={event} logger={logger}>
-      <Providers>
-        <DocumentComponent event={event} importMap={importMap}>
-          {pageElement}
-          <KeyworkSSREmbed eventInit={event.toJSON()} staticProps={staticProps} />
-        </DocumentComponent>
-      </Providers>
-    </FetchEventProvider>
+    <SSRPropsProvider initialLocation={initialNavigatorURL} initialPropsByPath={initialPropsByPath}>
+      <FetchEventProvider event={event} logger={logger}>
+        <Providers>
+          <DocumentComponent event={event} importMap={importMap}>
+            {pageElement}
+            <KeyworkSSREmbed eventInit={event.toJSON()} staticProps={staticProps} />
+          </DocumentComponent>
+        </Providers>
+      </FetchEventProvider>
+    </SSRPropsProvider>
   )
 
   return appDocument

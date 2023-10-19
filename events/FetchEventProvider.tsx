@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { IsomorphicFetchEvent } from '../events/index.js'
+import { IsomorphicFetchEvent, SSRDocumentContext } from '../events/index.js'
 import { RequestContext } from '../http/index.js'
 import { KeyworkLogger, KeyworkLoggerContext } from '../logging/index.js'
 import { URLPatternResultContext } from '../uri/index.js'
@@ -50,7 +50,9 @@ export const FetchEventProvider: React.FC<FetchEventProviderProps> = ({ logger, 
     <KeyworkLoggerContext.Provider value={logger}>
       <EnvironmentContext.Provider value={event.env}>
         <RequestContext.Provider value={event.request}>
-          <URLPatternResultContext.Provider value={event.match}>{children}</URLPatternResultContext.Provider>
+          <URLPatternResultContext.Provider value={event.match}>
+            <SSRDocumentContext.Provider value={event.document}>{children}</SSRDocumentContext.Provider>
+          </URLPatternResultContext.Provider>
         </RequestContext.Provider>
       </EnvironmentContext.Provider>
     </KeyworkLoggerContext.Provider>

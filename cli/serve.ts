@@ -12,8 +12,6 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import * as http from 'node:http'
-import { Socket } from 'node:net'
 import * as path from 'node:path'
 import type { Argv } from 'yargs'
 import { KeyworkResourceError, Status } from '../errors/index.js'
@@ -21,7 +19,7 @@ import { KeyworkLogger } from '../logging/index.js'
 import {
   NodeStaticFileRouter,
   applyNodeKeyworkPolyfills,
-  createNodeServerHandler,
+  createNodeKeyworkServer,
   projectRootPathBuilder,
 } from '../node/index.js'
 import { FetcherModuleExports, RequestRouter } from '../router/index.js'
@@ -80,16 +78,16 @@ export async function serveBuilder({ port, host, ...serveArgs }: ServeArgs) {
     )
   }
 
-  const fetcher = scriptModule.default
+  const router = scriptModule.default
 
-  if (!fetcher || !RequestRouter.assertIsInstanceOf(fetcher)) {
+  if (!router || !RequestRouter.assertIsInstanceOf(router)) {
     throw new KeyworkResourceError(
       `Router script ${absoluteScriptPath} does not export a valid request router.`,
       Status.InternalServerError
     )
   }
 
-  fetcher.get(
+  router.get(
     '/dist/*',
     new NodeStaticFileRouter({
       filesDirectoryPath: projectRootPathBuilder('dist'),
@@ -97,37 +95,15 @@ export async function serveBuilder({ port, host, ...serveArgs }: ServeArgs) {
     }).fetchStaticFile
   )
 
-  fetcher.use(
+  router.use(
     new NodeStaticFileRouter({
       filesDirectoryPath: absolutePublicDirPath,
     })
   )
 
-  fetcher.$prettyPrintRoutes()
+  router.$prettyPrintRoutes()
 
-  // And then wrap the router with `createServerHandler`
-  const server = http.createServer(createNodeServerHandler(fetcher))
-
-  const connections = new Set<Socket>()
-  server.on('connection', (connection) => {
-    connections.add(connection)
-    connection.on('close', () => connections.delete(connection))
-  })
-
-  server.on('close', () => fetcher.dispose('Shutting down...'))
-
-  const onProcessEnd = () => {
-    for (const connection of connections) {
-      connection.destroy()
-    }
-
-    connections.clear()
-
-    server.close(() => process.exit(0))
-  }
-
-  process.on('SIGINT', onProcessEnd)
-  process.on('SIGTERM', onProcessEnd)
+  const server = createNodeKeyworkServer(router)
 
   logger.info('Starting...')
 

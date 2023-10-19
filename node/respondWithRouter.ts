@@ -43,10 +43,10 @@ function readNodeEnv<BoundAliases = {}>(): BoundAliases {
 export async function respondWithRouter<BoundAliases = {}>(
   router: RequestRouter<BoundAliases>,
   incomingMessage: IncomingMessage,
-  serverResponse: ServerResponse
+  serverResponse: ServerResponse,
+  env = readNodeEnv<BoundAliases>()
 ): Promise<void> {
   const request = transformIncomingMessageToRequest(incomingMessage)
-  const env = readNodeEnv<BoundAliases>()
   const event = new IsomorphicFetchEvent('fetch', { request, originalURL: request.url, env })
 
   const fetchResponse = await router.fetch(request, env, event)

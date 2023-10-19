@@ -31,3 +31,8 @@ export const PNG = {
   extension: 'png',
   mimeType: 'image/png',
 } as const
+
+export const WEBP = {
+  extension: 'webp',
+  mimeType: 'image/webp',
+} as const

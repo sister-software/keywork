@@ -12,7 +12,8 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import type { IncomingMessage, ServerResponse } from 'node:http'
+import { createServer, type IncomingMessage, type ServerResponse } from 'node:http'
+import type { Socket } from 'node:net'
 import type { RequestRouter } from '../router/index.js'
 import { respondWithRouter } from './respondWithRouter.js'
 
@@ -38,6 +39,40 @@ export type ServerHandler = (req: IncomingMessage, res: ServerResponse) => void
  * @see {respondWithRouter}
  * @beta Node support is currently experimental and may change in the near future.
  */
-export function createNodeServerHandler<BoundAliases = {}>(router: RequestRouter<BoundAliases>): ServerHandler {
-  return (req, res) => respondWithRouter<BoundAliases>(router, req, res)
+export function createNodeServerHandler<BoundAliases = {}>(
+  router: RequestRouter<BoundAliases>,
+  env?: BoundAliases
+): ServerHandler {
+  return (req, res) => respondWithRouter<BoundAliases>(router, req, res, env)
+}
+
+/**
+ * Given a `RequestRouter`, creates a Node-compatible server.
+ */
+export function createNodeKeyworkServer<BoundAliases = {}>(
+  router: RequestRouter<BoundAliases>,
+  server = createServer(createNodeServerHandler(router))
+) {
+  const connections = new Set<Socket>()
+  server.on('connection', (connection) => {
+    connections.add(connection)
+    connection.on('close', () => connections.delete(connection))
+  })
+
+  server.on('close', () => router.dispose('Shutting down...'))
+
+  const onProcessEnd = () => {
+    for (const connection of connections) {
+      connection.destroy()
+    }
+
+    connections.clear()
+
+    server.close(() => process.exit(0))
+  }
+
+  process.on('SIGINT', onProcessEnd)
+  process.on('SIGTERM', onProcessEnd)
+
+  return server
 }

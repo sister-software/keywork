@@ -12,9 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-export * from './Forms.js'
-export * from './Images.js'
-export * from './JavaScript.js'
-export * from './PlainText.js'
-export * from './Styles.js'
-export * from './XML.js'
+export const CSS = {
+  extension: 'css',
+  mimeType: 'text/css; charset=utf-8',
+} as const
