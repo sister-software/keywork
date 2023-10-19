@@ -82,14 +82,18 @@ export const BrowserRouter: React.FC<BrowserRouterProps> = ({
   }, [currentHistory])
 
   return (
-    <SSRPropsProvider initialLocation={initialNavigatorURL} initialPropsByPath={initialPropsByPath}>
-      <FetchEventProvider event={fetchEvent} logger={logger}>
+    <FetchEventProvider event={fetchEvent} logger={logger}>
+      <SSRPropsProvider
+        currentLocation={window.location}
+        initialLocation={initialNavigatorURL}
+        initialPropsByPath={initialPropsByPath}
+      >
         <URLContext.Provider value={initialNavigatorURL}>
           <BrowserRouterContext.Provider value={value}>
             <KeyworkPatternToPageComponent routes={routes} />
           </BrowserRouterContext.Provider>
         </URLContext.Provider>
-      </FetchEventProvider>
-    </SSRPropsProvider>
+      </SSRPropsProvider>
+    </FetchEventProvider>
   )
 }

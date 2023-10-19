@@ -15,7 +15,6 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from 'react'
 import { useKeyworkLogger } from '../logging/index.js'
 import { KEYWORK_STATIC_PROPS_QUERY_KEY } from '../uri/index.js'
-import { useLocation } from './hooks.js'
 
 /**
  * A mapping of static props to a given path.
@@ -30,21 +29,24 @@ export const useSSRPropsByPath = () => useContext(SSRPropsContext)
 export interface SSRPropsProviderProps {
   initialPropsByPath: SSRPropsByPath
   initialLocation: URL
+  currentLocation?: Location
   children: React.ReactNode
 }
 
 export const SSRPropsProvider: React.FC<SSRPropsProviderProps> = ({
   initialPropsByPath,
   initialLocation,
+  currentLocation,
   children,
 }) => {
   const lastRenderLocationRef = useRef(initialLocation)
   const [propsByPath, setPropsByPath] = useState(initialPropsByPath)
-  const location = useLocation()
   const logger = useKeyworkLogger()
 
   const fetchRouteData = useCallback(async () => {
-    const url = new URL(location.pathname, (globalThis as any).location.origin)
+    if (!currentLocation) return
+
+    const url = new URL(currentLocation.pathname, (globalThis as any).location.origin)
     url.searchParams.set(KEYWORK_STATIC_PROPS_QUERY_KEY, 'true')
 
     const response = await fetch(url)
@@ -57,15 +59,16 @@ export const SSRPropsProvider: React.FC<SSRPropsProviderProps> = ({
 
     const data = await response.json()
 
-    setPropsByPath(new Map([[location.pathname, data]]))
-  }, [location.pathname, logger])
+    setPropsByPath(new Map([[currentLocation.pathname, data]]))
+  }, [currentLocation, logger])
 
   useEffect(() => {
-    if (lastRenderLocationRef.current.pathname !== location.pathname) {
-      lastRenderLocationRef.current = new URL(location.pathname, lastRenderLocationRef.current.origin)
+    if (!currentLocation) return
+    if (lastRenderLocationRef.current.pathname !== currentLocation.pathname) {
+      lastRenderLocationRef.current = new URL(currentLocation.pathname, lastRenderLocationRef.current.origin)
       fetchRouteData()
     }
-  }, [fetchRouteData, location])
+  }, [currentLocation, fetchRouteData])
 
   return <SSRPropsContext.Provider value={propsByPath}>{children}</SSRPropsContext.Provider>
 }

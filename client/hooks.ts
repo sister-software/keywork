@@ -14,7 +14,7 @@
 import { useEffect, useState } from 'react'
 
 export function useLocation() {
-  const [currentLocation, setCurrentLocation] = useState(location)
+  const [currentLocation, setCurrentLocation] = useState<Location>(location)
 
   useEffect(() => {
     const popStateHandler = (_event: PopStateEvent) => {

@@ -115,11 +115,11 @@ interface NormalizeURLPatternOptions {
 export function normalizeURLPatternInput(patternLike: URLPatternLike): URLPatternInput {
   if (!patternLike) throw new KeyworkResourceError('`patternLike` must be defined')
 
+  if (patternLike instanceof URL) return patternLike
+
   if (isURLPathname(patternLike)) return URLPathnameToURLPatternInput(patternLike)
 
   if (isKeyworkRouteComponent(patternLike)) return normalizeURLPattern(patternLike.pathname!)
-
-  if (patternLike instanceof URL) return patternLike
 
   return patternLike
 }

@@ -59,16 +59,16 @@ export const RequestDocument: React.FC<RequestDocumentProps> = ({
   const initialPropsByPath: SSRPropsByPath = new Map([[initialNavigatorURL.pathname, staticProps]])
 
   const appDocument = (
-    <SSRPropsProvider initialLocation={initialNavigatorURL} initialPropsByPath={initialPropsByPath}>
-      <FetchEventProvider event={event} logger={logger}>
+    <FetchEventProvider event={event} logger={logger}>
+      <SSRPropsProvider initialLocation={initialNavigatorURL} initialPropsByPath={initialPropsByPath}>
         <Providers>
           <DocumentComponent event={event} importMap={importMap}>
             {pageElement}
             <KeyworkSSREmbed eventInit={event.toJSON()} staticProps={staticProps} />
           </DocumentComponent>
         </Providers>
-      </FetchEventProvider>
-    </SSRPropsProvider>
+      </SSRPropsProvider>
+    </FetchEventProvider>
   )
 
   return appDocument

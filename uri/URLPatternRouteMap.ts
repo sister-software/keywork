@@ -16,9 +16,11 @@ import {
   IURLPattern,
   KeyworkRouteComponent,
   URLPathnameInput,
+  URLPatternLike,
   URLPatternResult,
   isKeyworkRouteComponent,
   normalizeURLPattern,
+  normalizeURLPatternInput,
 } from './URLPattern.js'
 
 export type RoutePatternEntry = [string, KeyworkRouteComponent<any>]
@@ -81,10 +83,11 @@ export class PatternRouteComponentMap extends Map<string, React.ComponentType<an
     return super.get(pathnamePattern)
   }
 
-  public match(location: URLPathnameInput): LocationPatternResult | null {
+  public match(input: URLPatternLike): LocationPatternResult | null {
     for (const [patternLike, Component] of this.entries()) {
+      // TODO: Consider submapping of this to avoid recompiling patterns.
       const pattern = normalizeURLPattern(patternLike)
-      const match = pattern.exec({ pathname: location.pathname })
+      const match = pattern.exec(normalizeURLPatternInput(input))
 
       if (!match) continue
 

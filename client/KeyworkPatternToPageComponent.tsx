@@ -13,19 +13,20 @@
  */
 
 import { useMemo } from 'react'
+import { useRequest } from '../http/RequestContext.js'
 import { PatternRouteComponentMap, RoutePatternsProps, URLPatternResultContext } from '../uri/index.js'
 import { useSSRPropsByPath } from './SSRPropsProvider.js'
-import { useLocation } from './hooks.js'
 
 /**
  * @beta
  * @ignore
  */
 export const KeyworkPatternToPageComponent: React.FC<RoutePatternsProps> = ({ routes }) => {
-  const location = useLocation()
+  const request = useRequest()
+
   const staticPropsByPath = useSSRPropsByPath()
   const patternRouteComponentMap = useMemo(() => new PatternRouteComponentMap(routes), [routes])
-  const result = useMemo(() => patternRouteComponentMap.match(location), [location, patternRouteComponentMap])
+  const result = useMemo(() => patternRouteComponentMap.match(request.url), [patternRouteComponentMap, request.url])
 
   if (!result) {
     return <FallbackComponent />
