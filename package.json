@@ -5,7 +5,7 @@
   "author": "Teffen Ellis <teffen@sister.software>",
   "description": "A batteries-included, magic-free, library for building web apps in V8 Isolates.",
   "bugs": {
-    "url": "https://keywork.app/help"
+    "url": "https://keywork.sister.software/help"
   },
   "keywords": [
     "cloudflare",
@@ -19,7 +19,7 @@
   "funding": [
     {
       "type": "individual",
-      "url": "https://keywork.app/contributing"
+      "url": "https://keywork.sister.software/contributing"
     }
   ],
   "type": "module",

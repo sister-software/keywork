@@ -28,4 +28,4 @@ If possible, please include...
   - **Note:** Because the developers need to copy and paste the code snippet, including a code snippet as a media file (i.e. .gif) is not sufficient.
 - Errors from either your server, or from the browser's Dev Tools Console (open from the menu: Help > Toggle Developer Tools)
 
-If the you believe the vulnerability is time-sensitive or requires additional support, please reach out to `support [at] keywork.app`
+If the you believe the vulnerability is time-sensitive or requires additional support, please reach out to `support [at] sister.software`
