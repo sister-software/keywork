@@ -14,14 +14,14 @@
 
 /// <reference lib="WebWorker" />
 
-import { Deno } from '@deno/shim-deno'
+import { test } from 'vitest'
 import { Status } from '../errors/index.js'
 import { RequestRouter } from '../router/index.js'
 import { assertEquals } from '../testing/index.js'
 import { DURATION_ONE_DAY } from '../utils/index.js'
 import { CORSMiddleware } from './CORSMiddleware.js'
 
-Deno.test('Middleware sets defaults', async () => {
+test('Middleware sets defaults', async () => {
   const middleware = new CORSMiddleware()
 
   assertEquals(middleware.corsOptions.allowedOrigins, '*', 'Default allowed origins is *')
@@ -38,7 +38,7 @@ Deno.test('Middleware sets defaults', async () => {
   )
 })
 
-Deno.test('Middleware sends preflight', async () => {
+test('Middleware sends preflight', async () => {
   const app = new RequestRouter({
     displayName: 'CORS Middleware Tester',
     middleware: [new CORSMiddleware()],
@@ -61,7 +61,7 @@ Deno.test('Middleware sends preflight', async () => {
   assertEquals(response.status, Status.NoContent, 'Options request has no content')
 })
 
-Deno.test('CORS middleware parses origins', async () => {
+test('CORS middleware parses origins', async () => {
   const app = new RequestRouter({
     displayName: 'CORS Middleware Tester',
     middleware: [new CORSMiddleware({ allowedOrigins: ['https://localhost', 'https://api.example.com'] })],

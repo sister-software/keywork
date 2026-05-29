@@ -12,14 +12,14 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Deno } from '@deno/shim-deno'
 import { parse as parseCookies } from 'cookie'
+import { test } from 'vitest'
 import { CookieHeaders } from '../http/index.js'
 import { RequestRouter } from '../router/index.js'
 import { assert, assertEquals } from '../testing/index.js'
 import { SessionMiddleware } from './SessionMiddleware.js'
 
-Deno.test('Session Middleware', async () => {
+test('Session Middleware', async () => {
   const sessionMiddleware = new SessionMiddleware()
   const app = new RequestRouter({
     displayName: 'Session Tester',

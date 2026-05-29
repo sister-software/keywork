@@ -12,8 +12,12 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 export function assertEquals(actual: any, expected: any, message = 'Assertion failed') {
-  if (actual !== expected) {
-    throw new Error(message)
+  const isObjectLike = (v: unknown) => typeof v === 'object' && v !== null
+  const equal = isObjectLike(actual) && isObjectLike(expected)
+    ? JSON.stringify(actual) === JSON.stringify(expected)
+    : actual === expected
+  if (!equal) {
+    throw new Error(`${message}\n  expected: ${JSON.stringify(expected)}\n  actual:   ${JSON.stringify(actual)}`)
   }
 }
 

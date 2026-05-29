@@ -26,7 +26,11 @@ export class Accepts {
 
   constructor(headers: Headers) {
     this.headers = headers
-    this.negotiator = new Negotiator({ headers: this.headers as any })
+    const headerRecord: Record<string, string> = {}
+    headers.forEach((value, key) => {
+      headerRecord[key.toLowerCase()] = value
+    })
+    this.negotiator = new Negotiator({ headers: headerRecord } as any)
   }
 
   /**

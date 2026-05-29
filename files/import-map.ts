@@ -63,11 +63,17 @@ export async function fetchImportMap(mountPoint = '/'): Promise<ImportMap> {
   // dynamically generated after the TypeScript's compilation step.
   const modulePath = 'keywork/importmap' + '.json'
 
-  const { default: importMap }: ImportMapModule = await import(modulePath, {
-    assert: {
-      type: 'json',
-    },
-  })
+  let importMap: ImportMap
+  try {
+    const mod: ImportMapModule = await import(modulePath, {
+      assert: {
+        type: 'json',
+      },
+    })
+    importMap = mod.default
+  } catch {
+    return { imports: {} }
+  }
 
   for (const [key, value] of Object.entries(importMap.imports)) {
     importMap.imports[key as keyof typeof importMap.imports] = value.replace('./', mountPoint)

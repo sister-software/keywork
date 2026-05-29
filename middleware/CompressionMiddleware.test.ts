@@ -14,14 +14,14 @@
 
 /// <reference lib="WebWorker" />
 
-import { Deno } from '@deno/shim-deno'
+import { test } from 'vitest'
 import { RequestRouter } from '../router/index.js'
 import { assertEquals } from '../testing/index.js'
 import { CompressionMiddleware } from './CompressionMiddleware.js'
 
 const dStream = new DecompressionStream('gzip')
 
-Deno.test('Router compresseses response body', async () => {
+test('Router compresseses response body', async () => {
   const textDecoder = new TextDecoder()
 
   const app = new RequestRouter({

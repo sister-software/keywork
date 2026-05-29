@@ -12,7 +12,7 @@
  * @see LICENSE.md in the project root for further licensing information.
  */
 
-import { Deno } from '@deno/shim-deno'
+import { test } from 'vitest'
 import { Status } from '../errors/index.js'
 import { JSONResponse, KeyworkHeaders } from '../http/index.js'
 import { assertEquals, assertExists, assertObjectMatch, assertStringIncludes } from '../testing/index.js'
@@ -26,7 +26,7 @@ interface HelloResponseBody extends Record<PropertyKey, unknown> {
   message: string
 }
 
-Deno.test('Router receives requests', async () => {
+test('Router receives requests', async () => {
   const app = new RequestRouter()
 
   app.get('/', (event) => {
@@ -71,7 +71,7 @@ Deno.test('Router receives requests', async () => {
   assertObjectMatch(await JSONResponse.json(), jsonBody)
 })
 
-Deno.test('Router parses URL parameters', async () => {
+test('Router parses URL parameters', async () => {
   const app = new RequestRouter()
 
   // Declaring a route with URL params...
@@ -90,7 +90,7 @@ Deno.test('Router parses URL parameters', async () => {
   assertEquals(body, { firstName: 'jessie', lastName: 'james' }, 'Params are parsed')
 })
 
-Deno.test('Router renders JSX', async () => {
+test('Router renders JSX', async () => {
   const app = new RequestRouter({
     displayName: 'JSX Tester Router',
   })
@@ -109,7 +109,7 @@ Deno.test('Router renders JSX', async () => {
   assertStringIncludes(await response.text(), `<div><h1>JSX Test</h1></div>`, 'Body includes rendered JSX')
 })
 
-Deno.test('Router uses match context', async () => {
+test('Router uses match context', async () => {
   const app = new RequestRouter({
     displayName: 'JSX Match Context Tester Router',
   })
@@ -144,7 +144,7 @@ Deno.test('Router uses match context', async () => {
   )
 })
 
-Deno.test('Router supports middleware', async () => {
+test('Router supports middleware', async () => {
   const HelloWorldRouter = new RequestRouter({
     displayName: 'Hello World Router',
   })
@@ -193,7 +193,7 @@ Deno.test('Router supports middleware', async () => {
   assertEquals(await nestedRequest.json(), { hello: 'world' }, 'Nested body includes content')
 })
 
-Deno.test('Router supports middleware as `RouteRequestHandler`', async () => {
+test('Router supports middleware as `RouteRequestHandler`', async () => {
   const app = new RequestRouter({
     displayName: 'Route Request Handler Tester',
   })

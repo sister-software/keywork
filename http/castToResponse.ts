@@ -71,7 +71,9 @@ export async function castToResponse(
       return new HTMLResponse(responseLike)
     }
 
-    return new Response(responseLike)
+    return new Response(responseLike, {
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' },
+    })
   }
 
   if (typeof responseLike === 'number') {

@@ -13,29 +13,27 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.x
+      - uses: actions/checkout@v4
 
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 17.4
-      - run: yarn install --immutable --immutable-cache --check-cache
+          node-version: 20
 
-      - name: Build Modules
-        run: |
-          yarn build
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build modules
+        run: yarn build
         env:
           NODE_ENV: production
           CI: true
 
       - name: Build site
-        run: |
-          yarn site:build
+        run: yarn site:build
         env:
           NODE_ENV: production
           CI: true
@@ -48,8 +46,8 @@ jobs:
           retention-days: 5
 
       - name: Deploy Site
-        run: |
-          yarn site:deploy --project-name keywork --branch main site/build
+        if: ${{ env.CLOUDFLARE_API_TOKEN != '' }}
+        run: yarn dlx wrangler@latest pages deploy site/build --project-name keywork --branch main
         env:
           NODE_ENV: production
           CI: true

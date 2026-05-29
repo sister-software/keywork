@@ -31,18 +31,20 @@
   "scripts": {
     "build:clean": "tsc --build --clean",
     "build:compile": "tsc --build",
-    "build:importmap": "node ./scripts/import-map/index.js",
+    "build:importmap": "node ./dist/scripts/import-map/index.js",
     "build": "run-p build:clean build:compile",
     "release": "run-p build release-it",
-    "test": "deno test --coverage=./cov .",
-    "test:coverage": "deno coverage --lcov ./cov"
+    "test": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "site:build": "yarn workspace @keywork/site run build",
+    "site:dev": "yarn workspace @keywork/site run dev",
+    "site:deploy": "yarn dlx wrangler pages deploy"
   },
   "workspaces": [
     "site"
   ],
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230922.0",
-    "@deno/shim-deno": "^0.16.1",
     "@sister.software/eslint-config": "^2.0.1",
     "@sister.software/prettier-config": "^2.0.1",
     "@sister.software/typescript-esm-packager": "^1.2.10",
@@ -56,6 +58,7 @@
     "@types/yargs": "^17.0.26",
     "@typescript-eslint/eslint-plugin": "^5.48.1",
     "@typescript-eslint/parser": "^5.48.1",
+    "@vitest/coverage-v8": "^1.6.0",
     "dashify": "^2.0.0",
     "esbuild": "^0.19.3",
     "eslint": "^8.37.0",
@@ -77,6 +80,7 @@
     "typescript": "5.2.2",
     "undici": "^5.25.2",
     "urlpattern-polyfill": "^9.0.0",
+    "vitest": "^1.6.0",
     "which": "^4.0.0"
   },
   "dependencies": {

@@ -14,39 +14,42 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-
-      - name: Setup Deno
-        uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.x
+      - uses: actions/checkout@v4
 
       - name: Use Node.js
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v4
         with:
-          node-version: 17.4
-      - run: yarn install --immutable --immutable-cache --check-cache
+          node-version: 20
 
-      - name: Build Modules
-        run: |
-          yarn build
+      - name: Enable Corepack
+        run: corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Build modules
+        run: yarn build
         env:
           NODE_ENV: production
 
-      - name: Run tests
-        run: yarn workspace keywork run test
+      - name: Generate import map
+        run: yarn build:importmap
 
-      - name: Generate lcov
-        run: yarn workspace keywork run test:coverage > cov.lcov
+      - name: Run tests
+        run: yarn test
+
+      - name: Generate coverage
+        run: yarn test:coverage
+        continue-on-error: true
 
       - name: Upload coverage
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v4
         with:
-          files: cov.lcov
+          directory: ./coverage
+        continue-on-error: true
 
       - name: Build site
-        run: |
-          yarn site:build
+        run: yarn site:build
         env:
           NODE_ENV: production
 

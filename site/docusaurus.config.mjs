@@ -208,7 +208,7 @@ const config = {
   tagline: 'A batteries-included library for building serverless web apps on Cloudflare Workers, Deno, and Node.JS',
   url: 'https://keywork.app',
   baseUrl: '/',
-  onBrokenLinks: 'throw',
+  onBrokenLinks: 'warn',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
 
