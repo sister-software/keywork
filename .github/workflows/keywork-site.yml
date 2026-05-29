@@ -41,7 +41,7 @@ jobs:
           CI: true
 
       - name: Archive doc site artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: keywork-site
           path: site/build

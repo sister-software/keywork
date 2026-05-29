@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: ['main']
+    branches: ["main"]
   pull_request:
-    branches: ['main']
+    branches: ["main"]
 
 permissions:
   contents: read
@@ -51,14 +51,14 @@ jobs:
           NODE_ENV: production
 
       - name: Archive Keywork artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: keywork-dist
           path: dist
           retention-days: 5
 
       - name: Archive doc site artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: keywork-site
           path: site/build
