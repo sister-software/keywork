@@ -12,13 +12,6 @@ app.get('/', () => <h1>Hello from Keywork! 👋</h1>)
 export default app
 ```
 
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/nirrius/keywork)
-![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/nirrius/keywork/CI/main)
-[![codecov](https://codecov.io/gh/nirrius/keywork/branch/main/graph/badge.svg?token=1SDGYMB2YN)](https://codecov.io/gh/nirrius/keywork)
-![npm](https://img.shields.io/npm/dm/keywork)
-![npm (scoped)](https://img.shields.io/npm/v/keywork)
-[![deno module](https://shield.deno.dev/x/keywork)](https://deno.land/x/keywork)
-
 ## Why use Keywork?
 
 **V8 Isolates** are an emerging technology offered by cloud-computing services,
@@ -30,6 +23,19 @@ and even scale at more affordable prices than virtual machines and containers.
 and may lock your code into a single platform.
 
 **Keywork is an open-source library that makes V8 Isolates easier to use.**
+
+:::caution Keywork is no longer actively developed
+
+Keywork set out to make serverless web apps simpler — especially the idea of treating request context like a React context, with providers and hooks. In the years since, the ecosystem has caught up and, in most cases, surpassed what Keywork offers. If you're starting a new project today, these are better served by:
+
+- **[Hono](https://hono.dev)** — the closest spiritual successor. Web-standards router across Workers, Deno, Bun, and Node, with a typed request `Context`, an onion middleware model, and — closest to Keywork's original vision — `jsxRenderer` plus `useRequestContext()` for reading request context directly inside server-rendered JSX.
+- **[itty-router](https://itty.dev/itty-router)** — if you want the opposite of a framework: a tiny, dependency-free router you assemble yourself.
+- **[Elysia](https://elysiajs.com)** — Bun-first, with best-in-class end-to-end type inference and the Eden type-safe client.
+- **[Nitro](https://nitro.build) / [h3](https://h3.dev)** — composable, event-based server toolkit with ambient request context via `useEvent()`.
+
+The technique Keywork lacked — ambient, async-safe request context via `AsyncLocalStorage` (and the emerging TC39 `AsyncContext`) — is now broadly available, and these projects build on it directly. Keywork remains here for reference and existing users.
+
+:::
 
 ## Serverless web apps without vendor lock-in
 
